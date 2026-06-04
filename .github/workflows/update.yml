@@ -1,0 +1,42 @@
+name: Uppdatera tippning
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # var ~10:e minut
+  workflow_dispatch:          # tillåt manuell körning från Actions-fliken / gh
+
+permissions:
+  contents: write             # behövs för att boten ska kunna committa data.json
+
+concurrency:
+  group: update-tippning
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checka ut repo
+        uses: actions/checkout@v4
+
+      - name: Sätt upp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Kör tippningsmotorn
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: python engine.py
+
+      - name: Committa uppdaterad data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json fixtures.json
+          if git diff --staged --quiet; then
+            echo "Ingen dataändring att committa."
+          else
+            git commit -m "Auto-uppdatera data.json/fixtures.json [skip ci]"
+            git push
+          fi
