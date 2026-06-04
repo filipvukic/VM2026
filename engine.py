@@ -15,6 +15,7 @@ Lokal testkörning utan API (matchningslogiken verifieras mot mockdata):
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import unicodedata
@@ -49,6 +50,27 @@ def make_alias_norm(aliases):
         return table.get(n, n)
 
     return f
+
+
+def make_bonus_match(aliases):
+    """Jämför bonustips mot facit. Översätter lag via alias och matchar
+    spelare på efternamn (token-delmängd), så 'Mbappe' matchar 'Kylian Mbappé'
+    och 'Raya' matchar 'David Raya'."""
+    table = {norm(k): v for k, v in aliases.items()}
+
+    def toks(name):
+        eng = table.get(norm(name), str(name or ""))
+        eng = unicodedata.normalize("NFKD", eng)
+        eng = "".join(c for c in eng if not unicodedata.combining(c)).lower()
+        return set(re.findall(r"[a-z0-9]+", eng))
+
+    def match(pick, actual):
+        if not pick or not actual:
+            return False
+        a, b = toks(pick), toks(actual)
+        return bool(a and b and (a == b or a <= b or b <= a))
+
+    return match
 
 
 def build_team_resolver(aliases):
@@ -233,6 +255,7 @@ def compute(tips, matches, scorers):
     cfg = tips["scoring"]
     resolve = build_team_resolver(tips.get("team_aliases", {}))
     anorm = make_alias_norm(tips.get("team_aliases", {}))
+    bmatch = make_bonus_match(tips.get("team_aliases", {}))
     manual = tips.get("manual_results", {})
 
     medals = derive_medals(matches, resolve)
@@ -254,6 +277,7 @@ def compute(tips, matches, scorers):
     match_index = {m.get("id"): m for m in matches}
     match_rows = {}  # id -> rad med allas tips
     leaderboard = []
+    unmatched = {}   # "Home vs Away" -> antal deltagare som tippat den men ingen API-match hittades
 
     for p in tips["participants"]:
         name = p["name"]
@@ -262,34 +286,36 @@ def compute(tips, matches, scorers):
         for entry in p.get("matches", []):
             m = find_match(entry, matches, resolve)
             tip = entry["tip"]
-            res = score_one_match(m, tip, cfg) if m else None
+            if m is None:
+                key = f"{entry.get('home')} vs {entry.get('away')}"
+                unmatched[key] = unmatched.get(key, 0) + 1
+                continue
+            res = score_one_match(m, tip, cfg)
             pts = exact = None
             if res is not None:
                 pts, exact = res
                 match_points += pts
                 if exact:
                     exact_count += 1
-            if m is not None:
-                row = match_rows.setdefault(m["id"], {
-                    "id": m["id"],
-                    "utcDate": m.get("utcDate"),
-                    "stage": m.get("stage"),
-                    "knockout": is_knockout(m),
-                    "home": (m.get("homeTeam") or {}).get("name"),
-                    "away": (m.get("awayTeam") or {}).get("name"),
-                    "status": m.get("status"),
-                    "score": final_score(m),
-                    "tips": [],
-                })
-                row["tips"].append({"name": name, "tip": tip, "points": pts})
+            row = match_rows.setdefault(m["id"], {
+                "id": m["id"],
+                "utcDate": m.get("utcDate"),
+                "stage": m.get("stage"),
+                "knockout": is_knockout(m),
+                "home": (m.get("homeTeam") or {}).get("name"),
+                "away": (m.get("awayTeam") or {}).get("name"),
+                "status": m.get("status"),
+                "score": final_score(m),
+                "tips": [],
+            })
+            row["tips"].append({"name": name, "tip": tip, "points": pts})
 
         # Bonuspoäng (räknas bara när resultatet är känt)
         bonus_points = 0
         bonus_detail = {}
         for key, picked in (p.get("bonus") or {}).items():
             actual = actual_bonus.get(key)
-            # Lag-bonus översätts via alias; spelarnamn jämförs normaliserat.
-            correct = actual is not None and anorm(picked) == anorm(actual)
+            correct = bmatch(picked, actual)
             got = bonus_pts.get(key, 0) if correct else 0
             bonus_points += got
             bonus_detail[key] = {"pick": picked, "correct": correct, "points": got}
@@ -328,6 +354,7 @@ def compute(tips, matches, scorers):
         "bonus_actual": actual_bonus,
         "bonus_points": bonus_pts,
         "awards_pending": awards_pending,
+        "unmatched_tips": dict(sorted(unmatched.items(), key=lambda x: -x[1])),
         "knockout_rule": "ET-score for exact; penalties decide outcome",
     }
 
@@ -373,6 +400,14 @@ def main():
         json.dump(build_fixtures(matches), f, ensure_ascii=False, indent=2)
     print(f"Skrev {args.out} ({len(data['leaderboard'])} deltagare, "
           f"{len(data['matches'])} matcher) och {args.fixtures_out}.")
+    um = data.get("unmatched_tips") or {}
+    if um:
+        print(f"VARNING: {len(um)} fixtures matchade ingen API-match "
+              f"(kolla lagnamn mot {args.fixtures_out} och justera team_aliases):")
+        for k, n in um.items():
+            print(f"    omatchad: {k}  ({n} tips)")
+    else:
+        print("Alla tippade fixtures matchade en API-match.")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,12 @@
 {
-  "_kommentar": "EXEMPELDATA. Byt ut participants mot riktiga tips. Match-tips kan anges med 'home'+'away' (+ valfritt 'date') ELLER med 'id' (API-match-id från fixtures.json). Lägg slutspelstips omgång för omgång när lottningen är klar.",
-
+  "_kommentar": "Auto-genererad från Tippning_Fotbolls_VM.pdf. Utelämnade (inga tips): Villiam, Vilgot, Hampus. Osäkra lag-alias kan behöva matchas mot fixtures.json.",
   "pot_per_player": 300,
   "currency": "kr",
-  "prize_split": [0.5, 0.3, 0.2],
-
+  "prize_split": [
+    0.5,
+    0.3,
+    0.2
+  ],
   "scoring": {
     "exact": 5,
     "outcome": 2,
@@ -17,93 +19,5364 @@
     "best_young": 3,
     "best_keeper": 3
   },
-
   "team_aliases": {
+    "Mexico": "Mexico",
     "Sydafrika": "South Africa",
     "Sydkorea": "South Korea",
-    "Tjeckien": "Czech Republic",
+    "Tjeckien": "Czechia",
     "Kanada": "Canada",
-    "Bosnien": "Bosnia and Herzegovina",
+    "Bosnien": "Bosnia-Herzegovina",
+    "USA": "United States",
+    "Paraguay": "Paraguay",
+    "Qatar": "Qatar",
     "Schweiz": "Switzerland",
     "Brasilien": "Brazil",
     "Marocko": "Morocco",
-    "Skottland": "Scotland",
-    "Frankrike": "France",
-    "Spanien": "Spain",
-    "Tyskland": "Germany",
-    "Argentina": "Argentina",
-    "Mexico": "Mexico",
-    "USA": "United States",
-    "Qatar": "Qatar",
-    "Paraguay": "Paraguay",
     "Haiti": "Haiti",
-    "Australien": "Australia"
+    "Skottland": "Scotland",
+    "Australien": "Australia",
+    "Turkiet": "Turkey",
+    "Tyskland": "Germany",
+    "Curacao": "Curacao",
+    "Nederländerna": "Netherlands",
+    "Japan": "Japan",
+    "Elfenbenskusten": "Ivory Coast",
+    "Ecuador": "Ecuador",
+    "Sverige": "Sweden",
+    "Tunisien": "Tunisia",
+    "Spanien": "Spain",
+    "Kap verde": "Cape Verde",
+    "Belgien": "Belgium",
+    "Egypten": "Egypt",
+    "Saudiarabien": "Saudi Arabia",
+    "Uruguay": "Uruguay",
+    "Iran": "Iran",
+    "Nya zeeland": "New Zealand",
+    "Nya Zeeland": "New Zealand",
+    "Frankrike": "France",
+    "Senegal": "Senegal",
+    "Irak": "Iraq",
+    "Norge": "Norway",
+    "Argentina": "Argentina",
+    "Algeriet": "Algeria",
+    "Österrike": "Austria",
+    "Jordanien": "Jordan",
+    "Portugal": "Portugal",
+    "DR Kongo": "Congo DR",
+    "England": "England",
+    "Kroatien": "Croatia",
+    "Ghana": "Ghana",
+    "Panama": "Panama",
+    "Uzbekistan": "Uzbekistan",
+    "Colombia": "Colombia"
   },
-
   "manual_results": {
-    "_kommentar": "Fyll i på slutet av turneringen. top_scorer behövs bara om skyttekungen blev delad (annars auto). Best player/keeper/young finns inte i API:t och MÅSTE anges manuellt.",
     "top_scorer": null,
     "best_player": null,
     "best_young": null,
     "best_keeper": null
   },
-
   "participants": [
     {
       "name": "Albin",
       "matches": [
-        { "home": "Mexico", "away": "Sydafrika", "date": "2026-06-11", "tip": [2, 0] },
-        { "home": "Sydkorea", "away": "Tjeckien", "tip": [2, 1] },
-        { "home": "Kanada", "away": "Bosnien", "tip": [1, 1] },
-        { "home": "USA", "away": "Paraguay", "tip": [2, 1] },
-        { "home": "Qatar", "away": "Schweiz", "tip": [0, 3] }
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            7,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            7,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
       ],
       "bonus": {
+        "best_young": "Lamine Yamal",
         "winner": "Frankrike",
-        "silver": "Brasilien",
-        "bronze": "Argentina",
-        "top_scorer": "Kylian Mbappé",
-        "best_player": "Jude Bellingham",
-        "best_young": "Lamine Yamal",
-        "best_keeper": "Gianluigi Donnarumma"
+        "best_keeper": "Mike Maignan",
+        "best_player": "Kylian Mbappe",
+        "top_scorer": "Kylian Mbappe",
+        "silver": "Spanien",
+        "bronze": "Argentina"
       }
     },
     {
-      "name": "Erik",
+      "name": "Filip",
       "matches": [
-        { "home": "Mexico", "away": "Sydafrika", "tip": [1, 1] },
-        { "home": "Sydkorea", "away": "Tjeckien", "tip": [0, 2] },
-        { "home": "Kanada", "away": "Bosnien", "tip": [2, 1] },
-        { "home": "USA", "away": "Paraguay", "tip": [3, 0] },
-        { "home": "Qatar", "away": "Schweiz", "tip": [1, 2] }
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
       ],
       "bonus": {
-        "winner": "Spanien",
-        "silver": "Frankrike",
-        "bronze": "Brasilien",
-        "top_scorer": "Lamine Yamal",
+        "best_young": "Lamine Yamal",
+        "winner": "Frankrike",
+        "best_keeper": "David Raya",
         "best_player": "Kylian Mbappé",
-        "best_young": "Lamine Yamal",
-        "best_keeper": "Unai Simón"
+        "top_scorer": "Harry Kane",
+        "silver": "England",
+        "bronze": "Spanien"
       }
     },
     {
-      "name": "Sara",
+      "name": "Martin",
       "matches": [
-        { "home": "Mexico", "away": "Sydafrika", "tip": [2, 0] },
-        { "home": "Sydkorea", "away": "Tjeckien", "tip": [1, 1] },
-        { "home": "Kanada", "away": "Bosnien", "tip": [0, 0] },
-        { "home": "USA", "away": "Paraguay", "tip": [1, 1] },
-        { "home": "Qatar", "away": "Schweiz", "tip": [0, 2] }
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
       ],
       "bonus": {
-        "winner": "Brasilien",
+        "best_young": "João Neves",
+        "winner": "England",
+        "best_keeper": "Thibaut Courtois",
+        "best_player": "Kylian Mbappé",
+        "top_scorer": "Harry Kane",
+        "silver": "Spanien",
+        "bronze": "Frankrike"
+      }
+    },
+    {
+      "name": "Oskar",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            4,
+            1
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USA",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Lamine Yamal",
+        "winner": "Spanien",
+        "best_keeper": "Raya",
+        "best_player": "Kylian Mbappe",
+        "top_scorer": "Harry Kane",
+        "silver": "Tyskland",
+        "bronze": "Brasilien"
+      }
+    },
+    {
+      "name": "Isac",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Lamine Yamal",
+        "winner": "Spanien",
+        "best_keeper": "Mike Maignan",
+        "best_player": null,
+        "top_scorer": "Kylian Mbappe",
+        "silver": "Frankrike",
+        "bronze": "England"
+      }
+    },
+    {
+      "name": "Casper",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            4,
+            2
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            4,
+            1
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            5,
+            1
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            5,
+            1
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            4,
+            2
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            4,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            4,
+            1
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            6,
+            1
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            1,
+            4
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            4,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            4
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            1,
+            4
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Lamine Yamal",
+        "winner": "Portugal",
+        "best_keeper": "Raya",
+        "best_player": "Vitinha",
+        "top_scorer": "Mbappe",
+        "silver": "Frankrike",
+        "bronze": "Spanien"
+      }
+    },
+    {
+      "name": "Johan",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Usa",
+          "away": "Paraguay",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            0,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            0,
+            2
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Yamal",
+        "winner": "Portugal",
+        "best_keeper": "David Raya",
+        "best_player": "Bruno Fernanch",
+        "top_scorer": "Harry Kane",
+        "silver": "Frankrike",
+        "bronze": "England"
+      }
+    },
+    {
+      "name": "Björn",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Paraguay",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            3
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Lamine Yamal",
+        "winner": "Frankrike",
+        "best_keeper": "Mike Maignan",
+        "best_player": "Kylian Mbappe",
+        "top_scorer": "Kylian Mbappe",
         "silver": "Argentina",
-        "bronze": "Frankrike",
-        "top_scorer": "Vinicius Junior",
-        "best_player": "Vinicius Junior",
-        "best_young": "Endrick",
-        "best_keeper": "Alisson"
+        "bronze": "Spanien"
+      }
+    },
+    {
+      "name": "Alexander",
+      "matches": [
+        {
+          "home": "Mexico",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Sydkorea",
+          "away": "Tjeckien",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Bosnien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Usa",
+          "away": "Paraguay",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Qatar",
+          "away": "Schweiz",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Marocko",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Haiti",
+          "away": "Skottland",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Australien",
+          "away": "Turkiet",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Curacao",
+          "tip": [
+            6,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Japan",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Elfenbenskusten",
+          "away": "Ecuador",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Sverige",
+          "away": "Tunisien",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Kap verde",
+          "tip": [
+            6,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Egypten",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Saudiarabien",
+          "away": "Uruguay",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Iran",
+          "away": "Nya zeeland",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Senegal",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Irak",
+          "away": "Norge",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Algeriet",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Österrike",
+          "away": "Jordanien",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "DR Kongo",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Kroatien",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Ghana",
+          "away": "Panama",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Uzbekistan",
+          "away": "Colombia",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Sydafrika",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Bosnien",
+          "tip": [
+            3,
+            2
+          ]
+        },
+        {
+          "home": "Kanada",
+          "away": "Qatar",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Mexico",
+          "away": "Syd korea",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "USA",
+          "away": "Australien",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Marocko",
+          "tip": [
+            2,
+            3
+          ]
+        },
+        {
+          "home": "Brasilien",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "paraguay",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Nederländerna",
+          "away": "Sverige",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Tyskland",
+          "away": "Elfenbenskusten",
+          "tip": [
+            4,
+            1
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Curacao",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Japan",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Spanien",
+          "away": "Saudiarabien",
+          "tip": [
+            4,
+            0
+          ]
+        },
+        {
+          "home": "Belgien",
+          "away": "Iran",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Kap verde",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Egypten",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Argentina",
+          "away": "Österrike",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Frankrike",
+          "away": "Irak",
+          "tip": [
+            5,
+            0
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Senegal",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Algeriet",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Portugal",
+          "away": "Uzbekistan",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "England",
+          "away": "Ghana",
+          "tip": [
+            3,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "Kroatien",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "DR kongo",
+          "tip": [
+            2,
+            0
+          ]
+        },
+        {
+          "home": "Schweiz",
+          "away": "Kanada",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Bosnien",
+          "away": "Qatar",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Marocko",
+          "away": "Haiti",
+          "tip": [
+            3,
+            0
+          ]
+        },
+        {
+          "home": "Skottland",
+          "away": "Brasilien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Sydafrika",
+          "away": "Syd korea",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Tjeckien",
+          "away": "Mexico",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Curacao",
+          "away": "Elfenbenskusten",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Ecuador",
+          "away": "Tyskland",
+          "tip": [
+            0,
+            3
+          ]
+        },
+        {
+          "home": "Tunisien",
+          "away": "Nederländerna",
+          "tip": [
+            0,
+            2
+          ]
+        },
+        {
+          "home": "Japan",
+          "away": "Sverige",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Turkiet",
+          "away": "USa",
+          "tip": [
+            1,
+            0
+          ]
+        },
+        {
+          "home": "Paraguay",
+          "away": "Australien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Norge",
+          "away": "Frankrike",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Senegal",
+          "away": "Irak",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Kap verde",
+          "away": "Saudiarabien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Uruguay",
+          "away": "Spanien",
+          "tip": [
+            1,
+            3
+          ]
+        },
+        {
+          "home": "Nya Zeeland",
+          "away": "Belgien",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "Egypten",
+          "away": "Iran",
+          "tip": [
+            2,
+            1
+          ]
+        },
+        {
+          "home": "Panama",
+          "away": "England",
+          "tip": [
+            0,
+            4
+          ]
+        },
+        {
+          "home": "Kroatien",
+          "away": "Ghana",
+          "tip": [
+            1,
+            1
+          ]
+        },
+        {
+          "home": "Colombia",
+          "away": "Portugal",
+          "tip": [
+            1,
+            2
+          ]
+        },
+        {
+          "home": "DR Kongo",
+          "away": "Uzbekistan",
+          "tip": [
+            0,
+            1
+          ]
+        },
+        {
+          "home": "Algeriet",
+          "away": "Österrike",
+          "tip": [
+            2,
+            2
+          ]
+        },
+        {
+          "home": "Jordanien",
+          "away": "Argentina",
+          "tip": [
+            0,
+            2
+          ]
+        }
+      ],
+      "bonus": {
+        "best_young": "Lamine Yamal",
+        "winner": "Frankrike",
+        "best_keeper": "Mike Maignan",
+        "best_player": "Harry Kane",
+        "top_scorer": "Harry Kane",
+        "silver": "Spanien",
+        "bronze": "England"
       }
     }
   ]
