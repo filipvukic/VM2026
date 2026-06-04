@@ -1,0 +1,110 @@
+{
+  "_kommentar": "EXEMPELDATA. Byt ut participants mot riktiga tips. Match-tips kan anges med 'home'+'away' (+ valfritt 'date') ELLER med 'id' (API-match-id från fixtures.json). Lägg slutspelstips omgång för omgång när lottningen är klar.",
+
+  "pot_per_player": 300,
+  "currency": "kr",
+  "prize_split": [0.5, 0.3, 0.2],
+
+  "scoring": {
+    "exact": 5,
+    "outcome": 2,
+    "floor": 1,
+    "winner": 10,
+    "silver": 5,
+    "bronze": 3,
+    "top_scorer": 3,
+    "best_player": 3,
+    "best_young": 3,
+    "best_keeper": 3
+  },
+
+  "team_aliases": {
+    "Sydafrika": "South Africa",
+    "Sydkorea": "South Korea",
+    "Tjeckien": "Czech Republic",
+    "Kanada": "Canada",
+    "Bosnien": "Bosnia and Herzegovina",
+    "Schweiz": "Switzerland",
+    "Brasilien": "Brazil",
+    "Marocko": "Morocco",
+    "Skottland": "Scotland",
+    "Frankrike": "France",
+    "Spanien": "Spain",
+    "Tyskland": "Germany",
+    "Argentina": "Argentina",
+    "Mexico": "Mexico",
+    "USA": "United States",
+    "Qatar": "Qatar",
+    "Paraguay": "Paraguay",
+    "Haiti": "Haiti",
+    "Australien": "Australia"
+  },
+
+  "manual_results": {
+    "_kommentar": "Fyll i på slutet av turneringen. top_scorer behövs bara om skyttekungen blev delad (annars auto). Best player/keeper/young finns inte i API:t och MÅSTE anges manuellt.",
+    "top_scorer": null,
+    "best_player": null,
+    "best_young": null,
+    "best_keeper": null
+  },
+
+  "participants": [
+    {
+      "name": "Albin",
+      "matches": [
+        { "home": "Mexico", "away": "Sydafrika", "date": "2026-06-11", "tip": [2, 0] },
+        { "home": "Sydkorea", "away": "Tjeckien", "tip": [2, 1] },
+        { "home": "Kanada", "away": "Bosnien", "tip": [1, 1] },
+        { "home": "USA", "away": "Paraguay", "tip": [2, 1] },
+        { "home": "Qatar", "away": "Schweiz", "tip": [0, 3] }
+      ],
+      "bonus": {
+        "winner": "Frankrike",
+        "silver": "Brasilien",
+        "bronze": "Argentina",
+        "top_scorer": "Kylian Mbappé",
+        "best_player": "Jude Bellingham",
+        "best_young": "Lamine Yamal",
+        "best_keeper": "Gianluigi Donnarumma"
+      }
+    },
+    {
+      "name": "Erik",
+      "matches": [
+        { "home": "Mexico", "away": "Sydafrika", "tip": [1, 1] },
+        { "home": "Sydkorea", "away": "Tjeckien", "tip": [0, 2] },
+        { "home": "Kanada", "away": "Bosnien", "tip": [2, 1] },
+        { "home": "USA", "away": "Paraguay", "tip": [3, 0] },
+        { "home": "Qatar", "away": "Schweiz", "tip": [1, 2] }
+      ],
+      "bonus": {
+        "winner": "Spanien",
+        "silver": "Frankrike",
+        "bronze": "Brasilien",
+        "top_scorer": "Lamine Yamal",
+        "best_player": "Kylian Mbappé",
+        "best_young": "Lamine Yamal",
+        "best_keeper": "Unai Simón"
+      }
+    },
+    {
+      "name": "Sara",
+      "matches": [
+        { "home": "Mexico", "away": "Sydafrika", "tip": [2, 0] },
+        { "home": "Sydkorea", "away": "Tjeckien", "tip": [1, 1] },
+        { "home": "Kanada", "away": "Bosnien", "tip": [0, 0] },
+        { "home": "USA", "away": "Paraguay", "tip": [1, 1] },
+        { "home": "Qatar", "away": "Schweiz", "tip": [0, 2] }
+      ],
+      "bonus": {
+        "winner": "Brasilien",
+        "silver": "Argentina",
+        "bronze": "Frankrike",
+        "top_scorer": "Vinicius Junior",
+        "best_player": "Vinicius Junior",
+        "best_young": "Endrick",
+        "best_keeper": "Alisson"
+      }
+    }
+  ]
+}

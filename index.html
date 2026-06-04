@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VM 2026 — Tippningen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d0b; --panel:#12171300; --card:#141a15; --line:#232c24;
+    --ink:#eef3ec; --muted:#8b968a; --lime:#c8f63a; --lime-dim:#4d5d22;
+    --gold:#f2c14e; --silver:#cdd6dd; --bronze:#d18a52;
+    --p5:#c8f63a; --p2:#5ec8e0; --p1:#5a6557; --live:#ff5252;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg);
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, #19211a 0%, transparent 60%),
+      repeating-linear-gradient(90deg,#0c100d 0 38px,#0a0d0b 38px 76px);
+    color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 64px}
+  header{padding:30px 0 14px;text-align:center}
+  .kicker{font-size:12px;letter-spacing:.42em;color:var(--lime);font-weight:700;margin:0 0 4px}
+  h1{font-family:"Anton",sans-serif;font-weight:400;letter-spacing:.01em;
+     font-size:clamp(46px,15vw,82px);line-height:.86;margin:0;text-transform:uppercase}
+  h1 .yr{color:var(--lime);-webkit-text-stroke:0}
+  .updated{color:var(--muted);font-size:12.5px;margin-top:10px}
+  .updated b{color:var(--ink);font-weight:600}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lime);margin-right:6px;vertical-align:middle}
+
+  .pot{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 6px}
+  .pot .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:8px 14px;font-size:13px;color:var(--muted)}
+  .pot .pill b{color:var(--ink);font-weight:700}
+  .pot .big{border-color:var(--lime-dim)}
+  .pot .big b{color:var(--lime)}
+
+  nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;padding:12px 0;
+    background:linear-gradient(var(--bg),var(--bg) 70%,transparent)}
+  nav button{flex:1;background:var(--card);color:var(--muted);border:1px solid var(--line);
+    border-radius:12px;padding:11px 8px;font-family:inherit;font-weight:700;font-size:13.5px;
+    letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:.15s}
+  nav button.on{background:var(--lime);color:#0a0d0b;border-color:var(--lime)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px}
+
+  /* leaderboard */
+  .row{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;
+    padding:14px 16px;cursor:pointer}
+  .rank{font-family:"Anton";font-size:26px;line-height:1;color:var(--muted);text-align:center}
+  .r1 .rank{color:var(--gold)} .r2 .rank{color:var(--silver)} .r3 .rank{color:var(--bronze)}
+  .r1{border-left:3px solid var(--gold)} .r2{border-left:3px solid var(--silver)} .r3{border-left:3px solid var(--bronze)}
+  .nm{font-weight:800;font-size:18px}
+  .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .tot{font-family:"Anton";font-size:30px;line-height:1;text-align:right}
+  .tot small{display:block;font-family:"Hanken Grotesk";font-size:11px;color:var(--lime);
+    font-weight:700;letter-spacing:.03em}
+  .prize{color:var(--gold);font-weight:700}
+  .detail{display:none;padding:0 16px 16px;border-top:1px solid var(--line);margin-top:-2px}
+  .detail.show{display:block}
+  .detail h4{margin:14px 0 6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .bgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .bchip{display:flex;justify-content:space-between;gap:8px;background:#0e130f;border:1px solid var(--line);
+    border-radius:9px;padding:8px 10px;font-size:13px}
+  .bchip .v{color:var(--muted)} .bchip.ok{border-color:var(--lime-dim)} .bchip.ok .v{color:var(--lime);font-weight:700}
+
+  /* matches */
+  .mstage{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);
+    font-weight:700;margin:18px 4px 8px}
+  .match{padding:13px 16px}
+  .mtop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .teams{font-weight:700;font-size:15.5px}
+  .teams .vs{color:var(--muted);font-weight:500;margin:0 7px}
+  .res{font-family:"Anton";font-size:24px;letter-spacing:.03em}
+  .res.pending{font-family:"Hanken Grotesk";font-size:12.5px;font-weight:700;color:var(--muted)}
+  .live{color:var(--live);font-weight:800;font-size:12px;letter-spacing:.08em}
+  .live .dot{background:var(--live);animation:pulse 1.1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .mtips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .tip{font-size:12px;background:#0e130f;border:1px solid var(--line);border-radius:8px;padding:5px 9px;color:var(--muted)}
+  .tip b{color:var(--ink);font-weight:700;margin-right:5px}
+  .tip .pts{font-weight:800;margin-left:6px}
+  .pp5{color:var(--p5)} .pp2{color:var(--p2)} .pp1{color:var(--p1)}
+
+  /* bonus */
+  .bonus h3{font-family:"Anton";font-weight:400;font-size:20px;margin:0 0 2px;text-transform:uppercase;letter-spacing:.02em}
+  .brow{padding:14px 16px}
+  .brow .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .brow .pts{color:var(--lime);font-weight:800;font-size:13px;white-space:nowrap}
+  .brow .actual{font-size:13px;color:var(--muted);margin-top:3px}
+  .brow .actual b{color:var(--ink)}
+  .winners{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .winners span{font-size:12px;background:var(--lime);color:#0a0d0b;border-radius:7px;padding:4px 9px;font-weight:700}
+  .pend{font-size:12px;color:var(--gold);background:#1c160a;border:1px solid #4a3a13;border-radius:7px;padding:4px 9px;display:inline-block;margin-top:9px}
+  .legend{color:var(--muted);font-size:12px;text-align:center;margin:18px 4px 0;line-height:1.7}
+  .legend b{color:var(--ink)}
+  .err{color:var(--gold);font-size:12px;text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">FOTBOLLS-VM</p>
+    <h1>Tipp<span class="yr">ningen</span><br><span class="yr">2026</span></h1>
+    <p class="updated" id="updated"></p>
+    <div class="pot" id="pot"></div>
+    <p class="err" id="src"></p>
+  </header>
+
+  <nav>
+    <button class="on" data-tab="table">Tabell</button>
+    <button data-tab="matches">Matcher</button>
+    <button data-tab="bonus">Bonus</button>
+  </nav>
+
+  <div id="table"></div>
+  <div id="matches" hidden></div>
+  <div id="bonus" hidden></div>
+
+  <p class="legend">
+    Poäng/match: <b class="pp5">5</b> exakt resultat &nbsp;·&nbsp; <b class="pp2">2</b> rätt utgång &nbsp;·&nbsp; <b class="pp1">1</b> annars.<br>
+    Slutspel: straffvinnaren räknas som rätt utgång. Lika i tabellen avgörs av flest exakta resultat.
+  </p>
+</div>
+
+<script>
+const SAMPLE_DATA = {"updated_at": "2026-06-04T21:18:08+00:00", "pot": {"per_player": 300, "total": 900, "currency": "kr", "split": {"1": 450, "2": 270, "3": 180}}, "leaderboard": [{"name": "Albin", "match_points": 20, "bonus_points": 21, "total": 41, "exact_count": 4, "bonus_detail": {"winner": {"pick": "Frankrike", "correct": true, "points": 10}, "silver": {"pick": "Brasilien", "correct": true, "points": 5}, "bronze": {"pick": "Argentina", "correct": true, "points": 3}, "top_scorer": {"pick": "Kylian Mbapp\u00e9", "correct": true, "points": 3}, "best_player": {"pick": "Jude Bellingham", "correct": false, "points": 0}, "best_young": {"pick": "Lamine Yamal", "correct": false, "points": 0}, "best_keeper": {"pick": "Gianluigi Donnarumma", "correct": false, "points": 0}}, "rank": 1, "prize": 450}, {"name": "Sara", "match_points": 9, "bonus_points": 0, "total": 9, "exact_count": 1, "bonus_detail": {"winner": {"pick": "Brasilien", "correct": false, "points": 0}, "silver": {"pick": "Argentina", "correct": false, "points": 0}, "bronze": {"pick": "Frankrike", "correct": false, "points": 0}, "top_scorer": {"pick": "Vinicius Junior", "correct": false, "points": 0}, "best_player": {"pick": "Vinicius Junior", "correct": false, "points": 0}, "best_young": {"pick": "Endrick", "correct": false, "points": 0}, "best_keeper": {"pick": "Alisson", "correct": false, "points": 0}}, "rank": 2, "prize": 270}, {"name": "Erik", "match_points": 5, "bonus_points": 0, "total": 5, "exact_count": 0, "bonus_detail": {"winner": {"pick": "Spanien", "correct": false, "points": 0}, "silver": {"pick": "Frankrike", "correct": false, "points": 0}, "bronze": {"pick": "Brasilien", "correct": false, "points": 0}, "top_scorer": {"pick": "Lamine Yamal", "correct": false, "points": 0}, "best_player": {"pick": "Kylian Mbapp\u00e9", "correct": false, "points": 0}, "best_young": {"pick": "Lamine Yamal", "correct": false, "points": 0}, "best_keeper": {"pick": "Unai Sim\u00f3n", "correct": false, "points": 0}}, "rank": 3, "prize": 180}], "matches": [{"id": 1, "utcDate": "2026-06-11T18:00:00Z", "stage": "GROUP_STAGE", "knockout": false, "home": "Mexico", "away": "South Africa", "status": "FINISHED", "score": [2, 0], "tips": [{"name": "Albin", "tip": [2, 0], "points": 5}, {"name": "Erik", "tip": [1, 1], "points": 1}, {"name": "Sara", "tip": [2, 0], "points": 5}]}, {"id": 2, "utcDate": "2026-06-12T15:00:00Z", "stage": "GROUP_STAGE", "knockout": false, "home": "South Korea", "away": "Czech Republic", "status": "FINISHED", "score": [2, 1], "tips": [{"name": "Albin", "tip": [2, 1], "points": 5}, {"name": "Erik", "tip": [0, 2], "points": 1}, {"name": "Sara", "tip": [1, 1], "points": 1}]}, {"id": 3, "utcDate": "2026-06-12T18:00:00Z", "stage": "GROUP_STAGE", "knockout": false, "home": "Canada", "away": "Bosnia and Herzegovina", "status": "FINISHED", "score": [1, 1], "tips": [{"name": "Albin", "tip": [1, 1], "points": 5}, {"name": "Erik", "tip": [2, 1], "points": 1}, {"name": "Sara", "tip": [0, 0], "points": 2}]}, {"id": 4, "utcDate": "2026-06-13T18:00:00Z", "stage": "GROUP_STAGE", "knockout": false, "home": "United States", "away": "Paraguay", "status": "FINISHED", "score": [2, 1], "tips": [{"name": "Albin", "tip": [2, 1], "points": 5}, {"name": "Erik", "tip": [3, 0], "points": 2}, {"name": "Sara", "tip": [1, 1], "points": 1}]}, {"id": 5, "utcDate": "2026-06-13T21:00:00Z", "stage": "GROUP_STAGE", "knockout": false, "home": "Qatar", "away": "Switzerland", "status": "IN_PLAY", "score": null, "tips": [{"name": "Albin", "tip": [0, 3], "points": null}, {"name": "Erik", "tip": [1, 2], "points": null}, {"name": "Sara", "tip": [0, 2], "points": null}]}], "bonus_actual": {"winner": "France", "silver": "Brazil", "bronze": "Argentina", "top_scorer": "Kylian Mbapp\u00e9", "best_player": null, "best_young": null, "best_keeper": null}, "bonus_points": {"winner": 10, "silver": 5, "bronze": 3, "top_scorer": 3, "best_player": 3, "best_young": 3, "best_keeper": 3}, "awards_pending": ["best_player", "best_young", "best_keeper"], "knockout_rule": "ET-score for exact; penalties decide outcome"};
+
+const STAGES={GROUP_STAGE:"Gruppspel",LAST_16:"Åttondelsfinal",QUARTER_FINALS:"Kvartsfinal",
+  SEMI_FINALS:"Semifinal",THIRD_PLACE:"Bronsmatch",FINAL:"Final"};
+const BONUS_LABELS={winner:"Vinnare",silver:"Silver",bronze:"Brons",top_scorer:"Bästa målskytt",
+  best_player:"Bästa spelare",best_young:"Bästa unga spelare",best_keeper:"Bästa målvakt"};
+
+const esc=s=>String(s??"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const ptsClass=p=>p===5?"pp5":p===2?"pp2":"pp1";
+
+function fmtKick(iso){
+  const d=new Date(iso);
+  return d.toLocaleString("sv-SE",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+}
+
+function renderPot(d){
+  const c=d.pot.currency, s=d.pot.split;
+  document.getElementById("pot").innerHTML=
+    `<span class="pill big">Pott <b>${d.pot.total} ${c}</b></span>`+
+    `<span class="pill">🥇 <b>${s["1"]||0} ${c}</b></span>`+
+    `<span class="pill">🥈 <b>${s["2"]||0} ${c}</b></span>`+
+    `<span class="pill">🥉 <b>${s["3"]||0} ${c}</b></span>`;
+}
+
+function renderTable(d){
+  const el=document.getElementById("table"); el.innerHTML="";
+  d.leaderboard.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="card r"+(p.rank<=3?p.rank:"");
+    const bonus=Object.entries(p.bonus_detail).map(([k,v])=>
+      `<div class="bchip ${v.correct?"ok":""}"><span>${BONUS_LABELS[k]}</span><span class="v">${esc(v.pick)}${v.correct?" ✓":""}</span></div>`).join("");
+    card.innerHTML=`
+      <div class="row">
+        <div class="rank">${p.rank}</div>
+        <div><div class="nm">${esc(p.name)}</div>
+          <div class="sub">${p.match_points} matchp · ${p.bonus_points} bonusp · ${p.exact_count} exakta</div></div>
+        <div class="tot">${p.total}<small>poäng</small>
+          ${p.prize?`<div class="sub prize">${p.prize} kr</div>`:""}</div>
+      </div>
+      <div class="detail">
+        <h4>Bonustips</h4>
+        <div class="bgrid">${bonus}</div>
+      </div>`;
+    card.querySelector(".row").onclick=()=>card.querySelector(".detail").classList.toggle("show");
+    el.appendChild(card);
+  });
+}
+
+function renderMatches(d){
+  const el=document.getElementById("matches"); el.innerHTML="";
+  let stage=null;
+  d.matches.forEach(m=>{
+    if(m.stage!==stage){stage=m.stage;
+      const h=document.createElement("div");h.className="mstage";
+      h.textContent=STAGES[stage]||stage;el.appendChild(h);}
+    const card=document.createElement("div");card.className="card match";
+    let res;
+    if(m.status==="FINISHED"&&m.score) res=`<span class="res">${m.score[0]}–${m.score[1]}</span>`;
+    else if(m.status==="IN_PLAY"||m.status==="PAUSED")
+      res=`<span class="live"><span class="dot"></span>LIVE${m.score?` ${m.score[0]}–${m.score[1]}`:""}</span>`;
+    else res=`<span class="res pending">${fmtKick(m.utcDate)}</span>`;
+    const tips=m.tips.map(t=>{
+      const p=t.points;
+      const tag=p==null?"":`<span class="pts ${ptsClass(p)}">${p}p</span>`;
+      return `<span class="tip"><b>${esc(t.name)}</b>${t.tip[0]}–${t.tip[1]}${tag}</span>`;
+    }).join("");
+    card.innerHTML=`<div class="mtop">
+        <span class="teams">${esc(m.home)}<span class="vs">v</span>${esc(m.away)}</span>${res}</div>
+      <div class="mtips">${tips}</div>`;
+    el.appendChild(card);
+  });
+}
+
+function renderBonus(d){
+  const el=document.getElementById("bonus");el.innerHTML="";
+  const wrap=document.createElement("div");wrap.className="bonus";
+  Object.keys(BONUS_LABELS).forEach(k=>{
+    const actual=d.bonus_actual[k], pts=d.bonus_points[k];
+    const winners=d.leaderboard.filter(p=>p.bonus_detail[k]?.correct).map(p=>p.name);
+    const card=document.createElement("div");card.className="card brow";
+    card.innerHTML=`
+      <div class="head"><h3>${BONUS_LABELS[k]}</h3><span class="pts">+${pts}p</span></div>
+      ${actual?`<div class="actual">Facit: <b>${esc(actual)}</b></div>`
+              :`<span class="pend">Avgörs senare</span>`}
+      ${winners.length?`<div class="winners">${winners.map(n=>`<span>${esc(n)} ✓</span>`).join("")}</div>`:""}`;
+    wrap.appendChild(card);
+  });
+  el.appendChild(wrap);
+}
+
+function render(d,fromFile){
+  const u=new Date(d.updated_at);
+  document.getElementById("updated").innerHTML=
+    `<span class="dot"></span>Uppdaterad <b>${u.toLocaleString("sv-SE",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</b>`;
+  if(!fromFile) document.getElementById("src").textContent="Visar exempeldata (data.json hittades inte ännu).";
+  renderPot(d);renderTable(d);renderMatches(d);renderBonus(d);
+}
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");
+  ["table","matches","bonus"].forEach(id=>document.getElementById(id).hidden=(id!==b.dataset.tab));
+});
+
+fetch("data.json",{cache:"no-store"})
+  .then(r=>{if(!r.ok)throw 0;return r.json();})
+  .then(d=>render(d,true))
+  .catch(()=>render(SAMPLE_DATA,false));
+</script>
+</body>
+</html>

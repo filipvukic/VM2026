@@ -1,0 +1,36 @@
+{
+  "matches": [
+    { "id": 1, "utcDate": "2026-06-11T18:00:00Z", "stage": "GROUP_STAGE", "status": "FINISHED",
+      "homeTeam": {"name": "Mexico", "tla": "MEX"}, "awayTeam": {"name": "South Africa", "tla": "RSA"},
+      "score": {"winner": "HOME_TEAM", "duration": "REGULAR", "fullTime": {"home": 2, "away": 0}} },
+
+    { "id": 2, "utcDate": "2026-06-12T15:00:00Z", "stage": "GROUP_STAGE", "status": "FINISHED",
+      "homeTeam": {"name": "South Korea", "tla": "KOR"}, "awayTeam": {"name": "Czech Republic", "tla": "CZE"},
+      "score": {"winner": "HOME_TEAM", "duration": "REGULAR", "fullTime": {"home": 2, "away": 1}} },
+
+    { "id": 3, "utcDate": "2026-06-12T18:00:00Z", "stage": "GROUP_STAGE", "status": "FINISHED",
+      "homeTeam": {"name": "Canada", "tla": "CAN"}, "awayTeam": {"name": "Bosnia and Herzegovina", "tla": "BIH"},
+      "score": {"winner": "DRAW", "duration": "REGULAR", "fullTime": {"home": 1, "away": 1}} },
+
+    { "id": 4, "utcDate": "2026-06-13T18:00:00Z", "stage": "GROUP_STAGE", "status": "FINISHED",
+      "homeTeam": {"name": "United States", "tla": "USA"}, "awayTeam": {"name": "Paraguay", "tla": "PAR"},
+      "score": {"winner": "HOME_TEAM", "duration": "REGULAR", "fullTime": {"home": 2, "away": 1}} },
+
+    { "id": 5, "utcDate": "2026-06-13T21:00:00Z", "stage": "GROUP_STAGE", "status": "IN_PLAY",
+      "homeTeam": {"name": "Qatar", "tla": "QAT"}, "awayTeam": {"name": "Switzerland", "tla": "SUI"},
+      "score": {"winner": null, "duration": "REGULAR", "fullTime": {"home": null, "away": null}} },
+
+    { "id": 90, "utcDate": "2026-07-18T19:00:00Z", "stage": "THIRD_PLACE", "status": "FINISHED",
+      "homeTeam": {"name": "Argentina", "tla": "ARG"}, "awayTeam": {"name": "Germany", "tla": "GER"},
+      "score": {"winner": "HOME_TEAM", "duration": "REGULAR", "fullTime": {"home": 3, "away": 1}} },
+
+    { "id": 91, "utcDate": "2026-07-19T19:00:00Z", "stage": "FINAL", "status": "FINISHED",
+      "homeTeam": {"name": "France", "tla": "FRA"}, "awayTeam": {"name": "Brazil", "tla": "BRA"},
+      "score": {"winner": "DRAW", "duration": "PENALTY_SHOOTOUT", "fullTime": {"home": 1, "away": 1},
+                "penalties": {"home": 4, "away": 3}} }
+  ],
+  "scorers": [
+    { "player": {"name": "Kylian Mbappé"}, "goals": 8 },
+    { "player": {"name": "Vinicius Junior"}, "goals": 6 }
+  ]
+}
