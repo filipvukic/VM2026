@@ -117,7 +117,100 @@ def fetch_data(token):
         scorers = api_get(f"/competitions/{COMPETITION}/scorers?limit=20", token).get("scorers", [])
     except Exception:
         scorers = []  # scorers-endpoint kan saknas tidigt i turneringen
-    return matches, scorers
+    try:
+        standings = api_get(f"/competitions/{COMPETITION}/standings", token).get("standings", [])
+    except Exception:
+        standings = []  # gratisplanen kan sakna standings -> härleds ur matcher
+    return matches, scorers, standings
+
+
+def normalize_group_code(s):
+    """'GROUP_A' / 'Group A' / 'A' -> 'A'. Returnerar None för okänt."""
+    if not s:
+        return None
+    s = str(s).upper().strip()
+    if s.startswith("GROUP"):
+        s = s.replace("GROUP_", "").replace("GROUP", "").strip()
+    s = s.strip("_ ").strip()
+    return s if s and len(s) <= 2 else None
+
+
+def build_groups_from_standings(standings):
+    groups = []
+    for s in standings or []:
+        if (s.get("type") or "").upper() != "TOTAL":
+            continue
+        code = normalize_group_code(s.get("group") or "")
+        if not code:
+            continue
+        table = []
+        for row in s.get("table", []) or []:
+            t = row.get("team") or {}
+            table.append({
+                "team": t.get("name"),
+                "tla": t.get("tla"),
+                "played": row.get("playedGames", 0),
+                "won": row.get("won", 0),
+                "draw": row.get("draw", 0),
+                "lost": row.get("lost", 0),
+                "gf": row.get("goalsFor", 0),
+                "ga": row.get("goalsAgainst", 0),
+                "gd": row.get("goalDifference", 0),
+                "points": row.get("points", 0),
+            })
+        groups.append({"code": code, "table": table})
+    groups.sort(key=lambda g: g["code"])
+    return groups
+
+
+def derive_groups_from_matches(matches):
+    """Fallback om standings-endpoint inte är tillgänglig. Bygger tabeller
+    från färdigspelade gruppmatcher där varje match har 'group' satt."""
+    teams = {}  # code -> name -> stats
+    for m in matches:
+        if m.get("stage") != GROUP_STAGE:
+            continue
+        code = normalize_group_code(m.get("group"))
+        if not code:
+            continue
+        ht = m.get("homeTeam") or {}
+        at = m.get("awayTeam") or {}
+        ht_name, at_name = ht.get("name"), at.get("name")
+        if not ht_name or not at_name:
+            continue
+        bucket = teams.setdefault(code, {})
+        for t in (ht, at):
+            bucket.setdefault(t.get("name"), {
+                "team": t.get("name"), "tla": t.get("tla"),
+                "played": 0, "won": 0, "draw": 0, "lost": 0,
+                "gf": 0, "ga": 0, "gd": 0, "points": 0,
+            })
+        if not is_finished(m):
+            continue
+        sc = final_score(m)
+        if not sc:
+            continue
+        h, a = sc
+        H, A = bucket[ht_name], bucket[at_name]
+        H["played"] += 1; A["played"] += 1
+        H["gf"] += h; H["ga"] += a
+        A["gf"] += a; A["ga"] += h
+        if h > a:
+            H["won"] += 1; H["points"] += 3; A["lost"] += 1
+        elif a > h:
+            A["won"] += 1; A["points"] += 3; H["lost"] += 1
+        else:
+            H["draw"] += 1; A["draw"] += 1
+            H["points"] += 1; A["points"] += 1
+        H["gd"] = H["gf"] - H["ga"]
+        A["gd"] = A["gf"] - A["ga"]
+
+    out = []
+    for code in sorted(teams.keys()):
+        table = sorted(teams[code].values(),
+                       key=lambda r: (-r["points"], -r["gd"], -r["gf"], (r["team"] or "")))
+        out.append({"code": code, "table": table})
+    return out
 
 
 # --------------------------------------------------------------------------- #
@@ -251,7 +344,7 @@ def top_scorer(scorers, manual):
 # --------------------------------------------------------------------------- #
 # Huvudberäkning
 # --------------------------------------------------------------------------- #
-def compute(tips, matches, scorers):
+def compute(tips, matches, scorers, standings=None):
     cfg = tips["scoring"]
     resolve = build_team_resolver(tips.get("team_aliases", {}))
     anorm = make_alias_norm(tips.get("team_aliases", {}))
@@ -301,9 +394,12 @@ def compute(tips, matches, scorers):
                 "id": m["id"],
                 "utcDate": m.get("utcDate"),
                 "stage": m.get("stage"),
+                "group": normalize_group_code(m.get("group")),
                 "knockout": is_knockout(m),
                 "home": (m.get("homeTeam") or {}).get("name"),
+                "homeTla": (m.get("homeTeam") or {}).get("tla"),
                 "away": (m.get("awayTeam") or {}).get("name"),
+                "awayTla": (m.get("awayTeam") or {}).get("tla"),
                 "status": m.get("status"),
                 "score": final_score(m),
                 "tips": [],
@@ -345,12 +441,17 @@ def compute(tips, matches, scorers):
     awards_pending = [k for k in ("top_scorer", "best_player", "best_young", "best_keeper")
                       if actual_bonus.get(k) is None]
 
+    groups = build_groups_from_standings(standings or [])
+    if not groups:
+        groups = derive_groups_from_matches(matches)
+
     return {
         "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "pot": {"per_player": tips["pot_per_player"], "total": total_pot,
                 "currency": tips.get("currency", "kr"), "split": prize},
         "leaderboard": leaderboard,
         "matches": sorted(match_rows.values(), key=lambda r: (r.get("utcDate") or "")),
+        "groups": groups,
         "bonus_actual": actual_bonus,
         "bonus_points": bonus_pts,
         "awards_pending": awards_pending,
@@ -364,8 +465,11 @@ def build_fixtures(matches):
         "id": m.get("id"),
         "utcDate": m.get("utcDate"),
         "stage": m.get("stage"),
+        "group": normalize_group_code(m.get("group")),
         "home": (m.get("homeTeam") or {}).get("name"),
+        "homeTla": (m.get("homeTeam") or {}).get("tla"),
         "away": (m.get("awayTeam") or {}).get("name"),
+        "awayTla": (m.get("awayTeam") or {}).get("tla"),
         "status": m.get("status"),
         "score": final_score(m),
     } for m in matches]
@@ -386,14 +490,16 @@ def main():
     if args.mock:
         with open(args.mock, encoding="utf-8") as f:
             mock = json.load(f)
-        matches, scorers = mock.get("matches", []), mock.get("scorers", [])
+        matches = mock.get("matches", [])
+        scorers = mock.get("scorers", [])
+        standings = mock.get("standings", [])
     else:
         token = os.environ.get("FOOTBALL_DATA_TOKEN")
         if not token:
             sys.exit("FOOTBALL_DATA_TOKEN saknas (sätt som GitHub Secret eller miljövariabel).")
-        matches, scorers = fetch_data(token)
+        matches, scorers, standings = fetch_data(token)
 
-    data = compute(tips, matches, scorers)
+    data = compute(tips, matches, scorers, standings)
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     with open(args.fixtures_out, "w", encoding="utf-8") as f:
