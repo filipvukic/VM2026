@@ -6,7 +6,7 @@
 <title>VM 2026 · Tippningsligan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      VM 2026 - OLED-dark · Pitch-grön · Data-dense
@@ -14,60 +14,58 @@
      Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
      ============================================================ */
   :root {
-    /* === Sophistication & Trust (UI/UX Design Pro skill) ===
-       Cool-neutral slate foundation (hue 240) + indigo single accent.
-       Ljust tema, multi-layer premium shadows, 8px radius. */
-    /* Bakgrunder */
-    --bg-0: #F2F4F8;              /* sidans yttre */
-    --bg-1: #F6F8FB;              /* page */
-    --bg-2: #FFFFFF;              /* card raised */
-    --bg-3: #EEF1F6;              /* hover/zebra row */
-    --bg-4: #E4E8F0;              /* aktiv/vald */
-    --bg-ink: #0F1424;            /* mörka block (footer/hero contrast) */
+    /* === Apple x Stripe ===
+       Monokrom bas + signature prism gradient. Maximum restraint. */
+    --bg-0: #FFFFFF;
+    --bg-1: #FFFFFF;
+    --bg-2: #FFFFFF;
+    --bg-3: #F6F6F8;
+    --bg-4: #EFEFF2;
+    --bg-ink: #0A0A0A;
 
-    /* Borders - subtle multi-layer */
-    --border:        rgba(15,20,36,.06);
-    --border-strong: rgba(15,20,36,.12);
-    --border-soft:   rgba(15,20,36,.04);
+    --border:        rgba(10,10,10,.06);
+    --border-strong: rgba(10,10,10,.12);
+    --border-soft:   rgba(10,10,10,.03);
 
-    /* Text */
-    --fg:   #0F1424;              /* slate-12 */
-    --fg-2: #2C334B;              /* slate-10 */
-    --fg-3: #5E667C;              /* slate-7 */
-    --fg-4: #8B91A4;              /* slate-5 */
+    --fg:   #0A0A0A;
+    --fg-2: #1F1F23;
+    --fg-3: #6B6B73;
+    --fg-4: #A1A1A9;
 
-    /* Indigo - single authoritative accent */
-    --pitch:       #4F46E5;       /* indigo-600 */
-    --pitch-dark:  #3730A3;       /* indigo-800 hero/header */
-    --pitch-dim:   #6366F1;       /* indigo-500 hover */
-    --pitch-deep:  #1E1B4B;
-    --pitch-glow:  rgba(79,70,229,.18);
-    --pitch-soft:  #EEF2FF;       /* indigo-50 - subtle bg */
+    /* Single accent - Stripe-violet */
+    --pitch:       #635BFF;
+    --pitch-dark:  #4338CA;
+    --pitch-dim:   #818CF8;
+    --pitch-deep:  #312E81;
+    --pitch-glow:  rgba(99,91,255,.16);
+    --pitch-soft:  #EFEFFF;
 
-    /* Sekundär accent - mintgrön för positiva poäng */
-    --yellow:      #F59E0B;        /* amber (highlights/streaks) */
+    /* Stripe-prism signature gradient (single source of color drama) */
+    --gradient-prism: linear-gradient(135deg, #6366F1 0%, #A855F7 35%, #EC4899 70%, #F59E0B 100%);
+    --gradient-prism-soft: radial-gradient(60% 80% at 30% 0%, rgba(99,102,241,.18) 0%, transparent 55%),
+                           radial-gradient(70% 90% at 90% 80%, rgba(236,72,153,.14) 0%, transparent 55%),
+                           radial-gradient(80% 80% at 0% 100%, rgba(168,85,247,.12) 0%, transparent 55%);
+
+    --yellow:      #F59E0B;
     --yellow-dim:  #D97706;
     --yellow-soft: #FEF3C7;
     --yellow-glow: rgba(245,158,11,.22);
 
-    /* Live: rose-red (matches indigo tonally) */
-    --live:        #E11D48;        /* rose-600 */
-    --live-soft:   #FFE4E6;
-    --live-glow:   rgba(225,29,72,.18);
+    --live:        #FF3B57;
+    --live-soft:   #FFE5E9;
+    --live-glow:   rgba(255,59,87,.18);
 
-    /* Medaljer */
-    --gold:        #D97706;        /* amber-600 - readable */
-    --gold-glow:   rgba(217,119,6,.22);
-    --silver:      #64748B;        /* slate-500 */
+    --gold:        #C68B0E;
+    --gold-glow:   rgba(198,139,14,.22);
+    --silver:      #8E8E93;
     --bronze:      #B45309;
 
-    /* Stöd-accenter */
-    --blue:        #0EA5E9;        /* sky-500 */
-    --blue-glow:   rgba(14,165,233,.20);
-    --purple:      #7C3AED;
-    --purple-glow: rgba(124,58,237,.22);
-    --orange:      #EA580C;
-    --mint:        #10B981;        /* emerald-500 - "vidare"/positive */
+    --blue:        #007AFF;
+    --blue-glow:   rgba(0,122,255,.18);
+    --purple:      #AF52DE;
+    --purple-glow: rgba(175,82,222,.22);
+    --orange:      #FF9500;
+    --mint:        #34C759;
 
     /* Pts-färger */
     --pts-5: var(--gold);   /* exakt */
@@ -89,19 +87,20 @@
     --grad:       linear-gradient(180deg, var(--pitch-dark) 0%, var(--pitch) 100%);
     --grad-soft:  linear-gradient(180deg, var(--pitch-soft), var(--bg-2));
 
-    /* Typografi - DM Sans variable + DM Mono för data */
-    --font-display: 'DM Sans', system-ui, -apple-system, sans-serif;
-    --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
-    --font-mono:    'DM Mono', ui-monospace, SFMono-Regular, monospace;
+    /* Typografi - system stack (SF Pro / Inter / Segoe) */
+    --font-display: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-body:    -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-mono:    ui-monospace, 'SF Mono', SFMono-Regular, 'JetBrains Mono', monospace;
     --display-tracking: -0.022em;
     --display-transform: none;
     --display-weight: 700;
 
     /* Radius */
-    /* Balanced corners - sophistication direction */
-    --r-sm: 6px;
-    --r-md: 8px;
-    --r-lg: 12px;
+    /* Apple-style corners */
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 18px;
+    --r-xl: 26px;
 
     /* Shadow + lift */
     /* Multi-layer premium shadow (Sophistication direction) */
@@ -131,13 +130,7 @@
     overscroll-behavior-y: none;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Subtilt cool-tonad bg-glow */
-  body::before {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(80vw 50vw at 50% -10%, rgba(79,70,229,.06), transparent 55%),
-      radial-gradient(60vw 40vw at 90% 100%, rgba(14,165,233,.04), transparent 55%);
-  }
+  /* INGEN background-effect här (vi använder gradient i hero som signature). */
   #root { position: relative; z-index: 1; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
   .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
@@ -145,7 +138,10 @@
   body {
     font-family: var(--font-body);
     color: var(--fg);
-    font-feature-settings: "ss01", "cv01", "cv02";
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   h1,h2,h3 { margin: 0; }
   .display {
@@ -2992,65 +2988,106 @@ function JackpotHero({ pot, prizes, isPre, nextUp }){
   const secs = Math.floor((diffMs % 60000) / 1000);
 
   return (
-    <div className="premium-card-lift" style={{ position: "relative", overflow: "hidden",
-      padding: "28px 28px 28px", marginBottom: 16 }}>
-      {/* subtle accent ring i bakgrund */}
-      <span style={{ position: "absolute", top: -100, right: -100, width: 320, height: 320,
-        borderRadius: "50%", background: "var(--pitch-soft)", filter: "blur(40px)",
-        opacity: .8, pointerEvents: "none" }} />
+    <div style={{ position: "relative", overflow: "hidden",
+      borderRadius: "var(--r-xl)",
+      marginBottom: 28,
+      padding: "56px 40px 48px",
+      background: "var(--bg-2)",
+      border: "1px solid var(--border)",
+      boxShadow: "0 1px 1px rgba(10,10,10,.04), 0 8px 24px -8px rgba(10,10,10,.08)" }}>
+      {/* Stripe-prism animerad gradient backdrop */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none",
+        background: "var(--gradient-prism-soft)",
+        animation: "prismDrift 18s ease-in-out infinite alternate" }} />
+      {/* Tunn gradient-bar i topp som signature */}
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3,
+        background: "var(--gradient-prism)" }} />
 
-      <div style={{ position: "relative", zIndex: 2,
-        display: "grid", gridTemplateColumns: isPre ? "1fr 1fr" : "1fr",
-        gap: 32, alignItems: "center" }} className="hero-grid">
-        <div>
-          <div className="eyebrow" style={{ color: "var(--pitch)", marginBottom: 8 }}>Sammanlagd jackpot</div>
-          <div className="display" style={{ fontSize: "clamp(48px, 7.5vw, 76px)", fontWeight: 700,
-            color: "var(--fg)", lineHeight: 1, letterSpacing: "-.03em" }}>
-            {pot.toLocaleString("sv-SE")}
-            <span style={{ fontSize: ".34em", fontWeight: 500, color: "var(--fg-3)", marginLeft: 10 }}>kr</span>
-          </div>
-
-          {/* Prize-split refined */}
-          <div style={{ display: "flex", gap: 0, marginTop: 18,
-            borderTop: "1px solid var(--border)" }}>
-            {prizes.map((amt, i) => {
-              const labels = ["1:a", "2:a", "3:e"];
-              const tints = ["var(--gold)", "var(--silver)", "var(--bronze)"];
-              return (
-                <div key={i} style={{ flex: 1, padding: "12px 4px",
-                  borderRight: i < prizes.length - 1 ? "1px solid var(--border)" : "none" }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: ".08em",
-                    textTransform: "uppercase", color: tints[i] }}>{labels[i]} pris</div>
-                  <div className="mono" style={{ fontSize: 16, fontWeight: 600,
-                    color: "var(--fg)", marginTop: 2 }}>{amt.toLocaleString("sv-SE")} kr</div>
-                </div>
-              );
-            })}
-          </div>
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <div style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-.005em",
+          color: "var(--fg-3)", marginBottom: 14 }}>
+          Prize pool
         </div>
 
-        {/* Countdown - refined digital clock */}
-        {isPre && diffMs > 0 && (
-          <div style={{ textAlign: "center" }}>
-            <div className="eyebrow" style={{ color: "var(--fg-3)", marginBottom: 12 }}>Avspark om</div>
-            <div style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
-              {[[days, "Dgr"], [hours, "Tim"], [mins, "Min"], [secs, "Sek"]].map(([v, l], i) => (
-                <div key={i} style={{ minWidth: 56,
-                  background: "var(--bg-1)",
-                  border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px" }}>
-                  <div className="mono" style={{ fontSize: 24, fontWeight: 500, color: "var(--fg)",
-                    letterSpacing: "-.02em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{String(v).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 10, fontWeight: 500,
-                    color: "var(--fg-3)", marginTop: 6 }}>{l}</div>
-                </div>
-              ))}
+        {/* The MASSIVE Apple-number */}
+        <div className="display" style={{
+          fontSize: "clamp(64px, 11vw, 128px)",
+          fontWeight: 700, color: "var(--fg)",
+          lineHeight: .96, letterSpacing: "-.045em",
+          display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
+          <span>{pot.toLocaleString("sv-SE")}</span>
+          <span style={{ fontSize: ".32em", fontWeight: 500, color: "var(--fg-3)", letterSpacing: "-.01em" }}>kr</span>
+        </div>
+
+        {/* Sub-text */}
+        <p style={{ marginTop: 14, fontSize: 17, fontWeight: 400, letterSpacing: "-.005em",
+          color: "var(--fg-2)", maxWidth: 560, lineHeight: 1.45 }}>
+          Nio tippare. En pott. Vinnaren tar{" "}
+          <strong style={{ color: "var(--fg)", fontWeight: 600 }}>
+            {prizes[0].toLocaleString("sv-SE")} kr
+          </strong>.
+          {isPre && diffMs > 0 && (
+            <span> Avspark om{" "}
+              <strong style={{ color: "var(--fg)", fontWeight: 600 }}>
+                {days} dagar
+              </strong>.
+            </span>
+          )}
+        </p>
+
+        {/* Bottom row: prizes + countdown side by side */}
+        <div style={{ marginTop: 40, display: "grid",
+          gridTemplateColumns: isPre && diffMs > 0 ? "minmax(0, 1.2fr) minmax(0, 1fr)" : "1fr",
+          gap: 40, alignItems: "end" }} className="hero-grid">
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 500, color: "var(--fg-3)", marginBottom: 12 }}>
+              Prisfördelning
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+              {prizes.map((amt, i) => {
+                const labels = ["Vinnare", "Tvåa", "Trea"];
+                return (
+                  <div key={i} style={{ paddingTop: 12,
+                    borderTop: `2px solid ${["var(--fg)", "var(--fg-3)", "var(--fg-4)"][i]}` }}>
+                    <div style={{ fontSize: 12, fontWeight: 500, color: "var(--fg-3)" }}>{labels[i]}</div>
+                    <div className="mono" style={{ fontSize: 19, fontWeight: 600,
+                      color: "var(--fg)", marginTop: 4, letterSpacing: "-.01em" }}>
+                      {amt.toLocaleString("sv-SE")} <span style={{ fontWeight: 400, color: "var(--fg-3)" }}>kr</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        )}
+
+          {isPre && diffMs > 0 && (
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 500, color: "var(--fg-3)", marginBottom: 12 }}>
+                Countdown
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                {[[days, "Dagar"], [hours, "Timmar"], [mins, "Min"], [secs, "Sek"]].map(([v, l], i) => (
+                  <div key={i} style={{ textAlign: "center" }}>
+                    <div className="mono" style={{ fontSize: 30, fontWeight: 600,
+                      color: "var(--fg)", lineHeight: 1, letterSpacing: "-.025em",
+                      fontVariantNumeric: "tabular-nums" }}>{String(v).padStart(2, "0")}</div>
+                    <div style={{ fontSize: 10.5, fontWeight: 500, color: "var(--fg-3)",
+                      marginTop: 6 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <style>{`
-        @media (max-width: 640px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+        @keyframes prismDrift {
+          0%   { transform: translate(0, 0); }
+          50%  { transform: translate(-20px, 10px); }
+          100% { transform: translate(10px, -10px); }
+        }
+        @media (max-width: 720px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
@@ -4049,43 +4086,32 @@ function App() {
   return (
     <div style={{ minHeight: "100vh" }}>
       <header style={{ position: "sticky", top: 0, zIndex: 40,
-        background: "rgba(255,255,255,.78)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        background: "rgba(255,255,255,.82)",
+        backdropFilter: "saturate(180%) blur(24px)",
+        WebkitBackdropFilter: "saturate(180%) blur(24px)",
         borderBottom: "1px solid var(--border)" }}>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto",
-          padding: "12px 20px", display: "flex", alignItems: "center", gap: 16 }}>
-          {/* Brand - subtle indigo monogram */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8,
-              background: "var(--pitch)", display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 0 0 1px var(--pitch-dim), 0 1px 2px rgba(15,20,36,.10)" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="#FFFFFF" strokeWidth="1.5"/>
-                <polygon points="12,5 16,8.5 14.5,13.5 9.5,13.5 8,8.5" fill="#FFFFFF"/>
-              </svg>
-            </div>
-            <div style={{ minWidth: 0, lineHeight: 1.05 }}>
-              <div style={{ fontSize: 14.5, fontWeight: 700, letterSpacing: "-.01em", color: "var(--fg)" }}>VM Tippet</div>
-              <div style={{ fontSize: 10.5, fontWeight: 500, letterSpacing: ".06em", color: "var(--fg-3)" }}>Sommaren 2026</div>
-            </div>
+          padding: "0 24px", height: 52, display: "flex", alignItems: "center", gap: 32 }}>
+          {/* Wordmark - inget logo, bara namn (Apple/Stripe-style) */}
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8, flex: "0 0 auto" }}>
+            <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-.015em", color: "var(--fg)" }}>VM Tippet</span>
+            <span style={{ fontSize: 13, fontWeight: 400, color: "var(--fg-3)", letterSpacing: ".01em" }}>'26</span>
           </div>
 
-          {/* Top tabs - quiet underline-active */}
+          {/* Quiet text-only tabs */}
           <nav style={{ flex: 1, display: "flex", justifyContent: "center", minWidth: 0 }}>
-            <div className="app-scroll" style={{ display: "flex", gap: 0,
-              overflowX: "auto", maxWidth: "100%", height: 40, alignItems: "stretch" }}>
+            <div className="app-scroll" style={{ display: "flex", gap: 4,
+              overflowX: "auto", maxWidth: "100%", alignItems: "center" }}>
               {NAV.map(n => {
                 const active = view === n.id;
                 return (
                   <button key={n.id} onClick={() => setView(n.id)}
                     style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                      padding: "0 14px", whiteSpace: "nowrap", position: "relative",
-                      fontSize: 13, fontWeight: active ? 600 : 500,
-                      color: active ? "var(--pitch)" : "var(--fg-2)",
-                      transition: "color .15s ease",
-                      borderBottom: active ? "2px solid var(--pitch)" : "2px solid transparent" }}>
-                    <span style={{ display: "inline-flex", opacity: active ? 1 : .65 }}>{Icon[n.icon](active)}</span>
+                      padding: "7px 12px", borderRadius: 7, whiteSpace: "nowrap", position: "relative",
+                      fontSize: 13, fontWeight: 500, letterSpacing: "-.005em",
+                      color: active ? "var(--fg)" : "var(--fg-3)",
+                      background: active ? "var(--bg-3)" : "transparent",
+                      transition: "background .15s ease, color .15s ease" }}>
                     <span>{n.label}</span>
                   </button>
                 );
@@ -4093,34 +4119,19 @@ function App() {
             </div>
           </nav>
 
-          {/* Live-status */}
+          {/* Live-status (minimal) */}
           <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 10 }}>
             {liveCount > 0 ? (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "5px 10px", borderRadius: 999, background: "var(--live-soft)",
-                border: "1px solid rgba(225,29,72,.18)", fontSize: 11.5, fontWeight: 600,
-                color: "var(--live)", letterSpacing: ".02em" }}>
+                padding: "5px 11px", borderRadius: 999, background: "var(--live-soft)",
+                fontSize: 11.5, fontWeight: 600, color: "var(--live)" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--live)",
                   animation: "blink 1.2s infinite" }} />
-                <span className="mono">{liveCount}</span>
-                <span>LIVE</span>
-              </span>
-            ) : nextMatch ? (
-              <span style={{ display: "none", alignItems: "center", gap: 6,
-                padding: "5px 11px", borderRadius: 999, background: "var(--pitch-soft)",
-                border: "1px solid rgba(79,70,229,.16)", fontSize: 11.5, fontWeight: 600,
-                color: "var(--pitch)" }} className="next-kick-md">
-                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase" }}>Nästa</span>
-                <span className="mono">{svDayLabel(nextMatch.kickoff)}</span>
+                {liveCount} live
               </span>
             ) : null}
           </div>
         </div>
-        <style>{`
-          @media (min-width: 880px) {
-            .next-kick-md { display: inline-flex !important; }
-          }
-        `}</style>
       </header>
 
       <main>
