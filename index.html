@@ -90,6 +90,15 @@
   @keyframes shine { from{background-position:-200% 0} to{background-position:200% 0} }
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  /* Mjuk expand/collapse via grid-rows hack (1fr -> 0fr) */
+  .smooth-collapse { display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .3s cubic-bezier(.3,.7,.4,1), opacity .25s; opacity: 0; }
+  .smooth-collapse.open { grid-template-rows: 1fr; opacity: 1; }
+  .smooth-collapse > div { overflow: hidden; min-height: 0; }
+  /* Hover-lyft */
+  .lift { transition: transform .15s cubic-bezier(.3,.7,.4,1), box-shadow .15s; }
+  .lift:hover { transform: translateY(-1px); }
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
   }
@@ -433,7 +442,10 @@
         status: finished ? "played" : (live ? "live" : "upcoming"),
         winner, pen: null,
         minute: (live && (f.minute != null)) ? f.minute : (live ? null : undefined),
-        venue: null,
+        venue: f.venue || null,
+        referees: f.referees || [],
+        subs: f.subs || [],
+        scoreDetail: f.scoreDetail || null,
         tippas,
         scorers, cards,
         stats: null,
@@ -552,6 +564,42 @@
     // SF: SF0=M101, SF1=M102.
     const SF_FIFA = [101, 102];
 
+    // KO venues per FIFA match number (officiell FIFA 2026-lottning).
+    const KO_VENUES = {
+      73:  { stadium: "Los Angeles Stadium",         city: "Los Angeles" },
+      74:  { stadium: "Houston Stadium",             city: "Houston" },
+      75:  { stadium: "Boston Stadium",              city: "Boston" },
+      76:  { stadium: "Monterrey Stadium",           city: "Monterrey" },
+      77:  { stadium: "Dallas Stadium",              city: "Dallas" },
+      78:  { stadium: "New York/New Jersey Stadium", city: "New Jersey" },
+      79:  { stadium: "Mexico City Stadium",         city: "Mexico City" },
+      80:  { stadium: "Atlanta Stadium",             city: "Atlanta" },
+      81:  { stadium: "Seattle Stadium",             city: "Seattle" },
+      82:  { stadium: "San Francisco Bay Area Stadium", city: "San Francisco Bay Area" },
+      83:  { stadium: "Los Angeles Stadium",         city: "Los Angeles" },
+      84:  { stadium: "Toronto Stadium",             city: "Toronto" },
+      85:  { stadium: "BC Place Vancouver",          city: "Vancouver" },
+      86:  { stadium: "Dallas Stadium",              city: "Dallas" },
+      87:  { stadium: "Miami Stadium",               city: "Miami" },
+      88:  { stadium: "Kansas City Stadium",         city: "Kansas City" },
+      89:  { stadium: "Houston Stadium",             city: "Houston" },
+      90:  { stadium: "Philadelphia Stadium",        city: "Philadelphia" },
+      91:  { stadium: "New York/New Jersey Stadium", city: "New Jersey" },
+      92:  { stadium: "Mexico City Stadium",         city: "Mexico City" },
+      93:  { stadium: "Dallas Stadium",              city: "Dallas" },
+      94:  { stadium: "Seattle Stadium",             city: "Seattle" },
+      95:  { stadium: "Atlanta Stadium",             city: "Atlanta" },
+      96:  { stadium: "BC Place Vancouver",          city: "Vancouver" },
+      97:  { stadium: "Boston Stadium",              city: "Boston" },
+      98:  { stadium: "Los Angeles Stadium",         city: "Los Angeles" },
+      99:  { stadium: "Miami Stadium",               city: "Miami" },
+      100: { stadium: "Kansas City Stadium",         city: "Kansas City" },
+      101: { stadium: "Dallas Stadium",              city: "Dallas" },
+      102: { stadium: "Atlanta Stadium",             city: "Atlanta" },
+      103: { stadium: "Miami Stadium",               city: "Miami" },
+      104: { stadium: "New York/New Jersey Stadium", city: "New Jersey" }
+    };
+
     function makeBracketMatch(prefix, idx, slotA, slotB, fifa){
       return {
         id: prefix + idx, stage: "ko", group: null, round: "Slutspel",
@@ -561,7 +609,7 @@
         fromA: slotA.label, fromB: slotB.label,
         kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
         ga: null, gb: null, status: "upcoming",
-        winner: null, pen: null, venue: null, tippas: false
+        winner: null, pen: null, venue: (fifa && KO_VENUES[fifa]) || null, tippas: true
       };
     }
 
@@ -612,6 +660,14 @@
         s.winner = rm.winner;
         s.tippas = rm.tippas;
         s._realId = rm._realId;
+        s.scorers = rm.scorers || [];
+        s.cards = rm.cards || [];
+        s.subs = rm.subs || [];
+        s.minute = rm.minute;
+        s.scoreDetail = rm.scoreDetail || null;
+        s.referees = rm.referees || [];
+        // Behåll hårdkodade FIFA-venue om engine inte gav nåt.
+        if(rm.venue && rm.venue.stadium) s.venue = rm.venue;
       });
     }
     overlayKO(r32, "r32_");
@@ -1584,11 +1640,8 @@ function MatchCard({ m, onOpen, showRound }) {
           <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
             <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
               {roundLabel(m)}</span>
-            {m.tippas ? <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "1px 6px", borderRadius: 5,
-              background: "color-mix(in oklab, var(--cool) 14%, var(--bg2))", color: "var(--cool)", fontSize: 9.5, fontWeight: 800, letterSpacing: ".03em" }}>
-              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--cool)" }} />TIPS</span> : null}
           </span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap" }}>{m.venue ? m.venue[1] : ""}</span>
+          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap" }}>{m.venue ? m.venue.city : ""}</span>
         </div>
       ) : null}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "11px 13px" }}>
@@ -1662,10 +1715,52 @@ function slugifyName(name) {
     .replace(/[^a-z0-9 ]/g, "")
     .trim().replace(/\s+/g, "-");
 }
+// Wikipedia thumbnail-cache (persistent across page loads).
+const _wikiCache = (() => {
+  try { return JSON.parse(localStorage.getItem("wp_photo_cache_v2") || "{}"); }
+  catch { return {}; }
+})();
+const _wikiInflight = {};
+function _saveWikiCache(){
+  try { localStorage.setItem("wp_photo_cache_v2", JSON.stringify(_wikiCache)); } catch {}
+}
+function useWikiPhoto(name){
+  const [url, setUrl] = React.useState(() => name && (name in _wikiCache) ? _wikiCache[name] : null);
+  React.useEffect(() => {
+    if(!name) return;
+    if(name in _wikiCache){ setUrl(_wikiCache[name]); return; }
+    // Dedupe parallel lookups
+    if(_wikiInflight[name]){
+      _wikiInflight[name].then(u => setUrl(u));
+      return;
+    }
+    const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
+              + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(name);
+    _wikiInflight[name] = fetch(api)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const pages = (data && data.query && data.query.pages) || {};
+        const first = Object.values(pages)[0];
+        const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
+        _wikiCache[name] = thumb;
+        _saveWikiCache();
+        return thumb;
+      })
+      .catch(() => { _wikiCache[name] = null; _saveWikiCache(); return null; })
+      .finally(() => { delete _wikiInflight[name]; });
+    _wikiInflight[name].then(u => setUrl(u));
+  }, [name]);
+  return url;
+}
+
 function StarPhoto({ name, countryCode, size = 28, showFlag = true }) {
-  const [err, setErr] = React.useState(false);
+  const wikiUrl = useWikiPhoto(name);
+  const [localErr, setLocalErr] = React.useState(false);
+  const [wikiErr, setWikiErr] = React.useState(false);
   const slug = slugifyName(name);
   const initials = String(name || "?").split(/\s+/).slice(0,2).map(w => (w[0]||"")).join("").toUpperCase();
+  // Prioritera lokalt foto (om uppladdat), annars Wikipedia, annars initial.
+  const localUrl = slug ? "images/stars/" + slug + ".jpg" : null;
   return (
     <span style={{ position: "relative", width: size, height: size, flex: "0 0 auto", display: "inline-block",
       borderRadius: "50%", overflow: "hidden",
@@ -1673,8 +1768,12 @@ function StarPhoto({ name, countryCode, size = 28, showFlag = true }) {
       boxShadow: "inset 0 0 0 1px rgba(0,0,0,.18)" }}>
       <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
         color: "#fff", fontWeight: 800, fontSize: size * 0.36, fontFamily: "var(--font-body)" }}>{initials}</span>
-      {!err && slug && (
-        <img src={"images/stars/" + slug + ".jpg"} alt="" loading="lazy" onError={() => setErr(true)}
+      {!localErr && localUrl && (
+        <img src={localUrl} alt="" loading="lazy" onError={() => setLocalErr(true)}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      )}
+      {localErr && !wikiErr && wikiUrl && (
+        <img src={wikiUrl} alt="" loading="lazy" onError={() => setWikiErr(true)}
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
       )}
       {showFlag && countryCode && (
@@ -1687,10 +1786,104 @@ function StarPhoto({ name, countryCode, size = 28, showFlag = true }) {
   );
 }
 
+/* ---------- VM-historik per landslag ---------- */
+// Källa: FIFA / Wikipedia. titles = guld, runnerUp = silverfinal, third = bronsmedalj,
+// semis = nått semifinal eller bättre, apps = antal VM-slutspel deltagit i.
+const WC_HISTORY = {
+  BRA: { titles: 5, lastTitle: 2002, runnerUp: 2, third: 2, semis: 11, apps: 22, best: "Vinnare (1958, 1962, 1970, 1994, 2002)" },
+  GER: { titles: 4, lastTitle: 2014, runnerUp: 4, third: 4, semis: 13, apps: 20, best: "Vinnare (1954, 1974, 1990, 2014)" },
+  ITA: { titles: 4, lastTitle: 2006, runnerUp: 2, third: 1, semis: 6, apps: 18, best: "Vinnare (1934, 1938, 1982, 2006)" },
+  ARG: { titles: 3, lastTitle: 2022, runnerUp: 3, third: 0, semis: 6, apps: 18, best: "Vinnare (1978, 1986, 2022)" },
+  FRA: { titles: 2, lastTitle: 2018, runnerUp: 2, third: 2, semis: 7, apps: 16, best: "Vinnare (1998, 2018)" },
+  URU: { titles: 2, lastTitle: 1950, runnerUp: 0, third: 0, semis: 5, apps: 14, best: "Vinnare (1930, 1950)" },
+  ENG: { titles: 1, lastTitle: 1966, runnerUp: 0, third: 0, semis: 3, apps: 16, best: "Vinnare (1966)" },
+  ESP: { titles: 1, lastTitle: 2010, runnerUp: 0, third: 0, semis: 1, apps: 16, best: "Vinnare (2010)" },
+  NED: { titles: 0, runnerUp: 3, third: 1, semis: 5, apps: 11, best: "Final 1974, 1978, 2010" },
+  HUN: { titles: 0, runnerUp: 2, semis: 2, apps: 9, best: "Final 1938, 1954" },
+  CZE: { titles: 0, runnerUp: 2, semis: 3, apps: 9, best: "Final 1934, 1962 (som Tjeckoslovakien)" },
+  SWE: { titles: 0, runnerUp: 1, third: 2, semis: 4, apps: 12, best: "Final 1958, brons 1950, 1994" },
+  CRO: { titles: 0, runnerUp: 1, third: 2, semis: 2, apps: 6, best: "Final 2018, brons 1998, 2022" },
+  POR: { titles: 0, runnerUp: 0, third: 1, semis: 2, apps: 8, best: "Brons 1966, fyra 2006" },
+  POL: { titles: 0, runnerUp: 0, third: 2, semis: 2, apps: 9, best: "Brons 1974, 1982" },
+  BEL: { titles: 0, runnerUp: 0, third: 1, semis: 2, apps: 14, best: "Brons 2018, fyra 1986" },
+  AUT: { titles: 0, runnerUp: 0, third: 1, semis: 1, apps: 7, best: "Brons 1954" },
+  CHI: { titles: 0, runnerUp: 0, third: 1, semis: 1, apps: 9, best: "Brons 1962 (hemmaplan)" },
+  TUR: { titles: 0, runnerUp: 0, third: 1, semis: 1, apps: 2, best: "Brons 2002" },
+  USA: { titles: 0, runnerUp: 0, third: 1, semis: 1, apps: 11, best: "Brons 1930, kvart 2002 (medvärd 1994 och 2026)" },
+  RUS: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 11, best: "Kvart 1970, 2018 (som Sovjet 4:a 1966)" },
+  KOR: { titles: 0, runnerUp: 0, third: 0, semis: 1, apps: 11, best: "Fyra 2002 (medvärd)" },
+  MEX: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 17, best: "Kvart 1970, 1986 (båda hemma)" },
+  GHA: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Kvart 2010" },
+  SEN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3, best: "Kvart 2002" },
+  CMR: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 8, best: "Kvart 1990" },
+  CRC: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6, best: "Kvart 2014" },
+  COL: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6, best: "Kvart 2014" },
+  PAR: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 8, best: "Kvart 2010" },
+  JPN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 7, best: "Åttondel (2002, 2010, 2018, 2022)" },
+  DEN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 5, best: "Kvart 1998" },
+  IRL: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3, best: "Kvart 1990" },
+  NIR: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3, best: "Kvart 1958" },
+  WAL: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 2, best: "Kvart 1958" },
+  MAR: { titles: 0, runnerUp: 0, third: 0, semis: 1, apps: 6, best: "Fyra 2022 (första AFC-/CAF-laget)" },
+  AUS: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6, best: "Åttondel 2006, 2022" },
+  IRN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6 },
+  TUN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6 },
+  NGA: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6, best: "Åttondel 1994, 1998, 2014" },
+  SUI: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 12, best: "Kvart 1934, 1938, 1954" },
+  ALG: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Åttondel 2014" },
+  CIV: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3 },
+  EGY: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3 },
+  PAN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 1 },
+  JOR: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 0, best: "Debutant 2026" },
+  UZB: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 0, best: "Debutant 2026" },
+  CAN: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 2, best: "Gruppspel 1986, 2022 (medvärd 2026)" },
+  KSA: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 6, best: "Åttondel 1994" },
+  ECU: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Åttondel 2006" },
+  RSA: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3 },
+  HON: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 3 },
+  NZL: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 2 },
+  SRB: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Som FR Jugoslavien: kvart 1990" }
+};
+
+function TeamHistoryBlock({ code }){
+  const h = WC_HISTORY[code];
+  if(!h) return null;
+  const items = [];
+  if(h.apps != null) items.push(["VM-slutspel", String(h.apps)]);
+  if(h.titles)    items.push(["Guld", String(h.titles), "var(--gold)"]);
+  if(h.runnerUp)  items.push(["Silver", String(h.runnerUp), "#AEB4BE"]);
+  if(h.third)     items.push(["Brons", String(h.third), "#C77F49"]);
+  if(h.semis)     items.push(["Semifinaler", String(h.semis)]);
+  return (
+    <div style={{ margin: "0 16px 14px" }}>
+      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase",
+        color: "var(--ink-soft)", margin: "0 2px 9px" }}>VM-historik</div>
+      <div style={{ background: "var(--paper)", borderRadius: 14, border: "1px solid var(--line)",
+        boxShadow: "var(--shadow)", padding: "12px 14px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${items.length}, 1fr)`, gap: 6, marginBottom: h.best ? 10 : 0 }}>
+          {items.map(([lab, val, col], i) => (
+            <div key={i} style={{ textAlign: "center", padding: "2px 0" }}>
+              <div className="num display" style={{ fontSize: 22, color: col || "var(--ink)", lineHeight: 1, fontWeight: "var(--display-weight)" }}>{val}</div>
+              <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)", marginTop: 4, textTransform: "uppercase" }}>{lab}</div>
+            </div>
+          ))}
+        </div>
+        {h.best && (
+          <div style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.5,
+            borderTop: items.length ? "1px solid var(--line)" : "none", paddingTop: items.length ? 10 : 0 }}>
+            {h.best}{h.lastTitle ? ` · Senast 1:a ${h.lastTitle}.` : ""}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 Object.assign(window, {
   VM_PALETTES, VM_FONTS, applyTheme, groupColor, groupColorSoft,
   Flag, TeamName, TeamLabel, Avatar, StarPhoto, slugifyName, svTime, svDateKey, svDayLabel,
-  useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting
+  useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting,
+  TeamHistoryBlock, WC_HISTORY
 });
 
 /* ---------- vimplar (bunting) - VM-/folkfestkänsla ---------- */
@@ -1960,22 +2153,24 @@ function PoolResultBlock({ data, m }) {
             transform: open ? "rotate(180deg)" : "rotate(0deg)", display: "inline-block" }}>▾</span>
         </span>
       </button>
-      {open && (
-        <div style={{ background: "var(--paper)", borderRadius: 14, border: "1px solid var(--line)",
-          boxShadow: "var(--shadow)", overflow: "hidden", marginTop: 8 }}>
-          {rows.map((r, i) => (
-            <div key={r.p.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px",
-              borderBottom: i < rows.length - 1 ? "1px solid var(--line)" : "none" }}>
-              <Avatar p={r.p} size={28} />
-              <span style={{ fontWeight: 700, fontSize: 13.5, flex: 1 }}>{r.p.name}</span>
-              <span className="num" style={{ fontWeight: 800, fontSize: 14, color: "var(--ink-soft)" }}>{r.tip[0]}-{r.tip[1]}</span>
-              {r.pts != null && (
-                <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 30, textAlign: "right" }}>+{r.pts}</span>
-              )}
-            </div>
-          ))}
+      <div className={"smooth-collapse" + (open ? " open" : "")} style={{ marginTop: open ? 8 : 0, transition: "margin-top .25s, grid-template-rows .3s cubic-bezier(.3,.7,.4,1), opacity .25s" }}>
+        <div>
+          <div style={{ background: "var(--paper)", borderRadius: 14, border: "1px solid var(--line)",
+            boxShadow: "var(--shadow)", overflow: "hidden" }}>
+            {rows.map((r, i) => (
+              <div key={r.p.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px",
+                borderBottom: i < rows.length - 1 ? "1px solid var(--line)" : "none" }}>
+                <Avatar p={r.p} size={28} />
+                <span style={{ fontWeight: 700, fontSize: 13.5, flex: 1 }}>{r.p.name}</span>
+                <span className="num" style={{ fontWeight: 800, fontSize: 14, color: "var(--ink-soft)" }}>{r.tip[0]}-{r.tip[1]}</span>
+                {r.pts != null && (
+                  <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 30, textAlign: "right" }}>+{r.pts}</span>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -2000,14 +2195,16 @@ function MatchDetail({ data, match, onClose, onTeam }) {
       <div style={{ textAlign: "center", marginBottom: 14 }}>
         <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".1em", color: "rgba(255,255,255,.9)", textTransform: "uppercase" }}>
           {roundLabel(m)}{m.group ? "" : ""}</div>
-        <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.7)", marginTop: 3 }}>
-          {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}{m.venue ? " · " + m.venue[1] : ""}</div>
-        <div style={{ marginTop: 8, display: "flex", justifyContent: "center" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "3px 10px", borderRadius: 7,
-            background: "rgba(255,255,255,.16)", color: "#fff", fontWeight: 800, fontSize: 10.5, letterSpacing: ".04em" }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: m.tippas ? "#5BE0A0" : "rgba(255,255,255,.5)" }} />
-            {m.tippas ? "TIPPNINGSMATCH" : "SLUTSPEL · INGEN TIPPNING"}</span>
+        <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)", marginTop: 3 }}>
+          {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}
         </div>
+        {m.venue && (
+          <div style={{ marginTop: 6, display: "flex", justifyContent: "center", alignItems: "center", gap: 6,
+            fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.85)" }}>
+            <span style={{ fontSize: 11 }}>📍</span>
+            <span>{m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}</span>
+          </div>
+        )}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         {teamCol(m.home, m.fromA)}
@@ -2039,17 +2236,8 @@ function MatchDetail({ data, match, onClose, onTeam }) {
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
         {!played && !live && !tbd && <H2HBlock m={m} />}
-        {!tbd && m.tippas && !played && <TipsDistribution data={data} m={m} />}
-        {!tbd && m.tippas && <PoolResultBlock data={data} m={m} />}
-        {!tbd && !m.tippas && (
-          <div style={{ margin: "0 16px 14px", background: "var(--bg2)", borderRadius: 13, padding: "13px 15px",
-            display: "flex", alignItems: "center", gap: 11 }}>
-            <span style={{ width: 30, height: 30, borderRadius: 8, background: "var(--cool)", flex: "0 0 auto",
-              display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 15 }}>i</span>
-            <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.4 }}>
-              Slutspelsmatch - inga matchtips här. Slutspelet avgörs i poolen via bonuspoängen (vinnare, silver, brons …).</span>
-          </div>
-        )}
+        {!tbd && !played && <TipsDistribution data={data} m={m} />}
+        {!tbd && <PoolResultBlock data={data} m={m} />}
         {tbd && (
           <div style={{ textAlign: "center", color: "var(--ink-soft)", padding: "30px 24px", fontWeight: 600 }}>
             Lagen avgörs när tidigare matcher är spelade.
@@ -2443,10 +2631,12 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
             <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
               {matchesOpen ? "Dölj matcher" : `Visa matcher (${allGroupMatches.length})`}
             </span>
-            <span style={{ fontSize: 12, color: "var(--ink-soft)", transition: "transform .2s",
+            <span style={{ fontSize: 12, color: "var(--ink-soft)", transition: "transform .25s cubic-bezier(.3,.7,.4,1)",
               transform: matchesOpen ? "rotate(180deg)" : "rotate(0deg)", display: "inline-block" }}>▾</span>
           </button>
-          {matchesOpen && allGroupMatches.map((m, i) => {
+          <div className={"smooth-collapse" + (matchesOpen ? " open" : "")}>
+            <div>
+          {allGroupMatches.map((m, i) => {
             const played = m.status === "played";
             const live = m.status === "live";
             const homeLost = played && m.gb > m.ga;
@@ -2481,6 +2671,8 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
               </button>
             );
           })}
+            </div>
+          </div>
         </div>
       )}
 
@@ -2633,26 +2825,24 @@ function Bracket({ data, onOpen }) {
     <div>
       <style>{BRACKET_CSS}</style>
       <div className="app-scroll" style={{ overflowX: "auto", paddingBottom: 12 }}>
-        <div style={{ minWidth: 920, display: "flex", alignItems: "stretch", gap: 24 }}>
-          <div style={{ flex: 1, minWidth: 880 }}>
-            <div style={{ display: "flex", marginBottom: 10 }}>
-              {labels.map((l, i) => (
-                <div key={l} style={{ flex: i === 0 ? "0 0 178px" : "1", textAlign: i === 0 ? "left" : "center",
-                  fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em", color: "var(--hot)", textTransform: "uppercase" }}>{l}</div>
-              ))}
-            </div>
-            <BracketNode roundsArr={roundsArr} ri={4} mi={0} onOpen={onOpen} />
+        <div style={{ minWidth: 920 }}>
+          <div style={{ display: "flex", marginBottom: 10 }}>
+            {labels.map((l, i) => (
+              <div key={l} style={{ flex: i === 0 ? "0 0 178px" : "1", textAlign: i === 0 ? "left" : "center",
+                fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em", color: "var(--hot)", textTransform: "uppercase" }}>{l}</div>
+            ))}
           </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 12, flex: "0 0 auto" }}>
-            <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em",
-              color: "color-mix(in oklab, var(--gold) 70%, #000 12%)" }}>BRONSMATCH</div>
-            <div style={{ background: "var(--paper)", border: "1px solid color-mix(in oklab, var(--gold) 40%, var(--line))",
-              borderRadius: 14, padding: 10, boxShadow: "var(--shadow)" }}>
-              <BracketCell m={ko.third[0]} onOpen={onOpen} />
-            </div>
-            <div style={{ fontSize: 10, fontWeight: 700, color: "var(--ink-soft)", maxWidth: 178, textAlign: "center", lineHeight: 1.4 }}>
-              Spelas mellan semifinal-förlorarna dagen före finalen.
-            </div>
+          <BracketNode roundsArr={roundsArr} ri={4} mi={0} onOpen={onOpen} />
+        </div>
+      </div>
+      <div style={{ marginTop: 24, paddingTop: 22, borderTop: "1px dashed var(--line-strong)",
+        display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, maxWidth: 320 }}>
+          <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".18em",
+            color: "color-mix(in oklab, var(--gold) 70%, #000 12%)", textTransform: "uppercase" }}>Bronsmatch</div>
+          <BracketCell m={ko.third[0]} onOpen={onOpen} />
+          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--ink-soft)", textAlign: "center", lineHeight: 1.5 }}>
+            Spelas mellan semifinal-förlorarna dagen före finalen.
           </div>
         </div>
       </div>
@@ -2975,8 +3165,12 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
             </div>
           </MiniBlock>
         )}
+        <TeamHistoryBlock code={code} />
         {fans.length > 0 && (
-          <MiniBlock title="Bonustro från poolen">
+          <MiniBlock title={`${fans.length} har laget i sina bonustips`}>
+            <div style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600, marginBottom: 9, lineHeight: 1.45 }}>
+              Spelare i poolen som tror på {(window.VM.TEAMS[code] && window.VM.TEAMS[code].name) || code} som vinnare, silver eller brons.
+            </div>
             <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
               {fans.map((p, j) => <span key={p.id} title={p.name} style={{ marginLeft: j === 0 ? 0 : -6 }}><Avatar p={p} size={30} /></span>)}
             </div>

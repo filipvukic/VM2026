@@ -407,6 +407,8 @@ def compute(tips, matches, scorers, standings=None):
                 "goals": extract_goals(m),
                 "bookings": extract_bookings(m),
                 "subs": extract_substitutions(m),
+                "venue": extract_venue(m),
+                "referees": extract_referees(m),
                 "tips": [],
             })
             row["tips"].append({"name": name, "tip": tip, "points": pts})
@@ -515,6 +517,31 @@ def extract_substitutions(m):
     return out
 
 
+def extract_venue(m):
+    """Vissa football-data v4-svar har 'venue' (sträng eller dict)."""
+    v = m.get("venue")
+    if not v:
+        return None
+    if isinstance(v, str):
+        return {"stadium": v, "city": None}
+    if isinstance(v, dict):
+        return {"stadium": v.get("name") or v.get("stadium"),
+                "city": v.get("city") or v.get("location")}
+    return None
+
+
+def extract_referees(m):
+    """Lista av domare {name, role, nationality}."""
+    out = []
+    for r in (m.get("referees") or []):
+        out.append({
+            "name": r.get("name"),
+            "role": r.get("role") or r.get("type"),
+            "nationality": r.get("nationality") or r.get("country"),
+        })
+    return out
+
+
 def detailed_score(m):
     """Halvtid / förlängning / straffar / duration. None om saknas."""
     sc = m.get("score") or {}
@@ -550,6 +577,8 @@ def build_fixtures(matches):
         "goals": extract_goals(m),
         "bookings": extract_bookings(m),
         "subs": extract_substitutions(m),
+        "venue": extract_venue(m),
+        "referees": extract_referees(m),
     } for m in matches]
 
 
