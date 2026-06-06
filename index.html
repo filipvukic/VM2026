@@ -14,44 +14,47 @@
      Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
      ============================================================ */
   :root {
-    /* Bakgrunds-skala (OLED-djup) */
-    --bg-0: #07090E;
-    --bg-1: #0C1018;
-    --bg-2: #131822;
-    --bg-3: #1B2230;
-    --bg-4: #232B3D;
+    /* Bakgrund: djup lila-svart - gaming/betting */
+    --bg-0: #07051A;
+    --bg-1: #0E0A24;
+    --bg-2: #15102E;
+    --bg-3: #1F1842;
+    --bg-4: #2A2256;
 
     /* Borders */
-    --border:        rgba(255,255,255,.07);
-    --border-strong: rgba(255,255,255,.12);
-    --border-pitch:  rgba(16,185,129,.36);
+    --border:        rgba(255,255,255,.08);
+    --border-strong: rgba(255,255,255,.16);
+    --border-pitch:  rgba(0,255,135,.40);
 
     /* Text */
-    --fg:   #F2F5FA;
-    --fg-2: #C9D0DD;
-    --fg-3: #8B93A6;
-    --fg-4: #555E73;
+    --fg:   #FFFFFF;
+    --fg-2: #D5D9EB;
+    --fg-3: #8E94B5;
+    --fg-4: #5A5F7E;
 
-    /* Brand */
-    --pitch:       #10B981;
-    --pitch-dim:   #059669;
-    --pitch-deep:  #036549;
-    --pitch-glow:  rgba(16,185,129,.16);
+    /* Brand: electric neon green */
+    --pitch:       #00FF87;
+    --pitch-dim:   #00D973;
+    --pitch-deep:  #00A057;
+    --pitch-glow:  rgba(0,255,135,.42);
 
-    /* Live */
-    --live:       #EF4444;
-    --live-glow:  rgba(239,68,68,.18);
+    /* Live: hot pink */
+    --live:        #FF1F77;
+    --live-glow:   rgba(255,31,119,.40);
 
     /* Medaljer */
-    --gold:    #FBBF24;
-    --silver:  #CBD5E1;
-    --bronze:  #D97757;
+    --gold:        #FFB800;
+    --gold-glow:   rgba(255,184,0,.40);
+    --silver:      #C8D0E0;
+    --bronze:      #E08545;
 
     /* Stöd-accenter */
-    --blue:   #3B82F6;
-    --purple: #A78BFA;
-    --orange: #FB923C;
-    --yellow: #FBBF24;
+    --blue:        #00D4FF;
+    --blue-glow:   rgba(0,212,255,.40);
+    --purple:      #B57BFF;
+    --purple-glow: rgba(181,123,255,.36);
+    --orange:      #FF8C2A;
+    --yellow:      #FFD600;
 
     /* Pts-färger */
     --pts-5: var(--gold);   /* exakt */
@@ -107,12 +110,14 @@
     overscroll-behavior-y: none;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Subtil bg-glow */
+  /* Mesh-gradient bakgrund med neon-glow */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(80vw 50vw at 50% -20%, rgba(16,185,129,.07), transparent 60%),
-      radial-gradient(60vw 40vw at 90% 110%, rgba(59,130,246,.05), transparent 60%);
+      radial-gradient(60vw 50vw at 15% 0%, rgba(255,31,119,.13), transparent 55%),
+      radial-gradient(70vw 50vw at 100% 30%, rgba(0,255,135,.10), transparent 55%),
+      radial-gradient(50vw 40vw at 50% 100%, rgba(0,212,255,.10), transparent 55%),
+      radial-gradient(60vw 40vw at 0% 80%, rgba(181,123,255,.10), transparent 55%);
   }
   body::after {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -156,6 +161,40 @@
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
   @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes neonPulse {
+    0%, 100% { text-shadow: 0 0 18px var(--pitch-glow), 0 0 36px var(--pitch-glow); }
+    50%      { text-shadow: 0 0 32px var(--pitch), 0 0 64px var(--pitch-glow); }
+  }
+  @keyframes goldPulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--gold-glow), 0 12px 36px -12px var(--gold-glow); }
+    50%      { box-shadow: 0 0 0 8px transparent, 0 16px 48px -8px var(--gold-glow); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes spin360 { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+
+  /* Hover-glow utility */
+  .glow-hover { transition: transform .2s cubic-bezier(.3,.7,.4,1), box-shadow .25s ease; }
+  .glow-hover:hover { transform: translateY(-2px); }
+  .glow-hover.glow-green:hover { box-shadow: 0 12px 32px -12px var(--pitch-glow), 0 0 0 1px var(--border-pitch); }
+  .glow-hover.glow-gold:hover  { box-shadow: 0 12px 32px -12px var(--gold-glow); }
+  .glow-hover.glow-pink:hover  { box-shadow: 0 12px 32px -12px var(--live-glow); }
+
+  /* Neon-text klass */
+  .neon-green { color: var(--pitch); text-shadow: 0 0 18px var(--pitch-glow), 0 0 36px var(--pitch-glow); }
+  .neon-gold  { color: var(--gold); text-shadow: 0 0 18px var(--gold-glow), 0 0 36px var(--gold-glow); }
+  .neon-pink  { color: var(--live); text-shadow: 0 0 18px var(--live-glow), 0 0 36px var(--live-glow); }
 
   /* Mjuk expand/collapse via grid-rows hack (1fr -> 0fr) */
   .smooth-collapse { display: grid; grid-template-rows: 0fr;
@@ -2434,18 +2473,171 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
-function KpiCard({ label, value, sub, accent, mono = true }){
+function KpiCard({ label, value, sub, accent, icon, glow }){
   return (
-    <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
-      borderRadius: "var(--r-md)", padding: "12px 14px", position: "relative", overflow: "hidden" }}>
+    <div className={"glow-hover " + (glow || "")} style={{
+      background: "linear-gradient(160deg, var(--bg-3), var(--bg-2))",
+      border: "1px solid var(--border)", borderRadius: "var(--r-md)",
+      padding: "14px 14px", position: "relative", overflow: "hidden",
+      boxShadow: "var(--shadow)" }}>
       {accent && (
-        <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: accent }} />
+        <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 2,
+          background: accent, opacity: .9 }} />
       )}
-      <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: ".08em",
-        textTransform: "uppercase", color: "var(--fg-3)" }}>{label}</div>
-      <div className={mono ? "mono" : ""} style={{ marginTop: 4, fontSize: 24,
-        fontWeight: 800, color: "var(--fg)", lineHeight: 1.05, letterSpacing: "-.02em" }}>{value}</div>
-      {sub && <div style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: "var(--fg-3)" }}>{sub}</div>}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em",
+          textTransform: "uppercase", color: "var(--fg-3)" }}>{label}</div>
+        {icon && <span style={{ fontSize: 14, opacity: .8 }}>{icon}</span>}
+      </div>
+      <div className="mono" style={{ marginTop: 8, fontSize: 26,
+        fontWeight: 800, color: "var(--fg)", lineHeight: 1.05, letterSpacing: "-.025em" }}>{value}</div>
+      {sub && <div style={{ marginTop: 5, fontSize: 11.5, fontWeight: 600, color: "var(--fg-3)" }}>{sub}</div>}
+    </div>
+  );
+}
+
+/* === Live-ticker: scrollar live-matcher + senaste händelser === */
+function LiveTicker({ data }){
+  const items = [];
+  const live = (data.allMatches || []).filter(m => m.status === "live");
+  live.forEach(m => {
+    items.push({ kind: "live",
+      text: `🔴 LIVE: ${window.VM.TEAMS[m.home] ? window.VM.TEAMS[m.home].name : m.home || "TBD"} ${m.ga != null ? m.ga + "-" + m.gb : ""} ${window.VM.TEAMS[m.away] ? window.VM.TEAMS[m.away].name : m.away || "TBD"}`,
+      color: "var(--live)" });
+  });
+  // Senaste 6 spelade matcherna
+  const recent = (data.allMatches || []).filter(m => m.status === "played" && m.ga != null).slice(-6);
+  recent.forEach(m => {
+    items.push({ kind: "result",
+      text: `✓ ${window.VM.TEAMS[m.home] ? window.VM.TEAMS[m.home].name : m.home} ${m.ga}-${m.gb} ${window.VM.TEAMS[m.away] ? window.VM.TEAMS[m.away].name : m.away}`,
+      color: "var(--fg-2)" });
+  });
+  // Ledare
+  if(data.standings && data.standings[0]){
+    items.push({ kind: "stat", text: `🏆 ${data.standings[0].name} leder med ${data.standings[0].total} p`, color: "var(--gold)" });
+  }
+  // Mest exakta
+  if(data.standings){
+    const mostExact = [...data.standings].sort((a,b) => b.exact - a.exact)[0];
+    if(mostExact && mostExact.exact > 0){
+      items.push({ kind: "stat", text: `🔥 ${mostExact.name} har ${mostExact.exact} exakta tips`, color: "var(--pitch)" });
+    }
+  }
+  // Nästa avspark
+  const nextM = (data.allMatches || []).find(m => m.status === "upcoming");
+  if(nextM){
+    items.push({ kind: "next",
+      text: `⚽ Nästa: ${window.VM.TEAMS[nextM.home] ? window.VM.TEAMS[nextM.home].name : nextM.home || "TBD"} vs ${window.VM.TEAMS[nextM.away] ? window.VM.TEAMS[nextM.away].name : nextM.away || "TBD"} · ${svDayLabel(nextM.kickoff)} ${svTime(nextM.kickoff)}`,
+      color: "var(--blue)" });
+  }
+  if(items.length === 0) {
+    items.push({ kind: "info", text: "⚽ VM 2026 startar 11 juni · 48 lag · 12 grupper · 104 matcher", color: "var(--fg-3)" });
+  }
+  // Duplicera för seamless scroll
+  const doubled = items.concat(items);
+  return (
+    <div style={{ position: "relative", overflow: "hidden",
+      background: "linear-gradient(90deg, var(--bg-2) 0%, var(--bg-3) 50%, var(--bg-2) 100%)",
+      border: "1px solid var(--border)", borderRadius: "var(--r-md)",
+      marginBottom: 16, height: 38 }}>
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center",
+        animation: `tickerScroll ${Math.max(20, items.length * 5)}s linear infinite`,
+        whiteSpace: "nowrap", willChange: "transform" }}>
+        {doubled.map((it, i) => (
+          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "0 22px", fontSize: 12.5, fontWeight: 700, color: it.color,
+            borderRight: "1px solid var(--border)", height: "100%" }}>
+            {it.text}
+          </span>
+        ))}
+      </div>
+      {/* Fade på kanterna */}
+      <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 50,
+        background: "linear-gradient(90deg, var(--bg-2), transparent)", pointerEvents: "none" }} />
+      <span style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 50,
+        background: "linear-gradient(270deg, var(--bg-2), transparent)", pointerEvents: "none" }} />
+    </div>
+  );
+}
+
+/* === JackpotHero: stor neon-glow jackpot + countdown === */
+function JackpotHero({ pot, prizes, isPre, nextUp }){
+  const target = nextUp ? nextUp.kickoff.getTime() : Date.UTC(2026, 5, 11, 16, 0);
+  const [now, setNow] = React.useState(Date.now());
+  React.useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
+  const diffMs = Math.max(0, target - now);
+  const days = Math.floor(diffMs / 86400000);
+  const hours = Math.floor((diffMs % 86400000) / 3600000);
+  const mins = Math.floor((diffMs % 3600000) / 60000);
+  const secs = Math.floor((diffMs % 60000) / 1000);
+
+  return (
+    <div style={{ position: "relative", overflow: "hidden",
+      background: "linear-gradient(135deg, #1A0F3E 0%, #0E0A24 50%, #1F0B2E 100%)",
+      borderRadius: "var(--r-lg)", padding: "28px 24px 28px",
+      border: "1px solid var(--border)", marginBottom: 16,
+      boxShadow: "0 24px 60px -24px rgba(0,255,135,.20), inset 0 1px 0 rgba(255,255,255,.04)" }}>
+      {/* Mesh-glow */}
+      <span style={{ position: "absolute", top: -120, left: -80, width: 360, height: 360,
+        background: "radial-gradient(closest-side, var(--pitch-glow), transparent 70%)",
+        pointerEvents: "none", filter: "blur(20px)" }} />
+      <span style={{ position: "absolute", bottom: -120, right: -80, width: 360, height: 360,
+        background: "radial-gradient(closest-side, var(--live-glow), transparent 70%)",
+        pointerEvents: "none", filter: "blur(20px)" }} />
+      {/* Sparkle-prickar */}
+      <span style={{ position: "absolute", top: 20, left: "30%", width: 4, height: 4, borderRadius: "50%",
+        background: "var(--gold)", boxShadow: "0 0 8px var(--gold)", animation: "sparkle 2.5s infinite" }} />
+      <span style={{ position: "absolute", top: 40, left: "70%", width: 3, height: 3, borderRadius: "50%",
+        background: "var(--pitch)", boxShadow: "0 0 6px var(--pitch)", animation: "sparkle 2s 0.5s infinite" }} />
+      <span style={{ position: "absolute", bottom: 30, left: "20%", width: 3, height: 3, borderRadius: "50%",
+        background: "var(--blue)", boxShadow: "0 0 6px var(--blue)", animation: "sparkle 3s 1s infinite" }} />
+      <span style={{ position: "absolute", bottom: 50, left: "85%", width: 4, height: 4, borderRadius: "50%",
+        background: "var(--live)", boxShadow: "0 0 8px var(--live)", animation: "sparkle 2.2s 1.5s infinite" }} />
+
+      <div style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".24em", textTransform: "uppercase",
+          color: "var(--fg-3)", marginBottom: 4 }}>Sammanlagd jackpot</div>
+        <div className="mono neon-green" style={{ fontSize: "clamp(54px, 11vw, 92px)", fontWeight: 900,
+          letterSpacing: "-.04em", lineHeight: 1, animation: "neonPulse 3s ease-in-out infinite" }}>
+          {pot.toLocaleString("sv-SE")}<span style={{ fontSize: ".4em", marginLeft: 8, color: "var(--fg-2)", textShadow: "none" }}>kr</span>
+        </div>
+
+        {/* Prize-split chips */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 16, flexWrap: "wrap" }}>
+          {prizes.map((amt, i) => {
+            const tint = ["var(--gold)", "var(--silver)", "var(--bronze)"][i];
+            const ico = ["🥇", "🥈", "🥉"][i];
+            return (
+              <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "6px 14px", borderRadius: 999, background: "rgba(255,255,255,.04)",
+                border: "1px solid " + tint, color: tint }}>
+                <span style={{ fontSize: 13 }}>{ico}</span>
+                <span className="mono" style={{ fontSize: 13.5, fontWeight: 800 }}>{amt.toLocaleString("sv-SE")} kr</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Countdown */}
+        {isPre && diffMs > 0 && (
+          <div style={{ marginTop: 22 }}>
+            <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".22em", textTransform: "uppercase",
+              color: "var(--live)", marginBottom: 8 }}>Avspark om</div>
+            <div style={{ display: "inline-flex", gap: 8 }}>
+              {[[days, "DGR"], [hours, "TIM"], [mins, "MIN"], [secs, "SEK"]].map(([v, l], i) => (
+                <div key={i} style={{ minWidth: 64,
+                  background: "linear-gradient(180deg, var(--bg-2), var(--bg-1))",
+                  border: "1px solid var(--border-strong)", borderRadius: 10, padding: "10px 4px" }}>
+                  <div className="mono" style={{ fontSize: 26, fontWeight: 900, color: "var(--fg)",
+                    letterSpacing: "-.02em", lineHeight: 1 }}>{String(v).padStart(2, "0")}</div>
+                  <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: ".12em",
+                    color: "var(--fg-3)", marginTop: 6 }}>{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -2461,72 +2653,111 @@ function StandingsView({ data, onOpenPlayer }) {
   const playedMatches = (data.allMatches || []).filter(m => m.status === "played").length;
   const totalMatches = (data.allMatches || []).length;
   const nextUp = (data.allMatches || []).find(m => m.status === "upcoming");
-  const daysLeft = nextUp ? Math.max(0, Math.ceil((nextUp.kickoff - Date.now()) / 86400000)) : null;
+  const mostExact = isPre ? null : [...s].sort((a,b) => b.exact - a.exact)[0];
 
   return (
-    <div style={{ animation: "viewIn .3s ease-out forwards" }}>
+    <div style={{ animation: "viewIn .35s ease-out forwards" }}>
+      <LiveTicker data={data} />
+
+      <JackpotHero pot={pot} prizes={prizes} isPre={isPre} nextUp={nextUp} />
+
       {/* === KPI-STRIP === */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
         gap: 10, marginBottom: 16 }}>
-        <KpiCard label="Sammanlagd pott" value={money(pot)} sub="9 spelare · 300 kr/st"
-          accent="var(--gold)" />
-        <KpiCard label={liveMatches > 0 ? "Live nu" : "Spelade matcher"}
-          value={liveMatches > 0 ? liveMatches : playedMatches}
-          sub={liveMatches > 0 ? "pågår just nu" : `av ${totalMatches} totalt`}
-          accent={liveMatches > 0 ? "var(--live)" : "var(--pitch)"} />
-        <KpiCard label={isPre ? "Avspark om" : "Ledare"}
-          value={isPre ? (daysLeft != null ? `${daysLeft} d` : "snart") : (s[0] ? s[0].name : "-")}
-          sub={isPre ? (nextUp ? svDayLabel(nextUp.kickoff) : "") : `${s[0] ? s[0].total : 0} poäng`}
-          accent="var(--pitch)" />
-        <KpiCard label="Mest exakta" value={isPre ? "-" : (
-            [...s].sort((a,b) => b.exact - a.exact)[0]
-              ? `${[...s].sort((a,b) => b.exact - a.exact)[0].exact}p`
-              : "0"
-          )}
-          sub={isPre ? "väntar på resultat" : (
-            [...s].sort((a,b) => b.exact - a.exact)[0]
-              ? [...s].sort((a,b) => b.exact - a.exact)[0].name
-              : "-"
-          )}
-          accent="var(--gold)" />
+        <KpiCard label={liveMatches > 0 ? "Live nu" : "Matcher"}
+          value={liveMatches > 0 ? `${liveMatches} LIVE` : `${playedMatches}/${totalMatches}`}
+          sub={liveMatches > 0 ? "pågår just nu" : "spelade"}
+          accent={liveMatches > 0 ? "var(--live)" : "var(--pitch)"}
+          icon={liveMatches > 0 ? "🔴" : "⚽"}
+          glow={liveMatches > 0 ? "glow-pink" : "glow-green"} />
+        <KpiCard label={isPre ? "Spelare" : "Ledare"}
+          value={isPre ? `${s.length}` : (s[0] ? s[0].name : "-")}
+          sub={isPre ? `${s.length * 300} kr i potten` : `${s[0] ? s[0].total : 0} poäng`}
+          accent="var(--gold)" icon={isPre ? "👥" : "👑"} glow="glow-gold" />
+        <KpiCard label="🔥 Hetast"
+          value={mostExact && mostExact.exact > 0 ? `${mostExact.exact} exakta` : (isPre ? "-" : "0 exakta")}
+          sub={mostExact && mostExact.exact > 0 ? mostExact.name : "Ingen har träffat ännu"}
+          accent="var(--live)" glow="glow-pink" />
+        <KpiCard label="Nästa match"
+          value={nextUp ? svTime(nextUp.kickoff) : "-"}
+          sub={nextUp ? svDayLabel(nextUp.kickoff) : "Alla matcher spelade"}
+          accent="var(--blue)" icon="⏱"
+          glow="glow-green" />
       </div>
 
-      {/* === PODIUM (kompakt, OLED-stil) === */}
+      {/* === PODIUM === */}
       {!isPre && top3.length > 0 && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr 1fr",
-          gap: 10, alignItems: "stretch", marginBottom: 14 }}>
-          {[top3[1], top3[0], top3[2]].filter(Boolean).map((p, ix) => {
-            const place = p.rank;
-            const tint = { 1: "var(--gold)", 2: "var(--silver)", 3: "var(--bronze)" }[place];
-            return (
-              <button key={p.id} onClick={() => onOpenPlayer(p.id)}
-                className="lift" style={{ width: "100%", textAlign: "left",
-                background: "var(--bg-2)", border: "1px solid var(--border)",
-                borderRadius: "var(--r-md)", padding: "16px 14px", display: "flex",
-                flexDirection: "column", alignItems: "center", gap: 8, position: "relative", overflow: "hidden",
-                boxShadow: place === 1 ? `0 18px 40px -22px ${tint}` : "var(--shadow)" }}>
-                <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: tint }} />
-                <Avatar p={p} size={place === 1 ? 60 : 48} ring={place} />
-                <div style={{ fontSize: place === 1 ? 14 : 13, fontWeight: 800, marginTop: 4 }}>{p.name}</div>
-                <div className="mono" style={{ fontSize: place === 1 ? 28 : 22, fontWeight: 800,
-                  color: tint, letterSpacing: "-.02em", lineHeight: 1 }}>{p.total}<span style={{ fontSize: 11, fontWeight: 600, color: "var(--fg-3)", marginLeft: 4 }}>p</span></div>
-                <div className="mono" style={{ fontSize: 11, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".02em" }}>{money(prizes[place - 1])}</div>
-              </button>
-            );
-          })}
+        <div style={{ marginBottom: 18 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <span style={{ width: 4, height: 18, background: "var(--gold)", borderRadius: 2 }} />
+            <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-2)" }}>
+              Top 3 - Pristagare
+            </span>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.25fr 1fr",
+            gap: 12, alignItems: "stretch" }}>
+            {[top3[1], top3[0], top3[2]].filter(Boolean).map((p, ix) => {
+              const place = p.rank;
+              const tint = { 1: "var(--gold)", 2: "var(--silver)", 3: "var(--bronze)" }[place];
+              const glow = { 1: "var(--gold-glow)", 2: "rgba(200,208,224,.30)", 3: "rgba(224,133,69,.34)" }[place];
+              const isWinner = place === 1;
+              return (
+                <button key={p.id} onClick={() => onOpenPlayer(p.id)}
+                  className={"glow-hover " + (isWinner ? "glow-gold" : "")} style={{ width: "100%", textAlign: "left",
+                  background: isWinner
+                    ? "linear-gradient(180deg, rgba(255,184,0,.10), var(--bg-2))"
+                    : "linear-gradient(180deg, var(--bg-3), var(--bg-2))",
+                  border: `1px solid ${isWinner ? tint : "var(--border)"}`,
+                  borderRadius: "var(--r-lg)", padding: isWinner ? "22px 14px 18px" : "16px 14px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
+                  position: "relative", overflow: "hidden",
+                  boxShadow: isWinner ? `0 16px 48px -16px ${glow}` : "var(--shadow)",
+                  animation: isWinner ? "goldPulse 3s ease-in-out infinite" : "none" }}>
+                  <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: tint }} />
+                  {isWinner && (
+                    <>
+                      <span style={{ position: "absolute", top: 8, left: 14, fontSize: 14, animation: "float 3s ease-in-out infinite" }}>👑</span>
+                      <span style={{ position: "absolute", top: 8, right: 14, fontSize: 14, animation: "float 3s ease-in-out infinite .4s" }}>✨</span>
+                    </>
+                  )}
+                  <Avatar p={p} size={isWinner ? 64 : 48} ring={place} />
+                  <div style={{ fontSize: isWinner ? 15 : 13, fontWeight: 800 }}>{p.name}</div>
+                  <div className="mono" style={{ fontSize: isWinner ? 36 : 26, fontWeight: 900,
+                    color: tint, letterSpacing: "-.025em", lineHeight: 1,
+                    textShadow: isWinner ? `0 0 24px ${glow}` : "none" }}>
+                    {p.total}<span style={{ fontSize: ".4em", fontWeight: 600, color: "var(--fg-3)", marginLeft: 4, textShadow: "none" }}>p</span>
+                  </div>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 5,
+                    padding: "4px 10px", borderRadius: 999, background: "rgba(0,0,0,.25)",
+                    border: `1px solid ${tint}`, color: tint, fontSize: 12, fontWeight: 800 }}>
+                    <span className="mono">{money(prizes[place - 1])}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 
-      {/* === TABELL: dense, sortable === */}
+      {/* === LEADERBOARD === */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <span style={{ width: 4, height: 18, background: "var(--pitch)", borderRadius: 2 }} />
+        <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-2)" }}>
+          Hela ligan
+        </span>
+        <span style={{ fontSize: 11.5, fontWeight: 700, color: "var(--fg-3)", marginLeft: "auto" }}>
+          {s.length} spelare
+        </span>
+      </div>
       <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
-        borderRadius: "var(--r-md)", overflow: "hidden" }}>
+        borderRadius: "var(--r-md)", overflow: "hidden", boxShadow: "var(--shadow)" }}>
         <div style={{ display: "grid",
-          gridTemplateColumns: "44px 1fr 80px 80px 80px 64px",
-          padding: "9px 14px", borderBottom: "1px solid var(--border)",
-          background: "var(--bg-3)",
-          fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase",
+          gridTemplateColumns: "44px 1fr 70px 70px 70px 80px",
+          padding: "10px 16px", borderBottom: "1px solid var(--border)",
+          background: "linear-gradient(180deg, var(--bg-3), var(--bg-2))",
+          fontSize: 10, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase",
           color: "var(--fg-3)" }}>
-          <span>Plac</span>
+          <span>#</span>
           <span>Spelare</span>
           <span style={{ textAlign: "right" }}>Match</span>
           <span style={{ textAlign: "right" }}>Bonus</span>
@@ -2537,49 +2768,59 @@ function StandingsView({ data, onOpenPlayer }) {
           const onPodium = !isPre && p.rank <= 3;
           const medal = { 1: "var(--gold)", 2: "var(--silver)", 3: "var(--bronze)" }[p.rank];
           const barPct = isPre ? 0 : Math.round((p.total / leaderTotal) * 100);
+          const hot = !isPre && p.exact >= 3;
           return (
             <button key={p.id} onClick={() => onOpenPlayer(p.id)}
               style={{ width: "100%", textAlign: "left", display: "grid",
-                gridTemplateColumns: "44px 1fr 80px 80px 80px 64px", alignItems: "center",
-                padding: "10px 14px",
+                gridTemplateColumns: "44px 1fr 70px 70px 70px 80px", alignItems: "center",
+                padding: "12px 16px",
                 borderBottom: i < s.length - 1 ? "1px solid var(--border)" : "none",
                 background: "transparent", position: "relative",
-                transition: "background .15s ease" }}
-              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,.025)"}
+                transition: "background .18s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(0,255,135,.04)"}
               onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
-              {onPodium && <span style={{ position: "absolute", left: 0, top: 8, bottom: 8, width: 3, background: medal, borderRadius: "0 2px 2px 0" }} />}
-              <span className="mono" style={{ fontSize: 13, fontWeight: 700,
-                color: onPodium ? medal : "var(--fg-3)" }}>{isPre ? "-" : `#${p.rank}`}</span>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-                <Avatar p={p} size={32} rank={onPodium ? p.rank : null} />
+              {onPodium && <span style={{ position: "absolute", left: 0, top: 6, bottom: 6, width: 3,
+                background: medal, borderRadius: "0 2px 2px 0",
+                boxShadow: `0 0 12px ${medal}` }} />}
+              <span className="mono" style={{ fontSize: 15, fontWeight: 800,
+                color: onPodium ? medal : "var(--fg-3)" }}>{isPre ? "-" : p.rank}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+                <Avatar p={p} size={36} rank={onPodium ? p.rank : null} />
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{p.name}</div>
+                  <div style={{ fontSize: 14.5, fontWeight: 800, display: "flex", alignItems: "center", gap: 6 }}>
+                    {p.name}
+                    {hot && <span style={{ fontSize: 11 }}>🔥</span>}
+                  </div>
                   {!isPre ? (
-                    <div style={{ marginTop: 4, height: 3, background: "var(--bg-3)", borderRadius: 99,
-                      overflow: "hidden", maxWidth: 160 }}>
+                    <div style={{ marginTop: 5, height: 4, background: "var(--bg-3)", borderRadius: 99,
+                      overflow: "hidden", maxWidth: 200, position: "relative" }}>
                       <div style={{ height: "100%", width: barPct + "%",
-                        background: onPodium ? medal : "var(--pitch)",
-                        borderRadius: 99, transition: "width .4s ease" }} />
+                        background: onPodium
+                          ? `linear-gradient(90deg, ${medal}, var(--pitch))`
+                          : "linear-gradient(90deg, var(--pitch), var(--blue))",
+                        borderRadius: 99, transition: "width .6s ease",
+                        boxShadow: `0 0 8px ${onPodium ? medal : "var(--pitch-glow)"}` }} />
                     </div>
                   ) : (
-                    <div style={{ fontSize: 11, color: "var(--fg-3)", marginTop: 2 }}>
+                    <div style={{ fontSize: 11.5, color: "var(--fg-3)", marginTop: 3, fontWeight: 600 }}>
                       {Object.keys(p.tips).length} tips inlagda
                     </div>
                   )}
                 </div>
               </div>
-              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 600, color: "var(--fg-2)" }}>
+              <span className="mono" style={{ textAlign: "right", fontSize: 13.5, fontWeight: 700, color: "var(--fg-2)" }}>
                 {isPre ? "-" : p.points}
               </span>
-              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 600, color: "var(--fg-2)" }}>
+              <span className="mono" style={{ textAlign: "right", fontSize: 13.5, fontWeight: 700, color: "var(--fg-2)" }}>
                 {isPre ? "-" : p.bonusPts}
               </span>
-              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 700,
+              <span className="mono" style={{ textAlign: "right", fontSize: 13.5, fontWeight: 800,
                 color: !isPre && p.exact > 0 ? "var(--gold)" : "var(--fg-3)" }}>
                 {isPre ? "-" : p.exact}
               </span>
-              <span className="mono" style={{ textAlign: "right", fontSize: 18, fontWeight: 800,
-                color: onPodium ? medal : "var(--fg)" }}>
+              <span className="mono" style={{ textAlign: "right", fontSize: 22, fontWeight: 900,
+                color: onPodium ? medal : "var(--fg)", letterSpacing: "-.02em",
+                textShadow: onPodium ? `0 0 16px ${medal}` : "none" }}>
                 {isPre ? 0 : p.total}
               </span>
             </button>
