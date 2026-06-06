@@ -99,502 +99,1161 @@
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- ============ image-slot.js ============ -->
+  <script>
+// @ds-adherence-ignore -- omelette starter scaffold (raw elements/hex/px by design)
+/* BEGIN USAGE */
+/**
+ * <image-slot> — user-fillable image placeholder.
+ *
+ * Drop this into a deck, mockup, or page wherever you want the user to
+ * supply an image. You control the slot's shape and size; the user fills it
+ * by dragging an image file onto it (or clicking to browse). The dropped
+ * image persists across reloads via a .image-slots.state.json sidecar —
+ * same read-via-fetch / write-via-window.omelette pattern as
+ * design_canvas.jsx, so the filled slot shows on share links, downloaded
+ * zips, and PPTX export. Outside the omelette runtime the slot is read-only.
+ *
+ * The host bridge only allows sidecar writes at the project root, so the
+ * HTML that uses this component is assumed to live at the project root too
+ * (same constraint as design_canvas.jsx).
+ *
+ * Attributes:
+ *   id           Persistence key. REQUIRED for the drop to survive reload —
+ *                every slot on the page needs a distinct id.
+ *   shape        'rect' | 'rounded' | 'circle' | 'pill'   (default 'rounded')
+ *                'circle' applies 50% border-radius; on a non-square slot
+ *                that's an ellipse — set equal width and height for a true
+ *                circle.
+ *   radius       Corner radius in px for 'rounded'.       (default 12)
+ *   mask         Any CSS clip-path value. Overrides `shape` — use this for
+ *                hexagons, blobs, arbitrary polygons.
+ *   fit          object-fit: cover | contain | fill.       (default 'cover')
+ *                With cover (the default) double-clicking the filled slot
+ *                enters a reframe mode: the whole image spills past the mask
+ *                (translucent outside, opaque inside), drag to reposition,
+ *                corner-drag to scale. The crop persists alongside the image
+ *                in the sidecar. contain/fill stay static.
+ *   position     object-position for fit=contain|fill.     (default '50% 50%')
+ *   placeholder  Empty-state caption.                      (default 'Drop an image')
+ *   src          Optional initial/fallback image URL. A user drop overrides
+ *                it; clearing the drop reveals src again.
+ *
+ * Size and layout come from ordinary CSS on the element — width/height
+ * inline or from a parent grid — so it composes with any layout.
+ *
+ * Usage:
+ *   <image-slot id="hero"   style="width:800px;height:450px" shape="rounded" radius="20"
+ *               placeholder="Drop a hero image"></image-slot>
+ *   <image-slot id="avatar" style="width:120px;height:120px" shape="circle"></image-slot>
+ *   <image-slot id="kite"   style="width:300px;height:300px"
+ *               mask="polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></image-slot>
+ */
+/* END USAGE */
+
+(() => {
+  const STATE_FILE = '.image-slots.state.json';
+  // 2× a ~600px slot in a 1920-wide deck — retina-sharp without making the
+  // sidecar enormous. A 1200px WebP at q=0.85 is ~150-300KB.
+  const MAX_DIM = 1200;
+  // Raster formats only. SVG is excluded (can carry script; createImageBitmap
+  // on SVG blobs is inconsistent). GIF is excluded because the canvas
+  // re-encode keeps only the first frame, so an animated GIF would silently
+  // go still — better to reject than surprise.
+  const ACCEPT = ['image/png', 'image/jpeg', 'image/webp', 'image/avif'];
+
+  // ── Shared sidecar store ────────────────────────────────────────────────
+  // One fetch + immediate write-on-change for every <image-slot> on the
+  // page. Reads via fetch() so viewing works anywhere the HTML and sidecar
+  // are served together; writes go through window.omelette.writeFile, which
+  // the host allowlists to *.state.json basenames only.
+  const subs = new Set();
+  let slots = {};
+  // ids explicitly cleared before the sidecar fetch resolved — otherwise
+  // the merge below can't tell "never set" from "just deleted" and would
+  // resurrect the sidecar's stale value.
+  const tombstones = new Set();
+  let loaded = false;
+  let loadP = null;
+
+  function load() {
+    if (loadP) return loadP;
+    loadP = fetch(STATE_FILE)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        // Merge: sidecar loses to any in-memory change that raced ahead of
+        // the fetch (drop or clear) so neither is clobbered by hydration.
+        if (j && typeof j === 'object') {
+          const merged = Object.assign({}, j, slots);
+          // A framing-only write that raced ahead of hydration must not
+          // drop a user image that's only on disk — inherit u from the
+          // sidecar for any in-memory entry that lacks one.
+          for (const k in slots) {
+            if (merged[k] && !merged[k].u && j[k]) {
+              merged[k].u = typeof j[k] === 'string' ? j[k] : j[k].u;
+            }
+          }
+          for (const id of tombstones) delete merged[id];
+          slots = merged;
+        }
+        tombstones.clear();
+      })
+      .catch(() => {})
+      .then(() => { loaded = true; subs.forEach((fn) => fn()); });
+    return loadP;
+  }
+
+  // Serialize writes so two near-simultaneous drops on different slots
+  // can't reorder at the backend and leave the sidecar with only the
+  // first. A save requested mid-flight just marks dirty and re-fires on
+  // completion with the then-current slots.
+  let saving = false;
+  let saveDirty = false;
+  function save() {
+    if (saving) { saveDirty = true; return; }
+    const w = window.omelette && window.omelette.writeFile;
+    if (!w) return;
+    saving = true;
+    Promise.resolve(w(STATE_FILE, JSON.stringify(slots)))
+      .catch(() => {})
+      .then(() => { saving = false; if (saveDirty) { saveDirty = false; save(); } });
+  }
+
+  const S_MAX = 5;
+  const clampS = (s) => Math.max(1, Math.min(S_MAX, s));
+
+  // Normalize a stored slot value. Pre-reframe sidecars stored a bare
+  // data-URL string; newer ones store {u, s, x, y}. Either shape is valid.
+  function getSlot(id) {
+    const v = slots[id];
+    if (!v) return null;
+    return typeof v === 'string' ? { u: v, s: 1, x: 0, y: 0 } : v;
+  }
+
+  function setSlot(id, val) {
+    if (!id) return;
+    if (val) { slots[id] = val; tombstones.delete(id); }
+    else { delete slots[id]; if (!loaded) tombstones.add(id); }
+    subs.forEach((fn) => fn());
+    // A drop is rare + high-value — write immediately so nav-away can't lose
+    // it. Gate on the initial read so we don't overwrite a sidecar we haven't
+    // merged yet; the merge in load() keeps this change once the read lands.
+    if (loaded) save(); else load().then(save);
+  }
+
+  // ── Image downscale ─────────────────────────────────────────────────────
+  // Encode through a canvas so the sidecar carries resized bytes, not the
+  // raw upload. Longest side is capped at 2× the slot's rendered width
+  // (retina) and at MAX_DIM. WebP keeps alpha and is ~10× smaller than PNG
+  // for photos, so there's no need for per-image format picking.
+  async function toDataUrl(file, targetW) {
+    const bitmap = await createImageBitmap(file);
+    try {
+      const cap = Math.min(MAX_DIM, Math.max(1, Math.round(targetW * 2)) || MAX_DIM);
+      const scale = Math.min(1, cap / Math.max(bitmap.width, bitmap.height));
+      const w = Math.max(1, Math.round(bitmap.width * scale));
+      const h = Math.max(1, Math.round(bitmap.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
+      return canvas.toDataURL('image/webp', 0.85);
+    } finally {
+      bitmap.close && bitmap.close();
+    }
+  }
+
+  // ── Custom element ──────────────────────────────────────────────────────
+  const stylesheet =
+    ':host{display:inline-block;position:relative;vertical-align:top;' +
+    '  font:13px/1.3 system-ui,-apple-system,sans-serif;color:rgba(0,0,0,.55);width:240px;height:160px}' +
+    '.frame{position:absolute;inset:0;overflow:hidden;background:rgba(0,0,0,.04)}' +
+    // .frame img (clipped) and .spill (unclipped ghost + handles) share the
+    // same left/top/width/height in frame-%, computed by _applyView(), so the
+    // inside-mask crop and the outside-mask spill stay pixel-aligned.
+    '.frame img{position:absolute;max-width:none;transform:translate(-50%,-50%);' +
+    '  -webkit-user-drag:none;user-select:none;touch-action:none}' +
+    // Reframe mode (double-click): the full image spills past the mask. The
+    // spill layer is sized to the IMAGE bounds so its corners are where the
+    // resize handles belong. The ghost <img> inside is translucent; the real
+    // clipped <img> underneath shows the opaque in-mask crop.
+    '.spill{position:absolute;transform:translate(-50%,-50%);display:none;z-index:1;' +
+    '  cursor:grab;touch-action:none}' +
+    ':host([data-panning]) .spill{cursor:grabbing}' +
+    '.spill .ghost{position:absolute;inset:0;width:100%;height:100%;opacity:.35;' +
+    '  pointer-events:none;-webkit-user-drag:none;user-select:none;' +
+    '  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.2)}' +
+    '.spill .handle{position:absolute;width:12px;height:12px;border-radius:50%;' +
+    '  background:#fff;box-shadow:0 0 0 1.5px #c96442,0 1px 3px rgba(0,0,0,.3);' +
+    '  transform:translate(-50%,-50%)}' +
+    '.spill .handle[data-c=nw]{left:0;top:0;cursor:nwse-resize}' +
+    '.spill .handle[data-c=ne]{left:100%;top:0;cursor:nesw-resize}' +
+    '.spill .handle[data-c=sw]{left:0;top:100%;cursor:nesw-resize}' +
+    '.spill .handle[data-c=se]{left:100%;top:100%;cursor:nwse-resize}' +
+    ':host([data-reframe]){z-index:10}' +
+    ':host([data-reframe]) .spill{display:block}' +
+    ':host([data-reframe]) .frame{box-shadow:0 0 0 2px #c96442}' +
+    '.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;' +
+    '  justify-content:center;gap:6px;text-align:center;padding:12px;box-sizing:border-box;' +
+    '  cursor:pointer;user-select:none}' +
+    '.empty svg{opacity:.45}' +
+    '.empty .cap{max-width:90%;font-weight:500;letter-spacing:.01em}' +
+    '.empty .sub{font-size:11px}' +
+    '.empty .sub u{text-underline-offset:2px;text-decoration-color:rgba(0,0,0,.25)}' +
+    '.empty:hover .sub u{color:rgba(0,0,0,.75);text-decoration-color:currentColor}' +
+    ':host([data-over]) .frame{outline:2px solid #c96442;outline-offset:-2px;' +
+    '  background:rgba(201,100,66,.10)}' +
+    '.ring{position:absolute;inset:0;pointer-events:none;border:1.5px dashed rgba(0,0,0,.25);' +
+    '  transition:border-color .12s}' +
+    ':host([data-over]) .ring{border-color:#c96442}' +
+    ':host([data-filled]) .ring{display:none}' +
+    // Controls sit BELOW the mask (top:100%), absolutely positioned so the
+    // author-declared slot height is unaffected. The gap is padding, not a
+    // top offset, so the hover target stays contiguous with the frame.
+    '.ctl{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;' +
+    '  display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:2;' +
+    '  white-space:nowrap}' +
+    ':host([data-filled][data-editable]:hover) .ctl,:host([data-reframe]) .ctl' +
+    '  {opacity:1;pointer-events:auto}' +
+    '.ctl button{appearance:none;border:0;border-radius:6px;padding:5px 10px;cursor:pointer;' +
+    '  background:rgba(0,0,0,.65);color:#fff;font:11px/1 system-ui,-apple-system,sans-serif;' +
+    '  backdrop-filter:blur(6px)}' +
+    '.ctl button:hover{background:rgba(0,0,0,.8)}' +
+    '.err{position:absolute;left:8px;bottom:8px;right:8px;color:#b3261e;font-size:11px;' +
+    '  background:rgba(255,255,255,.85);padding:4px 6px;border-radius:5px;pointer-events:none}';
+
+  const icon =
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>' +
+    '<path d="m21 15-5-5L5 21"/></svg>';
+
+  class ImageSlot extends HTMLElement {
+    static get observedAttributes() {
+      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', 'id'];
+    }
+
+    constructor() {
+      super();
+      const root = this.attachShadow({ mode: 'open' });
+      // .spill and .ctl sit OUTSIDE .frame so overflow:hidden + border-radius
+      // on the frame (circle, pill, rounded) can't clip them.
+      root.innerHTML =
+        '<style>' + stylesheet + '</style>' +
+        '<div class="frame" part="frame">' +
+        '  <img part="image" alt="" draggable="false" style="display:none">' +
+        '  <div class="empty" part="empty">' + icon +
+        '    <div class="cap"></div>' +
+        '    <div class="sub">or <u>browse files</u></div></div>' +
+        '  <div class="ring" part="ring"></div>' +
+        '</div>' +
+        '<div class="spill">' +
+        '  <img class="ghost" alt="" draggable="false">' +
+        '  <div class="handle" data-c="nw"></div><div class="handle" data-c="ne"></div>' +
+        '  <div class="handle" data-c="sw"></div><div class="handle" data-c="se"></div>' +
+        '</div>' +
+        '<div class="ctl"><button data-act="replace" title="Replace image">Replace</button>' +
+        '  <button data-act="clear" title="Remove image">Remove</button></div>' +
+        '<input type="file" accept="' + ACCEPT.join(',') + '" hidden>';
+      this._frame = root.querySelector('.frame');
+      this._ring = root.querySelector('.ring');
+      this._img = root.querySelector('.frame img');
+      this._empty = root.querySelector('.empty');
+      this._cap = root.querySelector('.cap');
+      this._sub = root.querySelector('.sub');
+      this._spill = root.querySelector('.spill');
+      this._ghost = root.querySelector('.ghost');
+      this._err = null;
+      this._input = root.querySelector('input');
+      this._depth = 0;
+      this._gen = 0;
+      this._view = { s: 1, x: 0, y: 0 };
+      this._subFn = () => this._render();
+      // Shadow-DOM listeners live with the shadow DOM — bound once here so
+      // disconnect/reconnect (e.g. React remount) doesn't stack handlers.
+      this._empty.addEventListener('click', () => this._input.click());
+      root.addEventListener('click', (e) => {
+        const act = e.target && e.target.getAttribute && e.target.getAttribute('data-act');
+        if (act === 'replace') { this._exitReframe(true); this._input.click(); }
+        if (act === 'clear') {
+          this._exitReframe(false);
+          this._gen++;
+          this._local = null;
+          if (this.id) setSlot(this.id, null); else this._render();
+        }
+      });
+      this._input.addEventListener('change', () => {
+        const f = this._input.files && this._input.files[0];
+        if (f) this._ingest(f);
+        this._input.value = '';
+      });
+      // naturalWidth/Height aren't known until load — re-apply so the cover
+      // baseline is computed from real dimensions, not the 100%×100% fallback.
+      this._img.addEventListener('load', () => this._applyView());
+      // Gated on editable + fit=cover so share links and contain/fill slots
+      // stay static.
+      this.addEventListener('dblclick', (e) => {
+        if (!this.hasAttribute('data-editable') || !this._reframes()) return;
+        e.preventDefault();
+        if (this.hasAttribute('data-reframe')) this._exitReframe(true);
+        else this._enterReframe();
+      });
+      // Pan + resize both originate on the spill layer. A handle pointerdown
+      // drives an aspect-locked resize anchored at the opposite corner; any
+      // other pointerdown on the spill pans. Offsets are frame-% so a
+      // reframed slot survives responsive resize / PPTX export.
+      this._spill.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 || !this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this._spill.setPointerCapture(e.pointerId);
+        const rect = this.getBoundingClientRect();
+        const fw = rect.width || 1, fh = rect.height || 1;
+        const corner = e.target.getAttribute && e.target.getAttribute('data-c');
+        let move;
+        if (corner) {
+          // Resize about the OPPOSITE corner. Viewport-px throughout (rect
+          // fw/fh, not clientWidth) so the math survives a transform:scale()
+          // ancestor — deck_stage renders slides scaled-to-fit.
+          const iw = this._img.naturalWidth || 1, ih = this._img.naturalHeight || 1;
+          const base = Math.max(fw / iw, fh / ih);
+          const sx = corner.includes('e') ? 1 : -1;
+          const sy = corner.includes('s') ? 1 : -1;
+          const s0 = this._view.s;
+          const w0 = iw * base * s0, h0 = ih * base * s0;
+          const cx0 = (50 + this._view.x) / 100 * fw;
+          const cy0 = (50 + this._view.y) / 100 * fh;
+          const ox = cx0 - sx * w0 / 2, oy = cy0 - sy * h0 / 2;
+          const diag0 = Math.hypot(w0, h0);
+          const ux = sx * w0 / diag0, uy = sy * h0 / diag0;
+          move = (ev) => {
+            const proj = (ev.clientX - rect.left - ox) * ux +
+                         (ev.clientY - rect.top - oy) * uy;
+            const s = clampS(s0 * proj / diag0);
+            const d = diag0 * s / s0;
+            this._view.s = s;
+            this._view.x = (ox + ux * d / 2) / fw * 100 - 50;
+            this._view.y = (oy + uy * d / 2) / fh * 100 - 50;
+            this._clampView();
+            this._applyView();
+          };
+        } else {
+          this.setAttribute('data-panning', '');
+          const start = { px: e.clientX, py: e.clientY, x: this._view.x, y: this._view.y };
+          move = (ev) => {
+            this._view.x = start.x + (ev.clientX - start.px) / fw * 100;
+            this._view.y = start.y + (ev.clientY - start.py) / fh * 100;
+            this._clampView();
+            this._applyView();
+          };
+        }
+        const up = () => {
+          try { this._spill.releasePointerCapture(e.pointerId); } catch {}
+          this._spill.removeEventListener('pointermove', move);
+          this._spill.removeEventListener('pointerup', up);
+          this._spill.removeEventListener('pointercancel', up);
+          this.removeAttribute('data-panning');
+          this._dragUp = null;
+        };
+        // Stashed so _exitReframe (Escape / outside-click mid-drag) can
+        // tear the capture + listeners down synchronously.
+        this._dragUp = up;
+        this._spill.addEventListener('pointermove', move);
+        this._spill.addEventListener('pointerup', up);
+        this._spill.addEventListener('pointercancel', up);
+      });
+      // Wheel zoom stays available inside reframe mode as a trackpad nicety —
+      // zooms toward the cursor (offset' = cursor·(1-k) + offset·k).
+      this.addEventListener('wheel', (e) => {
+        if (!this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        const r = this.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width * 100 - 50;
+        const cy = (e.clientY - r.top) / r.height * 100 - 50;
+        const prev = this._view.s;
+        const next = clampS(prev * Math.pow(1.0015, -e.deltaY));
+        if (next === prev) return;
+        const k = next / prev;
+        this._view.s = next;
+        this._view.x = cx * (1 - k) + this._view.x * k;
+        this._view.y = cy * (1 - k) + this._view.y * k;
+        this._clampView();
+        this._applyView();
+      }, { passive: false });
+    }
+
+    connectedCallback() {
+      // Warn once per page — an id-less slot works for the session but
+      // cannot persist, and two id-less slots would share nothing.
+      if (!this.id && !ImageSlot._warned) {
+        ImageSlot._warned = true;
+        console.warn('<image-slot> without an id will not persist its dropped image.');
+      }
+      this.addEventListener('dragenter', this);
+      this.addEventListener('dragover', this);
+      this.addEventListener('dragleave', this);
+      this.addEventListener('drop', this);
+      subs.add(this._subFn);
+      // width%/height% in _applyView encode the frame aspect at call time —
+      // a host resize (responsive grid, pane divider) would stretch the
+      // image until the next _render. Re-render on size change: _render()
+      // re-seeds _view from stored before clamp/apply, so a shrink→grow
+      // cycle round-trips instead of ratcheting x/y toward the narrower
+      // frame's clamp range.
+      this._ro = new ResizeObserver(() => this._render());
+      this._ro.observe(this);
+      load();
+      this._render();
+    }
+
+    disconnectedCallback() {
+      subs.delete(this._subFn);
+      this.removeEventListener('dragenter', this);
+      this.removeEventListener('dragover', this);
+      this.removeEventListener('dragleave', this);
+      this.removeEventListener('drop', this);
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+      this._exitReframe(false);
+    }
+
+    _enterReframe() {
+      if (this.hasAttribute('data-reframe')) return;
+      this.setAttribute('data-reframe', '');
+      this._applyView();
+      // Close on click outside (the spill handler stopPropagation()s so
+      // in-image drags don't reach this) and on Escape. Listeners are held
+      // on the instance so _exitReframe / disconnectedCallback can detach
+      // exactly what was attached.
+      this._outside = (e) => {
+        if (e.composedPath && e.composedPath().includes(this)) return;
+        this._exitReframe(true);
+      };
+      this._esc = (e) => { if (e.key === 'Escape') this._exitReframe(true); };
+      document.addEventListener('pointerdown', this._outside, true);
+      document.addEventListener('keydown', this._esc, true);
+    }
+
+    _exitReframe(commit) {
+      if (!this.hasAttribute('data-reframe')) return;
+      if (this._dragUp) this._dragUp();
+      this.removeAttribute('data-reframe');
+      this.removeAttribute('data-panning');
+      if (this._outside) document.removeEventListener('pointerdown', this._outside, true);
+      if (this._esc) document.removeEventListener('keydown', this._esc, true);
+      this._outside = this._esc = null;
+      if (commit) this._commitView();
+    }
+
+    attributeChangedCallback() { if (this.shadowRoot) this._render(); }
+
+    // handleEvent — one listener object for all four drag events keeps the
+    // add/remove symmetric and the depth counter correct.
+    handleEvent(e) {
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        // Without preventDefault the browser never fires 'drop'.
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+        if (e.type === 'dragenter') this._depth++;
+        this.setAttribute('data-over', '');
+      } else if (e.type === 'dragleave') {
+        // dragenter/leave fire for every descendant crossing — count depth
+        // so hovering the icon inside the empty state doesn't flicker.
+        if (--this._depth <= 0) { this._depth = 0; this.removeAttribute('data-over'); }
+      } else if (e.type === 'drop') {
+        e.preventDefault();
+        e.stopPropagation();
+        this._depth = 0;
+        this.removeAttribute('data-over');
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) this._ingest(f);
+      }
+    }
+
+    async _ingest(file) {
+      this._setError(null);
+      if (!file || ACCEPT.indexOf(file.type) < 0) {
+        this._setError('Drop a PNG, JPEG, WebP, or AVIF image.');
+        return;
+      }
+      // toDataUrl can take hundreds of ms on a large photo. A Clear or a
+      // newer drop during that window would be clobbered when this await
+      // resumes — bump + capture a generation so stale encodes bail.
+      const gen = ++this._gen;
+      try {
+        const w = this.clientWidth || this.offsetWidth || MAX_DIM;
+        const url = await toDataUrl(file, w);
+        if (gen !== this._gen) return;
+        // Only exit reframe once the new image is in hand — a rejected type
+        // or decode failure leaves the in-progress crop untouched.
+        this._exitReframe(false);
+        const val = { u: url, s: 1, x: 0, y: 0 };
+        setSlot(this.id || '', val);
+        // Keep a session-local copy for id-less slots so the drop still
+        // shows, even though it cannot persist.
+        if (!this.id) { this._local = val; this._render(); }
+      } catch (err) {
+        if (gen !== this._gen) return;
+        this._setError('Could not read that image.');
+        console.warn('<image-slot> ingest failed:', err);
+      }
+    }
+
+    _setError(msg) {
+      if (this._err) { this._err.remove(); this._err = null; }
+      if (!msg) return;
+      const d = document.createElement('div');
+      d.className = 'err'; d.textContent = msg;
+      this.shadowRoot.appendChild(d);
+      this._err = d;
+      setTimeout(() => { if (this._err === d) { d.remove(); this._err = null; } }, 3000);
+    }
+
+    // Reframing (pan/resize) is only meaningful for fit=cover — contain/fill
+    // keep the old object-fit path and double-click is a no-op.
+    _reframes() {
+      return this.hasAttribute('data-filled') &&
+        (this.getAttribute('fit') || 'cover') === 'cover';
+    }
+
+    // Cover-baseline geometry, shared by clamp/apply/resize. Null until the
+    // img has loaded (naturalWidth is 0 before that) or when the slot has no
+    // layout box — ResizeObserver fires with a 0×0 rect under display:none,
+    // and clamping against a degenerate 1×1 frame would silently pull the
+    // stored pan toward zero.
+    _geom() {
+      const iw = this._img.naturalWidth, ih = this._img.naturalHeight;
+      const fw = this.clientWidth, fh = this.clientHeight;
+      if (!iw || !ih || !fw || !fh) return null;
+      return { iw, ih, fw, fh, base: Math.max(fw / iw, fh / ih) };
+    }
+
+    _clampView() {
+      // Pan range on each axis is half the overflow past the frame edge.
+      const g = this._geom();
+      if (!g) return;
+      const mx = Math.max(0, (g.iw * g.base * this._view.s / g.fw - 1) * 50);
+      const my = Math.max(0, (g.ih * g.base * this._view.s / g.fh - 1) * 50);
+      this._view.x = Math.max(-mx, Math.min(mx, this._view.x));
+      this._view.y = Math.max(-my, Math.min(my, this._view.y));
+    }
+
+    _applyView() {
+      const g = this._geom();
+      const fit = this.getAttribute('fit') || 'cover';
+      if (fit !== 'cover' || !g) {
+        // Non-cover, or dimensions not known yet (before img load).
+        this._img.style.width = '100%';
+        this._img.style.height = '100%';
+        this._img.style.left = '50%';
+        this._img.style.top = '50%';
+        this._img.style.objectFit = fit;
+        this._img.style.objectPosition = this.getAttribute('position') || '50% 50%';
+        return;
+      }
+      // Cover baseline: img fills the frame on its tighter axis at s=1, so
+      // pan works immediately on the overflowing axis without zooming first.
+      // Width/height and left/top are all frame-% — depends only on the
+      // frame aspect ratio, so a responsive resize keeps the same crop. The
+      // spill layer mirrors the same box so its corners = image corners.
+      const k = g.base * this._view.s;
+      const w = (g.iw * k / g.fw * 100) + '%';
+      const h = (g.ih * k / g.fh * 100) + '%';
+      const l = (50 + this._view.x) + '%';
+      const t = (50 + this._view.y) + '%';
+      this._img.style.width = w; this._img.style.height = h;
+      this._img.style.left = l; this._img.style.top = t;
+      this._img.style.objectFit = '';
+      this._spill.style.width = w; this._spill.style.height = h;
+      this._spill.style.left = l; this._spill.style.top = t;
+    }
+
+    _commitView() {
+      const v = { s: this._view.s, x: this._view.x, y: this._view.y };
+      if (this._userUrl) v.u = this._userUrl;
+      // Framing-only (no u) persists too so an author-src slot remembers its
+      // crop; clearing the sidecar still falls through to src=.
+      if (this.id) setSlot(this.id, v);
+      else { this._local = v; }
+    }
+
+    _render() {
+      // Shape / mask. Presets use border-radius so the dashed ring can
+      // follow the rounded outline; clip-path is only applied for an
+      // explicit `mask` (the ring is hidden there since a rectangle
+      // dashed border chopped by an arbitrary polygon looks broken).
+      const mask = this.getAttribute('mask');
+      const shape = (this.getAttribute('shape') || 'rounded').toLowerCase();
+      let radius = '';
+      if (shape === 'circle') radius = '50%';
+      else if (shape === 'pill') radius = '9999px';
+      else if (shape === 'rounded') {
+        const n = parseFloat(this.getAttribute('radius'));
+        radius = (Number.isFinite(n) ? n : 12) + 'px';
+      }
+      this._frame.style.borderRadius = mask ? '' : radius;
+      this._frame.style.clipPath = mask || '';
+      this._ring.style.borderRadius = mask ? '' : radius;
+      this._ring.style.display = mask ? 'none' : '';
+
+      // Controls and reframe entry gate on this so share links stay read-only.
+      const editable = !!(window.omelette && window.omelette.writeFile);
+      this.toggleAttribute('data-editable', editable);
+      this._sub.style.display = editable ? '' : 'none';
+
+      // Content. The sidecar is also writable by the agent's write_file
+      // tool, so its value isn't guaranteed canvas-originated — only accept
+      // data:image/ URLs from it. The `src` attribute is author-controlled
+      // (Claude wrote it into the HTML) so it passes through unchanged.
+      let stored = this.id ? getSlot(this.id) : this._local;
+      if (stored && stored.u && !/^data:image\//i.test(stored.u)) stored = null;
+      const srcAttr = this.getAttribute('src') || '';
+      this._userUrl = (stored && stored.u) || null;
+      const url = this._userUrl || srcAttr;
+      // Don't clobber an in-flight reframe with a store-triggered re-render.
+      if (!this.hasAttribute('data-reframe')) {
+        this._view = {
+          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : 1,
+          x: stored && Number.isFinite(stored.x) ? stored.x : 0,
+          y: stored && Number.isFinite(stored.y) ? stored.y : 0,
+        };
+      }
+      this._cap.textContent = this.getAttribute('placeholder') || 'Drop an image';
+      // Toggle via style.display — the [hidden] attribute alone loses to
+      // the display:flex / display:block rules in the stylesheet above.
+      if (url) {
+        if (this._img.getAttribute('src') !== url) {
+          this._img.src = url;
+          this._ghost.src = url;
+        }
+        this._img.style.display = 'block';
+        this._empty.style.display = 'none';
+        this.setAttribute('data-filled', '');
+        this._clampView();
+        this._applyView();
+      } else {
+        this._img.style.display = 'none';
+        this._img.removeAttribute('src');
+        this._ghost.removeAttribute('src');
+        this._empty.style.display = 'flex';
+        this.removeAttribute('data-filled');
+      }
+    }
+  }
+
+  if (!customElements.get('image-slot')) {
+    customElements.define('image-slot', ImageSlot);
+  }
+})();
+
+  </script>
+
   <!-- ╔══════════════════════════════════════════════════════════════════╗ -->
-  <!-- ║  DATALAGER — adapter mot vår riktiga data.json + fixtures.json   ║ -->
-  <!-- ║  Exponerar samma window.VM.{build,TEAMS,GROUPS,...} som mock-    ║ -->
-  <!-- ║  datalagret, men byggt från verklig pool-data hämtad i runtime.  ║ -->
+  <!-- ║  DATALAGER — byt ut detta block mot riktig data.                  ║ -->
+  <!-- ║  Exponerar window.VM.build('pre'|'mid') som returnerar hela       ║ -->
+  <!-- ║  datasetet (lag, grupper, 104 matcher, statistik, spelare, tips). ║ -->
+  <!-- ║  Allt nedan är seedat/deterministiskt. Behåll samma form på       ║ -->
+  <!-- ║  objektet som build() returnerar så funkar vyerna oförändrat.     ║ -->
   <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
+  <!-- ============ data.js ============ -->
   <script>
 /* ============================================================
-   VM 2026 — Tippningsliga · Data-adapter
-   window.__REAL_DATA__ sätts av boot-koden innan React renderas.
-   window.VM.build()  ->  fullständig dataset i designens form.
+   VM 2026 — Tippningsliga  ·  Datalager (vanilla JS)
+   Allt seedat & deterministiskt så tabeller/poäng hänger ihop.
+   window.VM.build('pre' | 'mid')  ->  fullständig dataset
    ============================================================ */
 (function () {
   "use strict";
 
-  // ---- prispengar (samma 50/30/20 av 2700) ----
-  const PRIZES = [1350, 810, 540];
+  // ---- seedad RNG (mulberry32) --------------------------------
+  function rng(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function hash(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
 
-  // ---- 12 grupper ----
+  // ---- 48 lag: [kod, svenskt namn, färg1, färg2, rating] -------
+  // Pottordning: rad = pott (1..4), kolumn = grupp A..L
+  const POT1 = [
+    ["ARG","Argentina","#75AADB","#ffffff",91],["FRA","Frankrike","#1D3A8A","#EF3340",90],
+    ["ESP","Spanien","#C60B1E","#FFC400",90],["ENG","England","#ffffff","#CE1124",88],
+    ["BRA","Brasilien","#FEDF00","#009C3B",89],["POR","Portugal","#006600","#FF0000",87],
+    ["NED","Nederländerna","#FF6C00","#21468B",85],["USA","USA","#3C3B6E","#B22234",80],
+    ["MEX","Mexiko","#006847","#CE1126",79],["CAN","Kanada","#FF0000","#ffffff",76],
+    ["GER","Tyskland","#000000","#DD0000",87],["BEL","Belgien","#FDDA24","#EF3340",84]
+  ];
+  const POT2 = [
+    ["CRO","Kroatien","#171796","#FF0000",83],["URU","Uruguay","#7FB3E8","#ffffff",81],
+    ["COL","Colombia","#FCD116","#003893",80],["JPN","Japan","#BC002D","#ffffff",79],
+    ["MAR","Marocko","#C1272D","#006233",80],["SEN","Senegal","#00853F","#FDEF42",78],
+    ["SUI","Schweiz","#FF0000","#ffffff",78],["DEN","Danmark","#C60C30","#ffffff",78],
+    ["KOR","Sydkorea","#0047A0","#CD2E3A",77],["ECU","Ecuador","#FFD100","#0072CE",75],
+    ["AUT","Österrike","#ED2939","#ffffff",79],["AUS","Australien","#00843D","#FFCD00",73]
+  ];
+  const POT3 = [
+    ["NOR","Norge","#BA0C2F","#00205B",78],["SWE","Sverige","#006AA7","#FECC02",75],
+    ["POL","Polen","#ffffff","#DC143C",74],["SRB","Serbien","#C6363C","#0C4076",74],
+    ["TUR","Turkiet","#E30A17","#ffffff",75],["EGY","Egypten","#CE1126","#000000",73],
+    ["NGA","Nigeria","#008751","#ffffff",74],["CIV","Elfenbenskusten","#FF8200","#009E60",74],
+    ["IRN","Iran","#239F40","#DA0000",72],["PAN","Panama","#005293","#D21034",68],
+    ["PAR","Paraguay","#D52B1E","#0038A8",71],["HUN","Ungern","#477050","#CD2A3E",72]
+  ];
+  const POT4 = [
+    ["NZL","Nya Zeeland","#ffffff","#00247D",64],["KSA","Saudiarabien","#006C35","#ffffff",67],
+    ["GHA","Ghana","#006B3F","#FCD116",70],["CMR","Kamerun","#007A5E","#CE1126",71],
+    ["UZB","Uzbekistan","#1EB53A","#0099B5",69],["JOR","Jordanien","#007A3D","#CE1126",66],
+    ["RSA","Sydafrika","#007A4D","#FFB915",70],["ALG","Algeriet","#006233","#ffffff",73],
+    ["HON","Honduras","#0073CF","#ffffff",65],["PO1","Playoff A","#9aa0a6","#cfd3d7",66],
+    ["PO2","Playoff B","#9aa0a6","#cfd3d7",65],["PO3","Playoff C","#9aa0a6","#cfd3d7",64]
+  ];
+
   const GROUP_LETTERS = ["A","B","C","D","E","F","G","H","I","J","K","L"];
-
-  // ---- TLA → ISO alpha-2 (för flagcdn) ----
-  const TLA_TO_ISO = {
-    USA:"us", MEX:"mx", CAN:"ca",
-    BRA:"br", ARG:"ar", URU:"uy", COL:"co", ECU:"ec", PAR:"py", CHI:"cl", PER:"pe", VEN:"ve", BOL:"bo",
-    ENG:"gb-eng", SCO:"gb-sct", WAL:"gb-wls", NIR:"gb-nir", IRL:"ie",
-    FRA:"fr", GER:"de", ITA:"it", ESP:"es", POR:"pt", NED:"nl", BEL:"be",
-    CRO:"hr", SUI:"ch", AUT:"at", POL:"pl", DEN:"dk", SWE:"se", NOR:"no",
-    FIN:"fi", ISL:"is", HUN:"hu", CZE:"cz", SVK:"sk", SVN:"si", ROU:"ro",
-    GRE:"gr", BUL:"bg", SRB:"rs", UKR:"ua", BIH:"ba", ALB:"al", KOS:"xk",
-    MKD:"mk", MNE:"me", TUR:"tr", LUX:"lu",
-    MAR:"ma", TUN:"tn", ALG:"dz", EGY:"eg", SEN:"sn", CIV:"ci", NGA:"ng",
-    CMR:"cm", GHA:"gh", RSA:"za", COD:"cd", CGO:"cg", CPV:"cv", MLI:"ml", BFA:"bf",
-    ANG:"ao", ZAM:"zm", GUI:"gn", GAB:"ga", LBY:"ly", BEN:"bj", TOG:"tg",
-    JPN:"jp", KOR:"kr", KSA:"sa", IRN:"ir", IRQ:"iq", QAT:"qa", UAE:"ae",
-    UZB:"uz", JOR:"jo", AUS:"au", CHN:"cn", THA:"th", VIE:"vn", IDN:"id",
-    CRC:"cr", PAN:"pa", JAM:"jm", HAI:"ht", HON:"hn", SLV:"sv", GUA:"gt",
-    TRI:"tt", CUW:"cw", CUR:"cw", SUR:"sr", NZL:"nz"
+  // ISO 3166-1 alpha-2 (flagcdn). England -> gb-eng. Playoff -> null.
+  const ISO = {
+    ARG: "ar", FRA: "fr", ESP: "es", ENG: "gb-eng", BRA: "br", POR: "pt", NED: "nl",
+    USA: "us", MEX: "mx", CAN: "ca", GER: "de", BEL: "be", CRO: "hr", URU: "uy",
+    COL: "co", JPN: "jp", MAR: "ma", SEN: "sn", SUI: "ch", DEN: "dk", KOR: "kr",
+    ECU: "ec", AUT: "at", AUS: "au", NOR: "no", SWE: "se", POL: "pl", SRB: "rs",
+    TUR: "tr", EGY: "eg", NGA: "ng", CIV: "ci", IRN: "ir", PAN: "pa", PAR: "py",
+    HUN: "hu", NZL: "nz", KSA: "sa", GHA: "gh", CMR: "cm", UZB: "uz", JOR: "jo",
+    RSA: "za", ALG: "dz", HON: "hn", PO1: null, PO2: null, PO3: null
   };
 
-  // ---- engelska namn → ISO (om TLA saknas) ----
-  const NAME_TO_ISO = {
-    "united states":"us","mexico":"mx","canada":"ca",
-    "brazil":"br","argentina":"ar","uruguay":"uy","colombia":"co","ecuador":"ec",
-    "paraguay":"py","chile":"cl","peru":"pe","venezuela":"ve","bolivia":"bo",
-    "england":"gb-eng","scotland":"gb-sct","wales":"gb-wls","northern ireland":"gb-nir",
-    "ireland":"ie","republic of ireland":"ie",
-    "france":"fr","germany":"de","italy":"it","spain":"es","portugal":"pt",
-    "netherlands":"nl","belgium":"be","croatia":"hr","switzerland":"ch","austria":"at",
-    "poland":"pl","denmark":"dk","sweden":"se","norway":"no","finland":"fi","iceland":"is",
-    "hungary":"hu","czech republic":"cz","czechia":"cz","slovakia":"sk","slovenia":"si",
-    "romania":"ro","greece":"gr","serbia":"rs","ukraine":"ua",
-    "bosnia and herzegovina":"ba","bosnia-herzegovina":"ba","albania":"al",
-    "north macedonia":"mk","montenegro":"me","turkey":"tr","türkiye":"tr",
-    "morocco":"ma","tunisia":"tn","algeria":"dz","egypt":"eg","senegal":"sn",
-    "ivory coast":"ci","côte d'ivoire":"ci","nigeria":"ng",
-    "cameroon":"cm","ghana":"gh","south africa":"za","dr congo":"cd","congo dr":"cd",
-    "cape verde":"cv","mali":"ml","burkina faso":"bf","angola":"ao",
-    "japan":"jp","south korea":"kr","korea republic":"kr","saudi arabia":"sa",
-    "iran":"ir","iraq":"iq","qatar":"qa","united arab emirates":"ae",
-    "uzbekistan":"uz","jordan":"jo","australia":"au",
-    "costa rica":"cr","panama":"pa","jamaica":"jm","haiti":"ht","honduras":"hn",
-    "el salvador":"sv","guatemala":"gt","trinidad and tobago":"tt",
-    "curaçao":"cw","curacao":"cw","new zealand":"nz"
-  };
-
-  // ---- svenska namn → TLA (från tips.json team_aliases) ----
-  const SV_TO_TLA = {
-    "argentina":"ARG","frankrike":"FRA","spanien":"ESP","england":"ENG",
-    "brasilien":"BRA","portugal":"POR","nederländerna":"NED","usa":"USA",
-    "mexico":"MEX","mexiko":"MEX","kanada":"CAN","tyskland":"GER","belgien":"BEL",
-    "kroatien":"CRO","uruguay":"URU","colombia":"COL","japan":"JPN",
-    "marocko":"MAR","senegal":"SEN","schweiz":"SUI","danmark":"DEN",
-    "sydkorea":"KOR","ecuador":"ECU","österrike":"AUT","australien":"AUS",
-    "norge":"NOR","sverige":"SWE","polen":"POL","serbien":"SRB",
-    "turkiet":"TUR","egypten":"EGY","nigeria":"NGA","elfenbenskusten":"CIV",
-    "iran":"IRN","panama":"PAN","paraguay":"PAR","ungern":"HUN",
-    "nya zeeland":"NZL","saudiarabien":"KSA","ghana":"GHA","kamerun":"CMR",
-    "uzbekistan":"UZB","jordanien":"JOR","sydafrika":"RSA","algeriet":"ALG",
-    "honduras":"HON","peru":"PER","chile":"CHI","panama":"PAN",
-    "tjeckien":"CZE","bosnien":"BIH","qatar":"QAT","irak":"IRQ",
-    "haiti":"HAI","skottland":"SCO","kap verde":"CPV","tunisien":"TUN",
-    "dr kongo":"COD","curacao":"CUR"
-  };
-
-  // ---- engelska namn → svensk display (för paddade lag) ----
-  const EN_TO_SV = {
-    "United States":"USA","Mexico":"Mexico","Canada":"Kanada","Brazil":"Brasilien",
-    "Argentina":"Argentina","Uruguay":"Uruguay","Colombia":"Colombia","Ecuador":"Ecuador",
-    "Paraguay":"Paraguay","Chile":"Chile","Peru":"Peru","Venezuela":"Venezuela",
-    "England":"England","Scotland":"Skottland","Wales":"Wales",
-    "France":"Frankrike","Germany":"Tyskland","Italy":"Italien","Spain":"Spanien",
-    "Portugal":"Portugal","Netherlands":"Nederländerna","Belgium":"Belgien",
-    "Croatia":"Kroatien","Switzerland":"Schweiz","Austria":"Österrike",
-    "Poland":"Polen","Denmark":"Danmark","Sweden":"Sverige","Norway":"Norge",
-    "Finland":"Finland","Iceland":"Island","Hungary":"Ungern",
-    "Czech Republic":"Tjeckien","Czechia":"Tjeckien","Slovakia":"Slovakien",
-    "Romania":"Rumänien","Greece":"Grekland","Serbia":"Serbien","Ukraine":"Ukraina",
-    "Bosnia and Herzegovina":"Bosnien","Bosnia-Herzegovina":"Bosnien",
-    "Albania":"Albanien","Turkey":"Turkiet","Türkiye":"Turkiet",
-    "Morocco":"Marocko","Tunisia":"Tunisien","Algeria":"Algeriet","Egypt":"Egypten",
-    "Senegal":"Senegal","Ivory Coast":"Elfenbenskusten","Côte d'Ivoire":"Elfenbenskusten",
-    "Nigeria":"Nigeria","Cameroon":"Kamerun","Ghana":"Ghana","South Africa":"Sydafrika",
-    "DR Congo":"DR Kongo","Congo DR":"DR Kongo","Cape Verde":"Kap Verde",
-    "Japan":"Japan","South Korea":"Sydkorea","Korea Republic":"Sydkorea",
-    "Saudi Arabia":"Saudiarabien","Iran":"Iran","Iraq":"Irak","Qatar":"Qatar",
-    "United Arab Emirates":"Förenade Arabemiraten",
-    "Uzbekistan":"Uzbekistan","Jordan":"Jordanien","Australia":"Australien",
-    "Costa Rica":"Costa Rica","Panama":"Panama","Jamaica":"Jamaica","Haiti":"Haiti",
-    "Honduras":"Honduras","Curaçao":"Curaçao","Curacao":"Curaçao",
-    "New Zealand":"Nya Zeeland"
-  };
-
-  // ---- 9 spelare med deterministisk färg från designens palett ----
-  const PLAYER_COLORS = {
-    "Albin":     "#E5267E",
-    "Alexander": "#FF6B35",
-    "Björn":     "#1FA37A",
-    "Casper":    "#7A3CF0",
-    "Filip":     "#0E8FE0",
-    "Isac":      "#F5B301",
-    "Johan":     "#E63946",
-    "Martin":    "#16A0A0",
-    "Oskar":     "#9B5DE5"
-  };
-
-  function isoFromTla(tla){ return tla ? (TLA_TO_ISO[String(tla).toUpperCase()] || null) : null; }
-  function isoFromName(name){
-    if(!name) return null;
-    const key = String(name).toLowerCase().trim();
-    if(NAME_TO_ISO[key]) return NAME_TO_ISO[key];
-    const stripped = key.normalize("NFD").replace(/[̀-ͯ]/g,"");
-    return NAME_TO_ISO[stripped] || null;
-  }
-  function isoFor(name, tla){ return isoFromTla(tla) || isoFromName(name); }
-  // Generate deterministic team brand colors (c1/c2) from name hash if we lack flag-derived data
-  function brandFromName(name){
-    let h = 0;
-    for(let i=0;i<(name||"").length;i++) h = (h*31 + name.charCodeAt(i)) | 0;
-    const hue1 = ((h % 360) + 360) % 360;
-    const hue2 = (hue1 + 28) % 360;
-    return [`hsl(${hue1} 55% 45%)`, `hsl(${hue2} 65% 38%)`];
-  }
-  // Build a 3-letter code from a team name when TLA is missing.
-  function codeFromName(name){
-    if(!name) return null;
-    // Try a SV → TLA hit first.
-    const lc = String(name).toLowerCase();
-    if(SV_TO_TLA[lc]) return SV_TO_TLA[lc];
-    if(NAME_TO_ISO[lc]){ /* fall through */ }
-    // Otherwise pick first 3 chars from first word.
-    const cleaned = String(name).replace(/[^a-zA-ZåäöÅÄÖ ]/g,"").trim().toUpperCase();
-    return cleaned.slice(0,3) || "TBD";
-  }
-
-  // Map a bonus team-pick string (e.g. "Frankrike" or "France") to a team code.
-  function teamCodeFromPick(pick, teams){
-    if(!pick) return null;
-    const lc = String(pick).toLowerCase().trim();
-    if(SV_TO_TLA[lc]) return SV_TO_TLA[lc];
-    // try match against built TEAMS by name (Swedish display)
-    for(const code in teams){
-      if(teams[code].name && teams[code].name.toLowerCase() === lc) return code;
-    }
-    // try English name lookup → ISO → code
-    if(NAME_TO_ISO[lc]){
-      const iso = NAME_TO_ISO[lc];
-      for(const code in teams){ if(teams[code].iso === iso) return code; }
-    }
-    return null;
-  }
-
-  // ---- core builder ----
-  function build(){
-    const real = window.__REAL_DATA__ || {};
-    const D = real.data || {};
-    const F = (real.fixtures || []);
-
-    // ============= TEAMS + GROUPS from data.groups + fixtures =============
-    const TEAMS = {};
-    const GROUPS = {};
-    GROUP_LETTERS.forEach(L => { GROUPS[L] = []; });
-
-    // 1) Seed TEAMS + GROUPS from data.groups (the authoritative group memberships)
-    (D.groups || []).forEach(g => {
-      const L = g.code;
-      (g.table || []).forEach(row => {
-        const code = (row.tla && String(row.tla).toUpperCase()) || codeFromName(row.team);
-        if(TEAMS[code]) return;
-        const display = EN_TO_SV[row.team] || row.team;
-        const brand = brandFromName(row.team || code);
-        TEAMS[code] = {
-          code, name: display, c1: brand[0], c2: brand[1],
-          rating: 75, group: L, pot: 0,
-          iso: isoFor(row.team, row.tla)
-        };
-        if(GROUPS[L] && GROUPS[L].length < 4) GROUPS[L].push(code);
-      });
+  const TEAMS = {};
+  const GROUPS = {};
+  GROUP_LETTERS.forEach(function (L, g) {
+    const members = [POT1[g], POT2[g], POT3[g], POT4[g]].map(function (row, pi) {
+      const t = { code: row[0], name: row[1], c1: row[2], c2: row[3], rating: row[4],
+        group: L, pot: pi + 1, iso: ISO[row[0]] };
+      TEAMS[t.code] = t;
+      return t.code;
     });
+    GROUPS[L] = members;
+  });
 
-    // 2) Make sure every team that appears in fixtures.json exists in TEAMS too
-    F.forEach(f => {
-      [[f.home, f.homeTla], [f.away, f.awayTla]].forEach(([n, t]) => {
-        if(!n) return;
-        const code = (t && String(t).toUpperCase()) || codeFromName(n);
-        if(!TEAMS[code]){
-          const display = EN_TO_SV[n] || n;
-          const brand = brandFromName(n);
-          TEAMS[code] = { code, name: display, c1: brand[0], c2: brand[1],
-            rating: 75, group: f.group || null, pot: 0, iso: isoFor(n, t) };
-        }
-        if(f.group && f.stage === "GROUP_STAGE" && GROUPS[f.group] && !GROUPS[f.group].includes(code) && GROUPS[f.group].length < 4){
-          GROUPS[f.group].push(code);
-          if(!TEAMS[code].group) TEAMS[code].group = f.group;
-        }
-      });
-    });
+  // ---- 9 spelare (porträtt från randomuser.me, byt mot riktiga foton sen) --
+  const PH = "https://randomuser.me/api/portraits/";
+  const PLAYERS = [
+    { id: "erik",   name: "Erik",   color: "#E5267E", photo: PH + "men/32.jpg" },
+    { id: "anna",   name: "Anna",   color: "#FF6B35", photo: PH + "women/44.jpg" },
+    { id: "johan",  name: "Johan",  color: "#1FA37A", photo: PH + "men/55.jpg" },
+    { id: "sara",   name: "Sara",   color: "#7A3CF0", photo: PH + "women/68.jpg" },
+    { id: "markus", name: "Markus", color: "#0E8FE0", photo: PH + "men/15.jpg" },
+    { id: "lina",   name: "Lina",   color: "#F5B301", photo: PH + "women/21.jpg" },
+    { id: "oskar",  name: "Oskar",  color: "#E63946", photo: PH + "men/41.jpg" },
+    { id: "frida",  name: "Frida",  color: "#16A0A0", photo: PH + "women/9.jpg" },
+    { id: "david",  name: "David",  color: "#9B5DE5", photo: PH + "men/77.jpg" }
+  ];
 
-    // ============= helper: find team code by name from a fixture =============
-    function codeOf(name, tla){
-      if(!name) return null;
-      if(tla){
-        const t = String(tla).toUpperCase();
-        if(TEAMS[t]) return t;
-      }
-      // try name lookup
-      for(const c in TEAMS){
-        if(TEAMS[c].name === (EN_TO_SV[name] || name)) return c;
-      }
-      const fallback = codeFromName(name);
-      if(TEAMS[fallback]) return fallback;
-      // synthesize team if completely new (knockout TBD shouldn't hit this since home/away null)
-      const brand = brandFromName(name);
-      TEAMS[fallback] = { code:fallback, name: EN_TO_SV[name]||name, c1:brand[0], c2:brand[1],
-        rating:75, group:null, pot:0, iso: isoFor(name, tla) };
-      return fallback;
+  // ---- stjärnspelare (för bonus) -----------------------------
+  const STARS = [
+    ["Lamine Yamal","ESP"],["Kylian Mbappé","FRA"],["Vinícius Jr","BRA"],
+    ["Jude Bellingham","ENG"],["Erling Haaland","NOR"],["Lautaro Martínez","ARG"],
+    ["Rafael Leão","POR"],["Florian Wirtz","GER"],["Pedri","ESP"],
+    ["Khvicha Kvaratskhelia","CRO"],["Cole Palmer","ENG"],["Désiré Doué","FRA"]
+  ];
+  const KEEPERS = [
+    ["Emiliano Martínez","ARG"],["Gianluigi Donnarumma","BEL"],["Mike Maignan","FRA"],
+    ["Unai Simón","ESP"],["Jordan Pickford","ENG"],["Yann Sommer","SUI"]
+  ];
+  const YOUNG = [
+    ["Lamine Yamal","ESP"],["Endrick","BRA"],["Désiré Doué","FRA"],
+    ["Kobbie Mainoo","ENG"],["Arda Güler","TUR"],["Pau Cubarsí","ESP"]
+  ];
+
+  // ---- arenor (VM 2026 värdstäder) ----
+  const VENUES = [
+    ["MetLife Stadium", "New York/New Jersey", "us"], ["SoFi Stadium", "Los Angeles", "us"],
+    ["AT&T Stadium", "Dallas", "us"], ["Mercedes-Benz Stadium", "Atlanta", "us"],
+    ["NRG Stadium", "Houston", "us"], ["Lincoln Financial Field", "Philadelphia", "us"],
+    ["Levi's Stadium", "San Francisco", "us"], ["Lumen Field", "Seattle", "us"],
+    ["Arrowhead Stadium", "Kansas City", "us"], ["Gillette Stadium", "Boston", "us"],
+    ["Hard Rock Stadium", "Miami", "us"], ["Estadio Azteca", "Mexico City", "mx"],
+    ["Estadio Akron", "Guadalajara", "mx"], ["Estadio BBVA", "Monterrey", "mx"],
+    ["BMO Field", "Toronto", "ca"], ["BC Place", "Vancouver", "ca"]
+  ];
+
+  // ---- trupp-namn (för målskyttar) ----
+  const SURNAMES = [
+    "Silva","Santos","Costa","Pereira","Rodríguez","González","Fernández","Martínez","López",
+    "Müller","Schmidt","Wagner","Hoffmann","Koch","Bauer","Dubois","Laurent","Moreau","Bernard",
+    "Rossi","Russo","Ferrari","Bruno","Greco","Kim","Park","Lee","Sato","Tanaka","Suzuki",
+    "Diallo","Traoré","Koné","Touré","Mensah","Owusu","Hassan","Ahmed","Mahmoud","Salah",
+    "Novak","Horvat","Kovač","Nielsen","Hansen","Larsen","Berg","Lindberg","Andersson","Johansson",
+    "Nguyen","Tran","Khan","Ali","Yilmaz","Demir","Popović","Marković","Nakamura","Mendoza"
+  ];
+
+  function squadFor(code) {
+    const r = rng(hash(code + "squad"));
+    const names = [];
+    const used = {};
+    while (names.length < 6) {
+      const n = SURNAMES[Math.floor(r() * SURNAMES.length)];
+      if (!used[n]) { used[n] = 1; names.push(n); }
     }
+    return names;
+  }
 
-    // ============= MATCHES (group + knockout) from fixtures =============
-    const STAGE_MAP = {
-      GROUP_STAGE:"group",
-      LAST_32:"ko", LAST_16:"ko", QUARTER_FINALS:"ko",
-      SEMI_FINALS:"ko", THIRD_PLACE:"ko", FINAL:"ko"
+  function genStats(m) {
+    const r = rng(hash(m.id + "stats"));
+    const diff = TEAMS[m.home].rating - TEAMS[m.away].rating;
+    let possA = Math.round(50 + diff * 0.7 + (r() - 0.5) * 14);
+    possA = Math.max(33, Math.min(67, possA));
+    const possB = 100 - possA;
+    function shots(goals, poss) { return Math.max((goals || 0) + Math.round(r() * 3), Math.round(6 + poss / 9 + (goals || 0) * 1.3 + r() * 6)); }
+    const shA = shots(m.ga, possA), shB = shots(m.gb, possB);
+    const sotA = Math.max(m.ga || 0, Math.round(shA * (0.33 + r() * 0.2)));
+    const sotB = Math.max(m.gb || 0, Math.round(shB * (0.33 + r() * 0.2)));
+    function xg(goals, sot) { return Math.max(0.2, +(((goals || 0) * 0.65) + sot * 0.17 + r() * 0.5).toFixed(1)); }
+    return {
+      poss: [possA, possB], shots: [shA, shB], sot: [sotA, sotB],
+      corners: [2 + Math.round(r() * 8), 2 + Math.round(r() * 8)],
+      fouls: [6 + Math.round(r() * 10), 6 + Math.round(r() * 10)],
+      yellow: [Math.round(r() * 4), Math.round(r() * 4)],
+      red: [r() > 0.92 ? 1 : 0, r() > 0.95 ? 1 : 0],
+      xg: [xg(m.ga, sotA), xg(m.gb, sotB)],
+      pass: [Math.round(76 + possA * 0.16 + r() * 4), Math.round(76 + possB * 0.16 + r() * 4)]
     };
-    const KO_PREFIX = {
-      LAST_32:"r32_", LAST_16:"r16_", QUARTER_FINALS:"qf_",
-      SEMI_FINALS:"sf_", THIRD_PLACE:"third_", FINAL:"final_"
-    };
+  }
+  function genScorers(m) {
+    const out = [];
+    const sqH = squadFor(m.home), sqA = squadFor(m.away);
+    const r = rng(hash(m.id + "scorers"));
+    const maxMin = m.status === "live" ? Math.max(2, (m.minute || 60) - 1) : 93;
+    function add(team, sq, n) {
+      const mins = [];
+      for (let i = 0; i < n; i++) mins.push(1 + Math.floor(r() * maxMin));
+      mins.sort(function (a, b) { return a - b; });
+      mins.forEach(function (mn) { out.push({ team: team, name: sq[Math.floor(r() * 3)], minute: mn, pen: r() > 0.86 }); });
+    }
+    add(m.home, sqH, m.ga || 0);
+    add(m.away, sqA, m.gb || 0);
+    out.sort(function (a, b) { return a.minute - b.minute; });
+    return out;
+  }
+  function genCards(m, s) {
+    const out = [];
+    const sqH = squadFor(m.home), sqA = squadFor(m.away);
+    const r = rng(hash(m.id + "cards"));
+    const maxMin = m.status === "live" ? Math.max(2, (m.minute || 60) - 1) : 93;
+    function add(team, sq, n, type) {
+      for (let i = 0; i < n; i++) out.push({ team: team, name: sq[3 + Math.floor(r() * 3)], minute: 1 + Math.floor(r() * maxMin), type: type });
+    }
+    add(m.home, sqH, s.yellow[0], "yellow"); add(m.away, sqA, s.yellow[1], "yellow");
+    add(m.home, sqH, s.red[0], "red"); add(m.away, sqA, s.red[1], "red");
+    out.sort(function (a, b) { return a.minute - b.minute; });
+    return out;
+  }
+  function h2h(a, b) {
+    if (!a || !b || a.indexOf("PO") === 0 || b.indexOf("PO") === 0) return null;
+    const key = [a, b].slice().sort().join("");
+    const r = rng(hash(key + "h2h"));
+    const n = 2 + Math.floor(r() * 4);
+    const ms = []; let wa = 0, d = 0, wb = 0;
+    for (let i = 0; i < n; i++) {
+      const ga = Math.floor(r() * 4), gb = Math.floor(r() * 4);
+      ms.push({ a: ga, b: gb, year: 2024 - i * 2 });
+      if (ga > gb) wa++; else if (ga < gb) wb++; else d++;
+    }
+    return { a: a, b: b, wa: wa, d: d, wb: wb, matches: ms };
+  }
 
-    // Build a sidecar lookup of tips per match id (from data.matches)
-    const tipsByMatchId = {};
-    (D.matches || []).forEach(m => { tipsByMatchId[m.id] = m; });
+  // ---- turneringskalender ------------------------------------
+  // Avspark 11 juni 2026. Gruppspel ~11–27 juni. Slutspel följer.
+  function dateAt(dayOffset, hourSv) {
+    // bas: 2026-06-11 (UTC), svensk tid ~ UTC+2
+    const base = Date.UTC(2026, 5, 11, 0, 0, 0);
+    return new Date(base + dayOffset * 86400000 + (hourSv - 2) * 3600000);
+  }
+  const KICK_HOURS = [18, 21, 24, 3]; // svenska kvällar + sena USA-matcher
 
-    // Counters for KO ordering — index by stage so we get r32_0, r32_1, ...
-    const koCounters = {};
+  function scoreMatch(seed, ra, rb) {
+    const r = rng(seed);
+    const diff = (ra - rb) / 10;
+    function goals(bias) {
+      const base = 1.25 + Math.max(-0.9, Math.min(1.4, bias));
+      let g = 0; const lam = Math.max(0.2, base);
+      // enkel Poisson-approx via summering
+      let p = Math.exp(-lam), c = p, u = r();
+      while (u > c && g < 6) { g++; p = p * lam / g; c += p; }
+      return g;
+    }
+    return [goals(diff * 0.6), goals(-diff * 0.6)];
+  }
 
-    const allMatches = (F || []).map(f => {
-      const stage = STAGE_MAP[f.stage] || "ko";
-      const isGroup = stage === "group";
-      let id;
-      if(isGroup){
-        id = "G" + f.id;
-      } else {
-        const pfx = KO_PREFIX[f.stage] || "ko_";
-        koCounters[pfx] = koCounters[pfx] || 0;
-        id = pfx + (koCounters[pfx]++);
-      }
-      const homeCode = f.home ? codeOf(f.home, f.homeTla) : null;
-      const awayCode = f.away ? codeOf(f.away, f.awayTla) : null;
-      const kickoff = new Date(f.utcDate);
-      const finished = f.status === "FINISHED" || f.status === "AWARDED";
-      const live = f.status === "IN_PLAY" || f.status === "PAUSED" || f.status === "LIVE" || f.status === "SUSPENDED";
-      const ga = (f.score && f.score[0] != null) ? f.score[0] : null;
-      const gb = (f.score && f.score[1] != null) ? f.score[1] : null;
-      let winner = null;
-      if(finished && ga != null && gb != null){
-        if(ga > gb) winner = homeCode;
-        else if(gb > ga) winner = awayCode;
-      }
-      const tipped = tipsByMatchId[f.id];
-      const tippas = !!(tipped && tipped.tips && tipped.tips.length > 0);
+  function outcome(ga, gb) { return ga > gb ? "H" : ga < gb ? "B" : "X"; }
 
-      return {
-        id, stage, group: f.group || null,
-        round: isGroup ? ("Grupp " + (f.group||"")) : "Slutspel",
-        matchday: null,
-        home: homeCode, away: awayCode,
-        kickoff,
-        ga, gb,
-        status: finished ? "played" : (live ? "live" : "upcoming"),
-        winner, pen: null,
-        minute: live ? null : undefined,
-        venue: null,
-        tippas,
-        _realId: f.id  // for cross-lookup with data.matches.tips
-      };
-    });
+  function build(state) {
+    const isPre = state === "pre";
+    // simulerat "nu": pre = 5 juni (före avspark), mid = mitt i slutspel
+    const NOW = isPre ? new Date(Date.UTC(2026, 5, 5, 12, 0)) : new Date(Date.UTC(2026, 6, 3, 12, 0));
 
-    allMatches.sort((a,b) => a.kickoff - b.kickoff);
-    const matches = allMatches.filter(m => m.stage === "group");
-
-    // ============= groupTables from data.groups =============
-    const groupTables = {};
-    GROUP_LETTERS.forEach(L => {
-      const g = (D.groups || []).find(x => x.code === L);
-      if(g && g.table && g.table.length){
-        const sorted = [...g.table].sort((a,b) =>
-          (b.points - a.points) || ((b.gd||(b.gf-b.ga)) - (a.gd||(a.gf-a.ga))) || (b.gf - a.gf));
-        groupTables[L] = sorted.map((row, i) => {
-          const code = (row.tla && String(row.tla).toUpperCase()) || codeFromName(row.team);
-          return {
-            code,
-            sp: row.played || 0, v: row.won || 0, o: row.draw || 0, f: row.lost || 0,
-            gm: row.gf || 0, im: row.ga || 0,
-            ms: (row.gd != null ? row.gd : ((row.gf||0) - (row.ga||0))),
-            p:  row.points || 0,
-            pos: i + 1
+    // ---- gruppmatcher: round robin per grupp ----
+    const matches = [];
+    let mid = 0;
+    let dayCursor = 0, slot = 0;
+    // matchdag 1,2,3 enligt standard round-robin par
+    const RR = [[0, 1], [2, 3], [0, 2], [1, 3], [0, 3], [1, 2]];
+    for (let md = 0; md < 3; md++) {
+      GROUP_LETTERS.forEach(function (L) {
+        const m = GROUPS[L];
+        [RR[md * 2], RR[md * 2 + 1]].forEach(function (pair) {
+          const home = m[pair[0]], away = m[pair[1]];
+          const kickoff = dateAt(md * 5 + Math.floor(slot / 4), KICK_HOURS[slot % 4]);
+          slot++;
+          const match = {
+            id: "G" + (mid++), stage: "group", group: L, round: "Grupp " + L,
+            matchday: md + 1, home: home, away: away, kickoff: kickoff,
+            ga: null, gb: null, status: "upcoming"
           };
+          matches.push(match);
         });
-      } else {
-        // empty/placeholder — fill with placeholders for the design's "·" rendering
-        groupTables[L] = (GROUPS[L] || []).map((code, i) => ({
-          code, sp:0, v:0, o:0, f:0, gm:0, im:0, ms:0, p:0, pos: i+1
-        }));
-        // pad with synthetic codes if group has <4 known teams
-        while(groupTables[L].length < 4){
-          const tag = "TBD" + L + (groupTables[L].length+1);
-          TEAMS[tag] = TEAMS[tag] || { code:tag, name:"Att lottas", c1:"#888", c2:"#666",
-            rating:70, group:L, pot:0, iso:null };
-          groupTables[L].push({ code:tag, sp:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0, pos: groupTables[L].length+1 });
-        }
+      });
+    }
+    // sortera gruppmatcher kronologiskt
+    matches.sort(function (a, b) { return a.kickoff - b.kickoff; });
+
+    // spela gruppmatcher (mid: alla spelade; pre: inga)
+    matches.forEach(function (m) {
+      if (!isPre) {
+        const s = scoreMatch(hash(m.id), TEAMS[m.home].rating, TEAMS[m.away].rating);
+        m.ga = s[0]; m.gb = s[1]; m.status = "played";
       }
     });
 
-    // ============= knockout struct =============
-    function take(stage){ return allMatches.filter(m => m._stageOrig === stage || m.id.indexOf(KO_PREFIX[stage] || "###") === 0); }
-    function byStageId(prefix){ return allMatches.filter(m => m.id.indexOf(prefix) === 0); }
-
-    function padKO(arr, n){
-      while(arr.length < n){
-        arr.push({
-          id: "tbd_" + arr.length + "_" + Math.random().toString(36).slice(2,6),
-          stage: "ko", group: null, round: "Slutspel",
-          home: null, away: null, kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
-          ga: null, gb: null, status: "upcoming", winner: null, pen: null,
-          venue: null, tippas: false
+    // ---- grupptabeller ----
+    const groupTables = {};
+    GROUP_LETTERS.forEach(function (L) {
+      const rows = {};
+      GROUPS[L].forEach(function (code) {
+        rows[code] = { code: code, sp: 0, v: 0, o: 0, f: 0, gm: 0, im: 0, ms: 0, p: 0 };
+      });
+      matches.filter(function (m) { return m.stage === "group" && m.group === L && m.status === "played"; })
+        .forEach(function (m) {
+          const h = rows[m.home], a = rows[m.away];
+          h.sp++; a.sp++; h.gm += m.ga; h.im += m.gb; a.gm += m.gb; a.im += m.ga;
+          if (m.ga > m.gb) { h.v++; a.f++; h.p += 3; }
+          else if (m.ga < m.gb) { a.v++; h.f++; a.p += 3; }
+          else { h.o++; a.o++; h.p++; a.p++; }
         });
-      }
-      return arr;
+      const arr = Object.values(rows).map(function (r) { r.ms = r.gm - r.im; return r; });
+      arr.sort(function (x, y) {
+        return y.p - x.p || y.ms - x.ms || y.gm - x.gm || TEAMS[y.code].rating - TEAMS[x.code].rating;
+      });
+      arr.forEach(function (r, i) { r.pos = i + 1; });
+      groupTables[L] = arr;
+    });
+
+    // ---- kvalificerade: topp2 + 8 bästa treor ----
+    let qualifiers = [];
+    if (!isPre) {
+      const thirds = [];
+      GROUP_LETTERS.forEach(function (L) {
+        const t = groupTables[L];
+        qualifiers.push({ code: t[0].code, group: L, pos: 1, row: t[0] });
+        qualifiers.push({ code: t[1].code, group: L, pos: 2, row: t[1] });
+        thirds.push({ code: t[2].code, group: L, pos: 3, row: t[2] });
+      });
+      thirds.sort(function (x, y) {
+        return y.row.p - x.row.p || y.row.ms - x.row.ms || y.row.gm - x.row.gm;
+      });
+      qualifiers = qualifiers.concat(thirds.slice(0, 8));
+      // ranka 1..32 för seedning
+      qualifiers.sort(function (x, y) {
+        return y.row.p - x.row.p || y.row.ms - x.row.ms || TEAMS[y.code].rating - TEAMS[x.code].rating;
+      });
+      qualifiers.forEach(function (q, i) { q.seed = i + 1; });
     }
-    const knockout = {
-      r32:   padKO(byStageId("r32_"), 16),
-      r16:   padKO(byStageId("r16_"), 8),
-      qf:    padKO(byStageId("qf_"), 4),
-      sf:    padKO(byStageId("sf_"), 2),
-      third: padKO(byStageId("third_"), 1),
-      final: padKO(byStageId("final_"), 1)
-    };
-    const koRounds = [
-      { key:"r32", label:"Åttondelar", count:16 },
-      { key:"r16", label:"Sextondelar", count:8 },
-      { key:"qf",  label:"Kvartsfinal", count:4 },
-      { key:"sf",  label:"Semifinal", count:2 },
-      { key:"final", label:"Final", count:1 }
+
+    // ---- slutspelsträd ----
+    // Struktur byggs alltid (för 'pre' med TBD-slots).
+    const rounds = [
+      { key: "r32", label: "Åttondelar", count: 16 },
+      { key: "r16", label: "Sextondelar", count: 8 },
+      { key: "qf",  label: "Kvartsfinal", count: 4 },
+      { key: "sf",  label: "Semifinal", count: 2 },
+      { key: "final", label: "Final", count: 1 }
     ];
+    const knockout = {};
+    let koDay = 19; // efter gruppspel
+    // R32-par: seed i vs seed 33-i
+    function koMatch(idPrefix, i, home, away, ratingH, ratingA, dayOff) {
+      const kickoff = dateAt(dayOff, KICK_HOURS[i % 3]);
+      const m = {
+        id: idPrefix + i, stage: "ko", round: idPrefix,
+        home: home, away: away, kickoff: kickoff,
+        ga: null, gb: null, status: "upcoming", winner: null, pen: null
+      };
+      if (!isPre && home && away) {
+        let s = scoreMatch(hash(m.id), ratingH, ratingA);
+        let ga = s[0], gb = s[1], pen = null, w;
+        if (ga === gb) { // straffar
+          const r2 = rng(hash(m.id + "pen"));
+          const pa = 3 + Math.floor(r2() * 3), pb = (r2() < (ratingH >= ratingA ? 0.45 : 0.55)) ? pa + 1 : pa - 1;
+          pen = [pa, Math.max(0, pb)]; w = pa > pen[1] ? home : away;
+        } else { w = ga > gb ? home : away; }
+        m.ga = ga; m.gb = gb; m.pen = pen; m.winner = w; m.status = "played";
+      }
+      return m;
+    }
 
-    // ============= forms (last 5 results per team) =============
-    const forms = {};
-    Object.keys(TEAMS).forEach(c => { forms[c] = []; });
-    allMatches.forEach(m => {
-      if(m.status !== "played" || !m.home || !m.away) return;
-      const r = (g,o) => g > o ? "V" : g < o ? "F" : "O";
-      forms[m.home].push({ vs:m.away, gf:m.ga, ga:m.gb, r:r(m.ga, m.gb), id:m.id });
-      forms[m.away].push({ vs:m.home, gf:m.gb, ga:m.ga, r:r(m.gb, m.ga), id:m.id });
+    if (!isPre) {
+      // R32
+      const r32 = [];
+      for (let i = 0; i < 16; i++) {
+        const h = qualifiers[i], a = qualifiers[31 - i];
+        r32.push(koMatch("r32_", i, h.code, a.code, TEAMS[h.code].rating, TEAMS[a.code].rating, koDay + Math.floor(i / 4)));
+      }
+      knockout.r32 = r32;
+      // R16
+      const r16 = [];
+      for (let i = 0; i < 8; i++) {
+        const h = r32[i * 2].winner, a = r32[i * 2 + 1].winner;
+        r16.push(koMatch("r16_", i, h, a, TEAMS[h].rating, TEAMS[a].rating, koDay + 5 + Math.floor(i / 2)));
+      }
+      knockout.r16 = r16;
+      // QF onward = kommande (mid "nu" ligger mellan R16 och QF)
+      const qf = [];
+      for (let i = 0; i < 4; i++) {
+        const m = koMatch("qf_", i, r16[i * 2].winner, r16[i * 2 + 1].winner, 0, 0, koDay + 10 + i);
+        m.ga = null; m.gb = null; m.winner = null; m.status = "upcoming";
+        qf.push(m);
+      }
+      knockout.qf = qf;
+      knockout.sf = [
+        Object.assign(koMatch("sf_", 0, null, null, 0, 0, koDay + 15), { home: null, away: null }),
+        Object.assign(koMatch("sf_", 1, null, null, 0, 0, koDay + 15), { home: null, away: null })
+      ];
+      knockout.final = [Object.assign(koMatch("final_", 0, null, null, 0, 0, koDay + 19), { home: null, away: null })];
+      knockout.third = [Object.assign(koMatch("third_", 0, null, null, 0, 0, koDay + 18), { home: null, away: null })];
+    } else {
+      ["r32", "r16", "qf", "sf", "final"].forEach(function (k, idx) {
+        const cnt = [16, 8, 4, 2, 1][idx];
+        knockout[k] = [];
+        for (let i = 0; i < cnt; i++) {
+          knockout[k].push({ id: k + "_" + i, stage: "ko", round: k, home: null, away: null,
+            kickoff: dateAt(koDay + idx * 4 + i, 21), ga: null, gb: null, status: "upcoming", winner: null });
+        }
+      });
+      knockout.third = [{ id: "third_0", stage: "ko", round: "third", home: null, away: null,
+        kickoff: dateAt(koDay + 18, 18), ga: null, gb: null, status: "upcoming", winner: null }];
+    }
+
+    // sätt status relativt NOW (LIVE-fönster ~2h)
+    function setLiveStatus(m) {
+      if (m.status === "played") return;
+      const k = m.kickoff.getTime();
+      if (k <= NOW.getTime() && NOW.getTime() < k + 2 * 3600000 && m.home && m.away && !isPre) {
+        m.status = "live";
+        // delresultat
+        const s = scoreMatch(hash(m.id + "live"), TEAMS[m.home].rating, TEAMS[m.away].rating);
+        m.ga = s[0]; m.gb = s[1]; m.minute = 58;
+      } else {
+        m.status = "upcoming";
+      }
+    }
+    // i mid: gör några QF "live"/snart men håll det enkelt — låt första QF vara LIVE
+    if (!isPre && knockout.qf && knockout.qf[0]) {
+      const m = knockout.qf[0];
+      m.status = "live"; m.minute = 63;
+      const s = scoreMatch(hash(m.id + "live"), TEAMS[m.home].rating, TEAMS[m.away].rating);
+      m.ga = s[0]; m.gb = s[1];
+    }
+
+    // ---- alla matcher i en lista (för schema) ----
+    const allMatches = matches.slice();
+    ["r32", "r16", "qf", "sf", "third", "final"].forEach(function (k) {
+      (knockout[k] || []).forEach(function (m) { allMatches.push(m); });
+    });
+    allMatches.sort(function (a, b) { return a.kickoff - b.kickoff; });
+
+    // ---- arena, statistik & målskyttar per match ----
+    allMatches.forEach(function (m) {
+      const vr = rng(hash(m.id + "venue"));
+      m.venue = VENUES[Math.floor(vr() * VENUES.length)];
+      m.tippas = m.stage === "group";
+      if ((m.status === "played" || m.status === "live") && m.home && m.away) {
+        m.stats = genStats(m);
+        m.scorers = genScorers(m);
+        m.cards = genCards(m, m.stats);
+      }
     });
 
-    // ============= PLAYERS / STANDINGS / TIPS / BONUS =============
-    // Convert engine bonus_detail (with our snake_case keys) to design keys
-    const BONUS_KEY_MAP = {
-      winner:"winner", silver:"silver", bronze:"bronze",
-      top_scorer:"topscorer", best_player:"bestplayer",
-      best_young:"youngplayer", best_keeper:"keeper"
-    };
-    const TEAM_BONUS = new Set(["winner","silver","bronze"]);
+    // ---- form (senaste resultat) per lag ----
+    const forms = {};
+    Object.keys(TEAMS).forEach(function (c) { forms[c] = []; });
+    allMatches.forEach(function (m) {
+      if (m.status !== "played" || !m.home || !m.away) return;
+      forms[m.home].push({ vs: m.away, gf: m.ga, ga: m.gb, r: m.ga > m.gb ? "V" : m.ga < m.gb ? "F" : "O", id: m.id });
+      forms[m.away].push({ vs: m.home, gf: m.gb, ga: m.ga, r: m.gb > m.ga ? "V" : m.gb < m.ga ? "F" : "O", id: m.id });
+    });
 
-    // Build map: matchRealId -> tips array (with player name)
-    const realIdToMatchId = {};
-    allMatches.forEach(m => { if(m._realId != null) realIdToMatchId[m._realId] = m.id; });
-
-    // Lookup of each player's tips by design match id
-    function buildPlayerTips(playerName){
-      const out = {};
-      (D.matches || []).forEach(rm => {
-        const t = (rm.tips || []).find(x => x.name === playerName);
-        if(t){
-          const designId = realIdToMatchId[rm.id];
-          if(designId) out[designId] = [t.tip[0], t.tip[1]];
-        }
-      });
-      return out;
-    }
-
-    function buildBonus(detail){
-      const out = {};
-      Object.keys(BONUS_KEY_MAP).forEach(srcKey => {
-        const dstKey = BONUS_KEY_MAP[srcKey];
-        const v = detail && detail[srcKey];
-        if(!v){ out[dstKey] = TEAM_BONUS.has(dstKey) ? null : ["—", null]; return; }
-        if(TEAM_BONUS.has(dstKey)){
-          out[dstKey] = teamCodeFromPick(v.pick, TEAMS);
-        } else {
-          out[dstKey] = [v.pick || "—", null];
-        }
-      });
-      return out;
-    }
-
-    const leaderboard = D.leaderboard || [];
-    const players = leaderboard.map(p => {
-      const tips = buildPlayerTips(p.name);
-      // exact/correct/other if engine had them, else derive from tips against finished matches
-      let exact = p.exact_count || 0;
-      let correct = 0, other = 0;
-      let pts = 0;
-      allMatches.forEach(m => {
-        if(m.status !== "played" || !m.home || !m.away) return;
-        const tip = tips[m.id];
-        if(!tip) return;
-        if(tip[0] === m.ga && tip[1] === m.gb){ pts += 5; }
-        else {
-          const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X";
-          const o2 = m.ga    > m.gb    ? "H" : m.ga    < m.gb    ? "B" : "X";
-          if(o1 === o2){ pts += 2; correct++; }
+    // ---- spelartips & poäng ----
+    // Varje spelare tippar varje gruppmatch (exakt resultat).
+    const players = PLAYERS.map(function (p) {
+      const tips = {};
+      let pts = 0, exact = 0, correct = 0, other = 0;
+      matches.forEach(function (m) {
+        const r = rng(hash(p.id + m.id));
+        // tippa nära förväntat men med spelarbrus
+        const er = TEAMS[m.home].rating - TEAMS[m.away].rating;
+        function tg(bias) { const v = Math.max(0, Math.round(1.2 + bias + (r() - 0.5) * 2.2)); return v; }
+        const th = tg(er / 25 * 0.6), ta = tg(-er / 25 * 0.6);
+        tips[m.id] = [th, ta];
+        if (m.status === "played") {
+          if (th === m.ga && ta === m.gb) { pts += 5; exact++; }
+          else if (outcome(th, ta) === outcome(m.ga, m.gb)) { pts += 2; correct++; }
           else { pts += 1; other++; }
         }
       });
-      const pid = p.name.toLowerCase().replace(/[åä]/g,"a").replace(/ö/g,"o").replace(/[^a-z0-9]/g,"");
-      return {
-        id: pid, name: p.name,
-        color: PLAYER_COLORS[p.name] || "#7A3CF0",
-        photo: null,  // no portraits; Avatar will fall back to initial
-        tips,
-        points: p.match_points || 0,
-        exact, correct, other,
-        bonus: buildBonus(p.bonus_detail),
-        bonusPts: p.bonus_points || 0,
-        rank: p.rank || 0,
-        total: (p.match_points || 0) + (p.bonus_points || 0)
+      // bonusval (seedat)
+      const br = rng(hash(p.id + "bonus"));
+      function pick(arr) { return arr[Math.floor(br() * arr.length)]; }
+      const pot1codes = POT1.map(function (x) { return x[0]; });
+      const bonus = {
+        winner: pick(pot1codes), silver: pick(pot1codes), bronze: pick(POT2.map(function (x) { return x[0]; })),
+        topscorer: pick(STARS), bestplayer: pick(STARS), youngplayer: pick(YOUNG), keeper: pick(KEEPERS)
       };
+      return { id: p.id, name: p.name, color: p.color, photo: p.photo, tips: tips, points: pts,
+        exact: exact, correct: correct, other: other, bonus: bonus, bonusPts: 0 };
     });
 
-    // Standings (already ranked in D.leaderboard, but recompute for safety/tie-break)
-    const standings = players.slice().sort((a,b) =>
-      (b.total - a.total) || (b.exact - a.exact) || a.name.localeCompare(b.name));
+    // standings
+    const standings = players.slice().sort(function (a, b) {
+      return (b.points + b.bonusPts) - (a.points + a.bonusPts) || b.exact - a.exact;
+    });
     let prevTot = null, rank = 0;
-    standings.forEach((p, i) => {
-      if(p.total !== prevTot){ rank = i + 1; prevTot = p.total; }
-      p.rank = rank;
+    standings.forEach(function (p, i) {
+      const tot = p.points + p.bonusPts;
+      if (tot !== prevTot) { rank = i + 1; prevTot = tot; }
+      p.rank = rank; p.total = tot;
     });
-    // Echo rank back into players[] by id
-    standings.forEach(s => { const p = players.find(x => x.id === s.id); if(p) p.rank = s.rank; });
-
-    // ============= state: pre / mid =============
-    const anyPlayed = allMatches.some(m => m.status === "played");
-    const state = anyPlayed ? "mid" : "pre";
 
     return {
-      state, now: new Date(),
-      teams: TEAMS, groups: GROUPS, groupLetters: GROUP_LETTERS,
-      matches, allMatches, groupTables,
-      knockout, koRounds, qualifiers: [],
-      players, standings, forms,
-      pot: { p1:[], p2:[] },
-      stars: []
+      state: state, now: NOW, teams: TEAMS, groups: GROUPS, groupLetters: GROUP_LETTERS,
+      matches: matches, allMatches: allMatches, groupTables: groupTables,
+      knockout: knockout, koRounds: rounds, qualifiers: qualifiers,
+      players: players, standings: standings, forms: forms,
+      pot: { p1: POT1, p2: POT2 }, stars: STARS
     };
   }
 
-  // h2h — we don't have head-to-head data; components handle null.
-  function h2h(){ return null; }
-
-  // Initialize empty stubs so React components don't crash before fetch completes.
-  const TEAMS = {}, GROUPS = {};
-  GROUP_LETTERS.forEach(L => { GROUPS[L] = []; });
+  // prispengar
+  const PRIZES = [1350, 810, 540];
 
   window.VM = {
-    build, PLAYERS: [], PRIZES, TEAMS, GROUPS,
-    GROUP_LETTERS, STARS: [], KEEPERS: [], YOUNG: [], POT: PRIZES,
-    h2h, VENUES: []
-  };
-
-  // Keep TEAMS / GROUPS in sync after build() runs (so Flag lookups work).
-  const _origBuild = build;
-  window.VM.build = function(){
-    const data = _origBuild();
-    window.VM.TEAMS = data.teams;
-    window.VM.GROUPS = data.groups;
-    return data;
+    build: build, PLAYERS: PLAYERS, PRIZES: PRIZES, TEAMS: TEAMS, GROUPS: GROUPS,
+    GROUP_LETTERS: GROUP_LETTERS, STARS: STARS, KEEPERS: KEEPERS, YOUNG: YOUNG, POT: PRIZES,
+    h2h: h2h, VENUES: VENUES
   };
 })();
 
@@ -1276,7 +1935,7 @@ function Avatar({ p, size = 46, rank, ring }) {
         justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: size * 0.4, overflow: "hidden",
         background: `linear-gradient(140deg, ${p.color}, color-mix(in oklab, ${p.color} 55%, #000 18%))`,
         fontFamily: "var(--font-body)" }}>{p.name[0]}</span>
-      {!err && p.photo && (
+      {!err && (
         <img src={p.photo} alt="" loading="lazy" onError={() => setErr(true)}
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
             borderRadius: "50%", boxShadow: "inset 0 0 0 1px rgba(0,0,0,.12)" }} />
@@ -1887,8 +2546,8 @@ function StandingsView({ data, onOpenPlayer }) {
       {/* VM-banner med vimplar + bild-slot */}
       <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
         boxShadow: "var(--shadow-lift)", background: "var(--deep)" }}>
-        <div style={{ display: "block", width: "100%", height: "158px",
-          background: "radial-gradient(80% 90% at 80% 10%, color-mix(in oklab, var(--warm) 60%, var(--deep)), var(--deep) 70%), linear-gradient(135deg, var(--deep) 0%, color-mix(in oklab, var(--cool) 35%, var(--deep)) 100%)" }} />
+        <image-slot id="vm-hero" shape="rect" placeholder="Släpp en bild på gänget eller en VM-arena"
+          style={{ display: "block", width: "100%", height: "158px" }}></image-slot>
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
           background: "linear-gradient(to top, rgba(18,8,24,.74), rgba(18,8,24,.04) 48%, rgba(18,8,24,.18))" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
@@ -2583,19 +3242,15 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
 }
 
 function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [view, setView] = React.useState("standings");
+  const [dataState, setDataState] = React.useState("mid");
   const [player, setPlayer] = React.useState(null);
   const [team, setTeam] = React.useState(null);
   const [match, setMatch] = React.useState(null);
-  const [tick, setTick] = React.useState(0);
 
-  React.useEffect(() => { applyTheme("sunset", "modern"); }, []);
-  React.useEffect(() => {
-    const h = () => setTick(n => n + 1);
-    window.addEventListener("vm-data-updated", h);
-    return () => window.removeEventListener("vm-data-updated", h);
-  }, []);
-  const data = React.useMemo(() => window.VM.build(), [tick]);
+  React.useEffect(() => { applyTheme(t.palette, t.font); }, [t.palette, t.font]);
+  const data = React.useMemo(() => window.VM.build(dataState), [dataState]);
   React.useEffect(() => { window.scrollTo({ top: 0 }); }, [view]);
 
   const openMatch = (m) => setMatch(m);
@@ -2618,6 +3273,13 @@ function App() {
                 <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", marginLeft: 2 }}>Tippningsligan</span>
               </div>
             </div>
+          </div>
+          <div style={{ display: "flex", background: "var(--bg2)", borderRadius: 10, padding: 3, flex: "0 0 auto" }}>
+            {[["pre", "Före"], ["mid", "Mitt i VM"]].map(s => (
+              <button key={s[0]} onClick={() => setDataState(s[0])} style={{ padding: "7px 11px", borderRadius: 8, fontWeight: 800, fontSize: 12, whiteSpace: "nowrap",
+                background: dataState === s[0] ? "var(--paper)" : "transparent", color: dataState === s[0] ? "var(--ink)" : "var(--ink-soft)",
+                boxShadow: dataState === s[0] ? "var(--shadow)" : "none" }}>{s[1]}</button>
+            ))}
           </div>
         </div>
       </header>
@@ -2656,43 +3318,33 @@ function App() {
       {team && <TeamSheet data={data} code={team} onClose={() => setTeam(null)} onOpenMatch={openMatch} />}
       {match && <MatchDetail data={data} match={match} onClose={() => setMatch(null)} onTeam={openTeam} />}
 
+      <TweaksPanel>
+        <TweakSection label="Färgvärld" />
+        <TweakRadio label="Palett" value={t.palette}
+          options={[{ value: "sunset", label: "Solnedgång" }, { value: "prisma", label: "Prisma" }, { value: "stadium", label: "Stadion" }]}
+          onChange={v => setTweak("palette", v)} />
+        <div style={{ display: "flex", gap: 8, padding: "2px 2px 6px" }}>
+          {Object.entries(VM_PALETTES).map(([k, p]) => (
+            <button key={k} onClick={() => setTweak("palette", k)} style={{ flex: 1, display: "flex", borderRadius: 8, overflow: "hidden", height: 26,
+              outline: t.palette === k ? "2px solid var(--ink)" : "1px solid rgba(0,0,0,.12)", outlineOffset: 1 }}>
+              {p.swatch.map((c, i) => <span key={i} style={{ flex: 1, background: c }} />)}
+            </button>
+          ))}
+        </div>
+        <TweakSection label="Typografi" />
+        <TweakRadio label="Typsnitt" value={t.font}
+          options={[{ value: "modern", label: "Modern" }, { value: "stadion", label: "Stadion" }, { value: "affisch", label: "Affisch" }]}
+          onChange={v => setTweak("font", v)} />
+        <TweakSection label="Data" />
+        <TweakRadio label="Tillstånd" value={dataState}
+          options={[{ value: "pre", label: "Före avspark" }, { value: "mid", label: "Mitt i VM" }]}
+          onChange={v => setDataState(v)} />
+      </TweaksPanel>
     </div>
   );
 }
 
-/* ============================================================
-   Boot: fetcha vår riktiga data.json + fixtures.json innan vi
-   monterar React. Re-fetch var 90:e sekund för "live"-känsla.
-   ============================================================ */
-async function loadRealData() {
-  const bust = "?t=" + Math.floor(Date.now() / 30000);
-  const [dr, fr] = await Promise.allSettled([
-    fetch("data.json" + bust, { cache: "no-store" }),
-    fetch("fixtures.json" + bust, { cache: "no-store" })
-  ]);
-  const data = (dr.status === "fulfilled" && dr.value.ok) ? await dr.value.json() : null;
-  const fixtures = (fr.status === "fulfilled" && fr.value.ok) ? await fr.value.json() : [];
-  if (!data) throw new Error("data.json saknas");
-  window.__REAL_DATA__ = { data, fixtures };
-}
-
-(async () => {
-  const root = document.getElementById("root");
-  root.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;color:var(--ink-soft);font-weight:700;font-size:14px">Hämtar data…</div>';
-  try {
-    await loadRealData();
-  } catch (e) {
-    root.innerHTML = '<div style="padding:40px 20px;text-align:center;color:var(--ink-soft);font-weight:700">Kunde inte ladda data. Försöker igen…</div>';
-    setTimeout(() => location.reload(), 5000);
-    return;
-  }
-  ReactDOM.createRoot(root).render(<App />);
-  setInterval(() => {
-    loadRealData().then(() => {
-      window.dispatchEvent(new CustomEvent("vm-data-updated"));
-    }).catch(() => {});
-  }, 90 * 1000);
-})();
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 
   </script>
 </body>
