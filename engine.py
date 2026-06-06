@@ -402,9 +402,11 @@ def compute(tips, matches, scorers, standings=None):
                 "awayTla": (m.get("awayTeam") or {}).get("tla"),
                 "status": m.get("status"),
                 "score": final_score(m),
+                "scoreDetail": detailed_score(m),
                 "minute": m.get("minute"),
                 "goals": extract_goals(m),
                 "bookings": extract_bookings(m),
+                "subs": extract_substitutions(m),
                 "tips": [],
             })
             row["tips"].append({"name": name, "tip": tip, "points": pts})
@@ -497,6 +499,40 @@ def extract_bookings(m):
     return out
 
 
+def extract_substitutions(m):
+    """Hämtar byten ur match dict."""
+    out = []
+    for s in (m.get("substitutions") or []):
+        team = (s.get("team") or {})
+        pin = (s.get("playerIn") or {})
+        pout = (s.get("playerOut") or {})
+        out.append({
+            "minute": s.get("minute"),
+            "team": team.get("tla") or team.get("shortName") or team.get("name"),
+            "playerIn": pin.get("name"),
+            "playerOut": pout.get("name"),
+        })
+    return out
+
+
+def detailed_score(m):
+    """Halvtid / förlängning / straffar / duration. None om saknas."""
+    sc = m.get("score") or {}
+    def pair(d):
+        if not d:
+            return None
+        h, a = d.get("home"), d.get("away")
+        return [h, a] if (h is not None and a is not None) else None
+    return {
+        "halfTime": pair(sc.get("halfTime")),
+        "fullTime": pair(sc.get("fullTime")),
+        "extraTime": pair(sc.get("extraTime")),
+        "penalties": pair(sc.get("penalties")),
+        "duration": sc.get("duration"),
+        "winnerSide": sc.get("winner"),
+    }
+
+
 def build_fixtures(matches):
     return [{
         "id": m.get("id"),
@@ -509,9 +545,11 @@ def build_fixtures(matches):
         "awayTla": (m.get("awayTeam") or {}).get("tla"),
         "status": m.get("status"),
         "score": final_score(m),
+        "scoreDetail": detailed_score(m),
         "minute": m.get("minute"),
         "goals": extract_goals(m),
         "bookings": extract_bookings(m),
+        "subs": extract_substitutions(m),
     } for m in matches]
 
 
