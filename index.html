@@ -14,56 +14,65 @@
      Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
      ============================================================ */
   :root {
-    /* Bakgrund: djup lila-svart - gaming/betting */
-    --bg-0: #07051A;
-    --bg-1: #0E0A24;
-    --bg-2: #15102E;
-    --bg-3: #1F1842;
-    --bg-4: #2A2256;
+    /* === Bet365-inspirerad ljus palett === */
+    /* Sida-bakgrund */
+    --bg-0: #F2F2F2;          /* yttre */
+    --bg-1: #F8F8F8;          /* page */
+    --bg-2: #FFFFFF;          /* kort */
+    --bg-3: #F4F6F7;          /* hover/header-rader */
+    --bg-4: #E8EBED;          /* aktiv/vald rad */
 
     /* Borders */
-    --border:        rgba(255,255,255,.08);
-    --border-strong: rgba(255,255,255,.16);
-    --border-pitch:  rgba(0,255,135,.40);
+    --border:        #DDE1E3;
+    --border-strong: #C4C9CD;
+    --border-pitch:  #126E51;
 
     /* Text */
-    --fg:   #FFFFFF;
-    --fg-2: #D5D9EB;
-    --fg-3: #8E94B5;
-    --fg-4: #5A5F7E;
+    --fg:   #0F1414;
+    --fg-2: #2B3439;
+    --fg-3: #5A6670;
+    --fg-4: #8B949B;
 
-    /* Brand: electric neon green */
-    --pitch:       #00FF87;
-    --pitch-dim:   #00D973;
-    --pitch-deep:  #00A057;
-    --pitch-glow:  rgba(0,255,135,.42);
+    /* Brand: Bet365-grönt */
+    --pitch:       #126E51;       /* primärgrön (knappar, headers) */
+    --pitch-dark:  #014B36;       /* mörk topp-header */
+    --pitch-dim:   #1B8A66;       /* hover */
+    --pitch-deep:  #003D2C;
+    --pitch-glow:  rgba(18,110,81,.20);
+    --pitch-soft:  #E7F1ED;       /* ljust grönt bg för accent-block */
 
-    /* Live: hot pink */
-    --live:        #FF1F77;
-    --live-glow:   rgba(255,31,119,.40);
+    /* Gult highlights */
+    --yellow:      #FCDB00;       /* CTA / accent / odds */
+    --yellow-dim:  #E5C500;
+    --yellow-soft: #FFF6BF;
+    --yellow-glow: rgba(252,219,0,.40);
+
+    /* Live: röd */
+    --live:        #E10000;
+    --live-soft:   #FCE6E6;
+    --live-glow:   rgba(225,0,0,.20);
 
     /* Medaljer */
-    --gold:        #FFB800;
-    --gold-glow:   rgba(255,184,0,.40);
-    --silver:      #C8D0E0;
-    --bronze:      #E08545;
+    --gold:        #C9981A;        /* mörkare än neon - kontrast mot ljust bg */
+    --gold-glow:   rgba(201,152,26,.30);
+    --silver:      #7C8794;
+    --bronze:      #B26B33;
 
     /* Stöd-accenter */
-    --blue:        #00D4FF;
-    --blue-glow:   rgba(0,212,255,.40);
-    --purple:      #B57BFF;
-    --purple-glow: rgba(181,123,255,.36);
-    --orange:      #FF8C2A;
-    --yellow:      #FFD600;
+    --blue:        #0070BB;        /* Bet365 selektioner */
+    --blue-glow:   rgba(0,112,187,.30);
+    --purple:      #6B3CA1;
+    --purple-glow: rgba(107,60,161,.30);
+    --orange:      #E66A00;
 
     /* Pts-färger */
     --pts-5: var(--gold);   /* exakt */
     --pts-2: var(--pitch);  /* rätt utgång */
     --pts-1: var(--fg-3);   /* annars */
 
-    /* Bakåt-kompat alias (gamla komponenter använder dessa) */
+    /* Bakåt-kompat alias (ljust tema) */
     --bg:           var(--bg-1);
-    --bg2:          var(--bg-2);
+    --bg2:          var(--bg-3);
     --paper:        var(--bg-2);
     --ink:          var(--fg);
     --ink-soft:     var(--fg-3);
@@ -71,10 +80,10 @@
     --line-strong:  var(--border-strong);
     --hot:          var(--live);
     --warm:         var(--orange);
-    --cool:         var(--pitch);
-    --deep:         var(--bg-0);
-    --grad:       linear-gradient(120deg, #0D2520 0%, #082019 50%, #0F0F1A 100%);
-    --grad-soft:  linear-gradient(120deg, #102320, #0E1A28);
+    --cool:         var(--blue);
+    --deep:         var(--pitch-dark);
+    --grad:       linear-gradient(180deg, var(--pitch-dark) 0%, var(--pitch) 100%);
+    --grad-soft:  linear-gradient(180deg, var(--pitch-soft), var(--bg-2));
 
     /* Typografi */
     --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
@@ -110,22 +119,12 @@
     overscroll-behavior-y: none;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Mesh-gradient bakgrund med neon-glow */
+  /* Subtila accenter på ljus bg */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(60vw 50vw at 15% 0%, rgba(255,31,119,.13), transparent 55%),
-      radial-gradient(70vw 50vw at 100% 30%, rgba(0,255,135,.10), transparent 55%),
-      radial-gradient(50vw 40vw at 50% 100%, rgba(0,212,255,.10), transparent 55%),
-      radial-gradient(60vw 40vw at 0% 80%, rgba(181,123,255,.10), transparent 55%);
-  }
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(80% 60% at 50% 0%, #000, transparent 80%);
+      radial-gradient(70vw 40vw at 50% -10%, rgba(252,219,0,.08), transparent 60%),
+      radial-gradient(60vw 50vw at 100% 100%, rgba(18,110,81,.06), transparent 60%);
   }
   #root { position: relative; z-index: 1; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
@@ -144,8 +143,13 @@
 
   .app-scroll::-webkit-scrollbar { width: 0; height: 0; }
 
-  ::selection { background: var(--pitch); color: #08120F; }
+  ::selection { background: var(--yellow); color: var(--fg); }
   :focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
+
+  /* Helt globala defaults för Bet365-feel */
+  html, body { color: var(--fg); background: var(--bg-0); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
 
   @keyframes pop { 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
   @keyframes riseIn { from{transform:translateY(16px)} to{transform:translateY(0)} }
@@ -161,7 +165,7 @@
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
   @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-  @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
   @keyframes neonPulse {
     0%, 100% { text-shadow: 0 0 18px var(--pitch-glow), 0 0 36px var(--pitch-glow); }
     50%      { text-shadow: 0 0 32px var(--pitch), 0 0 64px var(--pitch-glow); }
@@ -1736,37 +1740,52 @@ function MatchCard({ m, onOpen, showRound }) {
         {code ? window.VM.TEAMS[code].name : (fromLabel || "Vinnare")}</span>
     </div>
   );
+  const showOdds = !played && !live && !tbd && m.home && m.away;
   return (
-    <button onClick={() => onOpen && onOpen(m)} style={{ width: "100%", textAlign: "left", background: "var(--paper)",
-      borderRadius: 12, border: "1px solid var(--line)", boxShadow: live ? "0 0 0 1.5px var(--hot)" : "var(--shadow)",
-      overflow: "hidden", display: "block" }}>
-      {showRound ? (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 13px 0", gap: 8 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
-            <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
-              {roundLabel(m)}</span>
+    <button onClick={() => onOpen && onOpen(m)} className="glow-hover"
+      style={{ width: "100%", textAlign: "left", background: "var(--bg-2)",
+        borderRadius: 8, border: live ? "1px solid var(--live)" : "1px solid var(--border)",
+        boxShadow: live ? "0 0 0 1px var(--live-soft)" : "0 1px 2px rgba(0,0,0,.04)",
+        overflow: "hidden", display: "block" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "7px 13px", gap: 8, background: live ? "var(--live-soft)" : "var(--bg-3)",
+        borderBottom: "1px solid var(--border)" }}>
+        <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".06em",
+          color: live ? "var(--live)" : "var(--fg-3)", textTransform: "uppercase" }}>
+          {live ? "🔴 Live" : roundLabel(m)}
+        </span>
+        {m.venue && (
+          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--fg-3)",
+            whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 4 }}>
+            📍 <span>{m.venue.city || m.venue.stadium}</span>
           </span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap" }}>{m.venue ? m.venue.city : ""}</span>
-        </div>
-      ) : null}
+        )}
+      </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "11px 13px" }}>
         {teamSide(m.home, m.fromA, false)}
         <div style={{ textAlign: "center", minWidth: 56 }}>
           {(played || live) && !tbd ? (
-            <div className="num" style={{ fontWeight: 800, fontSize: 19, lineHeight: 1, fontFamily: "var(--font-body)" }}>
-              {m.ga}<span style={{ color: "var(--ink-soft)", margin: "0 5px", fontWeight: 600 }}>–</span>{m.gb}
+            <div className="mono" style={{ fontWeight: 800, fontSize: 22, lineHeight: 1,
+              color: live ? "var(--live)" : "var(--fg)" }}>
+              {m.ga}<span style={{ color: "var(--fg-3)", margin: "0 5px", fontWeight: 600 }}>-</span>{m.gb}
             </div>
           ) : (
-            <div className="num" style={{ fontWeight: 800, fontSize: 15, color: "var(--ink)" }}>{svTime(m.kickoff)}</div>
+            <div className="mono" style={{ fontWeight: 800, fontSize: 16, color: "var(--fg)" }}>{svTime(m.kickoff)}</div>
           )}
           <div style={{ marginTop: 4, display: "flex", justifyContent: "center" }}>
             {live ? <LiveDot minute={m.minute} small /> :
-              played ? <span style={{ fontSize: 10, fontWeight: 700, color: "var(--ink-soft)", letterSpacing: ".05em" }}>SLUT{m.pen ? " · STR " + m.pen[0] + "–" + m.pen[1] : ""}</span> :
-              !tbd ? <span style={{ fontSize: 10, fontWeight: 700, color: "var(--ink-soft)" }}>{svDayLabel(m.kickoff)}</span> : null}
+              played ? <span style={{ fontSize: 10, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".06em" }}>SLUT{m.pen ? " · STR " + m.pen[0] + "-" + m.pen[1] : ""}</span> :
+              !tbd ? <span style={{ fontSize: 10, fontWeight: 700, color: "var(--fg-3)" }}>{svDayLabel(m.kickoff)}</span> : null}
           </div>
         </div>
         {teamSide(m.away, m.fromB, true)}
       </div>
+      {showOdds && (
+        <div style={{ padding: "8px 13px 11px", borderTop: "1px solid var(--border)",
+          background: "var(--bg-3)" }}>
+          <WinChanceBar home={m.home} away={m.away} size="sm" />
+        </div>
+      )}
     </button>
   );
 }
@@ -1829,32 +1848,97 @@ const _wikiInflight = {};
 function _saveWikiCache(){
   try { localStorage.setItem("wp_photo_cache_v2", JSON.stringify(_wikiCache)); } catch {}
 }
+/* Name-resolution: kortform/felstavning -> riktig Wikipedia-titel.
+   Wikipedia följer redirects om "redirects=1", men disambig-sidor och
+   kort-namn behöver explicit mappning. */
+const WIKI_TITLE_MAP = {
+  "vitinha": "Vitinha (footballer, born 2000)",
+  "raya": "David Raya",
+  "bruno fernanch": "Bruno Fernandes",
+  "bruno fernandes": "Bruno Fernandes",
+  "yamal": "Lamine Yamal",
+  "lamine yamal": "Lamine Yamal",
+  "kylian mbappé": "Kylian Mbappé",
+  "kylian mbappe": "Kylian Mbappé",
+  "mbappé": "Kylian Mbappé",
+  "mbappe": "Kylian Mbappé",
+  "vinícius jr": "Vinícius Júnior",
+  "vinicius jr": "Vinícius Júnior",
+  "vinicius junior": "Vinícius Júnior",
+  "vinícius junior": "Vinícius Júnior",
+  "jude bellingham": "Jude Bellingham",
+  "bellingham": "Jude Bellingham",
+  "erling haaland": "Erling Haaland",
+  "haaland": "Erling Haaland",
+  "lautaro martínez": "Lautaro Martínez",
+  "lautaro martinez": "Lautaro Martínez",
+  "rafael leão": "Rafael Leão",
+  "rafael leao": "Rafael Leão",
+  "florian wirtz": "Florian Wirtz",
+  "wirtz": "Florian Wirtz",
+  "pedri": "Pedri",
+  "khvicha kvaratskhelia": "Khvicha Kvaratskhelia",
+  "cole palmer": "Cole Palmer",
+  "désiré doué": "Désiré Doué",
+  "desire doue": "Désiré Doué",
+  "doué": "Désiré Doué",
+  "emiliano martínez": "Emiliano Martínez",
+  "emiliano martinez": "Emiliano Martínez",
+  "gianluigi donnarumma": "Gianluigi Donnarumma",
+  "donnarumma": "Gianluigi Donnarumma",
+  "mike maignan": "Mike Maignan",
+  "maignan": "Mike Maignan",
+  "unai simón": "Unai Simón",
+  "unai simon": "Unai Simón",
+  "jordan pickford": "Jordan Pickford",
+  "pickford": "Jordan Pickford",
+  "yann sommer": "Yann Sommer",
+  "sommer": "Yann Sommer",
+  "harry kane": "Harry Kane",
+  "kane": "Harry Kane",
+  "endrick": "Endrick",
+  "kobbie mainoo": "Kobbie Mainoo",
+  "mainoo": "Kobbie Mainoo",
+  "arda güler": "Arda Güler",
+  "arda guler": "Arda Güler",
+  "güler": "Arda Güler",
+  "pau cubarsí": "Pau Cubarsí",
+  "pau cubarsi": "Pau Cubarsí",
+  "cubarsí": "Pau Cubarsí"
+};
+function resolveWikiTitle(name){
+  if(!name) return null;
+  const key = String(name).toLowerCase().trim();
+  return WIKI_TITLE_MAP[key] || name;
+}
+
 function useWikiPhoto(name){
-  const [url, setUrl] = React.useState(() => name && (name in _wikiCache) ? _wikiCache[name] : null);
+  const resolved = resolveWikiTitle(name);
+  const [url, setUrl] = React.useState(() => resolved && (resolved in _wikiCache) ? _wikiCache[resolved] : null);
   React.useEffect(() => {
-    if(!name) return;
-    if(name in _wikiCache){ setUrl(_wikiCache[name]); return; }
+    if(!resolved) return;
+    if(resolved in _wikiCache){ setUrl(_wikiCache[resolved]); return; }
     // Dedupe parallel lookups
-    if(_wikiInflight[name]){
-      _wikiInflight[name].then(u => setUrl(u));
+    if(_wikiInflight[resolved]){
+      _wikiInflight[resolved].then(u => setUrl(u));
       return;
     }
     const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
-              + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(name);
-    _wikiInflight[name] = fetch(api)
+              + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(resolved);
+    _wikiInflight[resolved] = fetch(api)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         const pages = (data && data.query && data.query.pages) || {};
         const first = Object.values(pages)[0];
         const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
-        _wikiCache[name] = thumb;
+        _wikiCache[resolved] = thumb;
         _saveWikiCache();
         return thumb;
       })
-      .catch(() => { _wikiCache[name] = null; _saveWikiCache(); return null; })
-      .finally(() => { delete _wikiInflight[name]; });
-    _wikiInflight[name].then(u => setUrl(u));
-  }, [name]);
+      .catch(() => { _wikiCache[resolved] = null; _saveWikiCache(); return null; })
+      .finally(() => { delete _wikiInflight[resolved]; });
+    _wikiInflight[resolved].then(u => setUrl(u));
+  }, [resolved]);
   return url;
 }
 
@@ -1950,6 +2034,78 @@ const WC_HISTORY = {
   SRB: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Som FR Jugoslavien: kvart 1990" }
 };
 
+/* Approximativ team-rating för odds-beräkning. Härlett från
+   WC_HISTORY (titlar/semis/apps) + nyare form. Skala ~60-95. */
+function teamRating(code){
+  const h = WC_HISTORY[code];
+  if(!h) return 70;
+  let r = 70;
+  if(h.titles) r += 4 + h.titles * 2;
+  if(h.runnerUp) r += h.runnerUp * 1.2;
+  if(h.third) r += h.third * 0.8;
+  if(h.semis) r += Math.min(8, h.semis * 0.6);
+  if(h.apps) r += Math.min(4, h.apps * 0.15);
+  // Recent dynasties bonus
+  const bumps = { ARG: 4, FRA: 4, ESP: 3, ENG: 3, BRA: 3, POR: 3, NED: 2, GER: 2, MAR: 2, CRO: 2, BEL: 1, USA: 1 };
+  if(bumps[code]) r += bumps[code];
+  return Math.min(95, Math.round(r));
+}
+
+/* Räkna H/D/A-sannolikheter från lagrating. Hemmaplan-bias = 3p. */
+function matchOdds(homeCode, awayCode){
+  if(!homeCode || !awayCode) return null;
+  const rH = teamRating(homeCode) + 3; // hemmaplansbonus
+  const rA = teamRating(awayCode);
+  const diff = rH - rA;
+  // Logistic mapping för win-spread, kvar för D
+  const pHwin = 1 / (1 + Math.exp(-diff / 7));
+  const pAwin = 1 / (1 + Math.exp(diff / 7));
+  // Oavgjort skalas av matchnärhet
+  const closeness = 1 - Math.abs(pHwin - pAwin);
+  const pD = Math.max(0.10, Math.min(0.34, 0.18 + closeness * 0.20));
+  const raw = pHwin + pAwin + pD;
+  const h = pHwin / raw, d = pD / raw, a = pAwin / raw;
+  const round = (x) => Math.round(x * 100);
+  let H = round(h), D = round(d), A = round(a);
+  // Justera så de summerar 100
+  const delta = 100 - (H + D + A);
+  if(delta !== 0) H += delta;
+  return { H, D, A };
+}
+
+/* Visuell odds-bar för match (H / D / A) */
+function WinChanceBar({ home, away, size = "md" }){
+  const o = matchOdds(home, away);
+  if(!o) return null;
+  const fs = size === "sm" ? 10 : 11;
+  const ph = size === "sm" ? "3px 6px" : "5px 8px";
+  const minHeight = size === "sm" ? 4 : 6;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: size === "sm" ? 130 : 170 }}>
+      <div style={{ display: "flex", gap: 2 }}>
+        <div style={{ flex: o.H, background: "var(--pitch)", padding: ph, color: "#FFFFFF",
+          fontSize: fs, fontWeight: 800, textAlign: "center", borderRadius: "4px 0 0 4px", minHeight }}>
+          {o.H}%
+        </div>
+        <div style={{ flex: o.D, background: "var(--fg-4)", padding: ph, color: "#FFFFFF",
+          fontSize: fs, fontWeight: 800, textAlign: "center", minHeight }}>
+          {o.D}%
+        </div>
+        <div style={{ flex: o.A, background: "var(--blue)", padding: ph, color: "#FFFFFF",
+          fontSize: fs, fontWeight: 800, textAlign: "center", borderRadius: "0 4px 4px 0", minHeight }}>
+          {o.A}%
+        </div>
+      </div>
+      {size !== "sm" && (
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9.5, fontWeight: 700,
+          color: "var(--fg-3)", letterSpacing: ".06em", textTransform: "uppercase" }}>
+          <span>1 Hemma</span><span>X Lika</span><span>2 Borta</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function TeamHistoryBlock({ code }){
   const h = WC_HISTORY[code];
   if(!h) return null;
@@ -1988,7 +2144,7 @@ Object.assign(window, {
   VM_PALETTES, VM_FONTS, applyTheme, groupColor, groupColorSoft,
   Flag, TeamName, TeamLabel, Avatar, StarPhoto, slugifyName, svTime, svDateKey, svDayLabel,
   useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting,
-  TeamHistoryBlock, WC_HISTORY
+  TeamHistoryBlock, WC_HISTORY, teamRating, matchOdds, WinChanceBar
 });
 
 /* ---------- vimplar (bunting) - VM-/folkfestkänsla ---------- */
@@ -2473,89 +2629,129 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
-function KpiCard({ label, value, sub, accent, icon, glow }){
+function KpiCard({ label, value, sub, accent, icon }){
   return (
-    <div className={"glow-hover " + (glow || "")} style={{
-      background: "linear-gradient(160deg, var(--bg-3), var(--bg-2))",
-      border: "1px solid var(--border)", borderRadius: "var(--r-md)",
-      padding: "14px 14px", position: "relative", overflow: "hidden",
-      boxShadow: "var(--shadow)" }}>
+    <div className="glow-hover" style={{
+      background: "var(--bg-2)",
+      border: "1px solid var(--border)", borderRadius: 8,
+      padding: "12px 14px", position: "relative", overflow: "hidden",
+      boxShadow: "0 1px 2px rgba(0,0,0,.04)" }}>
       {accent && (
-        <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 2,
-          background: accent, opacity: .9 }} />
+        <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3,
+          background: accent }} />
       )}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em",
+        <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em",
           textTransform: "uppercase", color: "var(--fg-3)" }}>{label}</div>
-        {icon && <span style={{ fontSize: 14, opacity: .8 }}>{icon}</span>}
+        {icon && <span style={{ fontSize: 15 }}>{icon}</span>}
       </div>
-      <div className="mono" style={{ marginTop: 8, fontSize: 26,
-        fontWeight: 800, color: "var(--fg)", lineHeight: 1.05, letterSpacing: "-.025em" }}>{value}</div>
-      {sub && <div style={{ marginTop: 5, fontSize: 11.5, fontWeight: 600, color: "var(--fg-3)" }}>{sub}</div>}
+      <div style={{ marginTop: 6, fontSize: 22,
+        fontWeight: 800, color: "var(--fg)", lineHeight: 1.1, letterSpacing: "-.015em" }}>{value}</div>
+      {sub && <div style={{ marginTop: 4, fontSize: 11.5, fontWeight: 600, color: "var(--fg-3)" }}>{sub}</div>}
     </div>
   );
 }
 
-/* === Live-ticker: scrollar live-matcher + senaste händelser === */
+/* === "Hetast" - definierad så det alltid finns någon === */
+// Pre-tournament: spelare med dyraste bonus-exponering (vinnare=10p, silver=5p osv) + flest tips inlagda.
+// Mid: flest exakta, fallback flest matchp, fallback flest bonusp.
+function hottestPlayer(data){
+  const s = data.standings || [];
+  if(!s.length) return null;
+  const isPre = data.state === "pre";
+  if(!isPre){
+    // Mid/efter: flest exakta -> mest matchp -> mest bonusp
+    const sortMid = [...s].sort((a,b) =>
+      (b.exact - a.exact) || (b.points - a.points) || (b.bonusPts - a.bonusPts));
+    if(sortMid[0].exact > 0) return { p: sortMid[0], why: `${sortMid[0].exact} exakta` };
+    if(sortMid[0].points > 0) return { p: sortMid[0], why: `${sortMid[0].points} matchpoäng` };
+    if(sortMid[0].bonusPts > 0) return { p: sortMid[0], why: `${sortMid[0].bonusPts} bonuspoäng` };
+    return { p: sortMid[0], why: `${sortMid[0].total} poäng totalt` };
+  }
+  // Pre: räkna bonus-stake (10/5/3/3/3/3/3) - alla har samma. Använd antalet
+  // tips inlagda som primär, alfabetiskt fallback.
+  const tipCount = (p) => Object.keys(p.tips || {}).length;
+  const sortPre = [...s].sort((a,b) => tipCount(b) - tipCount(a) || a.name.localeCompare(b.name));
+  return { p: sortPre[0], why: `${tipCount(sortPre[0])} tips inlagda` };
+}
+
+/* === Live-ticker: alltid 8+ items för seamless loop === */
 function LiveTicker({ data }){
   const items = [];
-  const live = (data.allMatches || []).filter(m => m.status === "live");
+  const allM = data.allMatches || [];
+  const TEAMS = window.VM.TEAMS || {};
+  const teamName = (c) => (TEAMS[c] && TEAMS[c].name) || c || "TBD";
+
+  // 1) Live-matcher (om några)
+  const live = allM.filter(m => m.status === "live");
   live.forEach(m => {
-    items.push({ kind: "live",
-      text: `🔴 LIVE: ${window.VM.TEAMS[m.home] ? window.VM.TEAMS[m.home].name : m.home || "TBD"} ${m.ga != null ? m.ga + "-" + m.gb : ""} ${window.VM.TEAMS[m.away] ? window.VM.TEAMS[m.away].name : m.away || "TBD"}`,
-      color: "var(--live)" });
+    items.push({ text: `🔴 LIVE: ${teamName(m.home)} ${m.ga != null ? m.ga + "-" + m.gb : ""} ${teamName(m.away)}`, color: "var(--live)" });
   });
-  // Senaste 6 spelade matcherna
-  const recent = (data.allMatches || []).filter(m => m.status === "played" && m.ga != null).slice(-6);
-  recent.forEach(m => {
-    items.push({ kind: "result",
-      text: `✓ ${window.VM.TEAMS[m.home] ? window.VM.TEAMS[m.home].name : m.home} ${m.ga}-${m.gb} ${window.VM.TEAMS[m.away] ? window.VM.TEAMS[m.away].name : m.away}`,
-      color: "var(--fg-2)" });
-  });
-  // Ledare
+
+  // 2) Ledare
   if(data.standings && data.standings[0]){
-    items.push({ kind: "stat", text: `🏆 ${data.standings[0].name} leder med ${data.standings[0].total} p`, color: "var(--gold)" });
+    const l = data.standings[0];
+    items.push({ text: `🏆 LEDARE: ${l.name} med ${l.total} p`, color: "var(--pitch)" });
   }
-  // Mest exakta
-  if(data.standings){
-    const mostExact = [...data.standings].sort((a,b) => b.exact - a.exact)[0];
-    if(mostExact && mostExact.exact > 0){
-      items.push({ kind: "stat", text: `🔥 ${mostExact.name} har ${mostExact.exact} exakta tips`, color: "var(--pitch)" });
-    }
+
+  // 3) Hetast (alltid någon)
+  const hot = hottestPlayer(data);
+  if(hot){
+    items.push({ text: `🔥 HETAST: ${hot.p.name} (${hot.why})`, color: "var(--orange)" });
   }
-  // Nästa avspark
-  const nextM = (data.allMatches || []).find(m => m.status === "upcoming");
-  if(nextM){
-    items.push({ kind: "next",
-      text: `⚽ Nästa: ${window.VM.TEAMS[nextM.home] ? window.VM.TEAMS[nextM.home].name : nextM.home || "TBD"} vs ${window.VM.TEAMS[nextM.away] ? window.VM.TEAMS[nextM.away].name : nextM.away || "TBD"} · ${svDayLabel(nextM.kickoff)} ${svTime(nextM.kickoff)}`,
-      color: "var(--blue)" });
+
+  // 4) Senaste 5 spelade matcherna
+  const recent = allM.filter(m => m.status === "played" && m.ga != null).slice(-5);
+  recent.forEach(m => {
+    items.push({ text: `✓ ${teamName(m.home)} ${m.ga}-${m.gb} ${teamName(m.away)}`, color: "var(--fg-2)" });
+  });
+
+  // 5) Nästa 3 matcher
+  const upcoming = allM.filter(m => m.status === "upcoming").slice(0, 3);
+  upcoming.forEach((m, i) => {
+    const venue = m.venue && m.venue.city ? ` 📍 ${m.venue.city}` : "";
+    items.push({ text: `${i === 0 ? "⏱ NÄSTA" : "📅"}: ${teamName(m.home)} vs ${teamName(m.away)} · ${svDayLabel(m.kickoff)} ${svTime(m.kickoff)}${venue}`,
+      color: i === 0 ? "var(--blue)" : "var(--fg-2)" });
+  });
+
+  // 6) Tournament info
+  items.push({ text: `🏟 48 lag · 12 grupper · 104 matcher · 11 juni - 19 juli 2026`, color: "var(--fg-3)" });
+  items.push({ text: `🎯 5p exakt · 2p rätt utgång · 1p annars`, color: "var(--fg-3)" });
+  items.push({ text: `🇺🇸 USA · 🇲🇽 Mexiko · 🇨🇦 Kanada (medvärdar)`, color: "var(--fg-3)" });
+
+  // 7) Antal tips per spelare (random sample)
+  if(data.players){
+    const sample = [...data.players].sort(() => Math.random() - 0.5).slice(0, 3);
+    sample.forEach(p => {
+      const n = Object.keys(p.tips || {}).length;
+      if(n > 0) items.push({ text: `✏ ${p.name} har ${n} tips inlagda`, color: "var(--fg-3)" });
+    });
   }
-  if(items.length === 0) {
-    items.push({ kind: "info", text: "⚽ VM 2026 startar 11 juni · 48 lag · 12 grupper · 104 matcher", color: "var(--fg-3)" });
-  }
-  // Duplicera för seamless scroll
-  const doubled = items.concat(items);
+
+  // Säkra seamless: tripla för fluffigare loop, justera duration utifrån antal
+  const list = items.concat(items, items);
+  const baseSeconds = Math.max(40, items.length * 4.5);
+
   return (
     <div style={{ position: "relative", overflow: "hidden",
-      background: "linear-gradient(90deg, var(--bg-2) 0%, var(--bg-3) 50%, var(--bg-2) 100%)",
-      border: "1px solid var(--border)", borderRadius: "var(--r-md)",
-      marginBottom: 16, height: 38 }}>
+      background: "var(--pitch-dark)",
+      borderRadius: 8, marginBottom: 16, height: 38,
+      boxShadow: "inset 0 -2px 0 rgba(0,0,0,.15)" }}>
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center",
-        animation: `tickerScroll ${Math.max(20, items.length * 5)}s linear infinite`,
+        animation: `tickerScroll ${baseSeconds}s linear infinite`,
         whiteSpace: "nowrap", willChange: "transform" }}>
-        {doubled.map((it, i) => (
+        {list.map((it, i) => (
           <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 8,
             padding: "0 22px", fontSize: 12.5, fontWeight: 700, color: it.color,
-            borderRight: "1px solid var(--border)", height: "100%" }}>
+            borderRight: "1px solid rgba(255,255,255,.10)", height: "100%" }}>
             {it.text}
           </span>
         ))}
       </div>
-      {/* Fade på kanterna */}
-      <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 50,
-        background: "linear-gradient(90deg, var(--bg-2), transparent)", pointerEvents: "none" }} />
-      <span style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 50,
-        background: "linear-gradient(270deg, var(--bg-2), transparent)", pointerEvents: "none" }} />
+      <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 30,
+        background: "linear-gradient(90deg, var(--pitch-dark), transparent)", pointerEvents: "none" }} />
+      <span style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 30,
+        background: "linear-gradient(270deg, var(--pitch-dark), transparent)", pointerEvents: "none" }} />
     </div>
   );
 }
@@ -2573,46 +2769,35 @@ function JackpotHero({ pot, prizes, isPre, nextUp }){
 
   return (
     <div style={{ position: "relative", overflow: "hidden",
-      background: "linear-gradient(135deg, #1A0F3E 0%, #0E0A24 50%, #1F0B2E 100%)",
-      borderRadius: "var(--r-lg)", padding: "28px 24px 28px",
-      border: "1px solid var(--border)", marginBottom: 16,
-      boxShadow: "0 24px 60px -24px rgba(0,255,135,.20), inset 0 1px 0 rgba(255,255,255,.04)" }}>
-      {/* Mesh-glow */}
-      <span style={{ position: "absolute", top: -120, left: -80, width: 360, height: 360,
-        background: "radial-gradient(closest-side, var(--pitch-glow), transparent 70%)",
-        pointerEvents: "none", filter: "blur(20px)" }} />
-      <span style={{ position: "absolute", bottom: -120, right: -80, width: 360, height: 360,
-        background: "radial-gradient(closest-side, var(--live-glow), transparent 70%)",
-        pointerEvents: "none", filter: "blur(20px)" }} />
-      {/* Sparkle-prickar */}
-      <span style={{ position: "absolute", top: 20, left: "30%", width: 4, height: 4, borderRadius: "50%",
-        background: "var(--gold)", boxShadow: "0 0 8px var(--gold)", animation: "sparkle 2.5s infinite" }} />
-      <span style={{ position: "absolute", top: 40, left: "70%", width: 3, height: 3, borderRadius: "50%",
-        background: "var(--pitch)", boxShadow: "0 0 6px var(--pitch)", animation: "sparkle 2s 0.5s infinite" }} />
-      <span style={{ position: "absolute", bottom: 30, left: "20%", width: 3, height: 3, borderRadius: "50%",
-        background: "var(--blue)", boxShadow: "0 0 6px var(--blue)", animation: "sparkle 3s 1s infinite" }} />
-      <span style={{ position: "absolute", bottom: 50, left: "85%", width: 4, height: 4, borderRadius: "50%",
-        background: "var(--live)", boxShadow: "0 0 8px var(--live)", animation: "sparkle 2.2s 1.5s infinite" }} />
+      background: "linear-gradient(135deg, var(--pitch-dark) 0%, var(--pitch) 60%, var(--pitch-dim) 100%)",
+      borderRadius: 12, padding: "24px 22px 24px",
+      border: `2px solid var(--yellow)`, marginBottom: 16,
+      boxShadow: "0 8px 24px -8px rgba(0,0,0,.18)" }}>
+      {/* Hörn-stjärnor (gula) */}
+      <span style={{ position: "absolute", top: 10, left: 14, fontSize: 14, opacity: .55 }}>✦</span>
+      <span style={{ position: "absolute", top: 10, right: 14, fontSize: 14, opacity: .55 }}>✦</span>
+      <span style={{ position: "absolute", bottom: 10, left: 14, fontSize: 14, opacity: .55 }}>✦</span>
+      <span style={{ position: "absolute", bottom: 10, right: 14, fontSize: 14, opacity: .55 }}>✦</span>
 
       <div style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".24em", textTransform: "uppercase",
-          color: "var(--fg-3)", marginBottom: 4 }}>Sammanlagd jackpot</div>
-        <div className="mono neon-green" style={{ fontSize: "clamp(54px, 11vw, 92px)", fontWeight: 900,
-          letterSpacing: "-.04em", lineHeight: 1, animation: "neonPulse 3s ease-in-out infinite" }}>
-          {pot.toLocaleString("sv-SE")}<span style={{ fontSize: ".4em", marginLeft: 8, color: "var(--fg-2)", textShadow: "none" }}>kr</span>
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".26em", textTransform: "uppercase",
+          color: "var(--yellow)", marginBottom: 6 }}>★ Sammanlagd jackpot ★</div>
+        <div className="mono" style={{ fontSize: "clamp(54px, 11vw, 92px)", fontWeight: 900,
+          letterSpacing: "-.04em", lineHeight: 1, color: "#FFFFFF",
+          textShadow: "0 4px 18px rgba(0,0,0,.2)" }}>
+          {pot.toLocaleString("sv-SE")}<span style={{ fontSize: ".42em", marginLeft: 8, color: "var(--yellow)" }}>kr</span>
         </div>
 
         {/* Prize-split chips */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 16, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
           {prizes.map((amt, i) => {
-            const tint = ["var(--gold)", "var(--silver)", "var(--bronze)"][i];
             const ico = ["🥇", "🥈", "🥉"][i];
             return (
               <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "6px 14px", borderRadius: 999, background: "rgba(255,255,255,.04)",
-                border: "1px solid " + tint, color: tint }}>
+                padding: "6px 12px", borderRadius: 6, background: "#FFFFFF",
+                border: "1px solid var(--yellow)", color: "var(--fg)" }}>
                 <span style={{ fontSize: 13 }}>{ico}</span>
-                <span className="mono" style={{ fontSize: 13.5, fontWeight: 800 }}>{amt.toLocaleString("sv-SE")} kr</span>
+                <span className="mono" style={{ fontSize: 13, fontWeight: 800 }}>{amt.toLocaleString("sv-SE")} kr</span>
               </div>
             );
           })}
@@ -2620,18 +2805,18 @@ function JackpotHero({ pot, prizes, isPre, nextUp }){
 
         {/* Countdown */}
         {isPre && diffMs > 0 && (
-          <div style={{ marginTop: 22 }}>
+          <div style={{ marginTop: 18 }}>
             <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".22em", textTransform: "uppercase",
-              color: "var(--live)", marginBottom: 8 }}>Avspark om</div>
-            <div style={{ display: "inline-flex", gap: 8 }}>
+              color: "var(--yellow)", marginBottom: 8 }}>⏱ Avspark om</div>
+            <div style={{ display: "inline-flex", gap: 6 }}>
               {[[days, "DGR"], [hours, "TIM"], [mins, "MIN"], [secs, "SEK"]].map(([v, l], i) => (
-                <div key={i} style={{ minWidth: 64,
-                  background: "linear-gradient(180deg, var(--bg-2), var(--bg-1))",
-                  border: "1px solid var(--border-strong)", borderRadius: 10, padding: "10px 4px" }}>
-                  <div className="mono" style={{ fontSize: 26, fontWeight: 900, color: "var(--fg)",
+                <div key={i} style={{ minWidth: 58,
+                  background: "#FFFFFF",
+                  border: "1px solid var(--yellow)", borderRadius: 6, padding: "8px 4px" }}>
+                  <div className="mono" style={{ fontSize: 22, fontWeight: 900, color: "var(--fg)",
                     letterSpacing: "-.02em", lineHeight: 1 }}>{String(v).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: ".12em",
-                    color: "var(--fg-3)", marginTop: 6 }}>{l}</div>
+                  <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".12em",
+                    color: "var(--fg-3)", marginTop: 4 }}>{l}</div>
                 </div>
               ))}
             </div>
@@ -3623,42 +3808,49 @@ function App() {
   return (
     <div style={{ minHeight: "100vh" }}>
       <header style={{ position: "sticky", top: 0, zIndex: 40,
-        background: "color-mix(in oklab, var(--bg-0) 88%, transparent)",
-        backdropFilter: "blur(16px) saturate(140%)",
-        WebkitBackdropFilter: "blur(16px) saturate(140%)",
-        borderBottom: "1px solid var(--border)" }}>
+        background: "linear-gradient(180deg, var(--pitch-dark), var(--pitch))",
+        borderBottom: `2px solid var(--yellow)`,
+        boxShadow: "0 2px 8px rgba(0,0,0,.12)" }}>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto",
-          padding: "10px 16px", display: "flex", alignItems: "center", gap: 14 }}>
+          padding: "8px 16px", display: "flex", alignItems: "center", gap: 14 }}>
           {/* Brand */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10,
-              background: "linear-gradient(135deg, var(--pitch), var(--pitch-deep))",
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flex: "0 0 auto" }}>
+            <div style={{ width: 42, height: 42, borderRadius: "50%",
+              background: "#FFFFFF",
               display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 6px 18px -6px var(--pitch-glow), inset 0 1px 0 rgba(255,255,255,.18)" }}>
-              <span className="display" style={{ fontSize: 14, color: "#06120E", fontWeight: 800, letterSpacing: "-.02em" }}>26</span>
+              boxShadow: "0 4px 12px rgba(0,0,0,.18), inset 0 0 0 2px var(--yellow)" }}>
+              <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="14" fill="#FFFFFF" stroke="#0F1414" strokeWidth="1.2" />
+                <polygon points="16,7 21,11 19,17 13,17 11,11" fill="#0F1414" />
+                <polygon points="16,7 11,11 6.5,9 8,4.5 13.5,5" fill="none" stroke="#0F1414" strokeWidth=".9" />
+                <polygon points="16,7 21,11 25.5,9 24,4.5 18.5,5" fill="none" stroke="#0F1414" strokeWidth=".9" />
+                <polygon points="11,11 13,17 9,20 5.5,15 6.5,9" fill="none" stroke="#0F1414" strokeWidth=".9" />
+                <polygon points="21,11 19,17 23,20 26.5,15 25.5,9" fill="none" stroke="#0F1414" strokeWidth=".9" />
+                <polygon points="13,17 19,17 21,23 16,26.5 11,23" fill="none" stroke="#0F1414" strokeWidth=".9" />
+              </svg>
             </div>
-            <div style={{ minWidth: 0, display: "none" }} className="brand-text-md">
-              <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: ".02em" }}>VM 2026 Tippet</div>
-              <div style={{ fontSize: 10.5, fontWeight: 600, color: "var(--fg-3)" }}>USA · MEX · CAN</div>
+            <div style={{ minWidth: 0, color: "#FFFFFF", lineHeight: 1.05 }}>
+              <div style={{ fontSize: 17, fontWeight: 900, letterSpacing: "-.01em", color: "#FFFFFF" }}>VM TIPPET</div>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".24em", color: "var(--yellow)" }}>2026</div>
             </div>
           </div>
 
-          {/* Top tabs - kompakt pill-rad */}
+          {/* Top tabs - mörka pills med gult active */}
           <nav style={{ flex: 1, display: "flex", justifyContent: "center", minWidth: 0 }}>
             <div className="app-scroll" style={{ display: "flex", gap: 2, padding: 3,
-              background: "var(--bg-2)", borderRadius: 11, border: "1px solid var(--border)",
+              background: "rgba(0,0,0,.18)", borderRadius: 9, border: "1px solid rgba(255,255,255,.10)",
               overflowX: "auto", maxWidth: "100%" }}>
               {NAV.map(n => {
                 const active = view === n.id;
                 return (
                   <button key={n.id} onClick={() => setView(n.id)}
                     style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                      padding: "7px 13px", borderRadius: 8, whiteSpace: "nowrap",
-                      fontSize: 12.5, fontWeight: active ? 700 : 600,
-                      color: active ? "#06120E" : "var(--fg-2)",
-                      background: active ? "var(--pitch)" : "transparent",
-                      transition: "background .18s ease, color .18s ease, transform .18s ease" }}>
-                    <span style={{ display: "inline-flex", opacity: active ? 1 : .7 }}>{Icon[n.icon](active)}</span>
+                      padding: "7px 13px", borderRadius: 7, whiteSpace: "nowrap",
+                      fontSize: 12.5, fontWeight: 800,
+                      color: active ? "var(--fg)" : "rgba(255,255,255,.82)",
+                      background: active ? "var(--yellow)" : "transparent",
+                      transition: "background .18s ease, color .18s ease" }}>
+                    <span style={{ display: "inline-flex", opacity: active ? 1 : .85 }}>{Icon[n.icon](active)}</span>
                     <span>{n.label}</span>
                   </button>
                 );
@@ -3670,29 +3862,24 @@ function App() {
           <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 8 }}>
             {liveCount > 0 ? (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "5px 11px", borderRadius: 999, background: "var(--live-glow)",
-                border: "1px solid rgba(239,68,68,.45)", fontSize: 11.5, fontWeight: 700,
-                color: "var(--live)" }}>
-                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--live)",
+                padding: "6px 12px", borderRadius: 6, background: "var(--live)",
+                fontSize: 11.5, fontWeight: 800, color: "#FFFFFF", letterSpacing: ".04em" }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#FFFFFF",
                   animation: "blink 1.2s infinite" }} />
-                <span className="mono">{liveCount}</span> <span style={{ letterSpacing: ".06em" }}>LIVE</span>
+                <span className="mono">{liveCount}</span> LIVE
               </span>
             ) : nextMatch ? (
               <span style={{ display: "none", alignItems: "center", gap: 6,
-                padding: "5px 11px", borderRadius: 999, background: "var(--bg-2)",
-                border: "1px solid var(--border)", fontSize: 11.5, fontWeight: 600,
-                color: "var(--fg-3)" }} className="next-kick-md">
-                <span>Nästa</span>
-                <span className="mono" style={{ color: "var(--fg-2)" }}>{svDayLabel(nextMatch.kickoff)}</span>
+                padding: "5px 11px", borderRadius: 6, background: "rgba(255,255,255,.10)",
+                border: "1px solid rgba(255,255,255,.18)", fontSize: 11.5, fontWeight: 700,
+                color: "#FFFFFF" }} className="next-kick-md">
+                <span style={{ color: "var(--yellow)" }}>NÄSTA</span>
+                <span className="mono">{svDayLabel(nextMatch.kickoff)}</span>
               </span>
             ) : null}
           </div>
         </div>
-        {/* Mobile-säkring: visa brand-text + next-kick på >=640px via media */}
         <style>{`
-          @media (min-width: 640px) {
-            .brand-text-md { display: block !important; }
-          }
           @media (min-width: 880px) {
             .next-kick-md { display: inline-flex !important; }
           }
