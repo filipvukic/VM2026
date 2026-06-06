@@ -6,7 +6,7 @@
 <title>VM 2026 · Tippningsligan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,30..100,0..1;1,9..144,400..900,30..100,0..1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      VM 2026 - OLED-dark · Pitch-grön · Data-dense
@@ -14,56 +14,58 @@
      Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
      ============================================================ */
   :root {
-    /* === Bet365-inspirerad ljus palett === */
-    /* Sida-bakgrund */
-    --bg-0: #F2F2F2;          /* yttre */
-    --bg-1: #F8F8F8;          /* page */
-    --bg-2: #FFFFFF;          /* kort */
-    --bg-3: #F4F6F7;          /* hover/header-rader */
-    --bg-4: #E8EBED;          /* aktiv/vald rad */
+    /* === Editorial sport magazine - cream paper + burgundy/mustard === */
+    /* Bakgrunder (warm cream paper feel) */
+    --bg-0: #EAE2CB;          /* yttre - kraftig cream */
+    --bg-1: #F2EBD8;          /* page */
+    --bg-2: #FBF6E7;          /* kort */
+    --bg-3: #E6DCC1;          /* hover/zebra */
+    --bg-4: #D8CCAB;          /* aktiv */
+    --bg-ink: #16120D;        /* mörka block (hero, footer) */
 
-    /* Borders */
-    --border:        #DDE1E3;
-    --border-strong: #C4C9CD;
-    --border-pitch:  #126E51;
+    /* Heavy rules + borders */
+    --border:        #C9BD9C;
+    --border-strong: #16120D;     /* heavy black rule */
+    --border-soft:   #D8CCAB;
 
     /* Text */
-    --fg:   #0F1414;
-    --fg-2: #2B3439;
-    --fg-3: #5A6670;
-    --fg-4: #8B949B;
+    --fg:   #16120D;              /* deep ink */
+    --fg-2: #3A322A;
+    --fg-3: #6A6055;
+    --fg-4: #948A7C;
 
-    /* Brand: Bet365-grönt */
-    --pitch:       #126E51;       /* primärgrön (knappar, headers) */
-    --pitch-dark:  #014B36;       /* mörk topp-header */
-    --pitch-dim:   #1B8A66;       /* hover */
-    --pitch-deep:  #003D2C;
-    --pitch-glow:  rgba(18,110,81,.20);
-    --pitch-soft:  #E7F1ED;       /* ljust grönt bg för accent-block */
+    /* Burgundy - primärbrand */
+    --pitch:       #7B1F26;       /* burgundy primary */
+    --pitch-dark:  #4F0F14;
+    --pitch-dim:   #9A2D33;
+    --pitch-deep:  #350A0E;
+    --pitch-glow:  rgba(123,31,38,.18);
+    --pitch-soft:  #F3E1DF;
 
-    /* Gult highlights */
-    --yellow:      #FCDB00;       /* CTA / accent / odds */
-    --yellow-dim:  #E5C500;
-    --yellow-soft: #FFF6BF;
-    --yellow-glow: rgba(252,219,0,.40);
+    /* Mustard yellow accent (vintage) */
+    --yellow:      #D8A521;
+    --yellow-dim:  #B88712;
+    --yellow-soft: #F5E7B5;
+    --yellow-glow: rgba(216,165,33,.30);
 
-    /* Live: röd */
-    --live:        #E10000;
-    --live-soft:   #FCE6E6;
-    --live-glow:   rgba(225,0,0,.20);
+    /* Live: rust röd */
+    --live:        #C44A2A;
+    --live-soft:   #F4D9CE;
+    --live-glow:   rgba(196,74,42,.18);
 
     /* Medaljer */
-    --gold:        #C9981A;        /* mörkare än neon - kontrast mot ljust bg */
-    --gold-glow:   rgba(201,152,26,.30);
-    --silver:      #7C8794;
+    --gold:        #B88712;
+    --gold-glow:   rgba(184,135,18,.28);
+    --silver:      #6E6657;
     --bronze:      #B26B33;
 
     /* Stöd-accenter */
-    --blue:        #0070BB;        /* Bet365 selektioner */
-    --blue-glow:   rgba(0,112,187,.30);
-    --purple:      #6B3CA1;
-    --purple-glow: rgba(107,60,161,.30);
-    --orange:      #E66A00;
+    --blue:        #1E3851;        /* ink-blue */
+    --blue-glow:   rgba(30,56,81,.22);
+    --purple:      #4B3267;
+    --purple-glow: rgba(75,50,103,.22);
+    --orange:      #C46A2A;
+    --mint:        #5E8F7A;        /* subtilt grönt för "vidare"-markeringar */
 
     /* Pts-färger */
     --pts-5: var(--gold);   /* exakt */
@@ -85,22 +87,23 @@
     --grad:       linear-gradient(180deg, var(--pitch-dark) 0%, var(--pitch) 100%);
     --grad-soft:  linear-gradient(180deg, var(--pitch-soft), var(--bg-2));
 
-    /* Typografi */
-    --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+    /* Typografi - serif display + sans body (editorial sport magazine) */
+    --font-display: 'Fraunces', 'Newsreader', Georgia, serif;
     --font-body:    'Inter', system-ui, -apple-system, sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-    --display-tracking: -0.025em;
+    --display-tracking: -0.022em;
     --display-transform: none;
-    --display-weight: 800;
+    --display-weight: 700;
 
     /* Radius */
-    --r-sm: 6px;
-    --r-md: 10px;
-    --r-lg: 16px;
+    /* Sharp corners - editorial feel */
+    --r-sm: 2px;
+    --r-md: 3px;
+    --r-lg: 4px;
 
     /* Shadow + lift */
-    --shadow:       0 1px 0 rgba(255,255,255,.02) inset, 0 8px 24px -16px rgba(0,0,0,.55);
-    --shadow-lift:  0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -18px rgba(0,0,0,.6);
+    --shadow:       0 1px 0 rgba(22,18,13,.06), 0 4px 12px -8px rgba(22,18,13,.12);
+    --shadow-lift:  0 2px 0 rgba(22,18,13,.08), 0 12px 24px -12px rgba(22,18,13,.22);
 
     /* Geometri */
     --nav-h: 64px;
@@ -119,12 +122,19 @@
     overscroll-behavior-y: none;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Subtila accenter på ljus bg */
+  /* Paper-textur: ultrafint noise + subtila linjer */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(70vw 40vw at 50% -10%, rgba(252,219,0,.08), transparent 60%),
-      radial-gradient(60vw 50vw at 100% 100%, rgba(18,110,81,.06), transparent 60%);
+      radial-gradient(80vw 60vw at 50% -10%, rgba(123,31,38,.04), transparent 55%),
+      radial-gradient(70vw 50vw at 110% 100%, rgba(216,165,33,.04), transparent 55%);
+    opacity: .8;
+  }
+  /* Mycket subtilt paper-grain via noise-svg */
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.02 0 0 0 .35 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
   }
   #root { position: relative; z-index: 1; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
@@ -135,8 +145,33 @@
     font-family: var(--font-display);
     text-transform: var(--display-transform);
     letter-spacing: var(--display-tracking);
-    line-height: .98;
-    font-weight: var(--display-weight, 800);
+    line-height: .96;
+    font-weight: var(--display-weight, 700);
+    font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
+  }
+  .display-italic {
+    font-family: var(--font-display); font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+    font-weight: 700; letter-spacing: -0.018em;
+  }
+  .eyebrow {
+    font-family: var(--font-body); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .rule {
+    height: 0; border: 0; border-top: 1.5px solid var(--fg);
+    margin: 18px 0; opacity: .85;
+  }
+  .rule-thin {
+    height: 0; border: 0; border-top: 1px solid var(--border);
+    margin: 12px 0;
+  }
+  .editorial-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--fg);
+    border-radius: 2px;
+    padding: 18px 18px;
   }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; padding: 0; }
   img { display: block; max-width: 100%; }
@@ -164,7 +199,41 @@
   @keyframes shine { from{background-position:-200% 0} to{background-position:200% 0} }
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
-  @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes viewIn {
+    0% { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+    60% { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes viewOut {
+    0% { opacity: 1; transform: none; filter: blur(0); }
+    100% { opacity: 0; transform: translateY(-10px); filter: blur(4px); }
+  }
+  /* View Transition API */
+  @supports (view-transition-name: a) {
+    ::view-transition-old(root) {
+      animation: viewOut .28s cubic-bezier(.4,0,.2,1) both;
+    }
+    ::view-transition-new(root) {
+      animation: viewIn .42s cubic-bezier(.2,.7,.2,1) both;
+    }
+    ::view-transition-group(root) { animation-duration: .42s; }
+  }
+  /* Stagger för items i listor */
+  @keyframes itemStagger {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  .stagger > * { animation: itemStagger .35s cubic-bezier(.2,.7,.2,1) both; }
+  .stagger > *:nth-child(1)  { animation-delay: .02s; }
+  .stagger > *:nth-child(2)  { animation-delay: .06s; }
+  .stagger > *:nth-child(3)  { animation-delay: .10s; }
+  .stagger > *:nth-child(4)  { animation-delay: .14s; }
+  .stagger > *:nth-child(5)  { animation-delay: .18s; }
+  .stagger > *:nth-child(6)  { animation-delay: .22s; }
+  .stagger > *:nth-child(7)  { animation-delay: .26s; }
+  .stagger > *:nth-child(8)  { animation-delay: .30s; }
+  .stagger > *:nth-child(9)  { animation-delay: .34s; }
+  .stagger > *:nth-child(n+10) { animation-delay: .38s; }
   @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
   @keyframes neonPulse {
     0%, 100% { text-shadow: 0 0 18px var(--pitch-glow), 0 0 36px var(--pitch-glow); }
@@ -1740,7 +1809,6 @@ function MatchCard({ m, onOpen, showRound }) {
         {code ? window.VM.TEAMS[code].name : (fromLabel || "Vinnare")}</span>
     </div>
   );
-  const showOdds = !played && !live && !tbd && m.home && m.away;
   return (
     <button onClick={() => onOpen && onOpen(m)} className="glow-hover"
       style={{ width: "100%", textAlign: "left", background: "var(--bg-2)",
@@ -1780,12 +1848,6 @@ function MatchCard({ m, onOpen, showRound }) {
         </div>
         {teamSide(m.away, m.fromB, true)}
       </div>
-      {showOdds && (
-        <div style={{ padding: "8px 13px 11px", borderTop: "1px solid var(--border)",
-          background: "var(--bg-3)" }}>
-          <WinChanceBar home={m.home} away={m.away} size="sm" />
-        </div>
-      )}
     </button>
   );
 }
@@ -1851,11 +1913,12 @@ function _saveWikiCache(){
 /* Name-resolution: kortform/felstavning -> riktig Wikipedia-titel.
    Wikipedia följer redirects om "redirects=1", men disambig-sidor och
    kort-namn behöver explicit mappning. */
+/* Värdet är en lista med kandidat-titlar att prova i ordning. */
 const WIKI_TITLE_MAP = {
-  "vitinha": "Vitinha (footballer, born 2000)",
-  "raya": "David Raya",
-  "bruno fernanch": "Bruno Fernandes",
-  "bruno fernandes": "Bruno Fernandes",
+  "vitinha":          ["Vitinha (footballer, born 2000)", "Vítor Machado Ferreira", "Vitinha"],
+  "raya":             ["David Raya", "David Raya Martín"],
+  "bruno fernanch":   ["Bruno Fernandes"],
+  "bruno fernandes":  ["Bruno Fernandes"],
   "yamal": "Lamine Yamal",
   "lamine yamal": "Lamine Yamal",
   "kylian mbappé": "Kylian Mbappé",
@@ -1906,39 +1969,54 @@ const WIKI_TITLE_MAP = {
   "pau cubarsi": "Pau Cubarsí",
   "cubarsí": "Pau Cubarsí"
 };
-function resolveWikiTitle(name){
-  if(!name) return null;
+function resolveWikiCandidates(name){
+  if(!name) return [];
   const key = String(name).toLowerCase().trim();
-  return WIKI_TITLE_MAP[key] || name;
+  const v = WIKI_TITLE_MAP[key];
+  if(Array.isArray(v)) return v;
+  if(typeof v === "string") return [v];
+  return [name];
 }
 
 function useWikiPhoto(name){
-  const resolved = resolveWikiTitle(name);
-  const [url, setUrl] = React.useState(() => resolved && (resolved in _wikiCache) ? _wikiCache[resolved] : null);
+  const candidates = React.useMemo(() => resolveWikiCandidates(name), [name]);
+  const cacheKey = candidates.join("|");
+  const [url, setUrl] = React.useState(() => (cacheKey in _wikiCache) ? _wikiCache[cacheKey] : null);
   React.useEffect(() => {
-    if(!resolved) return;
-    if(resolved in _wikiCache){ setUrl(_wikiCache[resolved]); return; }
-    // Dedupe parallel lookups
-    if(_wikiInflight[resolved]){
-      _wikiInflight[resolved].then(u => setUrl(u));
+    if(!candidates.length) return;
+    if(cacheKey in _wikiCache){ setUrl(_wikiCache[cacheKey]); return; }
+    if(_wikiInflight[cacheKey]){
+      _wikiInflight[cacheKey].then(u => setUrl(u));
       return;
     }
-    const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
-              + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(resolved);
-    _wikiInflight[resolved] = fetch(api)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        const pages = (data && data.query && data.query.pages) || {};
+    // Försök varje kandidat i tur och ordning tills en träffar
+    const tryNext = async (i) => {
+      if(i >= candidates.length) return null;
+      const title = candidates[i];
+      try {
+        const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
+                  + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(title);
+        const res = await fetch(api);
+        if(!res.ok) return tryNext(i + 1);
+        const json = await res.json();
+        const pages = (json && json.query && json.query.pages) || {};
         const first = Object.values(pages)[0];
         const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
-        _wikiCache[resolved] = thumb;
+        if(thumb) return thumb;
+        return tryNext(i + 1);
+      } catch (e) {
+        return tryNext(i + 1);
+      }
+    };
+    _wikiInflight[cacheKey] = tryNext(0)
+      .then(thumb => {
+        _wikiCache[cacheKey] = thumb;
         _saveWikiCache();
         return thumb;
       })
-      .catch(() => { _wikiCache[resolved] = null; _saveWikiCache(); return null; })
-      .finally(() => { delete _wikiInflight[resolved]; });
-    _wikiInflight[resolved].then(u => setUrl(u));
-  }, [resolved]);
+      .finally(() => { delete _wikiInflight[cacheKey]; });
+    _wikiInflight[cacheKey].then(u => setUrl(u));
+  }, [cacheKey]);
   return url;
 }
 
@@ -2034,6 +2112,54 @@ const WC_HISTORY = {
   SRB: { titles: 0, runnerUp: 0, third: 0, semis: 0, apps: 4, best: "Som FR Jugoslavien: kvart 1990" }
 };
 
+/* FIFA-rankingen per landslag (approximerat november 2025).
+   Källa: FIFA Coca-Cola World Ranking. */
+const FIFA_RANKING_DATE = "Nov 2025";
+const FIFA_RANKING = {
+  ARG: 1, FRA: 2, ESP: 3, ENG: 4, BRA: 5, POR: 6, NED: 7, BEL: 8,
+  CRO: 9, ITA: 10, MAR: 14, GER: 12, COL: 13, URU: 11, MEX: 19,
+  SUI: 17, USA: 16, JPN: 15, DEN: 21, IRN: 18, KOR: 22, AUS: 26,
+  SEN: 20, EGY: 35, NGA: 41, ALG: 36, TUN: 49, GHA: 73, CIV: 39,
+  RSA: 56, CMR: 32, COD: 60, CPV: 64, AUT: 23, POL: 33, SRB: 30,
+  HUN: 38, NOR: 42, TUR: 28, SVK: 51, ECU: 24, PAR: 50, PER: 47,
+  CHI: 25, VEN: 54, BOL: 84, SWE: 40, FIN: 64, IRL: 60, SCO: 39,
+  WAL: 30, ISL: 73, ROU: 47, BIH: 76, SVN: 56, GRE: 50, NIR: 67,
+  QAT: 53, KSA: 58, UAE: 70, IRQ: 58, JOR: 64, UZB: 57, NZL: 89,
+  CAN: 30, CRC: 54, PAN: 39, JAM: 67, HAI: 88, HON: 81, SLV: 87,
+  GUA: 109, TRI: 100, CUR: 90, SUR: 137, CZE: 41, ALB: 65, KOS: 88,
+  MKD: 65, MNE: 74
+};
+
+/* Utökad team-detalj: tränare, key players, recent form (W/D/L senaste 5),
+   FIFA-poäng. Värden approximerade okt 2025. */
+const TEAM_DETAILS = {
+  ARG: { coach: "Lionel Scaloni", stars: ["Lionel Messi", "Lautaro Martínez", "Julián Álvarez"], form: "WWWDW", fifaPts: 1879 },
+  FRA: { coach: "Didier Deschamps", stars: ["Kylian Mbappé", "Antoine Griezmann", "Aurélien Tchouaméni"], form: "WWWWL", fifaPts: 1859 },
+  ESP: { coach: "Luis de la Fuente", stars: ["Rodri", "Lamine Yamal", "Pedri"], form: "WWWWW", fifaPts: 1855 },
+  ENG: { coach: "Thomas Tuchel", stars: ["Jude Bellingham", "Harry Kane", "Cole Palmer"], form: "WWDWW", fifaPts: 1820 },
+  BRA: { coach: "Dorival Júnior", stars: ["Vinícius Júnior", "Rodrygo", "Vitor Roque"], form: "WDLWW", fifaPts: 1789 },
+  POR: { coach: "Roberto Martínez", stars: ["Cristiano Ronaldo", "Bruno Fernandes", "Bernardo Silva"], form: "WWWLW", fifaPts: 1772 },
+  NED: { coach: "Ronald Koeman", stars: ["Virgil van Dijk", "Frenkie de Jong", "Cody Gakpo"], form: "WDWWW", fifaPts: 1754 },
+  BEL: { coach: "Rudi Garcia", stars: ["Kevin De Bruyne", "Romelu Lukaku", "Jérémy Doku"], form: "WWLWD", fifaPts: 1735 },
+  CRO: { coach: "Zlatko Dalić", stars: ["Luka Modrić", "Joško Gvardiol", "Mateo Kovačić"], form: "DWLDW", fifaPts: 1707 },
+  ITA: { coach: "Luciano Spalletti", stars: ["Federico Chiesa", "Nicolò Barella", "Gianluigi Donnarumma"], form: "WDWWL", fifaPts: 1718 },
+  GER: { coach: "Julian Nagelsmann", stars: ["Florian Wirtz", "Jamal Musiala", "Kai Havertz"], form: "WWDWW", fifaPts: 1726 },
+  COL: { coach: "Néstor Lorenzo", stars: ["James Rodríguez", "Luis Díaz", "Davinson Sánchez"], form: "WDWWL", fifaPts: 1721 },
+  URU: { coach: "Marcelo Bielsa", stars: ["Federico Valverde", "Darwin Núñez", "Ronald Araújo"], form: "WLWDW", fifaPts: 1719 },
+  MAR: { coach: "Walid Regragui", stars: ["Achraf Hakimi", "Hakim Ziyech", "Yassine Bounou"], form: "WWDWW", fifaPts: 1694 },
+  MEX: { coach: "Javier Aguirre", stars: ["Hirving Lozano", "Edson Álvarez", "Raúl Jiménez"], form: "WDLWW", fifaPts: 1671 },
+  JPN: { coach: "Hajime Moriyasu", stars: ["Takefusa Kubo", "Wataru Endo", "Kaoru Mitoma"], form: "WWWLW", fifaPts: 1666 },
+  USA: { coach: "Mauricio Pochettino", stars: ["Christian Pulisic", "Weston McKennie", "Tyler Adams"], form: "WDLDW", fifaPts: 1660 },
+  SUI: { coach: "Murat Yakin", stars: ["Granit Xhaka", "Manuel Akanji", "Breel Embolo"], form: "DWDLW", fifaPts: 1670 },
+  IRN: { coach: "Amir Ghalenoei", stars: ["Mehdi Taremi", "Sardar Azmoun", "Alireza Jahanbakhsh"], form: "WWLWW", fifaPts: 1653 },
+  KOR: { coach: "Hong Myung-bo", stars: ["Son Heung-min", "Kim Min-jae", "Lee Kang-in"], form: "WLWDW", fifaPts: 1639 },
+  SEN: { coach: "Pape Thiaw", stars: ["Sadio Mané", "Kalidou Koulibaly", "Édouard Mendy"], form: "WWDWL", fifaPts: 1651 },
+  AUS: { coach: "Tony Popovic", stars: ["Mat Ryan", "Ajdin Hrustic", "Mathew Leckie"], form: "WLDWW", fifaPts: 1551 },
+  CAN: { coach: "Jesse Marsch", stars: ["Alphonso Davies", "Jonathan David", "Stephen Eustáquio"], form: "WLWDW", fifaPts: 1573 },
+  SWE: { coach: "Jon Dahl Tomasson", stars: ["Alexander Isak", "Viktor Gyökeres", "Dejan Kulusevski"], form: "LWWDW", fifaPts: 1517 },
+  NOR: { coach: "Ståle Solbakken", stars: ["Erling Haaland", "Martin Ødegaard", "Alexander Sørloth"], form: "WWWDW", fifaPts: 1531 }
+};
+
 /* Approximativ team-rating för odds-beräkning. Härlett från
    WC_HISTORY (titlar/semis/apps) + nyare form. Skala ~60-95. */
 function teamRating(code){
@@ -2106,6 +2232,64 @@ function WinChanceBar({ home, away, size = "md" }){
   );
 }
 
+function TeamStatsBlock({ code }){
+  const d = TEAM_DETAILS[code];
+  const rank = FIFA_RANKING[code];
+  if(!d && !rank) return null;
+  const formColor = (c) => c === "W" ? "var(--pitch)" : c === "L" ? "var(--live)" : "var(--fg-3)";
+  return (
+    <div style={{ margin: "0 16px 14px" }}>
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Landslags-statistik</div>
+      <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
+        borderTop: "3px solid var(--fg)", padding: "16px 18px", borderRadius: 2 }}>
+        {(rank || (d && d.fifaPts)) && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline",
+            paddingBottom: 12, marginBottom: 12, borderBottom: "1px solid var(--border)" }}>
+            <div>
+              <div className="eyebrow" style={{ fontSize: 9.5 }}>FIFA-ranking · {FIFA_RANKING_DATE}</div>
+              <div className="display" style={{ fontSize: 38, color: "var(--fg)", lineHeight: 1 }}>
+                #{rank || "-"}
+              </div>
+            </div>
+            {d && d.fifaPts && (
+              <div style={{ textAlign: "right" }}>
+                <div className="eyebrow" style={{ fontSize: 9.5 }}>FIFA-poäng</div>
+                <div className="mono" style={{ fontSize: 22, fontWeight: 800, color: "var(--fg-2)" }}>{d.fifaPts}</div>
+              </div>
+            )}
+          </div>
+        )}
+        {d && d.coach && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid var(--border)" }}>
+            <span className="eyebrow">Förbundskapten</span>
+            <span style={{ fontWeight: 600, fontSize: 14, color: "var(--fg)" }}>{d.coach}</span>
+          </div>
+        )}
+        {d && d.stars && d.stars.length > 0 && (
+          <div style={{ paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid var(--border)" }}>
+            <div className="eyebrow" style={{ marginBottom: 6 }}>Stjärnspelare</div>
+            <ul style={{ margin: 0, paddingLeft: 18, color: "var(--fg-2)", fontSize: 13, lineHeight: 1.6 }}>
+              {d.stars.map((n, i) => <li key={i}>{n}</li>)}
+            </ul>
+          </div>
+        )}
+        {d && d.form && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span className="eyebrow">Senaste 5 matcher</span>
+            <div style={{ display: "inline-flex", gap: 4 }}>
+              {d.form.split("").map((c, i) => (
+                <span key={i} className="mono" style={{ width: 22, height: 22, borderRadius: 2,
+                  background: formColor(c), color: "#FFFFFF", fontSize: 11, fontWeight: 800,
+                  display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{c}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function TeamHistoryBlock({ code }){
   const h = WC_HISTORY[code];
   if(!h) return null;
@@ -2144,7 +2328,7 @@ Object.assign(window, {
   VM_PALETTES, VM_FONTS, applyTheme, groupColor, groupColorSoft,
   Flag, TeamName, TeamLabel, Avatar, StarPhoto, slugifyName, svTime, svDateKey, svDayLabel,
   useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting,
-  TeamHistoryBlock, WC_HISTORY, teamRating, matchOdds, WinChanceBar
+  TeamHistoryBlock, TeamStatsBlock, WC_HISTORY, TEAM_DETAILS, FIFA_RANKING, teamRating, matchOdds, WinChanceBar
 });
 
 /* ---------- vimplar (bunting) - VM-/folkfestkänsla ---------- */
@@ -2436,6 +2620,46 @@ function PoolResultBlock({ data, m }) {
   );
 }
 
+function WinChanceBlock({ m }){
+  if(!m.home || !m.away) return null;
+  const o = window.VM.matchOdds(m.home, m.away);
+  if(!o) return null;
+  return (
+    <div style={{ margin: "0 16px 14px" }}>
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Vinstchans inför avspark</div>
+      <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
+        borderTop: "3px solid var(--fg)", padding: "16px 16px 14px", borderRadius: 2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 14, alignItems: "end" }}>
+          <div style={{ textAlign: "center", paddingBottom: 8, borderBottom: "2px solid var(--pitch)" }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".14em", color: "var(--fg-3)", textTransform: "uppercase" }}>1 · Hemma</div>
+            <div className="display" style={{ fontSize: 38, color: "var(--pitch)", marginTop: 4, lineHeight: 1 }}>{o.H}<span style={{ fontSize: 18, color: "var(--fg-3)" }}>%</span></div>
+          </div>
+          <div style={{ textAlign: "center", paddingBottom: 8, borderBottom: "2px solid var(--fg-3)" }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".14em", color: "var(--fg-3)", textTransform: "uppercase" }}>X · Lika</div>
+            <div className="display" style={{ fontSize: 38, color: "var(--fg-2)", marginTop: 4, lineHeight: 1 }}>{o.D}<span style={{ fontSize: 18, color: "var(--fg-3)" }}>%</span></div>
+          </div>
+          <div style={{ textAlign: "center", paddingBottom: 8, borderBottom: "2px solid var(--blue)" }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".14em", color: "var(--fg-3)", textTransform: "uppercase" }}>2 · Borta</div>
+            <div className="display" style={{ fontSize: 38, color: "var(--blue)", marginTop: 4, lineHeight: 1 }}>{o.A}<span style={{ fontSize: 18, color: "var(--fg-3)" }}>%</span></div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 2, height: 8, borderRadius: 2, overflow: "hidden", marginBottom: 12 }}>
+          <span style={{ flex: o.H, background: "var(--pitch)" }} />
+          <span style={{ flex: o.D, background: "var(--fg-3)" }} />
+          <span style={{ flex: o.A, background: "var(--blue)" }} />
+        </div>
+        <div style={{ fontSize: 11.5, color: "var(--fg-3)", fontStyle: "italic", lineHeight: 1.5,
+          paddingTop: 10, borderTop: "1px dashed var(--border)" }}>
+          <strong style={{ color: "var(--fg-2)", fontStyle: "normal" }}>Källa:</strong> {" "}
+          Beräknad utifrån lagens VM-historiska meriter (titlar, semifinaler, antal slutspel)
+          + en logistisk modell på ratingdifferensen + <strong style={{ color: "var(--fg-2)", fontStyle: "normal" }}>+3p hemmaplansbonus</strong> för noterat hemmalag.
+          Inte officiella odds — endast en guide.
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function VenueRefsBlock({ m }){
   // Visar var matchen spelas + funktionärer prominent.
   const hasVenue = !!(m.venue && m.venue.stadium);
@@ -2549,6 +2773,7 @@ function MatchDetail({ data, match, onClose, onTeam }) {
           <MiniBlock title={live ? "Händelser · pågår" : "Händelser"} pad={false}><Timeline m={m} /></MiniBlock>
         )}
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
+        {!played && !live && !tbd && <WinChanceBlock m={m} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
         {!played && !live && !tbd && <H2HBlock m={m} />}
         {!tbd && !played && <TipsDistribution data={data} m={m} />}
@@ -3757,6 +3982,7 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
             </div>
           </MiniBlock>
         )}
+        <TeamStatsBlock code={code} />
         <TeamHistoryBlock code={code} />
         {fans.length > 0 && (
           <MiniBlock title={`${fans.length} har laget i sina bonustips`}>
@@ -3783,11 +4009,21 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
 }
 
 function App() {
-  const [view, setView] = React.useState("standings");
+  const [view, setRawView] = React.useState("standings");
   const [player, setPlayer] = React.useState(null);
   const [team, setTeam] = React.useState(null);
   const [match, setMatch] = React.useState(null);
   const [tick, setTick] = React.useState(0);
+
+  // Smooth view transition via View Transition API
+  const setView = React.useCallback((v) => {
+    if(v === view) return;
+    if(typeof document !== "undefined" && document.startViewTransition){
+      document.startViewTransition(() => setRawView(v));
+    } else {
+      setRawView(v);
+    }
+  }, [view]);
 
   React.useEffect(() => { applyTheme("sunset", "modern"); }, []);
   React.useEffect(() => {
