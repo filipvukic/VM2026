@@ -6,7 +6,7 @@
 <title>VM 2026 · Tippningsligan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,30..100,0..1;1,9..144,400..900,30..100,0..1&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      VM 2026 - OLED-dark · Pitch-grön · Data-dense
@@ -14,58 +14,60 @@
      Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
      ============================================================ */
   :root {
-    /* === Editorial sport magazine - cream paper + burgundy/mustard === */
-    /* Bakgrunder (warm cream paper feel) */
-    --bg-0: #EAE2CB;          /* yttre - kraftig cream */
-    --bg-1: #F2EBD8;          /* page */
-    --bg-2: #FBF6E7;          /* kort */
-    --bg-3: #E6DCC1;          /* hover/zebra */
-    --bg-4: #D8CCAB;          /* aktiv */
-    --bg-ink: #16120D;        /* mörka block (hero, footer) */
+    /* === Sophistication & Trust (UI/UX Design Pro skill) ===
+       Cool-neutral slate foundation (hue 240) + indigo single accent.
+       Ljust tema, multi-layer premium shadows, 8px radius. */
+    /* Bakgrunder */
+    --bg-0: #F2F4F8;              /* sidans yttre */
+    --bg-1: #F6F8FB;              /* page */
+    --bg-2: #FFFFFF;              /* card raised */
+    --bg-3: #EEF1F6;              /* hover/zebra row */
+    --bg-4: #E4E8F0;              /* aktiv/vald */
+    --bg-ink: #0F1424;            /* mörka block (footer/hero contrast) */
 
-    /* Heavy rules + borders */
-    --border:        #C9BD9C;
-    --border-strong: #16120D;     /* heavy black rule */
-    --border-soft:   #D8CCAB;
+    /* Borders - subtle multi-layer */
+    --border:        rgba(15,20,36,.06);
+    --border-strong: rgba(15,20,36,.12);
+    --border-soft:   rgba(15,20,36,.04);
 
     /* Text */
-    --fg:   #16120D;              /* deep ink */
-    --fg-2: #3A322A;
-    --fg-3: #6A6055;
-    --fg-4: #948A7C;
+    --fg:   #0F1424;              /* slate-12 */
+    --fg-2: #2C334B;              /* slate-10 */
+    --fg-3: #5E667C;              /* slate-7 */
+    --fg-4: #8B91A4;              /* slate-5 */
 
-    /* Burgundy - primärbrand */
-    --pitch:       #7B1F26;       /* burgundy primary */
-    --pitch-dark:  #4F0F14;
-    --pitch-dim:   #9A2D33;
-    --pitch-deep:  #350A0E;
-    --pitch-glow:  rgba(123,31,38,.18);
-    --pitch-soft:  #F3E1DF;
+    /* Indigo - single authoritative accent */
+    --pitch:       #4F46E5;       /* indigo-600 */
+    --pitch-dark:  #3730A3;       /* indigo-800 hero/header */
+    --pitch-dim:   #6366F1;       /* indigo-500 hover */
+    --pitch-deep:  #1E1B4B;
+    --pitch-glow:  rgba(79,70,229,.18);
+    --pitch-soft:  #EEF2FF;       /* indigo-50 - subtle bg */
 
-    /* Mustard yellow accent (vintage) */
-    --yellow:      #D8A521;
-    --yellow-dim:  #B88712;
-    --yellow-soft: #F5E7B5;
-    --yellow-glow: rgba(216,165,33,.30);
+    /* Sekundär accent - mintgrön för positiva poäng */
+    --yellow:      #F59E0B;        /* amber (highlights/streaks) */
+    --yellow-dim:  #D97706;
+    --yellow-soft: #FEF3C7;
+    --yellow-glow: rgba(245,158,11,.22);
 
-    /* Live: rust röd */
-    --live:        #C44A2A;
-    --live-soft:   #F4D9CE;
-    --live-glow:   rgba(196,74,42,.18);
+    /* Live: rose-red (matches indigo tonally) */
+    --live:        #E11D48;        /* rose-600 */
+    --live-soft:   #FFE4E6;
+    --live-glow:   rgba(225,29,72,.18);
 
     /* Medaljer */
-    --gold:        #B88712;
-    --gold-glow:   rgba(184,135,18,.28);
-    --silver:      #6E6657;
-    --bronze:      #B26B33;
+    --gold:        #D97706;        /* amber-600 - readable */
+    --gold-glow:   rgba(217,119,6,.22);
+    --silver:      #64748B;        /* slate-500 */
+    --bronze:      #B45309;
 
     /* Stöd-accenter */
-    --blue:        #1E3851;        /* ink-blue */
-    --blue-glow:   rgba(30,56,81,.22);
-    --purple:      #4B3267;
-    --purple-glow: rgba(75,50,103,.22);
-    --orange:      #C46A2A;
-    --mint:        #5E8F7A;        /* subtilt grönt för "vidare"-markeringar */
+    --blue:        #0EA5E9;        /* sky-500 */
+    --blue-glow:   rgba(14,165,233,.20);
+    --purple:      #7C3AED;
+    --purple-glow: rgba(124,58,237,.22);
+    --orange:      #EA580C;
+    --mint:        #10B981;        /* emerald-500 - "vidare"/positive */
 
     /* Pts-färger */
     --pts-5: var(--gold);   /* exakt */
@@ -87,23 +89,30 @@
     --grad:       linear-gradient(180deg, var(--pitch-dark) 0%, var(--pitch) 100%);
     --grad-soft:  linear-gradient(180deg, var(--pitch-soft), var(--bg-2));
 
-    /* Typografi - serif display + sans body (editorial sport magazine) */
-    --font-display: 'Fraunces', 'Newsreader', Georgia, serif;
-    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    /* Typografi - DM Sans variable + DM Mono för data */
+    --font-display: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-mono:    'DM Mono', ui-monospace, SFMono-Regular, monospace;
     --display-tracking: -0.022em;
     --display-transform: none;
     --display-weight: 700;
 
     /* Radius */
-    /* Sharp corners - editorial feel */
-    --r-sm: 2px;
-    --r-md: 3px;
-    --r-lg: 4px;
+    /* Balanced corners - sophistication direction */
+    --r-sm: 6px;
+    --r-md: 8px;
+    --r-lg: 12px;
 
     /* Shadow + lift */
-    --shadow:       0 1px 0 rgba(22,18,13,.06), 0 4px 12px -8px rgba(22,18,13,.12);
-    --shadow-lift:  0 2px 0 rgba(22,18,13,.08), 0 12px 24px -12px rgba(22,18,13,.22);
+    /* Multi-layer premium shadow (Sophistication direction) */
+    --shadow:       0 0 0 0.5px rgba(15,20,36,.04),
+                    0 1px 2px rgba(15,20,36,.04),
+                    0 2px 4px rgba(15,20,36,.03);
+    --shadow-lift:  0 0 0 0.5px rgba(15,20,36,.05),
+                    0 1px 2px rgba(15,20,36,.04),
+                    0 2px 4px rgba(15,20,36,.03),
+                    0 4px 8px rgba(15,20,36,.04),
+                    0 8px 16px rgba(15,20,36,.05);
 
     /* Geometri */
     --nav-h: 64px;
@@ -122,56 +131,45 @@
     overscroll-behavior-y: none;
     font-feature-settings: "ss01", "cv11";
   }
-  /* Paper-textur: ultrafint noise + subtila linjer */
+  /* Subtilt cool-tonad bg-glow */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(80vw 60vw at 50% -10%, rgba(123,31,38,.04), transparent 55%),
-      radial-gradient(70vw 50vw at 110% 100%, rgba(216,165,33,.04), transparent 55%);
-    opacity: .8;
-  }
-  /* Mycket subtilt paper-grain via noise-svg */
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .35;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.04 0 0 0 0 0.02 0 0 0 .35 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
-    mix-blend-mode: multiply;
+      radial-gradient(80vw 50vw at 50% -10%, rgba(79,70,229,.06), transparent 55%),
+      radial-gradient(60vw 40vw at 90% 100%, rgba(14,165,233,.04), transparent 55%);
   }
   #root { position: relative; z-index: 1; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
   .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
+  body {
+    font-family: var(--font-body);
+    color: var(--fg);
+    font-feature-settings: "ss01", "cv01", "cv02";
+  }
   h1,h2,h3 { margin: 0; }
   .display {
     font-family: var(--font-display);
     text-transform: var(--display-transform);
     letter-spacing: var(--display-tracking);
-    line-height: .96;
+    line-height: 1.04;
     font-weight: var(--display-weight, 700);
-    font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
-  }
-  .display-italic {
-    font-family: var(--font-display); font-style: italic;
-    font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
-    font-weight: 700; letter-spacing: -0.018em;
   }
   .eyebrow {
-    font-family: var(--font-body); font-size: 10.5px; font-weight: 700;
-    letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3);
+    font-family: var(--font-body); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
   }
-  .rule {
-    height: 0; border: 0; border-top: 1.5px solid var(--fg);
-    margin: 18px 0; opacity: .85;
-  }
-  .rule-thin {
-    height: 0; border: 0; border-top: 1px solid var(--border);
-    margin: 12px 0;
-  }
-  .editorial-card {
+  .premium-card {
     background: var(--bg-2);
     border: 1px solid var(--border);
-    border-top: 3px solid var(--fg);
-    border-radius: 2px;
-    padding: 18px 18px;
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow);
+  }
+  .premium-card-lift {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-lift);
   }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; padding: 0; }
   img { display: block; max-width: 100%; }
@@ -2768,12 +2766,13 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   return (
     <Sheet onClose={onClose} header={header}>
       <div style={{ paddingTop: 16 }}>
+        {/* Vinstchans FÖRST - tydligt och prominent */}
+        {!played && !live && !tbd && <WinChanceBlock m={m} />}
         {!tbd && <VenueRefsBlock m={m} />}
         {(played || live) && !tbd && (
           <MiniBlock title={live ? "Händelser · pågår" : "Händelser"} pad={false}><Timeline m={m} /></MiniBlock>
         )}
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
-        {!played && !live && !tbd && <WinChanceBlock m={m} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
         {!played && !live && !tbd && <H2HBlock m={m} />}
         {!tbd && !played && <TipsDistribution data={data} m={m} />}
@@ -2993,61 +2992,67 @@ function JackpotHero({ pot, prizes, isPre, nextUp }){
   const secs = Math.floor((diffMs % 60000) / 1000);
 
   return (
-    <div style={{ position: "relative", overflow: "hidden",
-      background: "linear-gradient(135deg, var(--pitch-dark) 0%, var(--pitch) 60%, var(--pitch-dim) 100%)",
-      borderRadius: 12, padding: "24px 22px 24px",
-      border: `2px solid var(--yellow)`, marginBottom: 16,
-      boxShadow: "0 8px 24px -8px rgba(0,0,0,.18)" }}>
-      {/* Hörn-stjärnor (gula) */}
-      <span style={{ position: "absolute", top: 10, left: 14, fontSize: 14, opacity: .55 }}>✦</span>
-      <span style={{ position: "absolute", top: 10, right: 14, fontSize: 14, opacity: .55 }}>✦</span>
-      <span style={{ position: "absolute", bottom: 10, left: 14, fontSize: 14, opacity: .55 }}>✦</span>
-      <span style={{ position: "absolute", bottom: 10, right: 14, fontSize: 14, opacity: .55 }}>✦</span>
+    <div className="premium-card-lift" style={{ position: "relative", overflow: "hidden",
+      padding: "28px 28px 28px", marginBottom: 16 }}>
+      {/* subtle accent ring i bakgrund */}
+      <span style={{ position: "absolute", top: -100, right: -100, width: 320, height: 320,
+        borderRadius: "50%", background: "var(--pitch-soft)", filter: "blur(40px)",
+        opacity: .8, pointerEvents: "none" }} />
 
-      <div style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".26em", textTransform: "uppercase",
-          color: "var(--yellow)", marginBottom: 6 }}>★ Sammanlagd jackpot ★</div>
-        <div className="mono" style={{ fontSize: "clamp(54px, 11vw, 92px)", fontWeight: 900,
-          letterSpacing: "-.04em", lineHeight: 1, color: "#FFFFFF",
-          textShadow: "0 4px 18px rgba(0,0,0,.2)" }}>
-          {pot.toLocaleString("sv-SE")}<span style={{ fontSize: ".42em", marginLeft: 8, color: "var(--yellow)" }}>kr</span>
+      <div style={{ position: "relative", zIndex: 2,
+        display: "grid", gridTemplateColumns: isPre ? "1fr 1fr" : "1fr",
+        gap: 32, alignItems: "center" }} className="hero-grid">
+        <div>
+          <div className="eyebrow" style={{ color: "var(--pitch)", marginBottom: 8 }}>Sammanlagd jackpot</div>
+          <div className="display" style={{ fontSize: "clamp(48px, 7.5vw, 76px)", fontWeight: 700,
+            color: "var(--fg)", lineHeight: 1, letterSpacing: "-.03em" }}>
+            {pot.toLocaleString("sv-SE")}
+            <span style={{ fontSize: ".34em", fontWeight: 500, color: "var(--fg-3)", marginLeft: 10 }}>kr</span>
+          </div>
+
+          {/* Prize-split refined */}
+          <div style={{ display: "flex", gap: 0, marginTop: 18,
+            borderTop: "1px solid var(--border)" }}>
+            {prizes.map((amt, i) => {
+              const labels = ["1:a", "2:a", "3:e"];
+              const tints = ["var(--gold)", "var(--silver)", "var(--bronze)"];
+              return (
+                <div key={i} style={{ flex: 1, padding: "12px 4px",
+                  borderRight: i < prizes.length - 1 ? "1px solid var(--border)" : "none" }}>
+                  <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: ".08em",
+                    textTransform: "uppercase", color: tints[i] }}>{labels[i]} pris</div>
+                  <div className="mono" style={{ fontSize: 16, fontWeight: 600,
+                    color: "var(--fg)", marginTop: 2 }}>{amt.toLocaleString("sv-SE")} kr</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Prize-split chips */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
-          {prizes.map((amt, i) => {
-            const ico = ["🥇", "🥈", "🥉"][i];
-            return (
-              <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "6px 12px", borderRadius: 6, background: "#FFFFFF",
-                border: "1px solid var(--yellow)", color: "var(--fg)" }}>
-                <span style={{ fontSize: 13 }}>{ico}</span>
-                <span className="mono" style={{ fontSize: 13, fontWeight: 800 }}>{amt.toLocaleString("sv-SE")} kr</span>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Countdown */}
+        {/* Countdown - refined digital clock */}
         {isPre && diffMs > 0 && (
-          <div style={{ marginTop: 18 }}>
-            <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".22em", textTransform: "uppercase",
-              color: "var(--yellow)", marginBottom: 8 }}>⏱ Avspark om</div>
-            <div style={{ display: "inline-flex", gap: 6 }}>
-              {[[days, "DGR"], [hours, "TIM"], [mins, "MIN"], [secs, "SEK"]].map(([v, l], i) => (
-                <div key={i} style={{ minWidth: 58,
-                  background: "#FFFFFF",
-                  border: "1px solid var(--yellow)", borderRadius: 6, padding: "8px 4px" }}>
-                  <div className="mono" style={{ fontSize: 22, fontWeight: 900, color: "var(--fg)",
-                    letterSpacing: "-.02em", lineHeight: 1 }}>{String(v).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".12em",
-                    color: "var(--fg-3)", marginTop: 4 }}>{l}</div>
+          <div style={{ textAlign: "center" }}>
+            <div className="eyebrow" style={{ color: "var(--fg-3)", marginBottom: 12 }}>Avspark om</div>
+            <div style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+              {[[days, "Dgr"], [hours, "Tim"], [mins, "Min"], [secs, "Sek"]].map(([v, l], i) => (
+                <div key={i} style={{ minWidth: 56,
+                  background: "var(--bg-1)",
+                  border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px" }}>
+                  <div className="mono" style={{ fontSize: 24, fontWeight: 500, color: "var(--fg)",
+                    letterSpacing: "-.02em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>{String(v).padStart(2, "0")}</div>
+                  <div style={{ fontSize: 10, fontWeight: 500,
+                    color: "var(--fg-3)", marginTop: 6 }}>{l}</div>
                 </div>
               ))}
             </div>
           </div>
         )}
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -4044,49 +4049,43 @@ function App() {
   return (
     <div style={{ minHeight: "100vh" }}>
       <header style={{ position: "sticky", top: 0, zIndex: 40,
-        background: "linear-gradient(180deg, var(--pitch-dark), var(--pitch))",
-        borderBottom: `2px solid var(--yellow)`,
-        boxShadow: "0 2px 8px rgba(0,0,0,.12)" }}>
+        background: "rgba(255,255,255,.78)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        borderBottom: "1px solid var(--border)" }}>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto",
-          padding: "8px 16px", display: "flex", alignItems: "center", gap: 14 }}>
-          {/* Brand */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12, flex: "0 0 auto" }}>
-            <div style={{ width: 42, height: 42, borderRadius: "50%",
-              background: "#FFFFFF",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 4px 12px rgba(0,0,0,.18), inset 0 0 0 2px var(--yellow)" }}>
-              <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
-                <circle cx="16" cy="16" r="14" fill="#FFFFFF" stroke="#0F1414" strokeWidth="1.2" />
-                <polygon points="16,7 21,11 19,17 13,17 11,11" fill="#0F1414" />
-                <polygon points="16,7 11,11 6.5,9 8,4.5 13.5,5" fill="none" stroke="#0F1414" strokeWidth=".9" />
-                <polygon points="16,7 21,11 25.5,9 24,4.5 18.5,5" fill="none" stroke="#0F1414" strokeWidth=".9" />
-                <polygon points="11,11 13,17 9,20 5.5,15 6.5,9" fill="none" stroke="#0F1414" strokeWidth=".9" />
-                <polygon points="21,11 19,17 23,20 26.5,15 25.5,9" fill="none" stroke="#0F1414" strokeWidth=".9" />
-                <polygon points="13,17 19,17 21,23 16,26.5 11,23" fill="none" stroke="#0F1414" strokeWidth=".9" />
+          padding: "12px 20px", display: "flex", alignItems: "center", gap: 16 }}>
+          {/* Brand - subtle indigo monogram */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8,
+              background: "var(--pitch)", display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 0 0 1px var(--pitch-dim), 0 1px 2px rgba(15,20,36,.10)" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="#FFFFFF" strokeWidth="1.5"/>
+                <polygon points="12,5 16,8.5 14.5,13.5 9.5,13.5 8,8.5" fill="#FFFFFF"/>
               </svg>
             </div>
-            <div style={{ minWidth: 0, color: "#FFFFFF", lineHeight: 1.05 }}>
-              <div style={{ fontSize: 17, fontWeight: 900, letterSpacing: "-.01em", color: "#FFFFFF" }}>VM TIPPET</div>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".24em", color: "var(--yellow)" }}>2026</div>
+            <div style={{ minWidth: 0, lineHeight: 1.05 }}>
+              <div style={{ fontSize: 14.5, fontWeight: 700, letterSpacing: "-.01em", color: "var(--fg)" }}>VM Tippet</div>
+              <div style={{ fontSize: 10.5, fontWeight: 500, letterSpacing: ".06em", color: "var(--fg-3)" }}>Sommaren 2026</div>
             </div>
           </div>
 
-          {/* Top tabs - mörka pills med gult active */}
+          {/* Top tabs - quiet underline-active */}
           <nav style={{ flex: 1, display: "flex", justifyContent: "center", minWidth: 0 }}>
-            <div className="app-scroll" style={{ display: "flex", gap: 2, padding: 3,
-              background: "rgba(0,0,0,.18)", borderRadius: 9, border: "1px solid rgba(255,255,255,.10)",
-              overflowX: "auto", maxWidth: "100%" }}>
+            <div className="app-scroll" style={{ display: "flex", gap: 0,
+              overflowX: "auto", maxWidth: "100%", height: 40, alignItems: "stretch" }}>
               {NAV.map(n => {
                 const active = view === n.id;
                 return (
                   <button key={n.id} onClick={() => setView(n.id)}
                     style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                      padding: "7px 13px", borderRadius: 7, whiteSpace: "nowrap",
-                      fontSize: 12.5, fontWeight: 800,
-                      color: active ? "var(--fg)" : "rgba(255,255,255,.82)",
-                      background: active ? "var(--yellow)" : "transparent",
-                      transition: "background .18s ease, color .18s ease" }}>
-                    <span style={{ display: "inline-flex", opacity: active ? 1 : .85 }}>{Icon[n.icon](active)}</span>
+                      padding: "0 14px", whiteSpace: "nowrap", position: "relative",
+                      fontSize: 13, fontWeight: active ? 600 : 500,
+                      color: active ? "var(--pitch)" : "var(--fg-2)",
+                      transition: "color .15s ease",
+                      borderBottom: active ? "2px solid var(--pitch)" : "2px solid transparent" }}>
+                    <span style={{ display: "inline-flex", opacity: active ? 1 : .65 }}>{Icon[n.icon](active)}</span>
                     <span>{n.label}</span>
                   </button>
                 );
@@ -4094,22 +4093,24 @@ function App() {
             </div>
           </nav>
 
-          {/* Live-status högst upp till höger */}
-          <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 8 }}>
+          {/* Live-status */}
+          <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 10 }}>
             {liveCount > 0 ? (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "6px 12px", borderRadius: 6, background: "var(--live)",
-                fontSize: 11.5, fontWeight: 800, color: "#FFFFFF", letterSpacing: ".04em" }}>
-                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#FFFFFF",
+                padding: "5px 10px", borderRadius: 999, background: "var(--live-soft)",
+                border: "1px solid rgba(225,29,72,.18)", fontSize: 11.5, fontWeight: 600,
+                color: "var(--live)", letterSpacing: ".02em" }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--live)",
                   animation: "blink 1.2s infinite" }} />
-                <span className="mono">{liveCount}</span> LIVE
+                <span className="mono">{liveCount}</span>
+                <span>LIVE</span>
               </span>
             ) : nextMatch ? (
               <span style={{ display: "none", alignItems: "center", gap: 6,
-                padding: "5px 11px", borderRadius: 6, background: "rgba(255,255,255,.10)",
-                border: "1px solid rgba(255,255,255,.18)", fontSize: 11.5, fontWeight: 700,
-                color: "#FFFFFF" }} className="next-kick-md">
-                <span style={{ color: "var(--yellow)" }}>NÄSTA</span>
+                padding: "5px 11px", borderRadius: 999, background: "var(--pitch-soft)",
+                border: "1px solid rgba(79,70,229,.16)", fontSize: 11.5, fontWeight: 600,
+                color: "var(--pitch)" }} className="next-kick-md">
+                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase" }}>Nästa</span>
                 <span className="mono">{svDayLabel(nextMatch.kickoff)}</span>
               </span>
             ) : null}
