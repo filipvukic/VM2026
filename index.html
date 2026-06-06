@@ -80,6 +80,8 @@
   @keyframes pop { 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
   @keyframes riseIn { from{transform:translateY(16px)} to{transform:translateY(0)} }
   @keyframes fadeRise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes sheetFade { from{opacity:0} to{opacity:1} }
+  @keyframes sheetPop  { from{opacity:0;transform:scale(.96) translateY(8px)} to{opacity:1;transform:none} }
   @media (prefers-reduced-motion: no-preference) {
     .can-fade { animation-name: fadeRise !important; }
   }
@@ -100,13 +102,13 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
   <!-- ╔══════════════════════════════════════════════════════════════════╗ -->
-  <!-- ║  DATALAGER — adapter mot vår riktiga data.json + fixtures.json   ║ -->
+  <!-- ║  DATALAGER - adapter mot vår riktiga data.json + fixtures.json   ║ -->
   <!-- ║  Exponerar samma window.VM.{build,TEAMS,GROUPS,...} som mock-    ║ -->
   <!-- ║  datalagret, men byggt från verklig pool-data hämtad i runtime.  ║ -->
   <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
   <script>
 /* ============================================================
-   VM 2026 — Tippningsliga · Data-adapter
+   VM 2026 - Tippningsliga · Data-adapter
    window.__REAL_DATA__ sätts av boot-koden innan React renderas.
    window.VM.build()  ->  fullständig dataset i designens form.
    ============================================================ */
@@ -223,6 +225,16 @@
     "Martin":    "#16A0A0",
     "Oskar":     "#9B5DE5"
   };
+  // Placeholder-foton: lägg in images/players/{slug}.jpg så plockas de upp.
+  // Saknas filen visas initial-brickan automatiskt (Avatar har onError-fallback).
+  const PLAYER_SLUGS = {
+    "Albin":"albin","Alexander":"alexander","Björn":"bjorn","Casper":"casper",
+    "Filip":"filip","Isac":"isac","Johan":"johan","Martin":"martin","Oskar":"oskar"
+  };
+  function playerPhoto(name){
+    const slug = PLAYER_SLUGS[name];
+    return slug ? ("images/players/" + slug + ".jpg") : null;
+  }
 
   function isoFromTla(tla){ return tla ? (TLA_TO_ISO[String(tla).toUpperCase()] || null) : null; }
   function isoFromName(name){
@@ -351,7 +363,7 @@
     const tipsByMatchId = {};
     (D.matches || []).forEach(m => { tipsByMatchId[m.id] = m; });
 
-    // Counters for KO ordering — index by stage so we get r32_0, r32_1, ...
+    // Counters for KO ordering - index by stage so we get r32_0, r32_1, ...
     const koCounters = {};
 
     const allMatches = (F || []).map(f => {
@@ -418,7 +430,7 @@
           };
         });
       } else {
-        // empty/placeholder — fill with placeholders for the design's "·" rendering
+        // empty/placeholder - fill with placeholders for the design's "·" rendering
         groupTables[L] = (GROUPS[L] || []).map((code, i) => ({
           code, sp:0, v:0, o:0, f:0, gm:0, im:0, ms:0, p:0, pos: i+1
         }));
@@ -433,32 +445,136 @@
     });
 
     // ============= knockout struct =============
-    function take(stage){ return allMatches.filter(m => m._stageOrig === stage || m.id.indexOf(KO_PREFIX[stage] || "###") === 0); }
-    function byStageId(prefix){ return allMatches.filter(m => m.id.indexOf(prefix) === 0); }
+    // Bracket-strukturen byggs alltid (även pre-draw) med slot-etiketter.
+    // Riktiga lag fylls i från groupTables (positionsbaserat) eller från
+    // verkliga KO-fixtures (när FIFA satt teams + datum).
 
-    function padKO(arr, n){
-      while(arr.length < n){
-        arr.push({
-          id: "tbd_" + arr.length + "_" + Math.random().toString(36).slice(2,6),
-          stage: "ko", group: null, round: "Slutspel",
-          home: null, away: null, kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
-          ga: null, gb: null, status: "upcoming", winner: null, pen: null,
-          venue: null, tippas: false
-        });
+    // Rank 12 third-placed teams; top 8 advance.
+    const thirds = [];
+    GROUP_LETTERS.forEach(L => {
+      const r = groupTables[L] && groupTables[L][2];
+      if(r) thirds.push(Object.assign({}, r, { group: L }));
+    });
+    thirds.sort((a,b) =>
+      (b.p - a.p) || (b.ms - a.ms) || (b.gm - a.gm) || a.group.localeCompare(b.group));
+
+    function slotTeamAndLabel(spec){
+      // spec = { pos: 1|2, g: "A" } or { pos: 3, rank: 1..8 } or { from: "label" }
+      if(spec.from){
+        return { code: null, label: spec.from };
       }
-      return arr;
+      if(spec.pos === 1 || spec.pos === 2){
+        const row = groupTables[spec.g] && groupTables[spec.g][spec.pos - 1];
+        const code = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
+        return { code, label: (spec.pos === 1 ? "Vinnare " : "Tvåa ") + spec.g };
+      }
+      if(spec.pos === 3){
+        const row = thirds[spec.rank - 1];
+        const code = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
+        return { code, label: "Bästa 3:a #" + spec.rank };
+      }
+      return { code: null, label: "TBD" };
     }
-    const knockout = {
-      r32:   padKO(byStageId("r32_"), 16),
-      r16:   padKO(byStageId("r16_"), 8),
-      qf:    padKO(byStageId("qf_"), 4),
-      sf:    padKO(byStageId("sf_"), 2),
-      third: padKO(byStageId("third_"), 1),
-      final: padKO(byStageId("final_"), 1)
-    };
+
+    // Round-of-32 bracket structure: 12 (winner v runner-up) + 4 (best-third v best-third)
+    const R32_SPECS = [
+      [{pos:1,g:"A"}, {pos:2,g:"B"}],
+      [{pos:1,g:"B"}, {pos:2,g:"C"}],
+      [{pos:1,g:"C"}, {pos:2,g:"D"}],
+      [{pos:1,g:"D"}, {pos:2,g:"E"}],
+      [{pos:1,g:"E"}, {pos:2,g:"F"}],
+      [{pos:1,g:"F"}, {pos:2,g:"G"}],
+      [{pos:1,g:"G"}, {pos:2,g:"H"}],
+      [{pos:1,g:"H"}, {pos:2,g:"I"}],
+      [{pos:1,g:"I"}, {pos:2,g:"J"}],
+      [{pos:1,g:"J"}, {pos:2,g:"K"}],
+      [{pos:1,g:"K"}, {pos:2,g:"L"}],
+      [{pos:1,g:"L"}, {pos:2,g:"A"}],
+      [{pos:3,rank:1}, {pos:3,rank:8}],
+      [{pos:3,rank:2}, {pos:3,rank:7}],
+      [{pos:3,rank:3}, {pos:3,rank:6}],
+      [{pos:3,rank:4}, {pos:3,rank:5}]
+    ];
+    function makeBracketMatch(prefix, idx, slotA, slotB, kickoff){
+      return {
+        id: prefix + idx, stage: "ko", group: null, round: "Slutspel",
+        home: slotA.code, away: slotB.code,
+        fromA: slotA.label, fromB: slotB.label,
+        kickoff: kickoff || new Date(Date.UTC(2026, 6, 19, 19, 0)),
+        ga: null, gb: null, status: "upcoming",
+        winner: null, pen: null, venue: null, tippas: false
+      };
+    }
+    // labels for forward rounds reference "M1..M32" globally
+    function nextLabel(round, i){
+      return "Vinnare " + round + "-" + (i + 1);
+    }
+
+    // Build structural rounds
+    const r32 = R32_SPECS.map((pair, i) =>
+      makeBracketMatch("r32_", i, slotTeamAndLabel(pair[0]), slotTeamAndLabel(pair[1])));
+    const r16 = []; for(let i=0;i<8;i++){
+      r16.push(makeBracketMatch("r16_", i,
+        slotTeamAndLabel({from: nextLabel("R32", i*2)}),
+        slotTeamAndLabel({from: nextLabel("R32", i*2+1)})));
+    }
+    const qf = []; for(let i=0;i<4;i++){
+      qf.push(makeBracketMatch("qf_", i,
+        slotTeamAndLabel({from: nextLabel("R16", i*2)}),
+        slotTeamAndLabel({from: nextLabel("R16", i*2+1)})));
+    }
+    const sf = []; for(let i=0;i<2;i++){
+      sf.push(makeBracketMatch("sf_", i,
+        slotTeamAndLabel({from: nextLabel("KV", i*2)}),
+        slotTeamAndLabel({from: nextLabel("KV", i*2+1)})));
+    }
+    const finalArr = [ makeBracketMatch("final_", 0,
+      slotTeamAndLabel({from: "Vinnare SF-1"}),
+      slotTeamAndLabel({from: "Vinnare SF-2"})) ];
+    const thirdArr = [ makeBracketMatch("third_", 0,
+      slotTeamAndLabel({from: "Förlorare SF-1"}),
+      slotTeamAndLabel({from: "Förlorare SF-2"})) ];
+
+    // Overlay any real KO fixtures (by stage, sorted by date) into the structural matches.
+    // This brings in real kickoff times AND populates teams once the draw is done.
+    function overlayKO(structural, stagePrefix){
+      const real = allMatches.filter(m => m.id.indexOf(stagePrefix) === 0)
+        .sort((a,b) => a.kickoff - b.kickoff);
+      real.forEach((rm, i) => {
+        const s = structural[i];
+        if(!s) return;
+        s.id = rm.id; // keep real id so tip-lookups work
+        s.kickoff = rm.kickoff;
+        s.status = rm.status;
+        if(rm.home){ s.home = rm.home; s.fromA = null; }
+        if(rm.away){ s.away = rm.away; s.fromB = null; }
+        s.ga = rm.ga; s.gb = rm.gb;
+        s.winner = rm.winner;
+        s.tippas = rm.tippas;
+        s._realId = rm._realId;
+      });
+    }
+    overlayKO(r32, "r32_");
+    overlayKO(r16, "r16_");
+    overlayKO(qf, "qf_");
+    overlayKO(sf, "sf_");
+    overlayKO(thirdArr, "third_");
+    overlayKO(finalArr, "final_");
+
+    const knockout = { r32, r16, qf, sf, third: thirdArr, final: finalArr };
+
+    // Replace allMatches' KO entries with the structural ones so schedule view shows fromA/fromB too.
+    const koIds = new Set();
+    [r32, r16, qf, sf, thirdArr, finalArr].forEach(arr => arr.forEach(m => koIds.add(m.id)));
+    const allMatchesGroupOnly = allMatches.filter(m => m.stage === "group");
+    const allMatchesNew = allMatchesGroupOnly.concat(r32, r16, qf, sf, thirdArr, finalArr);
+    allMatchesNew.sort((a,b) => a.kickoff - b.kickoff);
+    // mutate allMatches reference
+    allMatches.length = 0;
+    allMatchesNew.forEach(m => allMatches.push(m));
     const koRounds = [
-      { key:"r32", label:"Åttondelar", count:16 },
-      { key:"r16", label:"Sextondelar", count:8 },
+      { key:"r32", label:"Sextondelsfinal", count:16 },
+      { key:"r16", label:"Åttondelsfinal", count:8 },
       { key:"qf",  label:"Kvartsfinal", count:4 },
       { key:"sf",  label:"Semifinal", count:2 },
       { key:"final", label:"Final", count:1 }
@@ -505,11 +621,11 @@
       Object.keys(BONUS_KEY_MAP).forEach(srcKey => {
         const dstKey = BONUS_KEY_MAP[srcKey];
         const v = detail && detail[srcKey];
-        if(!v){ out[dstKey] = TEAM_BONUS.has(dstKey) ? null : ["—", null]; return; }
+        if(!v){ out[dstKey] = TEAM_BONUS.has(dstKey) ? null : ["-", null]; return; }
         if(TEAM_BONUS.has(dstKey)){
           out[dstKey] = teamCodeFromPick(v.pick, TEAMS);
         } else {
-          out[dstKey] = [v.pick || "—", null];
+          out[dstKey] = [v.pick || "-", null];
         }
       });
       return out;
@@ -538,7 +654,7 @@
       return {
         id: pid, name: p.name,
         color: PLAYER_COLORS[p.name] || "#7A3CF0",
-        photo: null,  // no portraits; Avatar will fall back to initial
+        photo: playerPhoto(p.name),
         tips,
         points: p.match_points || 0,
         exact, correct, other,
@@ -575,7 +691,7 @@
     };
   }
 
-  // h2h — we don't have head-to-head data; components handle null.
+  // h2h - we don't have head-to-head data; components handle null.
   function h2h(){ return null; }
 
   // Initialize empty stubs so React components don't crash before fetch completes.
@@ -657,7 +773,7 @@
 // TweakSelect past ~16/~10 chars per label); reach for TweakSelect directly when
 // options are many or long. For color tweaks always curate 3-4 options rather than
 // a free picker; an option can also be a whole 2–5 color palette (the stored value
-// is the array). The Tweak* controls are a floor, not a ceiling — build custom
+// is the array). The Tweak* controls are a floor, not a ceiling - build custom
 // controls inside the panel if a tweak calls for UI they don't cover.
 /* END USAGE */
 // ─────────────────────────────────────────────────────────────────────────────
@@ -786,7 +902,7 @@ function useTweaks(defaults) {
     setValues((prev) => ({ ...prev, ...edits }));
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
     // Same-window signal so in-page listeners (deck-stage rail thumbnails)
-    // can react — the parent message only reaches the host, not peers.
+    // can react - the parent message only reaches the host, not peers.
     window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
   }, []);
   return [values, setTweak];
@@ -794,7 +910,7 @@ function useTweaks(defaults) {
 
 // ── TweaksPanel ─────────────────────────────────────────────────────────────
 // Floating shell. Registers the protocol listener BEFORE announcing
-// availability — if the announce ran first, the host's activate could land
+// availability - if the announce ran first, the host's activate could land
 // before our handler exists and the toolbar toggle would silently no-op.
 // The close button posts __edit_mode_dismissed so the host's toolbar toggle
 // flips off in lockstep; the host echoes __deactivate_edit_mode back which
@@ -938,20 +1054,20 @@ function TweakRadio({ label, value, options, onChange }) {
   const trackRef = React.useRef(null);
   const [dragging, setDragging] = React.useState(false);
   // The active value is read by pointer-move handlers attached for the lifetime
-  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  // of a drag - ref it so a stale closure doesn't fire onChange for every move.
   const valueRef = React.useRef(value);
   valueRef.current = value;
 
   // Segments wrap mid-word once per-segment width runs out. The track is
   // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
-  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
+  // to its own padding, and 11.5px system-ui averages ~6.3px/char - so 2
   // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
   // back to a dropdown rather than wrap.
   const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
   const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
   const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
   if (!fitsAsSegments) {
-    // <select> emits strings — map back to the original option value so the
+    // <select> emits strings - map back to the original option value so the
     // fallback stays type-preserving (numbers, booleans) like the segment path.
     const resolve = (s) => {
       const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
@@ -1063,7 +1179,7 @@ function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) 
   );
 }
 
-// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
+// Relative-luminance contrast pick - checkmarks drawn over a swatch need to
 // read on both #111 and #fafafa without per-option configuration. Hex input
 // only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
 function __twkIsLight(hex) {
@@ -1083,8 +1199,8 @@ const __TwkCheck = ({ light }) => (
   </svg>
 );
 
-// TweakColor — curated color/palette picker. Each option is either a single
-// hex string or an array of 1-5 hex strings; the card adapts — a lone color
+// TweakColor - curated color/palette picker. Each option is either a single
+// hex string or an array of 1-5 hex strings; the card adapts - a lone color
 // renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
 // rest stacked in a sharp column on the right. onChange emits the
 // option in the shape it was passed (string stays string, array stays array).
@@ -1149,7 +1265,7 @@ Object.assign(window, {
   <!-- ============ shared.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   shared.jsx — tema, flaggor (riktiga), porträtt, matchkort, stats
+   shared.jsx - tema, flaggor (riktiga), porträtt, matchkort, stats
    ============================================================ */
 
 /* ---------- TEMA: paletter & typsnitt (Tweaks) ---------- */
@@ -1252,7 +1368,7 @@ function Flag({ code, size = 24, shape = "circle" }) {
 
 function TeamName({ code, size = 14, bold = true, abbrev = false }) {
   const t = (window.VM.TEAMS || {})[code];
-  const name = t ? (abbrev ? code : t.name) : "—";
+  const name = t ? (abbrev ? code : t.name) : "-";
   return <span style={{ fontWeight: bold ? 700 : 600, fontSize: size, whiteSpace: "nowrap",
     overflow: "hidden", textOverflow: "ellipsis" }}>{name}</span>;
 }
@@ -1439,7 +1555,7 @@ function MatchCard({ m, onOpen, showRound }) {
 
 function roundLabel(m) {
   if (m.stage === "group") return "Grupp " + m.group;
-  const map = { r32_: "Åttondelsfinal", r16_: "Sextondelsfinal", qf_: "Kvartsfinal", sf_: "Semifinal", third_: "Bronsmatch", final_: "Final" };
+  const map = { r32_: "Sextondelsfinal", r16_: "Åttondelsfinal", qf_: "Kvartsfinal", sf_: "Semifinal", third_: "Bronsmatch", final_: "Final" };
   const key = Object.keys(map).find(k => m.id.startsWith(k));
   return map[key] || "Slutspel";
 }
@@ -1482,7 +1598,7 @@ Object.assign(window, {
   useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting
 });
 
-/* ---------- vimplar (bunting) — VM-/folkfestkänsla ---------- */
+/* ---------- vimplar (bunting) - VM-/folkfestkänsla ---------- */
 function Bunting({ n = 18, height = 16, style }) {
   const cols = ["var(--hot)", "var(--warm)", "var(--gold)", "var(--cool)"];
   return (
@@ -1499,16 +1615,29 @@ function Bunting({ n = 18, height = 16, style }) {
   <!-- ============ match.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   match.jsx — Matchdetalj med statistik (före / under / efter)
+   match.jsx - Matchdetalj med statistik (före / under / efter)
    ============================================================ */
 
 function Sheet({ onClose, accent, children, header }) {
+  // Centered modal - close button is in `header`, so we render header + scroll body inside one shell.
+  // Mobile: nearly full-bleed with small inset, rounded corners.
+  // Desktop: ~620px wide centered card.
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 70, background: "rgba(20,12,20,.42)",
-      backdropFilter: "blur(3px)", display: "flex", alignItems: "flex-end", justifyContent: "center", animation: "riseIn .25s both" }}>
-      <div onClick={e => e.stopPropagation()} className="can-fade" style={{ background: "var(--bg)", width: "100%", maxWidth: "var(--maxw)",
-        maxHeight: "92vh", borderRadius: "22px 22px 0 0", overflow: "hidden", display: "flex", flexDirection: "column",
-        boxShadow: "0 -18px 50px -20px rgba(0,0,0,.45)", animation: "riseIn .3s both" }}>
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, zIndex: 70, background: "rgba(20,12,20,.55)",
+      backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "12px", overflow: "auto",
+      animation: "sheetFade .18s both"
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "var(--bg)", width: "100%", maxWidth: 620,
+        maxHeight: "calc(100dvh - 24px)",
+        borderRadius: 22, overflow: "hidden",
+        display: "flex", flexDirection: "column",
+        boxShadow: "0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.06)",
+        animation: "sheetPop .22s cubic-bezier(.2,.7,.2,1) both"
+      }}>
         {header}
         <div className="app-scroll" style={{ overflowY: "auto", flex: 1 }}>{children}</div>
       </div>
@@ -1549,7 +1678,7 @@ function Timeline({ m }) {
   ev.sort((a, b) => a.minute - b.minute || (a.kind === "goal" ? -1 : 1));
   if (!ev.length) return (
     <div style={{ padding: "18px", textAlign: "center", color: "var(--ink-soft)", fontWeight: 600, fontSize: 13 }}>
-      Inga händelser ännu — 0–0.</div>
+      Inga händelser ännu - 0–0.</div>
   );
   let sh = 0, sa = 0;
   const side = (e, home) => {
@@ -1742,7 +1871,6 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   );
   const header = (
     <div style={{ background: "var(--grad)", padding: "14px 18px 18px", position: "relative", flex: "0 0 auto" }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.5)", margin: "0 auto 12px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff",
         fontSize: 24, fontWeight: 700, lineHeight: 1, opacity: .9 }}>×</button>
       <div style={{ textAlign: "center", marginBottom: 14 }}>
@@ -1795,7 +1923,7 @@ function MatchDetail({ data, match, onClose, onTeam }) {
             <span style={{ width: 30, height: 30, borderRadius: 8, background: "var(--cool)", flex: "0 0 auto",
               display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 15 }}>i</span>
             <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.4 }}>
-              Slutspelsmatch — inga matchtips här. Slutspelet avgörs i poolen via bonuspoängen (vinnare, silver, brons …).</span>
+              Slutspelsmatch - inga matchtips här. Slutspelet avgörs i poolen via bonuspoängen (vinnare, silver, brons …).</span>
           </div>
         )}
         {tbd && (
@@ -1815,7 +1943,7 @@ Object.assign(window, { MatchDetail, Sheet, MiniBlock });
   <!-- ============ standings.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   standings.jsx — Ställning: pall + prispengar + spelardetalj
+   standings.jsx - Ställning: pall + prispengar + spelardetalj
    ============================================================ */
 
 function money(n) { return n.toLocaleString("sv-SE") + " kr"; }
@@ -1894,7 +2022,7 @@ function StandingsView({ data, onOpenPlayer }) {
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
         <div style={{ position: "absolute", left: 16, bottom: 12, right: 16, pointerEvents: "none" }}>
           <div className="display" style={{ color: "#fff", fontSize: 21, fontWeight: "var(--display-weight)", textShadow: "0 2px 8px rgba(0,0,0,.45)" }}>Hela världen, en pott</div>
-          <div style={{ color: "rgba(255,255,255,.88)", fontWeight: 700, fontSize: 12, textShadow: "0 1px 4px rgba(0,0,0,.5)" }}>USA · Mexiko · Kanada — sommaren 2026</div>
+          <div style={{ color: "rgba(255,255,255,.88)", fontWeight: 700, fontSize: 12, textShadow: "0 1px 4px rgba(0,0,0,.5)" }}>USA · Mexiko · Kanada - sommaren 2026</div>
         </div>
       </div>
 
@@ -1916,7 +2044,7 @@ function StandingsView({ data, onOpenPlayer }) {
           <div style={{ padding: "16px 18px 22px", textAlign: "center", position: "relative", zIndex: 2 }}>
             <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".12em", color: "var(--hot)", marginBottom: 14 }}>AVSPARK OM</div>
             <Countdown />
-            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll — vem tar första pallplatsen?</div>
+            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll - vem tar första pallplatsen?</div>
           </div>
         ) : (
           <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
@@ -2000,7 +2128,6 @@ function PlayerSheet({ data, playerId, onClose, onOpenMatch }) {
   ];
   const header = (
     <div style={{ background: "var(--grad)", padding: "14px 18px 16px", position: "relative", flex: "0 0 auto" }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.5)", margin: "0 auto 14px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff", fontSize: 24, fontWeight: 700 }}>×</button>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <Avatar p={p} size={60} rank={isPre ? null : st.rank} />
@@ -2092,7 +2219,7 @@ Object.assign(window, { StandingsView, PlayerSheet, money });
   <!-- ============ groups.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   groups.jsx — Grupper A–L med live-tabeller
+   groups.jsx - Grupper A–L med live-tabeller
    ============================================================ */
 
 function GroupBadge({ letter, size = 46 }) {
@@ -2105,8 +2232,15 @@ function GroupBadge({ letter, size = 46 }) {
   );
 }
 
-function GroupCard({ letter, table, isPre, onTeam, index }) {
+function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }) {
   const col = groupColor(letter);
+  const liveMatches = (matches || []).filter(m => m.status === "live");
+  const liveTeams = new Set();
+  liveMatches.forEach(m => { if(m.home) liveTeams.add(m.home); if(m.away) liveTeams.add(m.away); });
+  const upcomingMatches = (matches || []).filter(m => m.status === "upcoming");
+  const playedMatches = (matches || []).filter(m => m.status === "played");
+  const nextUp = upcomingMatches.sort((a,b) => a.kickoff - b.kickoff)[0] || null;
+  const recent = playedMatches.sort((a,b) => b.kickoff - a.kickoff).slice(0, 2);
   return (
     <div style={{ background: "var(--paper)", borderRadius: "var(--r-md)", overflow: "hidden",
       border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
@@ -2114,7 +2248,36 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
         borderBottom: "1px solid var(--line)" }}>
         <GroupBadge letter={letter} size={42} />
         <div className="display" style={{ fontSize: 21, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>Grupp {letter}</div>
+        {liveMatches.length > 0 && (
+          <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 9px",
+            background: "var(--hot)", color: "#fff", borderRadius: 6, fontWeight: 800, fontSize: 10.5, letterSpacing: ".04em" }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", animation: "blink 1.4s infinite" }} />
+            LIVE NU
+          </span>
+        )}
       </div>
+
+      {liveMatches.length > 0 && (
+        <div style={{ background: "color-mix(in oklab, var(--hot) 8%, var(--paper))",
+          borderBottom: "1px solid var(--line)" }}>
+          {liveMatches.map(m => (
+            <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)}
+              style={{ width: "100%", textAlign: "left", display: "grid",
+                gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "8px 14px" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 7, justifyContent: "flex-end", minWidth: 0 }}>
+                <TeamName code={m.home} size={12.5} bold={false} /><Flag code={m.home} size={19} />
+              </span>
+              <span style={{ textAlign: "center", minWidth: 56 }}>
+                <span className="num" style={{ fontWeight: 800, fontSize: 16, color: "var(--ink)" }}>{m.ga}<span style={{ margin: "0 4px", color: "var(--ink-soft)" }}>-</span>{m.gb}</span>
+                <div style={{ marginTop: 2 }}><LiveDot minute={m.minute} small /></div>
+              </span>
+              <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                <Flag code={m.away} size={19} /><TeamName code={m.away} size={12.5} bold={false} />
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
       <div style={{ display: "grid", gridTemplateColumns: "18px 1fr 24px 24px 24px 42px 28px", gap: 4,
         padding: "7px 14px", fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".03em",
         borderBottom: "1px solid var(--line)" }}>
@@ -2125,14 +2288,19 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
       </div>
       {table.map((r, i) => {
         const q = i < 2, third = i === 2;
+        const isPlaying = liveTeams.has(r.code);
         return (
           <button key={r.code} onClick={() => onTeam(r.code)} style={{ width: "100%", textAlign: "left", display: "grid",
             gridTemplateColumns: "18px 1fr 24px 24px 24px 42px 28px", gap: 4, alignItems: "center", padding: "9px 14px",
             borderBottom: i < 3 ? "1px solid var(--line)" : "none",
-            borderLeft: q ? `3px solid ${col}` : third ? "3px solid var(--gold)" : "3px solid transparent" }}>
+            borderLeft: q ? `3px solid ${col}` : third ? "3px solid var(--gold)" : "3px solid transparent",
+            background: isPlaying ? "color-mix(in oklab, var(--hot) 6%, transparent)" : "transparent" }}>
             <span className="num" style={{ fontSize: 13, fontWeight: 800, color: q ? col : third ? "var(--gold)" : "var(--ink-soft)", textAlign: "center" }}>{isPre ? "·" : r.pos}</span>
             <span style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
-              <Flag code={r.code} size={21} /><TeamName code={r.code} size={13} /></span>
+              <Flag code={r.code} size={21} /><TeamName code={r.code} size={13} />
+              {isPlaying && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hot)",
+                animation: "blink 1.4s infinite", flex: "0 0 auto" }} />}
+            </span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.sp}</span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.v}</span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.f}</span>
@@ -2141,7 +2309,41 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
           </button>
         );
       })}
-      <div style={{ display: "flex", gap: 14, padding: "9px 14px", fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)" }}>
+
+      {(nextUp || recent.length > 0) && (
+        <div style={{ background: "var(--bg2)", borderTop: "1px solid var(--line)", padding: "9px 14px",
+          display: "flex", flexDirection: "column", gap: 6 }}>
+          {recent.map(m => (
+            <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%", textAlign: "left",
+              display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "2px 0" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", minWidth: 0, fontSize: 11.5, fontWeight: 600,
+                color: m.winner && m.winner !== m.home ? "var(--ink-soft)" : "var(--ink)" }}>
+                <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={15} />
+              </span>
+              <span className="num" style={{ fontWeight: 800, fontSize: 12.5, color: "var(--ink-soft)" }}>{m.ga}-{m.gb}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, fontSize: 11.5, fontWeight: 600,
+                color: m.winner && m.winner !== m.away ? "var(--ink-soft)" : "var(--ink)" }}>
+                <Flag code={m.away} size={15} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
+              </span>
+            </button>
+          ))}
+          {nextUp && (
+            <button onClick={() => onOpenMatch && onOpenMatch(nextUp)} style={{ width: "100%", textAlign: "left",
+              display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "2px 0" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", minWidth: 0, fontSize: 11.5, fontWeight: 600, color: "var(--ink)" }}>
+                <TeamName code={nextUp.home} size={11.5} bold={false} abbrev /><Flag code={nextUp.home} size={15} />
+              </span>
+              <span className="num" style={{ fontWeight: 700, fontSize: 11, color: "var(--cool)" }}>{svTime(nextUp.kickoff)}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, fontSize: 11.5, fontWeight: 600, color: "var(--ink)" }}>
+                <Flag code={nextUp.away} size={15} /><TeamName code={nextUp.away} size={11.5} bold={false} abbrev />
+              </span>
+            </button>
+          )}
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 14, padding: "9px 14px", fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)",
+        borderTop: "1px solid var(--line)" }}>
         <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: col }} />Vidare</span>
         <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: "var(--gold)" }} />Bästa trea</span>
       </div>
@@ -2149,25 +2351,46 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
   );
 }
 
-function GroupsView({ data, onTeam }) {
+function GroupsView({ data, onTeam, onOpenMatch }) {
   const isPre = data.state === "pre";
   const [active, setActive] = React.useState("alla");
   const letters = data.groupLetters;
   const shown = active === "alla" ? letters : [active];
+  // Per-group matches map
+  const matchesByGroup = React.useMemo(() => {
+    const map = {};
+    (data.matches || []).forEach(m => {
+      if(!m.group) return;
+      (map[m.group] = map[m.group] || []).push(m);
+    });
+    return map;
+  }, [data]);
+  const liveCount = (data.allMatches || []).filter(m => m.status === "live" && m.stage === "group").length;
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
-      <SectionTitle kicker="Gruppspel" title="Tabeller" right={<Chip>{isPre ? "Före avspark" : "Spelas nu"}</Chip>} />
+      <SectionTitle kicker="Gruppspel" title="Tabeller"
+        right={liveCount > 0
+          ? <Chip bg="var(--hot)" color="#fff">{liveCount} live nu</Chip>
+          : <Chip>{isPre ? "Före avspark" : "Spelas nu"}</Chip>} />
       <div className="app-scroll" style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 10, marginBottom: 14 }}>
         <button onClick={() => setActive("alla")} style={{ flex: "0 0 auto", padding: "8px 16px", borderRadius: 10, fontWeight: 800, fontSize: 13,
           background: active === "alla" ? "var(--ink)" : "var(--paper)", color: active === "alla" ? "#fff" : "var(--ink)", border: "1px solid var(--line)" }}>Alla</button>
-        {letters.map(L => (
-          <button key={L} onClick={() => setActive(L)} style={{ flex: "0 0 auto", width: 38, height: 37, borderRadius: 10, fontWeight: 800,
-            fontFamily: "var(--font-display)", fontSize: 16, border: "1px solid var(--line)",
-            background: active === L ? groupColor(L) : "var(--paper)", color: active === L ? "#fff" : groupColor(L) }}>{L}</button>
-        ))}
+        {letters.map(L => {
+          const hasLive = (matchesByGroup[L] || []).some(m => m.status === "live");
+          return (
+            <button key={L} onClick={() => setActive(L)} style={{ flex: "0 0 auto", width: 38, height: 37, borderRadius: 10, fontWeight: 800,
+              fontFamily: "var(--font-display)", fontSize: 16, border: "1px solid var(--line)", position: "relative",
+              background: active === L ? groupColor(L) : "var(--paper)", color: active === L ? "#fff" : groupColor(L) }}>
+              {L}
+              {hasLive && <span style={{ position: "absolute", top: 4, right: 4, width: 6, height: 6, borderRadius: "50%",
+                background: "var(--hot)", animation: "blink 1.4s infinite" }} />}
+            </button>
+          );
+        })}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 14 }}>
-        {shown.map((L, i) => <GroupCard key={L} letter={L} table={data.groupTables[L]} isPre={isPre} onTeam={onTeam} index={i} />)}
+        {shown.map((L, i) => <GroupCard key={L} letter={L} table={data.groupTables[L]} isPre={isPre}
+          onTeam={onTeam} onOpenMatch={onOpenMatch} matches={matchesByGroup[L]} index={i} />)}
       </div>
     </div>
   );
@@ -2179,7 +2402,7 @@ Object.assign(window, { GroupsView, GroupBadge });
   <!-- ============ schedule.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   schedule.jsx — Spelschema per dag + slutspelsträd
+   schedule.jsx - Spelschema per dag + slutspelsträd
    ============================================================ */
 
 const BRACKET_CSS = `
@@ -2236,7 +2459,7 @@ function BracketNode({ roundsArr, ri, mi, onOpen }) {
 function Bracket({ data, onOpen }) {
   const ko = data.knockout;
   const roundsArr = [ko.r32, ko.r16, ko.qf, ko.sf, ko.final];
-  const labels = ["Åttondelar", "Sextondelar", "Kvarts", "Semi", "Final"];
+  const labels = ["Sextondelsfinal", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
   return (
     <div>
       <style>{BRACKET_CSS}</style>
@@ -2294,13 +2517,20 @@ function ScheduleView({ data, onOpenMatch }) {
       </div>
 
       {mode === "slutspel" ? (
-        isPre ? (
-          <div style={{ textAlign: "center", padding: "44px 22px", background: "var(--paper)", borderRadius: 16, border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
-            <div className="display" style={{ fontSize: 22, marginBottom: 8, fontWeight: "var(--display-weight)" }}>Trädet växer fram</div>
-            <div style={{ color: "var(--ink-soft)", fontWeight: 600, fontSize: 14, maxWidth: 340, margin: "0 auto", lineHeight: 1.5 }}>
-              Slutspelsträdet fylls i när gruppspelet är avgjort. 32 lag går vidare — topp 2 ur varje grupp plus de 8 bästa treorna.</div>
-          </div>
-        ) : <Bracket data={data} onOpen={onOpenMatch} />
+        <>
+          {isPre && (
+            <div style={{ marginBottom: 12, padding: "11px 14px", background: "var(--paper)", border: "1px solid var(--line)",
+              borderRadius: 12, boxShadow: "var(--shadow)", display: "flex", gap: 11, alignItems: "center" }}>
+              <span style={{ width: 26, height: 26, borderRadius: 7, background: "var(--cool)", display: "flex",
+                alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flex: "0 0 auto" }}>i</span>
+              <span style={{ fontSize: 12.5, color: "var(--ink-soft)", fontWeight: 600, lineHeight: 1.4 }}>
+                Slutspelsträdet visar projicerade matcher utifrån hur grupperna står just nu. Slutgiltig lottning sker
+                efter gruppspelet.
+              </span>
+            </div>
+          )}
+          <Bracket data={data} onOpen={onOpenMatch} />
+        </>
       ) : (
         <>
           <div className="app-scroll" style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 8, marginBottom: 8 }}>
@@ -2345,7 +2575,7 @@ Object.assign(window, { ScheduleView, Bracket });
   <!-- ============ bonus.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   bonus.jsx — Bonus-tips + Info (regler & poäng)
+   bonus.jsx - Bonus-tips + Info (regler & poäng)
    ============================================================ */
 
 const BONUS_DEFS = [
@@ -2409,7 +2639,7 @@ function BonusView({ data, onTeam }) {
       <SectionTitle kicker="Extrapoäng" title="Bonus-tips" right={<Chip>3–10p</Chip>} />
       <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 13, padding: "13px 15px", marginBottom: 16,
         fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)", boxShadow: "var(--shadow)", lineHeight: 1.45 }}>
-        Allas bonusval lades före avspark. Poängen räknas in när turneringen avgörs — och kan vända hela ligan på upploppet.
+        Allas bonusval lades före avspark. Poängen räknas in när turneringen avgörs - och kan vända hela ligan på upploppet.
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px,1fr))", gap: 14 }}>
         {BONUS_DEFS.map(def => <BonusCard key={def.key} def={def} players={data.players} onTeam={onTeam} />)}
@@ -2484,8 +2714,8 @@ function InfoView() {
         </div>
         <div style={{ marginTop: 10, fontSize: 13, color: "var(--ink-soft)", fontWeight: 600, lineHeight: 1.5, background: "var(--paper)",
           borderRadius: 13, padding: "13px 15px", border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
-          Topp 2 i varje grupp plus de 8 bästa treorna går vidare. Sedan utslagning hela vägen: åttondelar → sextondelar →
-          kvarts → semi → final. Spelas i USA, Mexiko och Kanada, 11 juni–19 juli 2026.
+          Topp 2 i varje grupp plus de 8 bästa treorna går vidare. Sedan utslagning hela vägen: sextondelsfinal {">"} åttondelsfinal {">"}
+          kvartsfinal {">"} semifinal {">"} final. Spelas i USA, Mexiko och Kanada, 11 juni till 19 juli 2026.
         </div>
       </div>
 
@@ -2502,7 +2732,7 @@ Object.assign(window, { BonusView, InfoView, BONUS_DEFS });
   <!-- ============ app.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   app.jsx — skal: navigering, växel pre/mid, sheets, Tweaks
+   app.jsx - skal: navigering, växel pre/mid, sheets, Tweaks
    ============================================================ */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -2535,7 +2765,6 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
   const fans = data.players.filter(p => Object.values(p.bonus).some(v => (Array.isArray(v) ? v[1] : v) === code));
   const header = (
     <div style={{ padding: "14px 18px 16px", position: "relative", background: `linear-gradient(135deg, ${t.c1}, color-mix(in oklab, ${t.c2} 80%, #000 12%))` }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.6)", margin: "0 auto 14px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff", fontSize: 24, fontWeight: 700, textShadow: "0 1px 3px rgba(0,0,0,.4)" }}>×</button>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <Flag code={code} size={50} shape="rect" />
@@ -2625,7 +2854,7 @@ function App() {
       <main>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)" }}>
           {view === "standings" && <StandingsView data={data} onOpenPlayer={setPlayer} />}
-          {view === "groups" && <GroupsView data={data} onTeam={openTeam} />}
+          {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
           {view === "bonus" && <BonusView data={data} onTeam={openTeam} />}
           {view === "info" && <InfoView />}
