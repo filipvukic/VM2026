@@ -2,7 +2,10 @@ name: Uppdatera tippning
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # var ~10:e minut
+    # */5 är snabbaste pålitliga upplösningen på GitHub Actions schemalagda
+    # workflows (kan ibland fördröjas av plattformen vid hög belastning).
+    # football-data.org gratisplan klarar ~10 req/min och vi gör 3 req/körning.
+    - cron: "*/5 * * * *"
   workflow_dispatch:          # tillåt manuell körning från Actions-fliken / gh
 
 permissions:

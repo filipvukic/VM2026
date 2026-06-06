@@ -392,6 +392,37 @@
       const tipped = tipsByMatchId[f.id];
       const tippas = !!(tipped && tipped.tips && tipped.tips.length > 0);
 
+      // Map engine's goals/bookings -> designens scorers/cards format.
+      // codeOfTeamRef resolverar "tla"-strängar mot vår TEAMS-tabell.
+      function codeOfTeamRef(ref){
+        if(!ref) return null;
+        const upper = String(ref).toUpperCase();
+        if(TEAMS[upper]) return upper;
+        return codeOf(ref, null);
+      }
+      const goalsSrc = (f.goals && f.goals.length) ? f.goals
+        : (tipped && tipped.goals) ? tipped.goals : [];
+      const bookingsSrc = (f.bookings && f.bookings.length) ? f.bookings
+        : (tipped && tipped.bookings) ? tipped.bookings : [];
+      const scorers = goalsSrc.map(g => ({
+        team: codeOfTeamRef(g.team),
+        name: g.scorer,
+        minute: g.minute,
+        pen: (String(g.type||"").toUpperCase() === "PENALTY")
+      })).filter(x => x.team && x.name);
+      const cards = bookingsSrc.map(b => {
+        const c = String(b.card||"").toUpperCase();
+        return {
+          team: codeOfTeamRef(b.team),
+          name: b.player,
+          minute: b.minute,
+          type: (c === "RED" || c === "YELLOW_RED") ? "red" : "yellow"
+        };
+      }).filter(x => x.team && x.name);
+      // Vi får inte possession/xG/skott från gratisplanen, så stats förblir null;
+      // designens StatsBlock returnerar null när stats saknas, men Timeline
+      // (mål + kort) ritas ändå från m.scorers/m.cards.
+
       return {
         id, stage, group: f.group || null,
         round: isGroup ? ("Grupp " + (f.group||"")) : "Slutspel",
@@ -401,9 +432,11 @@
         ga, gb,
         status: finished ? "played" : (live ? "live" : "upcoming"),
         winner, pen: null,
-        minute: live ? null : undefined,
+        minute: (live && (f.minute != null)) ? f.minute : (live ? null : undefined),
         venue: null,
         tippas,
+        scorers, cards,
+        stats: null,
         _realId: f.id  // for cross-lookup with data.matches.tips
       };
     });
@@ -449,91 +482,117 @@
     // Riktiga lag fylls i från groupTables (positionsbaserat) eller från
     // verkliga KO-fixtures (när FIFA satt teams + datum).
 
-    // Rank 12 third-placed teams; top 8 advance.
-    const thirds = [];
-    GROUP_LETTERS.forEach(L => {
-      const r = groupTables[L] && groupTables[L][2];
-      if(r) thirds.push(Object.assign({}, r, { group: L }));
-    });
-    thirds.sort((a,b) =>
-      (b.p - a.p) || (b.ms - a.ms) || (b.gm - a.gm) || a.group.localeCompare(b.group));
-
-    function slotTeamAndLabel(spec){
-      // spec = { pos: 1|2, g: "A" } or { pos: 3, rank: 1..8 } or { from: "label" }
-      if(spec.from){
-        return { code: null, label: spec.from };
-      }
-      if(spec.pos === 1 || spec.pos === 2){
-        const row = groupTables[spec.g] && groupTables[spec.g][spec.pos - 1];
-        const code = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
-        return { code, label: (spec.pos === 1 ? "Vinnare " : "Tvåa ") + spec.g };
-      }
-      if(spec.pos === 3){
-        const row = thirds[spec.rank - 1];
-        const code = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
-        return { code, label: "Bästa 3:a #" + spec.rank };
-      }
-      return { code: null, label: "TBD" };
+    // Compute "best 3rd from groups X" - picks the highest-ranked 3rd-placed
+    // team from a list of groups (e.g. "ABCDF" picks best 3rd from A,B,C,D,F).
+    function bestThirdFromGroups(letters){
+      const cands = [];
+      letters.split("").forEach(L => {
+        const r = groupTables[L] && groupTables[L][2];
+        if(r && r.code && r.code.indexOf("TBD") !== 0) cands.push(Object.assign({}, r, {group:L}));
+      });
+      cands.sort((a,b) => (b.p - a.p) || (b.ms - a.ms) || (b.gm - a.gm) || a.group.localeCompare(b.group));
+      return cands[0] ? cands[0].code : null;
     }
 
-    // Round-of-32 bracket structure: 12 (winner v runner-up) + 4 (best-third v best-third)
+    function slotTeamAndLabel(spec){
+      // spec shapes:
+      //  { p: 1|2, g: "A" }              — group winner / runner-up
+      //  { p: 3, gs: "ABCDF" }           — best 3rd from listed groups
+      //  { winM: 73 } / { loseM: 101 }   — winner/loser of FIFA match N (no projection)
+      //  { fromLabel: "..." }            — raw label
+      if(spec.fromLabel){
+        return { code: null, projCode: null, label: spec.fromLabel };
+      }
+      if(spec.winM){
+        return { code: null, projCode: null, label: "Vinnare M" + spec.winM };
+      }
+      if(spec.loseM){
+        return { code: null, projCode: null, label: "Förlorare M" + spec.loseM };
+      }
+      if(spec.p === 1 || spec.p === 2){
+        const row = groupTables[spec.g] && groupTables[spec.g][spec.p - 1];
+        const proj = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
+        return { code: null, projCode: proj, label: spec.p + spec.g };
+      }
+      if(spec.p === 3 && spec.gs){
+        return { code: null, projCode: bestThirdFromGroups(spec.gs),
+          label: "3 " + spec.gs.split("").join("/") };
+      }
+      return { code: null, projCode: null, label: "TBD" };
+    }
+
+    // Round-of-32 bracket — officiella FIFA 2026 pairings, ordnade så att
+    // designens recursive tree (R32[2i],R32[2i+1] → R16[i]) ger rätt par.
+    // FIFA-match-nummer (M73..M88) inkluderas för forward-labels.
     const R32_SPECS = [
-      [{pos:1,g:"A"}, {pos:2,g:"B"}],
-      [{pos:1,g:"B"}, {pos:2,g:"C"}],
-      [{pos:1,g:"C"}, {pos:2,g:"D"}],
-      [{pos:1,g:"D"}, {pos:2,g:"E"}],
-      [{pos:1,g:"E"}, {pos:2,g:"F"}],
-      [{pos:1,g:"F"}, {pos:2,g:"G"}],
-      [{pos:1,g:"G"}, {pos:2,g:"H"}],
-      [{pos:1,g:"H"}, {pos:2,g:"I"}],
-      [{pos:1,g:"I"}, {pos:2,g:"J"}],
-      [{pos:1,g:"J"}, {pos:2,g:"K"}],
-      [{pos:1,g:"K"}, {pos:2,g:"L"}],
-      [{pos:1,g:"L"}, {pos:2,g:"A"}],
-      [{pos:3,rank:1}, {pos:3,rank:8}],
-      [{pos:3,rank:2}, {pos:3,rank:7}],
-      [{pos:3,rank:3}, {pos:3,rank:6}],
-      [{pos:3,rank:4}, {pos:3,rank:5}]
+      // tree index : FIFA num : home spec, away spec
+      { fifa: 73, a: {p:2,g:"A"}, b: {p:2,g:"B"} },        // r32_0
+      { fifa: 75, a: {p:1,g:"E"}, b: {p:3,gs:"ABCDF"} },   // r32_1  → R16_0 = M89 (W73+W75)
+      { fifa: 74, a: {p:1,g:"C"}, b: {p:2,g:"F"} },        // r32_2
+      { fifa: 77, a: {p:2,g:"E"}, b: {p:2,g:"I"} },        // r32_3  → R16_1 = M90 (W74+W77)
+      { fifa: 83, a: {p:1,g:"H"}, b: {p:2,g:"J"} },        // r32_4
+      { fifa: 84, a: {p:2,g:"K"}, b: {p:2,g:"L"} },        // r32_5  → R16_2 = M93 (W83+W84)
+      { fifa: 81, a: {p:1,g:"G"}, b: {p:3,gs:"AEHIJ"} },   // r32_6
+      { fifa: 82, a: {p:1,g:"D"}, b: {p:3,gs:"BEFIJ"} },   // r32_7  → R16_3 = M94 (W81+W82)
+      { fifa: 76, a: {p:1,g:"F"}, b: {p:2,g:"C"} },        // r32_8
+      { fifa: 78, a: {p:1,g:"I"}, b: {p:3,gs:"CDFGH"} },   // r32_9  → R16_4 = M91 (W76+W78)
+      { fifa: 79, a: {p:1,g:"A"}, b: {p:3,gs:"CEFHI"} },   // r32_10
+      { fifa: 80, a: {p:1,g:"L"}, b: {p:3,gs:"EHIJK"} },   // r32_11 → R16_5 = M92 (W79+W80)
+      { fifa: 86, a: {p:2,g:"D"}, b: {p:2,g:"G"} },        // r32_12
+      { fifa: 88, a: {p:1,g:"K"}, b: {p:3,gs:"DEIJL"} },   // r32_13 → R16_6 = M95 (W86+W88)
+      { fifa: 85, a: {p:1,g:"B"}, b: {p:3,gs:"EFGIJ"} },   // r32_14
+      { fifa: 87, a: {p:1,g:"J"}, b: {p:2,g:"H"} }         // r32_15 → R16_7 = M96 (W85+W87)
     ];
-    function makeBracketMatch(prefix, idx, slotA, slotB, kickoff){
+    // R16 (tree order): each fed by R32[2i] and R32[2i+1].
+    // FIFA nums: R16_0=89, R16_1=90, R16_2=93, R16_3=94, R16_4=91, R16_5=92, R16_6=95, R16_7=96
+    const R16_FIFA = [89, 90, 93, 94, 91, 92, 95, 96];
+    // QF: each fed by R16[2i]+R16[2i+1]. FIFA: QF0=M97, QF1=M98, QF2=M99, QF3=M100.
+    const QF_FIFA = [97, 98, 99, 100];
+    // SF: SF0=M101, SF1=M102.
+    const SF_FIFA = [101, 102];
+
+    function makeBracketMatch(prefix, idx, slotA, slotB, fifa){
       return {
         id: prefix + idx, stage: "ko", group: null, round: "Slutspel",
+        fifa: fifa || null,
         home: slotA.code, away: slotB.code,
+        projHome: slotA.projCode || null, projAway: slotB.projCode || null,
         fromA: slotA.label, fromB: slotB.label,
-        kickoff: kickoff || new Date(Date.UTC(2026, 6, 19, 19, 0)),
+        kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
         ga: null, gb: null, status: "upcoming",
         winner: null, pen: null, venue: null, tippas: false
       };
     }
-    // labels for forward rounds reference "M1..M32" globally
-    function nextLabel(round, i){
-      return "Vinnare " + round + "-" + (i + 1);
-    }
 
     // Build structural rounds
-    const r32 = R32_SPECS.map((pair, i) =>
-      makeBracketMatch("r32_", i, slotTeamAndLabel(pair[0]), slotTeamAndLabel(pair[1])));
+    const r32 = R32_SPECS.map((spec, i) =>
+      makeBracketMatch("r32_", i, slotTeamAndLabel(spec.a), slotTeamAndLabel(spec.b), spec.fifa));
     const r16 = []; for(let i=0;i<8;i++){
       r16.push(makeBracketMatch("r16_", i,
-        slotTeamAndLabel({from: nextLabel("R32", i*2)}),
-        slotTeamAndLabel({from: nextLabel("R32", i*2+1)})));
+        slotTeamAndLabel({winM: R32_SPECS[i*2].fifa}),
+        slotTeamAndLabel({winM: R32_SPECS[i*2+1].fifa}),
+        R16_FIFA[i]));
     }
     const qf = []; for(let i=0;i<4;i++){
       qf.push(makeBracketMatch("qf_", i,
-        slotTeamAndLabel({from: nextLabel("R16", i*2)}),
-        slotTeamAndLabel({from: nextLabel("R16", i*2+1)})));
+        slotTeamAndLabel({winM: R16_FIFA[i*2]}),
+        slotTeamAndLabel({winM: R16_FIFA[i*2+1]}),
+        QF_FIFA[i]));
     }
     const sf = []; for(let i=0;i<2;i++){
       sf.push(makeBracketMatch("sf_", i,
-        slotTeamAndLabel({from: nextLabel("KV", i*2)}),
-        slotTeamAndLabel({from: nextLabel("KV", i*2+1)})));
+        slotTeamAndLabel({winM: QF_FIFA[i*2]}),
+        slotTeamAndLabel({winM: QF_FIFA[i*2+1]}),
+        SF_FIFA[i]));
     }
     const finalArr = [ makeBracketMatch("final_", 0,
-      slotTeamAndLabel({from: "Vinnare SF-1"}),
-      slotTeamAndLabel({from: "Vinnare SF-2"})) ];
+      slotTeamAndLabel({winM: SF_FIFA[0]}),
+      slotTeamAndLabel({winM: SF_FIFA[1]}),
+      104) ];
     const thirdArr = [ makeBracketMatch("third_", 0,
-      slotTeamAndLabel({from: "Förlorare SF-1"}),
-      slotTeamAndLabel({from: "Förlorare SF-2"})) ];
+      slotTeamAndLabel({loseM: SF_FIFA[0]}),
+      slotTeamAndLabel({loseM: SF_FIFA[1]}),
+      103) ];
 
     // Overlay any real KO fixtures (by stage, sorted by date) into the structural matches.
     // This brings in real kickoff times AND populates teams once the draw is done.
@@ -2237,10 +2296,7 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
   const liveMatches = (matches || []).filter(m => m.status === "live");
   const liveTeams = new Set();
   liveMatches.forEach(m => { if(m.home) liveTeams.add(m.home); if(m.away) liveTeams.add(m.away); });
-  const upcomingMatches = (matches || []).filter(m => m.status === "upcoming");
-  const playedMatches = (matches || []).filter(m => m.status === "played");
-  const nextUp = upcomingMatches.sort((a,b) => a.kickoff - b.kickoff)[0] || null;
-  const recent = playedMatches.sort((a,b) => b.kickoff - a.kickoff).slice(0, 2);
+  const allGroupMatches = (matches || []).slice().sort((a,b) => a.kickoff - b.kickoff);
   return (
     <div style={{ background: "var(--paper)", borderRadius: "var(--r-md)", overflow: "hidden",
       border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
@@ -2310,35 +2366,46 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
         );
       })}
 
-      {(nextUp || recent.length > 0) && (
-        <div style={{ background: "var(--bg2)", borderTop: "1px solid var(--line)", padding: "9px 14px",
-          display: "flex", flexDirection: "column", gap: 6 }}>
-          {recent.map(m => (
-            <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%", textAlign: "left",
-              display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "2px 0" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", minWidth: 0, fontSize: 11.5, fontWeight: 600,
-                color: m.winner && m.winner !== m.home ? "var(--ink-soft)" : "var(--ink)" }}>
-                <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={15} />
-              </span>
-              <span className="num" style={{ fontWeight: 800, fontSize: 12.5, color: "var(--ink-soft)" }}>{m.ga}-{m.gb}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, fontSize: 11.5, fontWeight: 600,
-                color: m.winner && m.winner !== m.away ? "var(--ink-soft)" : "var(--ink)" }}>
-                <Flag code={m.away} size={15} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
-              </span>
-            </button>
-          ))}
-          {nextUp && (
-            <button onClick={() => onOpenMatch && onOpenMatch(nextUp)} style={{ width: "100%", textAlign: "left",
-              display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "2px 0" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", minWidth: 0, fontSize: 11.5, fontWeight: 600, color: "var(--ink)" }}>
-                <TeamName code={nextUp.home} size={11.5} bold={false} abbrev /><Flag code={nextUp.home} size={15} />
-              </span>
-              <span className="num" style={{ fontWeight: 700, fontSize: 11, color: "var(--cool)" }}>{svTime(nextUp.kickoff)}</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, fontSize: 11.5, fontWeight: 600, color: "var(--ink)" }}>
-                <Flag code={nextUp.away} size={15} /><TeamName code={nextUp.away} size={11.5} bold={false} abbrev />
-              </span>
-            </button>
-          )}
+      {allGroupMatches.length > 0 && (
+        <div style={{ background: "var(--bg2)", borderTop: "1px solid var(--line)" }}>
+          <div style={{ padding: "9px 14px 4px", fontSize: 10, fontWeight: 800, letterSpacing: ".08em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
+            Gruppens matcher
+          </div>
+          {allGroupMatches.map((m, i) => {
+            const played = m.status === "played";
+            const live = m.status === "live";
+            const homeLost = played && m.gb > m.ga;
+            const awayLost = played && m.ga > m.gb;
+            return (
+              <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%", textAlign: "left",
+                display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "8px 14px",
+                borderTop: i > 0 ? "1px solid var(--line)" : "none",
+                background: live ? "color-mix(in oklab, var(--hot) 8%, transparent)" : "transparent" }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", minWidth: 0, fontSize: 11.5, fontWeight: 700,
+                  color: homeLost ? "var(--ink-soft)" : "var(--ink)" }}>
+                  <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={15} />
+                </span>
+                <span style={{ textAlign: "center", minWidth: 56 }}>
+                  {(played || live) ? (
+                    <span className="num" style={{ fontWeight: 800, fontSize: 13, color: live ? "var(--hot)" : "var(--ink)" }}>
+                      {m.ga}<span style={{ margin: "0 4px", color: "var(--ink-soft)" }}>-</span>{m.gb}
+                    </span>
+                  ) : (
+                    <span className="num" style={{ fontWeight: 700, fontSize: 11.5, color: "var(--ink-soft)" }}>{svTime(m.kickoff)}</span>
+                  )}
+                  <div style={{ marginTop: 2 }}>
+                    {live ? <LiveDot minute={m.minute} small /> :
+                      played ? <span style={{ fontSize: 9, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".06em" }}>SLUT</span> :
+                      <span style={{ fontSize: 9, fontWeight: 700, color: "var(--ink-soft)" }}>{svDayLabel(m.kickoff)}</span>}
+                  </div>
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, fontSize: 11.5, fontWeight: 700,
+                  color: awayLost ? "var(--ink-soft)" : "var(--ink)" }}>
+                  <Flag code={m.away} size={15} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -2419,24 +2486,51 @@ const BRACKET_CSS = `
 `;
 
 function BracketCell({ m, champion, onOpen }) {
-  const row = (code, isWinner, label) => (
-    <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 8px",
-      background: isWinner ? "color-mix(in oklab, var(--gold) 18%, transparent)" : "transparent",
-      borderRadius: 6, opacity: code ? 1 : .55 }}>
-      {code ? <Flag code={code} size={17} /> : <span style={{ width: 17, height: 17, borderRadius: "50%", background: "var(--bg2)", flex: "0 0 auto" }} />}
-      <span style={{ fontSize: 11.5, fontWeight: isWinner ? 800 : 600, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {code ? window.VM.TEAMS[code].name : (label || "Vinnare")}</span>
-      <span className="num" style={{ fontSize: 12, fontWeight: 800, color: isWinner ? "var(--ink)" : "var(--ink-soft)", minWidth: 9, textAlign: "right" }}>
-        {m.status === "played" && code ? (code === m.home ? m.ga : m.gb) : ""}</span>
-    </div>
-  );
+  // row renders one team-slot inside the bracket card.
+  // - code: actual team code (after draw) -> show flag + name
+  // - label: seed label (e.g. "1A", "Vinnare M73") - shown when code is null
+  // - proj: projected team code based on current standings (small text under label)
+  const row = (code, isWinner, label, proj) => {
+    const projName = proj && window.VM.TEAMS[proj] ? window.VM.TEAMS[proj].name : null;
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 8px",
+        background: isWinner ? "color-mix(in oklab, var(--gold) 18%, transparent)" : "transparent",
+        borderRadius: 6, opacity: code ? 1 : .85 }}>
+        {code
+          ? <Flag code={code} size={17} />
+          : (proj
+              ? <Flag code={proj} size={17} />
+              : <span style={{ width: 17, height: 17, borderRadius: "50%", background: "var(--bg2)", flex: "0 0 auto" }} />)}
+        <span style={{ minWidth: 0, flex: 1, display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+          <span style={{ fontSize: 11.5, fontWeight: isWinner ? 800 : 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            color: code ? "var(--ink)" : "var(--ink-soft)" }}>
+            {code ? window.VM.TEAMS[code].name : (label || "Vinnare")}
+          </span>
+          {!code && projName && (
+            <span style={{ fontSize: 9.5, fontWeight: 700, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 1 }}>
+              just nu: {projName}
+            </span>
+          )}
+        </span>
+        <span className="num" style={{ fontSize: 12, fontWeight: 800, color: isWinner ? "var(--ink)" : "var(--ink-soft)", minWidth: 9, textAlign: "right" }}>
+          {m.status === "played" && code ? (code === m.home ? m.ga : m.gb) : ""}
+        </span>
+      </div>
+    );
+  };
   const live = m.status === "live";
   return (
-    <button onClick={() => onOpen && (m.home && m.away) && onOpen(m)} style={{ width: 158, background: "var(--paper)", borderRadius: 10, padding: 4,
+    <button onClick={() => onOpen && onOpen(m)} style={{ width: 178, background: "var(--paper)", borderRadius: 10, padding: 4,
       border: "1px solid var(--line)", boxShadow: champion ? "0 0 0 2px var(--gold), var(--shadow)" : live ? "0 0 0 1.5px var(--hot)" : "var(--shadow)", textAlign: "left" }}>
-      {row(m.home, m.winner && m.winner === m.home, m.fromA)}
+      {m.fifa ? (
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "2px 8px 0", fontSize: 9, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)" }}>
+          <span>M{m.fifa}</span>
+          {m.status === "played" ? <span>SLUT</span> : m.status === "live" ? <span style={{ color: "var(--hot)" }}>LIVE</span> : <span>{svTime(m.kickoff)}</span>}
+        </div>
+      ) : null}
+      {row(m.home, m.winner && m.winner === m.home, m.fromA, m.projHome)}
       <div style={{ height: 1, background: "var(--line)", margin: "1px 6px" }} />
-      {row(m.away, m.winner && m.winner === m.away, m.fromB)}
+      {row(m.away, m.winner && m.winner === m.away, m.fromB, m.projAway)}
       {live ? <div style={{ textAlign: "center", padding: "3px 0 1px" }}><LiveDot minute={m.minute} small /></div> : null}
     </button>
   );
@@ -2916,11 +3010,13 @@ async function loadRealData() {
     return;
   }
   ReactDOM.createRoot(root).render(<App />);
+  // Re-fetcha var 45:e sekund. data.json regenereras av Actions var 5:e minut,
+  // så vi tittar lite oftare för att fånga uppdateringen så snart den landar.
   setInterval(() => {
     loadRealData().then(() => {
       window.dispatchEvent(new CustomEvent("vm-data-updated"));
     }).catch(() => {});
-  }, 90 * 1000);
+  }, 45 * 1000);
 })();
 
   </script>

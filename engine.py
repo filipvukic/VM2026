@@ -402,6 +402,9 @@ def compute(tips, matches, scorers, standings=None):
                 "awayTla": (m.get("awayTeam") or {}).get("tla"),
                 "status": m.get("status"),
                 "score": final_score(m),
+                "minute": m.get("minute"),
+                "goals": extract_goals(m),
+                "bookings": extract_bookings(m),
                 "tips": [],
             })
             row["tips"].append({"name": name, "tip": tip, "points": pts})
@@ -460,6 +463,40 @@ def compute(tips, matches, scorers, standings=None):
     }
 
 
+def extract_goals(m):
+    """Hämtar målskytte ur en match dict (football-data v4 shape).
+    Returnerar [{minute, team, scorer, type, score:[h,a]}]. Tom om datat saknas."""
+    out = []
+    for g in (m.get("goals") or []):
+        team = (g.get("team") or {})
+        scorer = (g.get("scorer") or {})
+        score = (g.get("score") or {})
+        out.append({
+            "minute": g.get("minute"),
+            "injuryTime": g.get("injuryTime"),
+            "team": team.get("tla") or team.get("shortName") or team.get("name"),
+            "scorer": scorer.get("name"),
+            "type": g.get("type"),
+            "score": [score.get("home"), score.get("away")] if score else None,
+        })
+    return out
+
+
+def extract_bookings(m):
+    """Hämtar kort (yellow/red) ur match dict."""
+    out = []
+    for b in (m.get("bookings") or []):
+        team = (b.get("team") or {})
+        player = (b.get("player") or {})
+        out.append({
+            "minute": b.get("minute"),
+            "team": team.get("tla") or team.get("shortName") or team.get("name"),
+            "player": player.get("name"),
+            "card": b.get("card"),
+        })
+    return out
+
+
 def build_fixtures(matches):
     return [{
         "id": m.get("id"),
@@ -472,6 +509,9 @@ def build_fixtures(matches):
         "awayTla": (m.get("awayTeam") or {}).get("tla"),
         "status": m.get("status"),
         "score": final_score(m),
+        "minute": m.get("minute"),
+        "goals": extract_goals(m),
+        "bookings": extract_bookings(m),
     } for m in matches]
 
 
