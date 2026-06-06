@@ -6,59 +6,125 @@
 <title>VM 2026 · Tippningsligan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800;900&family=Big+Shoulders+Display:wght@500;700;800;900&family=Spline+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet" />
 <style>
-  /* ====== PALETT & TYPSNITT (styrs av Tweaks) ====== */
+  /* ============================================================
+     VM 2026 - OLED-dark · Pitch-grön · Data-dense
+     Inspirerat av UI/UX Pro Max: Real-Time Monitoring +
+     Data-Dense Dashboard + Vibrant/Block-based för sport-energi.
+     ============================================================ */
   :root {
-    /* Solnedgång (default, förfinad) */
-    --hot:   #D81E5B;
-    --warm:  #F06543;
-    --gold:  #E8A630;
-    --cool:  #6C3FB5;
-    --deep:  #2A0E3F;
-    --grad: linear-gradient(120deg,#3A1452 0%,#7A1E5A 48%,#C23A55 100%);
-    --grad-soft: linear-gradient(120deg,#7A1E5A,#C23A55);
+    /* Bakgrunds-skala (OLED-djup) */
+    --bg-0: #07090E;
+    --bg-1: #0C1018;
+    --bg-2: #131822;
+    --bg-3: #1B2230;
+    --bg-4: #232B3D;
 
-    --font-display: 'Archivo Expanded','Archivo',sans-serif;
-    --font-body: 'Archivo', system-ui, sans-serif;
-    --display-tracking: -0.01em;
+    /* Borders */
+    --border:        rgba(255,255,255,.07);
+    --border-strong: rgba(255,255,255,.12);
+    --border-pitch:  rgba(16,185,129,.36);
+
+    /* Text */
+    --fg:   #F2F5FA;
+    --fg-2: #C9D0DD;
+    --fg-3: #8B93A6;
+    --fg-4: #555E73;
+
+    /* Brand */
+    --pitch:       #10B981;
+    --pitch-dim:   #059669;
+    --pitch-deep:  #036549;
+    --pitch-glow:  rgba(16,185,129,.16);
+
+    /* Live */
+    --live:       #EF4444;
+    --live-glow:  rgba(239,68,68,.18);
+
+    /* Medaljer */
+    --gold:    #FBBF24;
+    --silver:  #CBD5E1;
+    --bronze:  #D97757;
+
+    /* Stöd-accenter */
+    --blue:   #3B82F6;
+    --purple: #A78BFA;
+    --orange: #FB923C;
+    --yellow: #FBBF24;
+
+    /* Pts-färger */
+    --pts-5: var(--gold);   /* exakt */
+    --pts-2: var(--pitch);  /* rätt utgång */
+    --pts-1: var(--fg-3);   /* annars */
+
+    /* Bakåt-kompat alias (gamla komponenter använder dessa) */
+    --bg:           var(--bg-1);
+    --bg2:          var(--bg-2);
+    --paper:        var(--bg-2);
+    --ink:          var(--fg);
+    --ink-soft:     var(--fg-3);
+    --line:         var(--border);
+    --line-strong:  var(--border-strong);
+    --hot:          var(--live);
+    --warm:         var(--orange);
+    --cool:         var(--pitch);
+    --deep:         var(--bg-0);
+    --grad:       linear-gradient(120deg, #0D2520 0%, #082019 50%, #0F0F1A 100%);
+    --grad-soft:  linear-gradient(120deg, #102320, #0E1A28);
+
+    /* Typografi */
+    --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --display-tracking: -0.025em;
     --display-transform: none;
     --display-weight: 800;
 
-    /* ljus, varm men sofistikerad bas */
-    --bg:    #F4F1EA;
-    --bg2:   #ECE6DA;
-    --paper: #FFFFFF;
-    --ink:   #1C1B1A;
-    --ink-soft: #6E6A62;
-    --line:  #E7E1D5;
-    --line-strong: #D6CDBC;
+    /* Radius */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
 
-    --r-lg: 20px; --r-md: 14px; --r-sm: 10px;
-    --shadow: 0 1px 2px rgba(40,30,15,.05), 0 6px 18px -12px rgba(40,30,15,.18);
-    --shadow-lift: 0 2px 6px rgba(40,20,40,.08), 0 24px 48px -24px rgba(40,20,40,.30);
-    --nav-h: 68px;
-    --maxw: 1080px;
+    /* Shadow + lift */
+    --shadow:       0 1px 0 rgba(255,255,255,.02) inset, 0 8px 24px -16px rgba(0,0,0,.55);
+    --shadow-lift:  0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -18px rgba(0,0,0,.6);
+
+    /* Geometri */
+    --nav-h: 64px;
+    --maxw: 1180px;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; padding: 0; }
+  html { background: var(--bg-0); }
   body {
     font-family: var(--font-body);
-    color: var(--ink);
-    background: var(--bg);
+    color: var(--fg);
+    background: var(--bg-0);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
+    font-feature-settings: "ss01", "cv11";
   }
-  /* dekorativ bakgrund: mycket subtil varm vinjett */
+  /* Subtil bg-glow */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(70vw 50vw at 90% -10%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 60%),
-      radial-gradient(60vw 50vw at -10% 0%, color-mix(in oklab, var(--hot) 8%, transparent), transparent 60%);
+      radial-gradient(80vw 50vw at 50% -20%, rgba(16,185,129,.07), transparent 60%),
+      radial-gradient(60vw 40vw at 90% 110%, rgba(59,130,246,.05), transparent 60%);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(80% 60% at 50% 0%, #000, transparent 80%);
   }
   #root { position: relative; z-index: 1; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
   h1,h2,h3 { margin: 0; }
   .display {
@@ -68,14 +134,13 @@
     line-height: .98;
     font-weight: var(--display-weight, 800);
   }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; padding: 0; }
   img { display: block; max-width: 100%; }
 
-  /* skydd mot horisontell scroll */
   .app-scroll::-webkit-scrollbar { width: 0; height: 0; }
 
-  /* fokus-tillgänglighet */
-  :focus-visible { outline: 3px solid var(--cool); outline-offset: 2px; }
+  ::selection { background: var(--pitch); color: #08120F; }
+  :focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
 
   @keyframes pop { 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
   @keyframes riseIn { from{transform:translateY(16px)} to{transform:translateY(0)} }
@@ -90,6 +155,7 @@
   @keyframes shine { from{background-position:-200% 0} to{background-position:200% 0} }
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   /* Mjuk expand/collapse via grid-rows hack (1fr -> 0fr) */
   .smooth-collapse { display: grid; grid-template-rows: 0fr;
@@ -2175,51 +2241,104 @@ function PoolResultBlock({ data, m }) {
   );
 }
 
+function VenueRefsBlock({ m }){
+  // Visar var matchen spelas + funktionärer prominent.
+  const hasVenue = !!(m.venue && m.venue.stadium);
+  const refs = (m.referees || []).filter(r => r && r.name);
+  if(!hasVenue && refs.length === 0) return null;
+  const main = refs.find(r => /main|head|huvuddomare|referee/i.test(r.role||"")) || refs[0];
+  const others = refs.filter(r => r !== main);
+  return (
+    <div style={{ margin: "0 16px 14px", background: "var(--bg-2)",
+      border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "14px 16px" }}>
+      <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase",
+        color: "var(--fg-3)", marginBottom: 10 }}>Plats & funktionärer</div>
+      <div style={{ display: "grid", gridTemplateColumns: hasVenue && refs.length > 0 ? "1fr 1fr" : "1fr",
+        gap: 16 }}>
+        {hasVenue && (
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".06em", textTransform: "uppercase" }}>Arena</div>
+            <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--fg)", display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 13 }}>📍</span>
+              <span>{m.venue.stadium}</span>
+            </div>
+            {m.venue.city && (
+              <div style={{ marginTop: 2, fontSize: 12.5, fontWeight: 500, color: "var(--fg-3)" }}>{m.venue.city}</div>
+            )}
+          </div>
+        )}
+        {refs.length > 0 && (
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".06em", textTransform: "uppercase" }}>Domare</div>
+            {main && (
+              <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--fg)" }}>
+                {main.name}{main.nationality ? <span style={{ color: "var(--fg-3)", fontWeight: 500, marginLeft: 4 }}>({main.nationality})</span> : null}
+              </div>
+            )}
+            {others.length > 0 && (
+              <div style={{ marginTop: 4, fontSize: 11.5, fontWeight: 500, color: "var(--fg-3)" }}>
+                + {others.map(r => r.name).join(", ")}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function MatchDetail({ data, match, onClose, onTeam }) {
   const m = match;
   const live = m.status === "live", played = m.status === "played", tbd = !m.home || !m.away;
   const win = m.winner;
   const teamCol = (code, label) => (
     <button onClick={() => code && onTeam && onTeam(code)} style={{ flex: 1, display: "flex", flexDirection: "column",
-      alignItems: "center", gap: 8, minWidth: 0, color: "#fff" }}>
-      {code ? <Flag code={code} size={52} shape="rect" /> :
-        <span style={{ width: 73, height: 52, borderRadius: 8, background: "rgba(255,255,255,.18)" }} />}
-      <span style={{ fontWeight: 800, fontSize: 14, textAlign: "center", textShadow: "0 1px 3px rgba(0,0,0,.3)",
-        opacity: played && win && win !== code ? .6 : 1 }}>{code ? window.VM.TEAMS[code].name : (label || "Vinnare")}</span>
+      alignItems: "center", gap: 8, minWidth: 0, color: "var(--fg)" }}>
+      {code ? <Flag code={code} size={48} shape="rect" /> :
+        <span style={{ width: 67, height: 48, borderRadius: 8, background: "var(--bg-3)" }} />}
+      <span style={{ fontWeight: 700, fontSize: 14, textAlign: "center",
+        opacity: played && win && win !== code ? .5 : 1 }}>{code ? window.VM.TEAMS[code].name : (label || "Vinnare")}</span>
     </button>
   );
   const header = (
-    <div style={{ background: "var(--grad)", padding: "14px 18px 18px", position: "relative", flex: "0 0 auto" }}>
-      <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff",
-        fontSize: 24, fontWeight: 700, lineHeight: 1, opacity: .9 }}>×</button>
-      <div style={{ textAlign: "center", marginBottom: 14 }}>
-        <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".1em", color: "rgba(255,255,255,.9)", textTransform: "uppercase" }}>
-          {roundLabel(m)}{m.group ? "" : ""}</div>
-        <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)", marginTop: 3 }}>
+    <div style={{ padding: "16px 18px 18px", position: "relative", flex: "0 0 auto",
+      background: "linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%)",
+      borderBottom: "1px solid var(--border)" }}>
+      <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16,
+        width: 28, height: 28, borderRadius: 7, background: "var(--bg-4)",
+        border: "1px solid var(--border)", color: "var(--fg-2)",
+        fontSize: 16, fontWeight: 700, lineHeight: 1, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>×</button>
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8,
+          padding: "4px 10px", borderRadius: 7,
+          background: live ? "var(--live-glow)" : "var(--bg-3)",
+          border: `1px solid ${live ? "rgba(239,68,68,.4)" : "var(--border)"}`,
+          fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase",
+          color: live ? "var(--live)" : "var(--fg-3)" }}>
+          {live && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--live)", animation: "blink 1.2s infinite" }} />}
+          {roundLabel(m)}
+          {m.fifa && <span className="mono" style={{ opacity: .6, marginLeft: 4 }}>M{m.fifa}</span>}
+        </div>
+        <div className="mono" style={{ marginTop: 8, fontSize: 12, fontWeight: 600, color: "var(--fg-2)" }}>
           {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}
         </div>
-        {m.venue && (
-          <div style={{ marginTop: 6, display: "flex", justifyContent: "center", alignItems: "center", gap: 6,
-            fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.85)" }}>
-            <span style={{ fontSize: 11 }}>📍</span>
-            <span>{m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}</span>
-          </div>
-        )}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         {teamCol(m.home, m.fromA)}
-        <div style={{ flex: "0 0 auto", textAlign: "center", minWidth: 86 }}>
+        <div style={{ flex: "0 0 auto", textAlign: "center", minWidth: 94 }}>
           {(played || live) && !tbd ? (
-            <div className="num" style={{ fontWeight: 800, fontSize: 40, color: "#fff", lineHeight: 1 }}>
-              {m.ga}<span style={{ opacity: .55, margin: "0 6px", fontWeight: 600 }}>–</span>{m.gb}</div>
+            <div className="mono" style={{ fontWeight: 800, fontSize: 38, color: "var(--fg)",
+              lineHeight: 1, letterSpacing: "-.02em" }}>
+              {m.ga}<span style={{ color: "var(--fg-4)", margin: "0 8px", fontWeight: 600 }}>:</span>{m.gb}
+            </div>
           ) : (
-            <div className="num display" style={{ fontWeight: 800, fontSize: 30, color: "#fff" }}>{svTime(m.kickoff)}</div>
+            <div className="mono" style={{ fontWeight: 800, fontSize: 28, color: "var(--fg)", letterSpacing: "-.02em" }}>{svTime(m.kickoff)}</div>
           )}
-          <div style={{ marginTop: 7, display: "flex", justifyContent: "center" }}>
+          <div style={{ marginTop: 8, display: "flex", justifyContent: "center" }}>
             {live ? <LiveDot minute={m.minute} /> :
-              played ? <span style={{ fontSize: 11, fontWeight: 800, color: "rgba(255,255,255,.85)", letterSpacing: ".05em" }}>
-                SLUTSIGNAL{m.pen ? " · STR " + m.pen[0] + "–" + m.pen[1] : ""}</span> :
-              <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,.8)" }}>Avspark</span>}
+              played ? <span className="mono" style={{ fontSize: 11, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".06em" }}>
+                FT{m.pen ? ` · STR ${m.pen[0]}-${m.pen[1]}` : ""}</span> :
+              <span className="mono" style={{ fontSize: 11, fontWeight: 700, color: "var(--fg-3)" }}>AVSPARK</span>}
           </div>
         </div>
         {teamCol(m.away, m.fromB)}
@@ -2230,8 +2349,9 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   return (
     <Sheet onClose={onClose} header={header}>
       <div style={{ paddingTop: 16 }}>
+        {!tbd && <VenueRefsBlock m={m} />}
         {(played || live) && !tbd && (
-          <MiniBlock title={live ? "Matchförlopp · pågår" : "Matchförlopp"} pad={false}><Timeline m={m} /></MiniBlock>
+          <MiniBlock title={live ? "Händelser · pågår" : "Händelser"} pad={false}><Timeline m={m} /></MiniBlock>
         )}
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
@@ -2239,7 +2359,7 @@ function MatchDetail({ data, match, onClose, onTeam }) {
         {!tbd && !played && <TipsDistribution data={data} m={m} />}
         {!tbd && <PoolResultBlock data={data} m={m} />}
         {tbd && (
-          <div style={{ textAlign: "center", color: "var(--ink-soft)", padding: "30px 24px", fontWeight: 600 }}>
+          <div style={{ textAlign: "center", color: "var(--fg-3)", padding: "30px 24px", fontWeight: 600 }}>
             Lagen avgörs när tidigare matcher är spelade.
           </div>
         )}
@@ -2314,108 +2434,154 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
+function KpiCard({ label, value, sub, accent, mono = true }){
+  return (
+    <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
+      borderRadius: "var(--r-md)", padding: "12px 14px", position: "relative", overflow: "hidden" }}>
+      {accent && (
+        <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: accent }} />
+      )}
+      <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: ".08em",
+        textTransform: "uppercase", color: "var(--fg-3)" }}>{label}</div>
+      <div className={mono ? "mono" : ""} style={{ marginTop: 4, fontSize: 24,
+        fontWeight: 800, color: "var(--fg)", lineHeight: 1.05, letterSpacing: "-.02em" }}>{value}</div>
+      {sub && <div style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: "var(--fg-3)" }}>{sub}</div>}
+    </div>
+  );
+}
+
 function StandingsView({ data, onOpenPlayer }) {
   const isPre = data.state === "pre";
   const s = data.standings;
   const prizes = window.VM.PRIZES;
   const pot = 2700;
   const top3 = s.slice(0, 3);
-  const leaderTotal = Math.max(1, s[0].total);
+  const leaderTotal = Math.max(1, s[0] ? s[0].total : 1);
+  const liveMatches = (data.allMatches || []).filter(m => m.status === "live").length;
+  const playedMatches = (data.allMatches || []).filter(m => m.status === "played").length;
+  const totalMatches = (data.allMatches || []).length;
+  const nextUp = (data.allMatches || []).find(m => m.status === "upcoming");
+  const daysLeft = nextUp ? Math.max(0, Math.ceil((nextUp.kickoff - Date.now()) / 86400000)) : null;
 
   return (
-    <div style={{ animation: "riseIn .4s forwards" }}>
-      {/* VM-banner med vimplar + bild-slot */}
-      <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
-        boxShadow: "var(--shadow-lift)", background: "var(--deep)" }}>
-        <div style={{ display: "block", width: "100%", height: "158px",
-          background: "radial-gradient(80% 90% at 80% 10%, color-mix(in oklab, var(--warm) 60%, var(--deep)), var(--deep) 70%), linear-gradient(135deg, var(--deep) 0%, color-mix(in oklab, var(--cool) 35%, var(--deep)) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
-          background: "linear-gradient(to top, rgba(18,8,24,.74), rgba(18,8,24,.04) 48%, rgba(18,8,24,.18))" }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
-        <div style={{ position: "absolute", left: 16, bottom: 12, right: 16, pointerEvents: "none" }}>
-          <div className="display" style={{ color: "#fff", fontSize: 21, fontWeight: "var(--display-weight)", textShadow: "0 2px 8px rgba(0,0,0,.45)" }}>Hela världen, en pott</div>
-          <div style={{ color: "rgba(255,255,255,.88)", fontWeight: 700, fontSize: 12, textShadow: "0 1px 4px rgba(0,0,0,.5)" }}>USA · Mexiko · Kanada - sommaren 2026</div>
-        </div>
+    <div style={{ animation: "viewIn .3s ease-out forwards" }}>
+      {/* === KPI-STRIP === */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+        gap: 10, marginBottom: 16 }}>
+        <KpiCard label="Sammanlagd pott" value={money(pot)} sub="9 spelare · 300 kr/st"
+          accent="var(--gold)" />
+        <KpiCard label={liveMatches > 0 ? "Live nu" : "Spelade matcher"}
+          value={liveMatches > 0 ? liveMatches : playedMatches}
+          sub={liveMatches > 0 ? "pågår just nu" : `av ${totalMatches} totalt`}
+          accent={liveMatches > 0 ? "var(--live)" : "var(--pitch)"} />
+        <KpiCard label={isPre ? "Avspark om" : "Ledare"}
+          value={isPre ? (daysLeft != null ? `${daysLeft} d` : "snart") : (s[0] ? s[0].name : "-")}
+          sub={isPre ? (nextUp ? svDayLabel(nextUp.kickoff) : "") : `${s[0] ? s[0].total : 0} poäng`}
+          accent="var(--pitch)" />
+        <KpiCard label="Mest exakta" value={isPre ? "-" : (
+            [...s].sort((a,b) => b.exact - a.exact)[0]
+              ? `${[...s].sort((a,b) => b.exact - a.exact)[0].exact}p`
+              : "0"
+          )}
+          sub={isPre ? "väntar på resultat" : (
+            [...s].sort((a,b) => b.exact - a.exact)[0]
+              ? [...s].sort((a,b) => b.exact - a.exact)[0].name
+              : "-"
+          )}
+          accent="var(--gold)" />
       </div>
 
-      {/* POTT + PALL kort */}
-      <div style={{ position: "relative", background: "var(--paper)", border: "1px solid var(--line)",
-        borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-lift)", overflow: "hidden", marginBottom: 20 }}>
-        <div style={{ height: 4, background: "var(--grad)" }} />
-        {!isPre && <Confetti count={36} />}
-        {/* pott-rad */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 18px 6px", position: "relative", zIndex: 2 }}>
-          <div>
-            <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "var(--ink-soft)" }}>SAMMANLAGD POTT</div>
-            <div className="num display" style={{ fontSize: 30, color: "var(--ink)", whiteSpace: "nowrap", fontWeight: "var(--display-weight)" }}>{money(pot)}</div>
-          </div>
-          <Chip bg="var(--bg2)">9 spelare · 300 kr/st</Chip>
-        </div>
-
-        {isPre ? (
-          <div style={{ padding: "16px 18px 22px", textAlign: "center", position: "relative", zIndex: 2 }}>
-            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".12em", color: "var(--hot)", marginBottom: 14 }}>AVSPARK OM</div>
-            <Countdown />
-            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll - vem tar första pallplatsen?</div>
-          </div>
-        ) : (
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
-            <PodiumStep p={top3[1]} place={2} prize={prizes[1]} isPre={isPre} h={70} />
-            <PodiumStep p={top3[0]} place={1} prize={prizes[0]} isPre={isPre} h={96} />
-            <PodiumStep p={top3[2]} place={3} prize={prizes[2]} isPre={isPre} h={54} />
-          </div>
-        )}
-      </div>
-
-      {isPre && (
-        <div style={{ display: "flex", gap: 9, marginBottom: 20 }}>
-          {[0, 1, 2].map(i => {
-            const tint = ["var(--gold)", "#AEB4BE", "#C77F49"][i];
+      {/* === PODIUM (kompakt, OLED-stil) === */}
+      {!isPre && top3.length > 0 && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr 1fr",
+          gap: 10, alignItems: "stretch", marginBottom: 14 }}>
+          {[top3[1], top3[0], top3[2]].filter(Boolean).map((p, ix) => {
+            const place = p.rank;
+            const tint = { 1: "var(--gold)", 2: "var(--silver)", 3: "var(--bronze)" }[place];
             return (
-              <div key={i} style={{ flex: 1, background: "var(--paper)", borderRadius: 12, padding: "12px 10px", textAlign: "center",
-                border: "1px solid " + `color-mix(in oklab, ${tint} 40%, var(--line))`, boxShadow: "var(--shadow)" }}>
-                <div className="num display" style={{ fontSize: 22, color: `color-mix(in oklab, ${tint} 70%, #000 10%)`, fontWeight: "var(--display-weight)" }}>{i + 1}:a</div>
-                <div className="num" style={{ fontWeight: 800, fontSize: 14.5, marginTop: 2 }}>{money(prizes[i])}</div>
-              </div>
+              <button key={p.id} onClick={() => onOpenPlayer(p.id)}
+                className="lift" style={{ width: "100%", textAlign: "left",
+                background: "var(--bg-2)", border: "1px solid var(--border)",
+                borderRadius: "var(--r-md)", padding: "16px 14px", display: "flex",
+                flexDirection: "column", alignItems: "center", gap: 8, position: "relative", overflow: "hidden",
+                boxShadow: place === 1 ? `0 18px 40px -22px ${tint}` : "var(--shadow)" }}>
+                <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: tint }} />
+                <Avatar p={p} size={place === 1 ? 60 : 48} ring={place} />
+                <div style={{ fontSize: place === 1 ? 14 : 13, fontWeight: 800, marginTop: 4 }}>{p.name}</div>
+                <div className="mono" style={{ fontSize: place === 1 ? 28 : 22, fontWeight: 800,
+                  color: tint, letterSpacing: "-.02em", lineHeight: 1 }}>{p.total}<span style={{ fontSize: 11, fontWeight: 600, color: "var(--fg-3)", marginLeft: 4 }}>p</span></div>
+                <div className="mono" style={{ fontSize: 11, fontWeight: 700, color: "var(--fg-3)", letterSpacing: ".02em" }}>{money(prizes[place - 1])}</div>
+              </button>
             );
           })}
         </div>
       )}
 
-      <SectionTitle kicker={isPre ? "Innan avspark" : "Tabell"} title="Hela ligan"
-        right={<Chip color={isPre ? "var(--ink-soft)" : "#fff"} bg={isPre ? "var(--bg2)" : "var(--hot)"}>{isPre ? "Tippa nu" : "Live"}</Chip>} />
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {/* === TABELL: dense, sortable === */}
+      <div style={{ background: "var(--bg-2)", border: "1px solid var(--border)",
+        borderRadius: "var(--r-md)", overflow: "hidden" }}>
+        <div style={{ display: "grid",
+          gridTemplateColumns: "44px 1fr 80px 80px 80px 64px",
+          padding: "9px 14px", borderBottom: "1px solid var(--border)",
+          background: "var(--bg-3)",
+          fontSize: 10, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase",
+          color: "var(--fg-3)" }}>
+          <span>Plac</span>
+          <span>Spelare</span>
+          <span style={{ textAlign: "right" }}>Match</span>
+          <span style={{ textAlign: "right" }}>Bonus</span>
+          <span style={{ textAlign: "right" }}>Exakt</span>
+          <span style={{ textAlign: "right" }}>Total</span>
+        </div>
         {s.map((p, i) => {
           const onPodium = !isPre && p.rank <= 3;
-          const medal = { 1: "var(--gold)", 2: "#AEB4BE", 3: "#C77F49" }[p.rank];
+          const medal = { 1: "var(--gold)", 2: "var(--silver)", 3: "var(--bronze)" }[p.rank];
           const barPct = isPre ? 0 : Math.round((p.total / leaderTotal) * 100);
           return (
-            <button key={p.id} onClick={() => onOpenPlayer(p.id)} style={{ width: "100%", textAlign: "left", display: "grid",
-              gridTemplateColumns: "26px auto 1fr auto", alignItems: "center", gap: 12, background: "var(--paper)",
-              borderRadius: 13, padding: "11px 14px", border: "1px solid var(--line)",
-              borderLeft: onPodium ? `3px solid ${medal}` : "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
-              <span className="num display" style={{ fontSize: 18, color: onPodium ? medal : "var(--ink-soft)", textAlign: "center", fontWeight: "var(--display-weight)" }}>
-                {isPre ? "–" : p.rank}</span>
-              <Avatar p={p} size={42} rank={!isPre && onPodium ? p.rank : null} />
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontWeight: 800, fontSize: 15.5 }}>{p.name}</div>
-                {!isPre ? (
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
-                    <div style={{ position: "relative", flex: 1, maxWidth: 150, height: 5, background: "var(--bg2)", borderRadius: 99, overflow: "hidden" }}>
-                      <div style={{ position: "absolute", inset: 0, width: barPct + "%", background: onPodium ? medal : "var(--cool)",
-                        borderRadius: 99, animation: "barGrow 1s ease-out" }} />
+            <button key={p.id} onClick={() => onOpenPlayer(p.id)}
+              style={{ width: "100%", textAlign: "left", display: "grid",
+                gridTemplateColumns: "44px 1fr 80px 80px 80px 64px", alignItems: "center",
+                padding: "10px 14px",
+                borderBottom: i < s.length - 1 ? "1px solid var(--border)" : "none",
+                background: "transparent", position: "relative",
+                transition: "background .15s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,.025)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
+              {onPodium && <span style={{ position: "absolute", left: 0, top: 8, bottom: 8, width: 3, background: medal, borderRadius: "0 2px 2px 0" }} />}
+              <span className="mono" style={{ fontSize: 13, fontWeight: 700,
+                color: onPodium ? medal : "var(--fg-3)" }}>{isPre ? "-" : `#${p.rank}`}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                <Avatar p={p} size={32} rank={onPodium ? p.rank : null} />
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{p.name}</div>
+                  {!isPre ? (
+                    <div style={{ marginTop: 4, height: 3, background: "var(--bg-3)", borderRadius: 99,
+                      overflow: "hidden", maxWidth: 160 }}>
+                      <div style={{ height: "100%", width: barPct + "%",
+                        background: onPodium ? medal : "var(--pitch)",
+                        borderRadius: 99, transition: "width .4s ease" }} />
                     </div>
-                    <span style={{ fontSize: 11, color: "var(--ink-soft)", fontWeight: 700 }}>{p.exact} exakta</span>
-                  </div>
-                ) : (
-                  <div style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600, marginTop: 3 }}>{Object.keys(p.tips).length} tips inlagda</div>
-                )}
+                  ) : (
+                    <div style={{ fontSize: 11, color: "var(--fg-3)", marginTop: 2 }}>
+                      {Object.keys(p.tips).length} tips inlagda
+                    </div>
+                  )}
+                </div>
               </div>
-              <div style={{ textAlign: "right" }}>
-                <div className="num display" style={{ fontSize: 22, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>{isPre ? 0 : p.total}</div>
-                <div style={{ fontSize: 9.5, fontWeight: 800, letterSpacing: ".08em", color: "var(--ink-soft)" }}>POÄNG</div>
-              </div>
+              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 600, color: "var(--fg-2)" }}>
+                {isPre ? "-" : p.points}
+              </span>
+              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 600, color: "var(--fg-2)" }}>
+                {isPre ? "-" : p.bonusPts}
+              </span>
+              <span className="mono" style={{ textAlign: "right", fontSize: 13, fontWeight: 700,
+                color: !isPre && p.exact > 0 ? "var(--gold)" : "var(--fg-3)" }}>
+                {isPre ? "-" : p.exact}
+              </span>
+              <span className="mono" style={{ textAlign: "right", fontSize: 18, fontWeight: 800,
+                color: onPodium ? medal : "var(--fg)" }}>
+                {isPre ? 0 : p.total}
+              </span>
             </button>
           );
         })}
@@ -3209,29 +3375,91 @@ function App() {
   const openMatch = (m) => setMatch(m);
   const openTeam = (code) => setTeam(code);
 
+  // Räkna live-matcher + nästa avspark för header-status
+  const liveCount = (data.allMatches || []).filter(m => m.status === "live").length;
+  const nextMatch = (data.allMatches || []).find(m => m.status === "upcoming");
+
   return (
     <div style={{ minHeight: "100vh" }}>
-      <header style={{ position: "sticky", top: 0, zIndex: 40, background: "color-mix(in oklab, var(--bg) 88%, transparent)",
-        backdropFilter: "blur(12px)", borderBottom: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "11px 16px", display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 11, flex: 1, minWidth: 0 }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--grad)", display: "flex", alignItems: "center",
-              justifyContent: "center", flex: "0 0 auto", boxShadow: "var(--shadow)" }}>
-              <span className="num display" style={{ fontSize: 17, color: "#fff", fontWeight: "var(--display-weight)" }}>26</span>
+      <header style={{ position: "sticky", top: 0, zIndex: 40,
+        background: "color-mix(in oklab, var(--bg-0) 88%, transparent)",
+        backdropFilter: "blur(16px) saturate(140%)",
+        WebkitBackdropFilter: "blur(16px) saturate(140%)",
+        borderBottom: "1px solid var(--border)" }}>
+        <div style={{ maxWidth: "var(--maxw)", margin: "0 auto",
+          padding: "10px 16px", display: "flex", alignItems: "center", gap: 14 }}>
+          {/* Brand */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10,
+              background: "linear-gradient(135deg, var(--pitch), var(--pitch-deep))",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 6px 18px -6px var(--pitch-glow), inset 0 1px 0 rgba(255,255,255,.18)" }}>
+              <span className="display" style={{ fontSize: 14, color: "#06120E", fontWeight: 800, letterSpacing: "-.02em" }}>26</span>
             </div>
-            <div style={{ minWidth: 0 }}>
-              <div className="display" style={{ fontSize: 19, lineHeight: .95, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>VM&nbsp;2026</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
-                <Flag code="USA" size={12} /><Flag code="MEX" size={12} /><Flag code="CAN" size={12} />
-                <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", marginLeft: 2 }}>Tippningsligan</span>
-              </div>
+            <div style={{ minWidth: 0, display: "none" }} className="brand-text-md">
+              <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: ".02em" }}>VM 2026 Tippet</div>
+              <div style={{ fontSize: 10.5, fontWeight: 600, color: "var(--fg-3)" }}>USA · MEX · CAN</div>
             </div>
           </div>
+
+          {/* Top tabs - kompakt pill-rad */}
+          <nav style={{ flex: 1, display: "flex", justifyContent: "center", minWidth: 0 }}>
+            <div className="app-scroll" style={{ display: "flex", gap: 2, padding: 3,
+              background: "var(--bg-2)", borderRadius: 11, border: "1px solid var(--border)",
+              overflowX: "auto", maxWidth: "100%" }}>
+              {NAV.map(n => {
+                const active = view === n.id;
+                return (
+                  <button key={n.id} onClick={() => setView(n.id)}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 6,
+                      padding: "7px 13px", borderRadius: 8, whiteSpace: "nowrap",
+                      fontSize: 12.5, fontWeight: active ? 700 : 600,
+                      color: active ? "#06120E" : "var(--fg-2)",
+                      background: active ? "var(--pitch)" : "transparent",
+                      transition: "background .18s ease, color .18s ease, transform .18s ease" }}>
+                    <span style={{ display: "inline-flex", opacity: active ? 1 : .7 }}>{Icon[n.icon](active)}</span>
+                    <span>{n.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </nav>
+
+          {/* Live-status högst upp till höger */}
+          <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 8 }}>
+            {liveCount > 0 ? (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "5px 11px", borderRadius: 999, background: "var(--live-glow)",
+                border: "1px solid rgba(239,68,68,.45)", fontSize: 11.5, fontWeight: 700,
+                color: "var(--live)" }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--live)",
+                  animation: "blink 1.2s infinite" }} />
+                <span className="mono">{liveCount}</span> <span style={{ letterSpacing: ".06em" }}>LIVE</span>
+              </span>
+            ) : nextMatch ? (
+              <span style={{ display: "none", alignItems: "center", gap: 6,
+                padding: "5px 11px", borderRadius: 999, background: "var(--bg-2)",
+                border: "1px solid var(--border)", fontSize: 11.5, fontWeight: 600,
+                color: "var(--fg-3)" }} className="next-kick-md">
+                <span>Nästa</span>
+                <span className="mono" style={{ color: "var(--fg-2)" }}>{svDayLabel(nextMatch.kickoff)}</span>
+              </span>
+            ) : null}
+          </div>
         </div>
+        {/* Mobile-säkring: visa brand-text + next-kick på >=640px via media */}
+        <style>{`
+          @media (min-width: 640px) {
+            .brand-text-md { display: block !important; }
+          }
+          @media (min-width: 880px) {
+            .next-kick-md { display: inline-flex !important; }
+          }
+        `}</style>
       </header>
 
       <main>
-        <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)" }}>
+        <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "20px 16px 80px" }}>
           {view === "standings" && <StandingsView data={data} onOpenPlayer={setPlayer} />}
           {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
@@ -3239,26 +3467,6 @@ function App() {
           {view === "info" && <InfoView />}
         </div>
       </main>
-
-      <nav style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 45, pointerEvents: "none" }}>
-        <div style={{ maxWidth: 540, margin: "0 auto", padding: "0 12px 12px" }}>
-          <div style={{ pointerEvents: "auto", display: "flex", justifyContent: "space-around", alignItems: "center",
-            background: "var(--paper)", borderRadius: 16, padding: "7px 6px", border: "1px solid var(--line)",
-            boxShadow: "0 6px 24px -8px rgba(40,20,30,.28)" }}>
-            {NAV.map(n => {
-              const active = view === n.id;
-              return (
-                <button key={n.id} onClick={() => setView(n.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center",
-                  gap: 3, padding: "6px 8px", flex: 1, color: active ? "var(--hot)" : "var(--ink-soft)", position: "relative" }}>
-                  {active ? <span style={{ position: "absolute", top: -7, width: 22, height: 3, borderRadius: 99, background: "var(--hot)" }} /> : null}
-                  <span style={{ display: "flex" }}>{Icon[n.icon](active)}</span>
-                  <span style={{ fontSize: 10.5, fontWeight: active ? 800 : 600 }}>{n.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
 
       {player && <PlayerSheet data={data} playerId={player} onClose={() => setPlayer(null)} onOpenMatch={openMatch} />}
       {team && <TeamSheet data={data} code={team} onClose={() => setTeam(null)} onOpenMatch={openMatch} />}
