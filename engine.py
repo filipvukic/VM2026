@@ -344,7 +344,7 @@ def top_scorer(scorers, manual):
 # --------------------------------------------------------------------------- #
 # Huvudberäkning
 # --------------------------------------------------------------------------- #
-def compute(tips, matches, scorers, standings=None):
+def compute(tips, matches, scorers, standings=None, team_forms=None):
     cfg = tips["scoring"]
     resolve = build_team_resolver(tips.get("team_aliases", {}))
     anorm = make_alias_norm(tips.get("team_aliases", {}))
@@ -465,6 +465,7 @@ def compute(tips, matches, scorers, standings=None):
         "awards_pending": awards_pending,
         "unmatched_tips": dict(sorted(unmatched.items(), key=lambda x: -x[1])),
         "knockout_rule": "ET-score for exact; penalties decide outcome",
+        "team_forms": team_forms or {},
     }
 
 
@@ -533,6 +534,103 @@ def extract_odds(m):
         return {"H": float(h), "D": float(d), "A": float(a)}
     except (TypeError, ValueError):
         return None
+
+
+def collect_wc_teams(matches):
+    """Plocka unika lag (tla, id, name) ur match-listan."""
+    out = {}
+    for m in matches:
+        for key in ("homeTeam", "awayTeam"):
+            t = m.get(key) or {}
+            tla = t.get("tla")
+            tid = t.get("id")
+            if tla and tid and tla not in out:
+                out[tla] = {"id": tid, "tla": tla, "name": t.get("name")}
+    return out
+
+
+def fetch_team_forms(token, teams_by_tla, cache_path="team_forms.json",
+                     max_age_hours=22):
+    """För varje VM-lag, hämta senaste 5 färdigspelade matcherna via
+    /teams/{id}/matches?status=FINISHED&limit=5.
+
+    Cachar resultatet i team_forms.json. Om filen är fräsch (< max_age_hours)
+    returneras cachen oförändrad - vi spar då all rate-limit-budget.
+
+    free-tier på football-data: 10 req/min. 48 lag = ~5 min, kör därför
+    bara en gång per dygn (separat workflow).
+    """
+    now = datetime.now(timezone.utc)
+    cached = None
+    try:
+        with open(cache_path, "r", encoding="utf-8") as f:
+            cached = json.load(f)
+        ts = cached.get("updated_at")
+        if ts:
+            try:
+                fetched_at = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                age_h = (now - fetched_at).total_seconds() / 3600
+                if age_h < max_age_hours:
+                    return cached.get("forms", {})
+            except Exception:
+                pass
+    except FileNotFoundError:
+        pass
+    except Exception:
+        pass
+
+    forms = (cached or {}).get("forms", {}) if cached else {}
+    updated = dict(forms)
+
+    for tla, info in teams_by_tla.items():
+        try:
+            res = api_get(
+                f"/teams/{info['id']}/matches?status=FINISHED&limit=5",
+                token
+            )
+        except Exception:
+            continue
+        own_id = info["id"]
+        own_tla = tla
+        items = []
+        # API ger matcher i datum-ordning; ta de 5 senaste.
+        ms = (res.get("matches") or [])[-5:]
+        for m in ms:
+            ht = m.get("homeTeam") or {}
+            at = m.get("awayTeam") or {}
+            is_home = ht.get("id") == own_id
+            opp = at if is_home else ht
+            sc = (m.get("score") or {}).get("fullTime") or {}
+            gh, ga = sc.get("home"), sc.get("away")
+            if gh is None or ga is None:
+                continue
+            own_goals = gh if is_home else ga
+            opp_goals = ga if is_home else gh
+            if own_goals > opp_goals:
+                r = "V"
+            elif own_goals < opp_goals:
+                r = "F"
+            else:
+                r = "O"
+            items.append({
+                "date": (m.get("utcDate") or "")[:10],
+                "competition": ((m.get("competition") or {}).get("code")
+                                or (m.get("competition") or {}).get("name")),
+                "opp": opp.get("name"),
+                "oppTla": opp.get("tla"),
+                "gf": own_goals,
+                "ga": opp_goals,
+                "r": r,
+            })
+        updated[own_tla] = items
+
+    payload = {"updated_at": now.isoformat(timespec="seconds"), "forms": updated}
+    try:
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+    return updated
 
 
 def extract_venue(m):
@@ -608,24 +706,47 @@ def main():
     ap.add_argument("--mock", help="Lokal JSON med {'matches':[], 'scorers':[]} för test utan API")
     ap.add_argument("--out", default="data.json")
     ap.add_argument("--fixtures-out", default="fixtures.json")
+    ap.add_argument("--forms-cache", default="team_forms.json",
+                    help="Cache-fil för senaste-5-matcher per landslag.")
+    ap.add_argument("--refresh-forms", action="store_true",
+                    help="Tvinga ny hämtning av team-forms oavsett cache-ålder.")
     args = ap.parse_args()
 
     with open(args.tips, encoding="utf-8") as f:
         tips = json.load(f)
 
+    team_forms = {}
     if args.mock:
         with open(args.mock, encoding="utf-8") as f:
             mock = json.load(f)
         matches = mock.get("matches", [])
         scorers = mock.get("scorers", [])
         standings = mock.get("standings", [])
+        team_forms = mock.get("team_forms", {})
     else:
         token = os.environ.get("FOOTBALL_DATA_TOKEN")
         if not token:
             sys.exit("FOOTBALL_DATA_TOKEN saknas (sätt som GitHub Secret eller miljövariabel).")
         matches, scorers, standings = fetch_data(token)
+        if args.refresh_forms:
+            # Daglig workflow: hämta nya senaste-5-matcher för alla 48 lag
+            # (~5 min p.g.a. 10 req/min på free-tier).
+            teams_by_tla = collect_wc_teams(matches)
+            try:
+                team_forms = fetch_team_forms(token, teams_by_tla,
+                                              cache_path=args.forms_cache,
+                                              max_age_hours=0)
+            except Exception as e:
+                print(f"VARNING: kunde inte uppdatera team_forms: {e}")
+        # Snabbcron: läs ALDRIG från APIet, bara från cachen.
+        if not team_forms:
+            try:
+                with open(args.forms_cache, "r", encoding="utf-8") as f:
+                    team_forms = json.load(f).get("forms", {})
+            except Exception:
+                team_forms = {}
 
-    data = compute(tips, matches, scorers, standings)
+    data = compute(tips, matches, scorers, standings, team_forms=team_forms)
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     with open(args.fixtures_out, "w", encoding="utf-8") as f:

@@ -96,6 +96,8 @@
   @keyframes stadiumFade { from{opacity:0;transform:scale(1.04)} 15%,85%{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(1.04)} }
   @keyframes tileFade { from{opacity:0} 15%{opacity:1} 85%{opacity:1} to{opacity:.85} }
   @keyframes kenBurns { from{opacity:0;transform:scale(1.0) translate(0,0)} 12%{opacity:1} 100%{opacity:1;transform:scale(1.12) translate(-2%,-1%)} }
+  @keyframes shardFade { 0%{opacity:0;transform:translateX(-3%)} 18%{opacity:1;transform:translateX(0)} 85%{opacity:1} 100%{opacity:.65;transform:translateX(2%)} }
+  @keyframes shardKenBurns { 0%{opacity:0;transform:scale(1.0) translate(0,0)} 12%{opacity:1} 100%{opacity:1;transform:scale(1.14) translate(-3%,-1%)} }
   @keyframes fadeRise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: no-preference) {
     .can-fade { animation-name: fadeRise !important; }
@@ -608,14 +610,34 @@
     ];
 
     // ============= forms =============
+    // 1) seed med riktiga senaste-5 från engine (team_forms.json via daglig job)
     const forms = {};
     Object.keys(TEAMS).forEach(c => { forms[c] = []; });
+    const realForms = D.team_forms || {};
+    Object.keys(realForms).forEach(tla => {
+      const code = TEAMS[tla] ? tla : null;
+      if(!code) return;
+      (realForms[tla] || []).forEach(e => {
+        forms[code].push({
+          vs: e.oppTla || e.opp,
+          opp: e.opp,
+          gf: e.gf, ga: e.ga,
+          r: e.r,
+          date: e.date,
+          comp: e.competition
+        });
+      });
+    });
+    // 2) lägg till VM-matcher som spelats (har högre prio = senaste).
     allMatches.forEach(m => {
       if(m.status !== "played" || !m.home || !m.away) return;
       const r = (g,o) => g > o ? "V" : g < o ? "F" : "O";
-      forms[m.home].push({ vs:m.away, gf:m.ga, ga:m.gb, r:r(m.ga, m.gb), id:m.id });
-      forms[m.away].push({ vs:m.home, gf:m.gb, ga:m.ga, r:r(m.gb, m.ga), id:m.id });
+      forms[m.home].push({ vs:m.away, opp:m.away, gf:m.ga, ga:m.gb, r:r(m.ga, m.gb), id:m.id, comp:"WC" });
+      forms[m.away].push({ vs:m.home, opp:m.home, gf:m.gb, ga:m.ga, r:r(m.gb, m.ga), id:m.id, comp:"WC" });
     });
+    // Klipp till de 5 senaste (eftersom team_forms redan är begränsat till 5
+    // gör concat med VM-matcher max 10 → vi behåller bara de 5 senaste).
+    Object.keys(forms).forEach(c => { forms[c] = forms[c].slice(-5); });
 
     // ============= PLAYERS / STANDINGS / TIPS / BONUS =============
     const BONUS_KEY_MAP = {
@@ -2443,9 +2465,9 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
-/* StadiumHero - mosaik med 6 paneler av VM 2026:s 16 host-arenor.
-   Varje panel cyklar genom sin egen del av arena-poolen så hela
-   mosaiken byts ut kontinuerligt. */
+/* StadiumHero - diagonalt fragmenterat collage av VM 2026:s 16 host-arenor.
+   Skärvor (parallellogram via clip-path) ligger sida vid sida, var och en
+   cyklar genom egen pool. Horisontella accent-band bryter mönstret. */
 const WC_STADIUMS = [
   "MetLife Stadium", "SoFi Stadium", "AT&T Stadium", "Mercedes-Benz Stadium",
   "NRG Stadium", "Lincoln Financial Field", "Levi's Stadium", "Lumen Field",
@@ -2454,86 +2476,126 @@ const WC_STADIUMS = [
   "BMO Field", "BC Place"
 ];
 
-function HeroTile({ pool, offset, area, delay, kenBurns }){
+function HeroShard({ pool, offset, clip, delay, kenBurns, tone, posX, posY, interval = 5200 }){
   const [idx, setIdx] = React.useState(offset % pool.length);
   React.useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % pool.length), 5200);
+    const t = setInterval(() => setIdx(i => (i + 1) % pool.length), interval);
     return () => clearInterval(t);
-  }, [pool.length]);
+  }, [pool.length, interval]);
   const url = useWikiPhoto(pool[idx]);
   return (
-    <div style={{ position: "relative", gridArea: area, overflow: "hidden",
-      background: "linear-gradient(135deg, var(--deep), color-mix(in oklab, var(--cool) 30%, var(--deep)))" }}>
+    <div style={{
+      position: "absolute", inset: 0,
+      clipPath: clip, WebkitClipPath: clip,
+      background: "linear-gradient(140deg, var(--deep), color-mix(in oklab, var(--cool) 35%, var(--deep)))",
+      overflow: "hidden"
+    }}>
       {url && (
-        <div key={"t-"+area+"-"+idx} style={{ position: "absolute", inset: 0,
-          backgroundImage: `url(${url})`, backgroundSize: "cover", backgroundPosition: "center",
-          animation: `${kenBurns ? "kenBurns" : "tileFade"} 5.2s ease-out both`,
-          animationDelay: (delay || 0) + "ms" }} />
+        <div key={"s-"+clip.length+"-"+idx} style={{
+          position: "absolute", inset: "-6%",
+          backgroundImage: `url(${url})`,
+          backgroundSize: "cover",
+          backgroundPosition: `${posX || 50}% ${posY || 45}%`,
+          animation: `${kenBurns ? "shardKenBurns" : "shardFade"} ${interval/1000}s ease-out both`,
+          animationDelay: (delay || 0) + "ms"
+        }} />
       )}
-      {/* tone-färgad mesh ovanpå för att blanda med VM-paletten */}
-      <div style={{ position: "absolute", inset: 0,
-        background: "linear-gradient(135deg, color-mix(in oklab, var(--hot) 18%, transparent), transparent 60%)",
-        pointerEvents: "none" }} />
+      {/* tonad färgvask för att skärvan ska smälta in i VM-paletten */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: `linear-gradient(${135 + (offset * 13) % 60}deg, ${tone || "rgba(124,58,237,.18)"}, transparent 65%)`,
+        mixBlendMode: "overlay"
+      }} />
     </div>
   );
 }
 
 function StadiumHero(){
-  // Dela upp arenorna i 6 disjunkta pooler (1 per panel) så mosaiken
-  // alltid visar 6 olika arenor samtidigt.
+  // 8 disjunkta pooler -> 8 unika arenor visas samtidigt
   const chunks = React.useMemo(() => {
-    const n = 6;
+    const n = 8;
     const out = Array.from({length: n}, () => []);
     WC_STADIUMS.forEach((s, i) => out[i % n].push(s));
     return out;
   }, []);
-  return (
-    <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
-      boxShadow: "var(--shadow-lift)", background: "var(--deep)" }}>
-      {/* Mosaik: 4 kolumner x 4 rader, 6 paneler i unika storlekar */}
-      <div style={{ display: "grid",
-        gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
-        gridTemplateRows: "1fr 1fr 1fr 1fr",
-        gap: 4,
-        height: 320,
-        minHeight: 280 }} className="stadium-mosaic">
-        <HeroTile pool={chunks[0]} offset={0} area="1 / 1 / 4 / 2" delay={0}   kenBurns />
-        <HeroTile pool={chunks[1]} offset={1} area="1 / 2 / 2 / 4" delay={200} />
-        <HeroTile pool={chunks[2]} offset={2} area="1 / 4 / 3 / 5" delay={400} kenBurns />
-        <HeroTile pool={chunks[3]} offset={3} area="2 / 2 / 4 / 3" delay={600} />
-        <HeroTile pool={chunks[4]} offset={4} area="2 / 3 / 4 / 4" delay={800} kenBurns />
-        <HeroTile pool={chunks[5]} offset={5} area="3 / 4 / 5 / 5" delay={1000} />
-        <HeroTile pool={chunks[0]} offset={2} area="4 / 1 / 5 / 4" delay={1200} />
-      </div>
 
-      {/* Center-overlay: dark gradient + text */}
+  // Diagonala skärvor (clip-path-polygoner). Lutning ~-15% top till bot.
+  // Vertikala parallellogrammer + 2 horisontella accent-band + 1 trekantig kil.
+  const shards = [
+    // huvudskärvor (vertikala parallellogram, sluttar åt vänster)
+    { clip:"polygon(0% 0%, 24% 0%, 16% 100%, 0% 100%)",         kenBurns:true,  tone:"rgba(124,58,237,.28)",  posX:55, posY:40 },
+    { clip:"polygon(24.6% 0%, 48% 0%, 40% 100%, 16.6% 100%)",  kenBurns:false, tone:"rgba(8,145,178,.22)",   posX:50, posY:50 },
+    { clip:"polygon(48.6% 0%, 72% 0%, 64% 100%, 40.6% 100%)",  kenBurns:true,  tone:"rgba(220,38,38,.28)",   posX:60, posY:42 },
+    { clip:"polygon(72.6% 0%, 100% 0%, 100% 100%, 64.6% 100%)",kenBurns:false, tone:"rgba(245,158,11,.26)",  posX:45, posY:55 },
+    // horisontella accent-band (smala diagonaler ovanpå huvudskärvor)
+    { clip:"polygon(0% 38%, 100% 23%, 100% 33%, 0% 48%)",       kenBurns:false, tone:"rgba(255,255,255,.10)", posX:50, posY:60, interval:6400 },
+    { clip:"polygon(0% 66%, 100% 56%, 100% 64%, 0% 74%)",       kenBurns:false, tone:"rgba(255,255,255,.10)", posX:50, posY:30, interval:7000 },
+    // liten triangulär kil (extra fragmentering nere till vänster)
+    { clip:"polygon(0% 78%, 22% 82%, 8% 100%, 0% 100%)",        kenBurns:true,  tone:"rgba(124,58,237,.32)",  posX:50, posY:50, interval:5800 },
+    // liten kil uppe till höger
+    { clip:"polygon(82% 0%, 100% 0%, 100% 22%, 76% 18%)",       kenBurns:true,  tone:"rgba(220,38,38,.30)",   posX:50, posY:50, interval:5400 },
+  ];
+
+  return (
+    <div style={{
+      position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden",
+      marginBottom: 16, boxShadow: "var(--shadow-lift)", background: "var(--deep)",
+      height: 380, minHeight: 320
+    }} className="stadium-hero">
+      {shards.map((sh, i) => (
+        <HeroShard
+          key={i}
+          pool={chunks[i % chunks.length]}
+          offset={i + 1}
+          clip={sh.clip}
+          tone={sh.tone}
+          kenBurns={sh.kenBurns}
+          posX={sh.posX} posY={sh.posY}
+          delay={i * 220}
+          interval={sh.interval || 5200}
+        />
+      ))}
+
+      {/* tunna ljusspröjsar längs skärv-kanterna för glas-känsla */}
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{
+        position: "absolute", inset: 0, pointerEvents: "none", mixBlendMode: "screen"
+      }}>
+        <line x1="24" y1="0" x2="16" y2="100" stroke="rgba(255,255,255,.18)" strokeWidth=".18" />
+        <line x1="48" y1="0" x2="40" y2="100" stroke="rgba(255,255,255,.16)" strokeWidth=".18" />
+        <line x1="72" y1="0" x2="64" y2="100" stroke="rgba(255,255,255,.18)" strokeWidth=".18" />
+        <line x1="0"  y1="38" x2="100" y2="23" stroke="rgba(255,255,255,.10)" strokeWidth=".12" />
+        <line x1="0"  y1="66" x2="100" y2="56" stroke="rgba(255,255,255,.10)" strokeWidth=".12" />
+      </svg>
+
+      {/* botten-gradient + radial spotlight för läsbar text */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
-        background: "radial-gradient(70% 80% at 50% 100%, rgba(10,5,18,.92), rgba(10,5,18,.35) 55%, rgba(10,5,18,.55))" }} />
+        background: "radial-gradient(65% 70% at 50% 105%, rgba(8,4,16,.95) 0%, rgba(8,4,16,.45) 45%, rgba(8,4,16,.25) 75%, rgba(8,4,16,.55) 100%)" }} />
+
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={22} height={16} /></div>
 
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0,
-        padding: "22px 22px 18px", pointerEvents: "none" }}>
-        <div className="display" style={{ color: "#fff", fontSize: 30, fontWeight: "var(--display-weight)",
-          textShadow: "0 4px 18px rgba(0,0,0,.7)", lineHeight: 1.02 }}>
+        padding: "22px 22px 20px", pointerEvents: "none" }}>
+        <div className="display" style={{ color: "#fff", fontSize: 34, fontWeight: "var(--display-weight)",
+          textShadow: "0 4px 22px rgba(0,0,0,.75)", lineHeight: 1 }}>
           Hela världen, en pott
         </div>
         <div style={{ color: "rgba(255,255,255,.95)", fontWeight: 700, fontSize: 13.5,
-          textShadow: "0 1px 5px rgba(0,0,0,.7)", marginTop: 4,
+          textShadow: "0 1px 5px rgba(0,0,0,.8)", marginTop: 6,
           display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           <span>🇺🇸 USA</span><span style={{ opacity: .4 }}>·</span>
           <span>🇲🇽 Mexiko</span><span style={{ opacity: .4 }}>·</span>
           <span>🇨🇦 Kanada</span><span style={{ opacity: .4 }}>·</span>
           <span style={{ color: "rgba(255,255,255,.75)" }}>sommaren 2026</span>
         </div>
-        <div style={{ color: "rgba(255,255,255,.78)", fontWeight: 600, fontSize: 11.5,
-          textShadow: "0 1px 3px rgba(0,0,0,.7)", marginTop: 8 }}>
+        <div style={{ color: "rgba(255,255,255,.8)", fontWeight: 600, fontSize: 11.5,
+          textShadow: "0 1px 3px rgba(0,0,0,.8)", marginTop: 8 }}>
           16 städer · 104 matcher · en pott på 2 700 kr
         </div>
       </div>
 
       <style>{`
         @media (max-width: 540px){
-          .stadium-mosaic { height: 240px !important; }
+          .stadium-hero { height: 280px !important; min-height: 240px !important; }
         }
       `}</style>
     </div>
@@ -3307,11 +3369,13 @@ const NAV = [
 ];
 
 /* ---- lagdetalj ---- */
-function TeamStatsBlock({ code }){
+function TeamStatsBlock({ code, data }){
   const d = window.VM.TEAM_DETAILS[code];
   const rank = window.VM.FIFA_RANKING[code];
   if(!d && !rank) return null;
-  const formColor = (c) => c === "W" ? "var(--cool)" : c === "L" ? "var(--hot)" : "var(--ink-soft)";
+  // riktig senaste-5 från engine (team_forms.json), bygg V/O/F-rad
+  const realForm = (data && data.forms && data.forms[code]) || [];
+  const useRealForm = realForm.length > 0;
   return (
     <MiniBlock title="Landslags-statistik">
       {(rank || (d && d.fifaPts)) && (
@@ -3345,18 +3409,31 @@ function TeamStatsBlock({ code }){
           </ul>
         </div>
       )}
-      {d && d.form && (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>Senaste 5 matcher</span>
-          <div style={{ display: "inline-flex", gap: 4 }}>
-            {d.form.split("").map((c, i) => (
-              <span key={i} className="num" style={{ width: 22, height: 22, borderRadius: 5,
-                background: formColor(c), color: "#FFFFFF", fontSize: 11, fontWeight: 800,
-                display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{c}</span>
+      {useRealForm ? (
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>Senaste {realForm.length} matcher</span>
+            <FormPills form={realForm} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {realForm.slice().reverse().map((f, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+                fontSize: 11.5, fontWeight: 600, color: "var(--ink-soft)" }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6, minWidth: 0 }}>
+                  <span style={{ width: 14, height: 14, borderRadius: 4,
+                    background: f.r === "V" ? "#2BD17E" : f.r === "F" ? "#FF5A52" : "#D7B23E",
+                    color: "#fff", fontSize: 9, fontWeight: 800,
+                    display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{f.r}</span>
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.opp || f.vs}</span>
+                </span>
+                <span className="num" style={{ fontVariantNumeric: "tabular-nums", color: "var(--ink)", fontWeight: 700 }}>
+                  {f.gf}–{f.ga}
+                </span>
+              </div>
             ))}
           </div>
         </div>
-      )}
+      ) : null}
     </MiniBlock>
   );
 }
@@ -3416,16 +3493,8 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
   return (
     <Sheet onClose={onClose} header={header}>
       <div style={{ padding: "16px 0 28px" }}>
-        <TeamStatsBlock code={code} />
+        <TeamStatsBlock code={code} data={data} />
         <TeamHistoryBlock code={code} />
-        {!isPre && data.forms[code] && data.forms[code].length > 0 && (
-          <MiniBlock title="Form">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-soft)" }}>Senaste matcherna</span>
-              <FormPills form={data.forms[code]} />
-            </div>
-          </MiniBlock>
-        )}
         {fans.length > 0 && (
           <MiniBlock title={`${fans.length} har laget i sina bonustips`}>
             <div style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600, marginBottom: 9, lineHeight: 1.45 }}>

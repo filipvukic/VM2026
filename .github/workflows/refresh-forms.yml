@@ -1,0 +1,45 @@
+name: Uppdatera lag-form (senaste 5)
+
+on:
+  schedule:
+    # En gång per dygn (~05:30 UTC). Hämtningen tar ca 5 min p.g.a.
+    # football-data.org gratisplan: 10 req/min och vi hämtar 48 lag.
+    - cron: "30 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-team-forms
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checka ut repo
+        uses: actions/checkout@v4
+
+      - name: Sätt upp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Hämta senaste-5 för varje lag
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: python engine.py --refresh-forms
+
+      - name: Committa uppdaterad form-cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add team_forms.json data.json fixtures.json
+          if git diff --staged --quiet; then
+            echo "Ingen form-ändring att committa."
+          else
+            git commit -m "Auto-uppdatera team_forms.json [skip ci]"
+            git push
+          fi
