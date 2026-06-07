@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-06-07T14:55:35+00:00",
+  "updated_at": "2026-06-07T16:10:45+00:00",
   "pot": {
     "per_player": 300,
-    "total": 2700,
+    "total": 3600,
     "currency": "kr",
     "split": {
-      "1": 1350,
-      "2": 810,
-      "3": 540
+      "1": 1800,
+      "2": 1080,
+      "3": 720
     }
   },
   "leaderboard": [
@@ -55,7 +55,7 @@
         }
       },
       "rank": 1,
-      "prize": 1350
+      "prize": 1800
     },
     {
       "name": "Alexander",
@@ -70,12 +70,12 @@
           "points": 0
         },
         "winner": {
-          "pick": "Frankrike",
+          "pick": "Spanien",
           "correct": false,
           "points": 0
         },
         "best_keeper": {
-          "pick": "Mike Maignan",
+          "pick": "David Raya",
           "correct": false,
           "points": 0
         },
@@ -90,7 +90,7 @@
           "points": 0
         },
         "silver": {
-          "pick": "Spanien",
+          "pick": "Portugal",
           "correct": false,
           "points": 0
         },
@@ -101,7 +101,7 @@
         }
       },
       "rank": 2,
-      "prize": 810
+      "prize": 1080
     },
     {
       "name": "Björn",
@@ -147,7 +147,7 @@
         }
       },
       "rank": 3,
-      "prize": 540
+      "prize": 720
     },
     {
       "name": "Casper",
@@ -242,6 +242,52 @@
       "prize": 0
     },
     {
+      "name": "Hampus",
+      "match_points": 0,
+      "bonus_points": 0,
+      "total": 0,
+      "exact_count": 0,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Bart Verbruggen",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Bruno Fernandes",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Nederländerna",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 6,
+      "prize": 0
+    },
+    {
       "name": "Isac",
       "match_points": 0,
       "bonus_points": 0,
@@ -264,7 +310,7 @@
           "points": 0
         },
         "best_player": {
-          "pick": null,
+          "pick": "Lamine Yamal",
           "correct": false,
           "points": 0
         },
@@ -284,7 +330,7 @@
           "points": 0
         }
       },
-      "rank": 6,
+      "rank": 7,
       "prize": 0
     },
     {
@@ -305,7 +351,7 @@
           "points": 0
         },
         "best_keeper": {
-          "pick": "David Raya",
+          "pick": "Unai Simón",
           "correct": false,
           "points": 0
         },
@@ -330,7 +376,7 @@
           "points": 0
         }
       },
-      "rank": 7,
+      "rank": 8,
       "prize": 0
     },
     {
@@ -376,7 +422,7 @@
           "points": 0
         }
       },
-      "rank": 8,
+      "rank": 9,
       "prize": 0
     },
     {
@@ -422,7 +468,63 @@
           "points": 0
         }
       },
-      "rank": 9,
+      "rank": 10,
+      "prize": 0
+    },
+    {
+      "name": "Vilgot",
+      "match_points": 0,
+      "bonus_points": 0,
+      "total": 0,
+      "exact_count": 0,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "pedri",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "england",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 11,
+      "prize": 0
+    },
+    {
+      "name": "Villiam",
+      "match_points": 0,
+      "bonus_points": 0,
+      "total": 0,
+      "exact_count": 0,
+      "bonus_detail": {},
+      "rank": 12,
       "prize": 0
     }
   ],
@@ -506,16 +608,32 @@
         {
           "name": "Johan",
           "tip": [
-            3,
+            1,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
         {
           "name": "Björn",
           "tip": [
-            3,
+            1,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -614,9 +732,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
             1
           ],
           "points": null
@@ -716,10 +850,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            3
           ],
           "points": null
         },
@@ -818,10 +968,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            0
           ],
           "points": null
         },
@@ -896,6 +1062,14 @@
           "points": null
         },
         {
+          "name": "Isac",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Casper",
           "tip": [
             1,
@@ -912,10 +1086,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            4
           ],
           "points": null
         },
@@ -1014,9 +1204,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
             2
           ],
           "points": null
@@ -1116,10 +1322,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            3
           ],
           "points": null
         },
@@ -1218,10 +1440,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            2
           ],
           "points": null
         },
@@ -1320,6 +1558,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            4,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
@@ -1328,9 +1574,17 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            7,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
-            6,
+            5,
             0
           ],
           "points": null
@@ -1422,7 +1676,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             3,
             2
@@ -1518,8 +1788,16 @@
         {
           "name": "Johan",
           "tip": [
-            0,
+            2,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
@@ -1528,6 +1806,14 @@
           "tip": [
             1,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            1
           ],
           "points": null
         },
@@ -1626,10 +1912,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -1728,6 +2030,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            4,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
@@ -1736,9 +2046,17 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            5,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
-            6,
+            4,
             0
           ],
           "points": null
@@ -1830,10 +2148,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            0
           ],
           "points": null
         },
@@ -1932,9 +2266,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
             1
           ],
           "points": null
@@ -2034,10 +2384,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            1
           ],
           "points": null
         },
@@ -2083,7 +2449,7 @@
           "name": "Albin",
           "tip": [
             3,
-            0
+            1
           ],
           "points": null
         },
@@ -2136,10 +2502,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            1
           ],
           "points": null
         },
@@ -2238,9 +2620,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
             3
           ],
           "points": null
@@ -2340,10 +2738,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            0
           ],
           "points": null
         },
@@ -2442,10 +2856,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            0
           ],
           "points": null
         },
@@ -2544,10 +2974,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             5,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            4,
+            1
           ],
           "points": null
         },
@@ -2646,7 +3092,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             3,
             2
@@ -2748,9 +3210,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            4,
             1
           ],
           "points": null
@@ -2850,6 +3328,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
@@ -2858,10 +3344,18 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
             1,
-            3
+            2
           ],
           "points": null
         }
@@ -2952,10 +3446,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            1
           ],
           "points": null
         },
@@ -3054,6 +3564,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             4,
@@ -3062,10 +3580,18 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
             3,
-            2
+            1
           ],
           "points": null
         }
@@ -3156,10 +3682,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            0
           ],
           "points": null
         },
@@ -3258,9 +3800,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
             2
           ],
           "points": null
@@ -3360,10 +3918,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
@@ -3462,6 +4036,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
@@ -3470,10 +4052,18 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
             2,
-            3
+            2
           ],
           "points": null
         }
@@ -3564,10 +4154,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            4,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             5,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            6,
+            1
           ],
           "points": null
         },
@@ -3666,10 +4272,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             4,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            5,
+            1
           ],
           "points": null
         },
@@ -3768,6 +4390,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
@@ -3776,9 +4406,17 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
-            3,
+            2,
             0
           ],
           "points": null
@@ -3864,8 +4502,16 @@
         {
           "name": "Johan",
           "tip": [
-            3,
-            0
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -3878,9 +4524,17 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
-            4,
+            3,
             1
           ],
           "points": null
@@ -3972,10 +4626,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            3
           ],
           "points": null
         },
@@ -4074,10 +4744,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            2
           ],
           "points": null
         },
@@ -4176,10 +4862,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            3,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            0
           ],
           "points": null
         },
@@ -4278,10 +4980,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            0
           ],
           "points": null
         },
@@ -4380,9 +5098,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
             0
           ],
           "points": null
@@ -4482,9 +5216,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
             3
           ],
           "points": null
@@ -4584,10 +5334,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            3
           ],
           "points": null
         },
@@ -4686,7 +5452,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            4,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            3,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             3,
             0
@@ -4788,7 +5570,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            1,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             1,
             3
@@ -4890,10 +5688,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -4992,6 +5806,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
@@ -5000,10 +5822,18 @@
           "points": null
         },
         {
+          "name": "Hampus",
+          "tip": [
+            4,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
             3,
-            1
+            0
           ],
           "points": null
         }
@@ -5094,10 +5924,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            0
           ],
           "points": null
         },
@@ -5196,10 +6042,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            1
           ],
           "points": null
         },
@@ -5298,10 +6160,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            3
           ],
           "points": null
         },
@@ -5400,10 +6278,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            0
           ],
           "points": null
         },
@@ -5502,9 +6396,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
             1
           ],
           "points": null
@@ -5604,9 +6514,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            3,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            4,
             0
           ],
           "points": null
@@ -5706,10 +6632,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            2
           ],
           "points": null
         },
@@ -5808,10 +6750,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
@@ -5905,7 +6863,15 @@
           "name": "Johan",
           "tip": [
             1,
-            3
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            1
           ],
           "points": null
         },
@@ -5913,7 +6879,15 @@
           "name": "Björn",
           "tip": [
             2,
-            3
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            2
           ],
           "points": null
         },
@@ -6012,10 +6986,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            5
           ],
           "points": null
         },
@@ -6114,7 +7104,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            2,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             2,
             3
@@ -6216,10 +7222,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            3
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            2
           ],
           "points": null
         },
@@ -6318,10 +7340,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            2
           ],
           "points": null
         },
@@ -6420,6 +7458,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
@@ -6428,9 +7474,17 @@
           "points": null
         },
         {
-          "name": "Alexander",
+          "name": "Hampus",
           "tip": [
             1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
             0
           ],
           "points": null
@@ -6522,9 +7576,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
             2
           ],
           "points": null
@@ -6624,10 +7694,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -6726,10 +7812,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             2,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            3,
+            0
           ],
           "points": null
         },
@@ -6828,7 +7930,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             0,
             1
@@ -6930,9 +8048,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
             3
           ],
           "points": null
@@ -7032,7 +8166,23 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            3
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
           "tip": [
             1,
             2
@@ -7134,10 +8284,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
@@ -7236,10 +8402,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            4
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            4
           ],
           "points": null
         },
@@ -7338,10 +8520,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             3,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            3
           ],
           "points": null
         },
@@ -7440,10 +8638,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            2
           ],
           "points": null
         },
@@ -7542,9 +8756,25 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
             1
           ],
           "points": null
@@ -7644,10 +8874,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             1,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },
@@ -7746,10 +8992,26 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            3
+          ],
+          "points": null
+        },
+        {
           "name": "Björn",
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            2
           ],
           "points": null
         },
@@ -8427,5 +9689,6 @@
     "best_keeper"
   ],
   "unmatched_tips": {},
-  "knockout_rule": "ET-score for exact; penalties decide outcome"
+  "knockout_rule": "ET-score for exact; penalties decide outcome",
+  "team_forms": {}
 }
