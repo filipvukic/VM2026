@@ -10,7 +10,7 @@
 <style>
   /* ====== STADIONNATT · PALETT & TYPSNITT (styrs av Tweaks) ====== */
   :root {
-    /* Solnedgång (default) — vibrerande mot mörker */
+    /* Solnedgång (default) - vibrerande mot mörker */
     --hot:   #FF2E6E;
     --warm:  #FF8A3D;
     --gold:  #FFC53D;
@@ -25,7 +25,7 @@
     --display-transform: uppercase;
     --display-weight: 400;
 
-    /* djup, varm midnattsbas — inte svart */
+    /* djup, varm midnattsbas - inte svart */
     --bg:    #14101F;
     --bg2:   #221A34;
     --paper: #201930;
@@ -93,6 +93,7 @@
   @keyframes riseIn { from{transform:translateY(16px)} to{transform:translateY(0)} }
   @keyframes sheetFade { from{opacity:0} to{opacity:1} }
   @keyframes sheetPop  { from{opacity:0;transform:scale(.96) translateY(8px)} to{opacity:1;transform:none} }
+  @keyframes stadiumFade { from{opacity:0;transform:scale(1.04)} 15%,85%{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(1.04)} }
   @keyframes fadeRise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: no-preference) {
     .can-fade { animation-name: fadeRise !important; }
@@ -115,13 +116,13 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <!-- ╔══════════════════════════════════════════════════════════════════╗ -->
-  <!-- ║  DATALAGER — adapter som mappar vår riktiga data.json +          ║ -->
+  <!-- ║  DATALAGER - adapter som mappar vår riktiga data.json +          ║ -->
   <!-- ║  fixtures.json till samma window.VM-objekt-form som designens    ║ -->
   <!-- ║  mock. Data hämtas runtime via window.__REAL_DATA__.             ║ -->
   <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
   <script>
 /* ============================================================
-   VM 2026 — Data-adapter (vanilla JS)
+   VM 2026 - Data-adapter (vanilla JS)
    window.__REAL_DATA__ sätts av boot-koden innan React renderas.
    window.VM.build()  ->  fullständig dataset i designens form.
    ============================================================ */
@@ -218,6 +219,23 @@
   };
 
   // 9 spelare med deterministisk färg
+  // Grupp -> primär värdarena (för matcher där engine saknar venue)
+  // Baserat på FIFA:s publicerade gruppvis-fördelning för VM 2026.
+  const GROUP_HOST = {
+    A: { stadium:"Estadio Azteca",                city:"Mexico City" },
+    B: { stadium:"BMO Field",                     city:"Toronto" },
+    C: { stadium:"BC Place",                      city:"Vancouver" },
+    D: { stadium:"Gillette Stadium",              city:"Boston" },
+    E: { stadium:"Arrowhead Stadium",             city:"Kansas City" },
+    F: { stadium:"Mercedes-Benz Stadium",         city:"Atlanta" },
+    G: { stadium:"MetLife Stadium",               city:"New York/New Jersey" },
+    H: { stadium:"Hard Rock Stadium",             city:"Miami" },
+    I: { stadium:"AT&T Stadium",                  city:"Dallas" },
+    J: { stadium:"SoFi Stadium",                  city:"Los Angeles" },
+    K: { stadium:"NRG Stadium",                   city:"Houston" },
+    L: { stadium:"Estadio BBVA",                  city:"Monterrey" }
+  };
+
   const PLAYER_COLORS = {
     "Albin":"#FF2E6E","Alexander":"#FF8A3D","Björn":"#1FA37A","Casper":"#7A3CF0",
     "Filip":"#0E8FE0","Isac":"#F5B301","Johan":"#E63946","Martin":"#16A0A0","Oskar":"#9B5DE5"
@@ -403,7 +421,11 @@
         status: finished ? "played" : (live ? "live" : "upcoming"),
         winner, pen: null,
         minute: (live && (f.minute != null)) ? f.minute : (live ? null : undefined),
-        venue: f.venue || null,
+        venue: (f.venue && f.venue.stadium) ? f.venue
+               : (f.group && GROUP_HOST[f.group]) ? GROUP_HOST[f.group]
+               : null,
+        officialOdds: f.odds || null,
+        referees: f.referees || [],
         tippas,
         scorers, cards,
         stats: null,
@@ -620,11 +642,11 @@
       Object.keys(BONUS_KEY_MAP).forEach(srcKey => {
         const dstKey = BONUS_KEY_MAP[srcKey];
         const v = detail && detail[srcKey];
-        if(!v){ out[dstKey] = TEAM_BONUS.has(dstKey) ? null : ["—", null]; return; }
+        if(!v){ out[dstKey] = TEAM_BONUS.has(dstKey) ? null : ["-", null]; return; }
         if(TEAM_BONUS.has(dstKey)){
           out[dstKey] = teamCodeFromPick(v.pick, TEAMS);
         } else {
-          out[dstKey] = [v.pick || "—", null];
+          out[dstKey] = [v.pick || "-", null];
         }
       });
       return out;
@@ -766,7 +788,7 @@
 // TweakSelect past ~16/~10 chars per label); reach for TweakSelect directly when
 // options are many or long. For color tweaks always curate 3-4 options rather than
 // a free picker; an option can also be a whole 2–5 color palette (the stored value
-// is the array). The Tweak* controls are a floor, not a ceiling — build custom
+// is the array). The Tweak* controls are a floor, not a ceiling - build custom
 // controls inside the panel if a tweak calls for UI they don't cover.
 /* END USAGE */
 // ─────────────────────────────────────────────────────────────────────────────
@@ -895,7 +917,7 @@ function useTweaks(defaults) {
     setValues((prev) => ({ ...prev, ...edits }));
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
     // Same-window signal so in-page listeners (deck-stage rail thumbnails)
-    // can react — the parent message only reaches the host, not peers.
+    // can react - the parent message only reaches the host, not peers.
     window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
   }, []);
   return [values, setTweak];
@@ -903,7 +925,7 @@ function useTweaks(defaults) {
 
 // ── TweaksPanel ─────────────────────────────────────────────────────────────
 // Floating shell. Registers the protocol listener BEFORE announcing
-// availability — if the announce ran first, the host's activate could land
+// availability - if the announce ran first, the host's activate could land
 // before our handler exists and the toolbar toggle would silently no-op.
 // The close button posts __edit_mode_dismissed so the host's toolbar toggle
 // flips off in lockstep; the host echoes __deactivate_edit_mode back which
@@ -1047,20 +1069,20 @@ function TweakRadio({ label, value, options, onChange }) {
   const trackRef = React.useRef(null);
   const [dragging, setDragging] = React.useState(false);
   // The active value is read by pointer-move handlers attached for the lifetime
-  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  // of a drag - ref it so a stale closure doesn't fire onChange for every move.
   const valueRef = React.useRef(value);
   valueRef.current = value;
 
   // Segments wrap mid-word once per-segment width runs out. The track is
   // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
-  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
+  // to its own padding, and 11.5px system-ui averages ~6.3px/char - so 2
   // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
   // back to a dropdown rather than wrap.
   const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
   const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
   const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
   if (!fitsAsSegments) {
-    // <select> emits strings — map back to the original option value so the
+    // <select> emits strings - map back to the original option value so the
     // fallback stays type-preserving (numbers, booleans) like the segment path.
     const resolve = (s) => {
       const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
@@ -1172,7 +1194,7 @@ function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) 
   );
 }
 
-// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
+// Relative-luminance contrast pick - checkmarks drawn over a swatch need to
 // read on both #111 and #fafafa without per-option configuration. Hex input
 // only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
 function __twkIsLight(hex) {
@@ -1192,8 +1214,8 @@ const __TwkCheck = ({ light }) => (
   </svg>
 );
 
-// TweakColor — curated color/palette picker. Each option is either a single
-// hex string or an array of 1-5 hex strings; the card adapts — a lone color
+// TweakColor - curated color/palette picker. Each option is either a single
+// hex string or an array of 1-5 hex strings; the card adapts - a lone color
 // renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
 // rest stacked in a sharp column on the right. onChange emits the
 // option in the shape it was passed (string stays string, array stays array).
@@ -1258,7 +1280,7 @@ Object.assign(window, {
   <!-- ============ shared.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   shared.jsx — tema, flaggor (riktiga), porträtt, matchkort, stats
+   shared.jsx - tema, flaggor (riktiga), porträtt, matchkort, stats
    ============================================================ */
 
 /* ---------- TEMA: paletter & typsnitt (Tweaks) ---------- */
@@ -1361,7 +1383,7 @@ function Flag({ code, size = 24, shape = "circle" }) {
 
 function TeamName({ code, size = 14, bold = true, abbrev = false }) {
   const t = (window.VM.TEAMS || {})[code];
-  const name = t ? (abbrev ? code : t.name) : "—";
+  const name = t ? (abbrev ? code : t.name) : "-";
   return <span style={{ fontWeight: bold ? 700 : 600, fontSize: size, whiteSpace: "nowrap",
     overflow: "hidden", textOverflow: "ellipsis" }}>{name}</span>;
 }
@@ -1911,7 +1933,7 @@ if(window.VM){
   });
 }
 
-/* ---------- vimplar (bunting) — VM-/folkfestkänsla ---------- */
+/* ---------- vimplar (bunting) - VM-/folkfestkänsla ---------- */
 function Bunting({ n = 18, height = 16, style }) {
   const cols = ["var(--hot)", "var(--warm)", "var(--gold)", "var(--cool)"];
   return (
@@ -1928,7 +1950,7 @@ function Bunting({ n = 18, height = 16, style }) {
   <!-- ============ match.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   match.jsx — Matchdetalj med statistik (före / under / efter)
+   match.jsx - Matchdetalj med statistik (före / under / efter)
    ============================================================ */
 
 function Sheet({ onClose, accent, children, header }) {
@@ -1985,7 +2007,7 @@ function Timeline({ m }) {
   ev.sort((a, b) => a.minute - b.minute || (a.kind === "goal" ? -1 : 1));
   if (!ev.length) return (
     <div style={{ padding: "18px", textAlign: "center", color: "var(--ink-soft)", fontWeight: 600, fontSize: 13 }}>
-      Inga händelser ännu — 0–0.</div>
+      Inga händelser ännu - 0–0.</div>
   );
   let sh = 0, sa = 0;
   const side = (e, home) => {
@@ -2173,22 +2195,41 @@ function PoolResultBlock({ data, m }) {
 
 function WinChanceBlock({ m }){
   if(!m.home || !m.away) return null;
-  const o = window.VM.matchOdds(m.home, m.away);
+  // Prio: officiella odds från football-data, annars beräknad
+  let o, official = false;
+  if(m.officialOdds && m.officialOdds.H != null){
+    // Decimal-odds -> implied probability, normaliserad
+    const decH = m.officialOdds.H, decD = m.officialOdds.D, decA = m.officialOdds.A;
+    const pH = 1/decH, pD = 1/decD, pA = 1/decA;
+    const tot = pH + pD + pA;
+    const round = (x) => Math.round((x/tot) * 100);
+    let H = round(pH), D = round(pD), A = round(pA);
+    const delta = 100 - (H + D + A);
+    if(delta !== 0) H += delta;
+    o = { H, D, A, decH, decD, decA };
+    official = true;
+  } else {
+    o = window.VM.matchOdds(m.home, m.away);
+  }
   if(!o) return null;
+  const title = official ? "Officiella odds inför avspark" : "Vinstchans inför avspark";
   return (
-    <MiniBlock title="Vinstchans inför avspark">
+    <MiniBlock title={title}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 12, alignItems: "end" }}>
         <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--hot)" }}>
           <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>1 · Hemma</div>
           <div className="display" style={{ fontSize: 36, color: "var(--hot)", marginTop: 2, lineHeight: 1 }}>{o.H}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decH.toFixed(2)}</div>}
         </div>
         <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--ink-soft)" }}>
           <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>X · Lika</div>
           <div className="display" style={{ fontSize: 36, color: "var(--ink)", marginTop: 2, lineHeight: 1 }}>{o.D}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decD.toFixed(2)}</div>}
         </div>
         <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--cool)" }}>
           <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>2 · Borta</div>
           <div className="display" style={{ fontSize: 36, color: "var(--cool)", marginTop: 2, lineHeight: 1 }}>{o.A}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decA.toFixed(2)}</div>}
         </div>
       </div>
       <div style={{ display: "flex", gap: 2, height: 8, borderRadius: 4, overflow: "hidden", marginBottom: 12 }}>
@@ -2199,9 +2240,9 @@ function WinChanceBlock({ m }){
       <div style={{ fontSize: 11.5, color: "var(--ink-soft)", fontStyle: "italic", lineHeight: 1.5,
         paddingTop: 10, borderTop: "1px dashed var(--line)" }}>
         <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>Källa:</strong>{" "}
-        Beräknad utifrån lagens VM-historiska meriter (titlar, semifinaler, antal slutspel) +
-        en logistisk modell på ratingdifferensen + <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>+3p hemmaplansbonus</strong>.
-        Inte officiella odds.
+        {official
+          ? "Officiella decimal-odds från football-data.org, omräknade till sannolikhet och normaliserade."
+          : (<>Beräknad utifrån lagens VM-historiska meriter (titlar, semifinaler, antal slutspel) + en logistisk modell på ratingdifferensen + <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>+3p hemmaplansbonus</strong>. Visas tills officiella odds finns tillgängliga.</>)}
       </div>
     </MiniBlock>
   );
@@ -2212,7 +2253,7 @@ function VenueRefsBlock({ m }){
   let venue = m.venue;
   if((!venue || !venue.stadium) && m.id){
     const fifaMatch = m.id.match(/^(r32|r16|qf|sf|third|final)_(\d+)$/);
-    // Vi har inte FIFA-nummer per id i adapter — använd m.fifa om designen sätter det
+    // Vi har inte FIFA-nummer per id i adapter - använd m.fifa om designen sätter det
     if(m.fifa && window.VM.KO_VENUES[m.fifa]) venue = window.VM.KO_VENUES[m.fifa];
   }
   // Bonus: använd hemmalagets land som "venue" om vi inte har en stadion
@@ -2339,7 +2380,7 @@ Object.assign(window, { MatchDetail, Sheet, MiniBlock });
   <!-- ============ standings.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   standings.jsx — Ställning: pall + prispengar + spelardetalj
+   standings.jsx - Ställning: pall + prispengar + spelardetalj
    ============================================================ */
 
 function money(n) { return n.toLocaleString("sv-SE") + " kr"; }
@@ -2400,6 +2441,63 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
+/* StadiumHero - roterande Wikipedia-bilder av VM 2026:s 16 host-arenor */
+const WC_STADIUMS = [
+  "MetLife Stadium", "SoFi Stadium", "AT&T Stadium", "Mercedes-Benz Stadium",
+  "NRG Stadium", "Lincoln Financial Field", "Levi's Stadium", "Lumen Field",
+  "Arrowhead Stadium", "Gillette Stadium", "Hard Rock Stadium",
+  "Estadio Azteca", "Estadio Akron", "Estadio BBVA",
+  "BMO Field", "BC Place"
+];
+function StadiumHero(){
+  const [idx, setIdx] = React.useState(0);
+  React.useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % WC_STADIUMS.length), 4500);
+    return () => clearInterval(t);
+  }, []);
+  // Förladda alla bilder så vi har hela sviten cachead
+  const urls = WC_STADIUMS.map(name => useWikiPhoto(name));
+  const current = urls[idx];
+  const next = urls[(idx + 1) % urls.length];
+  const stadium = WC_STADIUMS[idx];
+  return (
+    <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
+      boxShadow: "var(--shadow-lift)", background: "var(--deep)", height: 200 }}>
+      {/* Bilden - fade in genom opacity-transition */}
+      {current && (
+        <div key={"img-"+idx} style={{ position: "absolute", inset: 0,
+          backgroundImage: `url(${current})`, backgroundSize: "cover", backgroundPosition: "center",
+          animation: "stadiumFade 4.5s ease-out both" }} />
+      )}
+      {/* Förladda nästa diskret */}
+      {next && <img src={next} alt="" style={{ display: "none" }} />}
+      {/* Gradient overlay för läsbarhet */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
+        background: "linear-gradient(to top, rgba(10,5,18,.86), rgba(10,5,18,.30) 55%, rgba(10,5,18,.55))" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
+      <div style={{ position: "absolute", left: 16, bottom: 14, right: 16, pointerEvents: "none" }}>
+        <div className="display" style={{ color: "#fff", fontSize: 24, fontWeight: "var(--display-weight)",
+          textShadow: "0 2px 12px rgba(0,0,0,.65)" }}>Hela världen, en pott</div>
+        <div style={{ color: "rgba(255,255,255,.92)", fontWeight: 700, fontSize: 12.5,
+          textShadow: "0 1px 4px rgba(0,0,0,.7)", marginTop: 2 }}>USA · Mexiko · Kanada · sommaren 2026</div>
+        <div style={{ color: "rgba(255,255,255,.78)", fontWeight: 600, fontSize: 11,
+          textShadow: "0 1px 3px rgba(0,0,0,.6)", marginTop: 6,
+          display: "inline-flex", alignItems: "center", gap: 5 }}>
+          📍 <span>{stadium}</span>
+        </div>
+      </div>
+      {/* dots */}
+      <div style={{ position: "absolute", top: 12, right: 14, display: "flex", gap: 4, pointerEvents: "none" }}>
+        {WC_STADIUMS.map((_, i) => (
+          <span key={i} style={{ width: 6, height: 6, borderRadius: "50%",
+            background: i === idx ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.32)",
+            transition: "background .3s" }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function StandingsView({ data, onOpenPlayer }) {
   const isPre = data.state === "pre";
   const s = data.standings;
@@ -2410,19 +2508,7 @@ function StandingsView({ data, onOpenPlayer }) {
 
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
-      {/* VM-banner med vimplar + bild-slot */}
-      <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
-        boxShadow: "var(--shadow-lift)", background: "var(--deep)" }}>
-        <div style={{ display: "block", width: "100%", height: "158px",
-          background: "radial-gradient(90% 90% at 80% 10%, color-mix(in oklab, var(--warm) 60%, var(--deep)), var(--deep) 70%), linear-gradient(135deg, var(--deep) 0%, color-mix(in oklab, var(--cool) 35%, var(--deep)) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
-          background: "linear-gradient(to top, rgba(18,8,24,.74), rgba(18,8,24,.04) 48%, rgba(18,8,24,.18))" }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
-        <div style={{ position: "absolute", left: 16, bottom: 12, right: 16, pointerEvents: "none" }}>
-          <div className="display" style={{ color: "#fff", fontSize: 21, fontWeight: "var(--display-weight)", textShadow: "0 2px 8px rgba(0,0,0,.45)" }}>Hela världen, en pott</div>
-          <div style={{ color: "rgba(255,255,255,.88)", fontWeight: 700, fontSize: 12, textShadow: "0 1px 4px rgba(0,0,0,.5)" }}>USA · Mexiko · Kanada — sommaren 2026</div>
-        </div>
-      </div>
+      <StadiumHero />
 
       {/* POTT + PALL kort */}
       <div style={{ position: "relative", background: "var(--paper)", border: "1px solid var(--line)",
@@ -2442,7 +2528,7 @@ function StandingsView({ data, onOpenPlayer }) {
           <div style={{ padding: "16px 18px 22px", textAlign: "center", position: "relative", zIndex: 2 }}>
             <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".12em", color: "var(--hot)", marginBottom: 14 }}>AVSPARK OM</div>
             <Countdown />
-            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll — vem tar första pallplatsen?</div>
+            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll - vem tar första pallplatsen?</div>
           </div>
         ) : (
           <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
@@ -2620,7 +2706,7 @@ Object.assign(window, { StandingsView, PlayerSheet, money });
   <!-- ============ groups.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   groups.jsx — Grupper A–L med live-tabeller
+   groups.jsx - Grupper A–L med live-tabeller
    ============================================================ */
 
 function GroupBadge({ letter, size = 46 }) {
@@ -2791,7 +2877,7 @@ Object.assign(window, { GroupsView, GroupBadge });
   <!-- ============ schedule.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   schedule.jsx — Spelschema per dag + slutspelsträd
+   schedule.jsx - Spelschema per dag + slutspelsträd
    ============================================================ */
 
 const BRACKET_CSS = `
@@ -2904,7 +2990,6 @@ function ScheduleView({ data, onOpenMatch }) {
 
   const filtered = data.allMatches.filter(m => {
     if (filter === "live") return m.status === "live";
-    if (filter === "tippas") return m.tippas;
     if (filter === "kommande") return m.status === "upcoming";
     if (filter === "spelade") return m.status === "played";
     return true;
@@ -2914,7 +2999,6 @@ function ScheduleView({ data, onOpenMatch }) {
 
   const liveCount = data.allMatches.filter(m => m.status === "live").length;
   const filters = [["alla", "Alla", data.allMatches.length], ["live", "Live", liveCount],
-    ["tippas", "Tippas", data.allMatches.filter(m => m.tippas).length],
     ["kommande", "Kommande", data.allMatches.filter(m => m.status === "upcoming").length],
     ["spelade", "Spelade", data.allMatches.filter(m => m.status === "played").length]];
 
@@ -2990,7 +3074,7 @@ Object.assign(window, { ScheduleView, Bracket });
   <!-- ============ bonus.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   bonus.jsx — Bonus-tips + Info (regler & poäng)
+   bonus.jsx - Bonus-tips + Info (regler & poäng)
    ============================================================ */
 
 const BONUS_DEFS = [
@@ -3058,7 +3142,7 @@ function BonusView({ data, onTeam }) {
       <SectionTitle kicker="Extrapoäng" title="Bonus-tips" right={<Chip>3–10p</Chip>} />
       <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 13, padding: "13px 15px", marginBottom: 16,
         fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)", boxShadow: "var(--shadow)", lineHeight: 1.45 }}>
-        Allas bonusval lades före avspark. Poängen räknas in när turneringen avgörs — och kan vända hela ligan på upploppet.
+        Allas bonusval lades före avspark. Poängen räknas in när turneringen avgörs - och kan vända hela ligan på upploppet.
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px,1fr))", gap: 14 }}>
         {BONUS_DEFS.map(def => <BonusCard key={def.key} def={def} players={data.players} onTeam={onTeam} />)}
@@ -3103,7 +3187,7 @@ function InfoView() {
         <h3 className="display" style={{ fontSize: 20, marginBottom: 11, fontWeight: "var(--display-weight)" }}>Poäng per match</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
           <RuleRow pts={2} title="Rätt utgång" desc="2 poäng om du har gissat rätt vinnare (eller oavgjort)." color="var(--warm)" />
-          <RuleRow pts={3} title="Exakt resultat — extra" desc="3 poäng EXTRA om du också gissat rätt slutsiffror. Ex: Brasilien–Frankrike, du tippar 1–2 och det blir 1–2 = 2 + 3 = 5 poäng totalt." color="var(--gold)" />
+          <RuleRow pts={3} title="Exakt resultat - extra" desc="3 poäng EXTRA om du också gissat rätt slutsiffror. Ex: Brasilien–Frankrike, du tippar 1–2 och det blir 1–2 = 2 + 3 = 5 poäng totalt." color="var(--gold)" />
           <RuleRow pts={1} title="Annars" desc="Fel utgång ger ändå en tröstpoäng per tippad match." color="var(--cool)" />
         </div>
         <div style={{ marginTop: 12, padding: "12px 15px", background: "var(--paper)",
@@ -3157,7 +3241,7 @@ Object.assign(window, { BonusView, InfoView, BONUS_DEFS });
   <!-- ============ app.jsx ============ -->
   <script type="text/babel">
 /* ============================================================
-   app.jsx — skal: navigering, växel pre/mid, sheets, Tweaks
+   app.jsx - skal: navigering, växel pre/mid, sheets, Tweaks
    ============================================================ */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{

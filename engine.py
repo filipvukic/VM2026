@@ -409,6 +409,7 @@ def compute(tips, matches, scorers, standings=None):
                 "subs": extract_substitutions(m),
                 "venue": extract_venue(m),
                 "referees": extract_referees(m),
+                "odds": extract_odds(m),
                 "tips": [],
             })
             row["tips"].append({"name": name, "tip": tip, "points": pts})
@@ -517,6 +518,23 @@ def extract_substitutions(m):
     return out
 
 
+def extract_odds(m):
+    """football-data v4 har 'odds' med {homeWin, draw, awayWin} i vissa svar.
+    Returnerar {H, D, A} som flyttal, eller None om saknas."""
+    o = m.get("odds")
+    if not isinstance(o, dict):
+        return None
+    h = o.get("homeWin") or o.get("home_win") or o.get("home")
+    d = o.get("draw")
+    a = o.get("awayWin") or o.get("away_win") or o.get("away")
+    if h is None or d is None or a is None:
+        return None
+    try:
+        return {"H": float(h), "D": float(d), "A": float(a)}
+    except (TypeError, ValueError):
+        return None
+
+
 def extract_venue(m):
     """Vissa football-data v4-svar har 'venue' (sträng eller dict)."""
     v = m.get("venue")
@@ -579,6 +597,7 @@ def build_fixtures(matches):
         "subs": extract_substitutions(m),
         "venue": extract_venue(m),
         "referees": extract_referees(m),
+        "odds": extract_odds(m),
     } for m in matches]
 
 
