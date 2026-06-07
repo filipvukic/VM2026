@@ -226,18 +226,39 @@
   // Grupp -> primär värdarena (för matcher där engine saknar venue)
   // Baserat på FIFA:s publicerade gruppvis-fördelning för VM 2026.
   const GROUP_HOST = {
-    A: { stadium:"Estadio Azteca",                city:"Mexico City" },
-    B: { stadium:"BMO Field",                     city:"Toronto" },
-    C: { stadium:"BC Place",                      city:"Vancouver" },
-    D: { stadium:"Gillette Stadium",              city:"Boston" },
-    E: { stadium:"Arrowhead Stadium",             city:"Kansas City" },
-    F: { stadium:"Mercedes-Benz Stadium",         city:"Atlanta" },
-    G: { stadium:"MetLife Stadium",               city:"New York/New Jersey" },
-    H: { stadium:"Hard Rock Stadium",             city:"Miami" },
-    I: { stadium:"AT&T Stadium",                  city:"Dallas" },
-    J: { stadium:"SoFi Stadium",                  city:"Los Angeles" },
-    K: { stadium:"NRG Stadium",                   city:"Houston" },
-    L: { stadium:"Estadio BBVA",                  city:"Monterrey" }
+    A: { stadium:"Estadio Azteca",                city:"Mexico City",          country:"Mexiko",  cc:"MEX" },
+    B: { stadium:"BMO Field",                     city:"Toronto",              country:"Kanada",  cc:"CAN" },
+    C: { stadium:"BC Place",                      city:"Vancouver",            country:"Kanada",  cc:"CAN" },
+    D: { stadium:"Gillette Stadium",              city:"Boston",               country:"USA",     cc:"USA" },
+    E: { stadium:"Arrowhead Stadium",             city:"Kansas City",          country:"USA",     cc:"USA" },
+    F: { stadium:"Mercedes-Benz Stadium",         city:"Atlanta",              country:"USA",     cc:"USA" },
+    G: { stadium:"MetLife Stadium",               city:"New York/New Jersey",  country:"USA",     cc:"USA" },
+    H: { stadium:"Hard Rock Stadium",             city:"Miami",                country:"USA",     cc:"USA" },
+    I: { stadium:"AT&T Stadium",                  city:"Dallas",               country:"USA",     cc:"USA" },
+    J: { stadium:"SoFi Stadium",                  city:"Los Angeles",          country:"USA",     cc:"USA" },
+    K: { stadium:"NRG Stadium",                   city:"Houston",              country:"USA",     cc:"USA" },
+    L: { stadium:"Estadio BBVA",                  city:"Monterrey",            country:"Mexiko",  cc:"MEX" }
+  };
+
+  // Stadium-namn -> land/landskod (för matcher där engine.py extraherat venue
+  // direkt från API:et men inte gett oss land). Används av MatchDetail-headern.
+  const STADIUM_COUNTRY = {
+    "Estadio Azteca":          { country:"Mexiko", cc:"MEX" },
+    "Estadio Akron":           { country:"Mexiko", cc:"MEX" },
+    "Estadio BBVA":            { country:"Mexiko", cc:"MEX" },
+    "BMO Field":               { country:"Kanada", cc:"CAN" },
+    "BC Place":                { country:"Kanada", cc:"CAN" },
+    "MetLife Stadium":         { country:"USA",    cc:"USA" },
+    "SoFi Stadium":            { country:"USA",    cc:"USA" },
+    "AT&T Stadium":            { country:"USA",    cc:"USA" },
+    "Mercedes-Benz Stadium":   { country:"USA",    cc:"USA" },
+    "NRG Stadium":             { country:"USA",    cc:"USA" },
+    "Lincoln Financial Field": { country:"USA",    cc:"USA" },
+    "Levi's Stadium":          { country:"USA",    cc:"USA" },
+    "Lumen Field":             { country:"USA",    cc:"USA" },
+    "Arrowhead Stadium":       { country:"USA",    cc:"USA" },
+    "Gillette Stadium":        { country:"USA",    cc:"USA" },
+    "Hard Rock Stadium":       { country:"USA",    cc:"USA" }
   };
 
   const PLAYER_COLORS = {
@@ -425,9 +446,16 @@
         status: finished ? "played" : (live ? "live" : "upcoming"),
         winner, pen: null,
         minute: (live && (f.minute != null)) ? f.minute : (live ? null : undefined),
-        venue: (f.venue && f.venue.stadium) ? f.venue
-               : (f.group && GROUP_HOST[f.group]) ? GROUP_HOST[f.group]
-               : null,
+        venue: (function(){
+          let v = (f.venue && f.venue.stadium) ? Object.assign({}, f.venue)
+                : (f.group && GROUP_HOST[f.group]) ? Object.assign({}, GROUP_HOST[f.group])
+                : null;
+          if(v && v.stadium && !v.country){
+            const ext = STADIUM_COUNTRY[v.stadium];
+            if(ext){ v.country = ext.country; v.cc = ext.cc; }
+          }
+          return v;
+        })(),
         officialOdds: f.odds || null,
         referees: f.referees || [],
         tippas,
@@ -1876,9 +1904,9 @@ function resolveWikiCandidates(name){
   const key = String(name).toLowerCase().trim();
   return WIKI_TITLE_MAP[key] || [name];
 }
-function useWikiPhoto(name){
+function useWikiPhoto(name, size = 400){
   const candidates = React.useMemo(() => resolveWikiCandidates(name), [name]);
-  const cacheKey = candidates.join("|");
+  const cacheKey = candidates.join("|") + "@" + size;
   const [url, setUrl] = React.useState(() => (cacheKey in _wikiCache) ? _wikiCache[cacheKey] : null);
   React.useEffect(() => {
     if(!candidates.length) return;
@@ -1891,7 +1919,7 @@ function useWikiPhoto(name){
       if(i >= candidates.length) return null;
       try {
         const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
-                  + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(candidates[i]);
+                  + "&pithumbsize=" + size + "&redirects=1&titles=" + encodeURIComponent(candidates[i]);
         const res = await fetch(api);
         if(!res.ok) return tryNext(i + 1);
         const json = await res.json();
@@ -1977,12 +2005,15 @@ function Bunting({ n = 18, height = 16, style }) {
    match.jsx - Matchdetalj med statistik (före / under / efter)
    ============================================================ */
 
-function Sheet({ onClose, accent, children, header }) {
+function Sheet({ onClose, accent, children, header, zIndex = 70, dimBackdrop = true }) {
   // Centrerad modal med scale-in. Mobil: hög, smal padding. Desktop: max 620px.
+  // zIndex kan höjas när flera sheets är öppna (team -> match staplas på varandra).
+  // dimBackdrop=false när det redan ligger ett sheet under, så vi inte dubbel-mörklägger.
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 70,
-      background: "rgba(10,6,16,.62)", backdropFilter: "blur(6px)",
-      WebkitBackdropFilter: "blur(6px)",
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex,
+      background: dimBackdrop ? "rgba(10,6,16,.62)" : "rgba(10,6,16,.25)",
+      backdropFilter: dimBackdrop ? "blur(6px)" : "blur(2px)",
+      WebkitBackdropFilter: dimBackdrop ? "blur(6px)" : "blur(2px)",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: "16px", overflow: "auto", animation: "sheetFade .18s both" }}>
       <div onClick={e => e.stopPropagation()} style={{ background: "var(--bg)",
@@ -2272,56 +2303,7 @@ function WinChanceBlock({ m }){
   );
 }
 
-function VenueRefsBlock({ m }){
-  // Plocka venue från KO_VENUES för KO-matcher om engine saknar venue
-  let venue = m.venue;
-  if((!venue || !venue.stadium) && m.id){
-    const fifaMatch = m.id.match(/^(r32|r16|qf|sf|third|final)_(\d+)$/);
-    // Vi har inte FIFA-nummer per id i adapter - använd m.fifa om designen sätter det
-    if(m.fifa && window.VM.KO_VENUES[m.fifa]) venue = window.VM.KO_VENUES[m.fifa];
-  }
-  // Bonus: använd hemmalagets land som "venue" om vi inte har en stadion
-  const hasVenue = !!(venue && venue.stadium);
-  const refs = (m.referees || []).filter(r => r && r.name);
-  if(!hasVenue && refs.length === 0) return null;
-  const main = refs.find(r => /main|head|huvuddomare|referee/i.test(r.role||"")) || refs[0];
-  const others = refs.filter(r => r !== main);
-  return (
-    <MiniBlock title="Plats & funktionärer">
-      <div style={{ display: "grid", gridTemplateColumns: hasVenue && refs.length > 0 ? "1fr 1fr" : "1fr", gap: 16 }}>
-        {hasVenue && (
-          <div>
-            <div style={{ fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".08em", textTransform: "uppercase" }}>Arena</div>
-            <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--ink)", display: "flex", alignItems: "center", gap: 6 }}>
-              <span style={{ fontSize: 13 }}>📍</span>
-              <span>{venue.stadium}</span>
-            </div>
-            {venue.city && (
-              <div style={{ marginTop: 2, fontSize: 12.5, fontWeight: 600, color: "var(--ink-soft)" }}>{venue.city}</div>
-            )}
-          </div>
-        )}
-        {refs.length > 0 && (
-          <div>
-            <div style={{ fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".08em", textTransform: "uppercase" }}>Domare</div>
-            {main && (
-              <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--ink)" }}>
-                {main.name}{main.nationality ? <span style={{ color: "var(--ink-soft)", fontWeight: 500, marginLeft: 4 }}>({main.nationality})</span> : null}
-              </div>
-            )}
-            {others.length > 0 && (
-              <div style={{ marginTop: 4, fontSize: 11.5, fontWeight: 500, color: "var(--ink-soft)" }}>
-                + {others.map(r => r.name).join(", ")}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </MiniBlock>
-  );
-}
-
-function MatchDetail({ data, match, onClose, onTeam }) {
+function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
   const m = match;
   const live = m.status === "live", played = m.status === "played", tbd = !m.home || !m.away;
   const win = m.winner;
@@ -2344,13 +2326,30 @@ function MatchDetail({ data, match, onClose, onTeam }) {
         <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)", marginTop: 3 }}>
           {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}
         </div>
-        {m.venue && m.venue.stadium && (
-          <div style={{ marginTop: 6, display: "flex", justifyContent: "center", alignItems: "center", gap: 6,
-            fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)" }}>
-            <span>📍</span>
-            <span>{m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}</span>
-          </div>
-        )}
+        {m.venue && m.venue.stadium && (() => {
+          const v = m.venue;
+          const flag = v.cc === "USA" ? "🇺🇸" : v.cc === "MEX" ? "🇲🇽" : v.cc === "CAN" ? "🇨🇦" : "📍";
+          return (
+            <div style={{ marginTop: 8, display: "inline-flex", alignItems: "center", gap: 7,
+              padding: "5px 11px", borderRadius: 999, background: "rgba(255,255,255,.14)",
+              border: "1px solid rgba(255,255,255,.18)",
+              fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.95)" }}>
+              <span style={{ fontSize: 13 }}>{flag}</span>
+              <span style={{ fontWeight: 700 }}>{v.stadium}</span>
+              {v.city && <span style={{ opacity: .85 }}>· {v.city}</span>}
+              {v.country && <span style={{ opacity: .7 }}>· {v.country}</span>}
+            </div>
+          );
+        })()}
+        {m.referees && m.referees.length > 0 && (() => {
+          const main = m.referees.find(r => /main|head|huvuddomare|referee/i.test(r.role || "")) || m.referees[0];
+          if(!main || !main.name) return null;
+          return (
+            <div style={{ marginTop: 6, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>
+              Domare · {main.name}{main.nationality ? ` (${main.nationality})` : ""}
+            </div>
+          );
+        })()}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         {teamCol(m.home, m.fromA)}
@@ -2374,11 +2373,10 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   );
 
   return (
-    <Sheet onClose={onClose} header={header}>
+    <Sheet onClose={onClose} header={header} zIndex={zIndex} dimBackdrop={dimBackdrop}>
       <div style={{ paddingTop: 16 }}>
         {/* Vinstchans FÖRST inför avspark */}
         {!played && !live && !tbd && <WinChanceBlock m={m} />}
-        {!tbd && <VenueRefsBlock m={m} />}
         {(played || live) && !tbd && (
           <MiniBlock title={live ? "Matchförlopp · pågår" : "Matchförlopp"} pad={false}><Timeline m={m} /></MiniBlock>
         )}
@@ -2465,24 +2463,17 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
-/* StadiumHero - diagonalt fragmenterat collage av VM 2026:s 16 host-arenor.
-   Skärvor (parallellogram via clip-path) ligger sida vid sida, var och en
-   cyklar genom egen pool. Horisontella accent-band bryter mönstret. */
-const WC_STADIUMS = [
-  "MetLife Stadium", "SoFi Stadium", "AT&T Stadium", "Mercedes-Benz Stadium",
-  "NRG Stadium", "Lincoln Financial Field", "Levi's Stadium", "Lumen Field",
-  "Arrowhead Stadium", "Gillette Stadium", "Hard Rock Stadium",
-  "Estadio Azteca", "Estadio Akron", "Estadio BBVA",
-  "BMO Field", "BC Place"
+/* StadiumHero - 4 ikoniska arenor (1 Kanada, 1 Mexiko, 2 USA) i diagonala
+   skivor. Hög upplösning från Wikimedia (1600px). */
+const HERO_STADIUMS = [
+  { wiki: "MetLife Stadium",   country: "USA",    cc: "USA", city: "New York/New Jersey", note: "VM-final 2026" },
+  { wiki: "SoFi Stadium",      country: "USA",    cc: "USA", city: "Los Angeles",          note: "16 städer" },
+  { wiki: "Estadio Azteca",    country: "Mexiko", cc: "MEX", city: "Mexico City",          note: "Invigningsmatch" },
+  { wiki: "BC Place",          country: "Kanada", cc: "CAN", city: "Vancouver",            note: "Group C" }
 ];
 
-function HeroShard({ pool, offset, clip, delay, kenBurns, tone, posX, posY, interval = 5200 }){
-  const [idx, setIdx] = React.useState(offset % pool.length);
-  React.useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % pool.length), interval);
-    return () => clearInterval(t);
-  }, [pool.length, interval]);
-  const url = useWikiPhoto(pool[idx]);
+function HeroSlice({ stadium, clip, delay, kenBurns, tone, posX, posY }){
+  const url = useWikiPhoto(stadium.wiki, 1600);
   return (
     <div style={{
       position: "absolute", inset: 0,
@@ -2491,19 +2482,18 @@ function HeroShard({ pool, offset, clip, delay, kenBurns, tone, posX, posY, inte
       overflow: "hidden"
     }}>
       {url && (
-        <div key={"s-"+clip.length+"-"+idx} style={{
+        <div style={{
           position: "absolute", inset: "-6%",
           backgroundImage: `url(${url})`,
           backgroundSize: "cover",
           backgroundPosition: `${posX || 50}% ${posY || 45}%`,
-          animation: `${kenBurns ? "shardKenBurns" : "shardFade"} ${interval/1000}s ease-out both`,
+          animation: `${kenBurns ? "shardKenBurns" : "shardFade"} 14s ease-in-out both infinite alternate`,
           animationDelay: (delay || 0) + "ms"
         }} />
       )}
-      {/* tonad färgvask för att skärvan ska smälta in i VM-paletten */}
       <div style={{
         position: "absolute", inset: 0,
-        background: `linear-gradient(${135 + (offset * 13) % 60}deg, ${tone || "rgba(124,58,237,.18)"}, transparent 65%)`,
+        background: `linear-gradient(155deg, ${tone || "rgba(124,58,237,.22)"}, transparent 70%)`,
         mixBlendMode: "overlay"
       }} />
     </div>
@@ -2511,29 +2501,13 @@ function HeroShard({ pool, offset, clip, delay, kenBurns, tone, posX, posY, inte
 }
 
 function StadiumHero(){
-  // 8 disjunkta pooler -> 8 unika arenor visas samtidigt
-  const chunks = React.useMemo(() => {
-    const n = 8;
-    const out = Array.from({length: n}, () => []);
-    WC_STADIUMS.forEach((s, i) => out[i % n].push(s));
-    return out;
-  }, []);
-
-  // Diagonala skärvor (clip-path-polygoner). Lutning ~-15% top till bot.
-  // Vertikala parallellogrammer + 2 horisontella accent-band + 1 trekantig kil.
-  const shards = [
-    // huvudskärvor (vertikala parallellogram, sluttar åt vänster)
-    { clip:"polygon(0% 0%, 24% 0%, 16% 100%, 0% 100%)",         kenBurns:true,  tone:"rgba(124,58,237,.28)",  posX:55, posY:40 },
-    { clip:"polygon(24.6% 0%, 48% 0%, 40% 100%, 16.6% 100%)",  kenBurns:false, tone:"rgba(8,145,178,.22)",   posX:50, posY:50 },
-    { clip:"polygon(48.6% 0%, 72% 0%, 64% 100%, 40.6% 100%)",  kenBurns:true,  tone:"rgba(220,38,38,.28)",   posX:60, posY:42 },
-    { clip:"polygon(72.6% 0%, 100% 0%, 100% 100%, 64.6% 100%)",kenBurns:false, tone:"rgba(245,158,11,.26)",  posX:45, posY:55 },
-    // horisontella accent-band (smala diagonaler ovanpå huvudskärvor)
-    { clip:"polygon(0% 38%, 100% 23%, 100% 33%, 0% 48%)",       kenBurns:false, tone:"rgba(255,255,255,.10)", posX:50, posY:60, interval:6400 },
-    { clip:"polygon(0% 66%, 100% 56%, 100% 64%, 0% 74%)",       kenBurns:false, tone:"rgba(255,255,255,.10)", posX:50, posY:30, interval:7000 },
-    // liten triangulär kil (extra fragmentering nere till vänster)
-    { clip:"polygon(0% 78%, 22% 82%, 8% 100%, 0% 100%)",        kenBurns:true,  tone:"rgba(124,58,237,.32)",  posX:50, posY:50, interval:5800 },
-    // liten kil uppe till höger
-    { clip:"polygon(82% 0%, 100% 0%, 100% 22%, 76% 18%)",       kenBurns:true,  tone:"rgba(220,38,38,.30)",   posX:50, posY:50, interval:5400 },
+  // Fyra diagonala skivor som tillsammans täcker rektangeln.
+  // Lutning ~-15 % från topp till bot.
+  const slices = [
+    { stadium: HERO_STADIUMS[0], clip: "polygon(0% 0%, 28% 0%, 13% 100%, 0% 100%)",     kenBurns:true,  tone:"rgba(220,38,38,.28)",  posX:55, posY:38 }, // MetLife
+    { stadium: HERO_STADIUMS[1], clip: "polygon(28.6% 0%, 53% 0%, 38% 100%, 13.6% 100%)", kenBurns:false, tone:"rgba(245,158,11,.26)", posX:50, posY:55 }, // SoFi
+    { stadium: HERO_STADIUMS[2], clip: "polygon(53.6% 0%, 78% 0%, 63% 100%, 38.6% 100%)", kenBurns:true,  tone:"rgba(8,145,178,.24)",  posX:60, posY:45 }, // Azteca
+    { stadium: HERO_STADIUMS[3], clip: "polygon(78.6% 0%, 100% 0%, 100% 100%, 63.6% 100%)", kenBurns:false, tone:"rgba(124,58,237,.30)", posX:45, posY:55 }  // BC Place
   ];
 
   return (
@@ -2542,30 +2516,36 @@ function StadiumHero(){
       marginBottom: 16, boxShadow: "var(--shadow-lift)", background: "var(--deep)",
       height: 380, minHeight: 320
     }} className="stadium-hero">
-      {shards.map((sh, i) => (
-        <HeroShard
-          key={i}
-          pool={chunks[i % chunks.length]}
-          offset={i + 1}
-          clip={sh.clip}
-          tone={sh.tone}
-          kenBurns={sh.kenBurns}
-          posX={sh.posX} posY={sh.posY}
-          delay={i * 220}
-          interval={sh.interval || 5200}
-        />
+      {slices.map((sl, i) => (
+        <HeroSlice key={i} stadium={sl.stadium} clip={sl.clip} tone={sl.tone}
+          kenBurns={sl.kenBurns} posX={sl.posX} posY={sl.posY} delay={i * 600} />
       ))}
 
-      {/* tunna ljusspröjsar längs skärv-kanterna för glas-känsla */}
+      {/* vita ljusspröjsar längs slice-kanterna ger glassplittrings-känsla */}
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{
         position: "absolute", inset: 0, pointerEvents: "none", mixBlendMode: "screen"
       }}>
-        <line x1="24" y1="0" x2="16" y2="100" stroke="rgba(255,255,255,.18)" strokeWidth=".18" />
-        <line x1="48" y1="0" x2="40" y2="100" stroke="rgba(255,255,255,.16)" strokeWidth=".18" />
-        <line x1="72" y1="0" x2="64" y2="100" stroke="rgba(255,255,255,.18)" strokeWidth=".18" />
-        <line x1="0"  y1="38" x2="100" y2="23" stroke="rgba(255,255,255,.10)" strokeWidth=".12" />
-        <line x1="0"  y1="66" x2="100" y2="56" stroke="rgba(255,255,255,.10)" strokeWidth=".12" />
+        <line x1="28" y1="0" x2="13" y2="100" stroke="rgba(255,255,255,.22)" strokeWidth=".22" />
+        <line x1="53" y1="0" x2="38" y2="100" stroke="rgba(255,255,255,.20)" strokeWidth=".22" />
+        <line x1="78" y1="0" x2="63" y2="100" stroke="rgba(255,255,255,.22)" strokeWidth=".22" />
       </svg>
+
+      {/* Flagga + arena-namn etiketter över varje skiva */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+        {[
+          { i:0, top:14, leftPct:6,  s:slices[0] },
+          { i:1, top:14, leftPct:31, s:slices[1] },
+          { i:2, top:14, leftPct:55, s:slices[2] },
+          { i:3, top:14, leftPct:80, s:slices[3] }
+        ].map(({ i, top, leftPct, s }) => {
+          const stad = s.stadium;
+          const flag = stad.cc === "USA" ? "🇺🇸" : stad.cc === "MEX" ? "🇲🇽" : "🇨🇦";
+          return (
+            <div key={i} style={{ position: "absolute", top, left: leftPct + "%",
+              fontSize: 18, lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.65)" }}>{flag}</div>
+          );
+        })}
+      </div>
 
       {/* botten-gradient + radial spotlight för läsbar text */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
@@ -2617,46 +2597,108 @@ function StandingsView({ data, onOpenPlayer }) {
       {/* POTT + PALL kort */}
       <div style={{ position: "relative", background: "var(--paper)", border: "1px solid var(--line)",
         borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-lift)", overflow: "hidden", marginBottom: 20 }}>
+        {/* glow-mesh i bakgrunden */}
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: .8,
+          background: "radial-gradient(70% 110% at 100% 0%, color-mix(in oklab, var(--hot) 18%, transparent), transparent 55%), radial-gradient(70% 110% at 0% 100%, color-mix(in oklab, var(--cool) 16%, transparent), transparent 55%)" }} />
         <div style={{ height: 4, background: "var(--grad)" }} />
         {!isPre && <Confetti count={36} />}
-        {/* pott-rad */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 18px 6px", position: "relative", zIndex: 2 }}>
-          <div>
-            <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "var(--ink-soft)" }}>SAMMANLAGD POTT</div>
-            <div className="num display" style={{ fontSize: 30, color: "var(--ink)", whiteSpace: "nowrap", fontWeight: "var(--display-weight)" }}>{money(pot)}</div>
-          </div>
-          <Chip bg="var(--bg2)">9 spelare · 300 kr/st</Chip>
-        </div>
 
         {isPre ? (
-          <div style={{ padding: "16px 18px 22px", textAlign: "center", position: "relative", zIndex: 2 }}>
-            <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".12em", color: "var(--hot)", marginBottom: 14 }}>AVSPARK OM</div>
-            <Countdown />
-            <div style={{ marginTop: 16, fontWeight: 600, fontSize: 13.5, color: "var(--ink-soft)" }}>Alla står på noll - vem tar första pallplatsen?</div>
+          <div style={{ padding: "20px 20px 22px", position: "relative", zIndex: 2 }}>
+            {/* topp: pott + 9 spelare som chips med rund avatar-stack */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 18 }}>
+              <div>
+                <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".16em", color: "var(--ink-soft)" }}>POTTEN</div>
+                <div className="num display" style={{ fontSize: 38, color: "var(--ink)", whiteSpace: "nowrap", fontWeight: "var(--display-weight)", lineHeight: 1, marginTop: 4 }}>
+                  {money(pot)}
+                </div>
+                <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>
+                  9 spelare · 300 kr per skalle
+                </div>
+              </div>
+              {/* avatar-stack */}
+              <div style={{ display: "flex", marginRight: 6 }}>
+                {s.slice(0, 6).map((p, i) => (
+                  <div key={p.id} style={{
+                    width: 32, height: 32, borderRadius: "50%",
+                    border: "2px solid var(--paper)",
+                    background: p.color,
+                    marginLeft: i === 0 ? 0 : -10,
+                    color: "#fff", fontWeight: 800, fontSize: 12,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    boxShadow: "0 2px 6px rgba(0,0,0,.18)"
+                  }}>{p.name.charAt(0)}</div>
+                ))}
+                {s.length > 6 && (
+                  <div style={{
+                    width: 32, height: 32, borderRadius: "50%",
+                    border: "2px solid var(--paper)",
+                    background: "var(--bg2)",
+                    marginLeft: -10,
+                    color: "var(--ink)", fontWeight: 800, fontSize: 11,
+                    display: "flex", alignItems: "center", justifyContent: "center"
+                  }}>+{s.length - 6}</div>
+                )}
+              </div>
+            </div>
+
+            {/* countdown card med inramad VM-glow */}
+            <div style={{
+              position: "relative",
+              borderRadius: 16, padding: "16px 14px 18px", textAlign: "center",
+              background: "linear-gradient(180deg, color-mix(in oklab, var(--hot) 6%, var(--bg)), var(--bg))",
+              border: "1px solid color-mix(in oklab, var(--hot) 30%, var(--line))",
+              overflow: "hidden"
+            }}>
+              <div style={{ position: "absolute", top: -1, left: 0, right: 0, height: 2,
+                background: "var(--grad)", opacity: .8 }} />
+              <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".16em",
+                color: "var(--hot)", marginBottom: 12, display: "inline-flex", alignItems: "center", gap: 7 }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hot)", animation: "blink 1.4s infinite" }} />
+                AVSPARK OM
+              </div>
+              <Countdown />
+            </div>
+
+            {/* Prizes-rad inom pott-kortet (ersätter den separata raden under) */}
+            <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+              {[0, 1, 2].map(i => {
+                const tint = ["var(--gold)", "#AEB4BE", "#C77F49"][i];
+                const labels = ["VINNARE", "SILVER", "BRONS"];
+                return (
+                  <div key={i} style={{
+                    flex: 1, borderRadius: 12, padding: "10px 8px 9px",
+                    background: `linear-gradient(160deg, color-mix(in oklab, ${tint} 15%, var(--paper)), var(--paper))`,
+                    border: "1px solid " + `color-mix(in oklab, ${tint} 40%, var(--line))`,
+                    boxShadow: "var(--shadow)",
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: 2
+                  }}>
+                    <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".12em",
+                      color: `color-mix(in oklab, ${tint} 60%, var(--ink-soft))` }}>{labels[i]}</div>
+                    <div className="num display" style={{ fontSize: 20, color: "var(--ink)",
+                      fontWeight: "var(--display-weight)", lineHeight: 1.05 }}>{money(prizes[i])}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ) : (
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
-            <PodiumStep p={top3[1]} place={2} prize={prizes[1]} isPre={isPre} h={70} />
-            <PodiumStep p={top3[0]} place={1} prize={prizes[0]} isPre={isPre} h={96} />
-            <PodiumStep p={top3[2]} place={3} prize={prizes[2]} isPre={isPre} h={54} />
-          </div>
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 18px 6px", position: "relative", zIndex: 2 }}>
+              <div>
+                <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "var(--ink-soft)" }}>SAMMANLAGD POTT</div>
+                <div className="num display" style={{ fontSize: 30, color: "var(--ink)", whiteSpace: "nowrap", fontWeight: "var(--display-weight)" }}>{money(pot)}</div>
+              </div>
+              <Chip bg="var(--bg2)">9 spelare · 300 kr/st</Chip>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
+              <PodiumStep p={top3[1]} place={2} prize={prizes[1]} isPre={isPre} h={70} />
+              <PodiumStep p={top3[0]} place={1} prize={prizes[0]} isPre={isPre} h={96} />
+              <PodiumStep p={top3[2]} place={3} prize={prizes[2]} isPre={isPre} h={54} />
+            </div>
+          </>
         )}
       </div>
-
-      {isPre && (
-        <div style={{ display: "flex", gap: 9, marginBottom: 20 }}>
-          {[0, 1, 2].map(i => {
-            const tint = ["var(--gold)", "#AEB4BE", "#C77F49"][i];
-            return (
-              <div key={i} style={{ flex: 1, background: "var(--paper)", borderRadius: 12, padding: "12px 10px", textAlign: "center",
-                border: "1px solid " + `color-mix(in oklab, ${tint} 40%, var(--line))`, boxShadow: "var(--shadow)" }}>
-                <div className="num display" style={{ fontSize: 22, color: `color-mix(in oklab, ${tint} 70%, #000 10%)`, fontWeight: "var(--display-weight)" }}>{i + 1}:a</div>
-                <div className="num" style={{ fontWeight: 800, fontSize: 14.5, marginTop: 2 }}>{money(prizes[i])}</div>
-              </div>
-            );
-          })}
-        </div>
-      )}
 
       <SectionTitle kicker={isPre ? "Innan avspark" : "Tabell"} title="Hela ligan"
         right={<Chip color={isPre ? "var(--ink-soft)" : "#fff"} bg={isPre ? "var(--bg2)" : "var(--hot)"}>{isPre ? "Tippa nu" : "Live"}</Chip>} />
@@ -2701,7 +2743,7 @@ function StandingsView({ data, onOpenPlayer }) {
 }
 
 /* ---------- SPELARDETALJ ---------- */
-function PlayerSheet({ data, playerId, onClose, onOpenMatch }) {
+function PlayerSheet({ data, playerId, onClose, onOpenMatch, zIndex, dimBackdrop }) {
   const p = data.players.find(x => x.id === playerId);
   const st = data.standings.find(x => x.id === playerId);
   const isPre = data.state === "pre";
@@ -2747,7 +2789,7 @@ function PlayerSheet({ data, playerId, onClose, onOpenMatch }) {
     </div>
   );
   return (
-    <Sheet onClose={onClose} header={header}>
+    <Sheet onClose={onClose} header={header} zIndex={zIndex} dimBackdrop={dimBackdrop}>
       <div style={{ padding: "14px 14px 30px" }}>
         {tab === "tips" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
@@ -3467,7 +3509,7 @@ function TeamHistoryBlock({ code }){
   );
 }
 
-function TeamSheet({ data, code, onClose, onOpenMatch }) {
+function TeamSheet({ data, code, onClose, onOpenMatch, zIndex, dimBackdrop }) {
   const t = window.VM.TEAMS[code];
   if (!t) return null;
   const isPre = data.state === "pre";
@@ -3491,7 +3533,7 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
     </div>
   );
   return (
-    <Sheet onClose={onClose} header={header}>
+    <Sheet onClose={onClose} header={header} zIndex={zIndex} dimBackdrop={dimBackdrop}>
       <div style={{ padding: "16px 0 28px" }}>
         <TeamStatsBlock code={code} data={data} />
         <TeamHistoryBlock code={code} />
@@ -3535,9 +3577,23 @@ function App() {
   const data = React.useMemo(() => window.VM.build(), [tick]);
   React.useEffect(() => { window.scrollTo({ top: 0 }); }, [view]);
 
-  const openMatch = (m) => { setTeam(null); setPlayer(null); setMatch(m); };
-  const openTeam  = (code) => { setMatch(null); setPlayer(null); setTeam(code); };
-  const openPlayer = (id) => { setMatch(null); setTeam(null); setPlayer(id); };
+  // Modaler kan staplas (team -> match -> team). openOrder håller koll på
+  // vilken som är topp. Stäng en modal -> den tas ur stacken och den under
+  // blir aktiv igen utan att också stängas.
+  const [openOrder, setOpenOrder] = React.useState([]);
+  const bringToTop = (kind) =>
+    setOpenOrder(o => [...o.filter(x => x !== kind), kind]);
+  const removeFromStack = (kind) =>
+    setOpenOrder(o => o.filter(x => x !== kind));
+
+  const openMatch  = (m)    => { setMatch(m);    bringToTop("match"); };
+  const openTeam   = (code) => { setTeam(code);  bringToTop("team"); };
+  const openPlayer = (id)   => { setPlayer(id);  bringToTop("player"); };
+  const closeMatch  = () => { setMatch(null);  removeFromStack("match"); };
+  const closeTeam   = () => { setTeam(null);   removeFromStack("team"); };
+  const closePlayer = () => { setPlayer(null); removeFromStack("player"); };
+  const zOf = (kind) => 70 + openOrder.indexOf(kind) * 10;
+  const isTop = (kind) => openOrder[openOrder.length - 1] === kind;
 
   return (
     <div style={{ minHeight: "100vh" }}>
@@ -3592,9 +3648,9 @@ function App() {
         </div>
       </nav>
 
-      {player && <PlayerSheet data={data} playerId={player} onClose={() => setPlayer(null)} onOpenMatch={openMatch} />}
-      {team && <TeamSheet data={data} code={team} onClose={() => setTeam(null)} onOpenMatch={openMatch} />}
-      {match && <MatchDetail data={data} match={match} onClose={() => setMatch(null)} onTeam={openTeam} />}
+      {player && <PlayerSheet data={data} playerId={player} onClose={closePlayer} onOpenMatch={openMatch} zIndex={zOf("player")} dimBackdrop={isTop("player") && openOrder.length === 1} />}
+      {team && <TeamSheet data={data} code={team} onClose={closeTeam} onOpenMatch={openMatch} zIndex={zOf("team")} dimBackdrop={openOrder[0] === "team"} />}
+      {match && <MatchDetail data={data} match={match} onClose={closeMatch} onTeam={openTeam} zIndex={zOf("match")} dimBackdrop={openOrder[0] === "match"} />}
 
     </div>
   );
