@@ -443,28 +443,136 @@
       }
     });
 
-    // ============= knockout struct =============
-    function byStageId(prefix){ return allMatches.filter(m => m.id.indexOf(prefix) === 0); }
-    function padKO(arr, n){
-      while(arr.length < n){
-        arr.push({
-          id: "tbd_" + arr.length + "_" + Math.random().toString(36).slice(2,6),
-          stage: "ko", group: null, round: "Slutspel",
-          home: null, away: null, kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
-          ga: null, gb: null, status: "upcoming", winner: null, pen: null,
-          venue: null, tippas: false
-        });
-      }
-      return arr;
+    // ============= knockout struct (FIFA 2026 officiell bracket) =============
+    function bestThirdFromGroups(letters){
+      const cands = [];
+      letters.split("").forEach(L => {
+        const r = groupTables[L] && groupTables[L][2];
+        if(r && r.code && r.code.indexOf("TBD") !== 0) cands.push(Object.assign({}, r, {group:L}));
+      });
+      cands.sort((a,b) => (b.p - a.p) || (b.ms - a.ms) || (b.gm - a.gm) || a.group.localeCompare(b.group));
+      return cands[0] ? cands[0].code : null;
     }
+    function slotResolve(spec){
+      // { p:1|2, g:"A" } | { p:3, gs:"ABCDF" } | { winM:N } | { loseM:N }
+      if(spec.winM)   return { code:null, projCode:null, label:"Vinnare M" + spec.winM };
+      if(spec.loseM)  return { code:null, projCode:null, label:"Förlorare M" + spec.loseM };
+      if(spec.p === 1 || spec.p === 2){
+        const row = groupTables[spec.g] && groupTables[spec.g][spec.p - 1];
+        const proj = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
+        return { code:null, projCode:proj, label:(spec.p === 1 ? "Vinnare " : "Tvåa ") + spec.g };
+      }
+      if(spec.p === 3 && spec.gs){
+        return { code:null, projCode:bestThirdFromGroups(spec.gs),
+          label:"Bästa 3:a (" + spec.gs.split("").join("/") + ")" };
+      }
+      return { code:null, projCode:null, label:"TBD" };
+    }
+    // R32: officiell FIFA 2026-lottning (tree-ordning för designens recursive feed)
+    const R32_SPECS = [
+      { fifa:73, a:{p:2,g:"A"}, b:{p:2,g:"B"} },
+      { fifa:75, a:{p:1,g:"E"}, b:{p:3,gs:"ABCDF"} },
+      { fifa:74, a:{p:1,g:"C"}, b:{p:2,g:"F"} },
+      { fifa:77, a:{p:2,g:"E"}, b:{p:2,g:"I"} },
+      { fifa:83, a:{p:1,g:"H"}, b:{p:2,g:"J"} },
+      { fifa:84, a:{p:2,g:"K"}, b:{p:2,g:"L"} },
+      { fifa:81, a:{p:1,g:"G"}, b:{p:3,gs:"AEHIJ"} },
+      { fifa:82, a:{p:1,g:"D"}, b:{p:3,gs:"BEFIJ"} },
+      { fifa:76, a:{p:1,g:"F"}, b:{p:2,g:"C"} },
+      { fifa:78, a:{p:1,g:"I"}, b:{p:3,gs:"CDFGH"} },
+      { fifa:79, a:{p:1,g:"A"}, b:{p:3,gs:"CEFHI"} },
+      { fifa:80, a:{p:1,g:"L"}, b:{p:3,gs:"EHIJK"} },
+      { fifa:86, a:{p:2,g:"D"}, b:{p:2,g:"G"} },
+      { fifa:88, a:{p:1,g:"K"}, b:{p:3,gs:"DEIJL"} },
+      { fifa:85, a:{p:1,g:"B"}, b:{p:3,gs:"EFGIJ"} },
+      { fifa:87, a:{p:1,g:"J"}, b:{p:2,g:"H"} }
+    ];
+    const R16_FIFA = [89, 90, 93, 94, 91, 92, 95, 96];
+    const QF_FIFA  = [97, 98, 99, 100];
+    const SF_FIFA  = [101, 102];
+
+    function makeKoMatch(prefix, idx, slotA, slotB, fifa){
+      return {
+        id: prefix + idx, stage: "ko", group: null, round: "Slutspel",
+        fifa: fifa || null,
+        home: slotA.code, away: slotB.code,
+        projHome: slotA.projCode || null, projAway: slotB.projCode || null,
+        fromA: slotA.label, fromB: slotB.label,
+        kickoff: new Date(Date.UTC(2026, 6, 19, 19, 0)),
+        ga: null, gb: null, status: "upcoming",
+        winner: null, pen: null,
+        venue: (fifa && window.VM && window.VM.KO_VENUES && window.VM.KO_VENUES[fifa]) || null,
+        tippas: true
+      };
+    }
+
+    const r32_built = R32_SPECS.map((spec, i) =>
+      makeKoMatch("r32_", i, slotResolve(spec.a), slotResolve(spec.b), spec.fifa));
+    const r16_built = []; for(let i=0;i<8;i++){
+      r16_built.push(makeKoMatch("r16_", i,
+        slotResolve({winM:R32_SPECS[i*2].fifa}),
+        slotResolve({winM:R32_SPECS[i*2+1].fifa}),
+        R16_FIFA[i]));
+    }
+    const qf_built = []; for(let i=0;i<4;i++){
+      qf_built.push(makeKoMatch("qf_", i,
+        slotResolve({winM:R16_FIFA[i*2]}),
+        slotResolve({winM:R16_FIFA[i*2+1]}),
+        QF_FIFA[i]));
+    }
+    const sf_built = []; for(let i=0;i<2;i++){
+      sf_built.push(makeKoMatch("sf_", i,
+        slotResolve({winM:QF_FIFA[i*2]}),
+        slotResolve({winM:QF_FIFA[i*2+1]}),
+        SF_FIFA[i]));
+    }
+    const final_built = [ makeKoMatch("final_", 0,
+      slotResolve({winM:SF_FIFA[0]}), slotResolve({winM:SF_FIFA[1]}), 104) ];
+    const third_built = [ makeKoMatch("third_", 0,
+      slotResolve({loseM:SF_FIFA[0]}), slotResolve({loseM:SF_FIFA[1]}), 103) ];
+
+    // Overlay verkliga KO-fixtures: behåll FIFA-num/labels men ta kickoff/team/score
+    function overlayKO(structural, stagePrefix){
+      const real = allMatches.filter(m => m.id.indexOf(stagePrefix) === 0)
+        .sort((a,b) => a.kickoff - b.kickoff);
+      real.forEach((rm, i) => {
+        const s = structural[i];
+        if(!s) return;
+        s.id = rm.id;
+        s.kickoff = rm.kickoff;
+        s.status = rm.status;
+        if(rm.home){ s.home = rm.home; s.fromA = null; }
+        if(rm.away){ s.away = rm.away; s.fromB = null; }
+        s.ga = rm.ga; s.gb = rm.gb;
+        s.winner = rm.winner;
+        s.scorers = rm.scorers || [];
+        s.cards = rm.cards || [];
+        s._realId = rm._realId;
+        if(rm.venue && rm.venue.stadium) s.venue = rm.venue;
+      });
+    }
+    overlayKO(r32_built, "r32_");
+    overlayKO(r16_built, "r16_");
+    overlayKO(qf_built, "qf_");
+    overlayKO(sf_built, "sf_");
+    overlayKO(third_built, "third_");
+    overlayKO(final_built, "final_");
+
     const knockout = {
-      r32:   padKO(byStageId("r32_"), 16),
-      r16:   padKO(byStageId("r16_"), 8),
-      qf:    padKO(byStageId("qf_"), 4),
-      sf:    padKO(byStageId("sf_"), 2),
-      third: padKO(byStageId("third_"), 1),
-      final: padKO(byStageId("final_"), 1)
+      r32: r32_built, r16: r16_built, qf: qf_built, sf: sf_built,
+      third: third_built, final: final_built
     };
+
+    // Ersätt KO-entries i allMatches med structural-versionerna
+    const koIds = new Set();
+    [r32_built, r16_built, qf_built, sf_built, third_built, final_built]
+      .forEach(arr => arr.forEach(m => koIds.add(m.id)));
+    const groupMatches = allMatches.filter(m => m.stage === "group");
+    const allMatchesNew = groupMatches.concat(r32_built, r16_built, qf_built, sf_built, third_built, final_built);
+    allMatchesNew.sort((a,b) => a.kickoff - b.kickoff);
+    allMatches.length = 0;
+    allMatchesNew.forEach(m => allMatches.push(m));
+
     const koRounds = [
       { key:"r32", label:"Sextondelsfinal", count:16 },
       { key:"r16", label:"Åttondelsfinal", count:8 },
@@ -1411,11 +1519,13 @@ function MatchCard({ m, onOpen, showRound }) {
           <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
             <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".07em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
               {roundLabel(m)}</span>
-            {m.tippas ? <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "1px 6px", borderRadius: 5,
-              background: "color-mix(in oklab, var(--cool) 22%, transparent)", color: "var(--cool)", fontSize: 9.5, fontWeight: 800, letterSpacing: ".03em" }}>
-              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--cool)" }} />TIPS</span> : null}
           </span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap" }}>{m.venue ? m.venue[1] : ""}</span>
+          {m.venue && (
+            <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap",
+              display: "inline-flex", alignItems: "center", gap: 4 }}>
+              📍 <span>{m.venue.city || m.venue.stadium}</span>
+            </span>
+          )}
         </div>
       ) : null}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "11px 13px 11px 16px" }}>
@@ -1790,6 +1900,14 @@ Object.assign(window, {
   WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS, KO_VENUES,
   teamRating, matchOdds, useWikiPhoto
 });
+// Lägg även på window.VM så andra babel-script-block (MatchDetail, TeamSheet) kan
+// nå dem via window.VM.X (top-level const blir inte automatiskt window-prop).
+if(window.VM){
+  Object.assign(window.VM, {
+    WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS, KO_VENUES,
+    teamRating, matchOdds
+  });
+}
 
 /* ---------- vimplar (bunting) — VM-/folkfestkänsla ---------- */
 function Bunting({ n = 18, height = 16, style }) {
@@ -2142,14 +2260,16 @@ function MatchDetail({ data, match, onClose, onTeam }) {
       <div style={{ textAlign: "center", marginBottom: 14 }}>
         <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".1em", color: "rgba(255,255,255,.9)", textTransform: "uppercase" }}>
           {roundLabel(m)}{m.group ? "" : ""}</div>
-        <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.7)", marginTop: 3 }}>
-          {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}{m.venue ? " · " + m.venue[1] : ""}</div>
-        <div style={{ marginTop: 8, display: "flex", justifyContent: "center" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "3px 10px", borderRadius: 7,
-            background: "rgba(255,255,255,.16)", color: "#fff", fontWeight: 800, fontSize: 10.5, letterSpacing: ".04em" }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: m.tippas ? "#5BE0A0" : "rgba(255,255,255,.5)" }} />
-            {m.tippas ? "TIPPNINGSMATCH" : "SLUTSPEL · INGEN TIPPNING"}</span>
+        <div style={{ fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)", marginTop: 3 }}>
+          {svDayLabel(m.kickoff)} · {svTime(m.kickoff)}
         </div>
+        {m.venue && m.venue.stadium && (
+          <div style={{ marginTop: 6, display: "flex", justifyContent: "center", alignItems: "center", gap: 6,
+            fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.85)" }}>
+            <span>📍</span>
+            <span>{m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}</span>
+          </div>
+        )}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         {teamCol(m.home, m.fromA)}
@@ -2184,17 +2304,8 @@ function MatchDetail({ data, match, onClose, onTeam }) {
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
         {!played && !live && !tbd && <H2HBlock m={m} />}
-        {!tbd && m.tippas && (live || (!played && !live)) && <TipsDistribution data={data} m={m} />}
-        {!tbd && m.tippas && played && <PoolResultBlock data={data} m={m} />}
-        {!tbd && !m.tippas && (
-          <div style={{ margin: "0 16px 14px", background: "var(--bg2)", borderRadius: 13, padding: "13px 15px",
-            display: "flex", alignItems: "center", gap: 11 }}>
-            <span style={{ width: 30, height: 30, borderRadius: 8, background: "var(--cool)", flex: "0 0 auto",
-              display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 15 }}>i</span>
-            <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.4 }}>
-              Slutspelsmatch — inga matchtips här. Slutspelet avgörs i poolen via bonuspoängen (vinnare, silver, brons …).</span>
-          </div>
-        )}
+        {!tbd && (live || (!played && !live)) && <TipsDistribution data={data} m={m} />}
+        {!tbd && played && <PoolResultBlock data={data} m={m} />}
         {tbd && (
           <div style={{ textAlign: "center", color: "var(--ink-soft)", padding: "30px 24px", fontWeight: 600 }}>
             Lagen avgörs när tidigare matcher är spelade.
@@ -2833,11 +2944,11 @@ Object.assign(window, { ScheduleView, Bracket });
 
 const BONUS_DEFS = [
   { key: "winner",      label: "Turneringsvinnare", pts: 10, kind: "team" },
-  { key: "silver",      label: "Silver",            pts: 6,  kind: "team" },
-  { key: "bronze",      label: "Brons",             pts: 4,  kind: "team" },
-  { key: "topscorer",   label: "Skyttekung",        pts: 6,  kind: "player" },
-  { key: "bestplayer",  label: "Bästa spelare",     pts: 5,  kind: "player" },
-  { key: "youngplayer", label: "Bästa unga spelare",pts: 4,  kind: "player" },
+  { key: "silver",      label: "Silver",            pts: 5,  kind: "team" },
+  { key: "bronze",      label: "Brons",             pts: 3,  kind: "team" },
+  { key: "topscorer",   label: "Bästa målskytt",    pts: 3,  kind: "player" },
+  { key: "bestplayer",  label: "Bästa spelare",     pts: 3,  kind: "player" },
+  { key: "youngplayer", label: "Bästa unga spelare",pts: 3,  kind: "player" },
   { key: "keeper",      label: "Bästa målvakt",     pts: 3,  kind: "player" }
 ];
 
@@ -2936,9 +3047,15 @@ function InfoView() {
       <div>
         <h3 className="display" style={{ fontSize: 20, marginBottom: 11, fontWeight: "var(--display-weight)" }}>Poäng per match</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-          <RuleRow pts={5} title="Exakt resultat" desc="Rätt slutsiffror, t.ex. 2–1 blir 2–1." color="var(--gold)" />
-          <RuleRow pts={2} title="Rätt utgång" desc="Rätt vinnare eller oavgjort, men fel siffror." color="var(--warm)" />
+          <RuleRow pts={2} title="Rätt utgång" desc="2 poäng om du har gissat rätt vinnare (eller oavgjort)." color="var(--warm)" />
+          <RuleRow pts={3} title="Exakt resultat — extra" desc="3 poäng EXTRA om du också gissat rätt slutsiffror. Ex: Brasilien–Frankrike, du tippar 1–2 och det blir 1–2 = 2 + 3 = 5 poäng totalt." color="var(--gold)" />
           <RuleRow pts={1} title="Annars" desc="Fel utgång ger ändå en tröstpoäng per tippad match." color="var(--cool)" />
+        </div>
+        <div style={{ marginTop: 12, padding: "12px 15px", background: "var(--paper)",
+          borderRadius: 13, border: "1px solid var(--line)", fontSize: 12.5, color: "var(--ink-soft)",
+          fontWeight: 600, lineHeight: 1.5 }}>
+          I slutspelet räknas <b style={{ color: "var(--ink)" }}>resultatet efter förlängning</b> för exakt poäng.
+          Straffmål räknas inte med, men <b style={{ color: "var(--ink)" }}>straffvinnaren</b> räknas som rätt utgång.
         </div>
       </div>
 
