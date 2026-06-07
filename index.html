@@ -91,6 +91,8 @@
 
   @keyframes pop { 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
   @keyframes riseIn { from{transform:translateY(16px)} to{transform:translateY(0)} }
+  @keyframes sheetFade { from{opacity:0} to{opacity:1} }
+  @keyframes sheetPop  { from{opacity:0;transform:scale(.96) translateY(8px)} to{opacity:1;transform:none} }
   @keyframes fadeRise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: no-preference) {
     .can-fade { animation-name: fadeRise !important; }
@@ -1663,15 +1665,15 @@ const FIFA_RANKING = {
 /* Utökade team-detaljer: tränare, key players, recent form */
 const TEAM_DETAILS = {
   ARG: { coach: "Lionel Scaloni", stars: ["Lionel Messi", "Lautaro Martínez", "Julián Álvarez"], form: "WWWDW", fifaPts: 1879 },
-  FRA: { coach: "Didier Deschamps", stars: ["Kylian Mbappé", "Antoine Griezmann", "Aurélien Tchouaméni"], form: "WWWWL", fifaPts: 1859 },
-  ESP: { coach: "Luis de la Fuente", stars: ["Rodri", "Lamine Yamal", "Pedri"], form: "WWWWW", fifaPts: 1855 },
+  FRA: { coach: "Didier Deschamps", stars: ["Kylian Mbappé", "Désiré Doué", "Aurélien Tchouaméni"], form: "WWWWL", fifaPts: 1859 },
+  ESP: { coach: "Luis de la Fuente", stars: ["Lamine Yamal", "Rodri", "Pedri"], form: "WWWWW", fifaPts: 1855 },
   ENG: { coach: "Thomas Tuchel", stars: ["Jude Bellingham", "Harry Kane", "Cole Palmer"], form: "WWDWW", fifaPts: 1820 },
-  BRA: { coach: "Dorival Júnior", stars: ["Vinícius Júnior", "Rodrygo", "Vitor Roque"], form: "WDLWW", fifaPts: 1789 },
-  POR: { coach: "Roberto Martínez", stars: ["Cristiano Ronaldo", "Bruno Fernandes", "Bernardo Silva"], form: "WWWLW", fifaPts: 1772 },
+  BRA: { coach: "Carlo Ancelotti", stars: ["Vinícius Júnior", "Rodrygo", "Endrick"], form: "WDLWW", fifaPts: 1789 },
+  POR: { coach: "Roberto Martínez", stars: ["Cristiano Ronaldo", "Bruno Fernandes", "Vitinha"], form: "WWWLW", fifaPts: 1772 },
   NED: { coach: "Ronald Koeman", stars: ["Virgil van Dijk", "Frenkie de Jong", "Cody Gakpo"], form: "WDWWW", fifaPts: 1754 },
   BEL: { coach: "Rudi Garcia", stars: ["Kevin De Bruyne", "Romelu Lukaku", "Jérémy Doku"], form: "WWLWD", fifaPts: 1735 },
   CRO: { coach: "Zlatko Dalić", stars: ["Luka Modrić", "Joško Gvardiol", "Mateo Kovačić"], form: "DWLDW", fifaPts: 1707 },
-  ITA: { coach: "Luciano Spalletti", stars: ["Federico Chiesa", "Nicolò Barella", "Gianluigi Donnarumma"], form: "WDWWL", fifaPts: 1718 },
+  ITA: { coach: "Gennaro Gattuso", stars: ["Federico Chiesa", "Nicolò Barella", "Gianluigi Donnarumma"], form: "WDWWL", fifaPts: 1718 },
   GER: { coach: "Julian Nagelsmann", stars: ["Florian Wirtz", "Jamal Musiala", "Kai Havertz"], form: "WWDWW", fifaPts: 1726 },
   COL: { coach: "Néstor Lorenzo", stars: ["James Rodríguez", "Luis Díaz", "Davinson Sánchez"], form: "WDWWL", fifaPts: 1721 },
   URU: { coach: "Marcelo Bielsa", stars: ["Federico Valverde", "Darwin Núñez", "Ronald Araújo"], form: "WLWDW", fifaPts: 1719 },
@@ -1685,7 +1687,7 @@ const TEAM_DETAILS = {
   SEN: { coach: "Pape Thiaw", stars: ["Sadio Mané", "Kalidou Koulibaly", "Édouard Mendy"], form: "WWDWL", fifaPts: 1651 },
   AUS: { coach: "Tony Popovic", stars: ["Mat Ryan", "Ajdin Hrustic", "Mathew Leckie"], form: "WLDWW", fifaPts: 1551 },
   CAN: { coach: "Jesse Marsch", stars: ["Alphonso Davies", "Jonathan David", "Stephen Eustáquio"], form: "WLWDW", fifaPts: 1573 },
-  SWE: { coach: "Jon Dahl Tomasson", stars: ["Alexander Isak", "Viktor Gyökeres", "Dejan Kulusevski"], form: "LWWDW", fifaPts: 1517 },
+  SWE: { coach: "Graham Potter", stars: ["Alexander Isak", "Viktor Gyökeres", "Dejan Kulusevski"], form: "LWWDW", fifaPts: 1517 },
   NOR: { coach: "Ståle Solbakken", stars: ["Erling Haaland", "Martin Ødegaard", "Alexander Sørloth"], form: "WWWDW", fifaPts: 1531 }
 };
 
@@ -1930,12 +1932,19 @@ function Bunting({ n = 18, height = 16, style }) {
    ============================================================ */
 
 function Sheet({ onClose, accent, children, header }) {
+  // Centrerad modal med scale-in. Mobil: hög, smal padding. Desktop: max 620px.
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 70, background: "rgba(20,12,20,.42)",
-      backdropFilter: "blur(3px)", display: "flex", alignItems: "flex-end", justifyContent: "center", animation: "riseIn .25s both" }}>
-      <div onClick={e => e.stopPropagation()} className="can-fade" style={{ background: "var(--bg)", width: "100%", maxWidth: "var(--maxw)",
-        maxHeight: "92vh", borderRadius: "22px 22px 0 0", overflow: "hidden", display: "flex", flexDirection: "column",
-        boxShadow: "0 -18px 50px -20px rgba(0,0,0,.45)", animation: "riseIn .3s both" }}>
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 70,
+      background: "rgba(10,6,16,.62)", backdropFilter: "blur(6px)",
+      WebkitBackdropFilter: "blur(6px)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "16px", overflow: "auto", animation: "sheetFade .18s both" }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "var(--bg)",
+        width: "100%", maxWidth: 620, maxHeight: "calc(100dvh - 32px)",
+        borderRadius: 22, overflow: "hidden",
+        display: "flex", flexDirection: "column",
+        boxShadow: "0 32px 80px -24px rgba(0,0,0,.6), 0 0 0 1px var(--line)",
+        animation: "sheetPop .26s cubic-bezier(.2,.7,.2,1) both" }}>
         {header}
         <div className="app-scroll" style={{ overflowY: "auto", flex: 1 }}>{children}</div>
       </div>
@@ -2129,25 +2138,33 @@ function H2HBlock({ m }) {
 }
 
 function PoolResultBlock({ data, m }) {
+  // Visar ALLA spelares tippningar - poäng om matchen är spelad, annars bara tippet.
+  const played = m.status === "played" && m.ga != null && m.gb != null;
   const rows = data.players.map(p => {
     const tip = p.tips[m.id];
     if (!tip) return null;
-    let pts = 1;
-    if (tip[0] === m.ga && tip[1] === m.gb) pts = 5;
-    else { const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X"; const o2 = m.ga > m.gb ? "H" : m.ga < m.gb ? "B" : "X"; if (o1 === o2) pts = 2; }
+    let pts = null;
+    if(played){
+      pts = 1;
+      if (tip[0] === m.ga && tip[1] === m.gb) pts = 5;
+      else { const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X"; const o2 = m.ga > m.gb ? "H" : m.ga < m.gb ? "B" : "X"; if (o1 === o2) pts = 2; }
+    }
     return { p, tip, pts };
-  }).filter(Boolean).sort((a, b) => b.pts - a.pts);
+  }).filter(Boolean);
   if (!rows.length) return null;
+  rows.sort((a, b) => (played ? (b.pts - a.pts) : 0) || a.p.name.localeCompare(b.p.name));
   const col = { 5: "var(--gold)", 2: "var(--warm)", 1: "var(--ink-soft)" };
   return (
-    <MiniBlock title="Så tippade poolen" pad={false}>
+    <MiniBlock title={played ? "Så tippade poolen" : "Vad alla har tippat"} pad={false}>
       {rows.map((r, i) => (
         <div key={r.p.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px",
           borderBottom: i < rows.length - 1 ? "1px solid var(--line)" : "none" }}>
           <Avatar p={r.p} size={28} />
           <span style={{ fontWeight: 700, fontSize: 13.5, flex: 1 }}>{r.p.name}</span>
           <span className="num" style={{ fontWeight: 800, fontSize: 14, color: "var(--ink-soft)" }}>{r.tip[0]}–{r.tip[1]}</span>
-          <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 30, textAlign: "right" }}>+{r.pts}</span>
+          {r.pts != null && (
+            <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 30, textAlign: "right" }}>+{r.pts}</span>
+          )}
         </div>
       ))}
     </MiniBlock>
@@ -2254,7 +2271,6 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   );
   const header = (
     <div style={{ background: "var(--grad)", padding: "14px 18px 18px", position: "relative", flex: "0 0 auto" }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.5)", margin: "0 auto 12px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff",
         fontSize: 24, fontWeight: 700, lineHeight: 1, opacity: .9 }}>×</button>
       <div style={{ textAlign: "center", marginBottom: 14 }}>
@@ -2304,8 +2320,8 @@ function MatchDetail({ data, match, onClose, onTeam }) {
         {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
         {!played && !live && !tbd && <FormBlock data={data} m={m} />}
         {!played && !live && !tbd && <H2HBlock m={m} />}
-        {!tbd && (live || (!played && !live)) && <TipsDistribution data={data} m={m} />}
-        {!tbd && played && <PoolResultBlock data={data} m={m} />}
+        {!tbd && !played && <TipsDistribution data={data} m={m} />}
+        {!tbd && <PoolResultBlock data={data} m={m} />}
         {tbd && (
           <div style={{ textAlign: "center", color: "var(--ink-soft)", padding: "30px 24px", fontWeight: 600 }}>
             Lagen avgörs när tidigare matcher är spelade.
@@ -2510,7 +2526,6 @@ function PlayerSheet({ data, playerId, onClose, onOpenMatch }) {
   ];
   const header = (
     <div style={{ background: "var(--grad)", padding: "14px 18px 16px", position: "relative", flex: "0 0 auto" }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.5)", margin: "0 auto 14px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff", fontSize: 24, fontWeight: 700 }}>×</button>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <Avatar p={p} size={60} rank={isPre ? null : st.rank} />
@@ -2583,7 +2598,10 @@ function PlayerSheet({ data, playerId, onClose, onOpenMatch }) {
                   background: "var(--paper)", borderRadius: 12, padding: "11px 14px", border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
                   <span style={{ fontWeight: 700, fontSize: 13, color: "var(--ink-soft)" }}>{label}</span>
                   {kind === "team" ? <TeamLabel code={val} size={22} /> :
-                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}><Flag code={val[1]} size={20} /><span style={{ fontWeight: 800, fontSize: 13.5 }}>{val[0]}</span></span>}
+                    <span style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                      <StarPhoto name={val[0]} countryCode={val[1]} size={28} />
+                      <span style={{ fontWeight: 800, fontSize: 13.5 }}>{val[0]}</span>
+                    </span>}
                 </div>
               );
             })}
@@ -2790,24 +2808,49 @@ const BRACKET_CSS = `
 `;
 
 function BracketCell({ m, champion, onOpen }) {
-  const row = (code, isWinner, label) => (
-    <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 8px",
-      background: isWinner ? "color-mix(in oklab, var(--gold) 18%, transparent)" : "transparent",
-      borderRadius: 6, opacity: code ? 1 : .55 }}>
-      {code ? <Flag code={code} size={17} /> : <span style={{ width: 17, height: 17, borderRadius: "50%", background: "var(--bg2)", flex: "0 0 auto" }} />}
-      <span style={{ fontSize: 11.5, fontWeight: isWinner ? 800 : 600, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {code ? window.VM.TEAMS[code].name : (label || "Vinnare")}</span>
-      <span className="num" style={{ fontSize: 12, fontWeight: 800, color: isWinner ? "var(--ink)" : "var(--ink-soft)", minWidth: 9, textAlign: "right" }}>
-        {m.status === "played" && code ? (code === m.home ? m.ga : m.gb) : ""}</span>
-    </div>
-  );
+  // code = riktig lagkod (efter lottning), label = slot-label (Vinnare A), proj = projicerat lag just nu
+  const row = (code, isWinner, label, proj) => {
+    const projName = proj && window.VM.TEAMS[proj] ? window.VM.TEAMS[proj].name : null;
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "5px 8px",
+        background: isWinner ? "color-mix(in oklab, var(--gold) 18%, transparent)" : "transparent",
+        borderRadius: 6 }}>
+        {code ? <Flag code={code} size={17} />
+          : proj ? <Flag code={proj} size={17} />
+          : <span style={{ width: 17, height: 17, borderRadius: "50%", background: "var(--bg2)", flex: "0 0 auto" }} />}
+        <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+          <span style={{ fontSize: 11.5, fontWeight: isWinner ? 800 : 700,
+            color: code ? "var(--ink)" : "var(--ink-soft)",
+            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {code ? window.VM.TEAMS[code].name : (label || "Vinnare")}
+          </span>
+          {!code && projName && (
+            <span style={{ fontSize: 9.5, fontWeight: 700, color: "var(--ink)", opacity: .85,
+              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 1 }}>
+              just nu: {projName}
+            </span>
+          )}
+        </span>
+        <span className="num" style={{ fontSize: 12, fontWeight: 800, color: isWinner ? "var(--ink)" : "var(--ink-soft)", minWidth: 9, textAlign: "right" }}>
+          {m.status === "played" && code ? (code === m.home ? m.ga : m.gb) : ""}
+        </span>
+      </div>
+    );
+  };
   const live = m.status === "live";
   return (
-    <button onClick={() => onOpen && (m.home && m.away) && onOpen(m)} style={{ width: 158, background: "var(--paper)", borderRadius: 10, padding: 4,
+    <button onClick={() => onOpen && onOpen(m)} style={{ width: 178, background: "var(--paper)", borderRadius: 10, padding: 4,
       border: "1px solid var(--line)", boxShadow: champion ? "0 0 0 2px var(--gold), var(--shadow)" : live ? "0 0 0 1.5px var(--hot)" : "var(--shadow)", textAlign: "left" }}>
-      {row(m.home, m.winner && m.winner === m.home, m.fromA)}
+      {m.fifa && (
+        <div style={{ display: "flex", justifyContent: "space-between",
+          padding: "2px 8px 0", fontSize: 9, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)" }}>
+          <span>M{m.fifa}</span>
+          {m.status === "played" ? <span>SLUT</span> : m.status === "live" ? <span style={{ color: "var(--hot)" }}>LIVE</span> : <span>{svTime(m.kickoff)}</span>}
+        </div>
+      )}
+      {row(m.home, m.winner && m.winner === m.home, m.fromA, m.projHome)}
       <div style={{ height: 1, background: "var(--line)", margin: "1px 6px" }} />
-      {row(m.away, m.winner && m.winner === m.away, m.fromB)}
+      {row(m.away, m.winner && m.winner === m.away, m.fromB, m.projAway)}
       {live ? <div style={{ textAlign: "center", padding: "3px 0 1px" }}><LiveDot minute={m.minute} small /></div> : null}
     </button>
   );
@@ -2888,13 +2931,21 @@ function ScheduleView({ data, onOpenMatch }) {
       </div>
 
       {mode === "slutspel" ? (
-        isPre ? (
-          <div style={{ textAlign: "center", padding: "44px 22px", background: "var(--paper)", borderRadius: 16, border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
-            <div className="display" style={{ fontSize: 22, marginBottom: 8, fontWeight: "var(--display-weight)" }}>Trädet växer fram</div>
-            <div style={{ color: "var(--ink-soft)", fontWeight: 600, fontSize: 14, maxWidth: 340, margin: "0 auto", lineHeight: 1.5 }}>
-              Slutspelsträdet fylls i när gruppspelet är avgjort. 32 lag går vidare — topp 2 ur varje grupp plus de 8 bästa treorna.</div>
-          </div>
-        ) : <Bracket data={data} onOpen={onOpenMatch} />
+        <>
+          {isPre && (
+            <div style={{ marginBottom: 12, padding: "11px 14px", background: "var(--paper)",
+              border: "1px solid var(--line)", borderRadius: 12, boxShadow: "var(--shadow)",
+              display: "flex", gap: 11, alignItems: "center" }}>
+              <span style={{ width: 26, height: 26, borderRadius: 7, background: "var(--cool)", flex: "0 0 auto",
+                display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13 }}>i</span>
+              <span style={{ fontSize: 12.5, color: "var(--ink-soft)", fontWeight: 600, lineHeight: 1.4 }}>
+                Slutspelsträdet visar projicerade matcher (Vinnare A, Tvåa B, Bästa 3:a osv) utifrån
+                hur grupperna står just nu. Slutgiltig lottning sker efter gruppspelet.
+              </span>
+            </div>
+          )}
+          <Bracket data={data} onOpen={onOpenMatch} />
+        </>
       ) : (
         <>
           <div className="app-scroll" style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 8, marginBottom: 8 }}>
@@ -2971,8 +3022,10 @@ function BonusCard({ def, players, onTeam }) {
           {def.kind === "team"
             ? <button onClick={() => onTeam(fav.v)} style={{ display: "flex", alignItems: "center", gap: 9 }}>
                 <Flag code={fav.v} size={28} /><span style={{ fontWeight: 800, fontSize: 16 }}>{window.VM.TEAMS[fav.v].name}</span></button>
-            : <span style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                <Flag code={fav.v[1]} size={24} /><span style={{ fontWeight: 800, fontSize: 15 }}>{fav.v[0]}</span></span>}
+            : <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <StarPhoto name={fav.v[0]} countryCode={fav.v[1]} size={34} />
+                <span style={{ fontWeight: 800, fontSize: 15 }}>{fav.v[0]}</span>
+              </span>}
         </div>
         <div style={{ textAlign: "center" }}>
           <div className="num display" style={{ fontSize: 24, color: "var(--hot)", fontWeight: "var(--display-weight)" }}>{fav.who.length}</div>
@@ -2982,10 +3035,12 @@ function BonusCard({ def, players, onTeam }) {
       <div style={{ padding: "11px 14px", display: "flex", flexDirection: "column", gap: 9 }}>
         {sorted.map((r, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 7, width: 138, flex: "0 0 auto" }}>
-              <Flag code={def.kind === "team" ? r.v : r.v[1]} size={17} />
+            <div style={{ display: "flex", alignItems: "center", gap: 8, width: 158, flex: "0 0 auto" }}>
+              {def.kind === "team"
+                ? <Flag code={r.v} size={20} />
+                : <StarPhoto name={r.v[0]} countryCode={r.v[1]} size={24} />}
               <span style={{ fontSize: 12.5, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {def.kind === "team" ? window.VM.TEAMS[r.v].name : r.v[0]}</span>
+                {def.kind === "team" ? (window.VM.TEAMS[r.v] && window.VM.TEAMS[r.v].name) : r.v[0]}</span>
             </div>
             <div style={{ display: "flex", gap: -4, flex: 1 }}>
               {r.who.map((p, j) => <span key={p.id} title={p.name} style={{ marginLeft: j === 0 ? 0 : -6 }}><Avatar p={p} size={24} /></span>)}
@@ -3218,7 +3273,6 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
   const fans = data.players.filter(p => Object.values(p.bonus).some(v => (Array.isArray(v) ? v[1] : v) === code));
   const header = (
     <div style={{ padding: "14px 18px 16px", position: "relative", background: `linear-gradient(135deg, ${t.c1}, color-mix(in oklab, ${t.c2} 80%, #000 12%))` }}>
-      <div style={{ width: 40, height: 5, borderRadius: 99, background: "rgba(255,255,255,.6)", margin: "0 auto 14px" }} />
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff", fontSize: 24, fontWeight: 700, textShadow: "0 1px 3px rgba(0,0,0,.4)" }}>×</button>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <Flag code={code} size={50} shape="rect" />
@@ -3286,8 +3340,9 @@ function App() {
   const data = React.useMemo(() => window.VM.build(), [tick]);
   React.useEffect(() => { window.scrollTo({ top: 0 }); }, [view]);
 
-  const openMatch = (m) => setMatch(m);
-  const openTeam = (code) => setTeam(code);
+  const openMatch = (m) => { setTeam(null); setPlayer(null); setMatch(m); };
+  const openTeam  = (code) => { setMatch(null); setPlayer(null); setTeam(code); };
+  const openPlayer = (id) => { setMatch(null); setTeam(null); setPlayer(id); };
 
   return (
     <div style={{ minHeight: "100vh" }}>
@@ -3313,7 +3368,7 @@ function App() {
 
       <main>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)" }}>
-          {view === "standings" && <StandingsView data={data} onOpenPlayer={setPlayer} />}
+          {view === "standings" && <StandingsView data={data} onOpenPlayer={openPlayer} />}
           {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
           {view === "bonus" && <BonusView data={data} onTeam={openTeam} />}
