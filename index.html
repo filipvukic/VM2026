@@ -263,11 +263,13 @@
 
   const PLAYER_COLORS = {
     "Albin":"#FF2E6E","Alexander":"#FF8A3D","Björn":"#1FA37A","Casper":"#7A3CF0",
-    "Filip":"#0E8FE0","Isac":"#F5B301","Johan":"#E63946","Martin":"#16A0A0","Oskar":"#9B5DE5"
+    "Filip":"#0E8FE0","Isac":"#F5B301","Johan":"#E63946","Martin":"#16A0A0","Oskar":"#9B5DE5",
+    "Villiam":"#2DD4BF","Vilgot":"#EC4899","Hampus":"#65A30D"
   };
   const PLAYER_SLUGS = {
     "Albin":"albin","Alexander":"alexander","Björn":"bjorn","Casper":"casper",
-    "Filip":"filip","Isac":"isac","Johan":"johan","Martin":"martin","Oskar":"oskar"
+    "Filip":"filip","Isac":"isac","Johan":"johan","Martin":"martin","Oskar":"oskar",
+    "Villiam":"villiam","Vilgot":"vilgot","Hampus":"hampus"
   };
   function playerPhoto(name){
     const slug = PLAYER_SLUGS[name];
@@ -749,13 +751,19 @@
     const anyPlayed = allMatches.some(m => m.status === "played");
     const state = anyPlayed ? "mid" : "pre";
 
+    const podiumPicks = { p1:[], p2:[] };
     return {
       state, now: new Date(),
       teams: TEAMS, groups: GROUPS, groupLetters: GROUP_LETTERS,
       matches, allMatches, groupTables,
       knockout, koRounds, qualifiers: [],
       players, standings, forms,
-      pot: { p1:[], p2:[] },
+      pot: {
+        ...podiumPicks,
+        perPlayer: (D.pot && D.pot.per_player) || 300,
+        total: (D.pot && D.pot.total) || (players.length * 300),
+        currency: (D.pot && D.pot.currency) || "kr"
+      },
       stars: []
     };
   }
@@ -2418,7 +2426,10 @@ function Crown({ size = 26 }) {
 }
 
 function Countdown() {
-  const target = Date.UTC(2026, 5, 11, 16, 0);
+  // Öppningsmatch Mexico vs Sydafrika 11/6 kl 12:00 lokal tid på Estadio Azteca.
+  // Mexico City är permanent UTC-6 (ingen DST sedan 2022) -> 18:00 UTC = 20:00
+  // svensk sommartid (CEST).
+  const target = Date.UTC(2026, 5, 11, 18, 0);
   const [now, setNow] = React.useState(Date.now());
   React.useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   let diff = Math.max(0, target - now);
@@ -2465,11 +2476,16 @@ function PodiumStep({ p, place, prize, isPre, h }) {
 
 /* StadiumHero - 4 ikoniska arenor (1 Kanada, 1 Mexiko, 2 USA) i diagonala
    skivor. Hög upplösning från Wikimedia (1600px). */
+// 4 fetaste arenorna med klart visuellt karaktäristisk arkitektur:
+//   - SoFi Stadium (LA, USA): modernist, futuristisk - öppningsmatchen för USA
+//   - MetLife Stadium (NJ, USA): VM-final 2026
+//   - Estadio BBVA (Monterrey, Mexiko): sjukt fet skålformad arena med berget Cerro de la Silla i bakgrunden
+//   - BC Place (Vancouver, Kanada): retraktabelt tak
 const HERO_STADIUMS = [
+  { wiki: "SoFi Stadium",      country: "USA",    cc: "USA", city: "Los Angeles",          note: "Inglewood" },
   { wiki: "MetLife Stadium",   country: "USA",    cc: "USA", city: "New York/New Jersey", note: "VM-final 2026" },
-  { wiki: "SoFi Stadium",      country: "USA",    cc: "USA", city: "Los Angeles",          note: "16 städer" },
-  { wiki: "Estadio Azteca",    country: "Mexiko", cc: "MEX", city: "Mexico City",          note: "Invigningsmatch" },
-  { wiki: "BC Place",          country: "Kanada", cc: "CAN", city: "Vancouver",            note: "Group C" }
+  { wiki: "Estadio BBVA",      country: "Mexiko", cc: "MEX", city: "Monterrey",            note: "El Gigante de Acero" },
+  { wiki: "BC Place",          country: "Kanada", cc: "CAN", city: "Vancouver",            note: "Retraktabelt tak" }
 ];
 
 function HeroSlice({ stadium, clip, delay, kenBurns, tone, posX, posY }){
@@ -2500,7 +2516,7 @@ function HeroSlice({ stadium, clip, delay, kenBurns, tone, posX, posY }){
   );
 }
 
-function StadiumHero(){
+function StadiumHero({ pot, playerCount }){
   // Fyra diagonala skivor som tillsammans täcker rektangeln.
   // Lutning ~-15 % från topp till bot.
   const slices = [
@@ -2569,7 +2585,7 @@ function StadiumHero(){
         </div>
         <div style={{ color: "rgba(255,255,255,.8)", fontWeight: 600, fontSize: 11.5,
           textShadow: "0 1px 3px rgba(0,0,0,.8)", marginTop: 8 }}>
-          16 städer · 104 matcher · en pott på 2 700 kr
+          16 städer · 104 matcher · pott på {money(pot || 0)} ({playerCount || 0} spelare)
         </div>
       </div>
 
@@ -2585,14 +2601,17 @@ function StadiumHero(){
 function StandingsView({ data, onOpenPlayer }) {
   const isPre = data.state === "pre";
   const s = data.standings;
-  const prizes = window.VM.PRIZES;
-  const pot = 2700;
+  const playerCount = s.length;
+  const perPlayer = (data.pot && data.pot.perPlayer) || 300;
+  const pot = (data.pot && data.pot.total) || playerCount * perPlayer;
+  // Räkna om prize-tier från faktisk pott (i fall PRIZES är hårdkodad för 9 spelare)
+  const prizes = [Math.round(pot * 0.5), Math.round(pot * 0.3), Math.round(pot * 0.2)];
   const top3 = s.slice(0, 3);
   const leaderTotal = Math.max(1, s[0].total);
 
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
-      <StadiumHero />
+      <StadiumHero pot={pot} playerCount={playerCount} />
 
       {/* POTT + PALL kort */}
       <div style={{ position: "relative", background: "var(--paper)", border: "1px solid var(--line)",
@@ -2613,7 +2632,7 @@ function StandingsView({ data, onOpenPlayer }) {
                   {money(pot)}
                 </div>
                 <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>
-                  9 spelare · 300 kr per skalle
+                  {playerCount} spelare · {perPlayer} kr per skalle
                 </div>
               </div>
               {/* avatar-stack */}
@@ -2689,7 +2708,7 @@ function StandingsView({ data, onOpenPlayer }) {
                 <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "var(--ink-soft)" }}>SAMMANLAGD POTT</div>
                 <div className="num display" style={{ fontSize: 30, color: "var(--ink)", whiteSpace: "nowrap", fontWeight: "var(--display-weight)" }}>{money(pot)}</div>
               </div>
-              <Chip bg="var(--bg2)">9 spelare · 300 kr/st</Chip>
+              <Chip bg="var(--bg2)">{playerCount} spelare · {perPlayer} kr/st</Chip>
             </div>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 10, padding: "12px 16px 0", position: "relative", zIndex: 2 }}>
               <PodiumStep p={top3[1]} place={2} prize={prizes[1]} isPre={isPre} h={70} />
@@ -3298,7 +3317,15 @@ function BonusView({ data, onTeam }) {
 }
 
 /* ---------- INFO ---------- */
-function InfoView() {
+function InfoView({ data }) {
+  const playerCount = (data && data.standings && data.standings.length) || 9;
+  const perPlayer = (data && data.pot && data.pot.perPlayer) || 300;
+  const pot = playerCount * perPlayer;
+  const tiers = [
+    ["1:a", money(Math.round(pot * 0.5)), "var(--gold)"],
+    ["2:a", money(Math.round(pot * 0.3)), "#D6DAE0"],
+    ["3:a", money(Math.round(pot * 0.2)), "#E0A983"]
+  ];
   const RuleRow = ({ pts, title, desc, color }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 14, background: "var(--paper)", borderRadius: 13, padding: "13px 15px",
       border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
@@ -3317,10 +3344,10 @@ function InfoView() {
 
       <div style={{ position: "relative", overflow: "hidden", borderRadius: "var(--r-lg)", background: "var(--grad)", padding: "18px 18px 20px", boxShadow: "var(--shadow-lift)" }}>
         <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".14em", color: "rgba(255,255,255,.85)" }}>SAMMANLAGD POTT</div>
-        <div className="num display" style={{ fontSize: 36, color: "#fff", marginBottom: 4, fontWeight: "var(--display-weight)" }}>2 700 kr</div>
-        <div style={{ color: "rgba(255,255,255,.9)", fontWeight: 600, fontSize: 13, marginBottom: 14 }}>9 spelare lägger 300 kr var. Topp 3 delar potten.</div>
+        <div className="num display" style={{ fontSize: 36, color: "#fff", marginBottom: 4, fontWeight: "var(--display-weight)" }}>{money(pot)}</div>
+        <div style={{ color: "rgba(255,255,255,.9)", fontWeight: 600, fontSize: 13, marginBottom: 14 }}>{playerCount} spelare lägger {perPlayer} kr var. Topp 3 delar potten.</div>
         <div style={{ display: "flex", gap: 8 }}>
-          {[["1:a", "1 350 kr", "var(--gold)"], ["2:a", "810 kr", "#D6DAE0"], ["3:a", "540 kr", "#E0A983"]].map((x, i) => (
+          {tiers.map((x, i) => (
             <div key={i} style={{ flex: 1, background: "rgba(255,255,255,.14)", borderRadius: 11, padding: "10px 8px", textAlign: "center" }}>
               <div className="num display" style={{ fontSize: 17, color: x[2], fontWeight: "var(--display-weight)" }}>{x[0]}</div>
               <div className="num" style={{ fontWeight: 800, color: "#fff", fontSize: 14.5, marginTop: 2 }}>{x[1]}</div>
@@ -3623,7 +3650,7 @@ function App() {
           {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
           {view === "bonus" && <BonusView data={data} onTeam={openTeam} />}
-          {view === "info" && <InfoView />}
+          {view === "info" && <InfoView data={data} />}
         </div>
       </main>
 
