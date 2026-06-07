@@ -2336,13 +2336,17 @@ function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
         </div>
         {m.venue && m.venue.stadium && (() => {
           const v = m.venue;
-          const flag = v.cc === "USA" ? "🇺🇸" : v.cc === "MEX" ? "🇲🇽" : v.cc === "CAN" ? "🇨🇦" : "📍";
+          const iso = v.cc === "USA" ? "us" : v.cc === "MEX" ? "mx" : v.cc === "CAN" ? "ca" : null;
           return (
             <div style={{ marginTop: 8, display: "inline-flex", alignItems: "center", gap: 7,
-              padding: "5px 11px", borderRadius: 999, background: "rgba(255,255,255,.14)",
+              padding: "5px 11px 5px 7px", borderRadius: 999, background: "rgba(255,255,255,.14)",
               border: "1px solid rgba(255,255,255,.18)",
               fontSize: 11.5, fontWeight: 600, color: "rgba(255,255,255,.95)" }}>
-              <span style={{ fontSize: 13 }}>{flag}</span>
+              {iso ? (
+                <img src={`https://flagcdn.com/w40/${iso}.png`} alt=""
+                  style={{ width: 18, height: 12, borderRadius: 2, objectFit: "cover",
+                    boxShadow: "inset 0 0 0 1px rgba(255,255,255,.25)" }} />
+              ) : <span>📍</span>}
               <span style={{ fontWeight: 700 }}>{v.stadium}</span>
               {v.city && <span style={{ opacity: .85 }}>· {v.city}</span>}
               {v.country && <span style={{ opacity: .7 }}>· {v.country}</span>}
@@ -2426,10 +2430,9 @@ function Crown({ size = 26 }) {
 }
 
 function Countdown() {
-  // Öppningsmatch Mexico vs Sydafrika 11/6 kl 12:00 lokal tid på Estadio Azteca.
-  // Mexico City är permanent UTC-6 (ingen DST sedan 2022) -> 18:00 UTC = 20:00
-  // svensk sommartid (CEST).
-  const target = Date.UTC(2026, 5, 11, 18, 0);
+  // Öppningsmatch Mexico vs Sydafrika 11/6 kl 13:00 lokal tid på Estadio
+  // Azteca = 19:00 UTC = 21:00 svensk sommartid (CEST).
+  const target = Date.UTC(2026, 5, 11, 19, 0);
   const [now, setNow] = React.useState(Date.now());
   React.useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   let diff = Math.max(0, target - now);
@@ -2546,7 +2549,9 @@ function StadiumHero({ pot, playerCount }){
         <line x1="78" y1="0" x2="63" y2="100" stroke="rgba(255,255,255,.22)" strokeWidth=".22" />
       </svg>
 
-      {/* Flagga + arena-namn etiketter över varje skiva */}
+      {/* Flagga + arena-namn etiketter över varje skiva. Använder flagcdn-
+          PNG istället för emoji eftersom flagg-emoji inte renderas som
+          flaggor på Windows/Chrome. */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         {[
           { i:0, top:14, leftPct:6,  s:slices[0] },
@@ -2554,11 +2559,12 @@ function StadiumHero({ pot, playerCount }){
           { i:2, top:14, leftPct:55, s:slices[2] },
           { i:3, top:14, leftPct:80, s:slices[3] }
         ].map(({ i, top, leftPct, s }) => {
-          const stad = s.stadium;
-          const flag = stad.cc === "USA" ? "🇺🇸" : stad.cc === "MEX" ? "🇲🇽" : "🇨🇦";
+          const iso = s.stadium.cc === "USA" ? "us" : s.stadium.cc === "MEX" ? "mx" : "ca";
           return (
-            <div key={i} style={{ position: "absolute", top, left: leftPct + "%",
-              fontSize: 18, lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.65)" }}>{flag}</div>
+            <img key={i} src={`https://flagcdn.com/w80/${iso}.png`} alt=""
+              style={{ position: "absolute", top, left: leftPct + "%",
+                width: 26, height: 18, borderRadius: 3, objectFit: "cover",
+                boxShadow: "0 2px 8px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.25)" }} />
           );
         })}
       </div>
@@ -2578,9 +2584,22 @@ function StadiumHero({ pot, playerCount }){
         <div style={{ color: "rgba(255,255,255,.95)", fontWeight: 700, fontSize: 13.5,
           textShadow: "0 1px 5px rgba(0,0,0,.8)", marginTop: 6,
           display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <span>🇺🇸 USA</span><span style={{ opacity: .4 }}>·</span>
-          <span>🇲🇽 Mexiko</span><span style={{ opacity: .4 }}>·</span>
-          <span>🇨🇦 Kanada</span><span style={{ opacity: .4 }}>·</span>
+          {[
+            { iso:"us", label:"USA" },
+            { iso:"mx", label:"Mexiko" },
+            { iso:"ca", label:"Kanada" }
+          ].map((c, i, arr) => (
+            <React.Fragment key={c.iso}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <img src={`https://flagcdn.com/w40/${c.iso}.png`} alt=""
+                  style={{ width: 20, height: 14, borderRadius: 2, objectFit: "cover",
+                    boxShadow: "inset 0 0 0 1px rgba(255,255,255,.25)" }} />
+                <span>{c.label}</span>
+              </span>
+              {i < arr.length - 1 && <span style={{ opacity: .4 }}>·</span>}
+            </React.Fragment>
+          ))}
+          <span style={{ opacity: .4 }}>·</span>
           <span style={{ color: "rgba(255,255,255,.75)" }}>sommaren 2026</span>
         </div>
         <div style={{ color: "rgba(255,255,255,.8)", fontWeight: 600, fontSize: 11.5,
@@ -2745,9 +2764,27 @@ function StandingsView({ data, onOpenPlayer }) {
                     </div>
                     <span style={{ fontSize: 11, color: "var(--ink-soft)", fontWeight: 700 }}>{p.exact} exakta</span>
                   </div>
-                ) : (
-                  <div style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600, marginTop: 3 }}>{Object.keys(p.tips).length} tips inlagda</div>
-                )}
+                ) : (() => {
+                  const winnerCode = p.bonus && p.bonus.winner;
+                  const tipCount = Object.keys(p.tips).length;
+                  return (
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 4, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600 }}>{tipCount} tips</span>
+                      {winnerCode && data.teams[winnerCode] && (
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 5,
+                          padding: "2px 7px 2px 3px", borderRadius: 99,
+                          background: "color-mix(in oklab, var(--gold) 18%, var(--bg2))",
+                          border: "1px solid color-mix(in oklab, var(--gold) 40%, var(--line))" }}>
+                          <Flag code={winnerCode} size={14} />
+                          <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".06em",
+                            color: "color-mix(in oklab, var(--gold) 65%, var(--ink))", textTransform: "uppercase" }}>
+                            tippar {data.teams[winnerCode].name}
+                          </span>
+                        </span>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
               <div style={{ textAlign: "right" }}>
                 <div className="num display" style={{ fontSize: 22, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>{isPre ? 0 : p.total}</div>
