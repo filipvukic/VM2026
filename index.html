@@ -94,6 +94,8 @@
   @keyframes sheetFade { from{opacity:0} to{opacity:1} }
   @keyframes sheetPop  { from{opacity:0;transform:scale(.96) translateY(8px)} to{opacity:1;transform:none} }
   @keyframes stadiumFade { from{opacity:0;transform:scale(1.04)} 15%,85%{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(1.04)} }
+  @keyframes tileFade { from{opacity:0} 15%{opacity:1} 85%{opacity:1} to{opacity:.85} }
+  @keyframes kenBurns { from{opacity:0;transform:scale(1.0) translate(0,0)} 12%{opacity:1} 100%{opacity:1;transform:scale(1.12) translate(-2%,-1%)} }
   @keyframes fadeRise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: no-preference) {
     .can-fade { animation-name: fadeRise !important; }
@@ -1674,14 +1676,14 @@ const FIFA_RANKING = {
   ARG: 1, FRA: 2, ESP: 3, ENG: 4, BRA: 5, POR: 6, NED: 7, BEL: 8,
   CRO: 9, ITA: 10, URU: 11, GER: 12, COL: 13, MAR: 14, JPN: 15,
   USA: 16, SUI: 17, IRN: 18, MEX: 19, SEN: 20, DEN: 21, KOR: 22,
-  AUT: 23, ECU: 24, CHI: 25, AUS: 26, TUR: 28, CAN: 30, WAL: 30,
-  SRB: 30, CMR: 32, POL: 33, EGY: 35, ALG: 36, HUN: 38, CIV: 39,
-  SCO: 39, NGA: 41, NOR: 42, PER: 47, ROU: 47, TUN: 49, PAR: 50,
-  SVK: 51, GRE: 50, QAT: 53, VEN: 54, RSA: 56, UZB: 57, KSA: 58,
-  IRQ: 58, COD: 60, CRC: 54, IRL: 60, JOR: 64, ALB: 65, MKD: 65,
-  CPV: 64, NIR: 67, JAM: 67, ISL: 73, GHA: 73, MNE: 74, BIH: 76,
-  HON: 81, BOL: 84, SVN: 56, KOS: 88, HAI: 88, NZL: 89, CUR: 90,
-  PAN: 39
+  AUT: 23, ECU: 24, CHI: 25, AUS: 26, TUR: 28, WAL: 30,
+  SRB: 30, CAN: 31, CMR: 32, POL: 33, EGY: 35, ALG: 36, HUN: 38, CIV: 39,
+  SCO: 39, PAN: 39, NGA: 41, NOR: 42, CZE: 43, FIN: 44, SWE: 46,
+  PER: 47, ROU: 47, TUN: 49, PAR: 50, GRE: 50,
+  SVK: 51, QAT: 53, CRC: 54, VEN: 54, RSA: 56, SVN: 56, UZB: 57, KSA: 58,
+  IRQ: 58, COD: 60, IRL: 60, CPV: 64, JOR: 64, ALB: 65, MKD: 65,
+  NIR: 67, JAM: 67, ISL: 73, GHA: 73, MNE: 74, BIH: 76,
+  HON: 81, BOL: 84, KOS: 88, HAI: 88, NZL: 89, CUR: 90
 };
 
 /* Utökade team-detaljer: tränare, key players, recent form */
@@ -2441,7 +2443,9 @@ function PodiumStep({ p, place, prize, isPre, h }) {
   );
 }
 
-/* StadiumHero - roterande Wikipedia-bilder av VM 2026:s 16 host-arenor */
+/* StadiumHero - mosaik med 6 paneler av VM 2026:s 16 host-arenor.
+   Varje panel cyklar genom sin egen del av arena-poolen så hela
+   mosaiken byts ut kontinuerligt. */
 const WC_STADIUMS = [
   "MetLife Stadium", "SoFi Stadium", "AT&T Stadium", "Mercedes-Benz Stadium",
   "NRG Stadium", "Lincoln Financial Field", "Levi's Stadium", "Lumen Field",
@@ -2449,51 +2453,89 @@ const WC_STADIUMS = [
   "Estadio Azteca", "Estadio Akron", "Estadio BBVA",
   "BMO Field", "BC Place"
 ];
-function StadiumHero(){
-  const [idx, setIdx] = React.useState(0);
+
+function HeroTile({ pool, offset, area, delay, kenBurns }){
+  const [idx, setIdx] = React.useState(offset % pool.length);
   React.useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % WC_STADIUMS.length), 4500);
+    const t = setInterval(() => setIdx(i => (i + 1) % pool.length), 5200);
     return () => clearInterval(t);
+  }, [pool.length]);
+  const url = useWikiPhoto(pool[idx]);
+  return (
+    <div style={{ position: "relative", gridArea: area, overflow: "hidden",
+      background: "linear-gradient(135deg, var(--deep), color-mix(in oklab, var(--cool) 30%, var(--deep)))" }}>
+      {url && (
+        <div key={"t-"+area+"-"+idx} style={{ position: "absolute", inset: 0,
+          backgroundImage: `url(${url})`, backgroundSize: "cover", backgroundPosition: "center",
+          animation: `${kenBurns ? "kenBurns" : "tileFade"} 5.2s ease-out both`,
+          animationDelay: (delay || 0) + "ms" }} />
+      )}
+      {/* tone-färgad mesh ovanpå för att blanda med VM-paletten */}
+      <div style={{ position: "absolute", inset: 0,
+        background: "linear-gradient(135deg, color-mix(in oklab, var(--hot) 18%, transparent), transparent 60%)",
+        pointerEvents: "none" }} />
+    </div>
+  );
+}
+
+function StadiumHero(){
+  // Dela upp arenorna i 6 disjunkta pooler (1 per panel) så mosaiken
+  // alltid visar 6 olika arenor samtidigt.
+  const chunks = React.useMemo(() => {
+    const n = 6;
+    const out = Array.from({length: n}, () => []);
+    WC_STADIUMS.forEach((s, i) => out[i % n].push(s));
+    return out;
   }, []);
-  // Förladda alla bilder så vi har hela sviten cachead
-  const urls = WC_STADIUMS.map(name => useWikiPhoto(name));
-  const current = urls[idx];
-  const next = urls[(idx + 1) % urls.length];
-  const stadium = WC_STADIUMS[idx];
   return (
     <div style={{ position: "relative", borderRadius: "var(--r-lg)", overflow: "hidden", marginBottom: 16,
-      boxShadow: "var(--shadow-lift)", background: "var(--deep)", height: 200 }}>
-      {/* Bilden - fade in genom opacity-transition */}
-      {current && (
-        <div key={"img-"+idx} style={{ position: "absolute", inset: 0,
-          backgroundImage: `url(${current})`, backgroundSize: "cover", backgroundPosition: "center",
-          animation: "stadiumFade 4.5s ease-out both" }} />
-      )}
-      {/* Förladda nästa diskret */}
-      {next && <img src={next} alt="" style={{ display: "none" }} />}
-      {/* Gradient overlay för läsbarhet */}
+      boxShadow: "var(--shadow-lift)", background: "var(--deep)" }}>
+      {/* Mosaik: 4 kolumner x 4 rader, 6 paneler i unika storlekar */}
+      <div style={{ display: "grid",
+        gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
+        gridTemplateRows: "1fr 1fr 1fr 1fr",
+        gap: 4,
+        height: 320,
+        minHeight: 280 }} className="stadium-mosaic">
+        <HeroTile pool={chunks[0]} offset={0} area="1 / 1 / 4 / 2" delay={0}   kenBurns />
+        <HeroTile pool={chunks[1]} offset={1} area="1 / 2 / 2 / 4" delay={200} />
+        <HeroTile pool={chunks[2]} offset={2} area="1 / 4 / 3 / 5" delay={400} kenBurns />
+        <HeroTile pool={chunks[3]} offset={3} area="2 / 2 / 4 / 3" delay={600} />
+        <HeroTile pool={chunks[4]} offset={4} area="2 / 3 / 4 / 4" delay={800} kenBurns />
+        <HeroTile pool={chunks[5]} offset={5} area="3 / 4 / 5 / 5" delay={1000} />
+        <HeroTile pool={chunks[0]} offset={2} area="4 / 1 / 5 / 4" delay={1200} />
+      </div>
+
+      {/* Center-overlay: dark gradient + text */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
-        background: "linear-gradient(to top, rgba(10,5,18,.86), rgba(10,5,18,.30) 55%, rgba(10,5,18,.55))" }} />
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={20} height={15} /></div>
-      <div style={{ position: "absolute", left: 16, bottom: 14, right: 16, pointerEvents: "none" }}>
-        <div className="display" style={{ color: "#fff", fontSize: 24, fontWeight: "var(--display-weight)",
-          textShadow: "0 2px 12px rgba(0,0,0,.65)" }}>Hela världen, en pott</div>
-        <div style={{ color: "rgba(255,255,255,.92)", fontWeight: 700, fontSize: 12.5,
-          textShadow: "0 1px 4px rgba(0,0,0,.7)", marginTop: 2 }}>USA · Mexiko · Kanada · sommaren 2026</div>
-        <div style={{ color: "rgba(255,255,255,.78)", fontWeight: 600, fontSize: 11,
-          textShadow: "0 1px 3px rgba(0,0,0,.6)", marginTop: 6,
-          display: "inline-flex", alignItems: "center", gap: 5 }}>
-          📍 <span>{stadium}</span>
+        background: "radial-gradient(70% 80% at 50% 100%, rgba(10,5,18,.92), rgba(10,5,18,.35) 55%, rgba(10,5,18,.55))" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={22} height={16} /></div>
+
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0,
+        padding: "22px 22px 18px", pointerEvents: "none" }}>
+        <div className="display" style={{ color: "#fff", fontSize: 30, fontWeight: "var(--display-weight)",
+          textShadow: "0 4px 18px rgba(0,0,0,.7)", lineHeight: 1.02 }}>
+          Hela världen, en pott
+        </div>
+        <div style={{ color: "rgba(255,255,255,.95)", fontWeight: 700, fontSize: 13.5,
+          textShadow: "0 1px 5px rgba(0,0,0,.7)", marginTop: 4,
+          display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span>🇺🇸 USA</span><span style={{ opacity: .4 }}>·</span>
+          <span>🇲🇽 Mexiko</span><span style={{ opacity: .4 }}>·</span>
+          <span>🇨🇦 Kanada</span><span style={{ opacity: .4 }}>·</span>
+          <span style={{ color: "rgba(255,255,255,.75)" }}>sommaren 2026</span>
+        </div>
+        <div style={{ color: "rgba(255,255,255,.78)", fontWeight: 600, fontSize: 11.5,
+          textShadow: "0 1px 3px rgba(0,0,0,.7)", marginTop: 8 }}>
+          16 städer · 104 matcher · en pott på 2 700 kr
         </div>
       </div>
-      {/* dots */}
-      <div style={{ position: "absolute", top: 12, right: 14, display: "flex", gap: 4, pointerEvents: "none" }}>
-        {WC_STADIUMS.map((_, i) => (
-          <span key={i} style={{ width: 6, height: 6, borderRadius: "50%",
-            background: i === idx ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.32)",
-            transition: "background .3s" }} />
-        ))}
-      </div>
+
+      <style>{`
+        @media (max-width: 540px){
+          .stadium-mosaic { height: 240px !important; }
+        }
+      `}</style>
     </div>
   );
 }
