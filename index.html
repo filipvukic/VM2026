@@ -1481,10 +1481,314 @@ function Confetti({ count = 40 }) {
   );
 }
 
+/* ---------- VM-historik per landslag ---------- */
+const WC_HISTORY = {
+  BRA: { titles: 5, lastTitle: 2002, runnerUp: 2, third: 2, semis: 11, apps: 22, best: "Vinnare (1958, 1962, 1970, 1994, 2002)" },
+  GER: { titles: 4, lastTitle: 2014, runnerUp: 4, third: 4, semis: 13, apps: 20, best: "Vinnare (1954, 1974, 1990, 2014)" },
+  ITA: { titles: 4, lastTitle: 2006, runnerUp: 2, third: 1, semis: 6, apps: 18, best: "Vinnare (1934, 1938, 1982, 2006)" },
+  ARG: { titles: 3, lastTitle: 2022, runnerUp: 3, third: 0, semis: 6, apps: 18, best: "Vinnare (1978, 1986, 2022)" },
+  FRA: { titles: 2, lastTitle: 2018, runnerUp: 2, third: 2, semis: 7, apps: 16, best: "Vinnare (1998, 2018)" },
+  URU: { titles: 2, lastTitle: 1950, runnerUp: 0, third: 0, semis: 5, apps: 14, best: "Vinnare (1930, 1950)" },
+  ENG: { titles: 1, lastTitle: 1966, runnerUp: 0, third: 0, semis: 3, apps: 16, best: "Vinnare (1966)" },
+  ESP: { titles: 1, lastTitle: 2010, runnerUp: 0, third: 0, semis: 1, apps: 16, best: "Vinnare (2010)" },
+  NED: { titles: 0, runnerUp: 3, third: 1, semis: 5, apps: 11, best: "Final 1974, 1978, 2010" },
+  HUN: { titles: 0, runnerUp: 2, semis: 2, apps: 9, best: "Final 1938, 1954" },
+  CZE: { titles: 0, runnerUp: 2, semis: 3, apps: 9, best: "Final 1934, 1962 (som Tjeckoslovakien)" },
+  SWE: { titles: 0, runnerUp: 1, third: 2, semis: 4, apps: 12, best: "Final 1958, brons 1950, 1994" },
+  CRO: { titles: 0, runnerUp: 1, third: 2, semis: 2, apps: 6, best: "Final 2018, brons 1998, 2022" },
+  POR: { titles: 0, third: 1, semis: 2, apps: 8, best: "Brons 1966, fyra 2006" },
+  POL: { titles: 0, third: 2, semis: 2, apps: 9, best: "Brons 1974, 1982" },
+  BEL: { titles: 0, third: 1, semis: 2, apps: 14, best: "Brons 2018, fyra 1986" },
+  AUT: { titles: 0, third: 1, semis: 1, apps: 7, best: "Brons 1954" },
+  CHI: { titles: 0, third: 1, semis: 1, apps: 9, best: "Brons 1962 (hemmaplan)" },
+  TUR: { titles: 0, third: 1, semis: 1, apps: 2, best: "Brons 2002" },
+  USA: { titles: 0, third: 1, semis: 1, apps: 11, best: "Brons 1930 (medvärd 1994, 2026)" },
+  KOR: { titles: 0, semis: 1, apps: 11, best: "Fyra 2002 (medvärd)" },
+  MEX: { titles: 0, apps: 17, best: "Kvart 1970, 1986 (båda hemma)" },
+  GHA: { titles: 0, apps: 4, best: "Kvart 2010" },
+  SEN: { titles: 0, apps: 3, best: "Kvart 2002" },
+  CMR: { titles: 0, apps: 8, best: "Kvart 1990" },
+  CRC: { titles: 0, apps: 6, best: "Kvart 2014" },
+  COL: { titles: 0, apps: 6, best: "Kvart 2014" },
+  PAR: { titles: 0, apps: 8, best: "Kvart 2010" },
+  JPN: { titles: 0, apps: 7, best: "Åttondel (2002, 2010, 2018, 2022)" },
+  DEN: { titles: 0, apps: 5, best: "Kvart 1998" },
+  MAR: { titles: 0, semis: 1, apps: 6, best: "Fyra 2022 (första AFC-/CAF-laget)" },
+  AUS: { titles: 0, apps: 6, best: "Åttondel 2006, 2022" },
+  IRN: { titles: 0, apps: 6 },
+  TUN: { titles: 0, apps: 6 },
+  NGA: { titles: 0, apps: 6, best: "Åttondel 1994, 1998, 2014" },
+  SUI: { titles: 0, apps: 12, best: "Kvart 1934, 1938, 1954" },
+  ALG: { titles: 0, apps: 4, best: "Åttondel 2014" },
+  CIV: { titles: 0, apps: 3 },
+  EGY: { titles: 0, apps: 3 },
+  PAN: { titles: 0, apps: 1 },
+  JOR: { titles: 0, apps: 0, best: "Debutant 2026" },
+  UZB: { titles: 0, apps: 0, best: "Debutant 2026" },
+  CAN: { titles: 0, apps: 2, best: "Gruppspel 1986, 2022 (medvärd 2026)" },
+  KSA: { titles: 0, apps: 6, best: "Åttondel 1994" },
+  ECU: { titles: 0, apps: 4, best: "Åttondel 2006" },
+  RSA: { titles: 0, apps: 3 },
+  HON: { titles: 0, apps: 3 },
+  NZL: { titles: 0, apps: 2 },
+  SRB: { titles: 0, apps: 4, best: "Som FR Jugoslavien: kvart 1990" }
+};
+
+/* FIFA-rankingen (approximerat november 2025) */
+const FIFA_RANKING_DATE = "Nov 2025";
+const FIFA_RANKING = {
+  ARG: 1, FRA: 2, ESP: 3, ENG: 4, BRA: 5, POR: 6, NED: 7, BEL: 8,
+  CRO: 9, ITA: 10, URU: 11, GER: 12, COL: 13, MAR: 14, JPN: 15,
+  USA: 16, SUI: 17, IRN: 18, MEX: 19, SEN: 20, DEN: 21, KOR: 22,
+  AUT: 23, ECU: 24, CHI: 25, AUS: 26, TUR: 28, CAN: 30, WAL: 30,
+  SRB: 30, CMR: 32, POL: 33, EGY: 35, ALG: 36, HUN: 38, CIV: 39,
+  SCO: 39, NGA: 41, NOR: 42, PER: 47, ROU: 47, TUN: 49, PAR: 50,
+  SVK: 51, GRE: 50, QAT: 53, VEN: 54, RSA: 56, UZB: 57, KSA: 58,
+  IRQ: 58, COD: 60, CRC: 54, IRL: 60, JOR: 64, ALB: 65, MKD: 65,
+  CPV: 64, NIR: 67, JAM: 67, ISL: 73, GHA: 73, MNE: 74, BIH: 76,
+  HON: 81, BOL: 84, SVN: 56, KOS: 88, HAI: 88, NZL: 89, CUR: 90,
+  PAN: 39
+};
+
+/* Utökade team-detaljer: tränare, key players, recent form */
+const TEAM_DETAILS = {
+  ARG: { coach: "Lionel Scaloni", stars: ["Lionel Messi", "Lautaro Martínez", "Julián Álvarez"], form: "WWWDW", fifaPts: 1879 },
+  FRA: { coach: "Didier Deschamps", stars: ["Kylian Mbappé", "Antoine Griezmann", "Aurélien Tchouaméni"], form: "WWWWL", fifaPts: 1859 },
+  ESP: { coach: "Luis de la Fuente", stars: ["Rodri", "Lamine Yamal", "Pedri"], form: "WWWWW", fifaPts: 1855 },
+  ENG: { coach: "Thomas Tuchel", stars: ["Jude Bellingham", "Harry Kane", "Cole Palmer"], form: "WWDWW", fifaPts: 1820 },
+  BRA: { coach: "Dorival Júnior", stars: ["Vinícius Júnior", "Rodrygo", "Vitor Roque"], form: "WDLWW", fifaPts: 1789 },
+  POR: { coach: "Roberto Martínez", stars: ["Cristiano Ronaldo", "Bruno Fernandes", "Bernardo Silva"], form: "WWWLW", fifaPts: 1772 },
+  NED: { coach: "Ronald Koeman", stars: ["Virgil van Dijk", "Frenkie de Jong", "Cody Gakpo"], form: "WDWWW", fifaPts: 1754 },
+  BEL: { coach: "Rudi Garcia", stars: ["Kevin De Bruyne", "Romelu Lukaku", "Jérémy Doku"], form: "WWLWD", fifaPts: 1735 },
+  CRO: { coach: "Zlatko Dalić", stars: ["Luka Modrić", "Joško Gvardiol", "Mateo Kovačić"], form: "DWLDW", fifaPts: 1707 },
+  ITA: { coach: "Luciano Spalletti", stars: ["Federico Chiesa", "Nicolò Barella", "Gianluigi Donnarumma"], form: "WDWWL", fifaPts: 1718 },
+  GER: { coach: "Julian Nagelsmann", stars: ["Florian Wirtz", "Jamal Musiala", "Kai Havertz"], form: "WWDWW", fifaPts: 1726 },
+  COL: { coach: "Néstor Lorenzo", stars: ["James Rodríguez", "Luis Díaz", "Davinson Sánchez"], form: "WDWWL", fifaPts: 1721 },
+  URU: { coach: "Marcelo Bielsa", stars: ["Federico Valverde", "Darwin Núñez", "Ronald Araújo"], form: "WLWDW", fifaPts: 1719 },
+  MAR: { coach: "Walid Regragui", stars: ["Achraf Hakimi", "Hakim Ziyech", "Yassine Bounou"], form: "WWDWW", fifaPts: 1694 },
+  MEX: { coach: "Javier Aguirre", stars: ["Hirving Lozano", "Edson Álvarez", "Raúl Jiménez"], form: "WDLWW", fifaPts: 1671 },
+  JPN: { coach: "Hajime Moriyasu", stars: ["Takefusa Kubo", "Wataru Endo", "Kaoru Mitoma"], form: "WWWLW", fifaPts: 1666 },
+  USA: { coach: "Mauricio Pochettino", stars: ["Christian Pulisic", "Weston McKennie", "Tyler Adams"], form: "WDLDW", fifaPts: 1660 },
+  SUI: { coach: "Murat Yakin", stars: ["Granit Xhaka", "Manuel Akanji", "Breel Embolo"], form: "DWDLW", fifaPts: 1670 },
+  IRN: { coach: "Amir Ghalenoei", stars: ["Mehdi Taremi", "Sardar Azmoun", "Alireza Jahanbakhsh"], form: "WWLWW", fifaPts: 1653 },
+  KOR: { coach: "Hong Myung-bo", stars: ["Son Heung-min", "Kim Min-jae", "Lee Kang-in"], form: "WLWDW", fifaPts: 1639 },
+  SEN: { coach: "Pape Thiaw", stars: ["Sadio Mané", "Kalidou Koulibaly", "Édouard Mendy"], form: "WWDWL", fifaPts: 1651 },
+  AUS: { coach: "Tony Popovic", stars: ["Mat Ryan", "Ajdin Hrustic", "Mathew Leckie"], form: "WLDWW", fifaPts: 1551 },
+  CAN: { coach: "Jesse Marsch", stars: ["Alphonso Davies", "Jonathan David", "Stephen Eustáquio"], form: "WLWDW", fifaPts: 1573 },
+  SWE: { coach: "Jon Dahl Tomasson", stars: ["Alexander Isak", "Viktor Gyökeres", "Dejan Kulusevski"], form: "LWWDW", fifaPts: 1517 },
+  NOR: { coach: "Ståle Solbakken", stars: ["Erling Haaland", "Martin Ødegaard", "Alexander Sørloth"], form: "WWWDW", fifaPts: 1531 }
+};
+
+/* Hårdkodade FIFA 2026 KO-arenor (M73-M104) */
+const KO_VENUES = {
+  73: { stadium: "Los Angeles Stadium", city: "Los Angeles" },
+  74: { stadium: "Houston Stadium", city: "Houston" },
+  75: { stadium: "Boston Stadium", city: "Boston" },
+  76: { stadium: "Monterrey Stadium", city: "Monterrey" },
+  77: { stadium: "Dallas Stadium", city: "Dallas" },
+  78: { stadium: "New York/New Jersey Stadium", city: "New Jersey" },
+  79: { stadium: "Mexico City Stadium", city: "Mexico City" },
+  80: { stadium: "Atlanta Stadium", city: "Atlanta" },
+  81: { stadium: "Seattle Stadium", city: "Seattle" },
+  82: { stadium: "San Francisco Bay Area Stadium", city: "San Francisco Bay Area" },
+  83: { stadium: "Los Angeles Stadium", city: "Los Angeles" },
+  84: { stadium: "Toronto Stadium", city: "Toronto" },
+  85: { stadium: "BC Place Vancouver", city: "Vancouver" },
+  86: { stadium: "Dallas Stadium", city: "Dallas" },
+  87: { stadium: "Miami Stadium", city: "Miami" },
+  88: { stadium: "Kansas City Stadium", city: "Kansas City" },
+  89: { stadium: "Houston Stadium", city: "Houston" },
+  90: { stadium: "Philadelphia Stadium", city: "Philadelphia" },
+  91: { stadium: "New York/New Jersey Stadium", city: "New Jersey" },
+  92: { stadium: "Mexico City Stadium", city: "Mexico City" },
+  93: { stadium: "Dallas Stadium", city: "Dallas" },
+  94: { stadium: "Seattle Stadium", city: "Seattle" },
+  95: { stadium: "Atlanta Stadium", city: "Atlanta" },
+  96: { stadium: "BC Place Vancouver", city: "Vancouver" },
+  97: { stadium: "Boston Stadium", city: "Boston" },
+  98: { stadium: "Los Angeles Stadium", city: "Los Angeles" },
+  99: { stadium: "Miami Stadium", city: "Miami" },
+ 100: { stadium: "Kansas City Stadium", city: "Kansas City" },
+ 101: { stadium: "Dallas Stadium", city: "Dallas" },
+ 102: { stadium: "Atlanta Stadium", city: "Atlanta" },
+ 103: { stadium: "Miami Stadium", city: "Miami" },
+ 104: { stadium: "New York/New Jersey Stadium", city: "New Jersey" }
+};
+
+/* Team-rating för odds-beräkning */
+function teamRating(code){
+  const h = WC_HISTORY[code];
+  let r = 70;
+  if(h){
+    if(h.titles)   r += 4 + h.titles * 2;
+    if(h.runnerUp) r += h.runnerUp * 1.2;
+    if(h.third)    r += h.third * 0.8;
+    if(h.semis)    r += Math.min(8, h.semis * 0.6);
+    if(h.apps)     r += Math.min(4, h.apps * 0.15);
+  }
+  const bumps = { ARG: 4, FRA: 4, ESP: 3, ENG: 3, BRA: 3, POR: 3, NED: 2, GER: 2, MAR: 2, CRO: 2, BEL: 1, USA: 1 };
+  if(bumps[code]) r += bumps[code];
+  // FIFA-ranking bonus (lägre rank = bättre)
+  const fr = FIFA_RANKING[code];
+  if(fr && fr <= 15) r += (16 - fr) * 0.4;
+  return Math.min(95, Math.round(r));
+}
+
+/* H/D/A% från lagrating + hemmaplansbonus */
+function matchOdds(homeCode, awayCode){
+  if(!homeCode || !awayCode) return null;
+  const rH = teamRating(homeCode) + 3;
+  const rA = teamRating(awayCode);
+  const diff = rH - rA;
+  const pHwin = 1 / (1 + Math.exp(-diff / 7));
+  const pAwin = 1 / (1 + Math.exp(diff / 7));
+  const closeness = 1 - Math.abs(pHwin - pAwin);
+  const pD = Math.max(0.10, Math.min(0.34, 0.18 + closeness * 0.20));
+  const raw = pHwin + pAwin + pD;
+  const h = pHwin / raw, d = pD / raw, a = pAwin / raw;
+  const round = (x) => Math.round(x * 100);
+  let H = round(h), D = round(d), A = round(a);
+  const delta = 100 - (H + D + A);
+  if(delta !== 0) H += delta;
+  return { H, D, A };
+}
+
+/* ---------- Wikipedia-foton för stjärnspelare ---------- */
+const _wikiCache = (() => {
+  try { return JSON.parse(localStorage.getItem("wp_photo_cache_v3") || "{}"); }
+  catch { return {}; }
+})();
+const _wikiInflight = {};
+function _saveWikiCache(){
+  try { localStorage.setItem("wp_photo_cache_v3", JSON.stringify(_wikiCache)); } catch {}
+}
+const WIKI_TITLE_MAP = {
+  "vitinha":          ["Vitinha (footballer, born 2000)", "Vítor Machado Ferreira"],
+  "raya":             ["David Raya"],
+  "bruno fernanch":   ["Bruno Fernandes"],
+  "bruno fernandes":  ["Bruno Fernandes"],
+  "yamal":            ["Lamine Yamal"],
+  "lamine yamal":     ["Lamine Yamal"],
+  "kylian mbappé":    ["Kylian Mbappé"],
+  "kylian mbappe":    ["Kylian Mbappé"],
+  "mbappé":           ["Kylian Mbappé"],
+  "mbappe":           ["Kylian Mbappé"],
+  "vinícius jr":      ["Vinícius Júnior"],
+  "vinicius jr":      ["Vinícius Júnior"],
+  "vinicius junior":  ["Vinícius Júnior"],
+  "vinícius junior":  ["Vinícius Júnior"],
+  "jude bellingham":  ["Jude Bellingham"],
+  "bellingham":       ["Jude Bellingham"],
+  "erling haaland":   ["Erling Haaland"],
+  "haaland":          ["Erling Haaland"],
+  "lautaro martínez": ["Lautaro Martínez"],
+  "lautaro martinez": ["Lautaro Martínez"],
+  "rafael leão":      ["Rafael Leão"],
+  "rafael leao":      ["Rafael Leão"],
+  "florian wirtz":    ["Florian Wirtz"],
+  "pedri":            ["Pedri"],
+  "khvicha kvaratskhelia": ["Khvicha Kvaratskhelia"],
+  "cole palmer":      ["Cole Palmer"],
+  "désiré doué":      ["Désiré Doué"],
+  "doué":             ["Désiré Doué"],
+  "emiliano martínez":["Emiliano Martínez (footballer, born 1992)"],
+  "emiliano martinez":["Emiliano Martínez (footballer, born 1992)"],
+  "gianluigi donnarumma": ["Gianluigi Donnarumma"],
+  "donnarumma":       ["Gianluigi Donnarumma"],
+  "mike maignan":     ["Mike Maignan"],
+  "unai simón":       ["Unai Simón"],
+  "unai simon":       ["Unai Simón"],
+  "jordan pickford":  ["Jordan Pickford"],
+  "yann sommer":      ["Yann Sommer"],
+  "harry kane":       ["Harry Kane"],
+  "endrick":          ["Endrick"],
+  "kobbie mainoo":    ["Kobbie Mainoo"],
+  "arda güler":       ["Arda Güler"],
+  "arda guler":       ["Arda Güler"],
+  "pau cubarsí":      ["Pau Cubarsí"],
+  "pau cubarsi":      ["Pau Cubarsí"],
+  "lionel messi":     ["Lionel Messi"],
+  "messi":            ["Lionel Messi"],
+  "cristiano ronaldo":["Cristiano Ronaldo"],
+  "ronaldo":          ["Cristiano Ronaldo"],
+  "son heung-min":    ["Son Heung-min"]
+};
+function resolveWikiCandidates(name){
+  if(!name) return [];
+  const key = String(name).toLowerCase().trim();
+  return WIKI_TITLE_MAP[key] || [name];
+}
+function useWikiPhoto(name){
+  const candidates = React.useMemo(() => resolveWikiCandidates(name), [name]);
+  const cacheKey = candidates.join("|");
+  const [url, setUrl] = React.useState(() => (cacheKey in _wikiCache) ? _wikiCache[cacheKey] : null);
+  React.useEffect(() => {
+    if(!candidates.length) return;
+    if(cacheKey in _wikiCache){ setUrl(_wikiCache[cacheKey]); return; }
+    if(_wikiInflight[cacheKey]){
+      _wikiInflight[cacheKey].then(u => setUrl(u));
+      return;
+    }
+    const tryNext = async (i) => {
+      if(i >= candidates.length) return null;
+      try {
+        const api = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages"
+                  + "&pithumbsize=400&redirects=1&titles=" + encodeURIComponent(candidates[i]);
+        const res = await fetch(api);
+        if(!res.ok) return tryNext(i + 1);
+        const json = await res.json();
+        const pages = (json && json.query && json.query.pages) || {};
+        const first = Object.values(pages)[0];
+        const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
+        if(thumb) return thumb;
+        return tryNext(i + 1);
+      } catch (e) { return tryNext(i + 1); }
+    };
+    _wikiInflight[cacheKey] = tryNext(0)
+      .then(thumb => { _wikiCache[cacheKey] = thumb; _saveWikiCache(); return thumb; })
+      .finally(() => { delete _wikiInflight[cacheKey]; });
+    _wikiInflight[cacheKey].then(u => setUrl(u));
+  }, [cacheKey]);
+  return url;
+}
+
+/* ---------- StarPhoto ---------- */
+function slugifyName(name) {
+  return String(name || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/å|ä/g, "a").replace(/ö/g, "o").replace(/[^a-z0-9 ]/g, "")
+    .trim().replace(/\s+/g, "-");
+}
+function StarPhoto({ name, countryCode, size = 32, showFlag = true }) {
+  const wikiUrl = useWikiPhoto(name);
+  const [err, setErr] = React.useState(false);
+  const initials = String(name || "?").split(/\s+/).slice(0,2).map(w => (w[0]||"")).join("").toUpperCase();
+  return (
+    <span style={{ position: "relative", width: size, height: size, flex: "0 0 auto", display: "inline-block",
+      borderRadius: "50%", overflow: "hidden",
+      background: "linear-gradient(140deg, var(--cool), color-mix(in oklab, var(--cool) 60%, #000 18%))",
+      boxShadow: "inset 0 0 0 1px rgba(0,0,0,.18)" }}>
+      <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+        color: "#fff", fontWeight: 800, fontSize: size * 0.36 }}>{initials}</span>
+      {!err && wikiUrl && (
+        <img src={wikiUrl} alt="" loading="lazy" onError={() => setErr(true)}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      )}
+      {showFlag && countryCode && (
+        <span style={{ position: "absolute", right: -2, bottom: -2, borderRadius: 3, overflow: "hidden",
+          boxShadow: "0 0 0 1.5px var(--paper)" }}>
+          <Flag code={countryCode} size={Math.max(11, Math.round(size * 0.34))} shape="rect" />
+        </span>
+      )}
+    </span>
+  );
+}
+
 Object.assign(window, {
   VM_PALETTES, VM_FONTS, applyTheme, groupColor, groupColorSoft,
-  Flag, TeamName, TeamLabel, Avatar, svTime, svDateKey, svDayLabel,
-  useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting
+  Flag, TeamName, TeamLabel, Avatar, StarPhoto, slugifyName, svTime, svDateKey, svDayLabel,
+  useCountUp, LiveDot, Chip, FormPills, StatBar, MatchCard, roundLabel, SectionTitle, Confetti, Bunting,
+  WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS, KO_VENUES,
+  teamRating, matchOdds, useWikiPhoto
 });
 
 /* ---------- vimplar (bunting) — VM-/folkfestkänsla ---------- */
@@ -1732,6 +2036,91 @@ function PoolResultBlock({ data, m }) {
   );
 }
 
+function WinChanceBlock({ m }){
+  if(!m.home || !m.away) return null;
+  const o = window.VM.matchOdds(m.home, m.away);
+  if(!o) return null;
+  return (
+    <MiniBlock title="Vinstchans inför avspark">
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 12, alignItems: "end" }}>
+        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--hot)" }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>1 · Hemma</div>
+          <div className="display" style={{ fontSize: 36, color: "var(--hot)", marginTop: 2, lineHeight: 1 }}>{o.H}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+        </div>
+        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--ink-soft)" }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>X · Lika</div>
+          <div className="display" style={{ fontSize: 36, color: "var(--ink)", marginTop: 2, lineHeight: 1 }}>{o.D}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+        </div>
+        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--cool)" }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>2 · Borta</div>
+          <div className="display" style={{ fontSize: 36, color: "var(--cool)", marginTop: 2, lineHeight: 1 }}>{o.A}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 2, height: 8, borderRadius: 4, overflow: "hidden", marginBottom: 12 }}>
+        <span style={{ flex: o.H, background: "var(--hot)" }} />
+        <span style={{ flex: o.D, background: "var(--ink-soft)" }} />
+        <span style={{ flex: o.A, background: "var(--cool)" }} />
+      </div>
+      <div style={{ fontSize: 11.5, color: "var(--ink-soft)", fontStyle: "italic", lineHeight: 1.5,
+        paddingTop: 10, borderTop: "1px dashed var(--line)" }}>
+        <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>Källa:</strong>{" "}
+        Beräknad utifrån lagens VM-historiska meriter (titlar, semifinaler, antal slutspel) +
+        en logistisk modell på ratingdifferensen + <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>+3p hemmaplansbonus</strong>.
+        Inte officiella odds.
+      </div>
+    </MiniBlock>
+  );
+}
+
+function VenueRefsBlock({ m }){
+  // Plocka venue från KO_VENUES för KO-matcher om engine saknar venue
+  let venue = m.venue;
+  if((!venue || !venue.stadium) && m.id){
+    const fifaMatch = m.id.match(/^(r32|r16|qf|sf|third|final)_(\d+)$/);
+    // Vi har inte FIFA-nummer per id i adapter — använd m.fifa om designen sätter det
+    if(m.fifa && window.VM.KO_VENUES[m.fifa]) venue = window.VM.KO_VENUES[m.fifa];
+  }
+  // Bonus: använd hemmalagets land som "venue" om vi inte har en stadion
+  const hasVenue = !!(venue && venue.stadium);
+  const refs = (m.referees || []).filter(r => r && r.name);
+  if(!hasVenue && refs.length === 0) return null;
+  const main = refs.find(r => /main|head|huvuddomare|referee/i.test(r.role||"")) || refs[0];
+  const others = refs.filter(r => r !== main);
+  return (
+    <MiniBlock title="Plats & funktionärer">
+      <div style={{ display: "grid", gridTemplateColumns: hasVenue && refs.length > 0 ? "1fr 1fr" : "1fr", gap: 16 }}>
+        {hasVenue && (
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".08em", textTransform: "uppercase" }}>Arena</div>
+            <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--ink)", display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 13 }}>📍</span>
+              <span>{venue.stadium}</span>
+            </div>
+            {venue.city && (
+              <div style={{ marginTop: 2, fontSize: 12.5, fontWeight: 600, color: "var(--ink-soft)" }}>{venue.city}</div>
+            )}
+          </div>
+        )}
+        {refs.length > 0 && (
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".08em", textTransform: "uppercase" }}>Domare</div>
+            {main && (
+              <div style={{ marginTop: 4, fontSize: 14, fontWeight: 700, color: "var(--ink)" }}>
+                {main.name}{main.nationality ? <span style={{ color: "var(--ink-soft)", fontWeight: 500, marginLeft: 4 }}>({main.nationality})</span> : null}
+              </div>
+            )}
+            {others.length > 0 && (
+              <div style={{ marginTop: 4, fontSize: 11.5, fontWeight: 500, color: "var(--ink-soft)" }}>
+                + {others.map(r => r.name).join(", ")}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </MiniBlock>
+  );
+}
+
 function MatchDetail({ data, match, onClose, onTeam }) {
   const m = match;
   const live = m.status === "live", played = m.status === "played", tbd = !m.home || !m.away;
@@ -1786,6 +2175,9 @@ function MatchDetail({ data, match, onClose, onTeam }) {
   return (
     <Sheet onClose={onClose} header={header}>
       <div style={{ paddingTop: 16 }}>
+        {/* Vinstchans FÖRST inför avspark */}
+        {!played && !live && !tbd && <WinChanceBlock m={m} />}
+        {!tbd && <VenueRefsBlock m={m} />}
         {(played || live) && !tbd && (
           <MiniBlock title={live ? "Matchförlopp · pågår" : "Matchförlopp"} pad={false}><Timeline m={m} /></MiniBlock>
         )}
@@ -2112,8 +2504,12 @@ function GroupBadge({ letter, size = 46 }) {
   );
 }
 
-function GroupCard({ letter, table, isPre, onTeam, index }) {
+function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }) {
   const col = groupColor(letter);
+  const [open, setOpen] = React.useState(false);
+  const liveMatches = (matches || []).filter(m => m.status === "live");
+  const liveTeams = new Set();
+  liveMatches.forEach(m => { if(m.home) liveTeams.add(m.home); if(m.away) liveTeams.add(m.away); });
   return (
     <div style={{ background: "var(--paper)", borderRadius: "var(--r-md)", overflow: "hidden",
       border: "1px solid var(--line)", boxShadow: "var(--shadow)" }}>
@@ -2121,6 +2517,14 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
         borderBottom: "1px solid var(--line)" }}>
         <GroupBadge letter={letter} size={42} />
         <div className="display" style={{ fontSize: 21, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>Grupp {letter}</div>
+        {liveMatches.length > 0 && (
+          <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5,
+            padding: "3px 9px", background: "var(--hot)", color: "#fff", borderRadius: 6,
+            fontWeight: 800, fontSize: 10.5 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", animation: "blink 1.4s infinite" }} />
+            LIVE
+          </span>
+        )}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "18px 1fr 24px 24px 24px 42px 28px", gap: 4,
         padding: "7px 14px", fontSize: 10, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".03em",
@@ -2132,14 +2536,18 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
       </div>
       {table.map((r, i) => {
         const q = i < 2, third = i === 2;
+        const playing = liveTeams.has(r.code);
         return (
           <button key={r.code} onClick={() => onTeam(r.code)} style={{ width: "100%", textAlign: "left", display: "grid",
             gridTemplateColumns: "18px 1fr 24px 24px 24px 42px 28px", gap: 4, alignItems: "center", padding: "9px 14px",
             borderBottom: i < 3 ? "1px solid var(--line)" : "none",
-            borderLeft: q ? `3px solid ${col}` : third ? "3px solid var(--gold)" : "3px solid transparent" }}>
+            borderLeft: q ? `3px solid ${col}` : third ? "3px solid var(--gold)" : "3px solid transparent",
+            background: playing ? "color-mix(in oklab, var(--hot) 14%, transparent)" : "transparent" }}>
             <span className="num" style={{ fontSize: 13, fontWeight: 800, color: q ? col : third ? "var(--gold)" : "var(--ink-soft)", textAlign: "center" }}>{isPre ? "·" : r.pos}</span>
             <span style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
-              <Flag code={r.code} size={21} /><TeamName code={r.code} size={13} /></span>
+              <Flag code={r.code} size={21} /><TeamName code={r.code} size={13} />
+              {playing && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hot)", animation: "blink 1.4s infinite", flex: "0 0 auto" }} />}
+            </span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.sp}</span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.v}</span>
             <span className="num" style={{ textAlign: "center", fontSize: 12.5, color: "var(--ink-soft)" }}>{r.f}</span>
@@ -2148,7 +2556,55 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
           </button>
         );
       })}
-      <div style={{ display: "flex", gap: 14, padding: "9px 14px", fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)" }}>
+
+      {/* Gruppens matcher - kollapsbara */}
+      {(matches || []).length > 0 && (
+        <div style={{ borderTop: "1px solid var(--line)" }}>
+          <button onClick={() => setOpen(o => !o)} style={{ width: "100%", display: "flex",
+            justifyContent: "space-between", alignItems: "center", padding: "10px 14px", textAlign: "left",
+            background: "var(--bg2)" }}>
+            <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em",
+              color: "var(--ink-soft)", textTransform: "uppercase" }}>
+              {open ? "Dölj matcher" : `Visa matcher (${matches.length})`}
+            </span>
+            <span style={{ fontSize: 12, color: "var(--ink-soft)",
+              transition: "transform .25s", transform: open ? "rotate(180deg)" : "rotate(0deg)",
+              display: "inline-block" }}>▾</span>
+          </button>
+          {open && matches.slice().sort((a,b) => a.kickoff - b.kickoff).map((m, i) => {
+            const played = m.status === "played";
+            const live = m.status === "live";
+            return (
+              <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%",
+                textAlign: "left", display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 8,
+                alignItems: "center", padding: "8px 14px", borderTop: "1px solid var(--line)",
+                background: live ? "color-mix(in oklab, var(--hot) 10%, transparent)" : "transparent" }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", fontSize: 11.5, fontWeight: 700 }}>
+                  <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={16} />
+                </span>
+                <span style={{ textAlign: "center", minWidth: 56 }}>
+                  {(played || live) ? (
+                    <span className="num" style={{ fontWeight: 800, fontSize: 13, color: live ? "var(--hot)" : "var(--ink)" }}>
+                      {m.ga}–{m.gb}
+                    </span>
+                  ) : (
+                    <span className="num" style={{ fontWeight: 700, fontSize: 11.5, color: "var(--ink-soft)" }}>{svTime(m.kickoff)}</span>
+                  )}
+                  <div style={{ marginTop: 2, fontSize: 9, fontWeight: 800, color: "var(--ink-soft)" }}>
+                    {live ? <LiveDot minute={m.minute} small /> : played ? "SLUT" : svDayLabel(m.kickoff)}
+                  </div>
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, fontWeight: 700 }}>
+                  <Flag code={m.away} size={16} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 14, padding: "9px 14px", fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)",
+        borderTop: "1px solid var(--line)" }}>
         <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: col }} />Vidare</span>
         <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: "var(--gold)" }} />Bästa trea</span>
       </div>
@@ -2156,25 +2612,45 @@ function GroupCard({ letter, table, isPre, onTeam, index }) {
   );
 }
 
-function GroupsView({ data, onTeam }) {
+function GroupsView({ data, onTeam, onOpenMatch }) {
   const isPre = data.state === "pre";
   const [active, setActive] = React.useState("alla");
   const letters = data.groupLetters;
   const shown = active === "alla" ? letters : [active];
+  const matchesByGroup = React.useMemo(() => {
+    const map = {};
+    (data.matches || []).forEach(m => {
+      if(!m.group) return;
+      (map[m.group] = map[m.group] || []).push(m);
+    });
+    return map;
+  }, [data]);
+  const liveCount = (data.allMatches || []).filter(m => m.status === "live" && m.stage === "group").length;
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
-      <SectionTitle kicker="Gruppspel" title="Tabeller" right={<Chip>{isPre ? "Före avspark" : "Spelas nu"}</Chip>} />
+      <SectionTitle kicker="Gruppspel" title="Tabeller"
+        right={liveCount > 0
+          ? <Chip bg="var(--hot)" color="#fff">{liveCount} live nu</Chip>
+          : <Chip>{isPre ? "Före avspark" : "Spelas nu"}</Chip>} />
       <div className="app-scroll" style={{ display: "flex", gap: 7, overflowX: "auto", paddingBottom: 10, marginBottom: 14 }}>
         <button onClick={() => setActive("alla")} style={{ flex: "0 0 auto", padding: "8px 16px", borderRadius: 10, fontWeight: 800, fontSize: 13,
           background: active === "alla" ? "var(--ink)" : "var(--paper)", color: active === "alla" ? "var(--bg)" : "var(--ink)", border: "1px solid var(--line)" }}>Alla</button>
-        {letters.map(L => (
-          <button key={L} onClick={() => setActive(L)} style={{ flex: "0 0 auto", width: 38, height: 37, borderRadius: 10, fontWeight: 800,
-            fontFamily: "var(--font-display)", fontSize: 16, border: "1px solid var(--line)",
-            background: active === L ? groupColor(L) : "var(--paper)", color: active === L ? "#15101F" : groupColor(L) }}>{L}</button>
-        ))}
+        {letters.map(L => {
+          const hasLive = (matchesByGroup[L] || []).some(m => m.status === "live");
+          return (
+            <button key={L} onClick={() => setActive(L)} style={{ flex: "0 0 auto", width: 38, height: 37, borderRadius: 10, fontWeight: 800,
+              fontFamily: "var(--font-display)", fontSize: 16, border: "1px solid var(--line)", position: "relative",
+              background: active === L ? groupColor(L) : "var(--paper)", color: active === L ? "#15101F" : groupColor(L) }}>
+              {L}
+              {hasLive && <span style={{ position: "absolute", top: 4, right: 4, width: 6, height: 6,
+                borderRadius: "50%", background: "var(--hot)", animation: "blink 1.4s infinite" }} />}
+            </button>
+          );
+        })}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 14 }}>
-        {shown.map((L, i) => <GroupCard key={L} letter={L} table={data.groupTables[L]} isPre={isPre} onTeam={onTeam} index={i} />)}
+        {shown.map((L, i) => <GroupCard key={L} letter={L} table={data.groupTables[L]} isPre={isPre}
+          onTeam={onTeam} onOpenMatch={onOpenMatch} matches={matchesByGroup[L]} index={i} />)}
       </div>
     </div>
   );
@@ -2533,6 +3009,89 @@ const NAV = [
 ];
 
 /* ---- lagdetalj ---- */
+function TeamStatsBlock({ code }){
+  const d = window.VM.TEAM_DETAILS[code];
+  const rank = window.VM.FIFA_RANKING[code];
+  if(!d && !rank) return null;
+  const formColor = (c) => c === "W" ? "var(--cool)" : c === "L" ? "var(--hot)" : "var(--ink-soft)";
+  return (
+    <MiniBlock title="Landslags-statistik">
+      {(rank || (d && d.fifaPts)) && (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline",
+          paddingBottom: 12, marginBottom: 12, borderBottom: "1px solid var(--line)" }}>
+          <div>
+            <div style={{ fontSize: 9.5, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>FIFA-ranking · {window.VM.FIFA_RANKING_DATE}</div>
+            <div className="display" style={{ fontSize: 36, color: "var(--ink)", lineHeight: 1, marginTop: 4 }}>
+              #{rank || "-"}
+            </div>
+          </div>
+          {d && d.fifaPts && (
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 9.5, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>FIFA-poäng</div>
+              <div className="num" style={{ fontSize: 22, fontWeight: 800, color: "var(--ink-soft)" }}>{d.fifaPts}</div>
+            </div>
+          )}
+        </div>
+      )}
+      {d && d.coach && (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid var(--line)" }}>
+          <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>Förbundskapten</span>
+          <span style={{ fontWeight: 700, fontSize: 14, color: "var(--ink)" }}>{d.coach}</span>
+        </div>
+      )}
+      {d && d.stars && d.stars.length > 0 && (
+        <div style={{ paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid var(--line)" }}>
+          <div style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase", marginBottom: 6 }}>Stjärnspelare</div>
+          <ul style={{ margin: 0, paddingLeft: 18, color: "var(--ink)", fontSize: 13, lineHeight: 1.7 }}>
+            {d.stars.map((n, i) => <li key={i}>{n}</li>)}
+          </ul>
+        </div>
+      )}
+      {d && d.form && (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-soft)", letterSpacing: ".10em", textTransform: "uppercase" }}>Senaste 5 matcher</span>
+          <div style={{ display: "inline-flex", gap: 4 }}>
+            {d.form.split("").map((c, i) => (
+              <span key={i} className="num" style={{ width: 22, height: 22, borderRadius: 5,
+                background: formColor(c), color: "#FFFFFF", fontSize: 11, fontWeight: 800,
+                display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{c}</span>
+            ))}
+          </div>
+        </div>
+      )}
+    </MiniBlock>
+  );
+}
+
+function TeamHistoryBlock({ code }){
+  const h = window.VM.WC_HISTORY[code];
+  if(!h) return null;
+  const items = [];
+  if(h.apps != null) items.push(["VM-slutspel", String(h.apps), "var(--ink)"]);
+  if(h.titles)    items.push(["Guld", String(h.titles), "var(--gold)"]);
+  if(h.runnerUp)  items.push(["Silver", String(h.runnerUp), "#AEB4BE"]);
+  if(h.third)     items.push(["Brons", String(h.third), "#C77F49"]);
+  if(h.semis)     items.push(["Semifinaler", String(h.semis), "var(--ink)"]);
+  return (
+    <MiniBlock title="VM-historik">
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${items.length}, 1fr)`, gap: 6, marginBottom: h.best ? 10 : 0 }}>
+        {items.map(([lab, val, col], i) => (
+          <div key={i} style={{ textAlign: "center", padding: "2px 0" }}>
+            <div className="display num" style={{ fontSize: 24, color: col, lineHeight: 1, fontWeight: "var(--display-weight)" }}>{val}</div>
+            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".08em", color: "var(--ink-soft)", marginTop: 4, textTransform: "uppercase" }}>{lab}</div>
+          </div>
+        ))}
+      </div>
+      {h.best && (
+        <div style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.5,
+          borderTop: items.length ? "1px solid var(--line)" : "none", paddingTop: items.length ? 10 : 0 }}>
+          {h.best}{h.lastTitle ? ` · Senast 1:a ${h.lastTitle}.` : ""}
+        </div>
+      )}
+    </MiniBlock>
+  );
+}
+
 function TeamSheet({ data, code, onClose, onOpenMatch }) {
   const t = window.VM.TEAMS[code];
   if (!t) return null;
@@ -2560,6 +3119,8 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
   return (
     <Sheet onClose={onClose} header={header}>
       <div style={{ padding: "16px 0 28px" }}>
+        <TeamStatsBlock code={code} />
+        <TeamHistoryBlock code={code} />
         {!isPre && data.forms[code] && data.forms[code].length > 0 && (
           <MiniBlock title="Form">
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -2569,7 +3130,10 @@ function TeamSheet({ data, code, onClose, onOpenMatch }) {
           </MiniBlock>
         )}
         {fans.length > 0 && (
-          <MiniBlock title="Bonustro från poolen">
+          <MiniBlock title={`${fans.length} har laget i sina bonustips`}>
+            <div style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600, marginBottom: 9, lineHeight: 1.45 }}>
+              Spelare i poolen som tror på {window.VM.TEAMS[code] && window.VM.TEAMS[code].name} som vinnare, silver eller brons.
+            </div>
             <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
               {fans.map((p, j) => <span key={p.id} title={p.name} style={{ marginLeft: j === 0 ? 0 : -6 }}><Avatar p={p} size={30} /></span>)}
             </div>
@@ -2633,7 +3197,7 @@ function App() {
       <main>
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)" }}>
           {view === "standings" && <StandingsView data={data} onOpenPlayer={setPlayer} />}
-          {view === "groups" && <GroupsView data={data} onTeam={openTeam} />}
+          {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
           {view === "bonus" && <BonusView data={data} onTeam={openTeam} />}
           {view === "info" && <InfoView />}
