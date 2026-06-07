@@ -264,12 +264,12 @@
   const PLAYER_COLORS = {
     "Albin":"#FF2E6E","Alexander":"#FF8A3D","Björn":"#1FA37A","Casper":"#7A3CF0",
     "Filip":"#0E8FE0","Isac":"#F5B301","Johan":"#E63946","Martin":"#16A0A0","Oskar":"#9B5DE5",
-    "Villiam":"#2DD4BF","Vilgot":"#EC4899","Hampus":"#65A30D"
+    "Vilgot":"#EC4899","Hampus":"#65A30D"
   };
   const PLAYER_SLUGS = {
     "Albin":"albin","Alexander":"alexander","Björn":"bjorn","Casper":"casper",
     "Filip":"filip","Isac":"isac","Johan":"johan","Martin":"martin","Oskar":"oskar",
-    "Villiam":"villiam","Vilgot":"vilgot","Hampus":"hampus"
+    "Vilgot":"vilgot","Hampus":"hampus"
   };
   function playerPhoto(name){
     const slug = PLAYER_SLUGS[name];
@@ -2479,13 +2479,11 @@ function PodiumStep({ p, place, prize, isPre, h }) {
 
 /* StadiumHero - 4 ikoniska arenor (1 Kanada, 1 Mexiko, 2 USA) i diagonala
    skivor. Hög upplösning från Wikimedia (1600px). */
-// 4 fetaste arenorna med klart visuellt karaktäristisk arkitektur:
-//   - SoFi Stadium (LA, USA): modernist, futuristisk - öppningsmatchen för USA
+// 3 fetaste arenorna - en per värdnation:
 //   - MetLife Stadium (NJ, USA): VM-final 2026
-//   - Estadio BBVA (Monterrey, Mexiko): sjukt fet skålformad arena med berget Cerro de la Silla i bakgrunden
+//   - Estadio BBVA (Monterrey, Mexiko): "El Gigante de Acero" med Cerro de la Silla i bakgrunden
 //   - BC Place (Vancouver, Kanada): retraktabelt tak
 const HERO_STADIUMS = [
-  { wiki: "SoFi Stadium",      country: "USA",    cc: "USA", city: "Los Angeles",          note: "Inglewood" },
   { wiki: "MetLife Stadium",   country: "USA",    cc: "USA", city: "New York/New Jersey", note: "VM-final 2026" },
   { wiki: "Estadio BBVA",      country: "Mexiko", cc: "MEX", city: "Monterrey",            note: "El Gigante de Acero" },
   { wiki: "BC Place",          country: "Kanada", cc: "CAN", city: "Vancouver",            note: "Retraktabelt tak" }
@@ -2520,13 +2518,12 @@ function HeroSlice({ stadium, clip, delay, kenBurns, tone, posX, posY }){
 }
 
 function StadiumHero({ pot, playerCount }){
-  // Fyra diagonala skivor som tillsammans täcker rektangeln.
+  // Tre diagonala skivor som tillsammans täcker rektangeln.
   // Lutning ~-15 % från topp till bot.
   const slices = [
-    { stadium: HERO_STADIUMS[0], clip: "polygon(0% 0%, 28% 0%, 13% 100%, 0% 100%)",     kenBurns:true,  tone:"rgba(220,38,38,.28)",  posX:55, posY:38 }, // MetLife
-    { stadium: HERO_STADIUMS[1], clip: "polygon(28.6% 0%, 53% 0%, 38% 100%, 13.6% 100%)", kenBurns:false, tone:"rgba(245,158,11,.26)", posX:50, posY:55 }, // SoFi
-    { stadium: HERO_STADIUMS[2], clip: "polygon(53.6% 0%, 78% 0%, 63% 100%, 38.6% 100%)", kenBurns:true,  tone:"rgba(8,145,178,.24)",  posX:60, posY:45 }, // Azteca
-    { stadium: HERO_STADIUMS[3], clip: "polygon(78.6% 0%, 100% 0%, 100% 100%, 63.6% 100%)", kenBurns:false, tone:"rgba(124,58,237,.30)", posX:45, posY:55 }  // BC Place
+    { stadium: HERO_STADIUMS[0], clip: "polygon(0% 0%, 36% 0%, 21% 100%, 0% 100%)",         kenBurns:true,  tone:"rgba(220,38,38,.28)",  posX:55, posY:38 }, // MetLife
+    { stadium: HERO_STADIUMS[1], clip: "polygon(36.6% 0%, 72% 0%, 57% 100%, 21.6% 100%)",   kenBurns:false, tone:"rgba(8,145,178,.24)",  posX:55, posY:50 }, // Estadio BBVA Monterrey
+    { stadium: HERO_STADIUMS[2], clip: "polygon(72.6% 0%, 100% 0%, 100% 100%, 57.6% 100%)", kenBurns:true,  tone:"rgba(124,58,237,.30)", posX:45, posY:55 }  // BC Place
   ];
 
   return (
@@ -2544,27 +2541,23 @@ function StadiumHero({ pot, playerCount }){
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{
         position: "absolute", inset: 0, pointerEvents: "none", mixBlendMode: "screen"
       }}>
-        <line x1="28" y1="0" x2="13" y2="100" stroke="rgba(255,255,255,.22)" strokeWidth=".22" />
-        <line x1="53" y1="0" x2="38" y2="100" stroke="rgba(255,255,255,.20)" strokeWidth=".22" />
-        <line x1="78" y1="0" x2="63" y2="100" stroke="rgba(255,255,255,.22)" strokeWidth=".22" />
+        <line x1="36" y1="0" x2="21" y2="100" stroke="rgba(255,255,255,.24)" strokeWidth=".26" />
+        <line x1="72" y1="0" x2="57" y2="100" stroke="rgba(255,255,255,.24)" strokeWidth=".26" />
       </svg>
 
-      {/* Flagga + arena-namn etiketter över varje skiva. Använder flagcdn-
-          PNG istället för emoji eftersom flagg-emoji inte renderas som
-          flaggor på Windows/Chrome. */}
+      {/* Flagga per skiva (flagcdn-PNG istället för emoji). */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         {[
-          { i:0, top:14, leftPct:6,  s:slices[0] },
-          { i:1, top:14, leftPct:31, s:slices[1] },
-          { i:2, top:14, leftPct:55, s:slices[2] },
-          { i:3, top:14, leftPct:80, s:slices[3] }
+          { i:0, top:14, leftPct:8,  s:slices[0] },
+          { i:1, top:14, leftPct:42, s:slices[1] },
+          { i:2, top:14, leftPct:78, s:slices[2] }
         ].map(({ i, top, leftPct, s }) => {
           const iso = s.stadium.cc === "USA" ? "us" : s.stadium.cc === "MEX" ? "mx" : "ca";
           return (
             <img key={i} src={`https://flagcdn.com/w80/${iso}.png`} alt=""
               style={{ position: "absolute", top, left: leftPct + "%",
-                width: 26, height: 18, borderRadius: 3, objectFit: "cover",
-                boxShadow: "0 2px 8px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.25)" }} />
+                width: 30, height: 20, borderRadius: 3, objectFit: "cover",
+                boxShadow: "0 2px 10px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.25)" }} />
           );
         })}
       </div>
