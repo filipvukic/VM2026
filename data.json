@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T18:27:43+00:00",
+  "updated_at": "2026-06-11T20:43:36+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -9069,6 +9069,30 @@
       "code": "A",
       "table": [
         {
+          "team": "Mexico",
+          "tla": "MEX",
+          "played": 1,
+          "won": 1,
+          "draw": 0,
+          "lost": 0,
+          "gf": 1,
+          "ga": 0,
+          "gd": 1,
+          "points": 3
+        },
+        {
+          "team": "South Korea",
+          "tla": "KOR",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
           "team": "Czechia",
           "tla": "CZE",
           "played": 0,
@@ -9081,39 +9105,15 @@
           "points": 0
         },
         {
-          "team": "Mexico",
-          "tla": "MEX",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "South Africa",
           "tla": "RSA",
-          "played": 0,
+          "played": 1,
           "won": 0,
           "draw": 0,
-          "lost": 0,
+          "lost": 1,
           "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "South Korea",
-          "tla": "KOR",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
@@ -9187,8 +9187,8 @@
           "points": 0
         },
         {
-          "team": "Morocco",
-          "tla": "MAR",
+          "team": "Haiti",
+          "tla": "HAI",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9199,8 +9199,8 @@
           "points": 0
         },
         {
-          "team": "Haiti",
-          "tla": "HAI",
+          "team": "Morocco",
+          "tla": "MAR",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9228,20 +9228,8 @@
       "code": "D",
       "table": [
         {
-          "team": "Turkey",
-          "tla": "TUR",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "United States",
-          "tla": "USA",
+          "team": "Australia",
+          "tla": "AUS",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9264,8 +9252,20 @@
           "points": 0
         },
         {
-          "team": "Australia",
-          "tla": "AUS",
+          "team": "Turkey",
+          "tla": "TUR",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "United States",
+          "tla": "USA",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9281,18 +9281,6 @@
       "code": "E",
       "table": [
         {
-          "team": "Germany",
-          "tla": "GER",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "Curaçao",
           "tla": "CUW",
           "played": 0,
@@ -9305,8 +9293,8 @@
           "points": 0
         },
         {
-          "team": "Ivory Coast",
-          "tla": "CIV",
+          "team": "Germany",
+          "tla": "GER",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9327,6 +9315,18 @@
           "ga": 0,
           "gd": 0,
           "points": 0
+        },
+        {
+          "team": "Ivory Coast",
+          "tla": "CIV",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
         }
       ]
     },
@@ -9334,8 +9334,8 @@
       "code": "F",
       "table": [
         {
-          "team": "Sweden",
-          "tla": "SWE",
+          "team": "Japan",
+          "tla": "JPN",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9358,8 +9358,8 @@
           "points": 0
         },
         {
-          "team": "Japan",
-          "tla": "JPN",
+          "team": "Sweden",
+          "tla": "SWE",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9387,8 +9387,8 @@
       "code": "G",
       "table": [
         {
-          "team": "Belgium",
-          "tla": "BEL",
+          "team": "Egypt",
+          "tla": "EGY",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9399,8 +9399,8 @@
           "points": 0
         },
         {
-          "team": "Egypt",
-          "tla": "EGY",
+          "team": "Belgium",
+          "tla": "BEL",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9440,18 +9440,6 @@
       "code": "H",
       "table": [
         {
-          "team": "Spain",
-          "tla": "ESP",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "Cape Verde Islands",
           "tla": "CPV",
           "played": 0,
@@ -9466,6 +9454,18 @@
         {
           "team": "Saudi Arabia",
           "tla": "KSA",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Spain",
+          "tla": "ESP",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9493,18 +9493,6 @@
       "code": "I",
       "table": [
         {
-          "team": "Iraq",
-          "tla": "IRQ",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "France",
           "tla": "FRA",
           "played": 0,
@@ -9517,8 +9505,8 @@
           "points": 0
         },
         {
-          "team": "Senegal",
-          "tla": "SEN",
+          "team": "Iraq",
+          "tla": "IRQ",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9531,6 +9519,18 @@
         {
           "team": "Norway",
           "tla": "NOR",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Senegal",
+          "tla": "SEN",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9611,6 +9611,18 @@
           "points": 0
         },
         {
+          "team": "Colombia",
+          "tla": "COL",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
           "team": "Portugal",
           "tla": "POR",
           "played": 0,
@@ -9625,18 +9637,6 @@
         {
           "team": "Uzbekistan",
           "tla": "UZB",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Colombia",
-          "tla": "COL",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9664,8 +9664,8 @@
           "points": 0
         },
         {
-          "team": "Croatia",
-          "tla": "CRO",
+          "team": "Ghana",
+          "tla": "GHA",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9676,8 +9676,8 @@
           "points": 0
         },
         {
-          "team": "Ghana",
-          "tla": "GHA",
+          "team": "Croatia",
+          "tla": "CRO",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9706,7 +9706,7 @@
     "winner": null,
     "silver": null,
     "bronze": null,
-    "top_scorer": null,
+    "top_scorer": "Julián Quiñones",
     "best_player": null,
     "best_young": null,
     "best_keeper": null
@@ -9721,7 +9721,6 @@
     "best_keeper": 3
   },
   "awards_pending": [
-    "top_scorer",
     "best_player",
     "best_young",
     "best_keeper"
