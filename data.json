@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T20:43:36+00:00",
+  "updated_at": "2026-06-11T22:29:55+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -529,7 +529,7 @@
       "homeTla": "MEX",
       "away": "South Africa",
       "awayTla": "RSA",
-      "status": "TIMED",
+      "status": "FINISHED",
       "score": null,
       "scoreDetail": {
         "halfTime": null,
@@ -9075,9 +9075,9 @@
           "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 1,
+          "gf": 2,
           "ga": 0,
-          "gd": 1,
+          "gd": 2,
           "points": 3
         },
         {
@@ -9112,8 +9112,8 @@
           "draw": 0,
           "lost": 1,
           "gf": 0,
-          "ga": 1,
-          "gd": -1,
+          "ga": 2,
+          "gd": -2,
           "points": 0
         }
       ]
@@ -9546,18 +9546,6 @@
       "code": "J",
       "table": [
         {
-          "team": "Argentina",
-          "tla": "ARG",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "Algeria",
           "tla": "ALG",
           "played": 0,
@@ -9570,8 +9558,8 @@
           "points": 0
         },
         {
-          "team": "Austria",
-          "tla": "AUT",
+          "team": "Argentina",
+          "tla": "ARG",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9584,6 +9572,18 @@
         {
           "team": "Jordan",
           "tla": "JOR",
+          "played": 0,
+          "won": 0,
+          "draw": 0,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Austria",
+          "tla": "AUT",
           "played": 0,
           "won": 0,
           "draw": 0,
