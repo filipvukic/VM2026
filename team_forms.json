@@ -1,10 +1,50 @@
 {
-  "updated_at": "2026-06-11T09:51:50+00:00",
+  "updated_at": "2026-06-12T09:45:42+00:00",
   "forms": {
-    "MEX": [],
-    "RSA": [],
-    "KOR": [],
-    "CZE": [],
+    "MEX": [
+      {
+        "date": "2026-06-11",
+        "competition": "WC",
+        "opp": "South Africa",
+        "oppTla": "RSA",
+        "gf": 2,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "RSA": [
+      {
+        "date": "2026-06-11",
+        "competition": "WC",
+        "opp": "Mexico",
+        "oppTla": "MEX",
+        "gf": 0,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
+    "KOR": [
+      {
+        "date": "2026-06-12",
+        "competition": "WC",
+        "opp": "Czechia",
+        "oppTla": "CZE",
+        "gf": 2,
+        "ga": 1,
+        "r": "V"
+      }
+    ],
+    "CZE": [
+      {
+        "date": "2026-06-12",
+        "competition": "WC",
+        "opp": "South Korea",
+        "oppTla": "KOR",
+        "gf": 1,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
     "CAN": [],
     "BIH": [],
     "USA": [],
@@ -41,6 +81,11 @@
     "CRO": [],
     "GHA": [],
     "PAN": [],
-    "UZB": []
+    "UZB": [],
+    "ECU": [],
+    "SWE": [],
+    "IRQ": [],
+    "NOR": [],
+    "COL": []
   }
 }
