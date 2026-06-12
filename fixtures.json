@@ -50,15 +50,24 @@
     "homeTla": "KOR",
     "away": "Czechia",
     "awayTla": "CZE",
-    "status": "TIMED",
-    "score": null,
+    "status": "FINISHED",
+    "score": [
+      2,
+      1
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
+      "fullTime": [
+        2,
+        1
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
     "minute": null,
     "goals": [],
