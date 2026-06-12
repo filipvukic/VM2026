@@ -28,18 +28,785 @@
       "winnerSide": "HOME_TEAM"
     },
     "minute": null,
-    "goals": [],
-    "bookings": [],
-    "subs": [],
-    "venue": null,
-    "referees": [
+    "goals": [
       {
-        "name": "Wilton Sampaio",
-        "role": "REFEREE",
-        "nationality": "Brazil"
+        "minute": "9",
+        "team": "MEX",
+        "scorer": "Julián Quiñones",
+        "assist": "Érik Lira",
+        "type": "REGULAR",
+        "description": "Goal! Mexico 1, South Africa 0. Julián Quiñones (Mexico) right footed shot from the centre of the box to the centre of the goal. Assisted by Érik Lira.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "67",
+        "team": "MEX",
+        "scorer": "Raúl Jiménez",
+        "assist": "Roberto Alvarado",
+        "type": "HEADER",
+        "description": "Goal! Mexico 2, South Africa 0. Raúl Jiménez (Mexico) header from very close range to the bottom left corner. Assisted by Roberto Alvarado with a cross.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
       }
     ],
-    "odds": null
+    "bookings": [
+      {
+        "minute": "17",
+        "team": "RSA",
+        "player": "Teboho Mokoena",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "23",
+        "team": "MEX",
+        "player": "Brian Gutiérrez",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "49",
+        "team": "RSA",
+        "player": "Sphephelo Sithole",
+        "card": "RED",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "RSA",
+        "player": "Nkosinathi Sibisi",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "RSA",
+        "player": "Themba Zwane",
+        "card": "RED",
+        "period": 2
+      },
+      {
+        "minute": "90'+2",
+        "team": "MEX",
+        "player": "César Montes",
+        "card": "RED",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "56",
+        "team": "RSA",
+        "playerIn": "Thalente Mbatha",
+        "playerOut": "Lyle Foster",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "RSA",
+        "playerIn": "Themba Zwane",
+        "playerOut": "Jayden Adams",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "MEX",
+        "playerIn": "Luis Chávez",
+        "playerOut": "Brian Gutiérrez",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "MEX",
+        "playerIn": "Gilberto Mora",
+        "playerOut": "Álvaro Fidalgo",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "MEX",
+        "playerIn": "Edson Álvarez",
+        "playerOut": "Érik Lira",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "MEX",
+        "playerIn": "Armando González",
+        "playerOut": "Raúl Jiménez",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "RSA",
+        "playerIn": "Evidence Makgopa",
+        "playerOut": "Iqraam Rayners",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "RSA",
+        "playerIn": "Oswin Appollis",
+        "playerOut": "Aubrey Modiba",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "MEX",
+        "playerIn": "Alexis Vega",
+        "playerOut": "Julián Quiñones",
+        "period": 2
+      }
+    ],
+    "venue": {
+      "stadium": "Estadio Banorte",
+      "city": "Mexico City",
+      "country": "Mexico"
+    },
+    "referees": [
+      {
+        "name": "Wilton Pereira Sampaio",
+        "role": "Referee"
+      }
+    ],
+    "odds": null,
+    "attendance": 80824,
+    "espnOdds": {
+      "homeML": -230,
+      "awayML": 750,
+      "spread": "MEX -1.5",
+      "overUnder": 2.5,
+      "overOdds": 130.0,
+      "underOdds": -160.0,
+      "provider": "DraftKings"
+    },
+    "homeLineup": {
+      "formation": "4-1-4-1",
+      "lineup": [
+        {
+          "name": "Raúl Rangel",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "290899"
+        },
+        {
+          "name": "Johan Vásquez",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "5",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "259975"
+        },
+        {
+          "name": "César Montes",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "224323"
+        },
+        {
+          "name": "Érik Lira",
+          "position": "DM",
+          "positionName": "Defensive Midfielder",
+          "jersey": "6",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "276942"
+        },
+        {
+          "name": "Jesús Gallardo",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "23",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "132098"
+        },
+        {
+          "name": "Israel Reyes",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "15",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "290414"
+        },
+        {
+          "name": "Álvaro Fidalgo",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "8",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "283827"
+        },
+        {
+          "name": "Brian Gutiérrez",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "26",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "303577"
+        },
+        {
+          "name": "Julián Quiñones",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "16",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "233075"
+        },
+        {
+          "name": "Roberto Alvarado",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "25",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "194308"
+        },
+        {
+          "name": "Raúl Jiménez",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "167060"
+        }
+      ],
+      "bench": [
+        {
+          "name": "Luis Romo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "242614"
+        },
+        {
+          "name": "César Huerta",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "265969"
+        },
+        {
+          "name": "Guillermo Ochoa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "137038"
+        },
+        {
+          "name": "Carlos Acevedo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "236368"
+        },
+        {
+          "name": "Luis Chávez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "104497"
+        },
+        {
+          "name": "Mateo Chávez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "379193"
+        },
+        {
+          "name": "Santiago Gimenez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "260775"
+        },
+        {
+          "name": "Obed Vargas",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "318554"
+        },
+        {
+          "name": "Alexis Vega",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "229487"
+        },
+        {
+          "name": "Guillermo Martínez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "193566"
+        },
+        {
+          "name": "Armando González",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "376110"
+        },
+        {
+          "name": "Gilberto Mora",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "389575"
+        },
+        {
+          "name": "Edson Álvarez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "241627"
+        },
+        {
+          "name": "Jorge Sánchez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "178746"
+        },
+        {
+          "name": "Orbelín Pineda",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "207011"
+        }
+      ],
+      "tla": "MEX",
+      "_espnEventId": "760415"
+    },
+    "awayLineup": {
+      "formation": "5-3-2",
+      "lineup": [
+        {
+          "name": "Ronwen Williams",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "196230"
+        },
+        {
+          "name": "Ime Okon",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "21",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "358744"
+        },
+        {
+          "name": "Mbekezeli Mbokazi",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "14",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "400594"
+        },
+        {
+          "name": "Nkosinathi Sibisi",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "19",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "266125"
+        },
+        {
+          "name": "Aubrey Modiba",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "6",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "223818"
+        },
+        {
+          "name": "Khuliso Mudau",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "20",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "276767"
+        },
+        {
+          "name": "Sphephelo Sithole",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "13",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "228595"
+        },
+        {
+          "name": "Jayden Adams",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "23",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "304736"
+        },
+        {
+          "name": "Teboho Mokoena",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "4",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "256691"
+        },
+        {
+          "name": "Lyle Foster",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "9",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "264751"
+        },
+        {
+          "name": "Iqraam Rayners",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "15",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "291141"
+        }
+      ],
+      "bench": [
+        {
+          "name": "Oswin Appollis",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "288771"
+        },
+        {
+          "name": "Sipho Chaine",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "265713"
+        },
+        {
+          "name": "Themba Zwane",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "157046"
+        },
+        {
+          "name": "Kamogelo Sebelebele",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "337134"
+        },
+        {
+          "name": "Khulumani Ndamane",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "390448"
+        },
+        {
+          "name": "Thabang Matuludi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "365623"
+        },
+        {
+          "name": "Samukele Kabini",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "366883"
+        },
+        {
+          "name": "Relebohile Mofokeng",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "361211"
+        },
+        {
+          "name": "Thalente Mbatha",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "301321"
+        },
+        {
+          "name": "Ricardo Goss",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "186121"
+        },
+        {
+          "name": "Bradley Cross",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "310593"
+        },
+        {
+          "name": "Thapelo Maseko",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "335450"
+        },
+        {
+          "name": "Tshepang Moremi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "8",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "313399"
+        },
+        {
+          "name": "Evidence Makgopa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "303312"
+        },
+        {
+          "name": "Olwethu Makhanya",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "351372"
+        }
+      ],
+      "tla": "RSA",
+      "_espnEventId": "760415"
+    },
+    "homeStats": {
+      "foulsCommitted": 12.0,
+      "yellowCards": 1.0,
+      "redCards": 1.0,
+      "offsides": 1.0,
+      "wonCorners": 3.0,
+      "saves": 2.0,
+      "possessionPct": 60.5,
+      "totalShots": 16.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 467.0,
+      "totalPasses": 520.0,
+      "passPct": 0.9,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 32.0,
+      "longballPct": 0.7,
+      "blockedShots": 5.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 11.0,
+      "tacklePct": 0.5,
+      "interceptions": 8.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
+    },
+    "awayStats": {
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
+      "redCards": 2.0,
+      "offsides": 1.0,
+      "wonCorners": 1.0,
+      "saves": 2.0,
+      "possessionPct": 39.5,
+      "totalShots": 3.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.7,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 272.0,
+      "totalPasses": 334.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 46.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.4,
+      "blockedShots": 0.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.5,
+      "interceptions": 7.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-05",
+        "result": "V",
+        "gf": 5,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-05-23",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-04-01",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-29",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-06",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-05-29",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-01-04",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537328,
@@ -70,18 +837,721 @@
       "winnerSide": "HOME_TEAM"
     },
     "minute": null,
-    "goals": [],
+    "goals": [
+      {
+        "minute": "59",
+        "team": "CZE",
+        "scorer": "Ladislav Krejcí",
+        "assist": "Vladimír Coufal",
+        "type": "HEADER",
+        "description": "Goal! Korea Republic 0, Czechia 1. Ladislav Krejcí (Czechia) header from very close range to the bottom right corner. Assisted by Vladimír Coufal.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "KOR",
+        "scorer": "Hwang In-Beom",
+        "assist": "Lee Kang-In",
+        "type": "REGULAR",
+        "description": "Goal! Korea Republic 1, Czechia 1. Hwang In-Beom (Korea Republic) right footed shot from the centre of the box to the bottom right corner. Assisted by Lee Kang-In.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [],
-    "subs": [],
-    "venue": null,
+    "subs": [
+      {
+        "minute": "62",
+        "team": "KOR",
+        "playerIn": "Hwang Hee-Chan",
+        "playerOut": "Lee Jae-Sung",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "CZE",
+        "playerIn": "Adam Hlozek",
+        "playerOut": "Pavel Sulc",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "CZE",
+        "playerIn": "Tomás Chorý",
+        "playerOut": "Patrik Schick",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "CZE",
+        "playerIn": "Michal Sadílek",
+        "playerOut": "Lukás Provod",
+        "period": 2
+      },
+      {
+        "minute": "69",
+        "team": "KOR",
+        "playerIn": "Eom Ji-Sung",
+        "playerOut": "Lee Tae-Seok",
+        "period": 2
+      },
+      {
+        "minute": "69",
+        "team": "KOR",
+        "playerIn": "Oh Hyeon-Gyu",
+        "playerOut": "Son Heung-Min",
+        "period": 2
+      }
+    ],
+    "venue": {
+      "stadium": "Estadio Akron",
+      "city": "Guadalajara",
+      "country": "Mexico"
+    },
     "referees": [
       {
         "name": "Amin Omar",
-        "role": "REFEREE",
-        "nationality": "Egypt"
+        "role": "Referee"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": {
+      "homeML": 160,
+      "awayML": 200,
+      "spread": "KOR -0.5",
+      "overUnder": 2.5,
+      "overOdds": 110.0,
+      "underOdds": -140.0,
+      "provider": "DraftKings"
+    },
+    "homeLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Kim Seung-Gyu",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "175921"
+        },
+        {
+          "name": "Kim Min-Jae",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "4",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "157688"
+        },
+        {
+          "name": "Lee Gi-Hyuk",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "3",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "345769"
+        },
+        {
+          "name": "Lee Han-Beom",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "2",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "297788"
+        },
+        {
+          "name": "Paik Seung-Ho",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "8",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "256598"
+        },
+        {
+          "name": "Hwang In-Beom",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "6",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "280061"
+        },
+        {
+          "name": "Lee Tae-Seok",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "13",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "297270"
+        },
+        {
+          "name": "Seol Young-Woo",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "22",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "302793"
+        },
+        {
+          "name": "Son Heung-Min",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "7",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "149945"
+        },
+        {
+          "name": "Lee Jae-Sung",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "10",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "134103"
+        },
+        {
+          "name": "Lee Kang-In",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "19",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "274197"
+        }
+      ],
+      "bench": [
+        {
+          "name": "Bae Jun-Ho",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "362208"
+        },
+        {
+          "name": "Kim Jin-Gyu",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "90721"
+        },
+        {
+          "name": "Kim Tae-Hyeon",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "286268"
+        },
+        {
+          "name": "Lee Dong-Gyeong",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "271702"
+        },
+        {
+          "name": "Jens Castrop",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "304793"
+        },
+        {
+          "name": "Song Bum-Keun",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "256724"
+        },
+        {
+          "name": "Hwang Hee-Chan",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "237224"
+        },
+        {
+          "name": "Cho Gue-Sung",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "303464"
+        },
+        {
+          "name": "Eom Ji-Sung",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "297791"
+        },
+        {
+          "name": "Jo Hyeon-Woo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "230244"
+        },
+        {
+          "name": "Yang Hyun-Jun",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "350711"
+        },
+        {
+          "name": "Kim Moon-Hwan",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "280060"
+        },
+        {
+          "name": "Cho Wi-Je",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "3098209"
+        },
+        {
+          "name": "Park Jin-Seop",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "336178"
+        },
+        {
+          "name": "Oh Hyeon-Gyu",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "302434"
+        }
+      ],
+      "tla": "KOR",
+      "_espnEventId": "760414"
+    },
+    "awayLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Matej Kovár",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "277313"
+        },
+        {
+          "name": "Robin Hranác",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "4",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "322510"
+        },
+        {
+          "name": "Ladislav Krejcí",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "7",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "151714"
+        },
+        {
+          "name": "Stepán Chaloupek",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "6",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "370744"
+        },
+        {
+          "name": "Alexandr Sojka",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "24",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "387865"
+        },
+        {
+          "name": "Tomás Soucek",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "22",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "230666"
+        },
+        {
+          "name": "Jaroslav Zelený",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "20",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "276659"
+        },
+        {
+          "name": "Vladimír Coufal",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "5",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "191209"
+        },
+        {
+          "name": "Patrik Schick",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "10",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "212330"
+        },
+        {
+          "name": "Pavel Sulc",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "15",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "305545"
+        },
+        {
+          "name": "Lukás Provod",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "17",
+          "subbedIn": false,
+          "subbedOut": true,
+          "espnId": "294618"
+        }
+      ],
+      "bench": [
+        {
+          "name": "Jindrich Stanek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "199988"
+        },
+        {
+          "name": "Adam Hlozek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "292169"
+        },
+        {
+          "name": "Tomás Chorý",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "257336"
+        },
+        {
+          "name": "David Doudera",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "343937"
+        },
+        {
+          "name": "Lukás Cerv",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "303726"
+        },
+        {
+          "name": "Tomás Holes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "280885"
+        },
+        {
+          "name": "Vladimír Darida",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "8",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "165637"
+        },
+        {
+          "name": "Lukás Hornícek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "319267"
+        },
+        {
+          "name": "Jan Kuchta",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "306008"
+        },
+        {
+          "name": "Mojmír Chytil",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "343733"
+        },
+        {
+          "name": "Michal Sadílek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "subbedIn": true,
+          "subbedOut": false,
+          "espnId": "249525"
+        },
+        {
+          "name": "Hugo Sochurek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "403974"
+        },
+        {
+          "name": "David Jurásek",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "335996"
+        },
+        {
+          "name": "Denis Visinský",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "310027"
+        },
+        {
+          "name": "David Zima",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "subbedIn": false,
+          "subbedOut": false,
+          "espnId": "290116"
+        }
+      ],
+      "tla": "CZE",
+      "_espnEventId": "760414"
+    },
+    "homeStats": {
+      "foulsCommitted": 6.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 4.0,
+      "saves": 0.0,
+      "possessionPct": 62.7,
+      "totalShots": 13.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 398.0,
+      "totalPasses": 452.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 44.0,
+      "accurateLongBalls": 22.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 5.0,
+      "tacklePct": 0.4,
+      "interceptions": 11.0,
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
+    },
+    "awayStats": {
+      "foulsCommitted": 11.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 4.0,
+      "saves": 4.0,
+      "possessionPct": 37.3,
+      "totalShots": 3.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 179.0,
+      "totalPasses": 257.0,
+      "passPct": 0.7,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 48.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.9,
+      "interceptions": 6.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-04",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-03-28",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2025-11-18",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-05",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-03-26",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2025-11-17",
+        "result": "V",
+        "gf": 6,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537333,
@@ -106,7 +1576,11 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "BMO Field",
+      "city": "Toronto",
+      "country": "Canada"
+    },
     "referees": [
       {
         "name": "Facundo Tello",
@@ -114,7 +1588,95 @@
         "nationality": "Argentina"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": {
+      "homeML": -120,
+      "awayML": 380,
+      "spread": "CAN -0.5",
+      "overUnder": 2.5,
+      "overOdds": 130.0,
+      "underOdds": -160.0,
+      "provider": "DraftKings"
+    },
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [
+      {
+        "date": "2026-06-05",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-02",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-04-01",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-28",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-01-18",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-06",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-05-29",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-26",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2025-11-18",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      }
+    ]
   },
   {
     "id": 537345,
@@ -139,7 +1701,11 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "SoFi Stadium",
+      "city": "Inglewood, California",
+      "country": "USA"
+    },
     "referees": [
       {
         "name": "Danny Makkelie",
@@ -147,7 +1713,95 @@
         "nationality": "Netherlands"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": {
+      "homeML": 110,
+      "awayML": 290,
+      "spread": "USA -0.5",
+      "overUnder": 2.5,
+      "overOdds": 150.0,
+      "underOdds": -185.0,
+      "provider": "DraftKings"
+    },
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-28",
+        "result": "V",
+        "gf": 5,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2025-11-19",
+        "result": "V",
+        "gf": 5,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-05",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-03-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2025-11-19",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2025-11-15",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      }
+    ]
   },
   {
     "id": 537334,
@@ -180,7 +1834,15 @@
         "nationality": "Honduras"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537339,
@@ -213,7 +1875,15 @@
         "nationality": "Slovenia"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537340,
@@ -246,7 +1916,15 @@
         "nationality": null
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537346,
@@ -279,7 +1957,15 @@
         "nationality": "Venezuela"
       }
     ],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537351,
@@ -289,7 +1975,7 @@
     "home": "Germany",
     "homeTla": "GER",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -306,7 +1992,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537357,
@@ -333,7 +2027,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537352,
@@ -344,7 +2046,7 @@
     "homeTla": "CIV",
     "away": "Ecuador",
     "awayTla": "ECU",
-    "status": "TIMED",
+    "status": "SCHEDULED",
     "score": null,
     "scoreDetail": {
       "halfTime": null,
@@ -360,7 +2062,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537358,
@@ -387,7 +2097,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537369,
@@ -414,7 +2132,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537363,
@@ -441,7 +2167,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537370,
@@ -468,7 +2202,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537364,
@@ -495,7 +2237,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537391,
@@ -522,7 +2272,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537392,
@@ -549,7 +2307,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537397,
@@ -576,7 +2342,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537398,
@@ -603,7 +2377,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537403,
@@ -630,7 +2412,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537409,
@@ -657,7 +2447,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537410,
@@ -684,7 +2482,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537404,
@@ -711,7 +2517,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537329,
@@ -738,7 +2552,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537335,
@@ -765,7 +2587,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537336,
@@ -792,7 +2622,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537330,
@@ -819,7 +2657,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537348,
@@ -846,7 +2692,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537342,
@@ -873,7 +2727,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537341,
@@ -900,7 +2762,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537347,
@@ -927,7 +2797,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537359,
@@ -954,7 +2832,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537353,
@@ -981,7 +2867,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537354,
@@ -991,7 +2885,7 @@
     "home": "Ecuador",
     "homeTla": "ECU",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -1008,7 +2902,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537360,
@@ -1035,7 +2937,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537371,
@@ -1062,7 +2972,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537365,
@@ -1089,7 +3007,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537372,
@@ -1116,7 +3042,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537366,
@@ -1143,7 +3077,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537399,
@@ -1170,7 +3112,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537393,
@@ -1197,7 +3147,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537394,
@@ -1224,7 +3182,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537400,
@@ -1251,7 +3217,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537405,
@@ -1278,7 +3252,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537411,
@@ -1305,7 +3287,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537412,
@@ -1332,7 +3322,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537406,
@@ -1359,7 +3357,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537337,
@@ -1386,7 +3392,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537338,
@@ -1413,7 +3427,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537344,
@@ -1440,7 +3462,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537343,
@@ -1467,7 +3497,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537331,
@@ -1494,7 +3532,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537332,
@@ -1521,7 +3567,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537355,
@@ -1548,7 +3602,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537356,
@@ -1556,7 +3618,7 @@
     "stage": "GROUP_STAGE",
     "group": "E",
     "home": "Curaçao",
-    "homeTla": "CUW",
+    "homeTla": "CUR",
     "away": "Ivory Coast",
     "awayTla": "CIV",
     "status": "TIMED",
@@ -1575,7 +3637,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537361,
@@ -1602,7 +3672,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537362,
@@ -1629,7 +3707,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537349,
@@ -1656,7 +3742,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537350,
@@ -1683,7 +3777,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537395,
@@ -1710,7 +3812,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537396,
@@ -1737,7 +3847,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537373,
@@ -1764,7 +3882,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537374,
@@ -1791,7 +3917,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537367,
@@ -1818,7 +3952,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537368,
@@ -1845,7 +3987,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537413,
@@ -1872,7 +4022,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537414,
@@ -1899,7 +4057,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537407,
@@ -1926,7 +4092,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537408,
@@ -1953,7 +4127,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537401,
@@ -1980,7 +4162,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537402,
@@ -2007,7 +4197,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537417,
@@ -2034,7 +4232,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537423,
@@ -2061,7 +4267,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537415,
@@ -2088,7 +4302,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537418,
@@ -2115,7 +4337,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537424,
@@ -2142,7 +4372,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537416,
@@ -2169,7 +4407,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537425,
@@ -2196,7 +4442,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537426,
@@ -2223,7 +4477,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537422,
@@ -2250,7 +4512,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537421,
@@ -2277,7 +4547,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537420,
@@ -2304,7 +4582,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537419,
@@ -2331,7 +4617,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537429,
@@ -2358,7 +4652,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537428,
@@ -2385,7 +4687,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537427,
@@ -2412,7 +4722,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537430,
@@ -2439,7 +4757,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537376,
@@ -2466,7 +4792,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537375,
@@ -2493,7 +4827,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537377,
@@ -2520,7 +4862,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537378,
@@ -2547,7 +4897,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537379,
@@ -2574,7 +4932,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537380,
@@ -2601,7 +4967,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537381,
@@ -2628,7 +5002,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537382,
@@ -2655,7 +5037,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537383,
@@ -2682,7 +5072,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537384,
@@ -2709,7 +5107,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537385,
@@ -2736,7 +5142,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537386,
@@ -2763,7 +5177,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537387,
@@ -2790,7 +5212,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537388,
@@ -2817,7 +5247,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537389,
@@ -2844,7 +5282,15 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537390,
@@ -2871,6 +5317,14 @@
     "subs": [],
     "venue": null,
     "referees": [],
-    "odds": null
+    "odds": null,
+    "attendance": null,
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {},
+    "awayStats": {},
+    "homeForm": [],
+    "awayForm": []
   }
 ]

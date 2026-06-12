@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T15:45:39+00:00",
+  "updated_at": "2026-06-12T16:32:37+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -549,18 +549,156 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "9",
+          "team": "MEX",
+          "scorer": "Julián Quiñones",
+          "assist": "Érik Lira",
+          "type": "REGULAR",
+          "description": "Goal! Mexico 1, South Africa 0. Julián Quiñones (Mexico) right footed shot from the centre of the box to the centre of the goal. Assisted by Érik Lira.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "67",
+          "team": "MEX",
+          "scorer": "Raúl Jiménez",
+          "assist": "Roberto Alvarado",
+          "type": "HEADER",
+          "description": "Goal! Mexico 2, South Africa 0. Raúl Jiménez (Mexico) header from very close range to the bottom left corner. Assisted by Roberto Alvarado with a cross.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "17",
+          "team": "RSA",
+          "player": "Teboho Mokoena",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "23",
+          "team": "MEX",
+          "player": "Brian Gutiérrez",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "49",
+          "team": "RSA",
+          "player": "Sphephelo Sithole",
+          "card": "RED",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "RSA",
+          "player": "Nkosinathi Sibisi",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "RSA",
+          "player": "Themba Zwane",
+          "card": "RED",
+          "period": 2
+        },
+        {
+          "minute": "90'+2",
+          "team": "MEX",
+          "player": "César Montes",
+          "card": "RED",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "56",
+          "team": "RSA",
+          "playerIn": "Thalente Mbatha",
+          "playerOut": "Lyle Foster",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "RSA",
+          "playerIn": "Themba Zwane",
+          "playerOut": "Jayden Adams",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "MEX",
+          "playerIn": "Luis Chávez",
+          "playerOut": "Brian Gutiérrez",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "MEX",
+          "playerIn": "Gilberto Mora",
+          "playerOut": "Álvaro Fidalgo",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "MEX",
+          "playerIn": "Edson Álvarez",
+          "playerOut": "Érik Lira",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "MEX",
+          "playerIn": "Armando González",
+          "playerOut": "Raúl Jiménez",
+          "period": 2
+        },
+        {
+          "minute": "77",
+          "team": "RSA",
+          "playerIn": "Evidence Makgopa",
+          "playerOut": "Iqraam Rayners",
+          "period": 2
+        },
+        {
+          "minute": "77",
+          "team": "RSA",
+          "playerIn": "Oswin Appollis",
+          "playerOut": "Aubrey Modiba",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "MEX",
+          "playerIn": "Alexis Vega",
+          "playerOut": "Julián Quiñones",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Estadio Banorte",
+        "city": "Mexico City",
+        "country": "Mexico"
+      },
       "referees": [
         {
-          "name": "Wilton Sampaio",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "name": "Wilton Pereira Sampaio",
+          "role": "Referee"
         }
       ],
       "odds": null,
+      "attendance": 80824,
       "tips": [
         {
           "name": "Albin",
@@ -682,18 +820,92 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
+      "goals": [
+        {
+          "minute": "59",
+          "team": "CZE",
+          "scorer": "Ladislav Krejcí",
+          "assist": "Vladimír Coufal",
+          "type": "HEADER",
+          "description": "Goal! Korea Republic 0, Czechia 1. Ladislav Krejcí (Czechia) header from very close range to the bottom right corner. Assisted by Vladimír Coufal.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "KOR",
+          "scorer": "Hwang In-Beom",
+          "assist": "Lee Kang-In",
+          "type": "REGULAR",
+          "description": "Goal! Korea Republic 1, Czechia 1. Hwang In-Beom (Korea Republic) right footed shot from the centre of the box to the bottom right corner. Assisted by Lee Kang-In.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [],
-      "subs": [],
-      "venue": null,
+      "subs": [
+        {
+          "minute": "62",
+          "team": "KOR",
+          "playerIn": "Hwang Hee-Chan",
+          "playerOut": "Lee Jae-Sung",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Adam Hlozek",
+          "playerOut": "Pavel Sulc",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Tomás Chorý",
+          "playerOut": "Patrik Schick",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Michal Sadílek",
+          "playerOut": "Lukás Provod",
+          "period": 2
+        },
+        {
+          "minute": "69",
+          "team": "KOR",
+          "playerIn": "Eom Ji-Sung",
+          "playerOut": "Lee Tae-Seok",
+          "period": 2
+        },
+        {
+          "minute": "69",
+          "team": "KOR",
+          "playerIn": "Oh Hyeon-Gyu",
+          "playerOut": "Son Heung-Min",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Estadio Akron",
+        "city": "Guadalajara",
+        "country": "Mexico"
+      },
       "referees": [
         {
           "name": "Amin Omar",
-          "role": "REFEREE",
-          "nationality": "Egypt"
+          "role": "Referee"
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -809,7 +1021,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
       "referees": [
         {
           "name": "Facundo Tello",
@@ -818,6 +1034,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -933,7 +1150,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Danny Makkelie",
@@ -942,6 +1163,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1066,6 +1288,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1190,6 +1413,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1314,6 +1538,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1438,6 +1663,7 @@
         }
       ],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1538,7 +1764,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -1556,6 +1782,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1674,6 +1901,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1775,7 +2003,7 @@
       "homeTla": "CIV",
       "away": "Ecuador",
       "awayTla": "ECU",
-      "status": "TIMED",
+      "status": "SCHEDULED",
       "score": null,
       "scoreDetail": {
         "halfTime": null,
@@ -1792,6 +2020,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1910,6 +2139,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2028,6 +2258,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2146,6 +2377,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2264,6 +2496,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2382,6 +2615,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2500,6 +2734,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2618,6 +2853,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2736,6 +2972,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2854,6 +3091,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2972,6 +3210,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3090,6 +3329,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3208,6 +3448,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3326,6 +3567,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3444,6 +3686,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3562,6 +3805,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3680,6 +3924,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3798,6 +4043,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -3916,6 +4162,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4034,6 +4281,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4152,6 +4400,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4270,6 +4519,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4388,6 +4638,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4506,6 +4757,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4606,7 +4858,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -4624,6 +4876,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4742,6 +4995,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4860,6 +5114,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -4978,6 +5233,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5096,6 +5352,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5214,6 +5471,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5332,6 +5590,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5450,6 +5709,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5568,6 +5828,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5686,6 +5947,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5804,6 +6066,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -5922,6 +6185,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6040,6 +6304,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6158,6 +6423,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6276,6 +6542,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6394,6 +6661,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6512,6 +6780,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6630,6 +6899,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6748,6 +7018,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6866,6 +7137,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -6964,7 +7236,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -6984,6 +7256,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7102,6 +7375,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7220,6 +7494,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7338,6 +7613,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7456,6 +7732,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7574,6 +7851,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7692,6 +7970,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7810,6 +8089,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -7928,6 +8208,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8046,6 +8327,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8164,6 +8446,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8282,6 +8565,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8400,6 +8684,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8518,6 +8803,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8636,6 +8922,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8754,6 +9041,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8872,6 +9160,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -8990,6 +9279,7 @@
       "venue": null,
       "referees": [],
       "odds": null,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -9746,50 +10036,10 @@
   "unmatched_tips": {},
   "knockout_rule": "ET-score for exact; penalties decide outcome",
   "team_forms": {
-    "MEX": [
-      {
-        "date": "2026-06-11",
-        "competition": "WC",
-        "opp": "South Africa",
-        "oppTla": "RSA",
-        "gf": 2,
-        "ga": 0,
-        "r": "V"
-      }
-    ],
-    "RSA": [
-      {
-        "date": "2026-06-11",
-        "competition": "WC",
-        "opp": "Mexico",
-        "oppTla": "MEX",
-        "gf": 0,
-        "ga": 2,
-        "r": "F"
-      }
-    ],
-    "KOR": [
-      {
-        "date": "2026-06-12",
-        "competition": "WC",
-        "opp": "Czechia",
-        "oppTla": "CZE",
-        "gf": 2,
-        "ga": 1,
-        "r": "V"
-      }
-    ],
-    "CZE": [
-      {
-        "date": "2026-06-12",
-        "competition": "WC",
-        "opp": "South Korea",
-        "oppTla": "KOR",
-        "gf": 1,
-        "ga": 2,
-        "r": "F"
-      }
-    ],
+    "MEX": [],
+    "RSA": [],
+    "KOR": [],
+    "CZE": [],
     "CAN": [],
     "BIH": [],
     "USA": [],
@@ -9826,11 +10076,6 @@
     "CRO": [],
     "GHA": [],
     "PAN": [],
-    "UZB": [],
-    "ECU": [],
-    "SWE": [],
-    "IRQ": [],
-    "NOR": [],
-    "COL": []
+    "UZB": []
   }
 }

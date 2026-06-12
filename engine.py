@@ -26,6 +26,7 @@ from urllib.error import HTTPError, URLError
 API_BASE = "https://api.football-data.org/v4"
 COMPETITION = "WC"  # FIFA World Cup
 GROUP_STAGE = "GROUP_STAGE"
+LIVE_STATUSES = {"IN_PLAY", "PAUSED", "LIVE", "SUSPENDED"}
 
 
 # --------------------------------------------------------------------------- #
@@ -111,16 +112,552 @@ def api_get(path, token):
     raise RuntimeError(f"API-anrop misslyckades: {path}")
 
 
+# --------------------------------------------------------------------------- #
+# ESPN Integration (inofficiellt API, ingen autentisering krävs)
+# --------------------------------------------------------------------------- #
+ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world"
+ESPN_WC_DATES = "20260611-20260719"
+
+# ESPN live-statusar (state == "in")
+ESPN_LIVE = {"STATUS_IN_PROGRESS", "STATUS_HALFTIME", "STATUS_EXTRA_TIME",
+             "STATUS_PENALTY", "STATUS_SHOOTOUT"}
+ESPN_FINISHED = {"STATUS_FULL_TIME", "STATUS_FT", "STATUS_AWARDED",
+                 "STATUS_FULL_PEN", "STATUS_FINAL"}
+
+
+def _jload(path, default=None):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return ({} if default is None else default)
+
+
+def _jsave(path, data):
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+def espn_get(path):
+    """Hämta från ESPNs inofficiella API."""
+    req = Request(f"{ESPN_BASE}{path}", headers={
+        "User-Agent": "Mozilla/5.0 (compatible; VM2026/1.0)",
+        "Accept": "application/json",
+    })
+    for attempt in range(3):
+        try:
+            with urlopen(req, timeout=30) as r:
+                return json.loads(r.read().decode("utf-8"))
+        except HTTPError as e:
+            if e.code == 429:
+                time.sleep(5)
+                continue
+            raise
+        except URLError:
+            time.sleep(3)
+    raise RuntimeError(f"ESPN-anrop misslyckades: {path}")
+
+
+def build_espn_id_map(fd_matches, cache_path="espn_id_map.json"):
+    """Bygger str(fd_id) → espn_event_id via datum + normaliserat lagnamn."""
+    id_map = _jload(cache_path)
+    unmapped = [m for m in fd_matches if str(m.get("id")) not in id_map]
+    if not unmapped:
+        return id_map
+
+    print(f"Bygger ESPN ID-map för {len(unmapped)} omappade matcher…")
+    try:
+        data = espn_get(f"/scoreboard?dates={ESPN_WC_DATES}&limit=200")
+    except Exception as e:
+        print(f"  Kunde inte hämta ESPN scoreboard: {e}")
+        return id_map
+
+    espn_lookup = {}
+    for e in data.get("events", []):
+        eid = e.get("id")
+        date = e.get("date", "")[:10]
+        comps = e.get("competitions", [{}])
+        competitors = comps[0].get("competitors", []) if comps else []
+        home = next((c for c in competitors if c.get("homeAway") == "home"), {})
+        away = next((c for c in competitors if c.get("homeAway") == "away"), {})
+        hn = norm(home.get("team", {}).get("displayName", ""))
+        an = norm(away.get("team", {}).get("displayName", ""))
+        if date and hn:
+            espn_lookup[(date, hn, an)] = eid
+
+    for m in unmapped:
+        mid = str(m.get("id"))
+        date = m.get("utcDate", "")[:10]
+        hn = norm((m.get("homeTeam") or {}).get("name", ""))
+        an = norm((m.get("awayTeam") or {}).get("name", ""))
+        eid = espn_lookup.get((date, hn, an))
+        if not eid:
+            for (d, h, a), candidate in espn_lookup.items():
+                if d == date and hn and an and (
+                    (hn[:5] in h or h[:5] in hn) and (an[:5] in a or a[:5] in an)
+                ):
+                    eid = candidate
+                    break
+        if eid:
+            id_map[mid] = eid
+
+    _jsave(cache_path, id_map)
+    mapped = sum(1 for m in fd_matches if str(m.get("id")) in id_map)
+    print(f"  ESPN ID-map: {mapped}/{len(fd_matches)} matcher mappade")
+    return id_map
+
+
+def _espn_minute(clock_display):
+    """'9\\'' → '9',  '90+2\\'' → '90+2'"""
+    return str(clock_display or "").rstrip("'").strip()
+
+
+def parse_espn_summary(data, home_tla, away_tla):
+    """Parsar ESPNs summary-endpoint till vår fixture-struktur.
+    Returnerar dict med goals, bookings, subs, lineups, stats m.m."""
+
+    # Identifiera ESPN:s hemma/borta-lagnamn
+    espn_home = espn_away = ""
+    for r in data.get("rosters", []):
+        n = norm(r.get("team", {}).get("displayName", ""))
+        if r.get("homeAway") == "home":
+            espn_home = n
+        else:
+            espn_away = n
+    if not espn_home:
+        for comp in (data.get("header", {}).get("competitions") or []):
+            for c in comp.get("competitors", []):
+                n = norm(c.get("team", {}).get("displayName", ""))
+                if c.get("homeAway") == "home":
+                    espn_home = n
+                else:
+                    espn_away = n
+
+    def tla_of(espn_team_name):
+        n = norm(espn_team_name)
+        if espn_home and (n == espn_home or (len(n) >= 4 and n[:4] == espn_home[:4])):
+            return home_tla
+        return away_tla
+
+    # --- Händelser (mål, kort, byten) ---
+    goals, bookings, subs = [], [], []
+    h_score = a_score = 0
+
+    for e in data.get("keyEvents", []):
+        etype = e.get("type", {}).get("type", "")
+        team_name = e.get("team", {}).get("displayName", "")
+        tla = tla_of(team_name)
+        minute = _espn_minute(e.get("clock", {}).get("displayValue", ""))
+        period = e.get("period", {}).get("number", 1)
+        parts = e.get("participants", [])
+        p0 = parts[0].get("athlete", {}).get("displayName") if parts else None
+        p1 = parts[1].get("athlete", {}).get("displayName") if len(parts) > 1 else None
+        text = e.get("text", "")
+
+        if etype in ("goal", "goal---header", "own-goal", "penalty-goal"):
+            is_own = "own goal" in text.lower()
+            is_pen = "penalty" in text.lower() or etype == "penalty-goal"
+            is_header = "header" in etype
+            if tla == home_tla:
+                h_score += 1
+            else:
+                a_score += 1
+            goals.append({
+                "minute": minute,
+                "team": tla,
+                "scorer": p0,
+                "assist": p1,
+                "type": "OWN" if is_own else ("PENALTY" if is_pen else
+                                               ("HEADER" if is_header else "REGULAR")),
+                "description": text,
+                "score": [h_score, a_score],
+                "period": period,
+            })
+        elif etype == "yellow-card":
+            bookings.append({"minute": minute, "team": tla, "player": p0,
+                              "card": "YELLOW", "period": period})
+        elif etype == "red-card":
+            is_2nd_y = any(w in text.lower() for w in ("second yellow", "second booking"))
+            bookings.append({"minute": minute, "team": tla, "player": p0,
+                              "card": "YELLOW_RED" if is_2nd_y else "RED", "period": period})
+        elif etype == "substitution":
+            subs.append({"minute": minute, "team": tla, "playerIn": p0,
+                          "playerOut": p1, "period": period})
+
+    # --- Uppställningar ---
+    def parse_roster(r):
+        tla_ = home_tla if r.get("homeAway") == "home" else away_tla
+        lineup, bench = [], []
+        for a in r.get("roster", []):
+            ath = a.get("athlete", {})
+            name = (ath.get("displayName") or
+                    (ath.get("firstName", "") + " " + ath.get("lastName", "")).strip())
+            entry = {
+                "name": name,
+                "position": a.get("position", {}).get("abbreviation"),
+                "positionName": a.get("position", {}).get("displayName"),
+                "jersey": a.get("jersey"),
+                "espnId": ath.get("id"),
+                "subbedIn": bool(a.get("subbedIn")),
+                "subbedOut": bool(a.get("subbedOut")),
+            }
+            (lineup if a.get("starter") else bench).append(entry)
+        if not lineup and not bench:
+            return None
+        return {"formation": r.get("formation"), "lineup": lineup,
+                "bench": bench, "tla": tla_, "_espnEventId": None}
+
+    lineups = {}
+    for r in data.get("rosters", []):
+        p = parse_roster(r)
+        if p:
+            lineups[p["tla"]] = p
+
+    # --- Lagstatistik (28 fält från ESPN) ---
+    def parse_stats(stats_list):
+        out = {}
+        for s in stats_list:
+            name = s.get("name")
+            if not name:
+                continue
+            # ESPN boxscore stats use "displayValue" (string), not "value"
+            raw = s.get("displayValue")
+            if raw is None:
+                raw = s.get("value")
+            if raw is None:
+                continue
+            try:
+                out[name] = float(str(raw).strip("%").replace(",", "."))
+            except (ValueError, TypeError):
+                out[name] = raw
+        return out
+
+    home_stats, away_stats = {}, {}
+    for t in data.get("boxscore", {}).get("teams", []):
+        parsed_stats = parse_stats(t.get("statistics", []))
+        if t.get("homeAway") == "home":
+            home_stats = parsed_stats
+        else:
+            away_stats = parsed_stats
+
+    # --- Spelplats, publik, domare ---
+    gi = data.get("gameInfo", {})
+    vd = gi.get("venue", {})
+    venue = None
+    if vd:
+        addr = vd.get("address", {})
+        venue = {"stadium": vd.get("fullName"), "city": addr.get("city"),
+                 "country": addr.get("country")}
+    referees = [{"name": o.get("displayName"),
+                 "role": o.get("position", {}).get("name")}
+                for o in gi.get("officials", [])]
+
+    # --- Odds (DraftKings pre-match) ---
+    espn_odds = None
+    pc = data.get("pickcenter", [])
+    if pc:
+        p = pc[0]
+        espn_odds = {
+            "homeML": (p.get("homeTeamOdds") or {}).get("moneyLine"),
+            "awayML": (p.get("awayTeamOdds") or {}).get("moneyLine"),
+            "spread": p.get("details"),
+            "overUnder": p.get("overUnder"),
+            "overOdds": p.get("overOdds"),
+            "underOdds": p.get("underOdds"),
+            "provider": (p.get("provider") or {}).get("name"),
+        }
+
+    # --- Senaste form (sista 5 matcher per lag) ---
+    def parse_form(form_entry):
+        team_id = str((form_entry.get("team") or {}).get("id", ""))
+        results = []
+        for fe in (form_entry.get("events") or [])[:5]:
+            score_str = str(fe.get("score", ""))
+            at_vs = fe.get("atVs", "vs")
+            home_team_id = str(fe.get("homeTeamId", ""))
+            is_home = (at_vs == "vs") or (home_team_id == team_id)
+            try:
+                h_g, a_g = map(int, score_str.split("-"))
+                gf = h_g if is_home else a_g
+                ga = a_g if is_home else h_g
+                results.append({
+                    "date": fe.get("gameDate", "")[:10],
+                    "result": "V" if gf > ga else ("F" if gf < ga else "O"),
+                    "gf": gf, "ga": ga, "home": is_home,
+                })
+            except (ValueError, TypeError):
+                pass
+        return results
+
+    home_form, away_form = [], []
+    for f_entry in data.get("boxscore", {}).get("form", []):
+        if f_entry.get("displayOrder") == 1:
+            home_form = parse_form(f_entry)
+        else:
+            away_form = parse_form(f_entry)
+
+    # --- ESPN-status ---
+    espn_status = ""
+    espn_clock = None
+    for comp in (data.get("header", {}).get("competitions") or []):
+        st = comp.get("status", {}).get("type", {})
+        espn_status = st.get("name", "")
+        espn_clock = comp.get("status", {}).get("clock")
+        break
+
+    return {
+        "goals": goals,
+        "bookings": bookings,
+        "subs": subs,
+        "homeLineup": lineups.get(home_tla),
+        "awayLineup": lineups.get(away_tla),
+        "homeStats": home_stats,
+        "awayStats": away_stats,
+        "venue": venue,
+        "attendance": gi.get("attendance"),
+        "referees": referees,
+        "espnOdds": espn_odds,
+        "homeForm": home_form,
+        "awayForm": away_form,
+        "espnStatus": espn_status,
+        "espnClock": espn_clock,
+    }
+
+
+def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
+    """Hämtar matchdetaljer från ESPN:
+      1. Pågående matcher – alltid (live-händelser ändras kontinuerligt)
+      2. FINISHED utan cachad ESPN-data – en gång tills händelser dyker upp
+      3. Kommande matcher inom 24 h – en gång per 6 h (odds, venue, form)
+      4. Stale TIMED (avspark 2.5–12 h sedan) – kan ha blivit klara
+
+    FINISHED-matcher cachelagras permanent i espn_cache.json.
+    """
+    cache = _jload(cache_path)
+    id_map = build_espn_id_map(fd_matches)
+    now = datetime.now(timezone.utc)
+
+    to_fetch = []
+    for m in fd_matches:
+        mid = str(m.get("id"))
+        espn_id = id_map.get(mid)
+        if not espn_id:
+            continue
+        status = m.get("status", "")
+        utc = m.get("utcDate", "")
+
+        if status in LIVE_STATUSES:
+            to_fetch.append((0, m, espn_id))
+            continue
+
+        if utc:
+            try:
+                kickoff = datetime.fromisoformat(utc.replace("Z", "+00:00"))
+                age_h = (now - kickoff).total_seconds() / 3600
+            except Exception:
+                age_h = 0
+        else:
+            age_h = 0
+
+        if status in ("TIMED", "SCHEDULED"):
+            if 2.5 <= age_h <= 12:
+                to_fetch.append((1, m, espn_id))  # Borde vara klar
+            elif -24 <= age_h <= 0:
+                # Kommande match: hämta om ej cachad eller cache > 6 h gammal
+                cached = cache.get(espn_id, {})
+                cached_at = cached.get("_fetched_at", "")
+                stale = True
+                if cached_at:
+                    try:
+                        dt = datetime.fromisoformat(cached_at)
+                        if (now - dt).total_seconds() < 6 * 3600:
+                            stale = False
+                    except Exception:
+                        pass
+                if stale:
+                    to_fetch.append((3, m, espn_id))
+            continue
+
+        if status == "FINISHED":
+            cached = cache.get(espn_id, {})
+            has_events = bool(cached.get("goals") or cached.get("bookings"))
+            if not has_events and age_h < 48:
+                to_fetch.append((2, m, espn_id))
+
+    # Applicera befintlig cache direkt
+    for m in fd_matches:
+        mid = str(m.get("id"))
+        espn_id = id_map.get(mid)
+        if espn_id and espn_id in cache:
+            _apply_espn(m, cache[espn_id])
+
+    if not to_fetch:
+        return
+
+    to_fetch.sort(key=lambda x: x[0])
+    labels = {0: "live", 1: "stale-timed", 2: "finished-no-events", 3: "pre-match"}
+
+    for i, (prio, m, espn_id) in enumerate(to_fetch[:max_calls]):
+        if i > 0:
+            time.sleep(1)  # Respektera ESPN utan explicit rate-limit
+        home_tla = (m.get("homeTeam") or {}).get("tla", "HOM")
+        away_tla = (m.get("awayTeam") or {}).get("tla", "AWY")
+        try:
+            summary = espn_get(f"/summary?event={espn_id}")
+            parsed = parse_espn_summary(summary, home_tla, away_tla)
+            for side in ("homeLineup", "awayLineup"):
+                if parsed.get(side):
+                    parsed[side]["_espnEventId"] = espn_id
+            parsed["_fetched_at"] = now.isoformat()
+
+            espn_status = parsed.get("espnStatus", "")
+            is_finished = espn_status in ESPN_FINISHED
+            is_live = espn_status in ESPN_LIVE
+
+            if is_finished:
+                cache[espn_id] = parsed   # Permanent cache för FINISHED
+            elif not is_live:
+                cache[espn_id] = parsed   # Korttidscache för pre-match
+
+            _apply_espn(m, parsed)
+            # Uppdatera status från ESPN om fd.org är sen
+            if is_finished and m.get("status") not in ("FINISHED", "AWARDED"):
+                m["status"] = "FINISHED"
+
+            hn = (m.get("homeTeam") or {}).get("name", "?")
+            an = (m.get("awayTeam") or {}).get("name", "?")
+            print(f"  [ESPN {labels.get(prio, str(prio))}] {hn}–{an}: "
+                  f"mål={len(parsed['goals'])}, kort={len(parsed['bookings'])}, "
+                  f"byten={len(parsed['subs'])}, status={espn_status}")
+        except Exception as e:
+            print(f"  ESPN misslyckades event={espn_id}: {e}")
+
+    # Applicera cache igen (inkl. nyss hämtade)
+    for m in fd_matches:
+        mid = str(m.get("id"))
+        espn_id = id_map.get(mid)
+        if espn_id and espn_id in cache:
+            _apply_espn(m, cache[espn_id])
+
+    _jsave(cache_path, cache)
+
+
+def _apply_espn(m, parsed):
+    """Slår in ESPN-data i football-data.org match-dict via m['_espn']."""
+    m["_espn"] = parsed
+    # Uppdatera venue/referees/attendance direkt på m (scoring engine bryr sig ej)
+    if parsed.get("venue"):
+        m["venue"] = parsed["venue"]
+    if parsed.get("referees"):
+        m["referees"] = parsed["referees"]
+    if parsed.get("attendance") is not None:
+        m["attendance"] = parsed["attendance"]
+
+
+# --------------------------------------------------------------------------- #
+# Hjälpare: ESPN-prioriterade extraktorer för goals/bookings/subs
+# --------------------------------------------------------------------------- #
+def _goals(m):
+    """Returnerar mål-lista i vår standard-format. ESPN-data prioriteras."""
+    espn = m.get("_espn") or {}
+    if espn.get("goals"):
+        return espn["goals"]
+    return extract_goals(m)
+
+
+def _bookings(m):
+    espn = m.get("_espn") or {}
+    if espn.get("bookings"):
+        return espn["bookings"]
+    return extract_bookings(m)
+
+
+def _subs(m):
+    espn = m.get("_espn") or {}
+    if espn.get("subs"):
+        return espn["subs"]
+    return extract_substitutions(m)
+
+
+def patch_missing_scores_from_standings(matches, standings):
+    """Fallback: om en FINISHED match saknar fullTime-score, försök rekonstruera
+    resultatet ur standings. Fungerar säkert bara när varje lag spelat exakt 1 match
+    i gruppen (dvs. matchdag 1 i ett mästerskap). Validerar GF/GA-konsistens."""
+    standings_by_group = {}
+    for s in standings or []:
+        if (s.get("type") or "").upper() != "TOTAL":
+            continue
+        code = normalize_group_code(s.get("group") or "")
+        if not code:
+            continue
+        for row in s.get("table", []) or []:
+            t = row.get("team") or {}
+            tid = t.get("id")
+            if tid:
+                standings_by_group.setdefault(code, {})[tid] = row
+
+    for m in matches:
+        if m.get("status") != "FINISHED":
+            continue
+        ft = ((m.get("score") or {}).get("fullTime") or {})
+        if ft.get("home") is not None and ft.get("away") is not None:
+            continue  # Redan känt
+
+        group = normalize_group_code(m.get("group"))
+        if not group or group not in standings_by_group:
+            continue
+
+        home_id = (m.get("homeTeam") or {}).get("id")
+        away_id = (m.get("awayTeam") or {}).get("id")
+        group_table = standings_by_group[group]
+        home_row = group_table.get(home_id)
+        away_row = group_table.get(away_id)
+
+        if not home_row or not away_row:
+            continue
+        if home_row.get("playedGames", 0) != 1 or away_row.get("playedGames", 0) != 1:
+            continue  # Mer än en match spelad - kan inte avgöra exakt
+
+        h_gf = home_row.get("goalsFor")
+        a_gf = away_row.get("goalsFor")
+        if h_gf is None or a_gf is None:
+            continue
+        if home_row.get("goalsAgainst") != a_gf or away_row.get("goalsAgainst") != h_gf:
+            continue  # Inkonsekvent data
+
+        hn = (m.get("homeTeam") or {}).get("name", "?")
+        an = (m.get("awayTeam") or {}).get("name", "?")
+        print(f"  [standings-fallback] {hn} {h_gf}-{a_gf} {an}")
+
+        if "score" not in m or m["score"] is None:
+            m["score"] = {}
+        m["score"]["fullTime"] = {"home": h_gf, "away": a_gf}
+        if not m["score"].get("duration"):
+            m["score"]["duration"] = "REGULAR"
+        if h_gf > a_gf:
+            m["score"]["winner"] = "HOME_TEAM"
+        elif a_gf > h_gf:
+            m["score"]["winner"] = "AWAY_TEAM"
+        else:
+            m["score"]["winner"] = "DRAW"
+
+
 def fetch_data(token):
     matches = api_get(f"/competitions/{COMPETITION}/matches", token).get("matches", [])
+    # ESPN: mål, kort, byten, uppställningar, statistik, odds (ingen token krävs)
+    refresh_espn_data(matches)
     try:
         scorers = api_get(f"/competitions/{COMPETITION}/scorers?limit=20", token).get("scorers", [])
     except Exception:
-        scorers = []  # scorers-endpoint kan saknas tidigt i turneringen
+        scorers = []
     try:
         standings = api_get(f"/competitions/{COMPETITION}/standings", token).get("standings", [])
     except Exception:
-        standings = []  # gratisplanen kan sakna standings -> härleds ur matcher
+        standings = []
+    patch_missing_scores_from_standings(matches, standings)
     return matches, scorers, standings
 
 
@@ -404,12 +941,13 @@ def compute(tips, matches, scorers, standings=None, team_forms=None):
                 "score": final_score(m),
                 "scoreDetail": detailed_score(m),
                 "minute": m.get("minute"),
-                "goals": extract_goals(m),
-                "bookings": extract_bookings(m),
-                "subs": extract_substitutions(m),
-                "venue": extract_venue(m),
-                "referees": extract_referees(m),
+                "goals": _goals(m),
+                "bookings": _bookings(m),
+                "subs": _subs(m),
+                "venue": (m.get("_espn") or {}).get("venue") or extract_venue(m),
+                "referees": (m.get("_espn") or {}).get("referees") or extract_referees(m),
                 "odds": extract_odds(m),
+                "attendance": m.get("attendance"),
                 "tips": [],
             })
             row["tips"].append({"name": name, "tip": tip, "points": pts})
@@ -534,6 +1072,45 @@ def extract_odds(m):
         return {"H": float(h), "D": float(d), "A": float(a)}
     except (TypeError, ValueError):
         return None
+
+
+def extract_lineup(team_data):
+    """Hämtar startuppställning, bänk, formering och tränare ur team-dict (football-data v4)."""
+    if not isinstance(team_data, dict):
+        return None
+    lineup = [
+        {"id": p.get("id"), "name": p.get("name"),
+         "position": p.get("position"), "shirtNumber": p.get("shirtNumber")}
+        for p in (team_data.get("lineup") or [])
+    ]
+    bench = [
+        {"id": p.get("id"), "name": p.get("name"),
+         "position": p.get("position"), "shirtNumber": p.get("shirtNumber")}
+        for p in (team_data.get("bench") or [])
+    ]
+    if not lineup and not bench:
+        return None
+    coach = team_data.get("coach") or {}
+    return {
+        "formation": team_data.get("formation"),
+        "lineup": lineup,
+        "bench": bench,
+        "coach": {"name": coach.get("name"), "nationality": coach.get("nationality")} if coach.get("name") else None,
+    }
+
+
+def extract_match_stats(team_data):
+    """Hämtar matchstatistik (bollinnehav, skott etc.) ur team-dict (football-data v4).
+    Returnerar dict med snake_case-nycklar, eller {} om ingen data."""
+    if not isinstance(team_data, dict):
+        return {}
+    out = {}
+    for s in (team_data.get("statistics") or []):
+        t = s.get("type")
+        v = s.get("value")
+        if t is not None and v is not None:
+            out[str(t).lower()] = v
+    return out
 
 
 def collect_wc_teams(matches):
@@ -690,12 +1267,20 @@ def build_fixtures(matches):
         "score": final_score(m),
         "scoreDetail": detailed_score(m),
         "minute": m.get("minute"),
-        "goals": extract_goals(m),
-        "bookings": extract_bookings(m),
-        "subs": extract_substitutions(m),
-        "venue": extract_venue(m),
-        "referees": extract_referees(m),
+        "goals": _goals(m),
+        "bookings": _bookings(m),
+        "subs": _subs(m),
+        "venue": (m.get("_espn") or {}).get("venue") or extract_venue(m),
+        "referees": (m.get("_espn") or {}).get("referees") or extract_referees(m),
         "odds": extract_odds(m),
+        "attendance": m.get("attendance"),
+        "espnOdds": (m.get("_espn") or {}).get("espnOdds"),
+        "homeLineup": (m.get("_espn") or {}).get("homeLineup") or extract_lineup(m.get("homeTeam") or {}),
+        "awayLineup": (m.get("_espn") or {}).get("awayLineup") or extract_lineup(m.get("awayTeam") or {}),
+        "homeStats": (m.get("_espn") or {}).get("homeStats") or extract_match_stats(m.get("homeTeam") or {}),
+        "awayStats": (m.get("_espn") or {}).get("awayStats") or extract_match_stats(m.get("awayTeam") or {}),
+        "homeForm": (m.get("_espn") or {}).get("homeForm", []),
+        "awayForm": (m.get("_espn") or {}).get("awayForm", []),
     } for m in matches]
 
 
@@ -723,6 +1308,9 @@ def main():
         scorers = mock.get("scorers", [])
         standings = mock.get("standings", [])
         team_forms = mock.get("team_forms", {})
+        # ESPN körs även i mock-läge (ingen token krävs)
+        refresh_espn_data(matches)
+        patch_missing_scores_from_standings(matches, standings)
     else:
         token = os.environ.get("FOOTBALL_DATA_TOKEN")
         if not token:

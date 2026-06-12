@@ -107,6 +107,10 @@
   @keyframes shine { from{background-position:-200% 0} to{background-position:200% 0} }
   @keyframes barGrow { from { width: 0 !important; } }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @keyframes pageIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes tabIn  { from{opacity:0;transform:translateY(8px)}  to{opacity:1;transform:translateY(0)} }
+  @keyframes popIn  { from{opacity:0;transform:scale(.88)}        to{opacity:1;transform:scale(1)} }
+  html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
   }
@@ -414,7 +418,7 @@
       const tipped = tipsByMatchId[f.id];
       const tippas = !!(tipped && tipped.tips && tipped.tips.length > 0);
 
-      // mappa engine-goals/bookings till designens scorers/cards
+      // mappa engine-goals/bookings/subs till designens scorers/cards/subs
       function refCode(ref){
         if(!ref) return null;
         const upper = String(ref).toUpperCase();
@@ -424,11 +428,16 @@
         : (tipped && tipped.goals) ? tipped.goals : [];
       const bookingsSrc = (f.bookings && f.bookings.length) ? f.bookings
         : (tipped && tipped.bookings) ? tipped.bookings : [];
+      const subsSrc = (f.subs && f.subs.length) ? f.subs : [];
       const scorers = goalsSrc.map(g => ({
         team: refCode(g.team),
         name: g.scorer,
         minute: g.minute,
-        pen: (String(g.type||"").toUpperCase() === "PENALTY")
+        injuryTime: g.injuryTime,
+        pen: (String(g.type||"").toUpperCase() === "PENALTY"),
+        header: (String(g.type||"").toUpperCase() === "HEADER"),
+        assist: g.assist || null,
+        score: g.score || null
       })).filter(x => x.team && x.name);
       const cards = bookingsSrc.map(b => {
         const c = String(b.card||"").toUpperCase();
@@ -437,6 +446,61 @@
           type: (c === "RED" || c === "YELLOW_RED") ? "red" : "yellow"
         };
       }).filter(x => x.team && x.name);
+      const subs = subsSrc.map(s => ({
+        team: refCode(s.team), minute: s.minute,
+        playerIn: s.playerIn, playerOut: s.playerOut
+      })).filter(x => x.team);
+
+      // Beräkna matchstatistik från homeStats/awayStats (ESPN, med fallback till football-data)
+      const hs = f.homeStats || {}, as_ = f.awayStats || {};
+      function getStat(obj, ...keys){
+        for(const k of keys){
+          if(obj[k] != null) return Number(obj[k]);
+          if(obj[k.toUpperCase()] != null) return Number(obj[k.toUpperCase()]);
+        }
+        return null;
+      }
+      const _poss = [getStat(hs,"possessionPct","ball_possession"), getStat(as_,"possessionPct","ball_possession")];
+      const _shots = [getStat(hs,"totalShots","total_shots"), getStat(as_,"totalShots","total_shots")];
+      const _sot   = [getStat(hs,"shotsOnTarget","shots_on_goal"), getStat(as_,"shotsOnTarget","shots_on_goal")];
+      const _corn  = [getStat(hs,"wonCorners","corner_kicks"), getStat(as_,"wonCorners","corner_kicks")];
+      const _fouls = [getStat(hs,"foulsCommitted","fouls"), getStat(as_,"foulsCommitted","fouls")];
+      const hPassPct = getStat(hs,"passPct"), aPassPct = getStat(as_,"passPct");
+      const hP=getStat(hs,"totalPasses","passes"), hA=getStat(hs,"accuratePasses","accurate_passes");
+      const aP=getStat(as_,"totalPasses","passes"), aA=getStat(as_,"accuratePasses","accurate_passes");
+      const _pass = [
+        hPassPct!=null ? Math.round(hPassPct*100) : (hP&&hA!=null)?Math.round(hA/hP*100):null,
+        aPassPct!=null ? Math.round(aPassPct*100) : (aP&&aA!=null)?Math.round(aA/aP*100):null
+      ];
+      const _tack  = [getStat(hs,"effectiveTackles"), getStat(as_,"effectiveTackles")];
+      const _inter = [getStat(hs,"interceptions"), getStat(as_,"interceptions")];
+      const _clear = [getStat(hs,"effectiveClearance","totalClearance"), getStat(as_,"effectiveClearance","totalClearance")];
+      const _blk   = [getStat(hs,"blockedShots"), getStat(as_,"blockedShots")];
+      const _long  = [getStat(hs,"totalLongBalls"), getStat(as_,"totalLongBalls")];
+      const hCrossAcc=getStat(hs,"accurateCrosses"), hCrossTot=getStat(hs,"totalCrosses");
+      const aCrossAcc=getStat(as_,"accurateCrosses"), aCrossTot=getStat(as_,"totalCrosses");
+      const _crossPct = [
+        (hCrossTot&&hCrossAcc!=null)?Math.round(hCrossAcc/hCrossTot*100):null,
+        (aCrossTot&&aCrossAcc!=null)?Math.round(aCrossAcc/aCrossTot*100):null
+      ];
+      let hy=0,hr=0,ay=0,ar=0;
+      cards.forEach(b=>{
+        if(b.team===homeCode){if(b.type==="red")hr++;else hy++;}
+        else if(b.team===awayCode){if(b.type==="red")ar++;else ay++;}
+      });
+      const _statsHasData = _poss[0]!=null || _shots[0]!=null || _sot[0]!=null;
+      const matchStats = _statsHasData ? {
+        poss:[_poss[0]??50,_poss[1]??50], xg:[null,null],
+        shots:[_shots[0]??0,_shots[1]??0], sot:[_sot[0]??0,_sot[1]??0],
+        corners:[_corn[0]??0,_corn[1]??0], pass:[_pass[0]??0,_pass[1]??0],
+        fouls:[_fouls[0]??0,_fouls[1]??0], yellow:[hy,ay], red:[hr,ar],
+        tackles:_tack, interceptions:_inter,
+        clearances:_clear, blockedShots:_blk,
+        longBalls:_long, crossPct:_crossPct
+      } : null;
+
+      const sd = f.scoreDetail || null;
+      const penScore = sd && sd.penalties && sd.penalties[0] != null ? sd.penalties : null;
 
       return {
         id, stage, group: f.group || null,
@@ -446,7 +510,7 @@
         kickoff,
         ga, gb,
         status: finished ? "played" : (live ? "live" : "upcoming"),
-        winner, pen: null,
+        winner, pen: penScore,
         minute: (live && (f.minute != null)) ? f.minute : (live ? null : undefined),
         venue: (function(){
           let v = (f.venue && f.venue.stadium) ? Object.assign({}, f.venue)
@@ -461,8 +525,15 @@
         officialOdds: f.odds || null,
         referees: f.referees || [],
         tippas,
-        scorers, cards,
-        stats: null,
+        scorers, cards, subs,
+        scoreDetail: sd,
+        homeLineup: f.homeLineup || null,
+        awayLineup: f.awayLineup || null,
+        stats: matchStats,
+        attendance: f.attendance || null,
+        espnOdds: f.espnOdds || null,
+        homeForm: f.homeForm || [],
+        awayForm: f.awayForm || [],
         _realId: f.id
       };
     });
@@ -748,8 +819,10 @@
     });
     standings.forEach(s => { const p = players.find(x => x.id === s.id); if(p) p.rank = s.rank; });
 
+    const TOURNAMENT_START_MS = Date.UTC(2026, 5, 11, 19, 0); // 11 jun 2026 19:00 UTC
+    const anyLive = allMatches.some(m => m.status === "live");
     const anyPlayed = allMatches.some(m => m.status === "played");
-    const state = anyPlayed ? "mid" : "pre";
+    const state = (anyPlayed || anyLive || Date.now() >= TOURNAMENT_START_MS) ? "mid" : "pre";
 
     const podiumPicks = { p1:[], p2:[] };
     return {
@@ -1556,10 +1629,12 @@ function FormPills({ form, max = 5 }) {
 
 /* ---------- jämförelse-stapel ---------- */
 function StatBar({ label, a, b, unit, decimals }) {
-  const av = decimals ? a.toFixed(1) : a, bv = decimals ? b.toFixed(1) : b;
-  const tot = (a + b) || 1;
-  const ap = Math.round((a / tot) * 100);
-  const aWin = a > b, bWin = b > a;
+  if (a == null || b == null) return null;
+  const an = Number(a), bn = Number(b);
+  const av = decimals ? an.toFixed(1) : an, bv = decimals ? bn.toFixed(1) : bn;
+  const tot = (an + bn) || 1;
+  const ap = Math.round((an / tot) * 100);
+  const aWin = an > bn, bWin = bn > an;
   return (
     <div style={{ marginBottom: 13 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
@@ -1604,12 +1679,19 @@ function MatchCard({ m, onOpen, showRound }) {
             <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".07em", color: "var(--ink-soft)", textTransform: "uppercase" }}>
               {roundLabel(m)}</span>
           </span>
-          {m.venue && (
-            <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap",
-              display: "inline-flex", alignItems: "center", gap: 4 }}>
-              📍 <span>{m.venue.city || m.venue.stadium}</span>
-            </span>
-          )}
+          {m.venue && (() => {
+            const vcc = m.venue.cc;
+            const iso = vcc === "USA" ? "us" : vcc === "MEX" ? "mx" : vcc === "CAN" ? "ca" : null;
+            return (
+              <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)", whiteSpace: "nowrap",
+                display: "inline-flex", alignItems: "center", gap: 4 }}>
+                {iso
+                  ? <img src={`https://flagcdn.com/w20/${iso}.png`} style={{ width: 14, height: "auto", borderRadius: 2, display: "inline-block" }} alt={vcc} />
+                  : "📍"}
+                <span>{m.venue.city || m.venue.stadium}</span>
+              </span>
+            );
+          })()}
         </div>
       ) : null}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, padding: "11px 13px 11px 16px" }}>
@@ -1630,6 +1712,18 @@ function MatchCard({ m, onOpen, showRound }) {
         </div>
         {teamSide(m.away, m.fromB, true)}
       </div>
+      {!played && !live && !tbd && m._odds && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+          borderTop: "1px solid var(--line)", padding: "7px 16px 9px" }}>
+          {[["1", m._odds.home], ["X", m._odds.draw], ["2", m._odds.away]].map(([lbl, val], i) => (
+            <div key={lbl} style={{ display: "flex", flexDirection: "column", gap: 1,
+              alignItems: i === 0 ? "flex-start" : i === 2 ? "flex-end" : "center" }}>
+              <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".07em", color: "var(--ink-soft)" }}>{lbl}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>{val.toFixed(2)}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </button>
   );
 }
@@ -2058,6 +2152,12 @@ function BallIcon({ size = 17 }) {
 }
 function EventIcon({ kind }) {
   if (kind === "goal") return <BallIcon />;
+  if (kind === "sub") return (
+    <span style={{ display:"inline-flex", flexDirection:"column", gap:1, lineHeight:1, fontSize:9 }}>
+      <span style={{ color:"#2BD17E", fontWeight:800 }}>▲</span>
+      <span style={{ color:"#FF5A52", fontWeight:800 }}>▼</span>
+    </span>
+  );
   const red = kind === "red";
   return <span style={{ width: 11, height: 15, borderRadius: 2, background: red ? "#D2453B" : "#E8B931",
     transform: "rotate(8deg)", display: "inline-block", boxShadow: "0 1px 2px rgba(0,0,0,.2)" }} />;
@@ -2065,25 +2165,62 @@ function EventIcon({ kind }) {
 
 function Timeline({ m }) {
   const ev = [];
-  (m.scorers || []).forEach(s => ev.push({ minute: s.minute, team: s.team, name: s.name, kind: "goal", pen: s.pen }));
+  (m.scorers || []).forEach(s => ev.push({ minute: s.minute, injuryTime: s.injuryTime, team: s.team, name: s.name, kind: "goal", pen: s.pen, header: s.header, assist: s.assist, score: s.score }));
   (m.cards || []).forEach(c => ev.push({ minute: c.minute, team: c.team, name: c.name, kind: c.type }));
-  ev.sort((a, b) => a.minute - b.minute || (a.kind === "goal" ? -1 : 1));
-  if (!ev.length) return (
-    <div style={{ padding: "18px", textAlign: "center", color: "var(--ink-soft)", fontWeight: 600, fontSize: 13 }}>
-      Inga händelser ännu - 0–0.</div>
-  );
+  (m.subs || []).forEach(s => ev.push({ minute: s.minute, team: s.team, kind: "sub", playerIn: s.playerIn, playerOut: s.playerOut }));
+  const KIND_PRI = { goal: 0, yellow: 1, red: 2, "yellow-red": 3, sub: 4 };
+  const parseMinute = s => { const ns = String(s||0).match(/\d+/g)||['0']; return { min: parseInt(ns[0])||0, inj: ns[1] ? parseInt(ns[1]) : 0 }; };
+  ev.sort((a, b) => {
+    const pa = parseMinute(a.minute), pb = parseMinute(b.minute);
+    const ta = pa.min * 100 + (a.injuryTime != null ? a.injuryTime : pa.inj);
+    const tb = pb.min * 100 + (b.injuryTime != null ? b.injuryTime : pb.inj);
+    return ta - tb || (KIND_PRI[a.kind]||5) - (KIND_PRI[b.kind]||5);
+  });
+  if (!ev.length) {
+    const played = m.status === "played";
+    const msg = played
+      ? "Detaljerad händelsedata hämtas från API…"
+      : "Inga händelser ännu – 0–0.";
+    return (
+      <div style={{ padding: "18px", textAlign: "center", color: "var(--ink-soft)", fontWeight: 600, fontSize: 13 }}>{msg}</div>
+    );
+  }
   let sh = 0, sa = 0;
+  const minLabel = (e) => {
+    let s = (e.minute || "?") + "'";
+    if (e.injuryTime) s = (e.minute || "?") + "+" + e.injuryTime + "'";
+    return s;
+  };
   const side = (e, home) => {
+    if (e.kind === "sub") {
+      return (
+        <div style={{ display:"flex", alignItems:"center", gap:6, flexDirection: home ? "row-reverse" : "row",
+          textAlign: home ? "right" : "left" }}>
+          <EventIcon kind="sub" />
+          <div style={{ minWidth:0 }}>
+            <div style={{ fontWeight:700, fontSize:12.5, color:"#2BD17E", lineHeight:1.15 }}>▲ {e.playerIn}</div>
+            <div style={{ fontWeight:600, fontSize:11.5, color:"#FF5A52", lineHeight:1.3 }}>▼ {e.playerOut}</div>
+          </div>
+        </div>
+      );
+    }
     const label = { goal: "MÅL", yellow: "Gult kort", red: "Rött kort" }[e.kind];
+    const goalScore = e.score ? e.score[0] + "–" + e.score[1] : sh + "–" + sa;
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexDirection: home ? "row-reverse" : "row",
         textAlign: home ? "right" : "left" }}>
         <EventIcon kind={e.kind} />
         <div style={{ minWidth: 0 }}>
           <div style={{ fontWeight: 700, fontSize: 13, lineHeight: 1.15 }}>
-            {e.name}{e.pen ? <span style={{ color: "var(--ink-soft)", fontWeight: 600, fontSize: 11 }}> (str)</span> : ""}</div>
+            {e.name}
+            {e.pen ? <span style={{ color: "var(--ink-soft)", fontWeight: 600, fontSize: 11 }}> (str)</span> : ""}
+            {e.header && !e.pen ? <span style={{ color: "var(--ink-soft)", fontWeight: 600, fontSize: 11 }}> (hd)</span> : ""}
+          </div>
+          {e.assist && e.kind === "goal" && (
+            <div style={{ fontSize: 10.5, fontWeight: 600, color: "var(--ink-soft)", lineHeight: 1.3 }}>Assist: {e.assist}</div>
+          )}
           <div style={{ fontSize: 10.5, fontWeight: 700, color: e.kind === "goal" ? "var(--hot)" : "var(--ink-soft)", letterSpacing: ".03em" }}>
-            {e.kind === "goal" ? "MÅL · " : label} {e.kind === "goal" ? (e.team === m.home ? (sh) + "–" + sa : sh + "–" + (sa)) : ""}</div>
+            {e.kind === "goal" ? "MÅL · " + goalScore : label}</div>
         </div>
       </div>
     );
@@ -2099,9 +2236,9 @@ function Timeline({ m }) {
             gap: 6, position: "relative", padding: "6px 0" }}>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>{home ? side(e, true) : null}</div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <span className="num" style={{ background: e.kind === "goal" ? "var(--ink)" : "var(--bg2)",
+              <span className="num" style={{ background: e.kind === "goal" ? "var(--ink)" : (e.kind === "sub" ? "var(--panel)" : "var(--bg2)"),
                 color: e.kind === "goal" ? "var(--bg)" : "var(--ink-soft)", border: "1px solid " + (e.kind === "goal" ? "var(--ink)" : "var(--line)"),
-                borderRadius: 7, padding: "2px 6px", fontSize: 11, fontWeight: 800, minWidth: 30, textAlign: "center" }}>{e.minute}'</span>
+                borderRadius: 7, padding: "2px 6px", fontSize: 11, fontWeight: 800, minWidth: 30, textAlign: "center" }}>{minLabel(e)}</span>
             </div>
             <div style={{ display: "flex", justifyContent: "flex-start" }}>{!home ? side(e, false) : null}</div>
           </div>
@@ -2147,23 +2284,52 @@ function TipsDistribution({ data, m }) {
 
 function StatsBlock({ m, full }) {
   const s = m.stats;
-  if (!s) return null;
+  // Always show card stats for played/live games even without API stats
+  const hasCards = m.cards && m.cards.length > 0;
+  const hasSubs = m.subs && m.subs.length > 0;
+  if (!s && !hasCards && !hasSubs) return null;
+
+  // Build card counts from cards array if stats unavailable
+  let hy = 0, hr = 0, ay = 0, ar = 0;
+  (m.cards || []).forEach(b => {
+    if (b.team === m.home) { if (b.type === "red") hr++; else hy++; }
+    else if (b.team === m.away) { if (b.type === "red") ar++; else ay++; }
+  });
+  const yellows = s ? [s.yellow[0], s.yellow[1]] : [hy, ay];
+  const reds = s ? [s.red[0], s.red[1]] : [hr, ar];
+
   return (
     <MiniBlock title="Matchstatistik">
-      <StatBar label="Bollinnehav" a={s.poss[0]} b={s.poss[1]} unit="%" />
-      <StatBar label="xG" a={s.xg[0]} b={s.xg[1]} decimals />
-      <StatBar label="Skott" a={s.shots[0]} b={s.shots[1]} />
-      <StatBar label="Skott på mål" a={s.sot[0]} b={s.sot[1]} />
-      {full && <>
-        <StatBar label="Hörnor" a={s.corners[0]} b={s.corners[1]} />
-        <StatBar label="Passningar %" a={s.pass[0]} b={s.pass[1]} unit="%" />
-        <StatBar label="Frisparkar" a={s.fouls[0]} b={s.fouls[1]} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
-          <Cards y={s.yellow[0]} r={s.red[0]} />
-          <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", letterSpacing: ".04em", textTransform: "uppercase" }}>Kort</span>
-          <Cards y={s.yellow[1]} r={s.red[1]} right />
-        </div>
+      {s && <>
+        <StatBar label="Bollinnehav" a={s.poss[0]} b={s.poss[1]} unit="%" />
+        <StatBar label="xG" a={s.xg[0]} b={s.xg[1]} decimals />
+        <StatBar label="Skott" a={s.shots[0]} b={s.shots[1]} />
+        <StatBar label="Skott på mål" a={s.sot[0]} b={s.sot[1]} />
+        {full && <>
+          <StatBar label="Blockade skott" a={s.blockedShots && s.blockedShots[0]} b={s.blockedShots && s.blockedShots[1]} />
+          <StatBar label="Hörnor" a={s.corners[0]} b={s.corners[1]} />
+          <StatBar label="Passningar %" a={s.pass[0]} b={s.pass[1]} unit="%" />
+          <StatBar label="Långa bollar" a={s.longBalls && s.longBalls[0]} b={s.longBalls && s.longBalls[1]} />
+          <StatBar label="Inlägg %" a={s.crossPct && s.crossPct[0]} b={s.crossPct && s.crossPct[1]} unit="%" />
+          <StatBar label="Tacklingar" a={s.tackles && s.tackles[0]} b={s.tackles && s.tackles[1]} />
+          <StatBar label="Interceptions" a={s.interceptions && s.interceptions[0]} b={s.interceptions && s.interceptions[1]} />
+          <StatBar label="Undsättningar" a={s.clearances && s.clearances[0]} b={s.clearances && s.clearances[1]} />
+          <StatBar label="Frisparkar" a={s.fouls[0]} b={s.fouls[1]} />
+        </>}
       </>}
+      {(yellows[0] + yellows[1] + reds[0] + reds[1] > 0 || full) && (
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: s ? 4 : 0 }}>
+          <Cards y={yellows[0]} r={reds[0]} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", letterSpacing: ".04em", textTransform: "uppercase" }}>Kort</span>
+          <Cards y={yellows[1]} r={reds[1]} right />
+        </div>
+      )}
+      {hasSubs && (
+        <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid var(--line)", fontSize: 11.5, fontWeight: 700, color: "var(--ink-soft)" }}>
+          {m.subs.filter(s => s.team === m.home).length} byte{m.subs.filter(s => s.team === m.home).length !== 1 ? "n" : ""} hemma
+          · {m.subs.filter(s => s.team === m.away).length} byte{m.subs.filter(s => s.team === m.away).length !== 1 ? "n" : ""} borta
+        </div>
+      )}
     </MiniBlock>
   );
 }
@@ -2178,7 +2344,9 @@ function Cards({ y, r, right }) {
 }
 
 function FormBlock({ data, m }) {
-  const hf = data.forms[m.home], af = data.forms[m.away];
+  const espnToForm = arr => (arr || []).map(e => ({ gf: e.gf, ga: e.ga, r: e.result || e.r }));
+  const hf = (m.homeForm && m.homeForm.length) ? espnToForm(m.homeForm) : data.forms[m.home];
+  const af = (m.awayForm && m.awayForm.length) ? espnToForm(m.awayForm) : data.forms[m.away];
   const hasForm = (hf && hf.length) || (af && af.length);
   if (!hasForm) return null;
   const row = (code, form) => (
@@ -2224,23 +2392,30 @@ function H2HBlock({ m }) {
 
 function PoolResultBlock({ data, m }) {
   // Visar ALLA spelares tippningar - poäng om matchen är spelad, annars bara tippet.
+  // Under live: visa preliminary poäng baserat på aktuellt ställning.
   const played = m.status === "played" && m.ga != null && m.gb != null;
+  const live = m.status === "live" && m.ga != null && m.gb != null;
+  const scored = played || live;
+  const calcPts = (tip, ga, gb) => {
+    let pts = 1;
+    if (tip[0] === ga && tip[1] === gb) return 5;
+    const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X";
+    const o2 = ga > gb ? "H" : ga < gb ? "B" : "X";
+    if (o1 === o2) pts = 2;
+    return pts;
+  };
   const rows = data.players.map(p => {
     const tip = p.tips[m.id];
     if (!tip) return null;
-    let pts = null;
-    if(played){
-      pts = 1;
-      if (tip[0] === m.ga && tip[1] === m.gb) pts = 5;
-      else { const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X"; const o2 = m.ga > m.gb ? "H" : m.ga < m.gb ? "B" : "X"; if (o1 === o2) pts = 2; }
-    }
+    const pts = scored ? calcPts(tip, m.ga, m.gb) : null;
     return { p, tip, pts };
   }).filter(Boolean);
   if (!rows.length) return null;
-  rows.sort((a, b) => (played ? (b.pts - a.pts) : 0) || a.p.name.localeCompare(b.p.name));
+  rows.sort((a, b) => (scored ? (b.pts - a.pts) : 0) || a.p.name.localeCompare(b.p.name));
   const col = { 5: "var(--gold)", 2: "var(--warm)", 1: "var(--ink-soft)" };
+  const title = played ? "Så tippade poolen" : live ? "Tippet just nu (pågår)" : "Vad alla har tippat";
   return (
-    <MiniBlock title={played ? "Så tippade poolen" : "Vad alla har tippat"} pad={false}>
+    <MiniBlock title={title} pad={false}>
       {rows.map((r, i) => (
         <div key={r.p.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 14px",
           borderBottom: i < rows.length - 1 ? "1px solid var(--line)" : "none" }}>
@@ -2248,7 +2423,10 @@ function PoolResultBlock({ data, m }) {
           <span style={{ fontWeight: 700, fontSize: 13.5, flex: 1 }}>{r.p.name}</span>
           <span className="num" style={{ fontWeight: 800, fontSize: 14, color: "var(--ink-soft)" }}>{r.tip[0]}–{r.tip[1]}</span>
           {r.pts != null && (
-            <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 30, textAlign: "right" }}>+{r.pts}</span>
+            <span className="num display" style={{ fontWeight: 800, fontSize: 17, color: col[r.pts], width: 34, textAlign: "right",
+              opacity: live ? 0.85 : 1 }}>
+              +{r.pts}{live ? <span style={{ fontSize: 9, verticalAlign: "super", opacity: .7 }}>~</span> : null}
+            </span>
           )}
         </div>
       ))}
@@ -2258,63 +2436,838 @@ function PoolResultBlock({ data, m }) {
 
 function WinChanceBlock({ m }){
   if(!m.home || !m.away) return null;
-  // Prio: officiella odds från football-data, annars beräknad
-  let o, official = false;
-  if(m.officialOdds && m.officialOdds.H != null){
-    // Decimal-odds -> implied probability, normaliserad
-    const decH = m.officialOdds.H, decD = m.officialOdds.D, decA = m.officialOdds.A;
-    const pH = 1/decH, pD = 1/decD, pA = 1/decA;
-    const tot = pH + pD + pA;
-    const round = (x) => Math.round((x/tot) * 100);
-    let H = round(pH), D = round(pD), A = round(pA);
-    const delta = 100 - (H + D + A);
-    if(delta !== 0) H += delta;
-    o = { H, D, A, decH, decD, decA };
-    official = true;
-  } else {
+  const mlFmt = v => v > 0 ? "+" + v : String(v);
+  const mlToDecimal = v => v < 0 ? (100/(-v) + 1) : (v/100 + 1);
+  const mlToImpl = v => v < 0 ? (-v)/(-v+100) : 100/(v+100);
+
+  let o, oddsSource = null, eo = m.espnOdds;
+
+  // Priority 1: ESPN/DraftKings moneyline  (compute implied 1X2 with ~27% draw prior)
+  if(eo && eo.homeML != null && eo.awayML != null){
+    const pHraw = mlToImpl(eo.homeML);
+    const pAraw = mlToImpl(eo.awayML);
+    const sum2  = pHraw + pAraw;
+    // Remove vig, scale to 2-way; then allocate ~27% draw (historical WC rate)
+    const DRAW_PRIOR = 0.27;
+    const pHadj = pHraw / sum2 * (1 - DRAW_PRIOR);
+    const pAadj = pAraw / sum2 * (1 - DRAW_PRIOR);
+    const pD    = DRAW_PRIOR;
+    const tot   = pHadj + pD + pAadj;
+    const round = x => Math.round(x/tot*100);
+    let H = round(pHadj), D = round(pD), A = round(pAadj);
+    H += 100 - (H+D+A);
+    o = { H, D, A,
+          decH: mlToDecimal(eo.homeML).toFixed(2),
+          decA: mlToDecimal(eo.awayML).toFixed(2),
+          decD: null };
+    oddsSource = "ESPN · " + (eo.provider || "DraftKings");
+  }
+  // Priority 2: football-data decimal odds
+  else if(m.officialOdds && m.officialOdds.H != null){
+    const decH=m.officialOdds.H, decD=m.officialOdds.D, decA=m.officialOdds.A;
+    const pH=1/decH, pD=1/decD, pA=1/decA, tot=pH+pD+pA;
+    const round=x=>Math.round(x/tot*100);
+    let H=round(pH), D=round(pD), A=round(pA); H+=100-(H+D+A);
+    o = { H, D, A, decH: decH.toFixed(2), decD: decD.toFixed(2), decA: decA.toFixed(2) };
+    oddsSource = "football-data.org";
+  }
+  // Priority 3: model calculation
+  else {
     o = window.VM.matchOdds(m.home, m.away);
   }
   if(!o) return null;
-  const title = official ? "Officiella odds inför avspark" : "Vinstchans inför avspark";
+
+  const isModel = !oddsSource;
   return (
-    <MiniBlock title={title}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 12, alignItems: "end" }}>
-        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--hot)" }}>
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>1 · Hemma</div>
-          <div className="display" style={{ fontSize: 36, color: "var(--hot)", marginTop: 2, lineHeight: 1 }}>{o.H}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
-          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decH.toFixed(2)}</div>}
+    <MiniBlock title={isModel ? "Vinstchans inför avspark" : "Odds inför avspark"}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:12, alignItems:"end" }}>
+        <div style={{ textAlign:"center", paddingBottom:6, borderBottom:"2px solid var(--hot)" }}>
+          <div style={{ fontSize:10, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)", textTransform:"uppercase" }}>1 · Hemma</div>
+          <div className="display" style={{ fontSize:36, color:"var(--hot)", marginTop:2, lineHeight:1 }}>{o.H}<span style={{ fontSize:16, color:"var(--ink-soft)" }}>%</span></div>
+          {o.decH && <div className="num" style={{ fontSize:11, fontWeight:700, color:"var(--ink-soft)", marginTop:4 }}>dec {o.decH}</div>}
+          {eo && eo.homeML != null && <div className="num" style={{ fontSize:12, fontWeight:800, color:"var(--hot)", marginTop:2 }}>{mlFmt(eo.homeML)}</div>}
         </div>
-        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--ink-soft)" }}>
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>X · Lika</div>
-          <div className="display" style={{ fontSize: 36, color: "var(--ink)", marginTop: 2, lineHeight: 1 }}>{o.D}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
-          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decD.toFixed(2)}</div>}
+        <div style={{ textAlign:"center", paddingBottom:6, borderBottom:"2px solid var(--ink-soft)" }}>
+          <div style={{ fontSize:10, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)", textTransform:"uppercase" }}>X · Lika</div>
+          <div className="display" style={{ fontSize:36, color:"var(--ink)", marginTop:2, lineHeight:1 }}>{o.D}<span style={{ fontSize:16, color:"var(--ink-soft)" }}>%</span></div>
+          {o.decD && <div className="num" style={{ fontSize:11, fontWeight:700, color:"var(--ink-soft)", marginTop:4 }}>dec {o.decD}</div>}
+          {eo && <div style={{ fontSize:10, color:"var(--ink-soft)", marginTop:2, fontStyle:"italic" }}>ca 27% hist.</div>}
         </div>
-        <div style={{ textAlign: "center", paddingBottom: 6, borderBottom: "2px solid var(--cool)" }}>
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>2 · Borta</div>
-          <div className="display" style={{ fontSize: 36, color: "var(--cool)", marginTop: 2, lineHeight: 1 }}>{o.A}<span style={{ fontSize: 16, color: "var(--ink-soft)" }}>%</span></div>
-          {official && <div className="num" style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", marginTop: 4 }}>odds {o.decA.toFixed(2)}</div>}
+        <div style={{ textAlign:"center", paddingBottom:6, borderBottom:"2px solid var(--cool)" }}>
+          <div style={{ fontSize:10, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)", textTransform:"uppercase" }}>2 · Borta</div>
+          <div className="display" style={{ fontSize:36, color:"var(--cool)", marginTop:2, lineHeight:1 }}>{o.A}<span style={{ fontSize:16, color:"var(--ink-soft)" }}>%</span></div>
+          {o.decA && <div className="num" style={{ fontSize:11, fontWeight:700, color:"var(--ink-soft)", marginTop:4 }}>dec {o.decA}</div>}
+          {eo && eo.awayML != null && <div className="num" style={{ fontSize:12, fontWeight:800, color:"var(--cool)", marginTop:2 }}>{mlFmt(eo.awayML)}</div>}
         </div>
       </div>
-      <div style={{ display: "flex", gap: 2, height: 8, borderRadius: 4, overflow: "hidden", marginBottom: 12 }}>
-        <span style={{ flex: o.H, background: "var(--hot)" }} />
-        <span style={{ flex: o.D, background: "var(--ink-soft)" }} />
-        <span style={{ flex: o.A, background: "var(--cool)" }} />
+      <div style={{ display:"flex", gap:2, height:8, borderRadius:4, overflow:"hidden", marginBottom:12 }}>
+        <span style={{ flex:o.H, background:"var(--hot)", transition:"flex .4s ease" }} />
+        <span style={{ flex:o.D, background:"var(--ink-soft)", transition:"flex .4s ease" }} />
+        <span style={{ flex:o.A, background:"var(--cool)", transition:"flex .4s ease" }} />
       </div>
-      <div style={{ fontSize: 11.5, color: "var(--ink-soft)", fontStyle: "italic", lineHeight: 1.5,
-        paddingTop: 10, borderTop: "1px dashed var(--line)" }}>
-        <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>Källa:</strong>{" "}
-        {official
-          ? "Officiella decimal-odds från football-data.org, omräknade till sannolikhet och normaliserade."
-          : (<>Beräknad utifrån lagens VM-historiska meriter (titlar, semifinaler, antal slutspel) + en logistisk modell på ratingdifferensen + <strong style={{ color: "var(--ink)", fontStyle: "normal" }}>+3p hemmaplansbonus</strong>. Visas tills officiella odds finns tillgängliga.</>)}
+      {eo && (eo.spread || eo.overUnder != null) && (
+        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
+          {eo.spread && (
+            <div style={{ flex:1, background:"var(--bg2)", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
+              <div style={{ fontSize:9.5, fontWeight:800, color:"var(--ink-soft)", letterSpacing:".06em", textTransform:"uppercase", marginBottom:3 }}>Handikapp</div>
+              <div className="num" style={{ fontWeight:800, fontSize:15 }}>{eo.spread}</div>
+            </div>
+          )}
+          {eo.overUnder != null && (
+            <div style={{ flex:1, background:"var(--bg2)", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
+              <div style={{ fontSize:9.5, fontWeight:800, color:"var(--ink-soft)", letterSpacing:".06em", textTransform:"uppercase", marginBottom:3 }}>Över/Under</div>
+              <div className="num" style={{ fontWeight:800, fontSize:15 }}>{eo.overUnder}
+                {eo.overOdds != null && (
+                  <span className="num" style={{ fontSize:10, fontWeight:600, color:"var(--ink-soft)", marginLeft:4 }}>
+                    Ö {mlFmt(eo.overOdds)} / U {mlFmt(eo.underOdds)}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      <div style={{ fontSize:11, color:"var(--ink-soft)", fontStyle:"italic", lineHeight:1.5,
+        paddingTop:10, borderTop:"1px dashed var(--line)" }}>
+        <strong style={{ color:"var(--ink)", fontStyle:"normal" }}>Källa:</strong>{" "}
+        {oddsSource
+          ? oddsSource === "ESPN · DraftKings" || oddsSource?.startsWith("ESPN")
+            ? `${oddsSource} moneyline-odds, omräknade till 1X2-sannolikhet med historisk oavgjort-prior (~27%).`
+            : `Decimal-odds från ${oddsSource}, omräknade till sannolikhet och normaliserade.`
+          : <>Beräknad utifrån lagens VM-historiska meriter + logistisk modell på ratingdifferensen + <strong style={{ color:"var(--ink)", fontStyle:"normal" }}>+3p hemmaplansbonus</strong>.</>
+        }
       </div>
     </MiniBlock>
   );
 }
 
-function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
-  const m = match;
+function LineupBlock({ m }) {
+  const [tab, setTab] = React.useState("home");
+  const hl = m.homeLineup, al = m.awayLineup;
+  const hasHome = !!(hl && hl.lineup && hl.lineup.length);
+  const hasAway = !!(al && al.lineup && al.lineup.length);
+  if (!hasHome && !hasAway) return null;
+  const active = tab === "home" ? (hasHome ? hl : al) : (hasAway ? al : hl);
+  const activeCode = tab === "home" ? m.home : m.away;
+  const posLabel = p => {
+    const pos = (p.position || "").toLowerCase();
+    if (pos.includes("goalkeeper")) return "MV";
+    if (pos.includes("defence")) return "DEF";
+    if (pos.includes("midfielder")) return "MF";
+    if (pos.includes("offence") || pos.includes("forward")) return "FW";
+    return "";
+  };
+  return (
+    <MiniBlock title="Uppställning" pad={false}>
+      <div style={{ display: "flex", borderBottom: "1px solid var(--line)" }}>
+        {[["home", m.home, hasHome], ["away", m.away, hasAway]].map(([t, code, has]) => {
+          const lu = t === "home" ? hl : al;
+          return (
+            <button key={t} onClick={() => has && setTab(t)} style={{
+              flex: 1, padding: "10px 0", fontWeight: 800, fontSize: 12.5,
+              color: tab === t ? "var(--ink)" : "var(--ink-soft)",
+              borderBottom: tab === t ? "2px solid var(--hot)" : "2px solid transparent",
+              opacity: has ? 1 : 0.4,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 7
+            }}>
+              {code && <Flag code={code} size={15} />}
+              <span>{code && (window.VM.TEAMS[code] || {}).name || (t === "home" ? "Hemma" : "Borta")}</span>
+              {lu && lu.formation && tab === t && (
+                <span style={{ fontWeight: 600, fontSize: 11, color: "var(--ink-soft)", marginLeft: 2 }}>{lu.formation}</span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      {active && active.lineup && active.lineup.map((p, i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 14px",
+          borderBottom: "1px solid var(--line)" }}>
+          <span className="num" style={{ width: 22, textAlign: "center", fontSize: 11, fontWeight: 700,
+            color: "var(--ink-soft)", background: "var(--bg2)", borderRadius: 4, padding: "1px 0" }}>
+            {p.shirtNumber != null ? p.shirtNumber : "·"}
+          </span>
+          <span style={{ flex: 1, fontSize: 13.5, fontWeight: 700 }}>{p.name}</span>
+          {posLabel(p) && (
+            <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)",
+              background: "var(--panel)", padding: "2px 6px", borderRadius: 5 }}>{posLabel(p)}</span>
+          )}
+        </div>
+      ))}
+      {active && active.bench && active.bench.length > 0 && (
+        <>
+          <div style={{ padding: "7px 14px 3px", fontSize: 9.5, fontWeight: 800, letterSpacing: ".1em",
+            color: "var(--ink-soft)", textTransform: "uppercase", borderTop: "1px solid var(--line)" }}>
+            Bänk
+          </div>
+          {active.bench.map((p, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "5px 14px",
+              borderBottom: i < active.bench.length - 1 ? "1px solid var(--line)" : "none", opacity: 0.65 }}>
+              <span className="num" style={{ width: 22, textAlign: "center", fontSize: 11, fontWeight: 700,
+                color: "var(--ink-soft)", background: "var(--bg2)", borderRadius: 4, padding: "1px 0" }}>
+                {p.jersey ?? p.shirtNumber ?? "·"}
+              </span>
+              <span style={{ flex: 1, fontSize: 12.5, fontWeight: 600 }}>{p.name}</span>
+              {posLabel(p) && (
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: ".06em", color: "var(--ink-soft)",
+                  background: "var(--panel)", padding: "2px 6px", borderRadius: 5 }}>{posLabel(p)}</span>
+              )}
+            </div>
+          ))}
+        </>
+      )}
+      {active && active.coach && active.coach.name && (
+        <div style={{ padding: "8px 14px", fontSize: 11.5, color: "var(--ink-soft)", fontWeight: 600,
+          borderTop: "1px solid var(--line)" }}>
+          Tränare: <strong style={{ color: "var(--ink)" }}>{active.coach.name}</strong>
+          {active.coach.nationality && <span> ({active.coach.nationality})</span>}
+        </div>
+      )}
+    </MiniBlock>
+  );
+}
+
+// ── TheSportsDB player cache ──────────────────────────────────────────────────
+const _tsdbCache = {};
+let _playerDbMerged = false;
+function _mergePlayersDb() {
+  if (_playerDbMerged) return;
+  _playerDbMerged = true;
+  const db = window.__PLAYERS_DB__;
+  if (!db) return;
+  for (const [name, info] of Object.entries(db)) {
+    if (info && !info._notFound && !(name in _tsdbCache)) _tsdbCache[name] = info;
+  }
+}
+
+const parseH = s => {
+  if (!s) return null;
+  let m = s.match(/(\d{2,3})\s*cm/i); if (m) return m[1] + ' cm';
+  m = s.match(/(\d+)[.,](\d+)\s*m/); if (m) return Math.round(parseFloat(m[1]+'.'+m[2])*100) + ' cm';
+  return null;
+};
+const parseW = s => {
+  if (!s) return null;
+  let m = s.match(/(\d+)\s*kg/i); if (m) return m[1] + ' kg';
+  m = s.match(/(\d+)\s*lb/i); if (m) return Math.round(parseInt(m[1])*0.4536) + ' kg';
+  return null;
+};
+
+// Applies team data from a lookupteam response onto an existing info object
+async function applyTeamData(info) {
+  const teamId = info._teamId;
+  if (!teamId) return info;
+  try {
+    const td = await fetch(`https://www.thesportsdb.com/api/v1/json/3/lookupteam.php?id=${teamId}`).then(r=>r.json());
+    const team = (td?.teams||[])[0] || null;
+    if (!team || !team.strLeague || /^_/.test(team.strLeague)) return info;
+    return {
+      ...info,
+      teamBadge:    team.strBadge     || null,
+      teamLeague:   team.strLeague    || null,
+      teamCountry:  team.strCountry   || null,
+      teamStadium:  team.strStadium   || null,
+      teamCapacity: team.intStadiumCapacity || null,
+      teamCity:     team.strLocation  || null,
+    };
+  } catch { return info; }
+}
+
+// Lightweight: search only (1 request). Used for prefetch.
+async function fetchTsdbPlayerBasic(name) {
+  _mergePlayersDb();
+  if (name in _tsdbCache) return _tsdbCache[name];
+  _tsdbCache[name] = null;
+  try {
+    const q = encodeURIComponent(name);
+    const sd = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${q}`).then(r=>r.json());
+    const players = sd.player || [];
+    if (!players.length) return null;
+    const basic = players.find(p => (p.strPlayer||'').toLowerCase() === name.toLowerCase()) || players[0];
+    const info = {
+      thumb:       basic.strThumb      || null,
+      cutout:      basic.strCutout     || null,
+      render:      null,
+      team:        basic.strTeam       || null,
+      position:    basic.strPosition   || null,
+      nationality: basic.strNationality || null,
+      born:        basic.dateBorn      || null,
+      birthPlace:  null, height: null, weight: null, foot: null, natJersey: null,
+      teamBadge: null, teamLeague: null, teamCountry: null,
+      teamStadium: null, teamCapacity: null, teamCity: null,
+      _teamId: basic.idTeam || null,
+      _playerId: basic.idPlayer || null,
+      _basic: true,
+    };
+    _tsdbCache[name] = info;
+    return info;
+  } catch { return null; }
+}
+
+// Full fetch: search + lookupplayer. Team is fetched separately via applyTeamData.
+async function fetchTsdbPlayer(name) {
+  _mergePlayersDb();
+  const cached = _tsdbCache[name];
+  // Already have full (non-basic) data
+  if (cached && !cached._basic) return cached;
+  // Start from basic if available, otherwise fetch basic first
+  if (!(name in _tsdbCache)) { _tsdbCache[name] = null; }
+
+  try {
+    const q = encodeURIComponent(name);
+    let basic;
+    if (cached?._basic) {
+      // Reuse basic data
+      basic = { idPlayer: cached._playerId, idTeam: cached._teamId, strTeam: cached.team,
+                strThumb: cached.thumb, strCutout: cached.cutout,
+                strPosition: cached.position, strNationality: cached.nationality, dateBorn: cached.born };
+    } else {
+      const sd = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${q}`).then(r=>r.json());
+      const players = sd.player || [];
+      if (!players.length) return null;
+      basic = players.find(p => (p.strPlayer||'').toLowerCase() === name.toLowerCase()) || players[0];
+    }
+
+    const fullData = await fetch(`https://www.thesportsdb.com/api/v1/json/3/lookupplayer.php?id=${basic.idPlayer}`).then(r=>r.json()).catch(()=>null);
+    const fp = (fullData?.players||[])[0] || basic;
+
+    const info = {
+      thumb:        fp.strThumb        || basic.strThumb  || null,
+      cutout:       fp.strCutout       || basic.strCutout || null,
+      render:       fp.strRender       || null,
+      team:         fp.strTeam         || basic.strTeam   || null,
+      position:     fp.strPosition     || basic.strPosition || null,
+      nationality:  fp.strNationality  || basic.strNationality || null,
+      born:         fp.dateBorn        || basic.dateBorn  || null,
+      birthPlace:   fp.strBirthLocation || null,
+      height:       parseH(fp.strHeight),
+      weight:       parseW(fp.strWeight),
+      foot:         fp.strSide         || null,
+      natJersey:    fp.strNumber       || null,
+      teamBadge:    null,
+      teamLeague:   null,
+      teamCountry:  null,
+      teamStadium:  null,
+      teamCapacity: null,
+      teamCity:     null,
+      _teamId:      fp.idTeam || basic.idTeam || null,
+      _basic:       false,
+    };
+    _tsdbCache[name] = info;
+    return info;
+  } catch { return cached || null; }
+}
+
+// ── PitchView ────────────────────────────────────────────────────────────────
+function PitchView({ m }) {
+  const hl = m.homeLineup, al = m.awayLineup;
+  const hasHome = !!(hl && hl.lineup && hl.lineup.length);
+  const hasAway = !!(al && al.lineup && al.lineup.length);
+  const [selectedPlayer, setSelectedPlayer] = React.useState(null);
+
+  const [playerImages, setPlayerImages] = React.useState({});
+
+  React.useEffect(() => {
+    const allP = [
+      ...(hl?.lineup || []), ...(hl?.bench || []),
+      ...(al?.lineup || []), ...(al?.bench || []),
+    ].filter(p => p.name);
+    // Throttled lightweight prefetch for dot images only (1 request per player, 80ms apart)
+    let i = 0;
+    const tick = () => {
+      if (i >= allP.length) return;
+      const p = allP[i++];
+      const cached = _tsdbCache[p.name];
+      if (cached) {
+        if (cached.cutout || cached.thumb)
+          setPlayerImages(prev => ({ ...prev, [p.name]: cached.cutout || cached.thumb }));
+      } else {
+        fetchTsdbPlayerBasic(p.name).then(info => {
+          if (info?.cutout || info?.thumb)
+            setPlayerImages(prev => ({ ...prev, [p.name]: info.cutout || info.thumb }));
+        });
+      }
+      setTimeout(tick, 80);
+    };
+    tick();
+  }, []);
+
+  if (!hasHome && !hasAway) return (
+    <div style={{ padding:"30px 24px", textAlign:"center", color:"var(--ink-soft)", fontWeight:600 }}>
+      Uppställning publiceras nära avspark.
+    </div>
+  );
+
+  const homeColor = (window.VM.TEAMS[m.home] || {}).c1 || "#4CAF50";
+  const awayColor = (window.VM.TEAMS[m.away] || {}).c1 || "#2980b9";
+
+  const parseForm = lu => {
+    const f = ((lu && lu.formation) || "4-4-2").split("-").map(Number);
+    return [1, ...f];
+  };
+  const chunkRows = (players, counts) => {
+    const rows = []; let i = 0;
+    counts.forEach(n => { rows.push(players.slice(i, i + n)); i += n; });
+    return rows;
+  };
+  const buildEvt = teamCode => {
+    const goals = {}, assists = {}, cards = {}, subOut = {}, subIn = {};
+    (m.scorers || []).forEach(s => {
+      if (s.team !== teamCode) return;
+      (goals[s.name] = goals[s.name] || []).push(s.minute);
+      if (s.assist) (assists[s.assist] = assists[s.assist] || []).push(s.minute);
+    });
+    (m.cards || []).forEach(c => { if (c.team === teamCode) cards[c.name] = c.type; });
+    (m.subs || []).forEach(s => {
+      if (s.team !== teamCode) return;
+      subOut[s.playerOut] = s.minute;
+      subIn[s.playerIn] = s.minute;
+    });
+    return { goals, assists, cards, subOut, subIn };
+  };
+  const lastName = name => {
+    if (!name) return "";
+    const p = name.split(" ");
+    const last = p[p.length - 1];
+    return last.length > 11 ? last.slice(0, 11) : last;
+  };
+  const posLabel = pos => {
+    if (!pos) return "";
+    const p = pos.split("-")[0];
+    return { G:"MV", GK:"MV", CB:"CB", CD:"CB", LB:"VB", RB:"HB", LWB:"VB", RWB:"HB",
+      SW:"MV", DM:"DM", CM:"CM", LM:"VM", RM:"HM", AM:"AM", CAM:"AM",
+      F:"FW", FW:"FW", ST:"FW", CF:"FW", LW:"VY", RW:"HY", SS:"SS", SUB:"BÄ" }[p] || pos.slice(0,3);
+  };
+
+  const calcPlayers = (lu, teamCode, isHome) => {
+    if (!lu || !lu.lineup) return [];
+    const counts = parseForm(lu);
+    const rows = chunkRows(lu.lineup, counts);
+    const evt = buildEvt(teamCode);
+    const color = isHome ? homeColor : awayColor;
+    const [yStart, yEnd] = isHome ? [95, 53] : [5, 47];
+    const step = rows.length > 1 ? (yEnd - yStart) / (rows.length - 1) : 0;
+    return rows.flatMap((row, ri) => {
+      const y = yStart + step * ri;
+      return row.map((p, ci) => ({
+        p, color, teamCode, isHome,
+        espnEventId: lu._espnEventId || null,
+        x: (ci + 1) / (row.length + 1) * 100,
+        y,
+        goals: evt.goals[p.name] || [],
+        assists: evt.assists[p.name] || [],
+        card: evt.cards[p.name] || null,
+        subOut: evt.subOut[p.name] || null,
+      }));
+    });
+  };
+
+  const allPlayers = [
+    ...(hasHome ? calcPlayers(hl, m.home, true) : []),
+    ...(hasAway ? calcPlayers(al, m.away, false) : []),
+  ];
+
+  const Dot = ({ pd }) => {
+    const { p, color, x, y, goals, assists, card, subOut } = pd;
+    const imgSrc = playerImages[p.name] || null;
+    const [dotImgOk, setDotImgOk] = React.useState(true);
+    const showPhoto = !!(imgSrc && dotImgOk);
+    return (
+      <div onClick={() => setSelectedPlayer(pd)}
+        style={{ position:"absolute", left:x+"%", top:y+"%",
+          transform:"translate(-50%,-50%)", display:"flex", flexDirection:"column",
+          alignItems:"center", gap:1, width:50, zIndex:1, cursor:"pointer" }}>
+        <div style={{ position:"relative", width:36, height:36, borderRadius:"50%",
+          background:color, border:"2px solid rgba(255,255,255,.9)",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          fontSize:10, fontWeight:800, color:"#fff", boxShadow:"0 2px 6px rgba(0,0,0,.55)",
+          overflow: showPhoto ? "hidden" : "visible",
+          transition:"transform .15s, box-shadow .15s" }}
+          onMouseEnter={e => { e.currentTarget.style.transform="scale(1.15)"; e.currentTarget.style.boxShadow="0 4px 12px rgba(0,0,0,.7)"; }}
+          onMouseLeave={e => { e.currentTarget.style.transform="scale(1)"; e.currentTarget.style.boxShadow="0 2px 6px rgba(0,0,0,.55)"; }}>
+          {showPhoto ? (
+            <img src={imgSrc} alt={p.name}
+              style={{ width:"100%", height:"100%", objectFit:"cover", borderRadius:"50%" }}
+              onError={() => setDotImgOk(false)} />
+          ) : (
+            p.jersey ?? p.shirtNumber ?? "·"
+          )}
+          {subOut && (
+            <span style={{ position:"absolute", bottom:-3, right:-3, width:13, height:13,
+              borderRadius:"50%", background:"#FF5A52", border:"1.5px solid rgba(255,255,255,.9)",
+              fontSize:8, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:900,
+              zIndex:2 }}>▼</span>
+          )}
+        </div>
+        {showPhoto && (
+          <span style={{ position:"absolute", top:0, right:-2, width:22, height:22, borderRadius:"50%",
+            background:color, border:"1.5px solid rgba(255,255,255,.9)",
+            display:"flex", alignItems:"center", justifyContent:"center",
+            fontSize:8, fontWeight:900, color:"#fff",
+            boxShadow:"0 1px 4px rgba(0,0,0,.5)", zIndex:2, pointerEvents:"none" }}>
+            {p.jersey ?? p.shirtNumber ?? "·"}
+          </span>
+        )}
+        <div style={{ display:"flex", gap:2, height:12, alignItems:"center", justifyContent:"center" }}>
+          {goals.map((_, i) => <span key={i} style={{ fontSize:11, lineHeight:1 }}>⚽</span>)}
+          {assists.length > 0 && (
+            <span style={{
+              width:14, height:14, borderRadius:"50%",
+              background:"rgba(255,210,0,.95)", border:"1.5px solid rgba(0,0,0,.25)",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              fontSize:8, fontWeight:900, color:"#000",
+              boxShadow:"0 1px 4px rgba(0,0,0,.5)"
+            }}>A</span>
+          )}
+          {card === "yellow" && <span style={{ width:7, height:9, background:"#E8B931", borderRadius:1,
+            display:"inline-block", boxShadow:"0 1px 3px rgba(0,0,0,.4)" }} />}
+          {card === "red" && <span style={{ width:7, height:9, background:"#D2453B", borderRadius:1,
+            display:"inline-block", boxShadow:"0 1px 3px rgba(0,0,0,.4)" }} />}
+        </div>
+        <div style={{ fontSize:9, fontWeight:700, color:"#fff", textAlign:"center", lineHeight:1.1,
+          textShadow:"0 1px 3px rgba(0,0,0,.85), 0 0 8px rgba(0,0,0,.6)",
+          maxWidth:48, overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>
+          {lastName(p.name)}
+        </div>
+      </div>
+    );
+  };
+
+  // Player popup — useMemo gives a stable component-type reference so re-renders from
+  // playerImages state updates don't unmount/remount the popup and re-trigger the animation.
+  const PlayerPopup = React.useMemo(() => ({ pd }) => {
+    const { p, color, teamCode, goals, assists, card, subOut } = pd;
+    const teamName = (window.VM.TEAMS[teamCode] || {}).name || teamCode;
+    const initials = (p.name || "").split(" ").map(x=>x[0]||"").join("").slice(0,2).toUpperCase();
+    const [tsdb, setTsdb] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
+    const [imgOk, setImgOk] = React.useState(true);
+
+    React.useEffect(() => {
+      let alive = true;
+      (async () => {
+        // Step 1: get personal data (search + lookupplayer), show immediately
+        let info = await fetchTsdbPlayer(p.name);
+        if (!alive) return;
+        setTsdb(info);
+        setLoading(false);
+        // Step 2: if no team league yet, fetch team data now (isolated request, not part of prefetch)
+        if (info && !info.teamLeague) {
+          const withTeam = await applyTeamData(info);
+          if (!alive) return;
+          if (withTeam !== info) {
+            _tsdbCache[p.name] = withTeam;
+            setTsdb(withTeam);
+          }
+        }
+      })();
+      return () => { alive = false; };
+    }, [p.name]);
+
+    const photoUrl = tsdb?.cutout || tsdb?.render || tsdb?.thumb || null;
+    const age = tsdb?.born ? Math.floor((Date.now() - new Date(tsdb.born)) / (365.25*24*3600*1000)) : null;
+    const fmtBorn = tsdb?.born ? new Date(tsdb.born).toLocaleDateString('sv-SE', {day:'numeric',month:'long',year:'numeric'}) : null;
+    const footSv = { Right:"Höger", Left:"Vänster", Both:"Bägge" };
+
+    // Reusable fact row
+    const Row = ({ icon, label, value, accent }) => value ? (
+      <div style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 0",
+        borderBottom:"1px solid var(--line)" }}>
+        <span style={{ fontSize:15, width:22, textAlign:"center", flexShrink:0 }}>{icon}</span>
+        <span style={{ fontSize:11.5, fontWeight:600, color:"var(--ink-soft)", flex:"0 0 90px" }}>{label}</span>
+        <span style={{ fontSize:13, fontWeight:700, color: accent || "var(--ink)", flex:1, minWidth:0,
+          overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>{value}</span>
+      </div>
+    ) : null;
+
+    const content = (
+      <div onClick={() => setSelectedPlayer(null)}
+        style={{ position:"fixed", inset:0, zIndex:1000,
+          background:"rgba(0,0,0,.7)", display:"flex", alignItems:"center", justifyContent:"center",
+          backdropFilter:"blur(12px)", padding:"12px" }}>
+        <div onClick={e=>e.stopPropagation()}
+          style={{ background:"var(--bg)", borderRadius:24, width:"min(96vw,370px)",
+            maxHeight:"min(92dvh,720px)", display:"flex", flexDirection:"column",
+            boxShadow:"0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.07)",
+            animation:"popIn .24s cubic-bezier(.2,.7,.2,1) both", overflow:"hidden" }}>
+
+          {/* ── Hero ── */}
+          <div style={{ position:"relative", height:190, flexShrink:0,
+            background:`linear-gradient(175deg, ${color} 0%, color-mix(in oklab,${color} 35%,#000 65%) 100%)`,
+            display:"flex", alignItems:"flex-end", justifyContent:"center", overflow:"hidden" }}>
+            <div style={{ position:"absolute", inset:0, pointerEvents:"none",
+              background:`radial-gradient(ellipse 90% 55% at 50% 115%, ${color}66, transparent)` }} />
+            {photoUrl && imgOk ? (
+              <img src={photoUrl} alt={p.name} onError={()=>setImgOk(false)}
+                style={{ height:182, objectFit:"contain", objectPosition:"bottom",
+                  filter:"drop-shadow(0 6px 20px rgba(0,0,0,.65))", position:"relative", zIndex:1 }} />
+            ) : loading ? (
+              <div style={{ marginBottom:16, zIndex:1, position:"relative",
+                width:76, height:76, borderRadius:"50%", background:"rgba(255,255,255,.1)",
+                border:"2px solid rgba(255,255,255,.15)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ fontSize:10, color:"rgba(255,255,255,.3)" }}>...</span>
+              </div>
+            ) : (
+              <div style={{ marginBottom:14, zIndex:1, position:"relative",
+                width:80, height:80, borderRadius:"50%", background:"rgba(255,255,255,.15)",
+                border:"2px solid rgba(255,255,255,.3)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <span style={{ fontSize:26, fontWeight:900, color:"#fff" }}>{initials}</span>
+              </div>
+            )}
+            {/* Name bar */}
+            <div style={{ position:"absolute", bottom:0, left:0, right:0, zIndex:2,
+              background:"linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%)",
+              padding:"30px 14px 10px" }}>
+              <div style={{ fontSize:17, fontWeight:900, color:"#fff", lineHeight:1.2,
+                textShadow:"0 1px 6px rgba(0,0,0,.6)" }}>{p.name}</div>
+              <div style={{ display:"flex", alignItems:"center", gap:5, marginTop:3, flexWrap:"wrap" }}>
+                <Flag code={teamCode} size={13} />
+                <span style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,.8)" }}>{teamName}</span>
+                {(tsdb?.position || p.positionName) && (
+                  <span style={{ fontSize:10.5, color:"rgba(255,255,255,.55)" }}>· {tsdb?.position || p.positionName}</span>
+                )}
+              </div>
+            </div>
+            {/* Jersey */}
+            <div style={{ position:"absolute", top:11, right:13, zIndex:3, minWidth:32, height:32,
+              borderRadius:9, background:"rgba(0,0,0,.5)", backdropFilter:"blur(6px)",
+              border:"1.5px solid rgba(255,255,255,.3)", display:"flex", alignItems:"center",
+              justifyContent:"center", padding:"0 7px" }}>
+              <span style={{ fontSize:14, fontWeight:900, color:"#fff" }}>{p.jersey??p.shirtNumber??"·"}</span>
+            </div>
+            {/* Close */}
+            <button onClick={()=>setSelectedPlayer(null)} style={{
+              position:"absolute", top:11, left:13, zIndex:3, width:32, height:32, borderRadius:"50%",
+              background:"rgba(0,0,0,.45)", backdropFilter:"blur(6px)",
+              border:"1.5px solid rgba(255,255,255,.2)", color:"#fff", fontSize:17, fontWeight:700,
+              display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer" }}>×</button>
+          </div>
+
+          {/* ── Scrollable body ── */}
+          <div className="app-scroll" style={{ overflowY:"auto", flex:1, padding:"0 14px 16px" }}>
+
+            {/* Personal facts */}
+            <div style={{ marginTop:10, background:"var(--paper)", borderRadius:14,
+              border:"1px solid var(--line)", padding:"0 12px", overflow:"hidden" }}>
+              <div style={{ fontSize:9, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)",
+                textTransform:"uppercase", padding:"9px 0 2px" }}>Personuppgifter</div>
+              <Row icon="🌍" label="Nationalitet"  value={tsdb?.nationality} />
+              <Row icon="📅" label="Född"          value={fmtBorn ? `${fmtBorn}${age ? ` (${age} år)` : ''}` : null} />
+              <Row icon="📍" label="Födelseort"    value={tsdb?.birthPlace} />
+              <Row icon="⚽" label="Position"      value={tsdb?.position || p.positionName} />
+              <Row icon="↕"  label="Längd"         value={tsdb?.height} />
+              <Row icon="⚖"  label="Vikt"          value={tsdb?.weight} />
+              <Row icon="👟" label="Dominant fot"  value={tsdb?.foot ? (footSv[tsdb.foot]||tsdb.foot) : null} />
+              {/* Last row: no bottom border */}
+              {tsdb?.natJersey && (
+                <div style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 0" }}>
+                  <span style={{ fontSize:15, width:22, textAlign:"center" }}>🔢</span>
+                  <span style={{ fontSize:11.5, fontWeight:600, color:"var(--ink-soft)", flex:"0 0 90px" }}>Nationströja</span>
+                  <span style={{ fontSize:13, fontWeight:700, color:"var(--ink)" }}>#{tsdb.natJersey}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Club */}
+            {tsdb?.team && (
+              <div style={{ marginTop:10, background:"var(--paper)", borderRadius:14,
+                border:"1px solid var(--line)", overflow:"hidden" }}>
+                <div style={{ fontSize:9, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)",
+                  textTransform:"uppercase", padding:"9px 12px 0" }}>Klubblag</div>
+                <div style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 12px 12px" }}>
+                  {tsdb.teamBadge ? (
+                    <img src={tsdb.teamBadge} alt={tsdb.team}
+                      style={{ width:48, height:48, objectFit:"contain", flexShrink:0 }} />
+                  ) : (
+                    <div style={{ width:48, height:48, borderRadius:10, background:"var(--bg2)",
+                      flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22 }}>⚽</div>
+                  )}
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ fontSize:15, fontWeight:800, color:"var(--ink)" }}>{tsdb.team}</div>
+                    {tsdb.teamLeague && (
+                      <div style={{ fontSize:12, fontWeight:600, color:"var(--ink-soft)", marginTop:2 }}>
+                        {tsdb.teamLeague}{tsdb.teamCountry ? ` · ${tsdb.teamCountry}` : ''}
+                      </div>
+                    )}
+                    {tsdb.teamStadium && (
+                      <div style={{ fontSize:11, color:"var(--ink-soft)", opacity:.7, marginTop:2 }}>
+                        📍 {tsdb.teamStadium}{tsdb.teamCapacity ? ` · ${Number(tsdb.teamCapacity).toLocaleString('sv-SE')} platser` : ''}{tsdb.teamCity ? ` · ${tsdb.teamCity}` : ''}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tournament stats */}
+            <div style={{ marginTop:10 }}>
+              <div style={{ fontSize:9, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)",
+                textTransform:"uppercase", marginBottom:7 }}>VM 2026</div>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:7 }}>
+                {[
+                  { label:"Mål", val: goals.length||0, lo: goals.length>0, accent:"var(--hot)" },
+                  { label:"Assists", val: assists.length||0, lo: assists.length>0, accent:"#F5C518" },
+                  { label:"Kort", val: card==="red"?"🟥":card==="yellow"?"🟨":"–", lo:false, accent:null },
+                ].map(s => (
+                  <div key={s.label} style={{ background:"var(--paper)", borderRadius:12,
+                    border:"1px solid var(--line)", padding:"12px 6px", textAlign:"center" }}>
+                    <div style={{ fontSize:22, fontWeight:900,
+                      color: s.lo && s.accent ? s.accent : "var(--ink)" }}>{s.val}</div>
+                    <div style={{ fontSize:10, fontWeight:700, color:"var(--ink-soft)", marginTop:3 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Sub info */}
+            {subOut && (
+              <div style={{ marginTop:10, display:"flex", alignItems:"center", gap:8,
+                padding:"9px 12px", borderRadius:10, background:"var(--paper)", border:"1px solid var(--line)" }}>
+                <span style={{ fontSize:13, color:"#FF5A52", fontWeight:900 }}>▼</span>
+                <span style={{ fontSize:12, fontWeight:700, color:"var(--ink)" }}>Byttes ut {subOut}'</span>
+              </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+    );
+    return ReactDOM.createPortal(content, document.body);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div style={{ padding:"2px 0 8px" }}>
+      {/* Pitch */}
+      <div style={{ position:"relative", width:"100%", paddingBottom:"154%", borderRadius:10, overflow:"hidden",
+        background:"repeating-linear-gradient(0deg,rgba(0,0,0,.035) 0,rgba(0,0,0,.035) 1px,transparent 1px,transparent 28px), #2d7a3a" }}>
+        <svg style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", zIndex:0 }}
+          viewBox="0 0 68 105" preserveAspectRatio="none">
+          <rect x="3" y="2" width="62" height="101" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <line x1="3" y1="52.5" x2="65" y2="52.5" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <circle cx="34" cy="52.5" r="9.15" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <circle cx="34" cy="52.5" r=".6" fill="rgba(255,255,255,.45)"/>
+          <rect x="13.84" y="88.5" width="40.32" height="16.5" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <rect x="24.84" y="96.5" width="18.32" height="6.5" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <circle cx="34" cy="93.66" r=".6" fill="rgba(255,255,255,.45)"/>
+          <rect x="13.84" y="0" width="40.32" height="16.5" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <rect x="24.84" y="2" width="18.32" height="6.5" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
+          <circle cx="34" cy="11.34" r=".6" fill="rgba(255,255,255,.45)"/>
+          <rect x="28.16" y="102" width="11.68" height="2.8" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth=".5"/>
+          <rect x="28.16" y=".2" width="11.68" height="2.8" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth=".5"/>
+        </svg>
+        {m.home && hasHome && (
+          <div style={{ position:"absolute", bottom:5, left:6, fontSize:9, fontWeight:800,
+            color:"rgba(255,255,255,.6)", letterSpacing:".04em", zIndex:2, textShadow:"0 1px 3px rgba(0,0,0,.7)" }}>
+            {(window.VM.TEAMS[m.home]||{}).name} · {hl.formation}
+          </div>
+        )}
+        {m.away && hasAway && (
+          <div style={{ position:"absolute", top:5, left:6, fontSize:9, fontWeight:800,
+            color:"rgba(255,255,255,.6)", letterSpacing:".04em", zIndex:2, textShadow:"0 1px 3px rgba(0,0,0,.7)" }}>
+            {(window.VM.TEAMS[m.away]||{}).name} · {al.formation}
+          </div>
+        )}
+        {allPlayers.map((pd, i) => <Dot key={i} pd={pd} />)}
+      </div>
+
+      {/* Substitutions */}
+      {m.subs && m.subs.length > 0 && (
+        <div style={{ padding:"12px 14px 4px" }}>
+          <div style={{ fontSize:9.5, fontWeight:800, letterSpacing:".1em", color:"var(--ink-soft)",
+            textTransform:"uppercase", marginBottom:10 }}>Byten</div>
+          {[m.home, m.away].map(teamCode => {
+            if (!teamCode) return null;
+            const teamSubs = (m.subs || []).filter(s => s.team === teamCode);
+            if (!teamSubs.length) return null;
+            return (
+              <div key={teamCode} style={{ marginBottom:12 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+                  <Flag code={teamCode} size={16} />
+                  <span style={{ fontSize:12, fontWeight:800, color:"var(--ink)" }}>
+                    {(window.VM.TEAMS[teamCode]||{}).name}
+                  </span>
+                </div>
+                {teamSubs.map((s, i) => (
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 0",
+                    borderTop: i > 0 ? "1px solid var(--line)" : "none", fontSize:13 }}>
+                    <span className="num" style={{ fontSize:11, fontWeight:700, color:"var(--ink-soft)", minWidth:30 }}>{s.minute}'</span>
+                    <span style={{ color:"#2BD17E", fontWeight:900, fontSize:14 }}>▲</span>
+                    <span style={{ fontWeight:700, flex:1 }}>{s.playerIn}</span>
+                    <span style={{ color:"#FF5A52", fontWeight:900, fontSize:14 }}>▼</span>
+                    <span style={{ fontWeight:600, color:"var(--ink-soft)", fontSize:12.5 }}>{s.playerOut}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Bench – players who did NOT come on */}
+      {[
+        { lu: hl, teamCode: m.home, color: homeColor, label: "Bänk" },
+        { lu: al, teamCode: m.away, color: awayColor, label: "Bänk" },
+      ].map(({ lu, teamCode, color, label }) => {
+        if (!teamCode || !lu || !lu.bench) return null;
+        const bench = lu.bench.filter(p => !p.subbedIn);
+        if (!bench.length) return null;
+        const evt = buildEvt(teamCode);
+        return (
+          <div key={teamCode} style={{ padding:"10px 14px 4px", borderTop:"1px solid var(--line)" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:8 }}>
+              <Flag code={teamCode} size={16} />
+              <span style={{ fontSize:9.5, fontWeight:800, letterSpacing:".1em", color:"var(--ink-soft)",
+                textTransform:"uppercase" }}>Bänk – {(window.VM.TEAMS[teamCode]||{}).name}</span>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(90px, 1fr))", gap:6 }}>
+              {bench.map((p, i) => (
+                <button key={i} onClick={() => setSelectedPlayer({ p, color, teamCode, espnEventId: lu._espnEventId || null, goals:[], assists:[], card:null, subOut:null })}
+                  style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 8px",
+                    background:"var(--bg2)", borderRadius:8, textAlign:"left", border:"1px solid var(--line)" }}>
+                  <span style={{ width:22, height:22, borderRadius:"50%", background:color, flexShrink:0,
+                    display:"flex", alignItems:"center", justifyContent:"center",
+                    fontSize:9, fontWeight:800, color:"#fff", border:"1.5px solid rgba(255,255,255,.7)" }}>
+                    {p.jersey ?? p.shirtNumber ?? "·"}
+                  </span>
+                  <div style={{ minWidth:0 }}>
+                    <div style={{ fontSize:10.5, fontWeight:700, overflow:"hidden", whiteSpace:"nowrap",
+                      textOverflow:"ellipsis", color:"var(--ink)" }}>{lastName(p.name)}</div>
+                    <div style={{ fontSize:9, fontWeight:700, color:"var(--ink-soft)" }}>{posLabel(p.position)}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Player popup */}
+      {selectedPlayer && <PlayerPopup pd={selectedPlayer} />}
+    </div>
+  );
+}
+
+// ── MatchDetail ───────────────────────────────────────────────────────────────
+function MatchDetail({ data, match: _match, onClose, onTeam, zIndex, dimBackdrop }) {
+  // Always reflect the latest polled data for this match
+  const m = React.useMemo(
+    () => data.allMatches.find(x => x.id === _match.id) || _match,
+    [data, _match.id]
+  );
+
   const live = m.status === "live", played = m.status === "played", tbd = !m.home || !m.away;
   const win = m.winner;
+
+  const TABS = [
+    { id:"events",  label: played || live ? "Händelser" : "Info" },
+    { id:"stats",   label:"Statistik" },
+    { id:"lineup",  label:"Uppställning" },
+    { id:"tips",    label:"Tips" },
+  ];
+  const [tab, setTab] = React.useState("events");
+  // Reset to events tab when a different match is opened
+  React.useEffect(() => { setTab("events"); }, [_match.id]);
+
   const teamCol = (code, label) => (
     <button onClick={() => code && onTeam && onTeam(code)} style={{ flex: 1, display: "flex", flexDirection: "column",
       alignItems: "center", gap: 8, minWidth: 0, color: "#fff" }}>
@@ -2324,6 +3277,7 @@ function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
         opacity: played && win && win !== code ? .6 : 1 }}>{code ? window.VM.TEAMS[code].name : (label || "Vinnare")}</span>
     </button>
   );
+
   const header = (
     <div style={{ background: "var(--grad)", padding: "14px 18px 18px", position: "relative", flex: "0 0 auto" }}>
       <button onClick={onClose} aria-label="Stäng" style={{ position: "absolute", top: 14, right: 16, color: "#fff",
@@ -2353,11 +3307,16 @@ function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
             </div>
           );
         })()}
+        {m.attendance && (
+          <div style={{ marginTop: 5, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>
+            Publik · {m.attendance.toLocaleString("sv-SE")}
+          </div>
+        )}
         {m.referees && m.referees.length > 0 && (() => {
           const main = m.referees.find(r => /main|head|huvuddomare|referee/i.test(r.role || "")) || m.referees[0];
-          if(!main || !main.name) return null;
+          if (!main || !main.name) return null;
           return (
-            <div style={{ marginTop: 6, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>
+            <div style={{ marginTop: 4, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,.7)" }}>
               Domare · {main.name}{main.nationality ? ` (${main.nationality})` : ""}
             </div>
           );
@@ -2367,10 +3326,18 @@ function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
         {teamCol(m.home, m.fromA)}
         <div style={{ flex: "0 0 auto", textAlign: "center", minWidth: 86 }}>
           {(played || live) && !tbd ? (
-            <div className="num" style={{ fontWeight: 800, fontSize: 40, color: "#fff", lineHeight: 1 }}>
-              {m.ga}<span style={{ opacity: .55, margin: "0 6px", fontWeight: 600 }}>–</span>{m.gb}</div>
+            <>
+              <div className="num" style={{ fontWeight: 800, fontSize: 36, color: "#fff", lineHeight: 1 }}>
+                {m.ga}<span style={{ opacity: .55, margin: "0 6px", fontWeight: 600 }}>–</span>{m.gb}
+              </div>
+              {m.scoreDetail && m.scoreDetail.halfTime && (
+                <div className="num" style={{ fontSize: 11, color: "rgba(255,255,255,.6)", fontWeight: 700, marginTop: 2 }}>
+                  HT {m.scoreDetail.halfTime[0]}–{m.scoreDetail.halfTime[1]}
+                </div>
+              )}
+            </>
           ) : (
-            <div className="num display" style={{ fontWeight: 800, fontSize: 30, color: "#fff" }}>{svTime(m.kickoff)}</div>
+            <div className="num display" style={{ fontWeight: 800, fontSize: 36, color: "#fff" }}>{svTime(m.kickoff)}</div>
           )}
           <div style={{ marginTop: 7, display: "flex", justifyContent: "center" }}>
             {live ? <LiveDot minute={m.minute} /> :
@@ -2384,31 +3351,72 @@ function MatchDetail({ data, match, onClose, onTeam, zIndex, dimBackdrop }) {
     </div>
   );
 
+  const TBDMsg = () => (
+    <div style={{ textAlign:"center", color:"var(--ink-soft)", padding:"30px 24px", fontWeight:600 }}>
+      Lagen avgörs när tidigare matcher är spelade.
+    </div>
+  );
+
   return (
     <Sheet onClose={onClose} header={header} zIndex={zIndex} dimBackdrop={dimBackdrop}>
-      <div style={{ paddingTop: 16 }}>
-        {/* Vinstchans FÖRST inför avspark */}
-        {!played && !live && !tbd && <WinChanceBlock m={m} />}
-        {(played || live) && !tbd && (
-          <MiniBlock title={live ? "Matchförlopp · pågår" : "Matchförlopp"} pad={false}><Timeline m={m} /></MiniBlock>
+      {/* Tab bar – sticky inside the scroll container */}
+      <div style={{ display:"flex", background:"var(--panel)", borderBottom:"1px solid var(--line)",
+        position:"sticky", top:0, zIndex:5 }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} style={{
+            flex:1, padding:"10px 4px", fontSize:11.5, fontWeight:700,
+            color: tab === t.id ? "var(--hot)" : "var(--ink-soft)",
+            borderBottom: tab === t.id ? "2px solid var(--hot)" : "2px solid transparent",
+          }}>{t.label}</button>
+        ))}
+      </div>
+
+      <div key={tab} style={{ paddingTop: 8, animation: "tabIn .22s cubic-bezier(.2,.7,.2,1) both" }}>
+
+        {/* ── Händelser / Info ── */}
+        {tab === "events" && (
+          tbd ? <TBDMsg /> : (played || live) ? (
+            <MiniBlock title={live ? "Händelser · pågår" : "Händelser"} pad={false}>
+              <Timeline m={m} />
+            </MiniBlock>
+          ) : (
+            <>
+              <WinChanceBlock m={m} />
+              <H2HBlock m={m} />
+            </>
+          )
         )}
-        {(played || live) && !tbd && <StatsBlock m={m} full={played} />}
-        {!played && !live && !tbd && <FormBlock data={data} m={m} />}
-        {!played && !live && !tbd && <H2HBlock m={m} />}
-        {!tbd && !played && <TipsDistribution data={data} m={m} />}
-        {!tbd && <PoolResultBlock data={data} m={m} />}
-        {tbd && (
-          <div style={{ textAlign: "center", color: "var(--ink-soft)", padding: "30px 24px", fontWeight: 600 }}>
-            Lagen avgörs när tidigare matcher är spelade.
-          </div>
+
+        {/* ── Statistik ── */}
+        {tab === "stats" && (
+          tbd ? <TBDMsg /> : (
+            <>
+              {(played || live) && <StatsBlock m={m} full />}
+              <FormBlock data={data} m={m} />
+            </>
+          )
         )}
+
+        {/* ── Uppställning ── */}
+        {tab === "lineup" && <PitchView m={m} />}
+
+        {/* ── Tips ── */}
+        {tab === "tips" && (
+          tbd ? <TBDMsg /> : (
+            <>
+              {!played && <TipsDistribution data={data} m={m} />}
+              <PoolResultBlock data={data} m={m} />
+            </>
+          )
+        )}
+
         <div style={{ height: 24 }} />
       </div>
     </Sheet>
   );
 }
 
-Object.assign(window, { MatchDetail, Sheet, MiniBlock });
+Object.assign(window, { MatchDetail, Sheet, MiniBlock, LineupBlock });
 
   </script>
   <!-- ============ standings.jsx ============ -->
@@ -2569,48 +3577,56 @@ function StadiumHero({ pot, playerCount }){
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none" }}><Bunting n={22} height={16} /></div>
 
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0,
-        padding: "22px 22px 20px", pointerEvents: "none" }}>
-        <div className="display" style={{ color: "#fff", fontSize: 34, fontWeight: "var(--display-weight)",
-          textShadow: "0 4px 22px rgba(0,0,0,.75)", lineHeight: 1 }}>
-          Hela världen, en pott
+        padding: "22px 22px 20px", pointerEvents: "none",
+        display: "flex", alignItems: "flex-end", gap: 14 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="display hero-title" style={{ color: "#fff", fontSize: 34, fontWeight: "var(--display-weight)",
+            textShadow: "0 4px 22px rgba(0,0,0,.75)", lineHeight: 1 }}>
+            VM 2026 Tippningsliga
+          </div>
+          <div style={{ color: "rgba(255,255,255,.95)", fontWeight: 700, fontSize: 13.5,
+            textShadow: "0 1px 5px rgba(0,0,0,.8)", marginTop: 6,
+            display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            {[
+              { iso:"us", label:"USA" },
+              { iso:"mx", label:"Mexiko" },
+              { iso:"ca", label:"Kanada" }
+            ].map((c, i, arr) => (
+              <React.Fragment key={c.iso}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <img src={`https://flagcdn.com/w40/${c.iso}.png`} alt=""
+                    style={{ width: 20, height: 14, borderRadius: 2, objectFit: "cover",
+                      boxShadow: "inset 0 0 0 1px rgba(255,255,255,.25)" }} />
+                  <span>{c.label}</span>
+                </span>
+                {i < arr.length - 1 && <span style={{ opacity: .4 }}>·</span>}
+              </React.Fragment>
+            ))}
+            <span style={{ opacity: .4 }}>·</span>
+            <span style={{ color: "rgba(255,255,255,.75)" }}>sommaren 2026</span>
+          </div>
+          <div style={{ color: "rgba(255,255,255,.8)", fontWeight: 600, fontSize: 11.5,
+            textShadow: "0 1px 3px rgba(0,0,0,.8)", marginTop: 8 }}>
+            16 städer · 104 matcher · pott på {money(pot || 0)} ({playerCount || 0} spelare)
+          </div>
         </div>
-        <div style={{ color: "rgba(255,255,255,.95)", fontWeight: 700, fontSize: 13.5,
-          textShadow: "0 1px 5px rgba(0,0,0,.8)", marginTop: 6,
-          display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          {[
-            { iso:"us", label:"USA" },
-            { iso:"mx", label:"Mexiko" },
-            { iso:"ca", label:"Kanada" }
-          ].map((c, i, arr) => (
-            <React.Fragment key={c.iso}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                <img src={`https://flagcdn.com/w40/${c.iso}.png`} alt=""
-                  style={{ width: 20, height: 14, borderRadius: 2, objectFit: "cover",
-                    boxShadow: "inset 0 0 0 1px rgba(255,255,255,.25)" }} />
-                <span>{c.label}</span>
-              </span>
-              {i < arr.length - 1 && <span style={{ opacity: .4 }}>·</span>}
-            </React.Fragment>
-          ))}
-          <span style={{ opacity: .4 }}>·</span>
-          <span style={{ color: "rgba(255,255,255,.75)" }}>sommaren 2026</span>
-        </div>
-        <div style={{ color: "rgba(255,255,255,.8)", fontWeight: 600, fontSize: 11.5,
-          textShadow: "0 1px 3px rgba(0,0,0,.8)", marginTop: 8 }}>
-          16 städer · 104 matcher · pott på {money(pot || 0)} ({playerCount || 0} spelare)
-        </div>
+        <img src="images/wc2026-logo.svg" alt="FIFA VM 2026" className="hero-wc-logo"
+          style={{ height: 92, width: "auto", flex: "0 0 auto", marginBottom: 4,
+            filter: "drop-shadow(0 6px 24px rgba(0,0,0,.85))" }} />
       </div>
 
       <style>{`
         @media (max-width: 540px){
           .stadium-hero { height: 280px !important; min-height: 240px !important; }
+          .hero-wc-logo { height: 64px !important; }
+          .hero-title { font-size: 26px !important; }
         }
       `}</style>
     </div>
   );
 }
 
-function StandingsView({ data, onOpenPlayer }) {
+function StandingsView({ data, onOpenPlayer, onOpenMatch }) {
   const isPre = data.state === "pre";
   const s = data.standings;
   const playerCount = s.length;
@@ -2619,11 +3635,45 @@ function StandingsView({ data, onOpenPlayer }) {
   // Räkna om prize-tier från faktisk pott (i fall PRIZES är hårdkodad för 9 spelare)
   const prizes = [Math.round(pot * 0.5), Math.round(pot * 0.3), Math.round(pot * 0.2)];
   const top3 = s.slice(0, 3);
-  const leaderTotal = Math.max(1, s[0].total);
+  const leaderTotal = Math.max(1, s[0] ? s[0].total : 1);
+  const liveGames = (data.allMatches || []).filter(m => m.status === "live");
 
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
       <StadiumHero pot={pot} playerCount={playerCount} />
+
+      {/* LIVE NU – visas ovanför allt annat när matcher pågår */}
+      {liveGames.length > 0 && (
+        <div style={{ marginBottom: 20 }}>
+          <SectionTitle kicker="PÅGÅR NU" title="Live" right={
+            <span style={{ display:"inline-flex", alignItems:"center", gap:5,
+              padding:"3px 9px", background:"var(--hot)", color:"#fff", borderRadius:6,
+              fontWeight:800, fontSize:10.5 }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:"#fff", animation:"blink 1.4s infinite" }} />
+              {liveGames.length} MATCH{liveGames.length > 1 ? "ER" : ""}
+            </span>
+          } />
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {liveGames.map(m => (
+              <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)}
+                style={{ background:"color-mix(in oklab, var(--hot) 9%, var(--paper))",
+                  border:"1px solid color-mix(in oklab, var(--hot) 45%, var(--line))",
+                  borderRadius:13, padding:"12px 14px", display:"flex", alignItems:"center",
+                  gap:10, width:"100%", textAlign:"left",
+                  boxShadow:"0 0 0 1px color-mix(in oklab,var(--hot) 20%,transparent), var(--shadow)" }}>
+                <Flag code={m.home} size={28} shape="rect" />
+                <div style={{ flex:1, textAlign:"center" }}>
+                  <div className="num" style={{ fontWeight:800, fontSize:28, color:"var(--hot)", lineHeight:1 }}>
+                    {m.ga}<span style={{ opacity:.5, margin:"0 5px" }}>–</span>{m.gb}
+                  </div>
+                  <div style={{ marginTop:4 }}><LiveDot minute={m.minute} /></div>
+                </div>
+                <Flag code={m.away} size={28} shape="rect" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* POTT + PALL kort */}
       <div style={{ position: "relative", background: "var(--paper)", border: "1px solid var(--line)",
@@ -2981,42 +4031,50 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
               transition: "transform .25s", transform: open ? "rotate(180deg)" : "rotate(0deg)",
               display: "inline-block" }}>▾</span>
           </button>
-          {open && matches.slice().sort((a,b) => a.kickoff - b.kickoff).map((m, i) => {
-            const played = m.status === "played";
-            const live = m.status === "live";
-            return (
-              <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%",
-                textAlign: "left", display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 8,
-                alignItems: "center", padding: "8px 14px", borderTop: "1px solid var(--line)",
-                background: live ? "color-mix(in oklab, var(--hot) 10%, transparent)" : "transparent" }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", fontSize: 11.5, fontWeight: 700 }}>
-                  <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={16} />
-                </span>
-                <span style={{ textAlign: "center", minWidth: 56 }}>
-                  {(played || live) ? (
-                    <span className="num" style={{ fontWeight: 800, fontSize: 13, color: live ? "var(--hot)" : "var(--ink)" }}>
-                      {m.ga}–{m.gb}
-                    </span>
-                  ) : (
-                    <span className="num" style={{ fontWeight: 700, fontSize: 11.5, color: "var(--ink-soft)" }}>{svTime(m.kickoff)}</span>
-                  )}
-                  <div style={{ marginTop: 2, fontSize: 9, fontWeight: 800, color: "var(--ink-soft)" }}>
-                    {live ? <LiveDot minute={m.minute} small /> : played ? "SLUT" : svDayLabel(m.kickoff)}
-                  </div>
-                </span>
-                <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, fontWeight: 700 }}>
-                  <Flag code={m.away} size={16} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
-                </span>
-              </button>
-            );
-          })}
+          <div style={{
+            overflow:"hidden",
+            maxHeight: open ? "600px" : "0",
+            opacity: open ? 1 : 0,
+            transition: "max-height .38s cubic-bezier(.4,0,.2,1), opacity .22s ease"
+          }}>
+            {matches.slice().sort((a,b) => a.kickoff - b.kickoff).map((m, i) => {
+              const played = m.status === "played";
+              const live = m.status === "live";
+              return (
+                <button key={m.id} onClick={() => onOpenMatch && onOpenMatch(m)} style={{ width: "100%",
+                  textAlign: "left", display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 8,
+                  alignItems: "center", padding: "8px 14px", borderTop: "1px solid var(--line)",
+                  background: live ? "color-mix(in oklab, var(--hot) 10%, transparent)" : "transparent" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-end", fontSize: 11.5, fontWeight: 700 }}>
+                    <TeamName code={m.home} size={11.5} bold={false} abbrev /><Flag code={m.home} size={16} />
+                  </span>
+                  <span style={{ textAlign: "center", minWidth: 56 }}>
+                    {(played || live) ? (
+                      <span className="num" style={{ fontWeight: 800, fontSize: 13, color: live ? "var(--hot)" : "var(--ink)" }}>
+                        {m.ga}–{m.gb}
+                      </span>
+                    ) : (
+                      <span className="num" style={{ fontWeight: 700, fontSize: 11.5, color: "var(--ink-soft)" }}>{svTime(m.kickoff)}</span>
+                    )}
+                    <div style={{ marginTop: 2, fontSize: 9, fontWeight: 800, color: "var(--ink-soft)" }}>
+                      {live ? <LiveDot minute={m.minute} small /> : played ? "SLUT" : svDayLabel(m.kickoff)}
+                    </div>
+                  </span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, fontWeight: 700 }}>
+                    <Flag code={m.away} size={16} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 14, padding: "9px 14px", fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)",
-        borderTop: "1px solid var(--line)" }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: col }} />Vidare</span>
-        <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: "var(--gold)" }} />Bästa trea</span>
+      <div style={{ padding: "9px 14px", borderTop: "1px solid var(--line)" }}>
+        <div style={{ display: "flex", gap: 14, fontSize: 10.5, fontWeight: 700, color: "var(--ink-soft)" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: col }} />Vidare till R32</span>
+          <span style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: 2, background: "var(--gold)" }} />Bästa trea</span>
+        </div>
       </div>
     </div>
   );
@@ -3035,6 +4093,7 @@ function GroupsView({ data, onTeam, onOpenMatch }) {
     });
     return map;
   }, [data]);
+
   const liveCount = (data.allMatches || []).filter(m => m.status === "live" && m.stage === "group").length;
   return (
     <div style={{ animation: "riseIn .4s forwards" }}>
@@ -3659,9 +4718,8 @@ function App() {
         <div style={{ height: 3, background: "var(--grad)" }} />
         <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "10px 16px", display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 11, flex: 1, minWidth: 0 }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: "var(--grad)", display: "flex", alignItems: "center",
-              justifyContent: "center", flex: "0 0 auto", boxShadow: "0 0 22px -6px var(--hot)" }}>
-              <span className="num display" style={{ fontSize: 17, color: "#fff", fontWeight: "var(--display-weight)" }}>26</span>
+            <div style={{ width: 40, height: 40, flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img src="images/wc2026-logo.svg" style={{ width: 40, height: 40, objectFit: "contain" }} alt="FIFA VM 2026" />
             </div>
             <div style={{ minWidth: 0 }}>
               <div className="display" style={{ fontSize: 19, lineHeight: .95, color: "var(--ink)", fontWeight: "var(--display-weight)" }}>VM&nbsp;2026</div>
@@ -3675,8 +4733,8 @@ function App() {
       </header>
 
       <main>
-        <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)" }}>
-          {view === "standings" && <StandingsView data={data} onOpenPlayer={openPlayer} />}
+        <div key={view} style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "18px 16px calc(var(--nav-h) + 30px)", animation: "pageIn .32s cubic-bezier(.2,.7,.2,1) both" }}>
+          {view === "standings" && <StandingsView data={data} onOpenPlayer={openPlayer} onOpenMatch={openMatch} />}
           {view === "groups" && <GroupsView data={data} onTeam={openTeam} onOpenMatch={openMatch} />}
           {view === "schedule" && <ScheduleView data={data} onOpenMatch={openMatch} />}
           {view === "bonus" && <BonusView data={data} onTeam={openTeam} />}
@@ -3715,18 +4773,40 @@ function App() {
 
 /* ============================================================
    Boot: fetcha vår riktiga data.json + fixtures.json innan vi
-   monterar React. Re-fetcha var 60:e sekund så live-data ticker in.
+   monterar React. Adaptiv polling: 15 sek om live-matcher pågår,
+   annars 60 sek.
    ============================================================ */
 async function loadRealData() {
-  const bust = "?t=" + Math.floor(Date.now() / 30000);
-  const [dr, fr] = await Promise.allSettled([
+  const bust = "?t=" + Math.floor(Date.now() / 5000);
+  const [dr, fr, pr, or_] = await Promise.allSettled([
     fetch("data.json" + bust, { cache: "no-store" }),
-    fetch("fixtures.json" + bust, { cache: "no-store" })
+    fetch("fixtures.json" + bust, { cache: "no-store" }),
+    fetch("players.json", { cache: "no-store" }),
+    fetch("odds.json" + bust, { cache: "no-store" }),
   ]);
   const data = (dr.status === "fulfilled" && dr.value.ok) ? await dr.value.json() : null;
   const fixtures = (fr.status === "fulfilled" && fr.value.ok) ? await fr.value.json() : [];
   if (!data) throw new Error("data.json saknas");
+  const oddsRaw = (or_.status === "fulfilled" && or_.value.ok) ? await or_.value.json() : null;
+  const oddsDb = oddsRaw ? (oddsRaw.odds || {}) : {};
+  for (const m of fixtures) { const o = oddsDb[String(m.id)]; if (o) m._odds = o; }
   window.__REAL_DATA__ = { data, fixtures };
+  window.__PLAYERS_DB__ = (pr.status === "fulfilled" && pr.value.ok) ? await pr.value.json() : null;
+}
+
+function hasLiveFixtures() {
+  const f = (window.__REAL_DATA__ && window.__REAL_DATA__.fixtures) || [];
+  return f.some(x => x.status === "IN_PLAY" || x.status === "PAUSED" || x.status === "LIVE");
+}
+
+function hasRecentFinishedWithoutEvents() {
+  const f = (window.__REAL_DATA__ && window.__REAL_DATA__.fixtures) || [];
+  const cutoff = Date.now() - 48 * 3600 * 1000;
+  return f.some(x =>
+    x.status === "FINISHED" &&
+    !(x.goals && x.goals.length) &&
+    new Date(x.utcDate).getTime() > cutoff
+  );
 }
 
 (async () => {
@@ -3740,12 +4820,20 @@ async function loadRealData() {
     return;
   }
   ReactDOM.createRoot(root).render(<App />);
-  // Re-fetcha var 60:e sekund
-  setInterval(() => {
-    loadRealData().then(() => {
-      window.dispatchEvent(new CustomEvent("vm-data-updated"));
-    }).catch(() => {});
-  }, 60 * 1000);
+
+  // Adaptiv polling: 15s live · 30s nyss spelade utan händelsedata · annars 60s
+  let pollTimer = null;
+  function schedulePoll() {
+    const interval = hasLiveFixtures() ? 15000
+      : hasRecentFinishedWithoutEvents() ? 30000
+      : 60000;
+    pollTimer = setTimeout(() => {
+      loadRealData().then(() => {
+        window.dispatchEvent(new CustomEvent("vm-data-updated"));
+      }).catch(() => {}).finally(() => schedulePoll());
+    }, interval);
+  }
+  schedulePoll();
 })();
 
   </script>
