@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T16:32:37+00:00",
+  "updated_at": "2026-06-12T17:54:08+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -665,7 +665,7 @@
           "period": 2
         },
         {
-          "minute": "77",
+          "minute": "76",
           "team": "RSA",
           "playerIn": "Evidence Makgopa",
           "playerOut": "Iqraam Rayners",
@@ -846,9 +846,30 @@
             1
           ],
           "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "KOR",
+          "scorer": "Oh Hyeon-Gyu",
+          "assist": "Hwang In-Beom",
+          "type": "REGULAR",
+          "description": "Goal! Korea Republic 2, Czechia 1. Oh Hyeon-Gyu (Korea Republic) left footed shot from very close range to the bottom left corner. Assisted by Hwang In-Beom.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 2
         }
       ],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "90'+6",
+          "team": "KOR",
+          "player": "Lee Gi-Hyuk",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
       "subs": [
         {
           "minute": "62",
@@ -891,6 +912,27 @@
           "playerIn": "Oh Hyeon-Gyu",
           "playerOut": "Son Heung-Min",
           "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "KOR",
+          "playerIn": "Kim Jin-Gyu",
+          "playerOut": "Hwang In-Beom",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "KOR",
+          "playerIn": "Park Jin-Seop",
+          "playerOut": "Paik Seung-Ho",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "CZE",
+          "playerIn": "Mojmír Chytil",
+          "playerOut": "Alexandr Sojka",
+          "period": 2
         }
       ],
       "venue": {
@@ -905,7 +947,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 44985,
       "tips": [
         {
           "name": "Albin",
@@ -10036,10 +10078,50 @@
   "unmatched_tips": {},
   "knockout_rule": "ET-score for exact; penalties decide outcome",
   "team_forms": {
-    "MEX": [],
-    "RSA": [],
-    "KOR": [],
-    "CZE": [],
+    "MEX": [
+      {
+        "date": "2026-06-11",
+        "competition": "WC",
+        "opp": "South Africa",
+        "oppTla": "RSA",
+        "gf": 2,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "RSA": [
+      {
+        "date": "2026-06-11",
+        "competition": "WC",
+        "opp": "Mexico",
+        "oppTla": "MEX",
+        "gf": 0,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
+    "KOR": [
+      {
+        "date": "2026-06-12",
+        "competition": "WC",
+        "opp": "Czechia",
+        "oppTla": "CZE",
+        "gf": 2,
+        "ga": 1,
+        "r": "V"
+      }
+    ],
+    "CZE": [
+      {
+        "date": "2026-06-12",
+        "competition": "WC",
+        "opp": "South Korea",
+        "oppTla": "KOR",
+        "gf": 1,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
     "CAN": [],
     "BIH": [],
     "USA": [],
@@ -10076,6 +10158,11 @@
     "CRO": [],
     "GHA": [],
     "PAN": [],
-    "UZB": []
+    "UZB": [],
+    "ECU": [],
+    "SWE": [],
+    "IRQ": [],
+    "NOR": [],
+    "COL": []
   }
 }
