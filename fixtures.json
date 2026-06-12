@@ -1604,21 +1604,24 @@
     "homeTla": "CAN",
     "away": "Bosnia-Herzegovina",
     "awayTla": "BIH",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
+      1,
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
+        1
+      ],
+      "fullTime": [
+        1,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "DRAW"
     },
     "minute": null,
     "goals": [
@@ -1634,6 +1637,19 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "78",
+        "team": "CAN",
+        "scorer": "Cyle Larin",
+        "assist": "Promise David",
+        "type": "REGULAR",
+        "description": "Goal! Canada 1, Bosnia and Herzegovina 1. Cyle Larin (Canada) right footed shot from the centre of the box to the bottom right corner. Assisted by Promise David.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [
@@ -1657,9 +1673,94 @@
         "player": "Jovo Lukic",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "53",
+        "team": "CAN",
+        "player": "Luc de Fougerolles",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90'+3",
+        "team": "BIH",
+        "player": "Nikola Katic",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "61",
+        "team": "CAN",
+        "playerIn": "Jacob Shaffelburg",
+        "playerOut": "Liam Millar",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "CAN",
+        "playerIn": "Promise David",
+        "playerOut": "Jonathan David",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "CAN",
+        "playerIn": "Ali Ahmed",
+        "playerOut": "Tajon Buchanan",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "BIH",
+        "playerIn": "Samed Bazdar",
+        "playerOut": "Jovo Lukic",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "BIH",
+        "playerIn": "Armin Gigovic",
+        "playerOut": "Ivan Basic",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "BIH",
+        "playerIn": "Ivan Sunjic",
+        "playerOut": "Esmir Bajraktarevic",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "BIH",
+        "playerIn": "Kerim Alajbegovic",
+        "playerOut": "Amar Memic",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "CAN",
+        "playerIn": "Cyle Larin",
+        "playerOut": "Tani Oluwaseyi",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "BIH",
+        "playerIn": "Dzenis Burnic",
+        "playerOut": "Sead Kolasinac",
+        "period": 2
+      },
+      {
+        "minute": "90'+1",
+        "team": "CAN",
+        "playerIn": "Jonathan Osorio",
+        "playerOut": "Stephen Eustáquio",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BMO Field",
       "city": "Toronto",
@@ -1672,7 +1773,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 43002,
     "espnOdds": {
       "homeML": -115,
       "awayML": 350,
@@ -1737,7 +1838,7 @@
           "jersey": "7",
           "espnId": "270505",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ismaël Koné",
@@ -1755,7 +1856,7 @@
           "jersey": "11",
           "espnId": "271879",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tajon Buchanan",
@@ -1764,7 +1865,7 @@
           "jersey": "17",
           "espnId": "284769",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tani Oluwaseyi",
@@ -1773,7 +1874,7 @@
           "jersey": "12",
           "espnId": "294039",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan David",
@@ -1782,7 +1883,7 @@
           "jersey": "10",
           "espnId": "273499",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -1810,7 +1911,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "286214",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -1828,7 +1929,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "184221",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -1846,7 +1947,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "205024",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -1855,7 +1956,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "340228",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -1864,7 +1965,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "318522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -1962,7 +2063,7 @@
           "jersey": "5",
           "espnId": "170553",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Amar Dedic",
@@ -1980,7 +2081,7 @@
           "jersey": "13",
           "espnId": "306256",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Benjamin Tahirovic",
@@ -1998,7 +2099,7 @@
           "jersey": "15",
           "espnId": "338199",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Esmir Bajraktarevic",
@@ -2007,7 +2108,7 @@
           "jersey": "20",
           "espnId": "325410",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jovo Lukic",
@@ -2016,7 +2117,7 @@
           "jersey": "25",
           "espnId": "305118",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ermedin Demirovic",
@@ -2062,7 +2163,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "322244",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -2089,7 +2190,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "288932",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -2107,7 +2208,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "225571",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -2116,7 +2217,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "391034",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -2152,7 +2253,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "194767",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -2169,64 +2270,64 @@
       "_espnEventId": "760416"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 1.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 9.0,
-      "saves": 1.0,
-      "possessionPct": 65.7,
-      "totalShots": 8.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.1,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 164.0,
-      "totalPasses": 218.0,
-      "passPct": 0.8,
-      "accurateCrosses": 8.0,
-      "totalCrosses": 17.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 24.0,
-      "accurateLongBalls": 13.0,
-      "longballPct": 0.5,
-      "blockedShots": 3.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 10.0,
-      "tacklePct": 0.8,
-      "interceptions": 3.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
-    },
-    "awayStats": {
-      "foulsCommitted": 8.0,
+      "foulsCommitted": 10.0,
       "yellowCards": 2.0,
       "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 9.0,
+      "saves": 2.0,
+      "possessionPct": 61.2,
+      "totalShots": 13.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 310.0,
+      "totalPasses": 417.0,
+      "passPct": 0.7,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 24.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.4,
+      "blockedShots": 4.0,
+      "effectiveTackles": 15.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.7,
+      "interceptions": 4.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
+    },
+    "awayStats": {
+      "foulsCommitted": 20.0,
+      "yellowCards": 3.0,
+      "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 1.0,
+      "wonCorners": 4.0,
       "saves": 1.0,
-      "possessionPct": 34.3,
-      "totalShots": 5.0,
-      "shotsOnTarget": 2.0,
+      "possessionPct": 38.8,
+      "totalShots": 8.0,
+      "shotsOnTarget": 3.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 79.0,
-      "totalPasses": 118.0,
-      "passPct": 0.7,
-      "accurateCrosses": 4.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.8,
-      "totalLongBalls": 26.0,
-      "accurateLongBalls": 9.0,
+      "accuratePasses": 170.0,
+      "totalPasses": 268.0,
+      "passPct": 0.6,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 10.0,
+      "crossPct": 0.6,
+      "totalLongBalls": 62.0,
+      "accurateLongBalls": 18.0,
       "longballPct": 0.3,
-      "blockedShots": 0.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 9.0,
-      "tacklePct": 0.4,
-      "interceptions": 7.0,
-      "effectiveClearance": 42.0,
-      "totalClearance": 42.0
+      "blockedShots": 1.0,
+      "effectiveTackles": 13.0,
+      "totalTackles": 21.0,
+      "tacklePct": 0.6,
+      "interceptions": 10.0,
+      "effectiveClearance": 71.0,
+      "totalClearance": 71.0
     },
     "homeForm": [
       {
@@ -2342,11 +2443,11 @@
     "attendance": null,
     "espnOdds": {
       "homeML": 110,
-      "awayML": 285,
+      "awayML": 300,
       "spread": "USA -0.5",
       "overUnder": 2.5,
-      "overOdds": 145.0,
-      "underOdds": -180.0,
+      "overOdds": 150.0,
+      "underOdds": -185.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -2471,7 +2572,7 @@
       "spread": "SUI -1.5",
       "overUnder": 2.5,
       "overOdds": -140.0,
-      "underOdds": 115.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
