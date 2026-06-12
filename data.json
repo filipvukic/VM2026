@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T17:54:08+00:00",
+  "updated_at": "2026-06-12T19:52:48+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -1049,19 +1049,61 @@
       "homeTla": "CAN",
       "away": "Bosnia-Herzegovina",
       "awayTla": "BIH",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
+      "goals": [
+        {
+          "minute": "21",
+          "team": "BIH",
+          "scorer": "Jovo Lukic",
+          "assist": "Sead Kolasinac",
+          "type": "HEADER",
+          "description": "Goal! Canada 0, Bosnia and Herzegovina 1. Jovo Lukic (Bosnia and Herzegovina) header from very close range to the centre of the goal. Assisted by Sead Kolasinac following a corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "11",
+          "team": "CAN",
+          "player": "Alistair Johnston",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "BIH",
+          "player": "Ermedin Demirovic",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45'+1",
+          "team": "BIH",
+          "player": "Jovo Lukic",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "BMO Field",
@@ -1071,8 +1113,7 @@
       "referees": [
         {
           "name": "Facundo Tello",
-          "role": "REFEREE",
-          "nationality": "Argentina"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -1321,7 +1362,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Levi's Stadium",
+        "city": "Santa Clara, California",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Said Martinez",
@@ -1806,7 +1851,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -2045,7 +2090,7 @@
       "homeTla": "CIV",
       "away": "Ecuador",
       "awayTla": "ECU",
-      "status": "SCHEDULED",
+      "status": "TIMED",
       "score": null,
       "scoreDetail": {
         "halfTime": null,
@@ -4900,7 +4945,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -7278,7 +7323,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUR",
+      "homeTla": "CUW",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -9474,26 +9519,14 @@
         {
           "team": "Bosnia-Herzegovina",
           "tla": "BIH",
-          "played": 0,
-          "won": 0,
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
+          "gf": 1,
           "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Canada",
-          "tla": "CAN",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Qatar",
@@ -9517,6 +9550,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Canada",
+          "tla": "CAN",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
