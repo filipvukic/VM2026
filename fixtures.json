@@ -2446,7 +2446,7 @@
       "awayML": 300,
       "spread": "USA -0.5",
       "overUnder": 2.5,
-      "overOdds": 150.0,
+      "overOdds": 145.0,
       "underOdds": -185.0,
       "provider": "DraftKings"
     },
@@ -2572,7 +2572,7 @@
       "spread": "SUI -1.5",
       "overUnder": 2.5,
       "overOdds": -140.0,
-      "underOdds": 110.0,
+      "underOdds": 115.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -2677,7 +2677,11 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "MetLife Stadium",
+      "city": "East Rutherford, New Jersey",
+      "country": "USA"
+    },
     "referees": [
       {
         "name": "Slavko Vinčič",
@@ -2687,13 +2691,93 @@
     ],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -150,
+      "awayML": 450,
+      "spread": "BRA -0.5",
+      "overUnder": 2.5,
+      "overOdds": 110.0,
+      "underOdds": -135.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
     "homeStats": {},
     "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeForm": [
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 6,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-04-01",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-26",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2025-11-18",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-07",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-02",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-05-26",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537340,

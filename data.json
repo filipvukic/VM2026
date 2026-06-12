@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T21:26:03+00:00",
+  "updated_at": "2026-06-12T22:55:27+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -1592,7 +1592,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "MetLife Stadium",
+        "city": "East Rutherford, New Jersey",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Slavko Vinčič",
