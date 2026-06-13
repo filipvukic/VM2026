@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T21:36:38+00:00",
+  "updated_at": "2026-06-13T22:42:59+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -1517,10 +1517,10 @@
         {
           "minute": "90'+4",
           "team": "QAT",
-          "scorer": "Boualem Khoukhi",
+          "scorer": "Miro Muheim",
           "assist": "Homam Ahmed",
-          "type": "HEADER",
-          "description": "Goal! Qatar 1, Switzerland 1. Boualem Khoukhi (Qatar) header from the centre of the box to the bottom right corner. Assisted by Homam El Amin with a cross.",
+          "type": "OWN",
+          "description": "Own Goal by Miro Muheim, Switzerland. Qatar 1, Switzerland 1.",
           "score": [
             1,
             0
@@ -1737,19 +1737,60 @@
       "homeTla": "BRA",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
+      "goals": [
+        {
+          "minute": "21",
+          "team": "MAR",
+          "scorer": "Ismael Saibari",
+          "assist": "Brahim Díaz",
+          "type": "REGULAR",
+          "description": "Goal! Brazil 0, Morocco 1. Ismael Saibari (Morocco) right footed shot from outside the box to the centre of the goal. Assisted by Brahim Díaz with a through ball following a fast break.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "32",
+          "team": "BRA",
+          "scorer": "Vinícius Júnior",
+          "assist": "Bruno Guimarães",
+          "type": "REGULAR",
+          "description": "Goal! Brazil 1, Morocco 1. Vinícius Júnior (Brazil) right footed shot from the left side of the box to the top right corner. Assisted by Bruno Guimarães.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "37",
+          "team": "BRA",
+          "player": "Casemiro",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "MetLife Stadium",
@@ -1758,9 +1799,8 @@
       },
       "referees": [
         {
-          "name": "Slavko Vinčič",
-          "role": "REFEREE",
-          "nationality": "Slovenia"
+          "name": "Slavko Vincici",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -9846,32 +9886,20 @@
       "code": "C",
       "table": [
         {
-          "team": "Brazil",
-          "tla": "BRA",
-          "played": 0,
-          "won": 0,
+          "team": "Morocco",
+          "tla": "MAR",
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
+          "gf": 1,
           "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Haiti",
           "tla": "HAI",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Morocco",
-          "tla": "MAR",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -9891,6 +9919,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Brazil",
+          "tla": "BRA",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
