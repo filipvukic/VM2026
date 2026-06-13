@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T15:58:13+00:00",
+  "updated_at": "2026-06-13T17:24:45+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2156,7 +2156,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "NRG Stadium",
+        "city": "Houston, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
