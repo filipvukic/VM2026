@@ -3154,10 +3154,10 @@
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
       "accuratePasses": 200.0,
-      "totalPasses": 279.0,
+      "totalPasses": 278.0,
       "passPct": 0.7,
       "accurateCrosses": 1.0,
-      "totalCrosses": 8.0,
+      "totalCrosses": 9.0,
       "crossPct": 0.1,
       "totalLongBalls": 64.0,
       "accurateLongBalls": 19.0,
@@ -3184,7 +3184,7 @@
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
       "accuratePasses": 526.0,
-      "totalPasses": 578.0,
+      "totalPasses": 577.0,
       "passPct": 0.9,
       "accurateCrosses": 6.0,
       "totalCrosses": 35.0,
@@ -3290,7 +3290,10 @@
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        1,
+        1
+      ],
       "fullTime": [
         1,
         1
@@ -3336,9 +3339,80 @@
         "player": "Casemiro",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "43",
+        "team": "BRA",
+        "player": "Roger Ibañez",
+        "card": "YELLOW",
+        "period": 1
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "BRA",
+        "playerIn": "Danilo",
+        "playerOut": "Roger Ibañez",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "BRA",
+        "playerIn": "Fabinho",
+        "playerOut": "Casemiro",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "BRA",
+        "playerIn": "Matheus Cunha",
+        "playerOut": "Lucas Paquetá",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "BRA",
+        "playerIn": "Luiz Henrique",
+        "playerOut": "Igor Thiago",
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "MAR",
+        "playerIn": "Samir El Mourabet",
+        "playerOut": "Azzedine Ounahi",
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "MAR",
+        "playerIn": "Chemsdine Talbi",
+        "playerOut": "Brahim Díaz",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "MAR",
+        "playerIn": "Anass Salah-Eddine",
+        "playerOut": "Noussair Mazraoui",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "MAR",
+        "playerIn": "Ayoube Amaimouni",
+        "playerOut": "Bilal El Khannouss",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "BRA",
+        "playerIn": "Danilo Santos",
+        "playerOut": "Bruno Guimarães",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
@@ -3407,7 +3481,7 @@
           "jersey": "24",
           "espnId": "259835",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Raphinha",
@@ -3425,7 +3499,7 @@
           "jersey": "8",
           "espnId": "218522",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Casemiro",
@@ -3434,7 +3508,7 @@
           "jersey": "5",
           "espnId": "173666",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Igor Thiago",
@@ -3443,7 +3517,7 @@
           "jersey": "25",
           "espnId": "301894",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Vinícius Júnior",
@@ -3461,7 +3535,7 @@
           "jersey": "20",
           "espnId": "234715",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -3471,7 +3545,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "259902",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3507,7 +3581,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "176287",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3525,7 +3599,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "304215",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3543,7 +3617,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "170369",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3570,7 +3644,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "306764",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3632,7 +3706,7 @@
           "jersey": "3",
           "espnId": "239350",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Achraf Hakimi",
@@ -3650,23 +3724,23 @@
           "jersey": "8",
           "espnId": "291552",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
-          "name": "Neil El Aynaoui",
+          "name": "Ayyoub Bouaddi",
           "position": "LM",
           "positionName": "Left Midfielder",
-          "jersey": "24",
-          "espnId": "323807",
+          "jersey": "6",
+          "espnId": "373927",
           "subbedIn": false,
           "subbedOut": false
         },
         {
-          "name": "Ayyoub Bouaddi",
+          "name": "Neil El Aynaoui",
           "position": "RM",
           "positionName": "Right Midfielder",
-          "jersey": "6",
-          "espnId": "373927",
+          "jersey": "24",
+          "espnId": "323807",
           "subbedIn": false,
           "subbedOut": false
         },
@@ -3686,7 +3760,7 @@
           "jersey": "23",
           "espnId": "336595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Brahim Díaz",
@@ -3695,7 +3769,7 @@
           "jersey": "10",
           "espnId": "246532",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -3723,7 +3797,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "360062",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3741,7 +3815,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "416636",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3759,7 +3833,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "378491",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3768,7 +3842,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "297296",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3839,64 +3913,64 @@
       "_espnEventId": "760419"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 14.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 1.0,
+      "wonCorners": 4.0,
       "saves": 1.0,
-      "possessionPct": 52.4,
-      "totalShots": 4.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "possessionPct": 54.9,
+      "totalShots": 10.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 163.0,
-      "totalPasses": 189.0,
+      "accuratePasses": 411.0,
+      "totalPasses": 465.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 13.0,
       "crossPct": 0.3,
-      "totalLongBalls": 15.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.4,
-      "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 9.0,
-      "tacklePct": 0.4,
-      "interceptions": 2.0,
-      "effectiveClearance": 7.0,
-      "totalClearance": 7.0
+      "totalLongBalls": 31.0,
+      "accurateLongBalls": 15.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 21.0,
+      "tacklePct": 0.5,
+      "interceptions": 3.0,
+      "effectiveClearance": 13.0,
+      "totalClearance": 13.0
     },
     "awayStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 12.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
+      "offsides": 1.0,
       "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 47.6,
+      "saves": 3.0,
+      "possessionPct": 45.1,
       "totalShots": 12.0,
       "shotsOnTarget": 2.0,
       "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 149.0,
-      "totalPasses": 170.0,
+      "accuratePasses": 331.0,
+      "totalPasses": 383.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 18.0,
-      "accurateLongBalls": 7.0,
-      "longballPct": 0.4,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 12.0,
+      "longballPct": 0.3,
       "blockedShots": 6.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 10.0,
-      "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "effectiveTackles": 14.0,
+      "totalTackles": 21.0,
+      "tacklePct": 0.7,
+      "interceptions": 3.0,
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
     },
     "homeForm": [
       {
@@ -4011,8 +4085,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 475,
-      "awayML": -190,
+      "homeML": 500,
+      "awayML": -195,
       "spread": "SCO -1.5",
       "overUnder": 2.5,
       "overOdds": -160.0,
@@ -4400,17 +4474,101 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Lincoln Financial Field",
+      "city": "Philadelphia, Pennsylvania",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 250,
+      "awayML": 145,
+      "spread": "ECU -0.5",
+      "overUnder": 1.5,
+      "overOdds": -165.0,
+      "underOdds": 135.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
     "homeStats": {},
     "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeForm": [
+      {
+        "date": "2026-06-04",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-28",
+        "result": "F",
+        "gf": 0,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-01-10",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-01-06",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-07",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-05-30",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-03-27",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2025-11-19",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537358,

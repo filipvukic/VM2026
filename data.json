@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T22:42:59+00:00",
+  "updated_at": "2026-06-13T23:47:52+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -1743,7 +1743,10 @@
         1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          1,
+          1
+        ],
         "fullTime": [
           1,
           1
@@ -1789,9 +1792,80 @@
           "player": "Casemiro",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "43",
+          "team": "BRA",
+          "player": "Roger Ibañez",
+          "card": "YELLOW",
+          "period": 1
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "BRA",
+          "playerIn": "Danilo",
+          "playerOut": "Roger Ibañez",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "BRA",
+          "playerIn": "Fabinho",
+          "playerOut": "Casemiro",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "BRA",
+          "playerIn": "Matheus Cunha",
+          "playerOut": "Lucas Paquetá",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "BRA",
+          "playerIn": "Luiz Henrique",
+          "playerOut": "Igor Thiago",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "MAR",
+          "playerIn": "Samir El Mourabet",
+          "playerOut": "Azzedine Ounahi",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "MAR",
+          "playerIn": "Chemsdine Talbi",
+          "playerOut": "Brahim Díaz",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "MAR",
+          "playerIn": "Anass Salah-Eddine",
+          "playerOut": "Noussair Mazraoui",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "MAR",
+          "playerIn": "Ayoube Amaimouni",
+          "playerOut": "Bilal El Khannouss",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "BRA",
+          "playerIn": "Danilo Santos",
+          "playerOut": "Bruno Guimarães",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "MetLife Stadium",
         "city": "East Rutherford, New Jersey",
@@ -2420,7 +2494,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lincoln Financial Field",
+        "city": "Philadelphia, Pennsylvania",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -9886,16 +9964,28 @@
       "code": "C",
       "table": [
         {
+          "team": "Brazil",
+          "tla": "BRA",
+          "played": 1,
+          "won": 0,
+          "draw": 1,
+          "lost": 0,
+          "gf": 1,
+          "ga": 1,
+          "gd": 0,
+          "points": 1
+        },
+        {
           "team": "Morocco",
           "tla": "MAR",
           "played": 1,
-          "won": 1,
-          "draw": 0,
+          "won": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 1,
-          "ga": 0,
-          "gd": 1,
-          "points": 3
+          "ga": 1,
+          "gd": 0,
+          "points": 1
         },
         {
           "team": "Haiti",
@@ -9919,18 +10009,6 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Brazil",
-          "tla": "BRA",
-          "played": 1,
-          "won": 0,
-          "draw": 0,
-          "lost": 1,
-          "gf": 0,
-          "ga": 1,
-          "gd": -1,
           "points": 0
         }
       ]
