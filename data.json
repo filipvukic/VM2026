@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T18:50:55+00:00",
+  "updated_at": "2026-06-13T20:09:15+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -549,156 +549,19 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [
-        {
-          "minute": "9",
-          "team": "MEX",
-          "scorer": "Julián Quiñones",
-          "assist": "Érik Lira",
-          "type": "REGULAR",
-          "description": "Goal! Mexico 1, South Africa 0. Julián Quiñones (Mexico) right footed shot from the centre of the box to the centre of the goal. Assisted by Érik Lira.",
-          "score": [
-            1,
-            0
-          ],
-          "period": 1
-        },
-        {
-          "minute": "67",
-          "team": "MEX",
-          "scorer": "Raúl Jiménez",
-          "assist": "Roberto Alvarado",
-          "type": "HEADER",
-          "description": "Goal! Mexico 2, South Africa 0. Raúl Jiménez (Mexico) header from very close range to the bottom left corner. Assisted by Roberto Alvarado with a cross.",
-          "score": [
-            2,
-            0
-          ],
-          "period": 2
-        }
-      ],
-      "bookings": [
-        {
-          "minute": "17",
-          "team": "RSA",
-          "player": "Teboho Mokoena",
-          "card": "YELLOW",
-          "period": 1
-        },
-        {
-          "minute": "23",
-          "team": "MEX",
-          "player": "Brian Gutiérrez",
-          "card": "YELLOW",
-          "period": 1
-        },
-        {
-          "minute": "49",
-          "team": "RSA",
-          "player": "Sphephelo Sithole",
-          "card": "RED",
-          "period": 2
-        },
-        {
-          "minute": "74",
-          "team": "RSA",
-          "player": "Nkosinathi Sibisi",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "RSA",
-          "player": "Themba Zwane",
-          "card": "RED",
-          "period": 2
-        },
-        {
-          "minute": "90'+2",
-          "team": "MEX",
-          "player": "César Montes",
-          "card": "RED",
-          "period": 2
-        }
-      ],
-      "subs": [
-        {
-          "minute": "56",
-          "team": "RSA",
-          "playerIn": "Thalente Mbatha",
-          "playerOut": "Lyle Foster",
-          "period": 2
-        },
-        {
-          "minute": "61",
-          "team": "RSA",
-          "playerIn": "Themba Zwane",
-          "playerOut": "Jayden Adams",
-          "period": 2
-        },
-        {
-          "minute": "66",
-          "team": "MEX",
-          "playerIn": "Luis Chávez",
-          "playerOut": "Brian Gutiérrez",
-          "period": 2
-        },
-        {
-          "minute": "66",
-          "team": "MEX",
-          "playerIn": "Gilberto Mora",
-          "playerOut": "Álvaro Fidalgo",
-          "period": 2
-        },
-        {
-          "minute": "76",
-          "team": "MEX",
-          "playerIn": "Edson Álvarez",
-          "playerOut": "Érik Lira",
-          "period": 2
-        },
-        {
-          "minute": "76",
-          "team": "MEX",
-          "playerIn": "Armando González",
-          "playerOut": "Raúl Jiménez",
-          "period": 2
-        },
-        {
-          "minute": "76",
-          "team": "RSA",
-          "playerIn": "Evidence Makgopa",
-          "playerOut": "Iqraam Rayners",
-          "period": 2
-        },
-        {
-          "minute": "77",
-          "team": "RSA",
-          "playerIn": "Oswin Appollis",
-          "playerOut": "Aubrey Modiba",
-          "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "MEX",
-          "playerIn": "Alexis Vega",
-          "playerOut": "Julián Quiñones",
-          "period": 2
-        }
-      ],
-      "venue": {
-        "stadium": "Estadio Banorte",
-        "city": "Mexico City",
-        "country": "Mexico"
-      },
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": null,
       "referees": [
         {
-          "name": "Wilton Pereira Sampaio",
-          "role": "Referee"
+          "name": "Wilton Sampaio",
+          "role": "REFEREE",
+          "nationality": "Brazil"
         }
       ],
       "odds": null,
-      "attendance": 80824,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1630,19 +1493,50 @@
       "homeTla": "QAT",
       "away": "Switzerland",
       "awayTla": "SUI",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
       "minute": null,
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "16",
+          "team": "QAT",
+          "player": "Mahmoud Abunada",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "23",
+          "team": "QAT",
+          "player": "Jassem Gaber",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "42",
+          "team": "SUI",
+          "player": "Denis Zakaria",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Levi's Stadium",
@@ -1651,9 +1545,8 @@
       },
       "referees": [
         {
-          "name": "Said Martinez",
-          "role": "REFEREE",
-          "nationality": "Honduras"
+          "name": "Martínez, Héctor",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -2279,7 +2172,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -9811,6 +9708,18 @@
       "code": "B",
       "table": [
         {
+          "team": "Switzerland",
+          "tla": "SUI",
+          "played": 1,
+          "won": 1,
+          "draw": 0,
+          "lost": 0,
+          "gf": 1,
+          "ga": 0,
+          "gd": 1,
+          "points": 3
+        },
+        {
           "team": "Bosnia-Herzegovina",
           "tla": "BIH",
           "played": 1,
@@ -9837,25 +9746,13 @@
         {
           "team": "Qatar",
           "tla": "QAT",
-          "played": 0,
+          "played": 1,
           "won": 0,
           "draw": 0,
-          "lost": 0,
+          "lost": 1,
           "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Switzerland",
-          "tla": "SUI",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
