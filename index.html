@@ -3967,6 +3967,19 @@ function GroupBadge({ letter, size = 46 }) {
 function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }) {
   const col = groupColor(letter);
   const [open, setOpen] = React.useState(false);
+  const [tipsOpen, setTipsOpen] = React.useState(false);
+  const groupRanking = React.useMemo(() => {
+    const pts = {};
+    (matches || []).forEach(m => {
+      if (m.status !== "played") return;
+      (m.tips || []).forEach(t => {
+        pts[t.name] = (pts[t.name] || 0) + (t.points || 0);
+      });
+    });
+    return Object.entries(pts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  }, [matches]);
+  const playedCount = (matches || []).filter(m => m.status === "played").length;
+  const totalCount = (matches || []).length;
   const liveMatches = (matches || []).filter(m => m.status === "live");
   const liveTeams = new Set();
   liveMatches.forEach(m => { if(m.home) liveTeams.add(m.home); if(m.away) liveTeams.add(m.away); });
@@ -4064,6 +4077,43 @@ function GroupCard({ letter, table, isPre, onTeam, onOpenMatch, matches, index }
                     <Flag code={m.away} size={16} /><TeamName code={m.away} size={11.5} bold={false} abbrev />
                   </span>
                 </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {groupRanking.length > 0 && (
+        <div style={{ borderTop: "1px solid var(--line)" }}>
+          <button onClick={() => setTipsOpen(o => !o)}
+            style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "10px 14px", textAlign: "left", background: "var(--bg2)" }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span style={{ fontSize: 14 }}>🏆</span>
+              <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em",
+                color: "var(--ink-soft)", textTransform: "uppercase" }}>Tippningstoppen</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "var(--ink-soft)", opacity: .6 }}>
+                {playedCount}/{totalCount} m
+              </span>
+            </span>
+            <span style={{ fontSize: 12, color: "var(--ink-soft)", transition: "transform .25s",
+              transform: tipsOpen ? "rotate(180deg)" : "rotate(0deg)", display: "inline-block" }}>▾</span>
+          </button>
+          <div style={{ overflow: "hidden", maxHeight: tipsOpen ? "600px" : 0,
+            opacity: tipsOpen ? 1 : 0, transition: "max-height .38s cubic-bezier(.4,0,.2,1), opacity .22s ease" }}>
+            {groupRanking.map(([name, pts], i) => {
+              const MEDAL = ["#F5C518", "#9BA3A5", "#CD7F32"];
+              const mc = MEDAL[i] || null;
+              return (
+                <div key={name} style={{ display: "flex", alignItems: "center", gap: 10,
+                  padding: "8px 14px", borderTop: i > 0 ? "1px solid var(--line)" : "none",
+                  background: mc ? `color-mix(in oklab, ${mc} 9%, transparent)` : "transparent" }}>
+                  <span className="num display" style={{ fontSize: 15, fontWeight: 900, width: 20,
+                    textAlign: "center", color: mc || "var(--ink-soft)", flex: "0 0 auto" }}>{i + 1}</span>
+                  <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{name}</span>
+                  <span className="num" style={{ fontSize: 13.5, fontWeight: 800,
+                    color: mc || "var(--ink-soft)" }}>{pts}<span style={{ fontSize: 10, fontWeight: 700, marginLeft: 1 }}>p</span></span>
+                </div>
               );
             })}
           </div>
