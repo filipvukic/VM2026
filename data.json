@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "updated_at": "2026-06-13T12:14:06+00:00",
+=======
+  "updated_at": "2026-06-13T12:03:19+00:00",
+>>>>>>> ff1920e (Fixa tips saknas i adapterade matchobjekt)
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -665,7 +669,7 @@
           "period": 2
         },
         {
-          "minute": "76",
+          "minute": "77",
           "team": "RSA",
           "playerIn": "Evidence Makgopa",
           "playerOut": "Iqraam Rayners",
@@ -846,30 +850,9 @@
             1
           ],
           "period": 2
-        },
-        {
-          "minute": "80",
-          "team": "KOR",
-          "scorer": "Oh Hyeon-Gyu",
-          "assist": "Hwang In-Beom",
-          "type": "REGULAR",
-          "description": "Goal! Korea Republic 2, Czechia 1. Oh Hyeon-Gyu (Korea Republic) left footed shot from very close range to the bottom left corner. Assisted by Hwang In-Beom.",
-          "score": [
-            2,
-            1
-          ],
-          "period": 2
         }
       ],
-      "bookings": [
-        {
-          "minute": "90'+6",
-          "team": "KOR",
-          "player": "Lee Gi-Hyuk",
-          "card": "YELLOW",
-          "period": 2
-        }
-      ],
+      "bookings": [],
       "subs": [
         {
           "minute": "62",
@@ -912,27 +895,6 @@
           "playerIn": "Oh Hyeon-Gyu",
           "playerOut": "Son Heung-Min",
           "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "KOR",
-          "playerIn": "Kim Jin-Gyu",
-          "playerOut": "Hwang In-Beom",
-          "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "KOR",
-          "playerIn": "Park Jin-Seop",
-          "playerOut": "Paik Seung-Ho",
-          "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "CZE",
-          "playerIn": "Mojmír Chytil",
-          "playerOut": "Alexandr Sojka",
-          "period": 2
         }
       ],
       "venue": {
@@ -947,7 +909,7 @@
         }
       ],
       "odds": null,
-      "attendance": 44985,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1076,25 +1038,12 @@
           "scorer": "Jovo Lukic",
           "assist": "Sead Kolasinac",
           "type": "HEADER",
-          "description": "Goal! Canada 0, Bosnia and Herzegovina 1. Jovo Lukic (Bosnia and Herzegovina) header from very close range to the centre of the goal. Assisted by Sead Kolasinac with a headed pass following a corner.",
+          "description": "Goal! Canada 0, Bosnia and Herzegovina 1. Jovo Lukic (Bosnia and Herzegovina) header from very close range to the centre of the goal. Assisted by Sead Kolasinac following a corner.",
           "score": [
             0,
             1
           ],
           "period": 1
-        },
-        {
-          "minute": "78",
-          "team": "CAN",
-          "scorer": "Cyle Larin",
-          "assist": "Promise David",
-          "type": "REGULAR",
-          "description": "Goal! Canada 1, Bosnia and Herzegovina 1. Cyle Larin (Canada) right footed shot from the centre of the box to the bottom right corner. Assisted by Promise David.",
-          "score": [
-            1,
-            1
-          ],
-          "period": 2
         }
       ],
       "bookings": [
@@ -1123,13 +1072,6 @@
           "minute": "53",
           "team": "CAN",
           "player": "Luc de Fougerolles",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "90'+3",
-          "team": "BIH",
-          "player": "Nikola Katic",
           "card": "YELLOW",
           "period": 2
         }
@@ -1190,20 +1132,6 @@
           "playerIn": "Cyle Larin",
           "playerOut": "Tani Oluwaseyi",
           "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "BIH",
-          "playerIn": "Dzenis Burnic",
-          "playerOut": "Sead Kolasinac",
-          "period": 2
-        },
-        {
-          "minute": "90'+1",
-          "team": "CAN",
-          "playerIn": "Jonathan Osorio",
-          "playerOut": "Stephen Eustáquio",
-          "period": 2
         }
       ],
       "venue": {
@@ -1218,7 +1146,7 @@
         }
       ],
       "odds": null,
-      "attendance": 43002,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -1379,39 +1307,13 @@
             0
           ],
           "period": 1
-        },
-        {
-          "minute": "73",
-          "team": "PAR",
-          "scorer": "Maurício",
-          "assist": "Julio Enciso",
-          "type": "REGULAR",
-          "description": "Goal! USA 3, Paraguay 1. Mauricio (Paraguay) left footed shot from the centre of the box to the bottom right corner. Assisted by Julio Enciso following a set piece situation.",
-          "score": [
-            3,
-            1
-          ],
-          "period": 2
-        },
-        {
-          "minute": "90'+8",
-          "team": "USA",
-          "scorer": "Giovanni Reyna",
-          "assist": "Alex Freeman",
-          "type": "REGULAR",
-          "description": "Goal! USA 4, Paraguay 1. Giovanni Reyna (USA) right footed shot from the centre of the box to the bottom left corner. Assisted by Alex Freeman.",
-          "score": [
-            4,
-            1
-          ],
-          "period": 2
         }
       ],
       "bookings": [
         {
           "minute": "10",
           "team": "PAR",
-          "player": "Juan Jose Cáceres",
+          "player": "Juan Cáceres",
           "card": "YELLOW",
           "period": 1
         },
@@ -1428,34 +1330,13 @@
           "player": "Tyler Adams",
           "card": "YELLOW",
           "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "PAR",
-          "player": "Diego Gómez",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "88",
-          "team": "PAR",
-          "player": "Alex Arce",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "90'+3",
-          "team": "PAR",
-          "player": "Júnior Alonso",
-          "card": "YELLOW",
-          "period": 2
         }
       ],
       "subs": [
         {
           "minute": "45",
           "team": "PAR",
-          "playerIn": "Maurício",
+          "playerIn": "Mauricio",
           "playerOut": "Damián Bobadilla",
           "period": 2
         },
@@ -1486,34 +1367,6 @@
           "playerIn": "Ricardo Pepi",
           "playerOut": "Folarin Balogun",
           "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "PAR",
-          "playerIn": "Ramón Sosa",
-          "playerOut": "Miguel Almirón",
-          "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "PAR",
-          "playerIn": "Gustavo Velázquez",
-          "playerOut": "Juan Jose Cáceres",
-          "period": 2
-        },
-        {
-          "minute": "80",
-          "team": "PAR",
-          "playerIn": "Alejandro Romero Gamarra",
-          "playerOut": "Diego Gómez",
-          "period": 2
-        },
-        {
-          "minute": "82",
-          "team": "USA",
-          "playerIn": "Giovanni Reyna",
-          "playerOut": "Malik Tillman",
-          "period": 2
         }
       ],
       "venue": {
@@ -1528,7 +1381,7 @@
         }
       ],
       "odds": null,
-      "attendance": 70492,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2141,7 +1994,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -2380,7 +2233,7 @@
       "homeTla": "CIV",
       "away": "Ecuador",
       "awayTla": "ECU",
-      "status": "TIMED",
+      "status": "SCHEDULED",
       "score": null,
       "scoreDetail": {
         "halfTime": null,
@@ -5235,7 +5088,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -7613,7 +7466,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -10457,50 +10310,10 @@
         "r": "F"
       }
     ],
-    "CAN": [
-      {
-        "date": "2026-06-12",
-        "competition": "WC",
-        "opp": "Bosnia-Herzegovina",
-        "oppTla": "BIH",
-        "gf": 1,
-        "ga": 1,
-        "r": "O"
-      }
-    ],
-    "BIH": [
-      {
-        "date": "2026-06-12",
-        "competition": "WC",
-        "opp": "Canada",
-        "oppTla": "CAN",
-        "gf": 1,
-        "ga": 1,
-        "r": "O"
-      }
-    ],
-    "USA": [
-      {
-        "date": "2026-06-13",
-        "competition": "WC",
-        "opp": "Paraguay",
-        "oppTla": "PAR",
-        "gf": 4,
-        "ga": 1,
-        "r": "V"
-      }
-    ],
-    "PAR": [
-      {
-        "date": "2026-06-13",
-        "competition": "WC",
-        "opp": "United States",
-        "oppTla": "USA",
-        "gf": 1,
-        "ga": 4,
-        "r": "F"
-      }
-    ],
+    "CAN": [],
+    "BIH": [],
+    "USA": [],
+    "PAR": [],
     "BRA": [],
     "MAR": [],
     "HAI": [],
