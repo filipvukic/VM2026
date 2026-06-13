@@ -2868,72 +2868,29 @@ function PitchView({ m }) {
   ];
 
   const Dot = ({ pd }) => {
-    const { p, color, x, y, goals, assists, card, subOut } = pd;
-    const imgSrc = playerImages[p.name] || null;
-    const [dotImgOk, setDotImgOk] = React.useState(true);
-    const showPhoto = !!(imgSrc && dotImgOk);
+    const { p, color, x, y, card, subOut } = pd;
     return (
       <div onClick={() => setSelectedPlayer(pd)}
         style={{ position:"absolute", left:x+"%", top:y+"%",
-          transform:"translate(-50%,-50%)", display:"flex", flexDirection:"column",
-          alignItems:"center", gap:2, width:56, zIndex:1, cursor:"pointer" }}>
-
-        {/* Wrapper: position relative so badges sit outside the overflow-hidden circle */}
-        <div style={{ position:"relative", width:40, height:40, flexShrink:0,
+          transform:"translate(-50%,-50%)", zIndex:1, cursor:"pointer" }}>
+        <div style={{ position:"relative", width:30, height:30,
           transition:"transform .15s", willChange:"transform" }}
-          onMouseEnter={e => e.currentTarget.style.transform="scale(1.18)"}
+          onMouseEnter={e => e.currentTarget.style.transform="scale(1.22)"}
           onMouseLeave={e => e.currentTarget.style.transform="scale(1)"}>
-
-          {/* Circle (overflow hidden clips photo to round shape) */}
-          <div style={{ width:40, height:40, borderRadius:"50%", background:color,
-            border:"2.5px solid rgba(255,255,255,.9)",
-            display:"flex", alignItems:"center", justifyContent:"center",
-            fontSize:13, fontWeight:900, color:"#fff",
-            boxShadow:"0 2px 10px rgba(0,0,0,.6)", overflow:"hidden" }}>
-            {showPhoto ? (
-              <img src={imgSrc} alt={p.name}
-                style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top center" }}
-                onError={() => setDotImgOk(false)} />
-            ) : (
-              <span style={{ lineHeight:1 }}>{p.jersey ?? p.shirtNumber ?? ""}</span>
-            )}
+          <div style={{ width:30, height:30, borderRadius:"50%", background:color,
+            border:"2.5px solid rgba(255,255,255,.92)", display:"flex", alignItems:"center",
+            justifyContent:"center", fontSize:10, fontWeight:900, color:"#fff",
+            boxShadow:"0 2px 8px rgba(0,0,0,.55)" }}>
+            {p.jersey ?? p.shirtNumber ?? ""}
           </div>
-
-          {/* Card badge – top-right of wrapper */}
-          {card && (
-            <span style={{ position:"absolute", top:-1, right:-2, width:8, height:11,
-              borderRadius:2, transform:"rotate(6deg)", pointerEvents:"none", zIndex:3,
-              background:card === "red" ? "#D2453B" : "#E8B931",
-              boxShadow:"0 1px 4px rgba(0,0,0,.6)" }} />
-          )}
-
-          {/* Sub-out badge – bottom-right of wrapper */}
-          {subOut && (
-            <span style={{ position:"absolute", bottom:-2, right:-2, width:15, height:15,
-              borderRadius:"50%", background:"#FF5A52", border:"2px solid rgba(255,255,255,.95)",
-              fontSize:7, color:"#fff", fontWeight:900, pointerEvents:"none", zIndex:3,
-              display:"flex", alignItems:"center", justifyContent:"center" }}>▼</span>
-          )}
-        </div>
-
-        {/* Goal / assist pills */}
-        {(goals.length > 0 || assists.length > 0) && (
-          <div style={{ display:"flex", gap:1, alignItems:"center", lineHeight:1 }}>
-            {goals.map((_, i) => <span key={i} style={{ fontSize:10 }}>⚽</span>)}
-            {assists.length > 0 && (
-              <span style={{ width:12, height:12, borderRadius:"50%", background:"rgba(255,210,0,.95)",
-                border:"1px solid rgba(0,0,0,.25)", fontSize:7, fontWeight:900, color:"#000",
-                display:"flex", alignItems:"center", justifyContent:"center" }}>A</span>
-            )}
-          </div>
-        )}
-
-        {/* Name label with dark pill background */}
-        <div style={{ fontSize:8.5, fontWeight:700, color:"#fff", textAlign:"center", lineHeight:1.2,
-          background:"rgba(0,0,0,.58)", backdropFilter:"blur(4px)",
-          padding:"2px 6px", borderRadius:4,
-          maxWidth:54, overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>
-          {lastName(p.name)}
+          {card && <span style={{ position:"absolute", top:-1, right:-2, width:7, height:10,
+            borderRadius:2, transform:"rotate(6deg)", display:"block", pointerEvents:"none", zIndex:3,
+            background:card==="red"?"#D2453B":"#E8B931",
+            boxShadow:"0 1px 3px rgba(0,0,0,.6)" }} />}
+          {subOut && <span style={{ position:"absolute", bottom:-2, right:-2, width:12, height:12,
+            borderRadius:"50%", background:"#FF5A52", border:"2px solid rgba(255,255,255,.9)",
+            fontSize:6, color:"#fff", fontWeight:900, pointerEvents:"none", zIndex:3,
+            display:"flex", alignItems:"center", justifyContent:"center" }}>▼</span>}
         </div>
       </div>
     );
@@ -3142,41 +3099,127 @@ function PitchView({ m }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const renderTeamList = (lu, teamCode, col) => {
+    if (!lu) return null;
+    const evt       = buildEvt(teamCode);
+    const starters  = lu.lineup || [];
+    const subsIn    = (lu.bench || []).filter(p => p.subbedIn);
+    const benchOnly = (lu.bench || []).filter(p => !p.subbedIn);
+    const teamName  = (window.VM.TEAMS[teamCode] || {}).name || teamCode;
+
+    const renderRow = (p, isBench, idx) => {
+      const img       = playerImages[p.name];
+      const goals     = evt.goals[p.name]   || [];
+      const assists   = evt.assists[p.name]  || [];
+      const card      = evt.cards[p.name]   || null;
+      const subOutMin = evt.subOut[p.name]  || null;
+      const subInMin  = evt.subIn[p.name]   || null;
+      return (
+        <button key={p.name || idx}
+          onClick={() => setSelectedPlayer({ p, color:col, teamCode,
+            espnEventId: lu._espnEventId || null,
+            goals, assists, card, subOut: subOutMin })}
+          style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 0",
+            borderTop:"1px solid var(--line)", textAlign:"left", background:"transparent",
+            width:"100%", cursor:"pointer", minWidth:0 }}>
+          <span style={{ width:18, textAlign:"center", fontSize:10, fontWeight:900, flexShrink:0,
+            color: isBench ? "var(--ink-soft)" : col }}>
+            {p.jersey ?? p.shirtNumber ?? ""}
+          </span>
+          {img ? (
+            <img src={img} alt="" style={{ width:26, height:26, borderRadius:"50%",
+              objectFit:"cover", objectPosition:"top center", flexShrink:0,
+              border:`2px solid ${isBench ? "var(--line)" : col}` }} />
+          ) : (
+            <span style={{ width:26, height:26, borderRadius:"50%",
+              background: isBench ? "var(--bg2)" : col, flexShrink:0,
+              display:"flex", alignItems:"center", justifyContent:"center",
+              fontSize:9, fontWeight:900,
+              color: isBench ? "var(--ink-soft)" : "#fff",
+              border:`2px solid ${isBench ? "var(--line)" : "rgba(255,255,255,.3)"}` }}>
+              {(p.name || "").split(" ").map(x => x[0] || "").join("").slice(0, 2)}
+            </span>
+          )}
+          <span style={{ flex:1, fontSize:11.5, fontWeight: isBench ? 500 : 700,
+            color: isBench ? "var(--ink-soft)" : "var(--ink)",
+            overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis", minWidth:0 }}>
+            {lastName(p.name)}
+          </span>
+          <div style={{ display:"flex", alignItems:"center", gap:2, flexShrink:0 }}>
+            {goals.map((_, gi) => <span key={gi} style={{ fontSize:10 }}>⚽</span>)}
+            {assists.length > 0 && (
+              <span style={{ width:13, height:13, borderRadius:"50%", background:"#F5C518",
+                fontSize:7, fontWeight:900, color:"#000",
+                display:"flex", alignItems:"center", justifyContent:"center" }}>A</span>
+            )}
+            {card && <span style={{ width:8, height:11, borderRadius:1.5, display:"inline-block",
+              background:card==="red"?"#D2453B":"#E8B931",
+              transform:"rotate(6deg)", flexShrink:0 }} />}
+            {subOutMin && <span style={{ fontSize:9, color:"#FF5A52", fontWeight:900, lineHeight:1 }}>▼</span>}
+            {subInMin  && <span style={{ fontSize:9, color:"#2BD17E", fontWeight:900, lineHeight:1 }}>▲</span>}
+          </div>
+        </button>
+      );
+    };
+
+    return (
+      <div>
+        <div style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 0 7px",
+          borderBottom:`2px solid ${col}` }}>
+          <Flag code={teamCode} size={16} />
+          <div style={{ minWidth:0 }}>
+            <div style={{ fontSize:12, fontWeight:800, color:"var(--ink)",
+              overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>{teamName}</div>
+            {lu.formation && (
+              <div style={{ fontSize:9.5, fontWeight:600, color:"var(--ink-soft)" }}>{lu.formation}</div>
+            )}
+          </div>
+        </div>
+        {starters.map((p, i) => renderRow(p, false, i))}
+        {subsIn.length > 0 && (
+          <React.Fragment>
+            <div style={{ fontSize:8.5, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)",
+              textTransform:"uppercase", padding:"7px 0 2px" }}>Inbytta</div>
+            {subsIn.map((p, i) => renderRow(p, false, 100 + i))}
+          </React.Fragment>
+        )}
+        {benchOnly.length > 0 && (
+          <React.Fragment>
+            <div style={{ fontSize:8.5, fontWeight:800, letterSpacing:".12em", color:"var(--ink-soft)",
+              textTransform:"uppercase", padding:"7px 0 2px" }}>Bänk</div>
+            {benchOnly.map((p, i) => renderRow(p, true, 200 + i))}
+          </React.Fragment>
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div style={{ padding:"2px 0 8px" }}>
+    <div style={{ padding:"2px 0 16px" }}>
       {/* Pitch */}
-      <div style={{ position:"relative", width:"100%", paddingBottom:"148%", borderRadius:12,
+      <div style={{ position:"relative", width:"100%", paddingBottom:"138%", borderRadius:12,
         overflow:"hidden", boxShadow:"0 4px 20px rgba(0,0,0,.35)",
         background:"repeating-linear-gradient(180deg,rgba(0,0,0,.04) 0px,rgba(0,0,0,.04) 1px,transparent 1px,transparent 26px), linear-gradient(180deg,#2e8040 0%,#267038 50%,#2e8040 100%)" }}>
         <svg style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", zIndex:0 }}
           viewBox="0 0 68 105" preserveAspectRatio="none">
-          {/* Outer boundary */}
           <rect x="3" y="2" width="62" height="101" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
-          {/* Halfway line */}
           <line x1="3" y1="52.5" x2="65" y2="52.5" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
-          {/* Centre circle */}
           <circle cx="34" cy="52.5" r="9.15" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
           <circle cx="34" cy="52.5" r=".9" fill="rgba(255,255,255,.6)"/>
-          {/* Bottom penalty area */}
           <rect x="13.84" y="88.5" width="40.32" height="16.5" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
           <rect x="24.84" y="96.5" width="18.32" height="6.5" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
           <circle cx="34" cy="93.66" r=".9" fill="rgba(255,255,255,.6)"/>
-          {/* Top penalty area */}
           <rect x="13.84" y="0" width="40.32" height="16.5" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
           <rect x="24.84" y="2" width="18.32" height="6.5" fill="none" stroke="rgba(255,255,255,.5)" strokeWidth=".55"/>
           <circle cx="34" cy="11.34" r=".9" fill="rgba(255,255,255,.6)"/>
-          {/* Goals */}
           <rect x="28.16" y="102.2" width="11.68" height="2.8" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
           <rect x="28.16" y=".0" width="11.68" height="2.8" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth=".5"/>
         </svg>
-
-        {/* Team labels */}
         {m.home && hasHome && (
-          <div style={{ position:"absolute", bottom:6, left:0, right:0, display:"flex", justifyContent:"center",
-            zIndex:2, pointerEvents:"none" }}>
+          <div style={{ position:"absolute", bottom:6, left:0, right:0, display:"flex",
+            justifyContent:"center", zIndex:2, pointerEvents:"none" }}>
             <div style={{ display:"inline-flex", alignItems:"center", gap:5,
-              background:"rgba(0,0,0,.45)", backdropFilter:"blur(6px)", borderRadius:6,
-              padding:"3px 8px" }}>
+              background:"rgba(0,0,0,.45)", backdropFilter:"blur(6px)", borderRadius:6, padding:"3px 8px" }}>
               <Flag code={m.home} size={13} />
               <span style={{ fontSize:9.5, fontWeight:800, color:"rgba(255,255,255,.9)", letterSpacing:".04em" }}>
                 {(window.VM.TEAMS[m.home]||{}).name}
@@ -3186,11 +3229,10 @@ function PitchView({ m }) {
           </div>
         )}
         {m.away && hasAway && (
-          <div style={{ position:"absolute", top:6, left:0, right:0, display:"flex", justifyContent:"center",
-            zIndex:2, pointerEvents:"none" }}>
+          <div style={{ position:"absolute", top:6, left:0, right:0, display:"flex",
+            justifyContent:"center", zIndex:2, pointerEvents:"none" }}>
             <div style={{ display:"inline-flex", alignItems:"center", gap:5,
-              background:"rgba(0,0,0,.45)", backdropFilter:"blur(6px)", borderRadius:6,
-              padding:"3px 8px" }}>
+              background:"rgba(0,0,0,.45)", backdropFilter:"blur(6px)", borderRadius:6, padding:"3px 8px" }}>
               <Flag code={m.away} size={13} />
               <span style={{ fontSize:9.5, fontWeight:800, color:"rgba(255,255,255,.9)", letterSpacing:".04em" }}>
                 {(window.VM.TEAMS[m.away]||{}).name}
@@ -3199,90 +3241,26 @@ function PitchView({ m }) {
             </div>
           </div>
         )}
-
         {allPlayers.map((pd, i) => <Dot key={i} pd={pd} />)}
       </div>
 
-      {/* Substitutions */}
-      {m.subs && m.subs.length > 0 && (
-        <div style={{ padding:"12px 14px 4px" }}>
-          <div style={{ fontSize:9.5, fontWeight:800, letterSpacing:".1em", color:"var(--ink-soft)",
-            textTransform:"uppercase", marginBottom:10 }}>Byten</div>
-          {[m.home, m.away].map(teamCode => {
-            if (!teamCode) return null;
-            const teamSubs = (m.subs || []).filter(s => s.team === teamCode);
-            if (!teamSubs.length) return null;
-            return (
-              <div key={teamCode} style={{ marginBottom:12 }}>
-                <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
-                  <Flag code={teamCode} size={16} />
-                  <span style={{ fontSize:12, fontWeight:800, color:"var(--ink)" }}>
-                    {(window.VM.TEAMS[teamCode]||{}).name}
-                  </span>
-                </div>
-                {teamSubs.map((s, i) => (
-                  <div key={i} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 0",
-                    borderTop: i > 0 ? "1px solid var(--line)" : "none", fontSize:13 }}>
-                    <span className="num" style={{ fontSize:11, fontWeight:700, color:"var(--ink-soft)", minWidth:30 }}>{s.minute}'</span>
-                    <span style={{ color:"#2BD17E", fontWeight:900, fontSize:14 }}>▲</span>
-                    <span style={{ fontWeight:700, flex:1 }}>{s.playerIn}</span>
-                    <span style={{ color:"#FF5A52", fontWeight:900, fontSize:14 }}>▼</span>
-                    <span style={{ fontWeight:600, color:"var(--ink-soft)", fontSize:12.5 }}>{s.playerOut}</span>
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Bench – players who did NOT come on */}
-      {[
-        { lu: hl, teamCode: m.home, color: homeColor },
-        { lu: al, teamCode: m.away, color: awayColor },
-      ].map(({ lu, teamCode, color }) => {
-        if (!teamCode || !lu || !lu.bench) return null;
-        const bench = lu.bench.filter(p => !p.subbedIn);
-        if (!bench.length) return null;
-        return (
-          <div key={teamCode} style={{ borderTop:"1px solid var(--line)", padding:"12px 14px 8px" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:10 }}>
-              <Flag code={teamCode} size={15} />
-              <span style={{ fontSize:10, fontWeight:800, letterSpacing:".09em", color:"var(--ink-soft)",
-                textTransform:"uppercase" }}>Bänk · {(window.VM.TEAMS[teamCode]||{}).name}</span>
-            </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
-              {bench.map((p, i) => {
-                const img = playerImages[p.name];
-                return (
-                  <button key={i} onClick={() => setSelectedPlayer({ p, color, teamCode, espnEventId: lu._espnEventId || null, goals:[], assists:[], card:null, subOut:null })}
-                    style={{ display:"flex", alignItems:"center", gap:9, padding:"7px 4px",
-                      borderTop: i > 0 ? "1px solid var(--line)" : "none",
-                      textAlign:"left", background:"transparent", borderRadius:0 }}>
-                    {img ? (
-                      <img src={img} alt={p.name}
-                        style={{ width:28, height:28, borderRadius:"50%", objectFit:"cover", objectPosition:"top center",
-                          flexShrink:0, border:`2px solid ${color}`, background:color }} />
-                    ) : (
-                      <span style={{ width:28, height:28, borderRadius:"50%", background:color, flexShrink:0,
-                        display:"flex", alignItems:"center", justifyContent:"center",
-                        fontSize:10, fontWeight:900, color:"#fff", border:"2px solid rgba(255,255,255,.2)" }}>
-                        {p.jersey ?? p.shirtNumber ?? ""}
-                      </span>
-                    )}
-                    <span style={{ flex:1, fontSize:12.5, fontWeight:700, color:"var(--ink)",
-                      overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>{p.name}</span>
-                    <span style={{ fontSize:9.5, fontWeight:800, letterSpacing:".05em", color:"var(--ink-soft)",
-                      background:"var(--bg2)", padding:"2px 7px", borderRadius:5, flexShrink:0 }}>{posLabel(p.position)}</span>
-                  </button>
-                );
-              })}
-            </div>
+      {/* Player lists – two columns */}
+      <div style={{ display:"grid",
+        gridTemplateColumns: hasHome && hasAway ? "1fr 1fr" : "1fr",
+        borderTop:"1px solid var(--line)", marginTop:2 }}>
+        {hasHome && (
+          <div style={{ padding:"0 8px 12px 14px",
+            borderRight: hasHome && hasAway ? "1px solid var(--line)" : "none" }}>
+            {renderTeamList(hl, m.home, homeColor)}
           </div>
-        );
-      })}
+        )}
+        {hasAway && (
+          <div style={{ padding:"0 14px 12px 8px" }}>
+            {renderTeamList(al, m.away, awayColor)}
+          </div>
+        )}
+      </div>
 
-      {/* Player popup */}
       {selectedPlayer && <PlayerPopup pd={selectedPlayer} />}
     </div>
   );
