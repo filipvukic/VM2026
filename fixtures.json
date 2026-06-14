@@ -4215,7 +4215,7 @@
         "scorer": "Jamal Musiala",
         "assist": "Joshua Kimmich",
         "type": "REGULAR",
-        "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+        "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich with a through ball.",
         "score": [
           4,
           1
@@ -4973,15 +4973,21 @@
     "homeTla": "NED",
     "away": "Japan",
     "awayTla": "JPN",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      0,
+      0
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        0,
+        0
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "DRAW"
     },
     "minute": null,
     "goals": [],
@@ -4995,15 +5001,14 @@
     "referees": [
       {
         "name": "Ismail Elfath",
-        "role": "REFEREE",
-        "nationality": "United States"
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
       "homeML": 100,
-      "awayML": 260,
+      "awayML": 270,
       "spread": "NED -0.5",
       "overUnder": 2.5,
       "overOdds": 100.0,
@@ -5019,8 +5024,8 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "291609",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Virgil van Dijk",
@@ -5028,8 +5033,8 @@
           "positionName": "Center Left Defender",
           "jersey": "4",
           "espnId": "157892",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jan Paul van Hecke",
@@ -5037,8 +5042,8 @@
           "positionName": "Center Right Defender",
           "jersey": "6",
           "espnId": "282583",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Micky van de Ven",
@@ -5046,8 +5051,8 @@
           "positionName": "Left Back",
           "jersey": "15",
           "espnId": "296512",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Denzel Dumfries",
@@ -5055,8 +5060,8 @@
           "positionName": "Right Back",
           "jersey": "22",
           "espnId": "213248",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Frenkie de Jong",
@@ -5064,8 +5069,8 @@
           "positionName": "Center Midfielder",
           "jersey": "21",
           "espnId": "219022",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tijjani Reijnders",
@@ -5073,8 +5078,8 @@
           "positionName": "Left Midfielder",
           "jersey": "14",
           "espnId": "261328",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ryan Gravenberch",
@@ -5082,8 +5087,8 @@
           "positionName": "Right Midfielder",
           "jersey": "8",
           "espnId": "274632",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Donyell Malen",
@@ -5091,8 +5096,8 @@
           "positionName": "Forward",
           "jersey": "18",
           "espnId": "259481",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Cody Gakpo",
@@ -5100,8 +5105,8 @@
           "positionName": "Left Forward",
           "jersey": "11",
           "espnId": "249524",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Crysencio Summerville",
@@ -5109,8 +5114,8 @@
           "positionName": "Right Forward",
           "jersey": "24",
           "espnId": "284792",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -5120,8 +5125,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "282186",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lutsharel Geertruida",
@@ -5129,8 +5134,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "264828",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Justin Kluivert",
@@ -5138,8 +5143,8 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "245916",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Teun Koopmeiners",
@@ -5147,8 +5152,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "258968",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Guus Til",
@@ -5156,8 +5161,8 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "240965",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Robin Roefs",
@@ -5165,8 +5170,8 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "301449",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Quinten Timber",
@@ -5174,8 +5179,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "282230",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nathan Aké",
@@ -5183,8 +5188,8 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "159248",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Wout Weghorst",
@@ -5192,8 +5197,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "177042",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mark Flekken",
@@ -5201,8 +5206,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "177821",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Memphis Depay",
@@ -5210,8 +5215,8 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "159255",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Noa Lang",
@@ -5219,8 +5224,8 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "255344",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Marten de Roon",
@@ -5228,8 +5233,8 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "146335",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jorrel Hato",
@@ -5237,8 +5242,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "353951",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Brian Brobbey",
@@ -5246,8 +5251,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "282229",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "NED",
@@ -5262,8 +5267,8 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "265958",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Shogo Taniguchi",
@@ -5271,8 +5276,8 @@
           "positionName": "Center Defender",
           "jersey": "3",
           "espnId": "202728",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hiroki Ito",
@@ -5280,8 +5285,8 @@
           "positionName": "Center Left Defender",
           "jersey": "21",
           "espnId": "97111",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tsuyoshi Watanabe",
@@ -5289,8 +5294,8 @@
           "positionName": "Center Right Defender",
           "jersey": "16",
           "espnId": "276279",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Daichi Kamada",
@@ -5298,8 +5303,8 @@
           "positionName": "Center Left Midfielder",
           "jersey": "15",
           "espnId": "219362",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kaishu Sano",
@@ -5307,8 +5312,8 @@
           "positionName": "Center Right Midfielder",
           "jersey": "24",
           "espnId": "357030",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Keito Nakamura",
@@ -5316,8 +5321,8 @@
           "positionName": "Left Midfielder",
           "jersey": "13",
           "espnId": "265953",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ritsu Doan",
@@ -5325,8 +5330,8 @@
           "positionName": "Right Midfielder",
           "jersey": "10",
           "espnId": "219627",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ayase Ueda",
@@ -5334,8 +5339,8 @@
           "positionName": "Forward",
           "jersey": "18",
           "espnId": "274277",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Daizen Maeda",
@@ -5343,8 +5348,8 @@
           "positionName": "Center Left Forward",
           "jersey": "11",
           "espnId": "286347",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Takefusa Kubo",
@@ -5352,8 +5357,8 @@
           "positionName": "Center Right Forward",
           "jersey": "8",
           "espnId": "256587",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -5363,8 +5368,8 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "219350",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Koki Ogawa",
@@ -5372,8 +5377,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "238016",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yuto Nagatomo",
@@ -5381,8 +5386,8 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "119082",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kento Shiogai",
@@ -5390,8 +5395,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "362959",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Keisuke Goto",
@@ -5399,8 +5404,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "346208",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yuito Suzuki",
@@ -5408,8 +5413,8 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "303031",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ayumu Seko",
@@ -5417,8 +5422,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "258270",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tomoki Hayakawa",
@@ -5426,8 +5431,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "312924",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Shuto Machino",
@@ -5435,8 +5440,8 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "271352",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kou Itakura",
@@ -5444,8 +5449,8 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "238033",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Junnosuke Suzuki",
@@ -5453,8 +5458,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "333663",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Keisuke Osako",
@@ -5462,8 +5467,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "255723",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ao Tanaka",
@@ -5471,8 +5476,8 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "253173",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yukinari Sugawara",
@@ -5480,8 +5485,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "265965",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Takehiro Tomiyasu",
@@ -5489,15 +5494,73 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "238004",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "JPN",
       "_espnEventId": "760425"
     },
-    "homeStats": {},
-    "awayStats": {},
+    "homeStats": {
+      "foulsCommitted": 2.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 1.0,
+      "saves": 0.0,
+      "possessionPct": 61.6,
+      "totalShots": 1.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 1.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 100.0,
+      "totalPasses": 115.0,
+      "passPct": 0.9,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 2.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 13.0,
+      "accurateLongBalls": 6.0,
+      "longballPct": 0.5,
+      "blockedShots": 0.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 3.0,
+      "tacklePct": 0.7,
+      "interceptions": 2.0,
+      "effectiveClearance": 4.0,
+      "totalClearance": 4.0
+    },
+    "awayStats": {
+      "foulsCommitted": 0.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 1.0,
+      "saves": 1.0,
+      "possessionPct": 38.4,
+      "totalShots": 1.0,
+      "shotsOnTarget": 0.0,
+      "shotPct": 0.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 60.0,
+      "totalPasses": 68.0,
+      "passPct": 0.9,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 5.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 6.0,
+      "accurateLongBalls": 3.0,
+      "longballPct": 0.5,
+      "blockedShots": 1.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 2.0,
+      "tacklePct": 1.0,
+      "interceptions": 2.0,
+      "effectiveClearance": 8.0,
+      "totalClearance": 8.0
+    },
     "homeForm": [
       {
         "date": "2026-06-08",

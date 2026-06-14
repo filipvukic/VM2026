@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T19:41:06+00:00",
+  "updated_at": "2026-06-14T20:21:30+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2307,7 +2307,7 @@
           "scorer": "Jamal Musiala",
           "assist": "Joshua Kimmich",
           "type": "REGULAR",
-          "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+          "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich with a through ball.",
           "score": [
             4,
             1
@@ -2527,15 +2527,21 @@
       "homeTla": "NED",
       "away": "Japan",
       "awayTla": "JPN",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
       "minute": null,
       "goals": [],
@@ -2549,8 +2555,7 @@
       "referees": [
         {
           "name": "Ismail Elfath",
-          "role": "REFEREE",
-          "nationality": "United States"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -10313,26 +10318,26 @@
         {
           "team": "Japan",
           "tla": "JPN",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Netherlands",
           "tla": "NED",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Sweden",
