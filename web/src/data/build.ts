@@ -176,8 +176,8 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     const kickoff = new Date(f.utcDate);
     const finished = f.status === "FINISHED" || f.status === "AWARDED";
     const live = f.status === "IN_PLAY" || f.status === "PAUSED" || f.status === "LIVE" || f.status === "SUSPENDED";
-    const ga = f.score && f.score[0] != null ? (f.score[0] as number) : null;
-    const gb = f.score && f.score[1] != null ? (f.score[1] as number) : null;
+    let ga = f.score && f.score[0] != null ? (f.score[0] as number) : null;
+    let gb = f.score && f.score[1] != null ? (f.score[1] as number) : null;
     let winner: string | null = null;
     if (finished && ga != null && gb != null) {
       if (ga > gb) winner = homeCode;
@@ -225,6 +225,27 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
         playerOut: s.playerOut,
       }))
       .filter((x: MatchSub) => x.team);
+
+    // LIVE score: the goal feed (ESPN, sometimes football-data) updates as soon
+    // as a goal is logged, while the match-level `score` field can lag minutes
+    // behind on the free feed — which showed "0–0" with a goal already listed.
+    // For live matches derive the score from the goal events (never for finished
+    // matches, whose official score is authoritative and drives scoring).
+    if (live && scorers.length) {
+      const cum = scorers.map((s) => s.score).filter((s): s is [number, number] => Array.isArray(s) && s.length === 2);
+      let gh: number, gaw: number;
+      if (cum.length) {
+        // each goal carries the running [home, away] tally — max handles own
+        // goals and any out-of-order events correctly.
+        gh = Math.max(...cum.map((s) => s[0]));
+        gaw = Math.max(...cum.map((s) => s[1]));
+      } else {
+        gh = scorers.filter((s) => s.team === homeCode).length;
+        gaw = scorers.filter((s) => s.team === awayCode).length;
+      }
+      ga = Math.max(ga ?? 0, gh);
+      gb = Math.max(gb ?? 0, gaw);
+    }
 
     const hs = f.homeStats || {};
     const as_ = f.awayStats || {};
