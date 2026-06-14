@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T18:59:30+00:00",
+  "updated_at": "2026-06-14T19:41:06+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Albin",
-      "match_points": 22,
+      "match_points": 24,
       "bonus_points": 0,
-      "total": 22,
+      "total": 24,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 17,
+      "match_points": 19,
       "bonus_points": 0,
-      "total": 17,
+      "total": 19,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 16,
+      "match_points": 18,
       "bonus_points": 0,
-      "total": 16,
+      "total": 18,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 15,
+      "match_points": 17,
       "bonus_points": 0,
-      "total": 15,
+      "total": 17,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 15,
+      "match_points": 17,
       "bonus_points": 0,
-      "total": 15,
+      "total": 17,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 14,
+      "match_points": 16,
       "bonus_points": 0,
-      "total": 14,
+      "total": 16,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 14,
+      "match_points": 16,
       "bonus_points": 0,
-      "total": 14,
+      "total": 16,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 14,
+      "match_points": 16,
       "bonus_points": 0,
-      "total": 14,
+      "total": 16,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 13,
+      "match_points": 15,
       "bonus_points": 0,
-      "total": 13,
+      "total": 15,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 12,
+      "match_points": 14,
       "bonus_points": 0,
-      "total": 12,
+      "total": 14,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 11,
+      "match_points": 13,
       "bonus_points": 0,
-      "total": 11,
+      "total": 13,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -817,156 +817,19 @@
         "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [
-        {
-          "minute": "21",
-          "team": "BIH",
-          "scorer": "Jovo Lukic",
-          "assist": "Sead Kolasinac",
-          "type": "HEADER",
-          "description": "Goal! Canada 0, Bosnia and Herzegovina 1. Jovo Lukic (Bosnia and Herzegovina) header from very close range to the centre of the goal. Assisted by Sead Kolasinac with a headed pass following a corner.",
-          "score": [
-            0,
-            1
-          ],
-          "period": 1
-        },
-        {
-          "minute": "78",
-          "team": "CAN",
-          "scorer": "Cyle Larin",
-          "assist": "Promise David",
-          "type": "REGULAR",
-          "description": "Goal! Canada 1, Bosnia and Herzegovina 1. Cyle Larin (Canada) right footed shot from the centre of the box to the bottom right corner. Assisted by Promise David.",
-          "score": [
-            1,
-            1
-          ],
-          "period": 2
-        }
-      ],
-      "bookings": [
-        {
-          "minute": "11",
-          "team": "CAN",
-          "player": "Alistair Johnston",
-          "card": "YELLOW",
-          "period": 1
-        },
-        {
-          "minute": "45",
-          "team": "BIH",
-          "player": "Ermedin Demirovic",
-          "card": "YELLOW",
-          "period": 1
-        },
-        {
-          "minute": "45+1",
-          "team": "BIH",
-          "player": "Jovo Lukic",
-          "card": "YELLOW",
-          "period": 1
-        },
-        {
-          "minute": "53",
-          "team": "CAN",
-          "player": "Luc de Fougerolles",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "90+3",
-          "team": "BIH",
-          "player": "Nikola Katic",
-          "card": "YELLOW",
-          "period": 2
-        }
-      ],
-      "subs": [
-        {
-          "minute": "61",
-          "team": "CAN",
-          "playerIn": "Jacob Shaffelburg",
-          "playerOut": "Liam Millar",
-          "period": 2
-        },
-        {
-          "minute": "61",
-          "team": "CAN",
-          "playerIn": "Promise David",
-          "playerOut": "Jonathan David",
-          "period": 2
-        },
-        {
-          "minute": "61",
-          "team": "CAN",
-          "playerIn": "Ali Ahmed",
-          "playerOut": "Tajon Buchanan",
-          "period": 2
-        },
-        {
-          "minute": "62",
-          "team": "BIH",
-          "playerIn": "Samed Bazdar",
-          "playerOut": "Jovo Lukic",
-          "period": 2
-        },
-        {
-          "minute": "62",
-          "team": "BIH",
-          "playerIn": "Armin Gigovic",
-          "playerOut": "Ivan Basic",
-          "period": 2
-        },
-        {
-          "minute": "74",
-          "team": "BIH",
-          "playerIn": "Ivan Sunjic",
-          "playerOut": "Esmir Bajraktarevic",
-          "period": 2
-        },
-        {
-          "minute": "74",
-          "team": "BIH",
-          "playerIn": "Kerim Alajbegovic",
-          "playerOut": "Amar Memic",
-          "period": 2
-        },
-        {
-          "minute": "76",
-          "team": "CAN",
-          "playerIn": "Cyle Larin",
-          "playerOut": "Tani Oluwaseyi",
-          "period": 2
-        },
-        {
-          "minute": "84",
-          "team": "BIH",
-          "playerIn": "Dzenis Burnic",
-          "playerOut": "Sead Kolasinac",
-          "period": 2
-        },
-        {
-          "minute": "90+1",
-          "team": "CAN",
-          "playerIn": "Jonathan Osorio",
-          "playerOut": "Stephen Eustáquio",
-          "period": 2
-        }
-      ],
-      "venue": {
-        "stadium": "BMO Field",
-        "city": "Toronto",
-        "country": "Canada"
-      },
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": null,
       "referees": [
         {
           "name": "Facundo Tello",
-          "role": "Referee"
+          "role": "REFEREE",
+          "nationality": "Argentina"
         }
       ],
       "odds": null,
-      "attendance": 43002,
+      "attendance": null,
       "tips": [
         {
           "name": "Albin",
@@ -2365,7 +2228,7 @@
       "homeTla": "GER",
       "away": "Curaçao",
       "awayTla": "CUW",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         7,
         1
@@ -2562,7 +2425,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 68021,
       "tips": [
         {
           "name": "Albin",
@@ -2570,7 +2433,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -2578,7 +2441,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -2586,7 +2449,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -2594,7 +2457,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -2602,7 +2465,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -2610,7 +2473,7 @@
             5,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -2618,7 +2481,7 @@
             5,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -2626,7 +2489,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -2634,7 +2497,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -2642,7 +2505,7 @@
             7,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -2650,7 +2513,7 @@
             5,
             0
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -3176,7 +3039,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -10397,9 +10264,9 @@
           "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 4,
+          "gf": 7,
           "ga": 1,
-          "gd": 3,
+          "gd": 6,
           "points": 3
         },
         {
@@ -10434,8 +10301,8 @@
           "draw": 0,
           "lost": 1,
           "gf": 1,
-          "ga": 4,
-          "gd": -3,
+          "ga": 7,
+          "gd": -6,
           "points": 0
         }
       ]
