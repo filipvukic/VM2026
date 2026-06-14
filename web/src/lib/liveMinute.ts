@@ -14,11 +14,12 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
     if (Number.isNaN(ko) || nowMs < ko) return "LIVE";
     const mins = Math.floor((nowMs - ko) / 60000);
     if (mins <= 45) return Math.max(1, mins) + "'";
-    if (mins <= 60) return "HT";
+    if (mins <= 60) return "Paus";
     return Math.min(mins - 15, 90 + 9) + "'";
   }
   const s = String(m.minute);
-  if (!/^\d+$/.test(s)) return s + "'"; // e.g. "90+2", "HT"
+  if (/^(HT|HALFTIME|PAUS|HALF[\s-]?TIME)$/i.test(s)) return "Paus";
+  if (!/^\d+$/.test(s)) return s + "'"; // e.g. "90+2"
   const base = parseInt(s, 10);
   const elapsed = updatedAtMs ? Math.max(0, Math.floor((nowMs - updatedAtMs) / 60000)) : 0;
   const shown = Math.min(base + elapsed, 90 + 9);

@@ -2,23 +2,9 @@ import { useState } from "react";
 import { usePlayersDb } from "../state/dataset";
 import { lineupPhoto } from "../lib/playerPhoto";
 import { initials } from "../lib/format";
+import { buildRows, sideScore } from "../lib/formation";
 import type { Match, RawLineup, RawLineupPlayer } from "../data/types";
 
-function place(code: string): { band: number; side: number } {
-  const c = (code || "").toUpperCase();
-  const side = c.includes("L") ? -1 : c.includes("R") ? 1 : 0;
-  if (c.startsWith("G")) return { band: 0, side: 0 };
-  if (c.startsWith("DM") || c === "CDM") return { band: 2, side };
-  if (c.includes("B") || c.startsWith("CD") || c.startsWith("CB") || c.startsWith("D")) return { band: 1, side };
-  if (c.startsWith("F") || c.startsWith("ST") || c.startsWith("CF") || c.startsWith("LW") || c.startsWith("RW") || c.endsWith("W"))
-    return { band: 4, side };
-  return { band: 3, side };
-}
-
-interface PP extends RawLineupPlayer {
-  band: number;
-  side: number;
-}
 
 export interface SubInfo {
   outAt?: string | number; // starter subbed out at minute
@@ -39,13 +25,9 @@ export function Pitch({
   onPlayer: (name: string, espnId?: string | null) => void;
 }) {
   const db = usePlayersDb();
-  const starters = (lineup.lineup || []).map((p) => ({ ...p, ...place(p.position || "") }));
-  const bandsPresent = [0, 1, 2, 3, 4].filter((b) => starters.some((p) => p.band === b));
-  const rowY = (band: number) => {
-    const idx = bandsPresent.indexOf(band);
-    const n = bandsPresent.length;
-    return 91 - (idx / Math.max(1, n - 1)) * 82;
-  };
+  const rows = buildRows(lineup); // back-to-front: [GK], defence, midfield(s), attack
+  const nRows = rows.length;
+  const rowY = (idx: number) => 91 - (idx / Math.max(1, nRows - 1)) * 82;
 
   const goalNames = new Set(match.scorers.map((g) => (g.name || "").toLowerCase()));
   const redNames = new Set(match.cards.filter((c) => c.type === "red").map((c) => (c.name || "").toLowerCase()));
@@ -57,21 +39,22 @@ export function Pitch({
   return (
     <div className="pitch">
       <div className="pitch-lines" />
-      {bandsPresent.map((band) => {
-        const row = starters
-          .filter((p) => p.band === band)
-          .sort((a, b) => a.side - b.side || (lineup.lineup || []).indexOf(a) - (lineup.lineup || []).indexOf(b));
-        return row.map((p, i) => {
-          const x = ((i + 1) / (row.length + 1)) * 100;
+      {rows.map((row, idx) => {
+        const ordered = row
+          .map((p, i) => ({ p, i }))
+          .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
+          .map((x) => x.p);
+        return ordered.map((p, i) => {
+          const x = ((i + 1) / (ordered.length + 1)) * 100;
           const nm = (p.name || "").toLowerCase();
           return (
             <PitchPlayer
-              key={p.name + i}
+              key={p.name + "-" + idx + "-" + i}
               p={p}
               photo={lineupPhoto(p.name, p.espnId, db)}
               color={color}
               x={x}
-              y={rowY(band)}
+              y={rowY(idx)}
               goal={goalNames.has(nm)}
               red={redNames.has(nm)}
               outAt={subOut.get(nm)}
@@ -126,7 +109,7 @@ function PitchPlayer({
   outAt,
   onClick,
 }: {
-  p: PP;
+  p: RawLineupPlayer;
   photo: string | null;
   color: string;
   x: number;

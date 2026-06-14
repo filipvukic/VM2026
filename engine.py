@@ -573,8 +573,13 @@ def _apply_espn(m, parsed):
     if parsed.get("attendance") is not None:
         m["attendance"] = parsed["attendance"]
     # Live match minute from ESPN's match clock (e.g. "73'") — accurate, unlike
-    # wall-clock from kickoff which overcounts by half-time/stoppages.
-    if parsed.get("espnStatus") in ESPN_LIVE and parsed.get("espnDisplayClock"):
+    # wall-clock from kickoff which overcounts by half-time/stoppages. At the
+    # break ESPN's clock is empty/"45:00"; flag it as "HT" so the site shows
+    # "Paus" instead of a frozen "45+5".
+    espn_status = parsed.get("espnStatus")
+    if espn_status == "STATUS_HALFTIME":
+        m["minute"] = "HT"
+    elif espn_status in ESPN_LIVE and parsed.get("espnDisplayClock"):
         dc = _espn_minute(parsed["espnDisplayClock"])
         if dc:
             m["minute"] = dc

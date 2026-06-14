@@ -197,7 +197,10 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     const scorers: MatchScorer[] = goalsSrc
       .map((g: any) => ({
         team: refCode(g.team),
-        name: g.scorer,
+        // a just-logged goal sometimes arrives before the scorer is attributed —
+        // still show it (as "Mål") so the timeline matches the score instead of
+        // silently dropping it.
+        name: g.scorer || "Mål",
         minute: g.minute,
         injuryTime: g.injuryTime,
         pen: String(g.type || "").toUpperCase() === "PENALTY",
@@ -205,7 +208,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
         assist: g.assist || null,
         score: g.score || null,
       }))
-      .filter((x: MatchScorer) => x.team && x.name);
+      .filter((x: MatchScorer) => x.team);
     const cards: MatchCardEvent[] = bookingsSrc
       .map((b: any) => {
         const c = String(b.card || "").toUpperCase();
