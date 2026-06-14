@@ -114,7 +114,10 @@
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
       "fullTime": [
         1,
         1
@@ -3186,14 +3189,14 @@
       "offsides": 0.0,
       "wonCorners": 6.0,
       "saves": 2.0,
-      "possessionPct": 51.3,
+      "possessionPct": 51.4,
       "totalShots": 12.0,
       "shotsOnTarget": 5.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 448.0,
-      "totalPasses": 513.0,
+      "accuratePasses": 449.0,
+      "totalPasses": 514.0,
       "passPct": 0.9,
       "accurateCrosses": 4.0,
       "totalCrosses": 16.0,
@@ -3206,8 +3209,8 @@
       "totalTackles": 23.0,
       "tacklePct": 0.6,
       "interceptions": 5.0,
-      "effectiveClearance": 24.0,
-      "totalClearance": 24.0
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
     },
     "awayStats": {
       "foulsCommitted": 14.0,
@@ -3216,28 +3219,28 @@
       "offsides": 1.0,
       "wonCorners": 2.0,
       "saves": 4.0,
-      "possessionPct": 48.7,
+      "possessionPct": 48.6,
       "totalShots": 14.0,
       "shotsOnTarget": 3.0,
       "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 420.0,
-      "totalPasses": 487.0,
+      "accuratePasses": 419.0,
+      "totalPasses": 486.0,
       "passPct": 0.9,
       "accurateCrosses": 2.0,
       "totalCrosses": 15.0,
       "crossPct": 0.1,
       "totalLongBalls": 52.0,
-      "accurateLongBalls": 16.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.3,
       "blockedShots": 6.0,
       "effectiveTackles": 18.0,
       "totalTackles": 26.0,
       "tacklePct": 0.7,
-      "interceptions": 4.0,
-      "effectiveClearance": 16.0,
-      "totalClearance": 16.0
+      "interceptions": 5.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
     },
     "homeForm": [
       {
@@ -3323,7 +3326,7 @@
     "homeTla": "HAI",
     "away": "Scotland",
     "awayTla": "SCO",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
       0,
       1
@@ -3342,7 +3345,7 @@
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "45'+5",
+    "minute": null,
     "goals": [
       {
         "minute": "28",
@@ -3365,9 +3368,87 @@
         "player": "Jean-Ricner Bellegarde",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "46",
+        "team": "SCO",
+        "player": "Aaron Hickey",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90'+1",
+        "team": "SCO",
+        "player": "Findlay Curtis",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90'+5",
+        "team": "SCO",
+        "player": "Kenny McLean",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "61",
+        "team": "HAI",
+        "playerIn": "Josué Casimir",
+        "playerOut": "Louicius Deedson",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "SCO",
+        "playerIn": "Ryan Christie",
+        "playerOut": "Ben Gannon-Doak",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "SCO",
+        "playerIn": "Lyndon Dykes",
+        "playerOut": "Ché Adams",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "SCO",
+        "playerIn": "Nathan Patterson",
+        "playerOut": "Aaron Hickey",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "HAI",
+        "playerIn": "Lenny Joseph",
+        "playerOut": "Wilson Isidor",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "SCO",
+        "playerIn": "Findlay Curtis",
+        "playerOut": "John McGinn",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "SCO",
+        "playerIn": "Kenny McLean",
+        "playerOut": "Lawrence Shankland",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "HAI",
+        "playerIn": "Yassin Fortuné",
+        "playerOut": "Ruben Providence",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
@@ -3380,7 +3461,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 64146,
     "espnOdds": {
       "homeML": 425,
       "awayML": -160,
@@ -3463,7 +3544,7 @@
           "jersey": "15",
           "espnId": "307861",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Louicius Deedson",
@@ -3472,7 +3553,7 @@
           "jersey": "11",
           "espnId": "291608",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Wilson Isidor",
@@ -3481,7 +3562,7 @@
           "jersey": "18",
           "espnId": "265915",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Frantzdy Pierrot",
@@ -3536,7 +3617,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "304212",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3545,7 +3626,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "301093",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3626,7 +3707,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "275007",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -3679,7 +3760,7 @@
           "jersey": "2",
           "espnId": "283940",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lewis Ferguson",
@@ -3706,7 +3787,7 @@
           "jersey": "7",
           "espnId": "162843",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ben Gannon-Doak",
@@ -3715,7 +3796,7 @@
           "jersey": "17",
           "espnId": "332948",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ché Adams",
@@ -3724,7 +3805,7 @@
           "jersey": "10",
           "espnId": "213725",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lawrence Shankland",
@@ -3733,7 +3814,7 @@
           "jersey": "20",
           "espnId": "173306",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -3752,7 +3833,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "271191",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3770,7 +3851,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "93435",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3815,7 +3896,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "207538",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3824,7 +3905,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "141870",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3833,7 +3914,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "368045",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -3877,66 +3958,73 @@
       "_espnEventId": "760418"
     },
     "homeStats": {
-      "foulsCommitted": 13.0,
+      "foulsCommitted": 23.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 3.0,
-      "wonCorners": 0.0,
+      "wonCorners": 4.0,
       "saves": 1.0,
-      "possessionPct": 44.9,
-      "totalShots": 8.0,
-      "shotsOnTarget": 1.0,
+      "possessionPct": 53.7,
+      "totalShots": 15.0,
+      "shotsOnTarget": 2.0,
       "shotPct": 0.1,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 164.0,
-      "totalPasses": 190.0,
+      "accuratePasses": 367.0,
+      "totalPasses": 431.0,
       "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 7.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 28.0,
-      "accurateLongBalls": 13.0,
-      "longballPct": 0.5,
-      "blockedShots": 2.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 23.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 59.0,
+      "accurateLongBalls": 26.0,
+      "longballPct": 0.4,
+      "blockedShots": 4.0,
       "effectiveTackles": 7.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.9,
-      "interceptions": 5.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "totalTackles": 12.0,
+      "tacklePct": 0.6,
+      "interceptions": 6.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
     },
     "awayStats": {
-      "foulsCommitted": 9.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 21.0,
+      "yellowCards": 3.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 55.1,
-      "totalShots": 7.0,
+      "offsides": 1.0,
+      "wonCorners": 3.0,
+      "saves": 2.0,
+      "possessionPct": 46.3,
+      "totalShots": 9.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 202.0,
-      "totalPasses": 239.0,
+      "accuratePasses": 307.0,
+      "totalPasses": 374.0,
       "passPct": 0.8,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 4.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 34.0,
-      "accurateLongBalls": 19.0,
-      "longballPct": 0.6,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 14.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 58.0,
+      "accurateLongBalls": 30.0,
+      "longballPct": 0.5,
+      "blockedShots": 2.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 12.0,
       "tacklePct": 0.4,
-      "interceptions": 2.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
+      "interceptions": 6.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-14",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-06",
         "result": "V",
@@ -3964,16 +4052,16 @@
         "gf": 1,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2025-11-19",
-        "result": "V",
-        "gf": 2,
-        "ga": 0,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-14",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
       {
         "date": "2026-06-06",
         "result": "F",
@@ -4001,13 +4089,6 @@
         "gf": 1,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2025-11-18",
-        "result": "V",
-        "gf": 4,
-        "ga": 2,
-        "home": true
       }
     ]
   },
@@ -4020,15 +4101,24 @@
     "homeTla": "AUS",
     "away": "Turkey",
     "awayTla": "TUR",
-    "status": "TIMED",
-    "score": null,
+    "status": "FINISHED",
+    "score": [
+      2,
+      0
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        1,
+        0
+      ],
+      "fullTime": [
+        2,
+        0
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
     "minute": null,
     "goals": [],
@@ -4084,7 +4174,7 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -3500,
+      "homeML": -3000,
       "awayML": 2800,
       "spread": "GER -3.5",
       "overUnder": 4.5,
@@ -4207,8 +4297,8 @@
       "awayML": 255,
       "spread": "NED -0.5",
       "overUnder": 2.5,
-      "overOdds": -110.0,
-      "underOdds": -115.0,
+      "overOdds": 100.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -4322,11 +4412,11 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 245,
-      "awayML": 150,
+      "homeML": 230,
+      "awayML": 155,
       "spread": "ECU -0.5",
       "overUnder": 1.5,
-      "overOdds": -165.0,
+      "overOdds": -160.0,
       "underOdds": 130.0,
       "provider": "DraftKings"
     },
@@ -4441,12 +4531,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -110,
-      "awayML": 320,
+      "homeML": -105,
+      "awayML": 310,
       "spread": "SWE -0.5",
       "overUnder": 2.5,
-      "overOdds": 120.0,
-      "underOdds": -145.0,
+      "overOdds": 115.0,
+      "underOdds": -140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
