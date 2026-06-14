@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T08:39:07+00:00",
+  "updated_at": "2026-06-14T08:54:41+00:00",
   "forms": {
     "MEX": [
       {
@@ -89,12 +89,72 @@
         "r": "F"
       }
     ],
-    "BRA": [],
-    "MAR": [],
-    "HAI": [],
-    "SCO": [],
-    "AUS": [],
-    "TUR": [],
+    "BRA": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Morocco",
+        "oppTla": "MAR",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "MAR": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Brazil",
+        "oppTla": "BRA",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "HAI": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Scotland",
+        "oppTla": "SCO",
+        "gf": 0,
+        "ga": 1,
+        "r": "F"
+      }
+    ],
+    "SCO": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Haiti",
+        "oppTla": "HAI",
+        "gf": 1,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "AUS": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Turkey",
+        "oppTla": "TUR",
+        "gf": 2,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "TUR": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Australia",
+        "oppTla": "AUS",
+        "gf": 0,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
     "GER": [],
     "CUW": [],
     "NED": [],
@@ -126,6 +186,28 @@
     "SWE": [],
     "IRQ": [],
     "NOR": [],
-    "COL": []
+    "COL": [],
+    "QAT": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Switzerland",
+        "oppTla": "SUI",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "SUI": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Qatar",
+        "oppTla": "QAT",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ]
   }
 }

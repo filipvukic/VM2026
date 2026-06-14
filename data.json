@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T06:53:43+00:00",
+  "updated_at": "2026-06-14T08:59:33+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -9924,8 +9924,8 @@
       "code": "B",
       "table": [
         {
-          "team": "Bosnia-Herzegovina",
-          "tla": "BIH",
+          "team": "Switzerland",
+          "tla": "SUI",
           "played": 1,
           "won": 0,
           "draw": 1,
@@ -9960,8 +9960,8 @@
           "points": 1
         },
         {
-          "team": "Switzerland",
-          "tla": "SUI",
+          "team": "Bosnia-Herzegovina",
+          "tla": "BIH",
           "played": 1,
           "won": 0,
           "draw": 1,
@@ -9989,8 +9989,8 @@
           "points": 3
         },
         {
-          "team": "Brazil",
-          "tla": "BRA",
+          "team": "Morocco",
+          "tla": "MAR",
           "played": 1,
           "won": 0,
           "draw": 1,
@@ -10001,8 +10001,8 @@
           "points": 1
         },
         {
-          "team": "Morocco",
-          "tla": "MAR",
+          "team": "Brazil",
+          "tla": "BRA",
           "played": 1,
           "won": 0,
           "draw": 1,
@@ -10618,12 +10618,72 @@
         "r": "F"
       }
     ],
-    "BRA": [],
-    "MAR": [],
-    "HAI": [],
-    "SCO": [],
-    "AUS": [],
-    "TUR": [],
+    "BRA": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Morocco",
+        "oppTla": "MAR",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "MAR": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Brazil",
+        "oppTla": "BRA",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "HAI": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Scotland",
+        "oppTla": "SCO",
+        "gf": 0,
+        "ga": 1,
+        "r": "F"
+      }
+    ],
+    "SCO": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Haiti",
+        "oppTla": "HAI",
+        "gf": 1,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "AUS": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Turkey",
+        "oppTla": "TUR",
+        "gf": 2,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "TUR": [
+      {
+        "date": "2026-06-14",
+        "competition": "WC",
+        "opp": "Australia",
+        "oppTla": "AUS",
+        "gf": 0,
+        "ga": 2,
+        "r": "F"
+      }
+    ],
     "GER": [],
     "CUW": [],
     "NED": [],
@@ -10655,6 +10715,28 @@
     "SWE": [],
     "IRQ": [],
     "NOR": [],
-    "COL": []
+    "COL": [],
+    "QAT": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Switzerland",
+        "oppTla": "SUI",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "SUI": [
+      {
+        "date": "2026-06-13",
+        "competition": "WC",
+        "opp": "Qatar",
+        "oppTla": "QAT",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ]
   }
 }
