@@ -402,10 +402,12 @@ def parse_espn_summary(data, home_tla, away_tla):
     # --- ESPN-status ---
     espn_status = ""
     espn_clock = None
+    espn_display_clock = None
     for comp in (data.get("header", {}).get("competitions") or []):
         st = comp.get("status", {}).get("type", {})
         espn_status = st.get("name", "")
         espn_clock = comp.get("status", {}).get("clock")
+        espn_display_clock = comp.get("status", {}).get("displayClock")
         break
 
     return {
@@ -424,6 +426,7 @@ def parse_espn_summary(data, home_tla, away_tla):
         "awayForm": away_form,
         "espnStatus": espn_status,
         "espnClock": espn_clock,
+        "espnDisplayClock": espn_display_clock,
     }
 
 
@@ -555,6 +558,12 @@ def _apply_espn(m, parsed):
         m["referees"] = parsed["referees"]
     if parsed.get("attendance") is not None:
         m["attendance"] = parsed["attendance"]
+    # Live match minute from ESPN's match clock (e.g. "73'") — accurate, unlike
+    # wall-clock from kickoff which overcounts by half-time/stoppages.
+    if parsed.get("espnStatus") in ESPN_LIVE and parsed.get("espnDisplayClock"):
+        dc = _espn_minute(parsed["espnDisplayClock"])
+        if dc:
+            m["minute"] = dc
 
 
 # --------------------------------------------------------------------------- #

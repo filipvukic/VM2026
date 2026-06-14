@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 espn_cache.json
 match_details_cache.json
+
+# New frontend (web/) — build alongside; not deployed until the approved swap
+web/node_modules/
+web/dist/
+/app/

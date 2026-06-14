@@ -1,0 +1,125 @@
+import { usePlayersDb, useData } from "../state/dataset";
+import { useSheets } from "../state/sheets";
+import { Sheet, type SheetChrome } from "../components/Sheet";
+import { Flag } from "../lib/flags";
+import { PlayerImg } from "../components/PlayerImg";
+import { findPlayer, bestPhoto } from "../lib/playerPhoto";
+import { isoFor } from "../data/static/names";
+import { starTeam } from "../data/stars";
+
+function age(born?: string | null): number | null {
+  if (!born) return null;
+  const y = parseInt(born.slice(0, 4), 10);
+  if (!y) return null;
+  return 2026 - y;
+}
+
+const norm = (s: string) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+function wcStats(ds: ReturnType<typeof useData>, name: string) {
+  const nm = norm(name);
+  let goals = 0, assists = 0, yellow = 0, red = 0, apps = 0;
+  ds.allMatches.forEach((m) => {
+    if (m.status === "upcoming") return;
+    m.scorers.forEach((g) => {
+      if (norm(g.name) === nm) goals++;
+      if (g.assist && norm(g.assist) === nm) assists++;
+    });
+    m.cards.forEach((c) => {
+      if (norm(c.name) === nm) (c.type === "red" ? red++ : yellow++);
+    });
+    const inXI = (lu: typeof m.homeLineup) => lu?.lineup?.some((p) => norm(p.name) === nm);
+    const cameOn = m.subs.some((s) => norm(s.playerIn || "") === nm);
+    if (inXI(m.homeLineup) || inXI(m.awayLineup) || cameOn) apps++;
+  });
+  return { goals, assists, yellow, red, apps };
+}
+
+export function FootballPlayerSheet({ name, ...chrome }: { name: string } & SheetChrome) {
+  const db = usePlayersDb();
+  const ds = useData();
+  const openTeam = useSheets((s) => s.openTeam);
+  const p = findPlayer(name, db);
+  const photo = bestPhoto(p);
+  const wc = wcStats(ds, p?.name || name);
+  const hasWc = wc.apps > 0 || wc.goals > 0;
+  // Fall back to national-team context (flag, team) for stars not yet in players.json.
+  const natCode = p ? null : starTeam(name);
+  const natTeam = natCode ? ds.teams[natCode] : null;
+  const natIso = p ? isoFor(p.nationality, null) : natTeam?.iso || null;
+  const a = age(p?.born);
+
+  return (
+    <Sheet {...chrome} accent="var(--cool)" maxWidth={520}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <PlayerImg src={photo} name={p?.name || name} size={88} radius={18} fontSize={30} />
+        <div style={{ minWidth: 0 }}>
+          <div className="display" style={{ fontSize: 24, lineHeight: 1 }}>{p?.name || name}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 8, flexWrap: "wrap" }}>
+            {natIso && <Flag iso={natIso} size={16} />}
+            {p?.nationality && <span className="dim" style={{ fontSize: 12.5, fontWeight: 700 }}>{p.nationality}</span>}
+            {!p && natTeam && <span className="dim" style={{ fontSize: 12.5, fontWeight: 700 }}>{natTeam.name}</span>}
+            {p?.position && <span className="chip" style={{ fontSize: 10.5 }}>{p.position}</span>}
+          </div>
+        </div>
+      </div>
+
+      {p ? (
+        <>
+          {p.team && (
+            <div className="card card-pad" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12 }}>
+              {p.teamBadge && <img src={p.teamBadge} alt="" style={{ width: 38, height: 38, objectFit: "contain" }} onError={(e) => ((e.currentTarget.style.display = "none"))} />}
+              <div>
+                <div style={{ fontWeight: 800 }}>{p.team}</div>
+                <div className="dim" style={{ fontSize: 11.5 }}>{[p.teamLeague, p.teamCountry].filter(Boolean).join(" · ")}</div>
+              </div>
+            </div>
+          )}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(80px,1fr))", gap: 10, marginTop: 14 }}>
+            {a != null && <Fact label="Ålder" value={`${a} år`} />}
+            {p.height && <Fact label="Längd" value={p.height} />}
+            {p.weight && <Fact label="Vikt" value={p.weight} />}
+            {p.foot && <Fact label="Fot" value={p.foot} />}
+            {p.natJersey && <Fact label="Tröja" value={`#${p.natJersey}`} />}
+            {p.birthPlace && <Fact label="Född" value={p.birthPlace} wide />}
+          </div>
+        </>
+      ) : natTeam ? (
+        <button className="card card-pad" onClick={() => openTeam(natCode!)} style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12, width: "100%", textAlign: "left" }}>
+          <Flag iso={natTeam.iso} code={natCode} size={34} />
+          <div>
+            <div style={{ fontWeight: 800 }}>Stjärna i {natTeam.name}</div>
+            <div className="dim" style={{ fontSize: 11.5 }}>Mer info kommer när laget spelat sin första match.</div>
+          </div>
+        </button>
+      ) : (
+        <div className="dim" style={{ marginTop: 20, fontSize: 13, textAlign: "center" }}>Ingen utökad spelarinfo tillgänglig ännu.</div>
+      )}
+
+      {/* WC stats */}
+      <div style={{ marginTop: 16 }}>
+        <div className="kicker" style={{ marginBottom: 10 }}>I detta VM</div>
+        {hasWc ? (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(72px,1fr))", gap: 10 }}>
+            <Fact label="Matcher" value={String(wc.apps)} />
+            <Fact label="Mål" value={String(wc.goals)} />
+            <Fact label="Assist" value={String(wc.assists)} />
+            {wc.yellow > 0 && <Fact label="Gula" value={String(wc.yellow)} />}
+            {wc.red > 0 && <Fact label="Röda" value={String(wc.red)} />}
+          </div>
+        ) : (
+          <div className="dim" style={{ fontSize: 12.5 }}>Har inte spelat någon VM-match ännu.</div>
+        )}
+      </div>
+    </Sheet>
+  );
+}
+
+function Fact({ label, value, wide }: { label: string; value: string; wide?: boolean }) {
+  return (
+    <div className="card" style={{ padding: "10px 11px", gridColumn: wide ? "1 / -1" : undefined }}>
+      <div className="num" style={{ fontSize: 16 }}>{value}</div>
+      <div className="kicker" style={{ fontSize: 8.5, marginTop: 2 }}>{label}</div>
+    </div>
+  );
+}

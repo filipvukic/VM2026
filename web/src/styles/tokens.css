@@ -1,0 +1,66 @@
+/* ============================================================
+   VM 2026 — design tokens (premium broadcast)
+   Dark, high-contrast base with a disciplined broadcast accent system.
+   ============================================================ */
+:root {
+  /* ---- surfaces ---- */
+  --bg: #08060f;
+  --bg-2: #0e0a18;
+  --surface: #15101f;
+  --surface-2: #1c1530;
+  --surface-3: #251c3d;
+  --surface-hi: #2f2450;
+
+  /* ---- lines ---- */
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.13);
+  --line-3: rgba(255, 255, 255, 0.22);
+
+  /* ---- ink ---- */
+  --ink: #f7f3ff;
+  --ink-2: #b4a9ce;
+  --ink-3: #837799;
+  --ink-on-accent: #1a0f12;
+
+  /* ---- accents ---- */
+  --hot: #ff2d6e; /* live, energy */
+  --hot-2: #ff5c8a;
+  --gold: #ffcb45; /* exact, champion */
+  --warm: #ff8a3d;
+  --cool: #7b6cff; /* away, secondary */
+  --cool-2: #9a8bff;
+  --win: #2ee6a6; /* correct outcome / win */
+  --electric: #38c6f0;
+  --loss: #ff5d5d;
+
+  /* ---- signature gradients ---- */
+  --grad: linear-gradient(115deg, #7a2bff 0%, #ff2d6e 54%, #ff8a3d 100%);
+  --grad-soft: linear-gradient(120deg, #7a2bff, #ff2d6e);
+  --grad-gold: linear-gradient(120deg, #ffcb45, #ff8a3d);
+  --grad-cool: linear-gradient(120deg, #38c6f0, #7b6cff);
+
+  /* ---- radii ---- */
+  --r-xl: 24px;
+  --r-lg: 18px;
+  --r-md: 13px;
+  --r-sm: 9px;
+  --r-pill: 999px;
+
+  /* ---- elevation ---- */
+  --shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.9), inset 0 0 0 1px var(--line);
+  --shadow-lift: 0 32px 64px -34px rgba(0, 0, 0, 0.95), inset 0 0 0 1px var(--line-2);
+  --shadow-glow-hot: 0 0 0 1px rgba(255, 45, 110, 0.4), 0 8px 30px -10px rgba(255, 45, 110, 0.5);
+
+  /* ---- typography ---- */
+  --font-body: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-display: "Barlow Condensed", "Archivo Expanded", system-ui, sans-serif;
+  --font-hero: "Anton", "Barlow Condensed", system-ui, sans-serif;
+
+  /* ---- layout ---- */
+  --maxw: 1240px;
+  --nav-h: 64px;
+  --header-h: 56px;
+  --gutter: clamp(14px, 4vw, 28px);
+
+  color-scheme: dark;
+}

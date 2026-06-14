@@ -62,63 +62,61 @@ def parse_weight(s):
 
 
 def fetch_player(name):
-    try:
-        # 1. Search
-        data = tsdb_get("searchplayers.php", p=name)
-        players = data.get("player") or []
-        if not players:
-            return None
-        # Prefer exact name match + soccer sport; fall back to first soccer player
-        soccer = [p for p in players if (p.get("strSport") or "").lower() == "soccer"]
-        pool = soccer if soccer else players
-        basic = next(
-            (p for p in pool if (p.get("strPlayer") or "").lower() == name.lower()),
-            pool[0],
-        )
-
-        time.sleep(1.5)
-
-        # 2. Full player lookup
-        full = tsdb_get("lookupplayer.php", id=basic["idPlayer"])
-        fp = (full.get("players") or [{}])[0]
-
-        time.sleep(1.5)
-
-        # 3. Team lookup — use fp.idTeam (club) not basic.idTeam (may be national)
-        team_id = fp.get("idTeam") or basic.get("idTeam")
-        team = {}
-        if team_id:
-            td = tsdb_get("lookupteam.php", id=team_id)
-            t = (td.get("teams") or [{}])[0]
-            league = t.get("strLeague") or ""
-            # Discard national teams and placeholder leagues
-            if league and not league.startswith("_") and "International" not in league:
-                team = t
-
-        return {
-            "thumb":        fp.get("strThumb")        or basic.get("strThumb"),
-            "cutout":       fp.get("strCutout")       or basic.get("strCutout"),
-            "render":       fp.get("strRender"),
-            "team":         fp.get("strTeam")         or basic.get("strTeam"),
-            "position":     fp.get("strPosition")     or basic.get("strPosition"),
-            "nationality":  fp.get("strNationality")  or basic.get("strNationality"),
-            "born":         fp.get("dateBorn")        or basic.get("dateBorn"),
-            "birthPlace":   fp.get("strBirthLocation"),
-            "height":       parse_height(fp.get("strHeight")),
-            "weight":       parse_weight(fp.get("strWeight")),
-            "foot":         fp.get("strSide"),
-            "natJersey":    fp.get("strNumber"),
-            "teamBadge":    team.get("strBadge"),
-            "teamLeague":   team.get("strLeague"),
-            "teamCountry":  team.get("strCountry"),
-            "teamStadium":  team.get("strStadium"),
-            "teamCapacity": team.get("intStadiumCapacity"),
-            "teamCity":     team.get("strLocation"),
-        }
-
-    except Exception as e:
-        print(f" ✗ {e}", flush=True)
+    """Returns a data dict, or None if genuinely not found in TheSportsDB.
+    Transient errors (rate limit / network) propagate so the caller can retry
+    later instead of marking the player as done."""
+    # 1. Search
+    data = tsdb_get("searchplayers.php", p=name)
+    players = data.get("player") or []
+    if not players:
         return None
+    # Prefer exact name match + soccer sport; fall back to first soccer player
+    soccer = [p for p in players if (p.get("strSport") or "").lower() == "soccer"]
+    pool = soccer if soccer else players
+    basic = next(
+        (p for p in pool if (p.get("strPlayer") or "").lower() == name.lower()),
+        pool[0],
+    )
+
+    time.sleep(1.5)
+
+    # 2. Full player lookup
+    full = tsdb_get("lookupplayer.php", id=basic["idPlayer"])
+    fp = (full.get("players") or [{}])[0]
+
+    time.sleep(1.5)
+
+    # 3. Team lookup — use fp.idTeam (club) not basic.idTeam (may be national)
+    team_id = fp.get("idTeam") or basic.get("idTeam")
+    team = {}
+    if team_id:
+        td = tsdb_get("lookupteam.php", id=team_id)
+        t = (td.get("teams") or [{}])[0]
+        league = t.get("strLeague") or ""
+        # Discard national teams and placeholder leagues
+        if league and not league.startswith("_") and "International" not in league:
+            team = t
+
+    return {
+        "thumb":        fp.get("strThumb")        or basic.get("strThumb"),
+        "cutout":       fp.get("strCutout")       or basic.get("strCutout"),
+        "render":       fp.get("strRender"),
+        "team":         team.get("strTeam"),
+        "position":     fp.get("strPosition")     or basic.get("strPosition"),
+        "nationality":  fp.get("strNationality")  or basic.get("strNationality"),
+        "born":         fp.get("dateBorn")        or basic.get("dateBorn"),
+        "birthPlace":   fp.get("strBirthLocation"),
+        "height":       parse_height(fp.get("strHeight")),
+        "weight":       parse_weight(fp.get("strWeight")),
+        "foot":         fp.get("strSide"),
+        "natJersey":    fp.get("strNumber"),
+        "teamBadge":    team.get("strBadge"),
+        "teamLeague":   team.get("strLeague"),
+        "teamCountry":  team.get("strCountry"),
+        "teamStadium":  team.get("strStadium"),
+        "teamCapacity": team.get("intStadiumCapacity"),
+        "teamCity":     team.get("strLocation"),
+    }
 
 
 # ── Load existing DB ─────────────────────────────────────────────────────────
@@ -141,14 +139,28 @@ for m in fixtures:
         for p in (lu.get("lineup") or []) + (lu.get("bench") or []):
             if p.get("name"):
                 names.add(p["name"])
+# Also enrich everyone seeded from ESPN squads (build_squads.py) so the whole
+# tournament's player pool gets TheSportsDB cutouts/club, not just lineups.
+names |= set(db.keys())
 
-print(f"Found {len(names)} unique players in lineups.")
-# Skip entries that are null (fetched, has data) or marked _notFound (confirmed not in TSDB)
+print(f"Found {len(names)} unique players (lineups + seeded squads).")
+# Fetch if: never fetched (None), or ESPN-seeded but still lacking club data and
+# not yet tried via TheSportsDB. Skip confirmed-absent and already-rich entries.
 def needs_fetch(v):
-    if v is None: return True                                  # not yet fetched
-    if isinstance(v, dict) and v.get('_notFound'): return False  # confirmed absent
-    return False                                               # has data
+    if v is None: return True                                      # not yet fetched
+    if isinstance(v, dict) and v.get('_notFound'): return False    # confirmed absent
+    if isinstance(v, dict) and v.get('_source') == 'espn' and not v.get('team') and not v.get('_tsdbTried'):
+        return True                                                # ESPN seed → enrich
+    return False                                                   # has rich data
 missing = sorted(n for n in names if n not in db or needs_fetch(db[n]))
+# Prioritise players from the biggest footballing nations so famous names
+# (Mbappé, Messi, Yamal…) get their club/photo first instead of waiting for the
+# rate-limited alphabetical crawl.
+PRIORITY_NATIONS = {
+    "France", "Argentina", "Spain", "England", "Brazil", "Portugal",
+    "Germany", "Netherlands", "Belgium", "Croatia", "Italy", "Uruguay",
+}
+missing.sort(key=lambda n: (0 if ((db.get(n) or {}).get("nationality") in PRIORITY_NATIONS) else 1, n))
 print(f"Need to fetch {len(missing)} new players.\n")
 
 if not missing:
@@ -159,15 +171,39 @@ if not missing:
 errors = []
 for i, name in enumerate(missing, 1):
     print(f"[{i:3}/{len(missing)}] {name} ...", end=" ", flush=True)
-    info = fetch_player(name)
-    db[name] = info
+    try:
+        info = fetch_player(name)
+    except Exception as e:
+        print(f"· transient ({str(e)[:40]}) — retry later")
+        time.sleep(3.0)
+        continue  # leave entry untouched so a later run retries
+    prev = db.get(name)
+    espn_seed = isinstance(prev, dict) and prev.get("_source") == "espn"
     if info:
+        if espn_seed:
+            # Merge: TheSportsDB values win where present, ESPN fills the gaps
+            # (keeps espnId, jersey, dob, height when TSDB lacks them).
+            merged = dict(prev)
+            for k, v in info.items():
+                if v:
+                    merged[k] = v
+            merged.pop("_source", None)
+            merged.pop("_tsdbTried", None)
+            db[name] = merged
+        else:
+            db[name] = info
         club = info.get("team") or "?"
         league = info.get("teamLeague") or "no league"
         print(f"✓  {club} · {league}")
     else:
-        print("✗  not found")
-        errors.append(name)
+        if espn_seed:
+            prev["_tsdbTried"] = True   # keep ESPN bio, don't retry endlessly
+            db[name] = prev
+            print("· kept ESPN data")
+        else:
+            db[name] = info
+            errors.append(name)
+            print("✗  not found")
     # Save after every player so progress is never lost on crash
     with open(DB_PATH, "w", encoding="utf-8") as f:
         json.dump(db, f, ensure_ascii=False, indent=2)
