@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T20:21:30+00:00",
+  "updated_at": "2026-06-14T21:46:24+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2346,7 +2346,7 @@
           "scorer": "Kai Havertz",
           "assist": "Deniz Undav",
           "type": "REGULAR",
-          "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav following a fast break.",
+          "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav with a through ball following a fast break.",
           "score": [
             7,
             1
@@ -2529,24 +2529,153 @@
       "awayTla": "JPN",
       "status": "IN_PLAY",
       "score": [
-        0,
-        0
+        2,
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           0,
           0
+        ],
+        "fullTime": [
+          2,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "goals": [
+        {
+          "minute": "51",
+          "team": "NED",
+          "scorer": "Virgil van Dijk",
+          "assist": "Ryan Gravenberch",
+          "type": "HEADER",
+          "description": "Goal! Netherlands 1, Japan 0. Virgil van Dijk (Netherlands) header from the centre of the box to the bottom right corner. Assisted by Ryan Gravenberch with a cross following a set piece situation.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "JPN",
+          "scorer": "Keito Nakamura",
+          "assist": "Takefusa Kubo",
+          "type": "REGULAR",
+          "description": "Goal! Netherlands 1, Japan 1. Keito Nakamura (Japan) right footed shot from outside the box to the bottom left corner. Assisted by Takefusa Kubo.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "NED",
+          "scorer": "Crysencio Summerville",
+          "assist": "Ryan Gravenberch",
+          "type": "REGULAR",
+          "description": "Goal! Netherlands 2, Japan 1. Crysencio Summerville (Netherlands) left footed shot from the right side of the box to the bottom left corner. Assisted by Ryan Gravenberch.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "61",
+          "team": "NED",
+          "player": "Crysencio Summerville",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "NED",
+          "player": "Memphis Depay",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "66",
+          "team": "JPN",
+          "playerIn": "Junya Ito",
+          "playerOut": "Daizen Maeda",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "NED",
+          "playerIn": "Memphis Depay",
+          "playerOut": "Donyell Malen",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "NED",
+          "playerIn": "Teun Koopmeiners",
+          "playerOut": "Crysencio Summerville",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "NED",
+          "playerIn": "Quinten Timber",
+          "playerOut": "Tijjani Reijnders",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "JPN",
+          "playerIn": "Yukinari Sugawara",
+          "playerOut": "Ritsu Doan",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "JPN",
+          "playerIn": "Takehiro Tomiyasu",
+          "playerOut": "Tsuyoshi Watanabe",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "JPN",
+          "playerIn": "Koki Ogawa",
+          "playerOut": "Takefusa Kubo",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "NED",
+          "playerIn": "Nathan Aké",
+          "playerOut": "Ryan Gravenberch",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "JPN",
+          "playerIn": "Kento Shiogai",
+          "playerOut": "Ayase Ueda",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "NED",
+          "playerIn": "Brian Brobbey",
+          "playerOut": "Cody Gakpo",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "AT&T Stadium",
         "city": "Arlington, Texas",
@@ -2680,7 +2809,13 @@
         "city": "Philadelphia, Pennsylvania",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "François Letexier",
+          "role": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -10316,28 +10451,16 @@
       "code": "F",
       "table": [
         {
-          "team": "Japan",
-          "tla": "JPN",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 1
-        },
-        {
           "team": "Netherlands",
           "tla": "NED",
           "played": 1,
-          "won": 0,
-          "draw": 1,
+          "won": 1,
+          "draw": 0,
           "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 1
+          "gf": 2,
+          "ga": 1,
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Sweden",
@@ -10361,6 +10484,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Japan",
+          "tla": "JPN",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 1,
+          "ga": 2,
+          "gd": -1,
           "points": 0
         }
       ]

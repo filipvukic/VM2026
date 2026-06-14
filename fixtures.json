@@ -4254,7 +4254,7 @@
         "scorer": "Kai Havertz",
         "assist": "Deniz Undav",
         "type": "REGULAR",
-        "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav following a fast break.",
+        "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav with a through ball following a fast break.",
         "score": [
           7,
           1
@@ -4836,28 +4836,28 @@
       "offsides": 0.0,
       "wonCorners": 8.0,
       "saves": 1.0,
-      "possessionPct": 64.7,
+      "possessionPct": 64.6,
       "totalShots": 26.0,
       "shotsOnTarget": 12.0,
       "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
-      "accuratePasses": 551.0,
-      "totalPasses": 635.0,
+      "accuratePasses": 554.0,
+      "totalPasses": 637.0,
       "passPct": 0.9,
       "accurateCrosses": 5.0,
       "totalCrosses": 12.0,
       "crossPct": 0.4,
-      "totalLongBalls": 26.0,
-      "accurateLongBalls": 13.0,
+      "totalLongBalls": 25.0,
+      "accurateLongBalls": 12.0,
       "longballPct": 0.5,
       "blockedShots": 8.0,
       "effectiveTackles": 13.0,
       "totalTackles": 19.0,
       "tacklePct": 0.7,
-      "interceptions": 10.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "interceptions": 12.0,
+      "effectiveClearance": 8.0,
+      "totalClearance": 8.0
     },
     "awayStats": {
       "foulsCommitted": 11.0,
@@ -4866,14 +4866,14 @@
       "offsides": 1.0,
       "wonCorners": 1.0,
       "saves": 4.0,
-      "possessionPct": 35.3,
+      "possessionPct": 35.4,
       "totalShots": 8.0,
       "shotsOnTarget": 2.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 280.0,
-      "totalPasses": 341.0,
+      "accuratePasses": 282.0,
+      "totalPasses": 343.0,
       "passPct": 0.8,
       "accurateCrosses": 2.0,
       "totalCrosses": 7.0,
@@ -4882,9 +4882,9 @@
       "accurateLongBalls": 17.0,
       "longballPct": 0.4,
       "blockedShots": 0.0,
-      "effectiveTackles": 7.0,
+      "effectiveTackles": 8.0,
       "totalTackles": 16.0,
-      "tacklePct": 0.4,
+      "tacklePct": 0.5,
       "interceptions": 16.0,
       "effectiveClearance": 25.0,
       "totalClearance": 25.0
@@ -4975,24 +4975,153 @@
     "awayTla": "JPN",
     "status": "IN_PLAY",
     "score": [
-      0,
-      0
+      2,
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        2,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
     "minute": null,
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "goals": [
+      {
+        "minute": "51",
+        "team": "NED",
+        "scorer": "Virgil van Dijk",
+        "assist": "Ryan Gravenberch",
+        "type": "HEADER",
+        "description": "Goal! Netherlands 1, Japan 0. Virgil van Dijk (Netherlands) header from the centre of the box to the bottom right corner. Assisted by Ryan Gravenberch with a cross following a set piece situation.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "JPN",
+        "scorer": "Keito Nakamura",
+        "assist": "Takefusa Kubo",
+        "type": "REGULAR",
+        "description": "Goal! Netherlands 1, Japan 1. Keito Nakamura (Japan) right footed shot from outside the box to the bottom left corner. Assisted by Takefusa Kubo.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "NED",
+        "scorer": "Crysencio Summerville",
+        "assist": "Ryan Gravenberch",
+        "type": "REGULAR",
+        "description": "Goal! Netherlands 2, Japan 1. Crysencio Summerville (Netherlands) left footed shot from the right side of the box to the bottom left corner. Assisted by Ryan Gravenberch.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "61",
+        "team": "NED",
+        "player": "Crysencio Summerville",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "NED",
+        "player": "Memphis Depay",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "66",
+        "team": "JPN",
+        "playerIn": "Junya Ito",
+        "playerOut": "Daizen Maeda",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "NED",
+        "playerIn": "Memphis Depay",
+        "playerOut": "Donyell Malen",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "NED",
+        "playerIn": "Teun Koopmeiners",
+        "playerOut": "Crysencio Summerville",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "NED",
+        "playerIn": "Quinten Timber",
+        "playerOut": "Tijjani Reijnders",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "JPN",
+        "playerIn": "Yukinari Sugawara",
+        "playerOut": "Ritsu Doan",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "JPN",
+        "playerIn": "Takehiro Tomiyasu",
+        "playerOut": "Tsuyoshi Watanabe",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "JPN",
+        "playerIn": "Koki Ogawa",
+        "playerOut": "Takefusa Kubo",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "NED",
+        "playerIn": "Nathan Aké",
+        "playerOut": "Ryan Gravenberch",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "JPN",
+        "playerIn": "Kento Shiogai",
+        "playerOut": "Ayase Ueda",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "NED",
+        "playerIn": "Brian Brobbey",
+        "playerOut": "Cody Gakpo",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "AT&T Stadium",
       "city": "Arlington, Texas",
@@ -5079,7 +5208,7 @@
           "jersey": "14",
           "espnId": "261328",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ryan Gravenberch",
@@ -5088,7 +5217,7 @@
           "jersey": "8",
           "espnId": "274632",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Donyell Malen",
@@ -5097,7 +5226,7 @@
           "jersey": "18",
           "espnId": "259481",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cody Gakpo",
@@ -5106,7 +5235,7 @@
           "jersey": "11",
           "espnId": "249524",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Crysencio Summerville",
@@ -5115,7 +5244,7 @@
           "jersey": "24",
           "espnId": "284792",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -5152,7 +5281,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "258968",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5179,7 +5308,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "282230",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5188,7 +5317,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "159248",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5215,7 +5344,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "159255",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5251,7 +5380,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "282229",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -5295,7 +5424,7 @@
           "jersey": "16",
           "espnId": "276279",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Daichi Kamada",
@@ -5331,7 +5460,7 @@
           "jersey": "10",
           "espnId": "219627",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ayase Ueda",
@@ -5340,7 +5469,7 @@
           "jersey": "18",
           "espnId": "274277",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Daizen Maeda",
@@ -5349,7 +5478,7 @@
           "jersey": "11",
           "espnId": "286347",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Takefusa Kubo",
@@ -5358,7 +5487,7 @@
           "jersey": "8",
           "espnId": "256587",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -5368,7 +5497,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "219350",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5377,7 +5506,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "238016",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5395,7 +5524,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "362959",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5485,7 +5614,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "265965",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5494,7 +5623,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "238004",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -5502,64 +5631,64 @@
       "_espnEventId": "760425"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 6.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 61.6,
-      "totalShots": 1.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 1.0,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 100.0,
-      "totalPasses": 115.0,
-      "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 13.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 3.0,
-      "tacklePct": 0.7,
-      "interceptions": 2.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
-    },
-    "awayStats": {
-      "foulsCommitted": 0.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
       "saves": 1.0,
-      "possessionPct": 38.4,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 60.8,
+      "totalShots": 9.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.7,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 60.0,
-      "totalPasses": 68.0,
+      "accuratePasses": 422.0,
+      "totalPasses": 476.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 6.0,
-      "accurateLongBalls": 3.0,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 18.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 31.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.5,
       "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 2.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "effectiveTackles": 4.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.5,
+      "interceptions": 7.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
+    },
+    "awayStats": {
+      "foulsCommitted": 7.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 2.0,
+      "saves": 4.0,
+      "possessionPct": 39.2,
+      "totalShots": 8.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 250.0,
+      "totalPasses": 297.0,
+      "passPct": 0.8,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 19.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 29.0,
+      "accurateLongBalls": 11.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.9,
+      "interceptions": 4.0,
+      "effectiveClearance": 28.0,
+      "totalClearance": 28.0
     },
     "homeForm": [
       {
@@ -5664,16 +5793,22 @@
       "city": "Philadelphia, Pennsylvania",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "François Letexier",
+        "role": "REFEREE",
+        "nationality": "France"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 225,
-      "awayML": 160,
+      "homeML": 230,
+      "awayML": 155,
       "spread": "ECU -0.5",
       "overUnder": 1.5,
-      "overOdds": -155.0,
-      "underOdds": 125.0,
+      "overOdds": -160.0,
+      "underOdds": 130.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -5787,8 +5922,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -105,
-      "awayML": 320,
+      "homeML": -110,
+      "awayML": 330,
       "spread": "SWE -0.5",
       "overUnder": 2.5,
       "overOdds": 115.0,
