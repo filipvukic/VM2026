@@ -4,6 +4,7 @@ import { MatchDetail } from "./MatchDetail";
 import { TeamSheet } from "./TeamSheet";
 import { PlayerSheet } from "./PlayerSheet";
 import { FootballPlayerSheet } from "./FootballPlayerSheet";
+import { CoachSheet } from "./CoachSheet";
 
 // Render the WHOLE stack so sheets sit OVER each other. Only the bottom sheet
 // blurs and only the top sheet is interactive — no stacked-blur lag. Global
@@ -46,6 +47,7 @@ export function SheetHost() {
         if (entry.type === "match") return <MatchDetail key={key} id={entry.id} {...common} />;
         if (entry.type === "team") return <TeamSheet key={key} code={entry.code} {...common} />;
         if (entry.type === "fbplayer") return <FootballPlayerSheet key={key} name={entry.name} espnId={entry.espnId} {...common} />;
+        if (entry.type === "coach") return <CoachSheet key={key} code={entry.code} {...common} />;
         return <PlayerSheet key={key} id={entry.id} {...common} />;
       })}
     </>

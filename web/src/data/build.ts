@@ -338,6 +338,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       venue,
       officialOdds: f.odds || null,
       cardOdds: f.cardOdds || null,
+      xg: f.xg ? [f.xg.home, f.xg.away] : null,
       referees: f.referees || [],
       tippas,
       tips: tipped ? tipped.tips || [] : [],

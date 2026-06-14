@@ -14,6 +14,8 @@ const ROOT_JSON = new Set([
   "/players.json",
   "/odds.json",
   "/team_forms.json",
+  "/xg.json",
+  "/coaches.json",
 ]);
 
 function serveRootData(): Plugin {

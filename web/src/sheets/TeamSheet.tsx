@@ -1,7 +1,8 @@
-import { useData } from "../state/dataset";
+import { useData, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { GroupTable } from "../components/GroupTable";
+import { PlayerImg } from "../components/PlayerImg";
 import { Flag, groupColor } from "../lib/flags";
 import { FormDots } from "../components/FormDots";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
@@ -11,10 +12,14 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
   const ds = useData();
   const openMatch = useSheets((s) => s.openMatch);
   const openFb = useSheets((s) => s.openFbPlayer);
+  const openCoach = useSheets((s) => s.openCoach);
+  const coaches = useCoaches();
   const t = ds.teams[code];
   if (!t) return null;
   const hist = WC_HISTORY[code];
   const detail = TEAM_DETAILS[code];
+  const coachRec = coaches?.[code] || null;
+  const coachName = coachRec?.name || detail?.coach;
   const rank = FIFA_RANKING[code];
   const matches = ds.allMatches.filter((m) => m.home === code || m.away === code).sort((a, b) => +a.kickoff - +b.kickoff);
   const fans = ds.players.filter((p) => p.bonus.winner === code || p.bonus.silver === code || p.bonus.bronze === code);
@@ -34,13 +39,16 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
       {/* group standings */}
       {t.group && <div style={{ marginTop: 12 }}><GroupTable letter={t.group} highlight={[code]} /></div>}
 
-      {(detail || hist) && (
+      {(coachName || hist || detail?.stars) && (
         <div className="card card-pad" style={{ marginTop: 12 }}>
-          {detail && (
-            <div style={{ marginBottom: detail.stars ? 12 : 0 }}>
-              <div className="kicker">Förbundskapten</div>
-              <div style={{ fontWeight: 800, marginTop: 2 }}>{detail.coach}</div>
-            </div>
+          {coachName && (
+            <button onClick={() => openCoach(code)} style={{ display: "flex", alignItems: "center", gap: 11, width: "100%", textAlign: "left", marginBottom: detail?.stars || hist ? 12 : 0 }}>
+              {coachRec?.photo ? <PlayerImg src={coachRec.photo} name={coachName} size={36} radius={50} fontSize={13} /> : null}
+              <div>
+                <div className="kicker">Förbundskapten ›</div>
+                <div style={{ fontWeight: 800, marginTop: 2 }}>{coachName}</div>
+              </div>
+            </button>
           )}
           {detail?.stars && (
             <div>

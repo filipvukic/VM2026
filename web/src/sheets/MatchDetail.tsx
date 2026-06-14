@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useData, usePlayersDb } from "../state/dataset";
+import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useNotif } from "../state/notifications";
 import { Sheet, type SheetChrome } from "../components/Sheet";
@@ -236,13 +236,17 @@ function buildTimeline(m: Match): TLEvent[] {
 // ---------- Pitch tab ----------
 function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const openFb = useSheets((s) => s.openFbPlayer);
+  const openCoach = useSheets((s) => s.openCoach);
+  const coaches = useCoaches();
   const db = usePlayersDb();
   const [side, setSide] = useState<"h" | "a">("h");
   const lu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
   const t = code ? ds.teams[code] : null;
   if (!lu?.lineup?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
-  const coach = lu.coach || (code ? TEAM_DETAILS[code]?.coach : null);
+  const coachRec = code ? coaches?.[code] : null;
+  const coach = coachRec?.name || lu.coach || (code ? TEAM_DETAILS[code]?.coach : null);
+  const coachPhoto = coachRec?.photo || null;
 
   // who came on (bench player → minute + replaced)
   const subIn = new Map<string, { at?: string | number; forName?: string }>();
@@ -264,14 +268,14 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
         })}
       </div>
       {coach ? (
-        <div className="card" style={{ display: "flex", alignItems: "center", gap: 11, padding: "9px 12px", marginBottom: 12 }}>
-          <Avatar name={coach} color={t?.c1 || "var(--cool)"} size={38} />
+        <button className="card" onClick={() => code && openCoach(code)} style={{ display: "flex", alignItems: "center", gap: 11, padding: "9px 12px", marginBottom: 12, width: "100%", textAlign: "left" }}>
+          {coachPhoto ? <PlayerImg src={coachPhoto} name={coach} size={38} radius={50} fontSize={14} /> : <Avatar name={coach} color={t?.c1 || "var(--cool)"} size={38} />}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="kicker" style={{ fontSize: 9 }}>Förbundskapten</div>
+            <div className="kicker" style={{ fontSize: 9 }}>Förbundskapten ›</div>
             <div style={{ fontWeight: 800, fontSize: 14 }}>{coach}</div>
           </div>
           {lu.formation && <span className="chip">{lu.formation}</span>}
-        </div>
+        </button>
       ) : (
         lu.formation && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {lu.formation}</span></div>
       )}
@@ -318,6 +322,7 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
     possA = 100 - possH;
   }
   const rows: [string, number | null, number | null][] = [
+    ...((m.xg ? [["xG (förväntade mål)", m.xg[0], m.xg[1]]] : []) as [string, number | null, number | null][]),
     ["Bollinnehav %", possH, possA],
     ["Skott", ri(s.shots[0]), ri(s.shots[1])],
     ["Skott på mål", ri(s.sot[0]), ri(s.sot[1])],

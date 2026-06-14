@@ -117,6 +117,7 @@ export interface RawFixture {
   homeForm?: RawFormEntry[];
   awayForm?: RawFormEntry[];
   cardOdds?: { home: number; draw: number; away: number };
+  xg?: { home: number; away: number } | null;
 }
 
 export interface RawTip {
@@ -223,6 +224,15 @@ export interface PlayerRecord {
 }
 export type PlayersDb = Record<string, PlayerRecord>;
 
+export interface Coach {
+  name: string;
+  age?: number | null;
+  country?: string | null;
+  countryCode?: string | null;
+  photo?: string | null;
+}
+export type CoachesDb = Record<string, Coach>; // keyed by team TLA
+
 export interface OddsFile {
   generated?: string;
   odds?: Record<string, { H?: number; D?: number; A?: number; home?: number; draw?: number; away?: number }>;
@@ -328,6 +338,7 @@ export interface Match {
   homeLineup?: RawLineup | null;
   awayLineup?: RawLineup | null;
   stats: MatchStats | null;
+  xg?: [number, number] | null;
   attendance?: number | null;
   espnOdds?: RawEspnOdds | null;
   homeForm?: RawFormEntry[];

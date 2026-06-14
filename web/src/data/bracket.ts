@@ -159,6 +159,7 @@ export function buildKnockout(
       s.subs = rm.subs || [];
       s.tips = rm.tips || [];
       s.stats = rm.stats ?? null;
+      s.xg = rm.xg ?? null;
       s.homeLineup = rm.homeLineup ?? null;
       s.awayLineup = rm.awayLineup ?? null;
       s.espnOdds = rm.espnOdds ?? null;

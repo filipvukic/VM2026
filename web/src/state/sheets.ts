@@ -6,7 +6,8 @@ export type SheetEntry =
   | { type: "match"; id: string }
   | { type: "team"; code: string }
   | { type: "player"; id: string }
-  | { type: "fbplayer"; name: string; espnId?: string | null };
+  | { type: "fbplayer"; name: string; espnId?: string | null }
+  | { type: "coach"; code: string };
 
 interface SheetState {
   stack: SheetEntry[];
@@ -14,6 +15,7 @@ interface SheetState {
   openTeam: (code: string) => void;
   openPlayer: (id: string) => void;
   openFbPlayer: (name: string, espnId?: string | null) => void;
+  openCoach: (code: string) => void;
   close: () => void;
   closeAll: () => void;
 }
@@ -31,6 +33,7 @@ export const useSheets = create<SheetState>((set) => ({
   openTeam: (code) => set((s) => ({ stack: push(s.stack, { type: "team", code }) })),
   openPlayer: (id) => set((s) => ({ stack: push(s.stack, { type: "player", id }) })),
   openFbPlayer: (name, espnId) => set((s) => ({ stack: push(s.stack, { type: "fbplayer", name, espnId }) })),
+  openCoach: (code) => set((s) => ({ stack: push(s.stack, { type: "coach", code }) })),
   close: () => set((s) => ({ stack: s.stack.slice(0, -1) })),
   closeAll: () => set({ stack: [] }),
 }));

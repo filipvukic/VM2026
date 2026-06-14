@@ -1,12 +1,13 @@
 // Typed boot fetch of the committed JSON files. Absolute paths hit the domain
 // root where the engine commits them — same code works at /app/ (preview) and /
 // (after swap). In dev, vite.config's serveRootData plugin serves them off disk.
-import type { OddsFile, PlayersDb, RawData, RawFixture } from "./types";
+import type { CoachesDb, OddsFile, PlayersDb, RawData, RawFixture } from "./types";
 
 export interface LoadedData {
   data: RawData;
   fixtures: RawFixture[];
   players: PlayersDb | null;
+  coaches: CoachesDb | null;
 }
 
 async function getJson<T>(url: string): Promise<T | null> {
@@ -24,11 +25,13 @@ export async function loadRealData(): Promise<LoadedData> {
   // Fully-unique bust per call (ms + counter) so no fetch can ever be served
   // from an HTTP cache — combined with cache:no-store this guarantees freshness.
   const bust = "?t=" + Date.now() + "-" + ++seq;
-  const [data, fixtures, players, oddsRaw] = await Promise.all([
+  const [data, fixtures, players, oddsRaw, xgRaw, coaches] = await Promise.all([
     getJson<RawData>("/data.json" + bust),
     getJson<RawFixture[]>("/fixtures.json" + bust),
     getJson<PlayersDb>("/players.json"),
     getJson<OddsFile>("/odds.json" + bust),
+    getJson<Record<string, { home: number; away: number }>>("/xg.json" + bust),
+    getJson<CoachesDb>("/coaches.json" + bust),
   ]);
 
   if (!data) throw new Error("data.json saknas");
@@ -36,6 +39,7 @@ export async function loadRealData(): Promise<LoadedData> {
 
   // Merge decimal odds (the-odds-api) onto fixtures so match cards can show 1 X 2.
   const oddsDb = oddsRaw ? oddsRaw.odds || {} : {};
+  const xgDb = xgRaw || {};
   for (const m of fx) {
     const o = oddsDb[String(m.id)];
     if (o) {
@@ -46,7 +50,9 @@ export async function loadRealData(): Promise<LoadedData> {
         (m as RawFixture).cardOdds = { home, draw, away };
       }
     }
+    const xg = xgDb[String(m.id)];
+    if (xg) (m as RawFixture).xg = xg;
   }
 
-  return { data, fixtures: fx, players: players ?? null };
+  return { data, fixtures: fx, players: players ?? null, coaches: coaches ?? null };
 }

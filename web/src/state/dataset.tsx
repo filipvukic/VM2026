@@ -2,12 +2,13 @@
 // (version bump) re-derives once — not once per component. Views read slices.
 import { createContext, useContext, useMemo, type ReactNode } from "react";
 import { build } from "../data/build";
-import type { Dataset, PlayersDb } from "../data/types";
+import type { CoachesDb, Dataset, PlayersDb } from "../data/types";
 import { useStore } from "./store";
 
 interface Ctx {
   ds: Dataset;
   players: PlayersDb | null;
+  coaches: CoachesDb | null;
 }
 const DatasetContext = createContext<Ctx | null>(null);
 
@@ -17,7 +18,7 @@ export function DatasetProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Ctx | null>(() => {
     if (!raw) return null;
-    return { ds: build(raw.data, raw.fixtures), players: raw.players };
+    return { ds: build(raw.data, raw.fixtures), players: raw.players, coaches: raw.coaches };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [version]);
 
@@ -33,4 +34,8 @@ export function useData(): Dataset {
 export function usePlayersDb(): PlayersDb | null {
   const ctx = useContext(DatasetContext);
   return ctx?.players ?? null;
+}
+export function useCoaches(): CoachesDb | null {
+  const ctx = useContext(DatasetContext);
+  return ctx?.coaches ?? null;
 }
