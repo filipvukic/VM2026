@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T12:18:31+00:00",
+  "updated_at": "2026-06-14T14:34:13+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2129,19 +2129,128 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "27",
+          "team": "AUS",
+          "scorer": "Nestory Irankunda",
+          "assist": "Paul Okon-Engstler",
+          "type": "REGULAR",
+          "description": "Goal! Australia 1, Türkiye 0. Nestory Irankunda (Australia) right footed shot from the centre of the box to the bottom left corner. Assisted by Paul Okon-Engstler.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "75",
+          "team": "AUS",
+          "scorer": "Connor Metcalfe",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Australia 2, Türkiye 0. Connor Metcalfe (Australia) left footed shot from outside the box to the bottom right corner.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "86",
+          "team": "TUR",
+          "player": "Yunus Akgün",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "TUR",
+          "playerIn": "Kenan Yildiz",
+          "playerOut": "Baris Alper Yilmaz",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "AUS",
+          "playerIn": "Nishan Velupillay",
+          "playerOut": "Nestory Irankunda",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "TUR",
+          "playerIn": "Yunus Akgün",
+          "playerOut": "Orkun Kökçü",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "AUS",
+          "playerIn": "Tete Yengi",
+          "playerOut": "Mohamed Toure",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "AUS",
+          "playerIn": "Jason Geria",
+          "playerOut": "Jacob Italiano",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "TUR",
+          "playerIn": "Salih Özcan",
+          "playerOut": "Ismail Yüksek",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "TUR",
+          "playerIn": "Mert Müldür",
+          "playerOut": "Zeki Çelik",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "AUS",
+          "playerIn": "Aziz Behich",
+          "playerOut": "Jordan Bos",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "AUS",
+          "playerIn": "Jackson Irvine",
+          "playerOut": "Paul Okon-Engstler",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "TUR",
+          "playerIn": "Deniz Gül",
+          "playerOut": "Kerem Aktürkoglu",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "BC Place",
+        "city": "Vancouver",
+        "country": "Canada"
+      },
       "referees": [
         {
           "name": "Jesús Valenzuela",
-          "role": "REFEREE",
-          "nationality": "Venezuela"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 52497,
       "tips": [
         {
           "name": "Albin",
