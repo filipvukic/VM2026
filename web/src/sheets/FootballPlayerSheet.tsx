@@ -3,7 +3,7 @@ import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Flag } from "../lib/flags";
 import { PlayerImg } from "../components/PlayerImg";
-import { findPlayer, bestPhoto } from "../lib/playerPhoto";
+import { findPlayer, bestPhoto, espnHeadshot } from "../lib/playerPhoto";
 import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
 
@@ -35,12 +35,12 @@ function wcStats(ds: ReturnType<typeof useData>, name: string) {
   return { goals, assists, yellow, red, apps };
 }
 
-export function FootballPlayerSheet({ name, ...chrome }: { name: string } & SheetChrome) {
+export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string; espnId?: string | null } & SheetChrome) {
   const db = usePlayersDb();
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
-  const p = findPlayer(name, db);
-  const photo = bestPhoto(p);
+  const p = findPlayer(name, db, espnId);
+  const photo = bestPhoto(p) || espnHeadshot(espnId);
   const wc = wcStats(ds, p?.name || name);
   const hasWc = wc.apps > 0 || wc.goals > 0;
   // Fall back to national-team context (flag, team) for stars not yet in players.json.

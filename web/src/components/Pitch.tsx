@@ -36,7 +36,7 @@ export function Pitch({
   color: string;
   match: Match;
   teamCode: string | null;
-  onPlayer: (name: string) => void;
+  onPlayer: (name: string, espnId?: string | null) => void;
 }) {
   const db = usePlayersDb();
   const starters = (lineup.lineup || []).map((p) => ({ ...p, ...place(p.position || "") }));
@@ -75,7 +75,7 @@ export function Pitch({
               goal={goalNames.has(nm)}
               red={redNames.has(nm)}
               outAt={subOut.get(nm)}
-              onClick={() => onPlayer(p.name)}
+              onClick={() => onPlayer(p.name, p.espnId)}
             />
           );
         });

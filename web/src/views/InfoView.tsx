@@ -22,7 +22,8 @@ export function InfoView() {
           <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
             Få en avi på datorn/mobilen för <b>mål, avspark och slutsignal</b>. Bevaka en enskild match via
             klockan inne på matchen, eller slå på avisering när <b>vilken match som helst</b> startar här nedan.
-            Notiser visas medan sidan är öppen.
+            Mål och slutsignal kräver att sidan är öppen; <b>avspark-aviseringar fungerar även när sidan är
+            stängd</b> i webbläsare som stödjer det (t.ex. Chrome) — på iPhone visas de medan sidan är öppen.
           </div>
           <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
             <button

@@ -90,7 +90,7 @@ export function Sheet({
           to{ background:rgba(4,2,10,.6); backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px); } }
         .sheet-root{ display:flex; align-items:center; justify-content:center; padding:16px; }
         .sheet-panel{
-          position:relative; width:100%; max-height:90dvh; overflow-y:auto;
+          position:relative; width:100%; max-width:100vw; max-height:90dvh; overflow-y:auto; overflow-x:hidden;
           background:linear-gradient(180deg, var(--surface-2), var(--bg-2));
           border:1px solid var(--line-2); border-radius:var(--r-xl);
           box-shadow:var(--shadow-lift); animation:sheetIn .3s cubic-bezier(.2,.7,.2,1);

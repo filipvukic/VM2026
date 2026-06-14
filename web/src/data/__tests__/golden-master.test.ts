@@ -13,9 +13,10 @@ const readJson = (p: string) => JSON.parse(readFileSync(root(p), "utf-8"));
 const data: RawData = readJson("data.json");
 const fixtures: RawFixture[] = readJson("fixtures.json");
 
-// --- extract the legacy adapter IIFE from index.html and run it in Node ---
+// --- extract the legacy adapter IIFE from legacy.html (the original single-file
+// site, kept as the parity reference after the swap) and run it in Node ---
 function legacyBuild(d: RawData, fx: RawFixture[]): any {
-  const html = readFileSync(root("index.html"), "utf-8");
+  const html = readFileSync(root("legacy.html"), "utf-8");
   const start = html.indexOf('(function () {\n  "use strict";');
   if (start < 0) throw new Error("legacy adapter start marker not found");
   const end = html.indexOf("})();", start);

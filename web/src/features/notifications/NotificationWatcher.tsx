@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useData } from "../../state/dataset";
-import { useNotif, fireNotification } from "../../state/notifications";
+import { useNotif, fireNotification, syncKickoffTriggers } from "../../state/notifications";
 
 // Watches the dataset across polls and fires foreground notifications for goals,
 // kickoffs and full-time. Works on desktop + mobile WHILE the page is open.
@@ -33,6 +33,22 @@ export function NotificationWatcher() {
       prev.current.set(m.id, cur);
     }
     primed.current = true;
+  }, [ds, subscribed, kickoffAll]);
+
+  // Schedule closed-tab kickoff notifications (Chromium) for upcoming matches
+  // that are watched or, with kickoffAll, all of them.
+  useEffect(() => {
+    const subs = new Set(subscribed);
+    const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
+    const items = ds.allMatches
+      .filter((m) => m.status === "upcoming" && (kickoffAll || subs.has(m.id)))
+      .map((m) => ({
+        tag: "kosched-" + m.id,
+        ts: +m.kickoff,
+        title: `🟢 Avspark: ${name(m.home, m.fromA)} – ${name(m.away, m.fromB)}`,
+        body: m.group ? `Grupp ${m.group}` : m.round,
+      }));
+    syncKickoffTriggers(items);
   }, [ds, subscribed, kickoffAll]);
 
   return null;

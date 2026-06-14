@@ -16,15 +16,22 @@ export function lineupPhoto(name: string, espnId: string | null | undefined, db:
   return bestPhoto(p) || espnHeadshot(espnId);
 }
 
-// Resolve a player record from players.json with a light fuzzy fallback (last
-// name match) so search hits like "mbappe" still find "Kylian Mbappé".
-export function findPlayer(name: string, db: PlayersDb | null): (PlayerRecord & { name: string }) | null {
+// Resolve a player record from players.json by name (with a light last-name
+// fuzzy fallback) or, failing that, by ESPN id — so a lineup player whose name
+// doesn't exactly match a db key still resolves to the right record.
+export function findPlayer(name: string, db: PlayersDb | null, espnId?: string | null): (PlayerRecord & { name: string }) | null {
   if (!db) return null;
   if (db[name]) return { name, ...db[name] };
   const n = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   for (const key of Object.keys(db)) {
     const k = key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
     if (k === n || k.endsWith(" " + n) || n.endsWith(" " + k)) return { name: key, ...db[key] };
+  }
+  if (espnId) {
+    const eid = String(espnId);
+    for (const key of Object.keys(db)) {
+      if (String(db[key].espnId) === eid) return { name: key, ...db[key] };
+    }
   }
   return null;
 }

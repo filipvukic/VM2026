@@ -68,6 +68,45 @@ export const useNotif = create<NotifState>((set, get) => ({
   },
 }));
 
+// Notification Triggers (Chromium) let us schedule a kickoff notification that
+// fires even when the tab/app is CLOSED — no backend needed. Unsupported on
+// Safari/iOS (there we fall back to foreground-only notifications).
+export function triggersSupported(): boolean {
+  try {
+    return (
+      "serviceWorker" in navigator &&
+      "Notification" in window &&
+      "showTrigger" in Notification.prototype &&
+      typeof (window as unknown as { TimestampTrigger?: unknown }).TimestampTrigger !== "undefined"
+    );
+  } catch {
+    return false;
+  }
+}
+
+export async function syncKickoffTriggers(items: { tag: string; ts: number; title: string; body: string }[]) {
+  if (!triggersSupported() || Notification.permission !== "granted") return;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const existing = await reg.getNotifications();
+    existing.filter((n) => (n.tag || "").startsWith("kosched-")).forEach((n) => n.close());
+    const TT = (window as unknown as { TimestampTrigger: new (t: number) => unknown }).TimestampTrigger;
+    for (const it of items) {
+      if (it.ts <= Date.now()) continue;
+      await reg.showNotification(it.title, {
+        body: it.body,
+        tag: it.tag,
+        icon: "/images/wc2026-logo.svg",
+        // @ts-expect-error showTrigger is experimental
+        showTrigger: new TT(it.ts),
+        data: { url: "/" },
+      });
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export function fireNotification(title: string, body: string, tag: string) {
   try {
     if ("Notification" in window && Notification.permission === "granted") {

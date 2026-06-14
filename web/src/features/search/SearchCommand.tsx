@@ -12,7 +12,7 @@ import type { Dataset, PlayersDb } from "../../data/types";
 
 type Result =
   | { kind: "player"; id: string; label: string; sub: string; color: string; photo: string | null }
-  | { kind: "fbplayer"; name: string; label: string; sub: string; photo: string | null; iso: string | null }
+  | { kind: "fbplayer"; name: string; label: string; sub: string; photo: string | null; iso: string | null; espnId?: string | null }
   | { kind: "team"; code: string; label: string; sub: string; iso: string | null }
   | { kind: "match"; id: string; label: string; sub: string; iso1: string | null; iso2: string | null };
 
@@ -38,7 +38,7 @@ function search(ds: Dataset, db: PlayersDb | null, q: string): Result[] {
       if (norm(key).includes(nq)) {
         const p = db[key];
         seen.add(norm(key));
-        out.push({ kind: "fbplayer", name: key, label: key, sub: [p.team, p.position].filter(Boolean).join(" · ") || "Spelare", photo: bestPhoto(p), iso: isoFor(p.nationality, null) });
+        out.push({ kind: "fbplayer", name: key, label: key, sub: [p.team, p.position].filter(Boolean).join(" · ") || "Spelare", photo: bestPhoto(p), iso: isoFor(p.nationality, null), espnId: p.espnId });
         n++;
       }
     }
@@ -98,7 +98,7 @@ export function SearchCommand({ onClose }: { onClose: () => void }) {
 
   const pick = (r: Result) => {
     if (r.kind === "player") openPlayer(r.id);
-    else if (r.kind === "fbplayer") openFbPlayer(r.name);
+    else if (r.kind === "fbplayer") openFbPlayer(r.name, r.espnId);
     else if (r.kind === "team") openTeam(r.code);
     else if (r.kind === "match") openMatch(r.id);
     onClose();

@@ -183,11 +183,9 @@ input {
     display: flex;
   }
 }
-.search-icon-only {
-  display: grid;
-}
 @media (min-width: 920px) {
-  .search-icon-only {
+  /* higher specificity than .icon-btn so the mobile search icon truly hides */
+  .icon-btn.search-icon-only {
     display: none;
   }
 }

@@ -130,8 +130,9 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
       </div>
 
       <style>{`
-        .md-tabs{ display:flex; gap:4px; margin-top:18px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
-        .md-tabs button{ flex:1; padding:8px 6px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
+        .md-tabs{ display:flex; gap:4px; margin-top:18px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; overflow-x:auto; scrollbar-width:none; }
+        .md-tabs::-webkit-scrollbar{ display:none; }
+        .md-tabs button{ flex:1 0 auto; white-space:nowrap; padding:8px 12px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
         .md-tabs button.on{ background:var(--grad-soft); color:#fff; }
         .md-tab-content{ animation:tabIn .26s cubic-bezier(.2,.7,.2,1); }
         @keyframes tabIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
@@ -283,7 +284,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
               const came = subIn.get(p.name);
               const scored = goalNames.has((p.name || "").toLowerCase());
               return (
-                <button key={i} onClick={() => openFb(p.name)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: came ? "color-mix(in srgb,var(--win) 12%, var(--surface))" : "var(--surface)", border: "1px solid var(--line)" }}>
+                <button key={i} onClick={() => openFb(p.name, p.espnId)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: came ? "color-mix(in srgb,var(--win) 12%, var(--surface))" : "var(--surface)", border: "1px solid var(--line)" }}>
                   <span style={{ position: "relative" }}>
                     <PlayerImg src={lineupPhoto(p.name, p.espnId, db)} name={p.name} size={46} radius={13} fontSize={16} />
                     {came && <span style={{ position: "absolute", right: -4, bottom: -3, height: 16, padding: "0 4px", borderRadius: 8, background: "var(--win)", color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>↑{came.at}'</span>}

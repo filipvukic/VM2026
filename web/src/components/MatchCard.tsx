@@ -26,7 +26,8 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const played = m.status === "played";
   const live = m.status === "live";
   const win = m.winner;
-  const accent = m.group ? groupColor(m.group) : "var(--cool)";
+  // Status-colored left edge so played / live / upcoming are scannable at a glance.
+  const accent = live ? "var(--hot)" : played ? "var(--win)" : "var(--cool)";
 
   const Side = ({ side }: { side: "h" | "a" }) => {
     const code = side === "h" ? m.home : m.away;
@@ -95,8 +96,8 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
               {liveMinuteText(m, updatedAt, now)}
             </div>
           ) : (
-            <div className="dim" style={{ fontSize: 9.5, fontWeight: 800, marginTop: 3, letterSpacing: ".08em" }}>
-              SLUT
+            <div className="chip" style={{ marginTop: 4, fontSize: 8.5, padding: "1px 7px", background: "color-mix(in srgb,var(--win) 16%, transparent)", borderColor: "color-mix(in srgb,var(--win) 35%, transparent)", color: "var(--win)", letterSpacing: ".06em" }}>
+              ✓ SLUT
             </div>
           )}
         </div>
@@ -104,14 +105,14 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
     }
     return (
       <div style={{ display: "grid", placeItems: "center", padding: "0 12px", minWidth: 78 }}>
-        <div className="num" style={{ fontSize: compact ? 17 : 19, color: "var(--ink)" }}>
+        <div className="num" style={{ fontSize: compact ? 18 : 20, color: "var(--cool-2)" }}>
           {svTime(m.kickoff)}
         </div>
+        <div className="chip" style={{ marginTop: 4, fontSize: 8.5, padding: "1px 7px", color: "var(--ink-3)", letterSpacing: ".06em" }}>
+          KOMMANDE
+        </div>
         {myTip && (
-          <div
-            className="chip"
-            style={{ marginTop: 5, padding: "1px 7px", fontSize: 10, borderColor: "var(--cool)", color: "var(--cool-2)" }}
-          >
+          <div className="chip" style={{ marginTop: 4, padding: "1px 7px", fontSize: 10, borderColor: "var(--cool)", color: "var(--cool-2)" }}>
             ditt: {myTip[0]}–{myTip[1]}
           </div>
         )}
@@ -132,6 +133,8 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
         cursor: onOpen ? "pointer" : "default",
         borderLeft: `3px solid ${accent}`,
         position: "relative",
+        background: played ? "linear-gradient(180deg, var(--surface), var(--bg-2))" : undefined,
+        opacity: played ? 0.92 : 1,
       }}
     >
       <div style={{ display: "flex", alignItems: "center" }}>

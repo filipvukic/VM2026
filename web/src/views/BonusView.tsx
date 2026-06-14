@@ -21,7 +21,7 @@ interface Scorer {
   goals: number;
   assists: number;
 }
-function topScorers(ds: Dataset): Scorer[] {
+function tallyScorers(ds: Dataset): Scorer[] {
   const map = new Map<string, Scorer>();
   const bump = (n: string | null | undefined, kind: "g" | "a") => {
     if (!n) return;
@@ -37,12 +37,14 @@ function topScorers(ds: Dataset): Scorer[] {
       if (g.assist) bump(g.assist, "a");
     });
   });
-  return [...map.values()].sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name)).slice(0, 12);
+  return [...map.values()];
 }
 
 export function BonusView() {
   const ds = useData();
-  const scorers = topScorers(ds);
+  const all = tallyScorers(ds);
+  const goals = all.filter((s) => s.goals > 0).sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name)).slice(0, 12);
+  const assists = all.filter((s) => s.assists > 0).sort((a, b) => b.assists - a.assists || b.goals - a.goals || a.name.localeCompare(b.name)).slice(0, 12);
   return (
     <div className="view container">
       <div className="section-head" style={{ marginTop: 6 }}>
@@ -55,37 +57,52 @@ export function BonusView() {
         ))}
       </div>
 
-      {scorers.length > 0 && <Skytteliga scorers={scorers} />}
+      {(goals.length > 0 || assists.length > 0) && (
+        <div className="scorer-grid">
+          {goals.length > 0 && <ScorerList title="Skytteligan" sub="flest mål" items={goals} metric="goals" />}
+          {assists.length > 0 && <ScorerList title="Assistligan" sub="flest assist" items={assists} metric="assists" />}
+        </div>
+      )}
 
       <style>{`
         .bonus-grid{ display:grid; gap:14px; grid-template-columns:1fr; }
         @media(min-width:680px){ .bonus-grid{ grid-template-columns:1fr 1fr; } }
         @media(min-width:1040px){ .bonus-grid{ grid-template-columns:1fr 1fr 1fr; } }
+        .scorer-grid{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:22px; }
+        @media(min-width:760px){ .scorer-grid{ grid-template-columns:1fr 1fr; } }
       `}</style>
     </div>
   );
 }
 
-function Skytteliga({ scorers }: { scorers: Scorer[] }) {
+function ScorerList({ title, sub, items, metric }: { title: string; sub: string; items: Scorer[]; metric: "goals" | "assists" }) {
   const db = usePlayersDb();
   const openFb = useSheets((s) => s.openFbPlayer);
   return (
-    <div style={{ marginTop: 22 }}>
-      <div className="section-head"><div className="section-title" style={{ fontSize: 20 }}>Skytteligan</div><div className="kicker">Mål · assist hittills</div></div>
+    <div>
+      <div className="section-head" style={{ margin: "0 0 10px" }}>
+        <div className="section-title" style={{ fontSize: 19 }}>{title}</div>
+        <div className="kicker">{sub}</div>
+      </div>
       <div className="card" style={{ overflow: "hidden" }}>
-        {scorers.map((s, i) => (
-          <button
-            key={s.name}
-            onClick={() => openFb(s.name)}
-            style={{ width: "100%", display: "flex", alignItems: "center", gap: 11, padding: "9px 14px", textAlign: "left", borderBottom: i < scorers.length - 1 ? "1px solid var(--line)" : "none" }}
-          >
-            <span className="num" style={{ width: 18, color: i === 0 ? "var(--gold)" : "var(--ink-3)", fontSize: 13 }}>{i + 1}</span>
-            <PlayerImg src={bestPhoto(findPlayer(s.name, db))} name={s.name} size={30} radius={8} fontSize={11} />
-            <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{s.name}</span>
-            <span className="num" style={{ color: "var(--gold)", fontSize: 15 }}>{s.goals}<span className="dim" style={{ fontSize: 10, fontWeight: 700 }}> mål</span></span>
-            {s.assists > 0 && <span className="num dim" style={{ width: 56, textAlign: "right", fontSize: 12.5 }}>{s.assists} assist</span>}
-          </button>
-        ))}
+        {items.map((s, i) => {
+          const main = metric === "goals" ? s.goals : s.assists;
+          const other = metric === "goals" ? s.assists : s.goals;
+          const otherLabel = metric === "goals" ? "assist" : "mål";
+          return (
+            <button
+              key={s.name}
+              onClick={() => openFb(s.name, findPlayer(s.name, db)?.espnId)}
+              style={{ width: "100%", display: "flex", alignItems: "center", gap: 11, padding: "9px 14px", textAlign: "left", borderBottom: i < items.length - 1 ? "1px solid var(--line)" : "none" }}
+            >
+              <span className="num" style={{ width: 18, color: i === 0 ? "var(--gold)" : "var(--ink-3)", fontSize: 13 }}>{i + 1}</span>
+              <PlayerImg src={bestPhoto(findPlayer(s.name, db))} name={s.name} size={30} radius={8} fontSize={11} />
+              <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</span>
+              {other > 0 && <span className="num dim" style={{ fontSize: 11.5 }}>{other} {otherLabel}</span>}
+              <span className="num" style={{ color: "var(--gold)", fontSize: 16, width: 26, textAlign: "right" }}>{main}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
