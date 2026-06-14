@@ -172,7 +172,7 @@
         "period": 1
       },
       {
-        "minute": "45'+1",
+        "minute": "45+1",
         "team": "BIH",
         "player": "Jovo Lukic",
         "card": "YELLOW",
@@ -186,7 +186,7 @@
         "period": 2
       },
       {
-        "minute": "90'+3",
+        "minute": "90+3",
         "team": "BIH",
         "player": "Nikola Katic",
         "card": "YELLOW",
@@ -258,7 +258,7 @@
         "period": 2
       },
       {
-        "minute": "90'+1",
+        "minute": "90+1",
         "team": "CAN",
         "playerIn": "Jonathan Osorio",
         "playerOut": "Stephen Eustáquio",
@@ -965,7 +965,7 @@
         "period": 1
       },
       {
-        "minute": "45'+5",
+        "minute": "45+5",
         "team": "USA",
         "scorer": "Folarin Balogun",
         "assist": "Malik Tillman",
@@ -991,7 +991,7 @@
         "period": 2
       },
       {
-        "minute": "90'+8",
+        "minute": "90+8",
         "team": "USA",
         "scorer": "Giovanni Reyna",
         "assist": "Alex Freeman",
@@ -1041,7 +1041,7 @@
         "period": 2
       },
       {
-        "minute": "90'+3",
+        "minute": "90+3",
         "team": "PAR",
         "player": "Júnior Alonso",
         "card": "YELLOW",
@@ -1787,7 +1787,20 @@
     "minute": null,
     "goals": [
       {
-        "minute": "90'+4",
+        "minute": "17",
+        "team": "SUI",
+        "scorer": "Breel Embolo",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Qatar 0, Switzerland 1. Breel Embolo (Switzerland) converts the penalty with a right footed shot to the bottom left corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "90+4",
         "team": "QAT",
         "scorer": "Miro Muheim",
         "assist": "Homam Ahmed",
@@ -1795,7 +1808,7 @@
         "description": "Own Goal by Miro Muheim, Switzerland. Qatar 1, Switzerland 1.",
         "score": [
           1,
-          0
+          1
         ],
         "period": 2
       }
@@ -3377,14 +3390,14 @@
         "period": 2
       },
       {
-        "minute": "90'+1",
+        "minute": "90+1",
         "team": "SCO",
         "player": "Findlay Curtis",
         "card": "YELLOW",
         "period": 2
       },
       {
-        "minute": "90'+5",
+        "minute": "90+5",
         "team": "SCO",
         "player": "Kenny McLean",
         "card": "YELLOW",
@@ -4884,19 +4897,22 @@
     "awayTla": "CUW",
     "status": "IN_PLAY",
     "score": [
-      1,
+      6,
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        3,
+        1
+      ],
       "fullTime": [
-        1,
+        6,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
     "minute": null,
     "goals": [
@@ -4938,10 +4954,132 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "45+5",
+        "team": "GER",
+        "scorer": "Kai Havertz",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Germany 3, Curaçao 1. Kai Havertz (Germany) converts the penalty with a left footed shot to the bottom left corner.",
+        "score": [
+          3,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "47",
+        "team": "GER",
+        "scorer": "Jamal Musiala",
+        "assist": "Joshua Kimmich",
+        "type": "REGULAR",
+        "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+        "score": [
+          4,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "GER",
+        "scorer": "Nathaniel Brown",
+        "assist": "Deniz Undav",
+        "type": "REGULAR",
+        "description": "Goal! Germany 5, Curaçao 1. Nathaniel Brown (Germany) right footed shot from the centre of the box to the bottom right corner. Assisted by Deniz Undav.",
+        "score": [
+          5,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "GER",
+        "scorer": "Deniz Undav",
+        "assist": "Joshua Kimmich",
+        "type": "REGULAR",
+        "description": "Goal! Germany 6, Curaçao 1. Deniz Undav (Germany) right footed shot from the centre of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+        "score": [
+          6,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "88",
+        "team": "GER",
+        "scorer": "Kai Havertz",
+        "assist": "Deniz Undav",
+        "type": "REGULAR",
+        "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the left side of the box following a fast break.",
+        "score": [
+          7,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "CUW",
+        "playerIn": "Jeremy Antonisse",
+        "playerOut": "Sontje Hansen",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "GER",
+        "playerIn": "Deniz Undav",
+        "playerOut": "Jamal Musiala",
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "CUW",
+        "playerIn": "Jearl Margaritha",
+        "playerOut": "Jürgen Locadia",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "GER",
+        "playerIn": "Antonio Rüdiger",
+        "playerOut": "Jonathan Tah",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "GER",
+        "playerIn": "Leon Goretzka",
+        "playerOut": "Felix Nmecha",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "GER",
+        "playerIn": "David Raum",
+        "playerOut": "Nathaniel Brown",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "CUW",
+        "playerIn": "Gervane Kastaneer",
+        "playerOut": "Tahith Chong",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "GER",
+        "playerIn": "Waldemar Anton",
+        "playerOut": "Joshua Kimmich",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "NRG Stadium",
       "city": "Houston, Texas",
@@ -4992,7 +5130,7 @@
           "jersey": "4",
           "espnId": "188052",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nathaniel Brown",
@@ -5001,7 +5139,7 @@
           "jersey": "18",
           "espnId": "120829",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Joshua Kimmich",
@@ -5010,7 +5148,7 @@
           "jersey": "6",
           "espnId": "190161",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jamal Musiala",
@@ -5019,7 +5157,7 @@
           "jersey": "10",
           "espnId": "303821",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Aleksandar Pavlovic",
@@ -5037,7 +5175,7 @@
           "jersey": "23",
           "espnId": "281122",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kai Havertz",
@@ -5074,7 +5212,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "249548",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5101,7 +5239,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "273300",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5110,7 +5248,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "220714",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5137,7 +5275,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "174550",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5146,7 +5284,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "169438",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5262,7 +5400,7 @@
           "jersey": "12",
           "espnId": "297299",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Leandro Bacuna",
@@ -5280,7 +5418,7 @@
           "jersey": "21",
           "espnId": "276218",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Juninho Bacuna",
@@ -5307,7 +5445,7 @@
           "jersey": "9",
           "espnId": "167213",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -5362,7 +5500,7 @@
           "positionName": null,
           "jersey": "19",
           "espnId": "178273",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5389,7 +5527,7 @@
           "positionName": null,
           "jersey": "16",
           "espnId": "301441",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5398,7 +5536,7 @@
           "positionName": null,
           "jersey": "11",
           "espnId": "310925",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -5451,64 +5589,64 @@
       "_espnEventId": "760422"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
+      "foulsCommitted": 18.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 4.0,
-      "saves": 0.0,
-      "possessionPct": 70.2,
-      "totalShots": 12.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.3,
+      "wonCorners": 8.0,
+      "saves": 1.0,
+      "possessionPct": 66.6,
+      "totalShots": 26.0,
+      "shotsOnTarget": 12.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 244.0,
-      "totalPasses": 273.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 522.0,
+      "totalPasses": 596.0,
       "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 7.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 6.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.7,
-      "blockedShots": 4.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.5,
-      "interceptions": 5.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
-    },
-    "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 2.0,
-      "possessionPct": 29.8,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 96.0,
-      "totalPasses": 118.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 1.0,
-      "crossPct": 1.0,
-      "totalLongBalls": 20.0,
-      "accurateLongBalls": 10.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 11.0,
+      "crossPct": 0.5,
+      "totalLongBalls": 23.0,
+      "accurateLongBalls": 12.0,
       "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.4,
-      "interceptions": 6.0,
+      "blockedShots": 8.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 15.0,
+      "tacklePct": 0.7,
+      "interceptions": 10.0,
       "effectiveClearance": 8.0,
       "totalClearance": 8.0
+    },
+    "awayStats": {
+      "foulsCommitted": 10.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 1.0,
+      "saves": 4.0,
+      "possessionPct": 33.4,
+      "totalShots": 8.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 239.0,
+      "totalPasses": 294.0,
+      "passPct": 0.8,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.4,
+      "blockedShots": 0.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.5,
+      "interceptions": 15.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
     },
     "homeForm": [
       {
@@ -5613,12 +5751,18 @@
       "city": "Arlington, Texas",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Ismail Elfath",
+        "role": "REFEREE",
+        "nationality": "United States"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 105,
-      "awayML": 255,
+      "homeML": 110,
+      "awayML": 250,
       "spread": "NED -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
@@ -5860,7 +6004,7 @@
       "spread": "SWE -0.5",
       "overUnder": 2.5,
       "overOdds": 115.0,
-      "underOdds": -140.0,
+      "underOdds": -145.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -5974,12 +6118,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -1000,
+      "homeML": -1100,
       "awayML": 2200,
       "spread": "ESP -2.5",
       "overUnder": 3.5,
       "overOdds": -110.0,
-      "underOdds": -115.0,
+      "underOdds": -110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,

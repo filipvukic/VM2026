@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T17:44:33+00:00",
+  "updated_at": "2026-06-14T18:53:40+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -861,7 +861,7 @@
           "period": 1
         },
         {
-          "minute": "45'+1",
+          "minute": "45+1",
           "team": "BIH",
           "player": "Jovo Lukic",
           "card": "YELLOW",
@@ -875,7 +875,7 @@
           "period": 2
         },
         {
-          "minute": "90'+3",
+          "minute": "90+3",
           "team": "BIH",
           "player": "Nikola Katic",
           "card": "YELLOW",
@@ -947,7 +947,7 @@
           "period": 2
         },
         {
-          "minute": "90'+1",
+          "minute": "90+1",
           "team": "CAN",
           "playerIn": "Jonathan Osorio",
           "playerOut": "Stephen Eustáquio",
@@ -1116,7 +1116,7 @@
           "period": 1
         },
         {
-          "minute": "45'+5",
+          "minute": "45+5",
           "team": "USA",
           "scorer": "Folarin Balogun",
           "assist": "Malik Tillman",
@@ -1142,7 +1142,7 @@
           "period": 2
         },
         {
-          "minute": "90'+8",
+          "minute": "90+8",
           "team": "USA",
           "scorer": "Giovanni Reyna",
           "assist": "Alex Freeman",
@@ -1192,7 +1192,7 @@
           "period": 2
         },
         {
-          "minute": "90'+3",
+          "minute": "90+3",
           "team": "PAR",
           "player": "Júnior Alonso",
           "card": "YELLOW",
@@ -1400,7 +1400,20 @@
       "minute": null,
       "goals": [
         {
-          "minute": "90'+4",
+          "minute": "17",
+          "team": "SUI",
+          "scorer": "Breel Embolo",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! Qatar 0, Switzerland 1. Breel Embolo (Switzerland) converts the penalty with a right footed shot to the bottom left corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "90+4",
           "team": "QAT",
           "scorer": "Miro Muheim",
           "assist": "Homam Ahmed",
@@ -1408,7 +1421,7 @@
           "description": "Own Goal by Miro Muheim, Switzerland. Qatar 1, Switzerland 1.",
           "score": [
             1,
-            0
+            1
           ],
           "period": 2
         }
@@ -1923,14 +1936,14 @@
           "period": 2
         },
         {
-          "minute": "90'+1",
+          "minute": "90+1",
           "team": "SCO",
           "player": "Findlay Curtis",
           "card": "YELLOW",
           "period": 2
         },
         {
-          "minute": "90'+5",
+          "minute": "90+5",
           "team": "SCO",
           "player": "Kenny McLean",
           "card": "YELLOW",
@@ -2354,19 +2367,22 @@
       "awayTla": "CUW",
       "status": "IN_PLAY",
       "score": [
-        1,
+        6,
         1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          3,
+          1
+        ],
         "fullTime": [
-          1,
+          6,
           1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "HOME_TEAM"
       },
       "minute": null,
       "goals": [
@@ -2408,10 +2424,132 @@
             1
           ],
           "period": 1
+        },
+        {
+          "minute": "45+5",
+          "team": "GER",
+          "scorer": "Kai Havertz",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! Germany 3, Curaçao 1. Kai Havertz (Germany) converts the penalty with a left footed shot to the bottom left corner.",
+          "score": [
+            3,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "47",
+          "team": "GER",
+          "scorer": "Jamal Musiala",
+          "assist": "Joshua Kimmich",
+          "type": "REGULAR",
+          "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+          "score": [
+            4,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "GER",
+          "scorer": "Nathaniel Brown",
+          "assist": "Deniz Undav",
+          "type": "REGULAR",
+          "description": "Goal! Germany 5, Curaçao 1. Nathaniel Brown (Germany) right footed shot from the centre of the box to the bottom right corner. Assisted by Deniz Undav.",
+          "score": [
+            5,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "GER",
+          "scorer": "Deniz Undav",
+          "assist": "Joshua Kimmich",
+          "type": "REGULAR",
+          "description": "Goal! Germany 6, Curaçao 1. Deniz Undav (Germany) right footed shot from the centre of the box to the bottom left corner. Assisted by Joshua Kimmich.",
+          "score": [
+            6,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "88",
+          "team": "GER",
+          "scorer": "Kai Havertz",
+          "assist": "Deniz Undav",
+          "type": "REGULAR",
+          "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the left side of the box following a fast break.",
+          "score": [
+            7,
+            1
+          ],
+          "period": 2
         }
       ],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "CUW",
+          "playerIn": "Jeremy Antonisse",
+          "playerOut": "Sontje Hansen",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "GER",
+          "playerIn": "Deniz Undav",
+          "playerOut": "Jamal Musiala",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "CUW",
+          "playerIn": "Jearl Margaritha",
+          "playerOut": "Jürgen Locadia",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "GER",
+          "playerIn": "Antonio Rüdiger",
+          "playerOut": "Jonathan Tah",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "GER",
+          "playerIn": "Leon Goretzka",
+          "playerOut": "Felix Nmecha",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "GER",
+          "playerIn": "David Raum",
+          "playerOut": "Nathaniel Brown",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "CUW",
+          "playerIn": "Gervane Kastaneer",
+          "playerOut": "Tahith Chong",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "GER",
+          "playerIn": "Waldemar Anton",
+          "playerOut": "Joshua Kimmich",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "NRG Stadium",
         "city": "Houston, Texas",
@@ -2545,7 +2683,13 @@
         "city": "Arlington, Texas",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Ismail Elfath",
+          "role": "REFEREE",
+          "nationality": "United States"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -10247,28 +10391,16 @@
       "code": "E",
       "table": [
         {
-          "team": "Curaçao",
-          "tla": "CUW",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 1
-        },
-        {
           "team": "Germany",
           "tla": "GER",
           "played": 1,
-          "won": 0,
-          "draw": 1,
+          "won": 1,
+          "draw": 0,
           "lost": 0,
-          "gf": 1,
+          "gf": 4,
           "ga": 1,
-          "gd": 0,
-          "points": 1
+          "gd": 3,
+          "points": 3
         },
         {
           "team": "Ecuador",
@@ -10292,6 +10424,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Curaçao",
+          "tla": "CUW",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 1,
+          "ga": 4,
+          "gd": -3,
           "points": 0
         }
       ]
