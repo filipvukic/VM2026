@@ -23,7 +23,8 @@ export function NotificationWatcher() {
         const sub = subs.has(m.id);
         const wentLive = p.status !== "live" && m.status === "live";
         if (sub && m.status === "live" && cur.g > p.g) {
-          fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "goal-" + m.id);
+          // unique tag per goal so a 2nd/3rd goal alerts instead of replacing the first
+          fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, `goal-${m.id}-${cur.g}`);
         } else if (wentLive && (sub || kickoffAll)) {
           fireNotification(`🟢 Avspark: ${h} – ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ko-" + m.id);
         } else if (sub && p.status !== "played" && m.status === "played") {

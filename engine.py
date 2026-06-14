@@ -225,8 +225,8 @@ def build_espn_id_map(fd_matches, cache_path="espn_id_map.json"):
 
 
 def _espn_minute(clock_display):
-    """'9\\'' → '9',  '90+2\\'' → '90+2'"""
-    return str(clock_display or "").rstrip("'").strip()
+    """'9\\'' → '9',  \"90+2'\" → '90+2',  \"45'+5'\" → '45+5'"""
+    return str(clock_display or "").replace("'", "").strip()
 
 
 def parse_espn_summary(data, home_tla, away_tla):
@@ -271,10 +271,27 @@ def parse_espn_summary(data, home_tla, away_tla):
         p1 = parts[1].get("athlete", {}).get("displayName") if len(parts) > 1 else None
         text = e.get("text", "")
 
-        if etype in ("goal", "goal---header", "own-goal", "penalty-goal"):
-            is_own = "own goal" in text.lower()
-            is_pen = "penalty" in text.lower() or etype == "penalty-goal"
-            is_header = "header" in etype
+        # Goal detection must be robust to ALL of ESPN's goal variants — the type
+        # string differs per goal kind: "goal", "goal---header", "goal---freekick",
+        # "penalty---scored" (NOT "penalty-goal"), "own-goal"/"own---goal", … A
+        # missed variant would otherwise be skipped, which also shifts the running
+        # [home,away] tally for every later goal (score ends up short). Penalty
+        # SHOOTOUT pens (period ≥ 5) must NOT count toward the match score line.
+        et = etype.lower()
+        tlow = text.lower()
+        is_goal = (
+            et.startswith("goal")
+            or ("penalty" in et and "scored" in et)
+            or ("own" in et and "goal" in et)
+            or tlow.startswith("goal!")
+            or tlow.startswith("own goal")
+        )
+        if "miss" in et or "saved" in et or "shootout" in et or period >= 5:
+            is_goal = False
+        if is_goal:
+            is_own = "own" in et or "own goal" in tlow
+            is_pen = "penalty" in et or "penalty" in tlow
+            is_header = "header" in et
             if tla == home_tla:
                 h_score += 1
             else:

@@ -1,5 +1,5 @@
 import { useData } from "../state/dataset";
-import { useNotif } from "../state/notifications";
+import { useNotif, fireNotification } from "../state/notifications";
 import { kr } from "../lib/format";
 import { PRIZES } from "../data/static/names";
 
@@ -39,11 +39,27 @@ export function InfoView() {
             </button>
             <span style={{ fontWeight: 700, fontSize: 13.5 }}>Notis när en match börjar</span>
           </label>
-          {notif.permission === "denied" && (
-            <div className="dim" style={{ fontSize: 11, marginTop: 8, color: "var(--loss)" }}>
-              Notiser är blockerade i webbläsaren — tillåt dem i webbläsarinställningarna.
-            </div>
-          )}
+
+          {/* permission state + a way to grant and to verify it works */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
+            {notif.permission === "granted" ? (
+              <>
+                <span className="chip" style={{ fontSize: 10.5, color: "var(--win)" }}>Notiser är på ✓</span>
+                <button className="btn" style={{ fontSize: 12, padding: "6px 12px" }}
+                  onClick={() => fireNotification("✅ Notiser funkar!", "Du får aviseringar härifrån.", "vm-test")}>
+                  Skicka testnotis
+                </button>
+              </>
+            ) : notif.permission === "denied" ? (
+              <div className="dim" style={{ fontSize: 11, color: "var(--loss)" }}>
+                Notiser är blockerade i webbläsaren — tillåt dem via hänglåset/inställningarna bredvid adressfältet.
+              </div>
+            ) : (
+              <button className="btn" style={{ fontSize: 12, padding: "6px 12px" }} onClick={() => notif.request()}>
+                Tillåt notiser
+              </button>
+            )}
+          </div>
         </div>
       )}
 

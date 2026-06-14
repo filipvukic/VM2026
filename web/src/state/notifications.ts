@@ -107,12 +107,41 @@ export async function syncKickoffTriggers(items: { tag: string; ts: number; titl
   }
 }
 
-export function fireNotification(title: string, body: string, tag: string) {
+// serviceWorker.ready never rejects — if the SW failed to register it just hangs.
+// Race it against a short timeout so a missing SW falls back instead of hanging.
+function swReady(): Promise<ServiceWorkerRegistration | null> {
+  if (!("serviceWorker" in navigator)) return Promise.resolve(null);
+  return Promise.race([
+    navigator.serviceWorker.ready.catch(() => null),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), 1500)),
+  ]);
+}
+
+export async function fireNotification(title: string, body: string, tag: string) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  const opts: NotificationOptions & { renotify?: boolean } = {
+    body,
+    tag,
+    renotify: true,
+    icon: "/images/wc2026-logo.svg",
+    badge: "/images/wc2026-logo.svg",
+    data: { url: "/" },
+  };
+  // Prefer the service worker's showNotification(): on Chrome for ANDROID the
+  // `new Notification()` constructor throws ("Illegal constructor"), so the old
+  // path silently failed on mobile. The SW path works on desktop AND mobile.
   try {
-    if ("Notification" in window && Notification.permission === "granted") {
-      new Notification(title, { body, tag, icon: "/images/wc2026-logo.svg" });
+    const reg = await swReady();
+    if (reg) {
+      await reg.showNotification(title, opts);
+      return;
     }
   } catch {
-    /* ignore */
+    /* fall through to the constructor */
+  }
+  try {
+    new Notification(title, opts);
+  } catch {
+    /* ignore (e.g. mobile without an active SW) */
   }
 }
