@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T14:34:13+00:00",
+  "updated_at": "2026-06-14T16:08:45+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -803,10 +803,7 @@
         1
       ],
       "scoreDetail": {
-        "halfTime": [
-          0,
-          1
-        ],
+        "halfTime": null,
         "fullTime": [
           1,
           1
@@ -2371,7 +2368,13 @@
         "city": "Houston, Texas",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Jalal Jayed",
+          "role": "REFEREE",
+          "nationality": "Morocco"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -2858,7 +2861,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
