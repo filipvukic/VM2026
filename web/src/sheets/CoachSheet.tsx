@@ -51,8 +51,26 @@ export function CoachSheet({ code, ...chrome }: { code: string } & SheetChrome) 
         </div>
       </button>
 
+      {/* career record with this national team (from FotMob) */}
+      {c?.career && c.career.games > 0 && (
+        <div style={{ marginTop: 16 }}>
+          <div className="kicker" style={{ marginBottom: 10 }}>Som {t.name}s förbundskapten</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8 }}>
+            <Kpi label="Matcher" value={c.career.games} />
+            <Kpi label="Vinster" value={c.career.win} accent="var(--win)" />
+            <Kpi label="Oavgjort" value={c.career.draw} />
+            <Kpi label="Förluster" value={c.career.loss} accent="var(--loss)" />
+          </div>
+          {c.career.winPct != null && (
+            <div className="dim" style={{ fontSize: 12, marginTop: 10 }}>
+              Vinstprocent: <b style={{ color: "var(--ink)" }}>{Math.round(c.career.winPct * 100)}%</b>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* WC record under this coach */}
-      <div style={{ marginTop: 14 }}>
+      <div style={{ marginTop: 16 }}>
         <div className="kicker" style={{ marginBottom: 10 }}>I detta VM</div>
         {played.length ? (
           <>

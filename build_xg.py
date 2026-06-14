@@ -7,7 +7,7 @@ fixture id: { "<fixtureId>": {"home": 1.46, "away": 0.07} }.
 NOT computed by us — values come straight from FotMob. Re-runnable; only fetches
 matches that have already kicked off. Usage: python3 build_xg.py
 """
-import json, re, time, datetime, unicodedata
+import json, re, time, datetime, unicodedata, difflib
 from pathlib import Path
 from urllib import request as urlreq
 
@@ -68,12 +68,35 @@ def find_team_xg(pp):
     return None
 
 
-# our fixtures: name+date -> (id, homeNorm, awayNorm)
+# our fixtures, keyed by the unordered pair of team TLAs (group-stage pairs are
+# unique; KO repeats are disambiguated by date below). FotMob team names are
+# resolved to our TLAs with fuzzy matching so spelling variants (Turkiye/Turkey,
+# USA/United States, Bosnia and Herzegovina/Bosnia-Herzegovina) still map.
 fixtures = json.loads((BASE / "fixtures.json").read_text(encoding="utf-8"))
-fx_by_key = {}
+our_norm2tla = {}
 for m in fixtures:
-    d = (m.get("utcDate") or "")[:10]
-    fx_by_key[(d, frozenset([norm(m.get("home")), norm(m.get("away"))]))] = m
+    if m.get("homeTla"):
+        our_norm2tla[norm(m.get("home"))] = m["homeTla"]
+    if m.get("awayTla"):
+        our_norm2tla[norm(m.get("away"))] = m["awayTla"]
+
+# FotMob spellings too short/different for fuzzy matching to reach.
+our_norm2tla.setdefault("usa", "USA")
+
+fx_by_pair = {}
+for m in fixtures:
+    if m.get("homeTla") and m.get("awayTla"):
+        fx_by_pair.setdefault(frozenset([m["homeTla"], m["awayTla"]]), []).append(m)
+
+
+def fm_tla(name):
+    n = norm(name)
+    if n in our_norm2tla:
+        return our_norm2tla[n]
+    best = max(our_norm2tla, key=lambda x: difflib.SequenceMatcher(None, n, x).ratio(), default=None)
+    if best and difflib.SequenceMatcher(None, n, best).ratio() >= 0.7:
+        return our_norm2tla[best]
+    return None
 
 data = get_next(LEAGUE)
 matches = data["props"]["pageProps"]["overview"]["matches"]["allMatches"]
@@ -99,8 +122,11 @@ for fm in matches:
     if ko > now:  # not started
         continue
     d = ut[:10]
-    hn, an = norm(fm["home"]["name"]), norm(fm["away"]["name"])
-    fx = fx_by_key.get((d, frozenset([hn, an])))
+    htla_fm, atla_fm = fm_tla(fm["home"]["name"]), fm_tla(fm["away"]["name"])
+    if not htla_fm or not atla_fm:
+        continue
+    cands = fx_by_pair.get(frozenset([htla_fm, atla_fm])) or []
+    fx = next((c for c in cands if (c.get("utcDate") or "")[:10] == d), cands[0] if len(cands) == 1 else None)
     if not fx:
         continue
     url = "https://www.fotmob.com" + fm["pageUrl"].split("#")[0]
@@ -109,14 +135,24 @@ for fm in matches:
     except Exception as e:
         print(f"  ! {fm['home']['name']}-{fm['away']['name']}: {e}")
         continue
-    # coaches (map FotMob home/away coach to OUR team codes)
+    # coaches (map FotMob home/away coach to OUR team codes). Only ENRICH the
+    # entry build_coaches.py owns: add age/country/countryCode (which the team
+    # page lacks); never clobber its name/id/career/photo.
     hc, ac = find_coaches(pp)
-    fx_home_is_fm_home = norm(fx.get("home")) == hn
-    htla, atla = fx.get("homeTla"), fx.get("awayTla")
-    if htla and (hc if fx_home_is_fm_home else ac):
-        coaches[htla] = hc if fx_home_is_fm_home else ac
-    if atla and (ac if fx_home_is_fm_home else hc):
-        coaches[atla] = ac if fx_home_is_fm_home else hc
+    fx_home_is_fm_home = fx.get("homeTla") == htla_fm
+    for tla, mc in ((fx.get("homeTla"), hc if fx_home_is_fm_home else ac),
+                    (fx.get("awayTla"), ac if fx_home_is_fm_home else hc)):
+        if not tla or not mc:
+            continue
+        cur = coaches.get(tla)
+        if not cur:
+            coaches[tla] = mc  # no team-page entry yet: take the match-page coach whole
+            continue
+        for k in ("age", "country", "countryCode"):
+            if mc.get(k) is not None:
+                cur[k] = mc[k]
+        if not cur.get("photo") and mc.get("photo"):
+            cur["photo"] = mc["photo"]
 
     xg = find_team_xg(pp)
     if xg:

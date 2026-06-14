@@ -1,0 +1,47 @@
+name: Uppdatera xG + förbundskaptener (FotMob)
+
+on:
+  schedule:
+    # Var 30:e minut. Hämtar riktig xG per spelad match + förbundskaptener från
+    # FotMobs server-renderade sidor (ingen nyckel behövs). Helt skild från
+    # tippningsmotorn (engine.py) så den pipelinen är orörd.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-xg
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checka ut repo
+        uses: actions/checkout@v4
+
+      - name: Sätt upp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Hämta förbundskaptener (alla 48, inkrementellt)
+        run: python build_coaches.py
+
+      - name: Hämta xG för spelade matcher
+        run: python build_xg.py
+
+      - name: Committa xg.json + coaches.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add xg.json coaches.json
+          if git diff --staged --quiet; then
+            echo "Ingen xG/coach-ändring att committa."
+          else
+            git commit -m "Auto-uppdatera xg.json/coaches.json [skip ci]"
+            git push
+          fi

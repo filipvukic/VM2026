@@ -226,10 +226,19 @@ export type PlayersDb = Record<string, PlayerRecord>;
 
 export interface Coach {
   name: string;
+  id?: number | null;
   age?: number | null;
   country?: string | null;
   countryCode?: string | null;
   photo?: string | null;
+  /** Career record with THIS national team, straight from FotMob (not computed). */
+  career?: {
+    games: number;
+    win: number;
+    draw: number;
+    loss: number;
+    winPct: number | null;
+  } | null;
 }
 export type CoachesDb = Record<string, Coach>; // keyed by team TLA
 

@@ -4,69 +4,623 @@
     "age": 67,
     "country": "Mexico",
     "countryCode": "MEX",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/78642.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78642.png",
+    "id": 78642,
+    "career": {
+      "games": 32,
+      "win": 19,
+      "draw": 8,
+      "loss": 5,
+      "winPct": 0.594
+    }
   },
   "RSA": {
     "name": "Hugo Broos",
     "age": 74,
     "country": "Belgium",
     "countryCode": "BEL",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/179919.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/179919.png",
+    "id": 179919,
+    "career": {
+      "games": 69,
+      "win": 33,
+      "draw": 23,
+      "loss": 13,
+      "winPct": 0.478
+    }
   },
   "KOR": {
     "name": "Myung-Bo Hong",
     "age": 57,
     "country": "South Korea",
     "countryCode": "KOR",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/29429.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/29429.png",
+    "id": 29429,
+    "career": {
+      "games": 40,
+      "win": 18,
+      "draw": 9,
+      "loss": 13,
+      "winPct": 0.45
+    }
   },
   "CZE": {
     "name": "Miroslav Koubek",
     "age": 74,
     "country": "Czechia",
     "countryCode": "CZE",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/278086.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/278086.png",
+    "id": 278086,
+    "career": {
+      "games": 5,
+      "win": 4,
+      "draw": 0,
+      "loss": 1,
+      "winPct": 0.8
+    }
   },
   "QAT": {
     "name": "Julen Lopetegui",
     "age": 59,
     "country": "Spain",
     "countryCode": "ESP",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/396454.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/396454.png",
+    "id": 396454,
+    "career": {
+      "games": 14,
+      "win": 2,
+      "draw": 5,
+      "loss": 7,
+      "winPct": 0.143
+    }
   },
   "SUI": {
     "name": "Murat Yakin",
     "age": 51,
     "country": "Switzerland",
     "countryCode": "SUI",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/34053.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/34053.png",
+    "id": 34053,
+    "career": {
+      "games": 60,
+      "win": 25,
+      "draw": 21,
+      "loss": 14,
+      "winPct": 0.417
+    }
   },
   "BRA": {
     "name": "Carlo Ancelotti",
     "age": 67,
     "country": "Italy",
     "countryCode": "ITA",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/78619.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78619.png",
+    "id": 78619,
+    "career": {
+      "games": 13,
+      "win": 7,
+      "draw": 3,
+      "loss": 3,
+      "winPct": 0.538
+    }
   },
   "MAR": {
     "name": "Mohamed Ouahbi",
     "age": 49,
     "country": "Belgium",
     "countryCode": "BEL",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/1816954.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1816954.png",
+    "id": 1816954,
+    "career": {
+      "games": 6,
+      "win": 3,
+      "draw": 3,
+      "loss": 0,
+      "winPct": 0.5
+    }
   },
   "HAI": {
     "name": "Sébastien Migné",
     "age": 53,
     "country": "France",
     "countryCode": "FRA",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/878257.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/878257.png",
+    "id": 878257,
+    "career": {
+      "games": 26,
+      "win": 14,
+      "draw": 5,
+      "loss": 7,
+      "winPct": 0.538
+    }
   },
   "SCO": {
     "name": "Steve Clarke",
     "age": 62,
     "country": "Scotland",
     "countryCode": "SCO",
-    "photo": "https://images.fotmob.com/image_resources/playerimages/322080.png"
+    "photo": "https://images.fotmob.com/image_resources/playerimages/322080.png",
+    "id": 322080,
+    "career": {
+      "games": 79,
+      "win": 38,
+      "draw": 14,
+      "loss": 27,
+      "winPct": 0.481
+    }
+  },
+  "ALG": {
+    "name": "Vladimir Petkovic",
+    "id": 191551,
+    "career": {
+      "games": 35,
+      "win": 23,
+      "draw": 8,
+      "loss": 4,
+      "winPct": 0.657
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/191551.png"
+  },
+  "ARG": {
+    "name": "Lionel Scaloni",
+    "id": 38922,
+    "career": {
+      "games": 96,
+      "win": 73,
+      "draw": 14,
+      "loss": 9,
+      "winPct": 0.76
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/38922.png"
+  },
+  "AUS": {
+    "name": "Tony Popovic",
+    "id": 34482,
+    "career": {
+      "games": 19,
+      "win": 11,
+      "draw": 4,
+      "loss": 4,
+      "winPct": 0.579
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/34482.png",
+    "age": 52,
+    "country": "Australia",
+    "countryCode": "AUS"
+  },
+  "AUT": {
+    "name": "Ralf Rangnick",
+    "id": 148889,
+    "career": {
+      "games": 45,
+      "win": 27,
+      "draw": 8,
+      "loss": 10,
+      "winPct": 0.6
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/148889.png"
+  },
+  "BEL": {
+    "name": "Rudi Garcia",
+    "id": 176580,
+    "career": {
+      "games": 14,
+      "win": 9,
+      "draw": 4,
+      "loss": 1,
+      "winPct": 0.643
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/176580.png"
+  },
+  "BIH": {
+    "name": "Sergej Barbarez",
+    "id": 27294,
+    "career": {
+      "games": 23,
+      "win": 8,
+      "draw": 7,
+      "loss": 8,
+      "winPct": 0.348
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/27294.png",
+    "age": 54,
+    "country": "Bosnia and Herzegovina",
+    "countryCode": "BIH"
+  },
+  "CAN": {
+    "name": "Jesse Marsch",
+    "id": 69655,
+    "career": {
+      "games": 33,
+      "win": 15,
+      "draw": 10,
+      "loss": 8,
+      "winPct": 0.455
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/69655.png",
+    "age": 52,
+    "country": "USA",
+    "countryCode": "USA"
+  },
+  "CIV": {
+    "name": "Emerse Faé",
+    "id": 30908,
+    "career": {
+      "games": 32,
+      "win": 23,
+      "draw": 4,
+      "loss": 5,
+      "winPct": 0.719
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/30908.png"
+  },
+  "COD": {
+    "name": "Sébastien Desabre",
+    "id": 535886,
+    "career": {
+      "games": 50,
+      "win": 29,
+      "draw": 9,
+      "loss": 12,
+      "winPct": 0.58
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/535886.png"
+  },
+  "COL": {
+    "name": "Néstor Lorenzo",
+    "id": 1248693,
+    "career": {
+      "games": 46,
+      "win": 28,
+      "draw": 11,
+      "loss": 7,
+      "winPct": 0.609
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1248693.png"
+  },
+  "CPV": {
+    "name": "Bubista",
+    "id": 1204965,
+    "career": {
+      "games": 64,
+      "win": 31,
+      "draw": 13,
+      "loss": 20,
+      "winPct": 0.484
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1204965.png"
+  },
+  "CRO": {
+    "name": "Zlatko Dalic",
+    "id": 886759,
+    "career": {
+      "games": 107,
+      "win": 60,
+      "draw": 20,
+      "loss": 27,
+      "winPct": 0.561
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/886759.png"
+  },
+  "CUW": {
+    "name": "Dick Advocaat",
+    "id": 78614,
+    "career": {
+      "games": 22,
+      "win": 12,
+      "draw": 6,
+      "loss": 4,
+      "winPct": 0.545
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78614.png"
+  },
+  "ECU": {
+    "name": "Sebastián Beccacece",
+    "id": 1135477,
+    "career": {
+      "games": 20,
+      "win": 8,
+      "draw": 11,
+      "loss": 1,
+      "winPct": 0.4
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1135477.png"
+  },
+  "EGY": {
+    "name": "Hossam Hassan",
+    "id": 505814,
+    "career": {
+      "games": 33,
+      "win": 19,
+      "draw": 8,
+      "loss": 6,
+      "winPct": 0.576
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/505814.png"
+  },
+  "ENG": {
+    "name": "Thomas Tuchel",
+    "id": 179347,
+    "career": {
+      "games": 14,
+      "win": 11,
+      "draw": 1,
+      "loss": 2,
+      "winPct": 0.786
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/179347.png"
+  },
+  "ESP": {
+    "name": "Luis de la Fuente",
+    "id": 1059866,
+    "career": {
+      "games": 41,
+      "win": 32,
+      "draw": 6,
+      "loss": 3,
+      "winPct": 0.78
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1059866.png"
+  },
+  "FRA": {
+    "name": "Didier Deschamps",
+    "id": 78624,
+    "career": {
+      "games": 179,
+      "win": 116,
+      "draw": 32,
+      "loss": 31,
+      "winPct": 0.648
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78624.png"
+  },
+  "GER": {
+    "name": "Julian Nagelsmann",
+    "id": 36567,
+    "career": {
+      "games": 33,
+      "win": 21,
+      "draw": 6,
+      "loss": 6,
+      "winPct": 0.636
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/36567.png"
+  },
+  "GHA": {
+    "name": "Carlos Queiroz",
+    "id": 149649,
+    "career": {
+      "games": 2,
+      "win": 0,
+      "draw": 1,
+      "loss": 1,
+      "winPct": 0.0
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/149649.png"
+  },
+  "IRN": {
+    "name": "Amir Ghalenoei",
+    "id": 504132,
+    "career": {
+      "games": 41,
+      "win": 31,
+      "draw": 5,
+      "loss": 5,
+      "winPct": 0.756
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/504132.png"
+  },
+  "IRQ": {
+    "name": "Graham Arnold",
+    "id": 147315,
+    "career": {
+      "games": 18,
+      "win": 11,
+      "draw": 3,
+      "loss": 4,
+      "winPct": 0.611
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/147315.png"
+  },
+  "JOR": {
+    "name": "Jamal Sellami",
+    "id": 1136875,
+    "career": {
+      "games": 31,
+      "win": 11,
+      "draw": 11,
+      "loss": 9,
+      "winPct": 0.355
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/1136875.png"
+  },
+  "JPN": {
+    "name": "Hajime Moriyasu",
+    "id": 431269,
+    "career": {
+      "games": 102,
+      "win": 71,
+      "draw": 13,
+      "loss": 18,
+      "winPct": 0.696
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/431269.png"
+  },
+  "KSA": {
+    "name": "Georgios Donis",
+    "id": 312235,
+    "career": {
+      "games": 3,
+      "win": 1,
+      "draw": 1,
+      "loss": 1,
+      "winPct": 0.333
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/312235.png"
+  },
+  "NED": {
+    "name": "Ronald Koeman",
+    "id": 78673,
+    "career": {
+      "games": 60,
+      "win": 33,
+      "draw": 13,
+      "loss": 14,
+      "winPct": 0.55
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78673.png"
+  },
+  "NOR": {
+    "name": "Ståle Solbakken",
+    "id": 78638,
+    "career": {
+      "games": 56,
+      "win": 32,
+      "draw": 12,
+      "loss": 12,
+      "winPct": 0.571
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/78638.png"
+  },
+  "NZL": {
+    "name": "Darren Bazeley",
+    "id": 23798,
+    "career": {
+      "games": 29,
+      "win": 9,
+      "draw": 6,
+      "loss": 14,
+      "winPct": 0.31
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/23798.png"
+  },
+  "PAN": {
+    "name": "Thomas Christiansen",
+    "id": 36053,
+    "career": {
+      "games": 93,
+      "win": 45,
+      "draw": 21,
+      "loss": 27,
+      "winPct": 0.484
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/36053.png"
+  },
+  "PAR": {
+    "name": "Gustavo Alfaro",
+    "id": 306380,
+    "career": {
+      "games": 20,
+      "win": 9,
+      "draw": 6,
+      "loss": 5,
+      "winPct": 0.45
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/306380.png",
+    "age": 63,
+    "country": "Argentina",
+    "countryCode": "ARG"
+  },
+  "POR": {
+    "name": "Roberto Martínez",
+    "id": 35382,
+    "career": {
+      "games": 40,
+      "win": 30,
+      "draw": 4,
+      "loss": 6,
+      "winPct": 0.75
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/35382.png"
+  },
+  "SEN": {
+    "name": "Pape Thiaw",
+    "id": 33003,
+    "career": {
+      "games": 41,
+      "win": 28,
+      "draw": 7,
+      "loss": 6,
+      "winPct": 0.683
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/33003.png"
+  },
+  "SWE": {
+    "name": "Graham Potter",
+    "id": 24347,
+    "career": {
+      "games": 6,
+      "win": 2,
+      "draw": 2,
+      "loss": 2,
+      "winPct": 0.333
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/24347.png"
+  },
+  "TUN": {
+    "name": "Sabri Lamouchi",
+    "id": 26180,
+    "career": {
+      "games": 4,
+      "win": 1,
+      "draw": 1,
+      "loss": 2,
+      "winPct": 0.25
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/26180.png"
+  },
+  "TUR": {
+    "name": "Vincenzo Montella",
+    "id": 30286,
+    "career": {
+      "games": 34,
+      "win": 20,
+      "draw": 5,
+      "loss": 9,
+      "winPct": 0.588
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/30286.png",
+    "age": 51,
+    "country": "Italy",
+    "countryCode": "ITA"
+  },
+  "URY": {
+    "name": "Marcelo Bielsa",
+    "id": 154305,
+    "career": {
+      "games": 36,
+      "win": 17,
+      "draw": 12,
+      "loss": 7,
+      "winPct": 0.472
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/154305.png"
+  },
+  "USA": {
+    "name": "Mauricio Pochettino",
+    "id": 37915,
+    "career": {
+      "games": 28,
+      "win": 16,
+      "draw": 2,
+      "loss": 10,
+      "winPct": 0.571
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/37915.png",
+    "age": 54,
+    "country": "Argentina",
+    "countryCode": "ARG"
+  },
+  "UZB": {
+    "name": "Fabio Cannavaro",
+    "id": 34520,
+    "career": {
+      "games": 9,
+      "win": 5,
+      "draw": 1,
+      "loss": 3,
+      "winPct": 0.556
+    },
+    "photo": "https://images.fotmob.com/image_resources/playerimages/34520.png"
   }
 }
