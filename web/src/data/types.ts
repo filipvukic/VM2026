@@ -201,6 +201,7 @@ export interface RawData {
 }
 
 export interface PlayerRecord {
+  photo?: string | null; // verified working URL (set by fix_players.py) — prefer this
   thumb?: string | null;
   cutout?: string | null;
   render?: string | null;

@@ -7,7 +7,8 @@ export const espnHeadshot = (espnId?: string | null) =>
 // TheSportsDB cutout/render → Wikipedia → TheSportsDB thumb → ESPN headshot.
 export function bestPhoto(p?: PlayerRecord | null): string | null {
   if (!p) return null;
-  return p.cutout || p.render || p.wiki || p.thumb || p.espnPhoto || espnHeadshot(p.espnId) || null;
+  // p.photo is the verified-working URL (fix_players.py); prefer it, then fall back.
+  return p.photo || p.cutout || p.render || p.wiki || p.thumb || p.espnPhoto || espnHeadshot(p.espnId) || null;
 }
 
 // Photo for a lineup player by name (+ espnId fallback for players not in db).

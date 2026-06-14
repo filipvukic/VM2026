@@ -188,6 +188,15 @@ def build_espn_id_map(fd_matches, cache_path="espn_id_map.json"):
         if date and hn:
             espn_lookup[(date, hn, an)] = eid
 
+    from difflib import SequenceMatcher
+
+    def sim(a, b):
+        if not a or not b:
+            return 0.0
+        if a == b or a in b or b in a:
+            return 1.0
+        return SequenceMatcher(None, a, b).ratio()
+
     for m in unmapped:
         mid = str(m.get("id"))
         date = m.get("utcDate", "")[:10]
@@ -195,12 +204,17 @@ def build_espn_id_map(fd_matches, cache_path="espn_id_map.json"):
         an = norm((m.get("awayTeam") or {}).get("name", ""))
         eid = espn_lookup.get((date, hn, an))
         if not eid:
+            # Best fuzzy match on the same date (handles name variants like
+            # Türkiye/Turkey, Korea Republic/South Korea, etc.).
+            best, best_score = None, 0.0
             for (d, h, a), candidate in espn_lookup.items():
-                if d == date and hn and an and (
-                    (hn[:5] in h or h[:5] in hn) and (an[:5] in a or a[:5] in an)
-                ):
-                    eid = candidate
-                    break
+                if d != date or not hn or not an:
+                    continue
+                score = sim(hn, h) + sim(an, a)
+                if score > best_score:
+                    best, best_score = candidate, score
+            if best and best_score >= 1.3:  # both teams reasonably similar
+                eid = best
         if eid:
             id_map[mid] = eid
 
