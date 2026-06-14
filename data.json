@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14T16:08:45+00:00",
+  "updated_at": "2026-06-14T17:44:33+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -803,7 +803,10 @@
         1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
         "fullTime": [
           1,
           1
@@ -2349,18 +2352,64 @@
       "homeTla": "GER",
       "away": "Curaçao",
       "awayTla": "CUW",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
+      "goals": [
+        {
+          "minute": "6",
+          "team": "GER",
+          "scorer": "Felix Nmecha",
+          "assist": "Florian Wirtz",
+          "type": "REGULAR",
+          "description": "Goal! Germany 1, Curaçao 0. Felix Nmecha (Germany) right footed shot from the centre of the box to the bottom right corner. Assisted by Florian Wirtz.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "21",
+          "team": "CUW",
+          "scorer": "Livano Comenencia",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Germany 1, Curaçao 1. Livano Comenencia (Curaçao) left footed shot from the centre of the box to the bottom left corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "38",
+          "team": "GER",
+          "scorer": "Nico Schlotterbeck",
+          "assist": "Nathaniel Brown",
+          "type": "HEADER",
+          "description": "Goal! Germany 2, Curaçao 1. Nico Schlotterbeck (Germany) header from very close range to the bottom left corner. Assisted by Nathaniel Brown with a cross following a corner.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -2371,8 +2420,7 @@
       "referees": [
         {
           "name": "Jalal Jayed",
-          "role": "REFEREE",
-          "nationality": "Morocco"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -10201,26 +10249,26 @@
         {
           "team": "Curaçao",
           "tla": "CUW",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
-          "gf": 0,
-          "ga": 0,
+          "gf": 1,
+          "ga": 1,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Germany",
           "tla": "GER",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
-          "gf": 0,
-          "ga": 0,
+          "gf": 1,
+          "ga": 1,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Ecuador",
