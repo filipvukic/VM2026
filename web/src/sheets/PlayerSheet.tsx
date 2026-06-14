@@ -15,12 +15,15 @@ const BONUS_LABEL: Record<BonusSlot, string> = {
 export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const ds = useData();
   const openMatch = useSheets((s) => s.openMatch);
+  const openTeam = useSheets((s) => s.openTeam);
+  const openFbPlayer = useSheets((s) => s.openFbPlayer);
   const p = ds.players.find((x) => x.id === id);
   if (!p) return null;
 
+  // chronological: the WC's first played match at the top
   const tipped = ds.allMatches
     .filter((m) => p.tips[m.id])
-    .sort((a, b) => +b.kickoff - +a.kickoff);
+    .sort((a, b) => +a.kickoff - +b.kickoff);
 
   return (
     <Sheet {...chrome} accent={p.color}>
@@ -54,13 +57,17 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
             const text = isTeam ? t?.name || "—" : Array.isArray(v) ? v[0] : "—";
             const actual = ds.bonusActual?.[mapKey(k)];
             const correct = actual && isTeam ? actual === t?.name || ds.teams[teamCode!]?.name === actual : actual && !isTeam ? Array.isArray(v) && actual.toLowerCase().includes(String(v[0]).toLowerCase()) : false;
+            const playerName = !isTeam && text !== "—" ? text : null;
+            const clickable = !!teamCode || !!playerName;
+            const open = () => { if (teamCode) openTeam(teamCode); else if (playerName) openFbPlayer(playerName); };
             return (
-              <div key={k} style={{ display: "flex", alignItems: "center", gap: 9, padding: "6px 8px", borderRadius: 8, background: "var(--surface)" }}>
+              <button key={k} onClick={clickable ? open : undefined} disabled={!clickable}
+                style={{ display: "flex", alignItems: "center", gap: 9, padding: "6px 8px", borderRadius: 8, background: "var(--surface)", width: "100%", textAlign: "left", cursor: clickable ? "pointer" : "default" }}>
                 <span className="dim" style={{ width: 104, fontSize: 11.5, fontWeight: 700 }}>{BONUS_LABEL[k]}</span>
                 {t && <Flag iso={t.iso} code={teamCode} size={16} />}
-                <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{text}</span>
+                <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, color: clickable ? "var(--cool-2)" : undefined }}>{text}</span>
                 {correct && <span className="chip solid" style={{ background: "var(--win)", color: "#0a0712", fontSize: 9.5, padding: "1px 6px" }}>RÄTT</span>}
-              </div>
+              </button>
             );
           })}
         </div>
@@ -78,19 +85,27 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const played = m.status === "played" && m.ga != null && m.gb != null;
               const pts = played ? classifyTip(tip, m.ga!, m.gb!).points : null;
               const color = pts === 5 ? "var(--gold)" : pts === 2 ? "var(--win)" : pts === 1 ? "var(--ink-3)" : "var(--ink-2)";
+              const openThis = () => m._realId && openMatch(m.id);
               return (
-                <button key={m.id} className="card" onClick={() => m._realId && openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 11px", borderRadius: "var(--r-md)", width: "100%", textAlign: "left" }}>
-                  <span className="dim" style={{ width: 46, fontSize: 10.5, fontWeight: 700 }}>{svDayMonth(m.kickoff)}</span>
-                  <Flag iso={home?.iso} code={m.home} size={16} />
-                  <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{home?.name || "?"}</span>
-                  <span className="num" style={{ minWidth: 58, textAlign: "center" }}>
+                // a row of separate click targets: the team names open the team,
+                // the date + score open the match (nested buttons aren't allowed,
+                // so the container is a div).
+                <div key={m.id} className="card" style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 11px", borderRadius: "var(--r-md)" }}>
+                  <button onClick={openThis} className="dim" style={{ width: 46, fontSize: 10.5, fontWeight: 700, padding: 0, textAlign: "left" }}>{svDayMonth(m.kickoff)}</button>
+                  <button onClick={() => m.home && openTeam(m.home)} disabled={!m.home} style={{ flex: 1, display: "flex", alignItems: "center", gap: 6, minWidth: 0, padding: 0 }}>
+                    <Flag iso={home?.iso} code={m.home} size={16} />
+                    <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: m.home ? "var(--cool-2)" : undefined }}>{home?.name || "?"}</span>
+                  </button>
+                  <button onClick={openThis} className="num" style={{ minWidth: 58, textAlign: "center", padding: 0 }}>
                     <span style={{ color: "var(--cool-2)" }}>{tip[0]}–{tip[1]}</span>
                     {played && <span className="dim" style={{ fontSize: 11 }}> ({m.ga}–{m.gb})</span>}
-                  </span>
-                  <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{away?.name || "?"}</span>
-                  <Flag iso={away?.iso} code={m.away} size={16} />
+                  </button>
+                  <button onClick={() => m.away && openTeam(m.away)} disabled={!m.away} style={{ flex: 1, display: "flex", alignItems: "center", gap: 6, minWidth: 0, padding: 0 }}>
+                    <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: m.away ? "var(--cool-2)" : undefined }}>{away?.name || "?"}</span>
+                    <Flag iso={away?.iso} code={m.away} size={16} />
+                  </button>
                   {pts != null && <span className="num" style={{ width: 26, textAlign: "right", color }}>{pts}</span>}
-                </button>
+                </div>
               );
             })}
           </div>

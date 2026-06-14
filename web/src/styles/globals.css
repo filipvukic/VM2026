@@ -236,25 +236,41 @@ input {
 .nav::-webkit-scrollbar {
   display: none;
 }
+.nav-inner {
+  /* equal columns that always fit the bar width. min-width:0 is essential: as a
+     flex child of .nav its default min-width:auto would otherwise keep it at its
+     content's min-content (~450px) and push the last tab off-screen. */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr); /* 0 min (not auto) so columns shrink to fit */
+  flex: 1;
+  min-width: 0;
+}
 .nav-item {
-  flex: 1 0 auto;
-  min-width: 62px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 8px 10px;
+  padding: 8px 2px;
   color: var(--ink-3);
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
+  white-space: nowrap;
   position: relative;
   transition: color 0.15s;
 }
+.nav-item span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .nav-item svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 .nav-item.active {
   color: var(--ink);
