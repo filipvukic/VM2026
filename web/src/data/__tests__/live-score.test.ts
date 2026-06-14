@@ -7,6 +7,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { build } from "../build";
+import { isLive } from "../../lib/liveState";
 import type { RawData, RawFixture } from "../types";
 
 const root = (p: string) => fileURLToPath(new URL("../../../../" + p, import.meta.url));
@@ -43,6 +44,17 @@ describe("live score derived from goal events", () => {
       (f.goals || []).forEach((g: any) => delete g.score);
     });
     expect([m.ga, m.gb]).toEqual([2, 0]);
+  });
+
+  it("flags a stale 'live' match as likelyEnded so it isn't shown as live forever", () => {
+    // MEX–RSA kicked off 2026-06-11, so any 'live' status now is far past full
+    // time — the safety net for the engine/CI lag in flipping it to FINISHED.
+    const m = buildWith((f) => {
+      f.status = "IN_PLAY";
+    });
+    expect(m.status).toBe("live"); // status untouched (scoring stays engine-driven)
+    expect(m.likelyEnded).toBe(true);
+    expect(isLive(m)).toBe(false); // but indicators treat it as not-live
   });
 
   it("never overrides a FINISHED match's official score", () => {

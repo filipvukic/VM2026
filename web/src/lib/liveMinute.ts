@@ -5,6 +5,8 @@ import type { Match } from "../data/types";
 // produced so it ticks smoothly between updates, and it self-corrects every
 // engine run. Falls back to "LIVE" when no clock is available.
 export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: number): string {
+  // certainly over but the feed still says live (engine/CI lag) → show "Slut"
+  if (m.likelyEnded) return "Slut";
   if (m.minute == null) {
     // No clock from the feed (e.g. a match served only by football-data without
     // an ESPN clock): estimate from kickoff so we still show a minute rather

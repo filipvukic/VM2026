@@ -5,6 +5,7 @@ import { Avatar } from "../components/Avatar";
 import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
 import { computeMovement } from "../features/insights/movement";
+import { isLive } from "../lib/liveState";
 import { PRIZES } from "../data/static/names";
 import { kr, svTime, svDateKey, svDayLabel } from "../lib/format";
 import { asset } from "../lib/assets";
@@ -33,7 +34,7 @@ export function StandingsView() {
 
   const move = useMemo(() => computeMovement(ds), [ds]);
 
-  const live = ds.allMatches.filter((m) => m.status === "live");
+  const live = ds.allMatches.filter(isLive);
   const upcoming = ds.allMatches.filter((m) => m.status === "upcoming").sort((a, b) => +a.kickoff - +b.kickoff);
   const next = upcoming[0] || null;
   // Matches strip for the home: live + today, else the next few upcoming.

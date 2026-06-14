@@ -9,6 +9,7 @@ import { PlayerImg } from "../components/PlayerImg";
 import { Avatar } from "../components/Avatar";
 import { lineupPhoto } from "../lib/playerPhoto";
 import { liveMinuteText } from "../lib/liveMinute";
+import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
 import { Flag, groupColor } from "../lib/flags";
 import { TLA_TO_ISO, NAME_TO_ISO } from "../data/static/names";
@@ -44,14 +45,14 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const openTeam = useSheets((s) => s.openTeam);
   const m = ds.allMatches.find((x) => x.id === id);
   const [tab, setTab] = useState<Tab>("overview");
-  const now = useNow(m?.status === "live" ? 30_000 : 0);
+  const now = useNow(m && isLive(m) ? 30_000 : 0);
   if (!m) return null;
 
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
   const accent = m.group ? groupColor(m.group) : "var(--cool)";
-  const live = m.status === "live";
-  const played = m.status === "played";
+  const live = isLive(m);
+  const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const vIso = venueIso(m.venue);
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
@@ -119,9 +120,9 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
           <div>
             <div className="kicker" style={{ marginBottom: 8 }}>Tabell · Grupp {m.group}</div>
             <GroupTable letter={m.group} highlight={[m.home, m.away]} deltas={matchDeltas(m)} />
-            {(m.status === "played" || m.status === "live") && (
+            {(played || live) && (
               <div className="dim" style={{ fontSize: 11, marginTop: 8, textAlign: "center" }}>
-                +X = poäng {m.status === "live" ? "som matchen ger just nu" : "den här matchen gav"}
+                +X = poäng {live ? "som matchen ger just nu" : "den här matchen gav"}
               </div>
             )}
           </div>
@@ -180,7 +181,7 @@ function Overview({ m }: { m: Match }) {
   return (
     <>
       {events.length > 0 ? (
-        <Block title={m.status === "live" ? "Händelser · live" : "Händelser"}>
+        <Block title={isLive(m) ? "Händelser · live" : "Händelser"}>
           <div className="tl">
             {events.map((e, i) => {
               const homeSide = e.side === "h";

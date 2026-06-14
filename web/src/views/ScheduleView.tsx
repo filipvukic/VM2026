@@ -4,6 +4,7 @@ import { useSheets } from "../state/sheets";
 import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
 import { svDayLabel, svDateKey } from "../lib/format";
+import { isLive, isEnded } from "../lib/liveState";
 import type { Dataset, Match } from "../data/types";
 
 type Mode = "list" | "bracket";
@@ -40,9 +41,9 @@ function ScheduleList({ ds }: { ds: Dataset }) {
 
   const filtered = useMemo(() => {
     let list = ds.allMatches.slice().sort((a, b) => +a.kickoff - +b.kickoff);
-    if (filter === "live") list = list.filter((m) => m.status === "live");
+    if (filter === "live") list = list.filter(isLive);
     else if (filter === "upcoming") list = list.filter((m) => m.status === "upcoming");
-    else if (filter === "played") list = list.filter((m) => m.status === "played");
+    else if (filter === "played") list = list.filter(isEnded);
     return list;
   }, [ds, filter]);
 
@@ -60,9 +61,9 @@ function ScheduleList({ ds }: { ds: Dataset }) {
   const counts = useMemo(
     () => ({
       all: ds.allMatches.length,
-      live: ds.allMatches.filter((m) => m.status === "live").length,
+      live: ds.allMatches.filter(isLive).length,
       upcoming: ds.allMatches.filter((m) => m.status === "upcoming").length,
-      played: ds.allMatches.filter((m) => m.status === "played").length,
+      played: ds.allMatches.filter(isEnded).length,
     }),
     [ds]
   );

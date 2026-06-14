@@ -334,6 +334,10 @@ export interface Match {
   winner: string | null;
   pen: [number, number] | null;
   minute?: number | string | null;
+  /** status is still "live" in the feed but kickoff is far enough in the past
+      that the match is certainly over — a safety net for the engine/CI lag in
+      flipping it to FINISHED. Affects display only, never scoring. */
+  likelyEnded?: boolean;
   venue?: RawVenue | null;
   officialOdds?: { H?: number; D?: number; A?: number } | null;
   cardOdds?: { home: number; draw: number; away: number } | null;

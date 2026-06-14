@@ -33,6 +33,7 @@ import {
 import { GROUP_HOST, STADIUM_COUNTRY } from "./static/venues";
 import { PLAYER_COLORS, playerPhoto } from "./static/players";
 import { buildKnockout, KO_ROUNDS } from "./bracket";
+import { maxLiveMin } from "../lib/liveState";
 
 const STAGE_MAP: Record<string, "group" | "ko"> = {
   GROUP_STAGE: "group",
@@ -359,6 +360,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       winner,
       pen: penScore,
       minute: live && f.minute != null ? f.minute : live ? null : undefined,
+      likelyEnded: live && Date.now() - +kickoff > maxLiveMin(stage) * 60000,
       venue,
       officialOdds: f.odds || null,
       cardOdds: f.cardOdds || null,

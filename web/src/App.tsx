@@ -12,6 +12,7 @@ import { SearchCommand } from "./features/search/SearchCommand";
 import { NotificationWatcher } from "./features/notifications/NotificationWatcher";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
+import { isLive } from "./lib/liveState";
 import { asset } from "./lib/assets";
 
 export default function App() {
@@ -19,7 +20,7 @@ export default function App() {
   const [tab, setTab] = useState<TabId>("standings");
   const [searchOpen, setSearchOpen] = useState(false);
   const openMatch = useSheets((s) => s.openMatch);
-  const live = ds.allMatches.filter((m) => m.status === "live");
+  const live = ds.allMatches.filter(isLive);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

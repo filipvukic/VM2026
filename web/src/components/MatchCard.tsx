@@ -3,6 +3,7 @@ import { useData } from "../state/dataset";
 import { Flag, groupColor } from "../lib/flags";
 import { svTime } from "../lib/format";
 import { liveMinuteText } from "../lib/liveMinute";
+import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 
 export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const ds = useData();
-  const now = useNow(m.status === "live" ? 30_000 : 0);
+  const now = useNow(isLive(m) ? 30_000 : 0);
   const updatedAt = ds.updatedAt ? new Date(ds.updatedAt).getTime() : null;
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
@@ -23,8 +24,8 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const projHome = !m.home && m.projHome ? ds.teams[m.projHome]?.name : null;
   const projAway = !m.away && m.projAway ? ds.teams[m.projAway]?.name : null;
 
-  const played = m.status === "played";
-  const live = m.status === "live";
+  const live = isLive(m);
+  const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const win = m.winner;
   // Status-colored left edge so played / live / upcoming are scannable at a glance.
   const accent = live ? "var(--hot)" : played ? "var(--win)" : "var(--cool)";

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Flag, groupColor } from "../lib/flags";
+import { isLive } from "../lib/liveState";
 import { classifyTip } from "../data/scoring";
 import { Avatar } from "../components/Avatar";
 import type { Dataset } from "../data/types";
@@ -83,20 +84,16 @@ export function GroupsView() {
       {/* group jump chips */}
       <div className="chip-row">
         <button className={`gchip ${!focus ? "on" : ""}`} onClick={() => setFocus(null)}>Alla</button>
-        {letters.map((L) => {
-          const live = ds.allMatches.some((m) => m.group === L && m.status === "live");
-          return (
-            <button
-              key={L}
-              className={`gchip ${focus === L ? "on" : ""}`}
-              onClick={() => setFocus(focus === L ? null : L)}
-              style={focus === L ? { background: groupColor(L), color: "#0a0712", borderColor: "transparent" } : {}}
-            >
-              {L}
-              {live && <span className="live-dot" style={{ background: "var(--hot)", marginLeft: 5 }} />}
-            </button>
-          );
-        })}
+        {letters.map((L) => (
+          <button
+            key={L}
+            className={`gchip ${focus === L ? "on" : ""}`}
+            onClick={() => setFocus(focus === L ? null : L)}
+            style={focus === L ? { background: groupColor(L), color: "#0a0712", borderColor: "transparent" } : {}}
+          >
+            {L}
+          </button>
+        ))}
       </div>
 
       <div className="group-grid">
@@ -130,6 +127,8 @@ function GroupCard({
 }) {
   const rows = ds.groupTables[letter] || [];
   const color = groupColor(letter);
+  // which teams are playing live RIGHT NOW (per team, not per group)
+  const liveTeams = new Set(ds.allMatches.filter(isLive).flatMap((m) => [m.home, m.away]));
   const host = useMemo(() => {
     const m = ds.matches.find((x) => x.group === letter && x.venue?.city);
     return m?.venue?.city || null;
@@ -150,9 +149,6 @@ function GroupCard({
           </div>
           {host && <div className="dim" style={{ fontSize: 10.5 }}>{host}</div>}
         </div>
-        {ds.allMatches.some((m) => m.group === letter && m.status === "live") && (
-          <span className="live-pill" style={{ fontSize: 9.5, padding: "2px 8px" }}><span className="live-dot" />LIVE</span>
-        )}
       </div>
 
       <div style={{ padding: "4px 6px 8px" }}>
@@ -183,6 +179,11 @@ function GroupCard({
                 <span style={{ fontWeight: 700, fontSize: 13.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {tbd ? "Att lottas" : t?.name || r.code}
                 </span>
+                {liveTeams.has(r.code) && (
+                  <span className="live-pill" style={{ fontSize: 8.5, padding: "1px 6px", flexShrink: 0 }}>
+                    <span className="live-dot" />LIVE
+                  </span>
+                )}
               </span>
               <span className="gt-num">{r.sp}</span>
               <span className="gt-num" style={{ color: r.ms > 0 ? "var(--win)" : r.ms < 0 ? "var(--loss)" : "var(--ink-2)" }}>
