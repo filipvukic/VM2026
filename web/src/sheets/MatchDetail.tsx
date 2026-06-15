@@ -19,7 +19,8 @@ import { Flag, groupColor } from "../lib/flags";
 import { TLA_TO_ISO, NAME_TO_ISO } from "../data/static/names";
 import { TEAM_DETAILS } from "../data/static/history";
 import { svFullDate, svTime } from "../lib/format";
-import { winChance } from "../data/odds";
+import { winChance, winChanceFromEspn } from "../data/odds";
+import { useFixtureOdds } from "../state/fixtureOdds";
 import { classifyTip } from "../data/scoring";
 import type { Dataset, Match, MatchStats } from "../data/types";
 
@@ -529,11 +530,18 @@ function DetailBar({ label, h, a }: { label: string; h: number | string; a: numb
 
 function WinChanceBlock({ m }: { m: Match }) {
   const ds = useData();
-  // a pre-match prediction is only meaningful before the result is known
-  if (m.status === "played" || (m.status === "live" && !!m.likelyEnded)) return null;
-  const o = winChance(m);
+  const committed = winChance(m);
+  const haveReal = committed && committed.source !== "Modell";
+  const ended = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
+  // no real odds committed yet → fetch them on demand (hook called unconditionally)
+  const lazy = useFixtureOdds(
+    !haveReal && !ended ? (m._realId != null ? String(m._realId) : m.id) : null,
+    m.home, m.away, m.kickoff ? m.kickoff.toISOString() : null,
+  );
+  if (ended) return null;
+  const o = haveReal ? committed : lazy ? winChanceFromEspn(lazy.homeML, lazy.awayML) : null;
   // only show REAL bookmaker odds — never our own model fallback
-  if (!o || o.source === "Modell") return null;
+  if (!o) return null;
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
   const src = o.source === "ESPN" ? "Odds: ESPN" : "Odds: football-data";

@@ -220,6 +220,48 @@ export async function fetchEventSummary(eventId: string): Promise<EspnSummary | 
   }
 }
 
+// On-demand: real bookmaker moneyline for ONE fixture (any date), fetched when a
+// match view opens — so the win-chance shows real odds even for matches the live
+// overlay window hasn't covered yet. Returns {homeML,awayML} oriented to OUR
+// home/away, or null. Two requests (scoreboard for the date → that event's summary).
+export async function fetchFixtureOdds(home: string, away: string, koUtc: string): Promise<{ homeML: number; awayML: number } | null> {
+  const ko = Date.parse(koUtc || "");
+  if (Number.isNaN(ko)) return null;
+  const fh = canon(norm(home)), fa = canon(norm(away));
+  const days = [-1, 0, 1].map((off) => {
+    const d = new Date(ko + off * 86400000);
+    return `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, "0")}${String(d.getUTCDate()).padStart(2, "0")}`;
+  });
+  for (const day of days) {
+    try {
+      const r = await fetch(SCOREBOARD + day, { cache: "no-store" });
+      if (!r.ok) continue;
+      const j = await r.json();
+      for (const ev of j.events || []) {
+        const comp = (ev.competitions || [])[0];
+        const cs = comp?.competitors || [];
+        const h = cs.find((c: any) => c.homeAway === "home");
+        const a = cs.find((c: any) => c.homeAway === "away");
+        if (!h || !a) continue;
+        const eh = canon(norm(h.team?.displayName || h.team?.name || ""));
+        const ea = canon(norm(a.team?.displayName || a.team?.name || ""));
+        const direct = (eh === fh && ea === fa) || (eh === fa && ea === fh);
+        const score = direct ? 2 : Math.max(similar(eh, fh) + similar(ea, fa), similar(eh, fa) + similar(ea, fh));
+        if (score < 1.4) continue;
+        const sm = await fetchEventSummary(String(ev.id || ev.uid || ""));
+        if (!sm?.odds) return null;
+        const sameOrient = eh === fh || (eh !== fa && similar(eh, fh) >= similar(eh, fa));
+        return sameOrient
+          ? { homeML: sm.odds.homeML, awayML: sm.odds.awayML }
+          : { homeML: sm.odds.awayML, awayML: sm.odds.homeML };
+      }
+    } catch {
+      /* try next date */
+    }
+  }
+  return null;
+}
+
 // Overlay live ESPN data onto fixtures. DISPLAY only — never downgrades a match
 // the engine already finalised, only touches matches in the live window, never
 // invents points. Scoreboard gives status/score/minute/venue/goals for all

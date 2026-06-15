@@ -72,6 +72,12 @@ export function matchOdds(homeCode: string | null, awayCode: string | null): { H
   return round100(pHwin / raw, pD / raw, pAwin / raw);
 }
 
+/** Win-chance from a 2-way ESPN moneyline (for odds fetched lazily on demand). */
+export function winChanceFromEspn(homeML: number, awayML: number): WinChance | null {
+  const e = fromEspn({ homeML, awayML });
+  return e ? { ...e, source: "ESPN" } : null;
+}
+
 /** Best available win-chance for a match. */
 export function winChance(m: Match): WinChance | null {
   if (m.espnOdds) {
