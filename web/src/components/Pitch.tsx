@@ -3,6 +3,7 @@ import { usePlayersDb } from "../state/dataset";
 import { lineupPhoto } from "../lib/playerPhoto";
 import { initials } from "../lib/format";
 import { buildRows, sideScore } from "../lib/formation";
+import { ratingColor } from "../lib/rating";
 import type { Match, RawLineup, RawLineupPlayer } from "../data/types";
 
 
@@ -17,12 +18,14 @@ export function Pitch({
   match,
   teamCode,
   onPlayer,
+  getRating,
 }: {
   lineup: RawLineup;
   color: string;
   match: Match;
   teamCode: string | null;
   onPlayer: (name: string, espnId?: string | null) => void;
+  getRating?: (name: string) => number | null;
 }) {
   const db = usePlayersDb();
   const rows = buildRows(lineup); // back-to-front: [GK], defence, midfield(s), attack
@@ -58,6 +61,7 @@ export function Pitch({
               goal={goalNames.has(nm)}
               red={redNames.has(nm)}
               outAt={subOut.get(nm)}
+              rating={getRating ? getRating(p.name) : null}
               onClick={() => onPlayer(p.name, p.espnId)}
             />
           );
@@ -75,7 +79,7 @@ export function Pitch({
           background-repeat:no-repeat; }
         .pitch-lines::before,.pitch-lines::after{ content:""; position:absolute; left:28%; width:44%; height:13%; border:1px solid rgba(255,255,255,.14); }
         .pitch-lines::before{ top:0; border-top:none; } .pitch-lines::after{ bottom:0; border-bottom:none; }
-        .ppl{ position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:4px; width:74px; }
+        .ppl{ position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:9px; width:74px; }
         .ppl-card{ position:relative; width:54px; height:54px; border-radius:16px; overflow:visible; }
         .ppl-img{ width:100%; height:100%; border-radius:16px; overflow:hidden; background:var(--surface-3);
           display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); border:2px solid rgba(255,255,255,.85); }
@@ -91,6 +95,9 @@ export function Pitch({
         .ppl-b.red{ width:11px; height:15px; border-radius:2px; background:var(--loss); }
         .ppl-out{ position:absolute; right:-7px; bottom:-5px; display:flex; align-items:center; gap:1px; height:16px; padding:0 4px;
           border-radius:8px; background:var(--loss); color:#fff; font-size:9px; font-weight:800; box-shadow:0 2px 5px rgba(0,0,0,.5); }
+        .ppl-rating{ position:absolute; left:50%; bottom:-8px; transform:translateX(-50%);
+          min-width:22px; height:16px; padding:0 3px; border-radius:5px; display:grid; place-items:center;
+          font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 2px 5px rgba(0,0,0,.55); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
       `}</style>
@@ -107,6 +114,7 @@ function PitchPlayer({
   goal,
   red,
   outAt,
+  rating,
   onClick,
 }: {
   p: RawLineupPlayer;
@@ -117,6 +125,7 @@ function PitchPlayer({
   goal: boolean;
   red: boolean;
   outAt?: string | number;
+  rating?: number | null;
   onClick: () => void;
 }) {
   const [failed, setFailed] = useState(false);
@@ -139,6 +148,9 @@ function PitchPlayer({
           {red && <span className="ppl-b red" />}
         </div>
         {outAt !== undefined && <span className="ppl-out">↓{outAt}'</span>}
+        {rating != null && (
+          <span className="ppl-rating num" style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>
+        )}
       </div>
       <span className="ppl-name">{last}</span>
     </button>

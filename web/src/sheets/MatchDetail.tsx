@@ -239,14 +239,31 @@ function buildTimeline(m: Match): TLEvent[] {
 }
 
 // ---------- Pitch tab ----------
+const ratingNorm = (s: string) =>
+  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+
 function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const openFb = useSheets((s) => s.openFbPlayer);
   const openCoach = useSheets((s) => s.openCoach);
   const coaches = useCoaches();
   const db = usePlayersDb();
+  const detail = useMatchStats(m._realId ?? null);
   const [side, setSide] = useState<"h" | "a">("h");
   const lu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
+  // FotMob ratings for this team's players, matched by name (full → surname).
+  const { full: ratFull, last: ratLast } = (() => {
+    const full = new Map<string, number>(), last = new Map<string, number>();
+    (detail?.players || []).forEach((p) => {
+      if (p.rating == null || p.tla !== code) return;
+      full.set(ratingNorm(p.name), p.rating);
+      const ln = ratingNorm((p.name || "").split(" ").slice(-1)[0]);
+      if (ln && !last.has(ln)) last.set(ln, p.rating);
+    });
+    return { full, last };
+  })();
+  const getRating = (name: string): number | null =>
+    ratFull.get(ratingNorm(name)) ?? ratLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
   const t = code ? ds.teams[code] : null;
   if (!lu?.lineup?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
   const coachRec = code ? coaches?.[code] : null;
@@ -284,7 +301,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         lu.formation && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {lu.formation}</span></div>
       )}
-      <Pitch lineup={lu} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} />
+      <Pitch lineup={lu} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} />
       {lu.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
@@ -292,12 +309,14 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
             {lu.bench.map((p, i) => {
               const came = subIn.get(p.name);
               const scored = goalNames.has((p.name || "").toLowerCase());
+              const rb = getRating(p.name);
               return (
                 <button key={i} onClick={() => openFb(p.name, p.espnId)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: came ? "color-mix(in srgb,var(--win) 12%, var(--surface))" : "var(--surface)", border: "1px solid var(--line)" }}>
                   <span style={{ position: "relative" }}>
                     <PlayerImg src={lineupPhoto(p.name, p.espnId, db)} name={p.name} size={46} radius={13} fontSize={16} />
                     {came && <span style={{ position: "absolute", right: -4, bottom: -3, height: 16, padding: "0 4px", borderRadius: 8, background: "var(--win)", color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>↑{came.at}'</span>}
                     {scored && <span style={{ position: "absolute", left: -5, top: -5, fontSize: 12 }}>⚽</span>}
+                    {rb != null && <span className="num" style={{ position: "absolute", left: -5, bottom: -3, minWidth: 20, height: 15, padding: "0 3px", borderRadius: 5, background: ratingColor(rb), color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>{rb.toFixed(1)}</span>}
                   </span>
                   <span style={{ fontSize: 11, fontWeight: 700, textAlign: "center", lineHeight: 1.1, maxWidth: 78, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxInlineSize: 78 }}>
                     {p.jersey || p.shirtNumber} {(p.name || "").split(" ").slice(-1)[0]}
