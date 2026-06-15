@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { usePlayersDb, useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
@@ -8,6 +9,7 @@ import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
 import { useStatsIndex, useMatchStats } from "../state/matchStats";
 import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
+import { ratingColor } from "../lib/rating";
 
 function age(born?: string | null): number | null {
   if (!born) return null;
@@ -114,7 +116,7 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
         )}
       </div>
 
-      <LatestMatchStats name={p?.name || name} />
+      <PlayerMatchHistory name={p?.name || name} />
     </Sheet>
   );
 }
@@ -122,22 +124,44 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
 const idxNorm = (s: string) =>
   (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
 
-// Detailed FotMob stats for the player's most recent match (rating, heatmap, shots…).
-function LatestMatchStats({ name }: { name: string }) {
+const shortDate = (d?: string) => (d && d.length >= 10 ? `${parseInt(d.slice(8, 10), 10)}/${parseInt(d.slice(5, 7), 10)}` : "");
+
+// Per-match performance from FotMob: a clickable list of every match the player
+// has stats for (rating per match), expanding to that match's heatmap/shots/stats.
+function PlayerMatchHistory({ name }: { name: string }) {
   const ds = useData();
   const index = useStatsIndex();
   const entry = index?.players[idxNorm(name)];
-  const fixtureId = entry?.fx[0] || null;
-  const stats = useMatchStats(fixtureId);
-  if (!entry || !stats) return null;
-  const pl = stats.players.find((p) => p.optaId === entry.opta);
-  const fx = fixtureId ? index!.fixtures[fixtureId] : null;
-  const oppTla = pl && fx ? (pl.tla === fx.h ? fx.a : fx.h) : null;
-  const opp = oppTla ? ds.teams[oppTla]?.name || oppTla : null;
+  const [sel, setSel] = useState<string | null>(null);
+  const selId = sel ?? entry?.fx[0]?.id ?? null;
+  const stats = useMatchStats(selId); // hook always called (null id is a no-op)
+  if (!entry || !entry.fx.length) return null;
+  const myTla = stats?.players.find((p) => p.optaId === entry.opta)?.tla ?? null;
+  const oppName = (fid: string) => {
+    const fx = index!.fixtures[fid];
+    if (!fx) return "";
+    const opp = myTla ? (myTla === fx.h ? fx.a : fx.h) : fx.a;
+    return ds.teams[opp]?.name || opp;
+  };
+  const selPl = stats?.players.find((p) => p.optaId === entry.opta);
   return (
     <div style={{ marginTop: 18 }}>
-      <div className="kicker" style={{ marginBottom: 10 }}>Senaste matchen{opp ? ` — mot ${opp}` : ""}</div>
-      <PlayerMatchPanel stats={stats} optaId={entry.opta} subtitle={pl?.gk ? "Målvakt" : pl?.pos || undefined} />
+      <div className="kicker" style={{ marginBottom: 10 }}>Prestation per match ({entry.fx.length})</div>
+      <div style={{ display: "grid", gap: 5, marginBottom: entry.fx.length > 1 ? 14 : 10 }}>
+        {entry.fx.map((it) => {
+          const fx = index!.fixtures[it.id];
+          const on = it.id === selId;
+          return (
+            <button key={it.id} onClick={() => setSel(it.id)}
+              style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", borderRadius: 9, width: "100%", textAlign: "left", background: on ? "var(--surface-2)" : "var(--surface)", border: `1px solid ${on ? "var(--line-3)" : "transparent"}` }}>
+              {it.r != null && <span className="num" style={{ fontSize: 13, fontWeight: 800, padding: "2px 7px", borderRadius: 7, background: ratingColor(it.r), color: "#0a0712", minWidth: 38, textAlign: "center" }}>{it.r.toFixed(1)}</span>}
+              <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>mot {oppName(it.id)}</span>
+              <span className="dim" style={{ fontSize: 10.5 }}>{shortDate(fx?.d)}</span>
+            </button>
+          );
+        })}
+      </div>
+      {stats && <PlayerMatchPanel stats={stats} optaId={entry.opta} subtitle={selPl?.gk ? "Målvakt" : selPl?.pos || undefined} />}
     </div>
   );
 }

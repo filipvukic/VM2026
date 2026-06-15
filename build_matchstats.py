@@ -321,10 +321,10 @@ def rebuild_index(fixtures):
                 continue
             key = norm(p["name"])
             entry = idx["players"].setdefault(key, {"opta": p.get("optaId"), "name": p["name"], "fx": []})
-            entry["fx"].append(fid)
+            entry["fx"].append({"id": fid, "r": p.get("rating")})
     # most-recent match first
     for e in idx["players"].values():
-        e["fx"].sort(key=lambda fid: idx["fixtures"].get(fid, {}).get("d", ""), reverse=True)
+        e["fx"].sort(key=lambda x: idx["fixtures"].get(x["id"], {}).get("d", ""), reverse=True)
     (OUT_DIR / "index.json").write_text(json.dumps(idx, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 

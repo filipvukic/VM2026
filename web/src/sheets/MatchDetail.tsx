@@ -263,22 +263,19 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const [side, setSide] = useState<"h" | "a">("h");
   const rawLu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
-  // FotMob ratings + minutes for this team's players, matched by name (full → surname).
-  const { rFull, rLast, mFull, mLast } = (() => {
+  // FotMob ratings for this team's players, matched by name (full → surname).
+  const { rFull, rLast } = (() => {
     const rFull = new Map<string, number>(), rLast = new Map<string, number>();
-    const mFull = new Map<string, number>(), mLast = new Map<string, number>();
     (detail?.players || []).forEach((p) => {
-      if (p.tla !== code) return;
+      if (p.tla !== code || p.rating == null) return;
       const fn = ratingNorm(p.name), ln = ratingNorm((p.name || "").split(" ").slice(-1)[0]);
-      if (p.rating != null) { rFull.set(fn, p.rating); if (ln && !rLast.has(ln)) rLast.set(ln, p.rating); }
-      if (p.min != null) { mFull.set(fn, p.min as number); if (ln && !mLast.has(ln)) mLast.set(ln, p.min as number); }
+      rFull.set(fn, p.rating);
+      if (ln && !rLast.has(ln)) rLast.set(ln, p.rating);
     });
-    return { rFull, rLast, mFull, mLast };
+    return { rFull, rLast };
   })();
   const getRating = (name: string): number | null =>
     rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
-  const getMin = (name: string): number | null =>
-    mFull.get(ratingNorm(name)) ?? mLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
   // FotMob formation + exact coords are accurate (ESPN's is often wrong, e.g.
   // 3-1-4-2 vs 3-4-1-2). Prefer the FotMob coords for placement.
   const fmFormation = detail?.formations?.[side === "h" ? "home" : "away"];
@@ -322,7 +319,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         (fmFormation || lu?.formation) && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {fmFormation || lu?.formation}</span></div>
       )}
-      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} getMin={getMin} coords={coords} />
+      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} />
       {lu?.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>

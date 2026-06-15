@@ -26,7 +26,9 @@ export function PlayerMatchPanel({ stats, optaId, subtitle }: {
         )}
         <div style={{ minWidth: 0 }}>
           <div style={{ fontWeight: 800, fontSize: 15 }}>{p.name}</div>
-          <div className="dim" style={{ fontSize: 11 }}>{subtitle || (p.gk ? "Målvakt" : p.pos || "")}{p.shirt ? ` · #${p.shirt}` : ""}</div>
+          <div className="dim" style={{ fontSize: 11 }}>
+            {subtitle || (p.gk ? "Målvakt" : p.pos || "")}{p.shirt ? ` · #${p.shirt}` : ""}{p.min != null ? ` · ${p.min} min spelade` : ""}
+          </div>
         </div>
       </div>
 

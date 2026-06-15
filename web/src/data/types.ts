@@ -279,7 +279,7 @@ export interface MatchStatsDetail {
 }
 export interface MatchStatsIndex {
   fixtures: Record<string, { h: string; a: string; d: string }>;
-  players: Record<string, { opta: string; name: string; fx: string[] }>;
+  players: Record<string, { opta: string; name: string; fx: { id: string; r: number | null }[] }>;
 }
 
 export interface OddsFile {
