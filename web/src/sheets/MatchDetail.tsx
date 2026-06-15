@@ -352,8 +352,25 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
       );
     }
     const ranked = detail.players.filter((p) => p.rating != null);
+    const motm = ranked[0]; // highest-rated = FotMob's player of the match
+    const motmTeam = motm?.tla ? ds.teams[motm.tla] : null;
     return (
       <>
+        {motm && (
+          <button onClick={() => setSel(motm.optaId)} className="card" style={{ marginTop: 14, width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", textAlign: "left", background: "linear-gradient(120deg, color-mix(in srgb,var(--gold) 16%, var(--surface)), var(--surface))", border: "1px solid color-mix(in srgb,var(--gold) 30%, var(--line-2))" }}>
+            <span className="num" style={{ fontSize: 19, fontWeight: 800, padding: "5px 11px", borderRadius: 10, background: ratingColor(motm.rating!), color: "#0a0712", minWidth: 50, textAlign: "center" }}>{motm.rating!.toFixed(1)}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="kicker" style={{ color: "var(--gold)", fontSize: 9.5 }}>⭐ Matchens spelare</div>
+              <div style={{ fontWeight: 800, fontSize: 15, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{motm.name}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 2 }}>
+                <Flag iso={motmTeam?.iso} code={motm.tla} size={13} />
+                <span className="dim" style={{ fontSize: 11 }}>{motmTeam?.name || motm.tla}{motm.gk ? " · MV" : motm.pos ? ` · ${motm.pos}` : ""}</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ink-3)" strokeWidth="2.4"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        )}
+
         {detail.team.length > 0 && (
           <div className="card card-pad" style={{ marginTop: 14 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>

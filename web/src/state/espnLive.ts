@@ -1,33 +1,36 @@
 import { create } from "zustand";
-import { fetchEspnEvents, type EspnLite } from "../lib/espnLive";
+import { fetchEspnEvents, fetchEventSummary, type EspnLite, type EspnSummary } from "../lib/espnLive";
 import { useStore } from "./store";
 
 interface EspnLiveState {
   events: EspnLite[];
+  summaries: Record<string, EspnSummary>; // by ESPN event id (lineups/subs/cards)
   version: number; // bumps on each refresh → dataset re-overlays
-  set: (e: EspnLite[]) => void;
+  set: (e: EspnLite[], s: Record<string, EspnSummary>) => void;
 }
 
 export const useEspnLive = create<EspnLiveState>((set) => ({
   events: [],
+  summaries: {},
   version: 0,
-  set: (events) => set((s) => ({ events, version: s.version + 1 })),
+  set: (events, summaries) => set((s) => ({ events, summaries, version: s.version + 1 })),
 }));
 
-// Is any fixture inside the live window (so it's worth polling ESPN frequently)?
 function inLiveWindow(nowMs: number): boolean {
   const fx = useStore.getState().raw?.fixtures;
   if (!fx) return false;
   return fx.some((f) => {
     const ko = Date.parse(f.utcDate || "");
-    return !Number.isNaN(ko) && nowMs - ko > -45 * 60000 && nowMs - ko < 4 * 3600 * 1000;
+    // poll fast from ~75 min before kickoff (line-ups drop) until ~4 h after
+    return !Number.isNaN(ko) && nowMs - ko > -75 * 60000 && nowMs - ko < 4 * 3600 * 1000;
   });
 }
 
 let timer: ReturnType<typeof setTimeout> | null = null;
 
-// Self-scheduling poller: ~25s while a match is in the live window, otherwise a
-// lazy 4 min just to catch the next kickoff. Pauses while the tab is hidden.
+// Self-scheduling poller. Pulls the scoreboard (all matches) every cycle, and the
+// per-match SUMMARY (lineups/subs/cards) for matches in the live window — line-ups
+// are fetched once (cached), live matches refetched each cycle for fresh subs.
 export function startEspnLive() {
   if (timer) return;
   const tick = async () => {
@@ -37,7 +40,21 @@ export function startEspnLive() {
     if (!hidden) {
       try {
         const events = await fetchEspnEvents(now);
-        useEspnLive.getState().set(events);
+        const cur = useEspnLive.getState().summaries;
+        const next = { ...cur };
+        const want = events.filter((e) => {
+          const ko = Date.parse(e.koUtc || "");
+          const win = !Number.isNaN(ko) && now - ko > -90 * 60000 && now - ko < 4 * 3600 * 1000;
+          return win && (e.state === "in" || e.state === "pre");
+        });
+        await Promise.all(
+          want.map(async (e) => {
+            if (e.state !== "in" && next[e.id]) return; // pre fetched once; live always refetched
+            const sm = await fetchEventSummary(e.id);
+            if (sm) next[e.id] = sm;
+          })
+        );
+        useEspnLive.getState().set(events, next);
       } catch {
         /* ignore */
       }

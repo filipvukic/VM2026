@@ -95,7 +95,7 @@ export function Pitch({
         .ppl-b.red{ width:11px; height:15px; border-radius:2px; background:var(--loss); }
         .ppl-out{ position:absolute; right:-7px; bottom:-5px; display:flex; align-items:center; gap:1px; height:16px; padding:0 4px;
           border-radius:8px; background:var(--loss); color:#fff; font-size:9px; font-weight:800; box-shadow:0 2px 5px rgba(0,0,0,.5); }
-        .ppl-rating{ position:absolute; left:50%; bottom:-8px; transform:translateX(-50%);
+        .ppl-rating{ position:absolute; left:-6px; bottom:-7px;
           min-width:22px; height:16px; padding:0 3px; border-radius:5px; display:grid; place-items:center;
           font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 2px 5px rgba(0,0,0,.55); }
         .ppl:active .ppl-card{ transform:scale(.93); }

@@ -5,7 +5,7 @@
 // scores/status/minute straight from ESPN and overlays them onto the fixtures for
 // DISPLAY — independent of the cron. The engine stays the source of truth for
 // committed data and for player POINTS (overlay never invents points).
-import type { RawFixture } from "../data/types";
+import type { RawFixture, RawLineup, RawLineupPlayer } from "../data/types";
 
 export interface EspnGoal {
   minute: string;
@@ -14,6 +14,8 @@ export interface EspnGoal {
   type: string;
 }
 export interface EspnLite {
+  id: string; // ESPN event id (for the summary/lineup fetch)
+  koUtc: string;
   homeNorm: string;
   awayNorm: string;
   state: string; // "pre" | "in" | "post"
@@ -25,6 +27,7 @@ export interface EspnLite {
   venue: { stadium: string; city?: string; country?: string } | null;
   goals: EspnGoal[];
 }
+export interface EspnLineups { home: RawLineup | null; away: RawLineup | null }
 
 function norm(s: string): string {
   return (s || "")
@@ -108,6 +111,8 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
               type: d.type?.text || "Goal",
             }));
           out.push({
+            id: String(ev.id || ev.uid || ""),
+            koUtc: ev.date || "",
             homeNorm: norm(h.team?.displayName || h.team?.name || h.team?.shortDisplayName || ""),
             awayNorm: norm(a.team?.displayName || a.team?.name || a.team?.shortDisplayName || ""),
             state: type.state || "",
@@ -134,39 +139,115 @@ function minuteFromClock(clock: string | null): string | null {
   return cleaned || null;
 }
 
-// Overlay live ESPN status/score/minute onto fixtures. DISPLAY only: never
-// downgrades a match the engine already finalised, and only touches matches in
-// the live window so it can't disturb historical/scored data.
-export function overlayFixtures(fixtures: RawFixture[], events: EspnLite[], nowMs: number): RawFixture[] {
+const SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=";
+
+// Per-match detail from ESPN's summary endpoint (CORS-enabled): lineups + subs +
+// cards. `espnHome` flags whether each event belongs to ESPN's home team — the
+// overlay maps that to our home/away via the matched orientation.
+export interface EspnSummary {
+  homeLineup: RawLineup | null;
+  awayLineup: RawLineup | null;
+  subs: { minute: string; espnHome: boolean; playerIn?: string; playerOut?: string }[];
+  cards: { minute: string; espnHome: boolean; player?: string; card: string }[];
+}
+
+function rosterPlayer(p: any): RawLineupPlayer {
+  const a = p.athlete || {};
+  return {
+    name: a.displayName || `${a.firstName || ""} ${a.lastName || ""}`.trim(),
+    position: p.position?.abbreviation,
+    jersey: p.jersey,
+    shirtNumber: p.jersey,
+    espnId: a.id != null ? String(a.id) : undefined,
+    subbedIn: !!p.subbedIn,
+    subbedOut: !!p.subbedOut,
+  };
+}
+function lineupSide(roster: any, eventId: string): RawLineup | null {
+  const players = roster?.roster || [];
+  const starters = players.filter((p: any) => p.starter).map(rosterPlayer);
+  if (!starters.length) return null;
+  return {
+    formation: roster.formation,
+    lineup: starters,
+    bench: players.filter((p: any) => !p.starter).map(rosterPlayer),
+    _espnEventId: eventId,
+  };
+}
+
+export async function fetchEventSummary(eventId: string): Promise<EspnSummary | null> {
+  try {
+    const r = await fetch(SUMMARY + eventId, { cache: "no-store" });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const ros = d.rosters || [];
+    const hr = ros.find((x: any) => x.homeAway === "home");
+    const ar = ros.find((x: any) => x.homeAway === "away");
+    const homeTeamId = String(hr?.team?.id ?? "");
+    const subs: EspnSummary["subs"] = [];
+    const cards: EspnSummary["cards"] = [];
+    const mins = (e: any) => String(e.clock?.displayValue || "").replace(/[^0-9+]/g, "");
+    for (const e of d.keyEvents || []) {
+      const et = (e.type?.type || "").toLowerCase();
+      const espnHome = String(e.team?.id ?? "") === homeTeamId;
+      const parts = e.participants || [];
+      const p0 = parts[0]?.athlete?.displayName;
+      const p1 = parts[1]?.athlete?.displayName;
+      if (et === "substitution") subs.push({ minute: mins(e), espnHome, playerIn: p0, playerOut: p1 });
+      else if (et === "yellow-card") cards.push({ minute: mins(e), espnHome, player: p0, card: "YELLOW" });
+      else if (et === "red-card") {
+        const second = /(second yellow|second booking)/i.test(e.text || "");
+        cards.push({ minute: mins(e), espnHome, player: p0, card: second ? "YELLOW_RED" : "RED" });
+      }
+    }
+    return {
+      homeLineup: hr ? lineupSide(hr, eventId) : null,
+      awayLineup: ar ? lineupSide(ar, eventId) : null,
+      subs,
+      cards,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// Overlay live ESPN data onto fixtures. DISPLAY only — never downgrades a match
+// the engine already finalised, only touches matches in the live window, never
+// invents points. Scoreboard gives status/score/minute/venue/goals for all
+// matches; the per-match summary adds lineups/subs/cards (incl. for not-yet-started
+// matches whose XI has been announced).
+export function overlayFixtures(
+  fixtures: RawFixture[],
+  events: EspnLite[],
+  summaries: Record<string, EspnSummary>,
+  nowMs: number,
+): RawFixture[] {
   if (!events.length) return fixtures;
-  const live = events.filter((e) => e.state === "in" || e.state === "post");
-  if (!live.length) return fixtures;
+  const pool = events.filter((e) => e.state === "in" || e.state === "post" || e.state === "pre");
+  if (!pool.length) return fixtures;
 
   return fixtures.map((f) => {
     if (f.status === "FINISHED" || f.status === "AWARDED") return f;
     if (!f.home || !f.away) return f;
     const ko = Date.parse(f.utcDate || "");
-    if (Number.isNaN(ko) || Math.abs(nowMs - ko) > 36 * 3600 * 1000) return f; // outside live window
+    if (Number.isNaN(ko) || Math.abs(nowMs - ko) > 36 * 3600 * 1000) return f; // outside window
     const fh = canon(norm(f.home)), fa = canon(norm(f.away));
 
     let best: EspnLite | null = null;
     let bestScore = 0;
-    for (const e of live) {
+    for (const e of pool) {
       const eh = canon(e.homeNorm), ea = canon(e.awayNorm);
       const direct = (eh === fh && ea === fa) || (eh === fa && ea === fh);
-      // best of same-orientation vs swapped name similarity (out of 2.0)
       const s = direct ? 2 : Math.max(similar(eh, fh) + similar(ea, fa), similar(eh, fa) + similar(ea, fh));
       if (s > bestScore) { bestScore = s; best = e; }
     }
-    if (!best || bestScore < 1.4) return f; // require a confident match
+    if (!best || bestScore < 1.4) return f;
 
     const eh = canon(best.homeNorm);
     const sameOrient = eh === fh || (eh !== fa && similar(eh, fh) >= similar(eh, fa));
-    const [h, a] = sameOrient ? [best.home, best.away] : [best.away, best.home];
-    if (Number.isNaN(h) || Number.isNaN(a)) return f;
+    const ourIsHome = (espnHome: boolean) => (sameOrient ? espnHome : !espnHome);
+    const ourTla = (espnHome: boolean) => (ourIsHome(espnHome) ? f.homeTla : f.awayTla);
 
-    // venue: ESPN has the real stadium; only fill it in when the (stale) engine
-    // data has none, otherwise the UI falls back to a wrong per-group default.
     const venue =
       f.venue && f.venue.stadium
         ? f.venue
@@ -174,25 +255,42 @@ export function overlayFixtures(fixtures: RawFixture[], events: EspnLite[], nowM
           ? { stadium: best.venue.stadium, city: best.venue.city, country: best.venue.country }
           : f.venue;
 
-    // goals timeline from the scoreboard's scoring plays. Keep the engine's goals
-    // when it already has at least as many (they carry assists/richer data).
+    // lineups + subs + cards from the summary
+    let homeLineup = f.homeLineup, awayLineup = f.awayLineup, subs = f.subs, bookings = f.bookings;
+    const sm = summaries[best.id];
+    if (sm) {
+      const luH = sameOrient ? sm.homeLineup : sm.awayLineup;
+      const luA = sameOrient ? sm.awayLineup : sm.homeLineup;
+      if (!homeLineup?.lineup?.length && luH) homeLineup = { ...luH, tla: f.homeTla };
+      if (!awayLineup?.lineup?.length && luA) awayLineup = { ...luA, tla: f.awayTla };
+      if (sm.subs.length > (f.subs?.length || 0)) {
+        subs = sm.subs.map((s) => ({ minute: s.minute, team: ourTla(s.espnHome), playerIn: s.playerIn, playerOut: s.playerOut }));
+      }
+      if (sm.cards.length > (f.bookings?.length || 0)) {
+        bookings = sm.cards.map((c) => ({ minute: c.minute, team: ourTla(c.espnHome), player: c.player, card: c.card }));
+      }
+    }
+
+    if (best.state === "pre") {
+      return { ...f, venue, homeLineup, awayLineup }; // XI announced; keep upcoming status
+    }
+
+    const [h, a] = sameOrient ? [best.home, best.away] : [best.away, best.home];
     let goals = f.goals;
     if (best.goals.length > (f.goals?.length || 0)) {
       let hc = 0, ac = 0;
       goals = best.goals.map((g) => {
-        const espnIsHome = g.espnTeamId === best.homeId;
-        const ourHome = sameOrient ? espnIsHome : !espnIsHome;
-        const tla = ourHome ? f.homeTla : f.awayTla;
+        const home = ourIsHome(g.espnTeamId === best.homeId);
         const t = g.type.toLowerCase();
         const type = t.includes("own") ? "OWN" : t.includes("penalty") ? "PENALTY" : t.includes("header") ? "HEADER" : "REGULAR";
-        if (ourHome) hc++; else ac++;
-        return { minute: g.minute, team: tla, scorer: g.scorer, type, score: [hc, ac] as [number, number] };
+        if (home) hc++; else ac++;
+        return { minute: g.minute, team: home ? f.homeTla : f.awayTla, scorer: g.scorer, type, score: [hc, ac] as [number, number] };
       });
     }
 
     if (best.state === "post") {
-      return { ...f, status: "FINISHED", score: [h, a], venue, goals };
+      return { ...f, status: "FINISHED", score: [h, a], venue, goals, homeLineup, awayLineup, subs, bookings };
     }
-    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, _liveOverlay: true };
+    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, homeLineup, awayLineup, subs, bookings, _liveOverlay: true };
   });
 }
