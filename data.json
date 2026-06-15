@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-15T16:24:32+00:00",
+  "updated_at": "2026-06-15T20:00:57+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Albin",
-      "match_points": 28,
+      "match_points": 29,
       "bonus_points": 0,
-      "total": 28,
+      "total": 29,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 22,
+      "match_points": 23,
       "bonus_points": 0,
-      "total": 22,
+      "total": 23,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 22,
+      "match_points": 23,
       "bonus_points": 0,
-      "total": 22,
+      "total": 23,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 22,
+      "match_points": 23,
       "bonus_points": 0,
-      "total": 22,
+      "total": 23,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 21,
+      "match_points": 22,
       "bonus_points": 0,
-      "total": 21,
+      "total": 22,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 20,
+      "match_points": 21,
       "bonus_points": 0,
-      "total": 20,
+      "total": 21,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 20,
+      "match_points": 21,
       "bonus_points": 0,
-      "total": 20,
+      "total": 21,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 20,
+      "match_points": 21,
       "bonus_points": 0,
-      "total": 20,
+      "total": 21,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 20,
+      "match_points": 21,
       "bonus_points": 0,
-      "total": 20,
+      "total": 21,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 19,
+      "match_points": 20,
       "bonus_points": 0,
-      "total": 19,
+      "total": 20,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 17,
+      "match_points": 18,
       "bonus_points": 0,
-      "total": 17,
+      "total": 18,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -3577,13 +3577,16 @@
       "homeTla": "ESP",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         0,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
         "fullTime": [
           0,
           0
@@ -3595,25 +3598,14 @@
       },
       "minute": null,
       "goals": [],
-      "bookings": [
-        {
-          "minute": "16",
-          "team": "CPV",
-          "player": "Sidny Lopes Cabral",
-          "card": "YELLOW",
-          "period": 1
-        }
-      ],
+      "bookings": [],
       "subs": [],
-      "venue": {
-        "stadium": "Mercedes-Benz Stadium",
-        "city": "Atlanta, Georgia",
-        "country": "USA"
-      },
+      "venue": null,
       "referees": [
         {
-          "name": "Adham Mohammad",
-          "role": "Referee"
+          "name": "Adham Makhadmeh",
+          "role": "REFEREE",
+          "nationality": "Jordan"
         }
       ],
       "odds": null,
@@ -3625,7 +3617,7 @@
             7,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -3633,7 +3625,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -3641,7 +3633,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -3649,7 +3641,7 @@
             4,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -3657,7 +3649,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -3665,7 +3657,7 @@
             5,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -3673,7 +3665,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -3681,7 +3673,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -3689,7 +3681,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Hampus",
@@ -3697,7 +3689,7 @@
             5,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -3705,7 +3697,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -3719,22 +3711,76 @@
       "homeTla": "BEL",
       "away": "Egypt",
       "awayTla": "EGY",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "HT",
+      "goals": [
+        {
+          "minute": "19",
+          "team": "EGY",
+          "scorer": "Emam Ashour",
+          "assist": "Mohamed Salah",
+          "type": "REGULAR",
+          "description": "Goal! Belgium 0, Egypt 1. Emam Ashour (Egypt) right footed shot from outside the box to the bottom left corner. Assisted by Mohamed Salah.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "13",
+          "team": "EGY",
+          "player": "Marawan Attia",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "14",
+          "team": "BEL",
+          "player": "Timothy Castagne",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "34",
+          "team": "EGY",
+          "player": "Ahmed Fatouh",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
-      "venue": null,
-      "referees": [],
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
+      "referees": [
+        {
+          "name": "Ramon Abatti Abel",
+          "role": "Referee"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -3853,7 +3899,13 @@
       "bookings": [],
       "subs": [],
       "venue": null,
-      "referees": [],
+      "referees": [
+        {
+          "name": "Maurizio Mariani",
+          "role": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -11056,26 +11108,14 @@
         {
           "team": "Egypt",
           "tla": "EGY",
-          "played": 0,
-          "won": 0,
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
+          "gf": 1,
           "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Belgium",
-          "tla": "BEL",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Iran",
@@ -11099,6 +11139,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Belgium",
+          "tla": "BEL",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
