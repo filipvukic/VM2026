@@ -532,10 +532,11 @@ function WinChanceBlock({ m }: { m: Match }) {
   // a pre-match prediction is only meaningful before the result is known
   if (m.status === "played" || (m.status === "live" && !!m.likelyEnded)) return null;
   const o = winChance(m);
-  if (!o) return null;
+  // only show REAL bookmaker odds — never our own model fallback
+  if (!o || o.source === "Modell") return null;
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
-  const src = o.source === "ESPN" ? "Odds: ESPN" : o.source === "Odds" ? "Odds: football-data" : "Statistisk modell";
+  const src = o.source === "ESPN" ? "Odds: ESPN" : "Odds: football-data";
   return (
     <div className="card" style={{ marginTop: 14, padding: "11px 13px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>

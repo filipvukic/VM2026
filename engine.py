@@ -499,8 +499,9 @@ def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
         if status in ("TIMED", "SCHEDULED"):
             if 2.5 <= age_h <= 12:
                 to_fetch.append((1, m, espn_id))  # Borde vara klar
-            elif -24 <= age_h <= 0:
-                # Kommande match: hämta om ej cachad eller cache > 6 h gammal
+            elif -120 <= age_h <= 0:
+                # Kommande match (upp till 5 dygn före): hämta odds/uppställning/venue.
+                # Hämta om ej cachad eller cache > 6 h gammal
                 cached = cache.get(espn_id, {})
                 cached_at = cached.get("_fetched_at", "")
                 stale = True
