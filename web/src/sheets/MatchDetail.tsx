@@ -231,15 +231,21 @@ function Overview({ m }: { m: Match }) {
 interface TLEvent { minute: string; side: "h" | "a"; icon: string; main: string; sub?: string; order: number }
 function buildTimeline(m: Match): TLEvent[] {
   const ev: TLEvent[] = [];
-  const min = (x?: string | number) => parseInt(String(x || "0"), 10) || 0;
+  // "45+5" → 45.05 so stoppage-time events sort within their minute (not collapsed
+  // to 45). Event-type offsets are tiny so they only break exact ties.
+  const min = (x?: string | number) => {
+    const mt = String(x ?? "0").match(/^(\d+)(?:\+(\d+))?/);
+    if (!mt) return 0;
+    return parseInt(mt[1], 10) + (mt[2] ? parseInt(mt[2], 10) / 100 : 0);
+  };
   m.scorers.forEach((g) =>
     ev.push({ minute: `${g.minute}'`, side: g.team === m.home ? "h" : "a", icon: "⚽", main: `${g.name}${g.pen ? " (str)" : ""}`, sub: g.assist ? `assist: ${g.assist}` : undefined, order: min(g.minute) })
   );
   m.cards.forEach((c) =>
-    ev.push({ minute: `${c.minute}'`, side: c.team === m.home ? "h" : "a", icon: c.type === "red" ? "🟥" : "🟨", main: c.name, order: min(c.minute) + 0.1 })
+    ev.push({ minute: `${c.minute}'`, side: c.team === m.home ? "h" : "a", icon: c.type === "red" ? "🟥" : "🟨", main: c.name, order: min(c.minute) + 0.001 })
   );
   m.subs.forEach((s) =>
-    ev.push({ minute: `${s.minute}'`, side: s.team === m.home ? "h" : "a", icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `ut: ${s.playerOut}` : undefined, order: min(s.minute) + 0.2 })
+    ev.push({ minute: `${s.minute}'`, side: s.team === m.home ? "h" : "a", icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `ut: ${s.playerOut}` : undefined, order: min(s.minute) + 0.002 })
   );
   return ev.sort((a, b) => a.order - b.order);
 }
@@ -255,21 +261,27 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const db = usePlayersDb();
   const detail = useMatchStats(m._realId ?? null);
   const [side, setSide] = useState<"h" | "a">("h");
-  const lu = side === "h" ? m.homeLineup : m.awayLineup;
+  const rawLu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
-  // FotMob ratings for this team's players, matched by name (full → surname).
-  const { full: ratFull, last: ratLast } = (() => {
-    const full = new Map<string, number>(), last = new Map<string, number>();
+  // FotMob ratings + minutes for this team's players, matched by name (full → surname).
+  const { rFull, rLast, mFull, mLast } = (() => {
+    const rFull = new Map<string, number>(), rLast = new Map<string, number>();
+    const mFull = new Map<string, number>(), mLast = new Map<string, number>();
     (detail?.players || []).forEach((p) => {
-      if (p.rating == null || p.tla !== code) return;
-      full.set(ratingNorm(p.name), p.rating);
-      const ln = ratingNorm((p.name || "").split(" ").slice(-1)[0]);
-      if (ln && !last.has(ln)) last.set(ln, p.rating);
+      if (p.tla !== code) return;
+      const fn = ratingNorm(p.name), ln = ratingNorm((p.name || "").split(" ").slice(-1)[0]);
+      if (p.rating != null) { rFull.set(fn, p.rating); if (ln && !rLast.has(ln)) rLast.set(ln, p.rating); }
+      if (p.min != null) { mFull.set(fn, p.min as number); if (ln && !mLast.has(ln)) mLast.set(ln, p.min as number); }
     });
-    return { full, last };
+    return { rFull, rLast, mFull, mLast };
   })();
   const getRating = (name: string): number | null =>
-    ratFull.get(ratingNorm(name)) ?? ratLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+    rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+  const getMin = (name: string): number | null =>
+    mFull.get(ratingNorm(name)) ?? mLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+  // FotMob formation is accurate (ESPN's is often wrong, e.g. 3-1-4-2 vs 3-4-1-2)
+  const fmFormation = detail?.formations?.[side === "h" ? "home" : "away"];
+  const lu = rawLu && fmFormation ? { ...rawLu, formation: fmFormation } : rawLu;
   const t = code ? ds.teams[code] : null;
   if (!lu?.lineup?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
   const coachRec = code ? coaches?.[code] : null;
@@ -308,7 +320,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         lu.formation && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {lu.formation}</span></div>
       )}
-      <Pitch lineup={lu} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} />
+      <Pitch lineup={lu} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} getMin={getMin} />
       {lu.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>

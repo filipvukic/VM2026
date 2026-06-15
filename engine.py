@@ -518,7 +518,9 @@ def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
         if status == "FINISHED":
             cached = cache.get(espn_id, {})
             has_events = bool(cached.get("goals") or cached.get("bookings"))
-            if not has_events and age_h < 48:
+            # backfill events for finished matches even days later (cron can lag /
+            # be throttled, and the events cache permanently once fetched)
+            if not has_events and age_h < 720:
                 to_fetch.append((2, m, espn_id))
 
     # Applicera befintlig cache direkt

@@ -255,6 +255,7 @@ export interface MatchPlayerStat {
   pos?: string | null;
   shirt?: string | number | null;
   rating: number | null;
+  min?: number | null;
   stats: Record<string, number | string>;
 }
 export interface MatchShot {
@@ -268,6 +269,7 @@ export interface MatchStatsDetail {
   homeTla: string;
   awayTla: string;
   finished: boolean;
+  formations?: { home?: string | null; away?: string | null } | null;
   team: MatchTeamStat[];
   players: MatchPlayerStat[];
   shots: MatchShot[];

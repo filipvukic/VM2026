@@ -102,12 +102,16 @@ def extract_players(content, tla_of):
     for pid, p in (content.get("playerStats") or {}).items():
         flat = {}
         rating = None
+        minutes = None
         for grp in p.get("stats", []):
             for label, v in (grp.get("stats") or {}).items():
                 key = v.get("key")
                 val = (v.get("stat") or {}).get("value")
                 if key == "rating_title":
                     rating = val
+                    continue
+                if key == "minutes_played":
+                    minutes = val
                     continue
                 if key in label_map and val is not None:
                     flat[label_map[key]] = num(val)
@@ -120,6 +124,7 @@ def extract_players(content, tla_of):
             "pos": p.get("usualPosition"),
             "shirt": p.get("shirtNumber"),
             "rating": rating,
+            "min": minutes,
             "stats": ordered,
         })
     out.sort(key=lambda x: (x["rating"] or 0), reverse=True)
@@ -249,10 +254,19 @@ def main():
             for t in team:
                 t["home"], t["away"] = t["away"], t["home"]
 
+        # FotMob formations (accurate, unlike ESPN), oriented to our home/away
+        fm_home_form = (lineup.get("homeTeam") or {}).get("formation")
+        fm_away_form = (lineup.get("awayTeam") or {}).get("formation")
+        formations = {
+            "home": fm_home_form if fm_home_is_our_home else fm_away_form,
+            "away": fm_away_form if fm_home_is_our_home else fm_home_form,
+        }
+
         out = {
             "fixtureId": fx["id"], "fmMatchId": fm_match_id,
             "homeTla": fx["homeTla"], "awayTla": fx["awayTla"],
             "finished": finished, "updated": now.isoformat(),
+            "formations": formations,
             "team": team, "players": players, "shots": shots, "heatmap": heatmap,
         }
         out_path.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
