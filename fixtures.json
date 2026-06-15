@@ -5034,7 +5034,7 @@
         "period": 2
       },
       {
-        "minute": "88",
+        "minute": "89",
         "team": "JPN",
         "scorer": "Daichi Kamada",
         "assist": "Koki Ogawa",
@@ -5657,28 +5657,28 @@
       "offsides": 1.0,
       "wonCorners": 5.0,
       "saves": 1.0,
-      "possessionPct": 59.8,
+      "possessionPct": 59.7,
       "totalShots": 10.0,
       "shotsOnTarget": 6.0,
       "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
       "accuratePasses": 464.0,
-      "totalPasses": 525.0,
+      "totalPasses": 524.0,
       "passPct": 0.9,
       "accurateCrosses": 8.0,
       "totalCrosses": 21.0,
       "crossPct": 0.4,
-      "totalLongBalls": 36.0,
-      "accurateLongBalls": 17.0,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 16.0,
       "longballPct": 0.5,
       "blockedShots": 1.0,
       "effectiveTackles": 5.0,
       "totalTackles": 11.0,
       "tacklePct": 0.5,
       "interceptions": 7.0,
-      "effectiveClearance": 22.0,
-      "totalClearance": 22.0
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
     },
     "awayStats": {
       "foulsCommitted": 7.0,
@@ -5687,7 +5687,7 @@
       "offsides": 0.0,
       "wonCorners": 4.0,
       "saves": 4.0,
-      "possessionPct": 40.2,
+      "possessionPct": 40.3,
       "totalShots": 10.0,
       "shotsOnTarget": 3.0,
       "shotPct": 0.3,
@@ -5699,8 +5699,8 @@
       "accurateCrosses": 6.0,
       "totalCrosses": 23.0,
       "crossPct": 0.3,
-      "totalLongBalls": 38.0,
-      "accurateLongBalls": 14.0,
+      "totalLongBalls": 37.0,
+      "accurateLongBalls": 13.0,
       "longballPct": 0.4,
       "blockedShots": 1.0,
       "effectiveTackles": 10.0,
@@ -5808,585 +5808,17 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": {
-      "stadium": "Lincoln Financial Field",
-      "city": "Philadelphia, Pennsylvania",
-      "country": "USA"
-    },
+    "venue": null,
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": {
-      "homeML": 225,
-      "awayML": 155,
-      "spread": "ECU -0.5",
-      "overUnder": 1.5,
-      "overOdds": -170.0,
-      "underOdds": 140.0,
-      "provider": "DraftKings"
-    },
-    "homeLineup": {
-      "formation": "4-4-2",
-      "lineup": [
-        {
-          "name": "Yahia Fofana",
-          "position": "G",
-          "positionName": "Goalkeeper",
-          "jersey": "1",
-          "espnId": "261595",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ghislain Konan",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "3",
-          "espnId": "250888",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Wilfried Singo",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "5",
-          "espnId": "286569",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Guela Doué",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "17",
-          "espnId": "346636",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Emmanuel Agbadou",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "20",
-          "espnId": "308449",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Franck Kessié",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "8",
-          "espnId": "194711",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Bazoumana Touré",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "24",
-          "espnId": "359108",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Seko Fofana",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "6",
-          "espnId": "184118",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Yan Diomande",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "11",
-          "espnId": "402479",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Elye Wahi",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "12",
-          "espnId": "311118",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Nicolas Pépé",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "19",
-          "espnId": "210397",
-          "subbedIn": true,
-          "subbedOut": true
-        }
-      ],
-      "bench": [
-        {
-          "name": "Parfait Guiagon",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "25",
-          "espnId": "257055",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Christ Inao Oulaï",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "26",
-          "espnId": "386989",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Christopher Operi",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "13",
-          "espnId": "249072",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Simon Adingra",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "10",
-          "espnId": "317404",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ange-Yoan Bonny",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "9",
-          "espnId": "309185",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Oumar Diakité",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "14",
-          "espnId": "329483",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Mohamed Koné",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "16",
-          "espnId": "323997",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ibrahim Sangaré",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "18",
-          "espnId": "213718",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ousmane Diomande",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "2",
-          "espnId": "343964",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Evan Ndicka",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "21",
-          "espnId": "242593",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Alban Lafont",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "23",
-          "espnId": "231282",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Evann Guessand",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "22",
-          "espnId": "288924",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jean Michaël Seri",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "4",
-          "espnId": "193539",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Amad Diallo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "15",
-          "espnId": "291630",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Odilon Kossounou",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "7",
-          "espnId": "284822",
-          "subbedIn": true,
-          "subbedOut": true
-        }
-      ],
-      "tla": "CIV",
-      "_espnEventId": "760423"
-    },
-    "awayLineup": {
-      "formation": "3-4-3",
-      "lineup": [
-        {
-          "name": "Hernán Galíndez",
-          "position": "G",
-          "positionName": "Goalkeeper",
-          "jersey": "1",
-          "espnId": "207921",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Joel Ordóñez",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "4",
-          "espnId": "336589",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Piero Hincapié",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "3",
-          "espnId": "292062",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Willian Pacho",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "6",
-          "espnId": "287005",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Pedro Vite",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "15",
-          "espnId": "297150",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Moisés Caicedo",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "23",
-          "espnId": "289877",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Alan Franco",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "21",
-          "espnId": "262111",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Alan Minda",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "14",
-          "espnId": "319422",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "John Yeboah",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "9",
-          "espnId": "265926",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Enner Valencia",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "13",
-          "espnId": "171771",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Gonzalo Plata",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "19",
-          "espnId": "277352",
-          "subbedIn": true,
-          "subbedOut": true
-        }
-      ],
-      "bench": [
-        {
-          "name": "Kevin Rodríguez",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "11",
-          "espnId": "281316",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Gonzalo Valle",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "22",
-          "espnId": "131726",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Pervis Estupiñán",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "7",
-          "espnId": "214689",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Denil Castillo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "18",
-          "espnId": "328742",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jordy Caicedo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "16",
-          "espnId": "217079",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Nilson Angulo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "20",
-          "espnId": "318090",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Anthony Valencia",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "8",
-          "espnId": "303328",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ángelo Preciado",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "17",
-          "espnId": "256560",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Kendry Páez",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "10",
-          "espnId": "358746",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Yaimar Medina",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "26",
-          "espnId": "315600",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jackson Porozo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "25",
-          "espnId": "286665",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Félix Torres",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "2",
-          "espnId": "251963",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jeremy Arévalo",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "24",
-          "espnId": "367725",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jordy Alcívar",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "5",
-          "espnId": "270829",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Moisés Ramírez",
-          "position": "SUB",
-          "positionName": "Substitute",
-          "jersey": "12",
-          "espnId": "269881",
-          "subbedIn": true,
-          "subbedOut": true
-        }
-      ],
-      "tla": "ECU",
-      "_espnEventId": "760423"
-    },
+    "espnOdds": null,
+    "homeLineup": null,
+    "awayLineup": null,
     "homeStats": {},
     "awayStats": {},
-    "homeForm": [
-      {
-        "date": "2026-06-04",
-        "result": "F",
-        "gf": 1,
-        "ga": 2,
-        "home": false
-      },
-      {
-        "date": "2026-03-31",
-        "result": "V",
-        "gf": 1,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-03-28",
-        "result": "F",
-        "gf": 0,
-        "ga": 4,
-        "home": false
-      },
-      {
-        "date": "2026-01-10",
-        "result": "F",
-        "gf": 2,
-        "ga": 3,
-        "home": false
-      },
-      {
-        "date": "2026-01-06",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
-        "home": true
-      }
-    ],
-    "awayForm": [
-      {
-        "date": "2026-06-07",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-05-30",
-        "result": "V",
-        "gf": 2,
-        "ga": 1,
-        "home": true
-      },
-      {
-        "date": "2026-03-31",
-        "result": "O",
-        "gf": 1,
-        "ga": 1,
-        "home": false
-      },
-      {
-        "date": "2026-03-27",
-        "result": "O",
-        "gf": 1,
-        "ga": 1,
-        "home": false
-      },
-      {
-        "date": "2025-11-19",
-        "result": "V",
-        "gf": 2,
-        "ga": 0,
-        "home": true
-      }
-    ]
+    "homeForm": [],
+    "awayForm": []
   },
   {
     "id": 537358,
@@ -6425,7 +5857,7 @@
       "spread": "SWE -0.5",
       "overUnder": 2.5,
       "overOdds": 115.0,
-      "underOdds": -140.0,
+      "underOdds": -145.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
