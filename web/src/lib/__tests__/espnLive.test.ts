@@ -11,7 +11,8 @@ const fx = (over: Partial<any>): any => ({
   ...over,
 });
 const ev = (over: Partial<EspnLite>): EspnLite => ({
-  homeNorm: "sweden", awayNorm: "tunisia", state: "in", home: 0, away: 0, clock: "5'", ...over,
+  homeNorm: "sweden", awayNorm: "tunisia", state: "in", home: 0, away: 0, clock: "5'",
+  homeId: "h", awayId: "a", venue: null, goals: [], ...over,
 });
 
 describe("overlayFixtures", () => {
@@ -47,6 +48,34 @@ describe("overlayFixtures", () => {
     const [m] = overlayFixtures([f], [ev({ state: "in", home: 0, away: 0 })], NOW);
     expect(m.status).toBe("FINISHED");
     expect(m.score).toEqual([3, 0]);
+  });
+
+  it("overlays the real venue and goal events from the scoreboard", () => {
+    const e = ev({
+      home: 1, away: 0, clock: "9'",
+      venue: { stadium: "Estadio BBVA", city: "Guadalupe", country: "Mexico" },
+      goals: [{ minute: "9", espnTeamId: "h", scorer: "Yasin Ayari", type: "Goal - Volley" }],
+    });
+    const [m] = overlayFixtures([fx({})], [e], NOW);
+    expect(m.venue).toEqual({ stadium: "Estadio BBVA", city: "Guadalupe", country: "Mexico" });
+    expect(m.goals).toHaveLength(1);
+    expect(m.goals![0]).toMatchObject({ team: "SWE", scorer: "Yasin Ayari", type: "REGULAR", score: [1, 0] });
+  });
+
+  it("maps goal team correctly when orientation is flipped", () => {
+    const e = ev({
+      homeNorm: "tunisia", awayNorm: "sweden", homeId: "tun", awayId: "swe", home: 0, away: 1,
+      goals: [{ minute: "9", espnTeamId: "swe", scorer: "Ayari", type: "Goal" }],
+    });
+    const [m] = overlayFixtures([fx({})], [e], NOW); // our fixture: Sweden home, Tunisia away
+    expect(m.goals![0].team).toBe("SWE"); // ESPN away (swe) → our home column
+  });
+
+  it("keeps the engine's richer goals when it already has as many", () => {
+    const f = fx({ goals: [{ minute: "9", team: "SWE", scorer: "Ayari", assist: "Bernström", type: "REGULAR" }] });
+    const e = ev({ home: 1, away: 0, goals: [{ minute: "9", espnTeamId: "h", scorer: "Ayari", type: "Goal" }] });
+    const [m] = overlayFixtures([f], [e], NOW);
+    expect(m.goals![0].assist).toBe("Bernström"); // engine goal kept
   });
 
   it("ignores matches far outside the live window", () => {

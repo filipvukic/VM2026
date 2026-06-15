@@ -7,6 +7,12 @@
 // committed data and for player POINTS (overlay never invents points).
 import type { RawFixture } from "../data/types";
 
+export interface EspnGoal {
+  minute: string;
+  espnTeamId: string;
+  scorer: string;
+  type: string;
+}
 export interface EspnLite {
   homeNorm: string;
   awayNorm: string;
@@ -14,6 +20,10 @@ export interface EspnLite {
   home: number;
   away: number;
   clock: string | null;
+  homeId: string;
+  awayId: string;
+  venue: { stadium: string; city?: string; country?: string } | null;
+  goals: EspnGoal[];
 }
 
 function norm(s: string): string {
@@ -85,6 +95,18 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
           const key = (ev.id || ev.uid || "") + "";
           if (key && seen.has(key)) continue;
           if (key) seen.add(key);
+          const v = comp.venue;
+          const venue = v?.fullName
+            ? { stadium: v.fullName, city: v.address?.city, country: v.address?.country }
+            : null;
+          const goals: EspnGoal[] = (comp.details || [])
+            .filter((d: any) => d.scoringPlay)
+            .map((d: any) => ({
+              minute: (d.clock?.displayValue || "").replace(/[^0-9+]/g, ""),
+              espnTeamId: String(d.team?.id || ""),
+              scorer: (d.athletesInvolved || [])[0]?.displayName || "Mål",
+              type: d.type?.text || "Goal",
+            }));
           out.push({
             homeNorm: norm(h.team?.displayName || h.team?.name || h.team?.shortDisplayName || ""),
             awayNorm: norm(a.team?.displayName || a.team?.name || a.team?.shortDisplayName || ""),
@@ -92,6 +114,10 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
             home: Number(h.score),
             away: Number(a.score),
             clock: (comp.status || ev.status || {}).displayClock || null,
+            homeId: String(h.team?.id || h.id || ""),
+            awayId: String(a.team?.id || a.id || ""),
+            venue,
+            goals,
           });
         }
       } catch {
@@ -139,9 +165,34 @@ export function overlayFixtures(fixtures: RawFixture[], events: EspnLite[], nowM
     const [h, a] = sameOrient ? [best.home, best.away] : [best.away, best.home];
     if (Number.isNaN(h) || Number.isNaN(a)) return f;
 
-    if (best.state === "post") {
-      return { ...f, status: "FINISHED", score: [h, a] };
+    // venue: ESPN has the real stadium; only fill it in when the (stale) engine
+    // data has none, otherwise the UI falls back to a wrong per-group default.
+    const venue =
+      f.venue && f.venue.stadium
+        ? f.venue
+        : best.venue
+          ? { stadium: best.venue.stadium, city: best.venue.city, country: best.venue.country }
+          : f.venue;
+
+    // goals timeline from the scoreboard's scoring plays. Keep the engine's goals
+    // when it already has at least as many (they carry assists/richer data).
+    let goals = f.goals;
+    if (best.goals.length > (f.goals?.length || 0)) {
+      let hc = 0, ac = 0;
+      goals = best.goals.map((g) => {
+        const espnIsHome = g.espnTeamId === best.homeId;
+        const ourHome = sameOrient ? espnIsHome : !espnIsHome;
+        const tla = ourHome ? f.homeTla : f.awayTla;
+        const t = g.type.toLowerCase();
+        const type = t.includes("own") ? "OWN" : t.includes("penalty") ? "PENALTY" : t.includes("header") ? "HEADER" : "REGULAR";
+        if (ourHome) hc++; else ac++;
+        return { minute: g.minute, team: tla, scorer: g.scorer, type, score: [hc, ac] as [number, number] };
+      });
     }
-    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), _liveOverlay: true };
+
+    if (best.state === "post") {
+      return { ...f, status: "FINISHED", score: [h, a], venue, goals };
+    }
+    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, _liveOverlay: true };
   });
 }
