@@ -528,29 +528,47 @@ function DetailBar({ label, h, a }: { label: string; h: number | string; a: numb
 }
 
 function WinChanceBlock({ m }: { m: Match }) {
+  const ds = useData();
+  // a pre-match prediction is only meaningful before the result is known
+  if (m.status === "played" || (m.status === "live" && !!m.likelyEnded)) return null;
   const o = winChance(m);
   if (!o) return null;
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
+  const real = /espn|odds|bookmaker/i.test(o.source);
+  const lead = o.H >= o.D && o.H >= o.A ? "h" : o.A >= o.D && o.A >= o.H ? "a" : "d";
   return (
-    <Block title={`Vinstchans · ${o.source}`}>
-      <div style={{ display: "flex", height: 30, borderRadius: 8, overflow: "hidden", gap: 2 }}>
-        <Seg pct={o.H} color="var(--hot)" label="1" />
-        <Seg pct={o.D} color="var(--ink-3)" label="X" />
-        <Seg pct={o.A} color="var(--cool)" label="2" />
-      </div>
-      {m.espnOdds && (m.espnOdds.overUnder || m.espnOdds.spread) && (
-        <div className="dim" style={{ fontSize: 11.5, marginTop: 10, display: "flex", gap: 14 }}>
-          {m.espnOdds.spread && <span>Spread: <b style={{ color: "var(--ink)" }}>{m.espnOdds.spread}</b></span>}
-          {m.espnOdds.overUnder && <span>Mållinje: <b style={{ color: "var(--ink)" }}>{m.espnOdds.overUnder}</b></span>}
+    <Block title="Vinstchans">
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 8, marginBottom: 11 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0 }}>
+            <Flag iso={home?.iso} code={m.home} size={17} />
+            <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{home?.name || "Hemma"}</span>
+          </span>
+          <span className="num" style={{ fontSize: 23, fontWeight: 800, color: "var(--hot)", opacity: lead === "h" ? 1 : 0.65 }}>{o.H}%</span>
         </div>
-      )}
+        <div style={{ textAlign: "center", flexShrink: 0 }}>
+          <div className="dim" style={{ fontSize: 11, fontWeight: 700 }}>Oavgjort</div>
+          <div className="num" style={{ fontSize: 18, fontWeight: 800, color: "var(--ink-2)", opacity: lead === "d" ? 1 : 0.65, marginTop: 5 }}>{o.D}%</div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0, alignItems: "flex-end" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, flexDirection: "row-reverse" }}>
+            <Flag iso={away?.iso} code={m.away} size={17} />
+            <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{away?.name || "Borta"}</span>
+          </span>
+          <span className="num" style={{ fontSize: 23, fontWeight: 800, color: "var(--cool-2)", opacity: lead === "a" ? 1 : 0.65 }}>{o.A}%</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", height: 8, borderRadius: 999, overflow: "hidden", gap: 2 }}>
+        <div style={{ width: `${o.H}%`, background: "var(--hot)" }} />
+        <div style={{ width: `${o.D}%`, background: "var(--ink-3)" }} />
+        <div style={{ width: `${o.A}%`, background: "var(--cool)" }} />
+      </div>
+      <div className="dim" style={{ fontSize: 10.5, marginTop: 8 }}>
+        {real ? "Baserat på spelbolagens odds" : "Statistisk uppskattning"}
+        {m.espnOdds?.overUnder ? ` · mållinje ${m.espnOdds.overUnder}` : ""}
+      </div>
     </Block>
-  );
-}
-function Seg({ pct, color, label }: { pct: number; color: string; label: string }) {
-  return (
-    <div style={{ width: `${pct}%`, background: color, display: "grid", placeItems: "center", color: "#0a0712", fontWeight: 800, fontSize: 12, minWidth: 30 }}>
-      {label} {pct}%
-    </div>
   );
 }
 
