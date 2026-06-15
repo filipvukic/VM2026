@@ -21,6 +21,9 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
   }
   const s = String(m.minute);
   if (/^(HT|HALFTIME|PAUS|HALF[\s-]?TIME)$/i.test(s)) return "Paus";
+  // overlay minute is the live ESPN clock, refreshed ~every 25s — show it as-is
+  // instead of ticking it forward from the (possibly stale) engine timestamp.
+  if (m.liveOverlay) return s + "'";
   if (!/^\d+$/.test(s)) return s + "'"; // e.g. "90+2"
   const base = parseInt(s, 10);
   const elapsed = updatedAtMs ? Math.max(0, Math.floor((nowMs - updatedAtMs) / 60000)) : 0;

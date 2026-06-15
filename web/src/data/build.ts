@@ -361,6 +361,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       pen: penScore,
       minute: live && f.minute != null ? f.minute : live ? null : undefined,
       likelyEnded: live && Date.now() - +kickoff > maxLiveMin(stage) * 60000,
+      liveOverlay: !!f._liveOverlay,
       venue,
       officialOdds: f.odds || null,
       cardOdds: f.cardOdds || null,

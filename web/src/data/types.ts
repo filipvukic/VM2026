@@ -118,6 +118,9 @@ export interface RawFixture {
   awayForm?: RawFormEntry[];
   cardOdds?: { home: number; draw: number; away: number };
   xg?: { home: number; away: number } | null;
+  /** set by the client ESPN overlay — minute is the live ESPN clock (fresh), so
+      the UI should NOT tick it forward from the (stale) engine timestamp. */
+  _liveOverlay?: boolean;
 }
 
 export interface RawTip {
@@ -334,6 +337,8 @@ export interface Match {
   winner: string | null;
   pen: [number, number] | null;
   minute?: number | string | null;
+  /** minute came live from the client ESPN overlay → show it as-is (don't tick). */
+  liveOverlay?: boolean;
   /** status is still "live" in the feed but kickoff is far enough in the past
       that the match is certainly over — a safety net for the engine/CI lag in
       flipping it to FINISHED. Affects display only, never scoring. */

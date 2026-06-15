@@ -142,6 +142,6 @@ export function overlayFixtures(fixtures: RawFixture[], events: EspnLite[], nowM
     if (best.state === "post") {
       return { ...f, status: "FINISHED", score: [h, a] };
     }
-    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock) };
+    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), _liveOverlay: true };
   });
 }
