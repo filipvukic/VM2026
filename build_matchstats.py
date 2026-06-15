@@ -208,8 +208,15 @@ def main():
         if not fx:
             continue
         out_path = OUT_DIR / f"{fx['id']}.json"
+        # Skip a finished match ONLY if its file was already written as finished.
+        # A file written while the match was still live holds mid-match stats —
+        # re-fetch once it's done so the FINAL ratings/xG/goals are captured.
         if finished and out_path.exists() and not FORCE:
-            continue
+            try:
+                if json.loads(out_path.read_text(encoding="utf-8")).get("finished"):
+                    continue
+            except Exception:
+                pass
 
         try:
             pp = get_next("https://www.fotmob.com" + fm["pageUrl"].split("#")[0])["props"]["pageProps"]
