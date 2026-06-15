@@ -20,16 +20,22 @@ export function InfoView() {
         <div className="card card-pad" style={{ marginBottom: 16 }}>
           <div className="kicker" style={{ marginBottom: 6 }}>Notiser</div>
           <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
-            Få en avi på datorn/mobilen för <b>mål, avspark och slutsignal</b>. Bevaka en enskild match via
-            klockan inne på matchen, eller slå på avisering när <b>vilken match som helst</b> startar här nedan.
-            Mål och slutsignal kräver att sidan är öppen; <b>avspark-aviseringar fungerar även när sidan är
-            stängd</b> i webbläsare som stödjer det (t.ex. Chrome) — på iPhone visas de medan sidan är öppen.
+            Få en avi för <b>mål, avspark och slutsignal</b> — bevaka en enskild match via klockan inne på
+            matchen, eller slå på avisering när <b>vilken match som helst</b> börjar här nedan.
+            Notiserna fungerar så länge <b>fliken är öppen</b> (även som bakgrundsflik) — en helt stängd flik
+            kan tyvärr inte ta emot notiser utan en server.
           </div>
           <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
             <button
               role="switch"
               aria-checked={notif.kickoffAll}
-              onClick={() => notif.setKickoffAll(!notif.kickoffAll)}
+              onClick={async () => {
+                const turningOn = !notif.kickoffAll;
+                await notif.setKickoffAll(turningOn);
+                if (turningOn && useNotif.getState().kickoffAll) {
+                  fireNotification("🔔 Avspark-notiser på", "Du får en avi när en match börjar (håll fliken öppen).", "ko-all-on");
+                }
+              }}
               style={{
                 width: 46, height: 27, borderRadius: 999, flexShrink: 0, position: "relative",
                 background: notif.kickoffAll ? "var(--win)" : "var(--surface-3)", border: "1px solid var(--line-2)", transition: "background .2s",

@@ -30,9 +30,11 @@ export function Pitch({
   const db = usePlayersDb();
   const rows = buildRows(lineup); // back-to-front: [GK], defence, midfield(s), attack
   const nRows = rows.length;
-  const rowY = (idx: number) => 91 - (idx / Math.max(1, nRows - 1)) * 82;
+  // keep the top row clear of the pitch edge and give the rows breathing room
+  const rowY = (idx: number) => 88 - (idx / Math.max(1, nRows - 1)) * 75;
 
   const goalNames = new Set(match.scorers.map((g) => (g.name || "").toLowerCase()));
+  const assistNames = new Set(match.scorers.filter((g) => g.assist).map((g) => (g.assist || "").toLowerCase()));
   const redNames = new Set(match.cards.filter((c) => c.type === "red").map((c) => (c.name || "").toLowerCase()));
   const subOut = new Map<string, string | number>();
   match.subs.filter((s) => s.team === teamCode).forEach((s) => {
@@ -59,6 +61,7 @@ export function Pitch({
               x={x}
               y={rowY(idx)}
               goal={goalNames.has(nm)}
+              assist={assistNames.has(nm)}
               red={redNames.has(nm)}
               outAt={subOut.get(nm)}
               rating={getRating ? getRating(p.name) : null}
@@ -68,7 +71,7 @@ export function Pitch({
         });
       })}
       <style>{`
-        .pitch{ position:relative; width:100%; aspect-ratio:7/9; max-width:440px; margin:0 auto;
+        .pitch{ position:relative; width:100%; aspect-ratio:7/10.2; max-width:440px; margin:0 auto;
           border-radius:18px; overflow:hidden;
           background:linear-gradient(170deg,#0f3a22,#0c2c1a);
           border:1px solid var(--line-2); box-shadow:inset 0 0 60px rgba(0,0,0,.4); }
@@ -92,6 +95,7 @@ export function Pitch({
         .ppl-badges{ position:absolute; right:-6px; top:-6px; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
         .ppl-b{ width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:10px; box-shadow:0 2px 5px rgba(0,0,0,.5); }
         .ppl-b.goal{ background:#fff; }
+        .ppl-b.assist{ background:var(--cool); color:#fff; font-family:var(--font-display); font-weight:800; font-size:11px; }
         .ppl-b.red{ width:11px; height:15px; border-radius:2px; background:var(--loss); }
         .ppl-out{ position:absolute; right:-7px; bottom:-5px; display:flex; align-items:center; gap:1px; height:16px; padding:0 4px;
           border-radius:8px; background:var(--loss); color:#fff; font-size:9px; font-weight:800; box-shadow:0 2px 5px rgba(0,0,0,.5); }
@@ -112,6 +116,7 @@ function PitchPlayer({
   x,
   y,
   goal,
+  assist,
   red,
   outAt,
   rating,
@@ -123,6 +128,7 @@ function PitchPlayer({
   x: number;
   y: number;
   goal: boolean;
+  assist: boolean;
   red: boolean;
   outAt?: string | number;
   rating?: number | null;
@@ -145,6 +151,7 @@ function PitchPlayer({
         {num && <span className="ppl-num" style={{ background: color }}>{num}</span>}
         <div className="ppl-badges">
           {goal && <span className="ppl-b goal">⚽</span>}
+          {assist && <span className="ppl-b assist" title="Assist">A</span>}
           {red && <span className="ppl-b red" />}
         </div>
         {outAt !== undefined && <span className="ppl-out">↓{outAt}'</span>}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
-import { useNotif } from "../state/notifications";
+import { useNotif, fireNotification } from "../state/notifications";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Pitch } from "../components/Pitch";
 import { GroupTable } from "../components/GroupTable";
@@ -104,7 +104,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
             {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{m.attendance ? ` · ${m.attendance.toLocaleString("sv-SE")} i publiken` : ""}
           </div>
         )}
-        {m.status !== "played" && <WatchButton id={m.id} />}
+        {m.status !== "played" && <WatchButton id={m.id} label={`${home?.name || m.home || "?"} – ${away?.name || m.away || "?"}`} />}
       </div>
 
       {/* tabs */}
@@ -146,17 +146,21 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   );
 }
 
-function WatchButton({ id }: { id: string }) {
+function WatchButton({ id, label }: { id: string; label: string }) {
   const notif = useNotif();
   if (!notif.supported) return null;
   const watching = notif.subscribed.includes(id);
+  const onClick = async () => {
+    const wasWatching = notif.subscribed.includes(id);
+    await notif.toggleMatch(id);
+    // confirm immediately so the user SEES it works (and knows permission was granted)
+    if (!wasWatching && useNotif.getState().subscribed.includes(id)) {
+      fireNotification("🔔 Du bevakar matchen", `${label} — notiser vid avspark, mål & slut`, "watch-" + id);
+    }
+  };
   return (
     <div style={{ marginTop: 14 }}>
-      <button
-        className="btn"
-        onClick={() => notif.toggleMatch(id)}
-        style={watching ? { borderColor: "var(--gold)", color: "var(--gold)" } : {}}
-      >
+      <button className="btn" onClick={onClick} style={watching ? { borderColor: "var(--gold)", color: "var(--gold)" } : {}}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill={watching ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
           <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M13.7 21a2 2 0 0 1-3.4 0" strokeLinecap="round" />
@@ -164,7 +168,9 @@ function WatchButton({ id }: { id: string }) {
         {watching ? "Bevakar matchen ✓" : "Bevaka matchen"}
       </button>
       <div className="dim" style={{ fontSize: 10.5, marginTop: 6 }}>
-        Notis vid avspark, mål och slutsignal — medan sidan är öppen.
+        {notif.permission === "denied"
+          ? "⚠️ Notiser är blockerade i webbläsaren — tillåt dem via hänglåset bredvid adressfältet."
+          : "Notis vid avspark, mål och slutsignal. Håll fliken öppen (även i bakgrundsflik) — stängd flik kan inte ta emot notiser."}
       </div>
     </div>
   );
@@ -276,6 +282,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
     if (s.playerIn) subIn.set(s.playerIn, { at: s.minute, forName: s.playerOut });
   });
   const goalNames = new Set(m.scorers.map((g) => (g.name || "").toLowerCase()));
+  const assistNames = new Set(m.scorers.filter((g) => g.assist).map((g) => (g.assist || "").toLowerCase()));
 
   return (
     <div>
@@ -309,6 +316,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
             {lu.bench.map((p, i) => {
               const came = subIn.get(p.name);
               const scored = goalNames.has((p.name || "").toLowerCase());
+              const assisted = assistNames.has((p.name || "").toLowerCase());
               const rb = getRating(p.name);
               return (
                 <button key={i} onClick={() => openFb(p.name, p.espnId)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: came ? "color-mix(in srgb,var(--win) 12%, var(--surface))" : "var(--surface)", border: "1px solid var(--line)" }}>
@@ -316,6 +324,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
                     <PlayerImg src={lineupPhoto(p.name, p.espnId, db)} name={p.name} size={46} radius={13} fontSize={16} />
                     {came && <span style={{ position: "absolute", right: -4, bottom: -3, height: 16, padding: "0 4px", borderRadius: 8, background: "var(--win)", color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>↑{came.at}'</span>}
                     {scored && <span style={{ position: "absolute", left: -5, top: -5, fontSize: 12 }}>⚽</span>}
+                    {assisted && <span style={{ position: "absolute", left: 9, top: -7, width: 15, height: 15, borderRadius: "50%", background: "var(--cool)", color: "#fff", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center", fontFamily: "var(--font-display)" }}>A</span>}
                     {rb != null && <span className="num" style={{ position: "absolute", left: -5, bottom: -3, minWidth: 20, height: 15, padding: "0 3px", borderRadius: 5, background: ratingColor(rb), color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>{rb.toFixed(1)}</span>}
                   </span>
                   <span style={{ fontSize: 11, fontWeight: 700, textAlign: "center", lineHeight: 1.1, maxWidth: 78, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxInlineSize: 78 }}>

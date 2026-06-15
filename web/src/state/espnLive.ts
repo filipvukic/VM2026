@@ -37,29 +37,30 @@ export function startEspnLive() {
     timer = null;
     const now = Date.now();
     const hidden = typeof document !== "undefined" && document.hidden;
-    if (!hidden) {
-      try {
-        const events = await fetchEspnEvents(now);
-        const cur = useEspnLive.getState().summaries;
-        const next = { ...cur };
-        const want = events.filter((e) => {
-          const ko = Date.parse(e.koUtc || "");
-          const win = !Number.isNaN(ko) && now - ko > -90 * 60000 && now - ko < 4 * 3600 * 1000;
-          return win && (e.state === "in" || e.state === "pre");
-        });
-        await Promise.all(
-          want.map(async (e) => {
-            if (e.state !== "in" && next[e.id]) return; // pre fetched once; live always refetched
-            const sm = await fetchEventSummary(e.id);
-            if (sm) next[e.id] = sm;
-          })
-        );
-        useEspnLive.getState().set(events, next);
-      } catch {
-        /* ignore */
-      }
+    // Keep polling even when the tab is hidden (slower) so live updates — and the
+    // goal/kickoff NOTIFICATIONS that ride on them — still fire in a background tab.
+    try {
+      const events = await fetchEspnEvents(now);
+      const cur = useEspnLive.getState().summaries;
+      const next = { ...cur };
+      const want = events.filter((e) => {
+        const ko = Date.parse(e.koUtc || "");
+        const win = !Number.isNaN(ko) && now - ko > -90 * 60000 && now - ko < 4 * 3600 * 1000;
+        return win && (e.state === "in" || e.state === "pre");
+      });
+      await Promise.all(
+        want.map(async (e) => {
+          if (e.state !== "in" && next[e.id]) return; // pre fetched once; live always refetched
+          const sm = await fetchEventSummary(e.id);
+          if (sm) next[e.id] = sm;
+        })
+      );
+      useEspnLive.getState().set(events, next);
+    } catch {
+      /* ignore */
     }
-    const delay = hidden ? 60000 : inLiveWindow(Date.now()) ? 25000 : 240000;
+    const live = inLiveWindow(Date.now());
+    const delay = hidden ? (live ? 60000 : 300000) : live ? 25000 : 240000;
     timer = setTimeout(tick, delay);
   };
   tick();
