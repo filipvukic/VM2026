@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-15T05:16:42+00:00",
+  "updated_at": "2026-06-15T08:02:39+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -549,19 +549,156 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "9",
+          "team": "MEX",
+          "scorer": "Julián Quiñones",
+          "assist": "Érik Lira",
+          "type": "REGULAR",
+          "description": "Goal! Mexico 1, South Africa 0. Julián Quiñones (Mexico) right footed shot from the centre of the box to the centre of the goal. Assisted by Érik Lira.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "67",
+          "team": "MEX",
+          "scorer": "Raúl Jiménez",
+          "assist": "Roberto Alvarado",
+          "type": "HEADER",
+          "description": "Goal! Mexico 2, South Africa 0. Raúl Jiménez (Mexico) header from very close range to the bottom left corner. Assisted by Roberto Alvarado with a cross.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "17",
+          "team": "RSA",
+          "player": "Teboho Mokoena",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "23",
+          "team": "MEX",
+          "player": "Brian Gutiérrez",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "49",
+          "team": "RSA",
+          "player": "Sphephelo Sithole",
+          "card": "RED",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "RSA",
+          "player": "Nkosinathi Sibisi",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "RSA",
+          "player": "Themba Zwane",
+          "card": "RED",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "MEX",
+          "player": "César Montes",
+          "card": "RED",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "56",
+          "team": "RSA",
+          "playerIn": "Thalente Mbatha",
+          "playerOut": "Lyle Foster",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "RSA",
+          "playerIn": "Themba Zwane",
+          "playerOut": "Jayden Adams",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "MEX",
+          "playerIn": "Luis Chávez",
+          "playerOut": "Brian Gutiérrez",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "MEX",
+          "playerIn": "Gilberto Mora",
+          "playerOut": "Álvaro Fidalgo",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "MEX",
+          "playerIn": "Edson Álvarez",
+          "playerOut": "Érik Lira",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "MEX",
+          "playerIn": "Armando González",
+          "playerOut": "Raúl Jiménez",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "RSA",
+          "playerIn": "Evidence Makgopa",
+          "playerOut": "Iqraam Rayners",
+          "period": 2
+        },
+        {
+          "minute": "77",
+          "team": "RSA",
+          "playerIn": "Oswin Appollis",
+          "playerOut": "Aubrey Modiba",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "MEX",
+          "playerIn": "Alexis Vega",
+          "playerOut": "Julián Quiñones",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Estadio Banorte",
+        "city": "Mexico City",
+        "country": "Mexico"
+      },
       "referees": [
         {
-          "name": "Wilton Sampaio",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "name": "Wilton Pereira Sampaio",
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 80824,
       "tips": [
         {
           "name": "Albin",
@@ -683,19 +820,134 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "59",
+          "team": "CZE",
+          "scorer": "Ladislav Krejcí",
+          "assist": "Vladimír Coufal",
+          "type": "HEADER",
+          "description": "Goal! Korea Republic 0, Czechia 1. Ladislav Krejcí (Czechia) header from very close range to the bottom right corner. Assisted by Vladimír Coufal.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "KOR",
+          "scorer": "Hwang In-Beom",
+          "assist": "Lee Kang-In",
+          "type": "REGULAR",
+          "description": "Goal! Korea Republic 1, Czechia 1. Hwang In-Beom (Korea Republic) right footed shot from the centre of the box to the bottom right corner. Assisted by Lee Kang-In.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "KOR",
+          "scorer": "Oh Hyeon-Gyu",
+          "assist": "Hwang In-Beom",
+          "type": "REGULAR",
+          "description": "Goal! Korea Republic 2, Czechia 1. Oh Hyeon-Gyu (Korea Republic) left footed shot from very close range to the bottom left corner. Assisted by Hwang In-Beom.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "90+6",
+          "team": "KOR",
+          "player": "Lee Gi-Hyuk",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "62",
+          "team": "KOR",
+          "playerIn": "Hwang Hee-Chan",
+          "playerOut": "Lee Jae-Sung",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Adam Hlozek",
+          "playerOut": "Pavel Sulc",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Tomás Chorý",
+          "playerOut": "Patrik Schick",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "CZE",
+          "playerIn": "Michal Sadílek",
+          "playerOut": "Lukás Provod",
+          "period": 2
+        },
+        {
+          "minute": "69",
+          "team": "KOR",
+          "playerIn": "Eom Ji-Sung",
+          "playerOut": "Lee Tae-Seok",
+          "period": 2
+        },
+        {
+          "minute": "69",
+          "team": "KOR",
+          "playerIn": "Oh Hyeon-Gyu",
+          "playerOut": "Son Heung-Min",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "KOR",
+          "playerIn": "Kim Jin-Gyu",
+          "playerOut": "Hwang In-Beom",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "KOR",
+          "playerIn": "Park Jin-Seop",
+          "playerOut": "Paik Seung-Ho",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "CZE",
+          "playerIn": "Mojmír Chytil",
+          "playerOut": "Alexandr Sojka",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Estadio Akron",
+        "city": "Guadalajara",
+        "country": "Mexico"
+      },
       "referees": [
         {
           "name": "Amin Omar",
-          "role": "REFEREE",
-          "nationality": "Egypt"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 44985,
       "tips": [
         {
           "name": "Albin",
@@ -817,19 +1069,156 @@
         "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "21",
+          "team": "BIH",
+          "scorer": "Jovo Lukic",
+          "assist": "Sead Kolasinac",
+          "type": "HEADER",
+          "description": "Goal! Canada 0, Bosnia and Herzegovina 1. Jovo Lukic (Bosnia and Herzegovina) header from very close range to the centre of the goal. Assisted by Sead Kolasinac with a headed pass following a corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "78",
+          "team": "CAN",
+          "scorer": "Cyle Larin",
+          "assist": "Promise David",
+          "type": "REGULAR",
+          "description": "Goal! Canada 1, Bosnia and Herzegovina 1. Cyle Larin (Canada) right footed shot from the centre of the box to the bottom right corner. Assisted by Promise David.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "11",
+          "team": "CAN",
+          "player": "Alistair Johnston",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "BIH",
+          "player": "Ermedin Demirovic",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45+1",
+          "team": "BIH",
+          "player": "Jovo Lukic",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "53",
+          "team": "CAN",
+          "player": "Luc de Fougerolles",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "BIH",
+          "player": "Nikola Katic",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "61",
+          "team": "CAN",
+          "playerIn": "Jacob Shaffelburg",
+          "playerOut": "Liam Millar",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CAN",
+          "playerIn": "Promise David",
+          "playerOut": "Jonathan David",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CAN",
+          "playerIn": "Ali Ahmed",
+          "playerOut": "Tajon Buchanan",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "BIH",
+          "playerIn": "Samed Bazdar",
+          "playerOut": "Jovo Lukic",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "BIH",
+          "playerIn": "Armin Gigovic",
+          "playerOut": "Ivan Basic",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "BIH",
+          "playerIn": "Ivan Sunjic",
+          "playerOut": "Esmir Bajraktarevic",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "BIH",
+          "playerIn": "Kerim Alajbegovic",
+          "playerOut": "Amar Memic",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "CAN",
+          "playerIn": "Cyle Larin",
+          "playerOut": "Tani Oluwaseyi",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "BIH",
+          "playerIn": "Dzenis Burnic",
+          "playerOut": "Sead Kolasinac",
+          "period": 2
+        },
+        {
+          "minute": "90+1",
+          "team": "CAN",
+          "playerIn": "Jonathan Osorio",
+          "playerOut": "Stephen Eustáquio",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
       "referees": [
         {
           "name": "Facundo Tello",
-          "role": "REFEREE",
-          "nationality": "Argentina"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 43002,
       "tips": [
         {
           "name": "Albin",
@@ -951,19 +1340,195 @@
         "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "7",
+          "team": "USA",
+          "scorer": "Damián Bobadilla",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Damián Bobadilla, Paraguay. USA 1, Paraguay 0.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "31",
+          "team": "USA",
+          "scorer": "Folarin Balogun",
+          "assist": "Christian Pulisic",
+          "type": "REGULAR",
+          "description": "Goal! USA 2, Paraguay 0. Folarin Balogun (USA) right footed shot from the centre of the box to the bottom right corner. Assisted by Christian Pulisic.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+5",
+          "team": "USA",
+          "scorer": "Folarin Balogun",
+          "assist": "Malik Tillman",
+          "type": "REGULAR",
+          "description": "Goal! USA 3, Paraguay 0. Folarin Balogun (USA) left footed shot from the centre of the box to the top left corner. Assisted by Malik Tillman.",
+          "score": [
+            3,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "73",
+          "team": "PAR",
+          "scorer": "Maurício",
+          "assist": "Julio Enciso",
+          "type": "REGULAR",
+          "description": "Goal! USA 3, Paraguay 1. Mauricio (Paraguay) left footed shot from the centre of the box to the bottom right corner. Assisted by Julio Enciso following a set piece situation.",
+          "score": [
+            3,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+8",
+          "team": "USA",
+          "scorer": "Giovanni Reyna",
+          "assist": "Alex Freeman",
+          "type": "REGULAR",
+          "description": "Goal! USA 4, Paraguay 1. Giovanni Reyna (USA) right footed shot from the centre of the box to the bottom left corner. Assisted by Alex Freeman.",
+          "score": [
+            4,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "10",
+          "team": "PAR",
+          "player": "Juan Jose Cáceres",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "53",
+          "team": "PAR",
+          "player": "Miguel Almirón",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "59",
+          "team": "USA",
+          "player": "Tyler Adams",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "PAR",
+          "player": "Diego Gómez",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "88",
+          "team": "PAR",
+          "player": "Alex Arce",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "PAR",
+          "player": "Júnior Alonso",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "PAR",
+          "playerIn": "Maurício",
+          "playerOut": "Damián Bobadilla",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "USA",
+          "playerIn": "Sebastian Berhalter",
+          "playerOut": "Christian Pulisic",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "PAR",
+          "playerIn": "Alex Arce",
+          "playerOut": "Antonio Sanabria",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "USA",
+          "playerIn": "Timothy Weah",
+          "playerOut": "Sergiño Dest",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "USA",
+          "playerIn": "Ricardo Pepi",
+          "playerOut": "Folarin Balogun",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "PAR",
+          "playerIn": "Ramón Sosa",
+          "playerOut": "Miguel Almirón",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "PAR",
+          "playerIn": "Gustavo Velázquez",
+          "playerOut": "Juan Jose Cáceres",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "PAR",
+          "playerIn": "Alejandro Romero Gamarra",
+          "playerOut": "Diego Gómez",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "USA",
+          "playerIn": "Giovanni Reyna",
+          "playerOut": "Malik Tillman",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Danny Makkelie",
-          "role": "REFEREE",
-          "nationality": "Netherlands"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70492,
       "tips": [
         {
           "name": "Albin",
@@ -3045,7 +3610,7 @@
           "period": 2
         },
         {
-          "minute": "90+1",
+          "minute": "90",
           "team": "SWE",
           "playerIn": "Anthony Elanga",
           "playerOut": "Alexander Isak",
@@ -3187,11 +3752,7 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": {
-        "stadium": "Mercedes-Benz Stadium",
-        "city": "Atlanta, Georgia",
-        "country": "USA"
-      },
+      "venue": null,
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -3310,11 +3871,7 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": {
-        "stadium": "Lumen Field",
-        "city": "Seattle, Washington",
-        "country": "USA"
-      },
+      "venue": null,
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -3433,11 +3990,7 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": {
-        "stadium": "Hard Rock Stadium",
-        "city": "Miami Gardens, Florida",
-        "country": "USA"
-      },
+      "venue": null,
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -3556,11 +4109,7 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": {
-        "stadium": "SoFi Stadium",
-        "city": "Inglewood, California",
-        "country": "USA"
-      },
+      "venue": null,
       "referees": [],
       "odds": null,
       "attendance": null,
