@@ -530,20 +530,20 @@ function DetailBar({ label, h, a }: { label: string; h: number | string; a: numb
 
 function WinChanceBlock({ m }: { m: Match }) {
   const ds = useData();
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
   const committed = winChance(m);
   const haveReal = committed && committed.source !== "Modell";
   const ended = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
-  // no real odds committed yet → fetch them on demand (hook called unconditionally)
+  // no real odds committed yet → fetch them on demand (matched to ESPN by team NAME)
   const lazy = useFixtureOdds(
     !haveReal && !ended ? (m._realId != null ? String(m._realId) : m.id) : null,
-    m.home, m.away, m.kickoff ? m.kickoff.toISOString() : null,
+    home?.name, away?.name, m.kickoff ? m.kickoff.toISOString() : null,
   );
   if (ended) return null;
   const o = haveReal ? committed : lazy ? winChanceFromEspn(lazy.homeML, lazy.awayML) : null;
   // only show REAL bookmaker odds — never our own model fallback
   if (!o) return null;
-  const home = m.home ? ds.teams[m.home] : null;
-  const away = m.away ? ds.teams[m.away] : null;
   const src = o.source === "ESPN" ? "Odds: ESPN" : "Odds: football-data";
   return (
     <div className="card" style={{ marginTop: 14, padding: "11px 13px" }}>
