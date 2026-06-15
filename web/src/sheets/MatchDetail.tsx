@@ -535,40 +535,26 @@ function WinChanceBlock({ m }: { m: Match }) {
   if (!o) return null;
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
-  const real = /espn|odds|bookmaker/i.test(o.source);
-  const lead = o.H >= o.D && o.H >= o.A ? "h" : o.A >= o.D && o.A >= o.H ? "a" : "d";
+  const src = o.source === "ESPN" ? "Odds: ESPN" : o.source === "Odds" ? "Odds: football-data" : "Statistisk modell";
   return (
-    <Block title="Vinstchans">
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 8, marginBottom: 11 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0 }}>
-            <Flag iso={home?.iso} code={m.home} size={17} />
-            <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{home?.name || "Hemma"}</span>
-          </span>
-          <span className="num" style={{ fontSize: 23, fontWeight: 800, color: "var(--hot)", opacity: lead === "h" ? 1 : 0.65 }}>{o.H}%</span>
-        </div>
-        <div style={{ textAlign: "center", flexShrink: 0 }}>
-          <div className="dim" style={{ fontSize: 11, fontWeight: 700 }}>Oavgjort</div>
-          <div className="num" style={{ fontSize: 18, fontWeight: 800, color: "var(--ink-2)", opacity: lead === "d" ? 1 : 0.65, marginTop: 5 }}>{o.D}%</div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5, flex: 1, minWidth: 0, alignItems: "flex-end" }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, flexDirection: "row-reverse" }}>
-            <Flag iso={away?.iso} code={m.away} size={17} />
-            <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{away?.name || "Borta"}</span>
-          </span>
-          <span className="num" style={{ fontSize: 23, fontWeight: 800, color: "var(--cool-2)", opacity: lead === "a" ? 1 : 0.65 }}>{o.A}%</span>
-        </div>
+    <div className="card" style={{ marginTop: 14, padding: "11px 13px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <span className="kicker">Vinstchans</span>
+        <span className="dim" style={{ fontSize: 9.5 }}>{src}</span>
       </div>
-      <div style={{ display: "flex", height: 8, borderRadius: 999, overflow: "hidden", gap: 2 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+        <Flag iso={home?.iso} code={m.home} size={15} />
+        <span className="num" style={{ fontSize: 16, fontWeight: 800, color: "var(--hot)" }}>{o.H}%</span>
+        <span className="dim" style={{ flex: 1, textAlign: "center", fontSize: 11 }}>oavgjort <b style={{ color: "var(--ink-2)" }}>{o.D}%</b></span>
+        <span className="num" style={{ fontSize: 16, fontWeight: 800, color: "var(--cool-2)" }}>{o.A}%</span>
+        <Flag iso={away?.iso} code={m.away} size={15} />
+      </div>
+      <div style={{ display: "flex", height: 6, borderRadius: 999, overflow: "hidden", gap: 2 }}>
         <div style={{ width: `${o.H}%`, background: "var(--hot)" }} />
         <div style={{ width: `${o.D}%`, background: "var(--ink-3)" }} />
         <div style={{ width: `${o.A}%`, background: "var(--cool)" }} />
       </div>
-      <div className="dim" style={{ fontSize: 10.5, marginTop: 8 }}>
-        {real ? "Baserat på spelbolagens odds" : "Statistisk uppskattning"}
-        {m.espnOdds?.overUnder ? ` · mållinje ${m.espnOdds.overUnder}` : ""}
-      </div>
-    </Block>
+    </div>
   );
 }
 
