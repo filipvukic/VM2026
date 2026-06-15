@@ -65,11 +65,11 @@ export function BonusView() {
       )}
 
       <style>{`
-        .bonus-grid{ display:grid; gap:14px; grid-template-columns:1fr; }
-        @media(min-width:680px){ .bonus-grid{ grid-template-columns:1fr 1fr; } }
-        @media(min-width:1040px){ .bonus-grid{ grid-template-columns:1fr 1fr 1fr; } }
-        .scorer-grid{ display:grid; gap:14px; grid-template-columns:1fr; margin-top:22px; }
-        @media(min-width:760px){ .scorer-grid{ grid-template-columns:1fr 1fr; } }
+        .bonus-grid{ display:grid; gap:14px; grid-template-columns:minmax(0,1fr); }
+        @media(min-width:680px){ .bonus-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+        @media(min-width:1040px){ .bonus-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+        .scorer-grid{ display:grid; gap:14px; grid-template-columns:minmax(0,1fr); margin-top:22px; }
+        @media(min-width:760px){ .scorer-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
       `}</style>
     </div>
   );

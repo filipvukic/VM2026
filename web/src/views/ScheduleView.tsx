@@ -115,9 +115,11 @@ function ScheduleList({ ds }: { ds: Dataset }) {
         .fchip.live.on{ background:var(--hot); color:#fff; }
         .fchip:disabled{ opacity:.4; }
         .day-head{ display:flex; align-items:baseline; justify-content:space-between; margin:0 2px 9px; font-family:var(--font-display); text-transform:uppercase; letter-spacing:.04em; font-weight:800; font-size:15px; }
-        .day-grid{ display:grid; gap:9px; grid-template-columns:1fr; }
-        @media(min-width:760px){ .day-grid{ grid-template-columns:1fr 1fr; } }
-        @media(min-width:1100px){ .day-grid{ grid-template-columns:1fr 1fr 1fr; } }
+        /* minmax(0,1fr) (not bare 1fr) so a long team name can't widen the column
+           past the screen — names clip via ellipsis instead. */
+        .day-grid{ display:grid; gap:9px; grid-template-columns:minmax(0,1fr); }
+        @media(min-width:760px){ .day-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+        @media(min-width:1100px){ .day-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
       `}</style>
     </>
   );

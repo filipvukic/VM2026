@@ -192,9 +192,9 @@ export function StandingsView() {
         .hero-stats{ display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-2); }
         .hero-stats b{ color:var(--ink); font-size:16px; margin-right:4px; }
         .hero-match{ background:rgba(0,0,0,.28); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:12px 16px; min-width:200px; text-align:left; }
-        .home-matches{ display:grid; gap:9px; grid-template-columns:1fr; }
-        @media(min-width:560px){ .home-matches{ grid-template-columns:1fr 1fr; } }
-        @media(min-width:920px){ .home-matches{ grid-template-columns:1fr 1fr 1fr; } }
+        .home-matches{ display:grid; gap:9px; grid-template-columns:minmax(0,1fr); }
+        @media(min-width:560px){ .home-matches{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+        @media(min-width:920px){ .home-matches{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
         .podium{ display:flex; align-items:flex-end; justify-content:center; gap:10px; margin:20px 0 8px; }
         .podium-col{ display:flex; flex-direction:column; align-items:center; flex:1; max-width:160px; position:relative; }
         .crown{ position:absolute; top:-18px; font-size:20px; color:var(--gold); filter:drop-shadow(0 2px 6px rgba(255,203,69,.6)); }

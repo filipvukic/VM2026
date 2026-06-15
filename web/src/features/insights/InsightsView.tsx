@@ -74,8 +74,8 @@ export function InsightsView() {
       <TriviaCard acc={acc} ds={ds} />
 
       <style>{`
-        .ins-grid{ display:grid; gap:14px; grid-template-columns:1fr; }
-        @media(min-width:820px){ .ins-grid{ grid-template-columns:1fr 1fr; } }
+        .ins-grid{ display:grid; gap:14px; grid-template-columns:minmax(0,1fr); }
+        @media(min-width:820px){ .ins-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
         .ins-row{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:5px 6px; border-radius:8px; transition:background .12s; }
         .ins-row:hover{ background:var(--surface-2); }
       `}</style>

@@ -106,9 +106,9 @@ export function GroupsView() {
         .chip-row{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
         .gchip{ min-width:34px; height:32px; padding:0 12px; border-radius:var(--r-pill); border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-weight:800; font-size:13px; font-family:var(--font-display); display:inline-flex; align-items:center; justify-content:center; }
         .gchip.on{ color:var(--ink); border-color:var(--line-3); }
-        .group-grid{ display:grid; gap:14px; grid-template-columns:1fr; align-items:start; }
-        @media(min-width:640px){ .group-grid{ grid-template-columns:1fr 1fr; } }
-        @media(min-width:1040px){ .group-grid{ grid-template-columns:1fr 1fr 1fr; } }
+        .group-grid{ display:grid; gap:14px; grid-template-columns:minmax(0,1fr); align-items:start; }
+        @media(min-width:640px){ .group-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+        @media(min-width:1040px){ .group-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
       `}</style>
     </div>
   );
