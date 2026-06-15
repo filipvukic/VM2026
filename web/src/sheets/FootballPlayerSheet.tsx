@@ -6,6 +6,8 @@ import { PlayerImg } from "../components/PlayerImg";
 import { findPlayer, bestPhoto, espnHeadshot } from "../lib/playerPhoto";
 import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
+import { useStatsIndex, useMatchStats } from "../state/matchStats";
+import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
 
 function age(born?: string | null): number | null {
   if (!born) return null;
@@ -111,7 +113,32 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
           <div className="dim" style={{ fontSize: 12.5 }}>Har inte spelat någon VM-match ännu.</div>
         )}
       </div>
+
+      <LatestMatchStats name={p?.name || name} />
     </Sheet>
+  );
+}
+
+const idxNorm = (s: string) =>
+  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
+
+// Detailed FotMob stats for the player's most recent match (rating, heatmap, shots…).
+function LatestMatchStats({ name }: { name: string }) {
+  const ds = useData();
+  const index = useStatsIndex();
+  const entry = index?.players[idxNorm(name)];
+  const fixtureId = entry?.fx[0] || null;
+  const stats = useMatchStats(fixtureId);
+  if (!entry || !stats) return null;
+  const pl = stats.players.find((p) => p.optaId === entry.opta);
+  const fx = fixtureId ? index!.fixtures[fixtureId] : null;
+  const oppTla = pl && fx ? (pl.tla === fx.h ? fx.a : fx.h) : null;
+  const opp = oppTla ? ds.teams[oppTla]?.name || oppTla : null;
+  return (
+    <div style={{ marginTop: 18 }}>
+      <div className="kicker" style={{ marginBottom: 10 }}>Senaste matchen{opp ? ` — mot ${opp}` : ""}</div>
+      <PlayerMatchPanel stats={stats} optaId={entry.opta} subtitle={pl?.gk ? "Målvakt" : pl?.pos || undefined} />
+    </div>
   );
 }
 

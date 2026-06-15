@@ -245,6 +245,39 @@ export interface Coach {
 }
 export type CoachesDb = Record<string, Coach>; // keyed by team TLA
 
+// ---- detailed match stats (FotMob, via matchstats/<fixtureId>.json) ----
+export interface MatchTeamStat { key: string; label: string; home: number | string; away: number | string }
+export interface MatchPlayerStat {
+  optaId: string;
+  name: string;
+  tla: string | null;
+  gk: boolean;
+  pos?: string | null;
+  shirt?: string | number | null;
+  rating: number | null;
+  stats: Record<string, number | string>;
+}
+export interface MatchShot {
+  x: number; y: number; min: number | null; xg: number; tla: string | null;
+  player: string; optaId: string; goal: boolean; onTarget: boolean; outcome: string;
+}
+export interface MatchHeatmap { viewBox: string; players: Record<string, [number, number][]> }
+export interface MatchStatsDetail {
+  fixtureId: number;
+  fmMatchId?: number;
+  homeTla: string;
+  awayTla: string;
+  finished: boolean;
+  team: MatchTeamStat[];
+  players: MatchPlayerStat[];
+  shots: MatchShot[];
+  heatmap: MatchHeatmap | null;
+}
+export interface MatchStatsIndex {
+  fixtures: Record<string, { h: string; a: string; d: string }>;
+  players: Record<string, { opta: string; name: string; fx: string[] }>;
+}
+
 export interface OddsFile {
   generated?: string;
   odds?: Record<string, { H?: number; D?: number; A?: number; home?: number; draw?: number; away?: number }>;

@@ -34,14 +34,17 @@ jobs:
       - name: Hämta xG för spelade matcher
         run: python build_xg.py
 
-      - name: Committa xg.json + coaches.json
+      - name: Hämta detaljerad matchstatistik (spelare/heatmap/skott)
+        run: python build_matchstats.py
+
+      - name: Committa xg.json + coaches.json + matchstats
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add xg.json coaches.json
+          git add xg.json coaches.json matchstats
           if git diff --staged --quiet; then
-            echo "Ingen xG/coach-ändring att committa."
+            echo "Ingen xG/coach/statistik-ändring att committa."
           else
-            git commit -m "Auto-uppdatera xg.json/coaches.json [skip ci]"
+            git commit -m "Auto-uppdatera xg.json/coaches.json/matchstats [skip ci]"
             git push
           fi

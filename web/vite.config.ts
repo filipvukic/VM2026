@@ -24,7 +24,8 @@ function serveRootData(): Plugin {
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = (req.url || "").split("?")[0];
-        if (!ROOT_JSON.has(url)) return next();
+        const isMatchStats = url.startsWith("/matchstats/") && url.endsWith(".json");
+        if (!ROOT_JSON.has(url) && !isMatchStats) return next();
         try {
           const buf = await readFile(resolve(REPO_ROOT, "." + url));
           res.setHeader("Content-Type", "application/json; charset=utf-8");

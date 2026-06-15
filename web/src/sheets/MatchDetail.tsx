@@ -11,6 +11,10 @@ import { lineupPhoto } from "../lib/playerPhoto";
 import { liveMinuteText } from "../lib/liveMinute";
 import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
+import { useMatchStats } from "../state/matchStats";
+import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
+import { Shotmap } from "../components/Shotmap";
+import { ratingColor } from "../lib/rating";
 import { Flag, groupColor } from "../lib/flags";
 import { TLA_TO_ISO, NAME_TO_ISO } from "../data/static/names";
 import { TEAM_DETAILS } from "../data/static/history";
@@ -56,7 +60,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const vIso = venueIso(m.venue);
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
-  const hasStats = !!m.stats;
+  const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too
   const hasTips = m.tippas && m.tips.length > 0;
   const hasTable = m.stage === "group" && !!m.group;
   const tabs: { id: Tab; label: string; show: boolean }[] = [
@@ -115,7 +119,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
       <div key={tab} className="md-tab-content" style={{ marginTop: 14 }}>
         {tab === "overview" && <Overview m={m} />}
         {tab === "lineup" && <PitchTab m={m} ds={ds} />}
-        {tab === "stats" && m.stats && <StatsTab m={m} ds={ds} />}
+        {tab === "stats" && <StatsTab m={m} ds={ds} />}
         {tab === "table" && m.group && (
           <div>
             <div className="kicker" style={{ marginBottom: 8 }}>Tabell · Grupp {m.group}</div>
@@ -311,9 +315,67 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
 
 // ---------- Stats tab ----------
 function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
-  const s = m.stats as MatchStats;
+  const detail = useMatchStats(m._realId ?? null);
+  const [sel, setSel] = useState<string | null>(null);
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
+
+  if (detail) {
+    if (sel) {
+      return (
+        <div className="card card-pad" style={{ marginTop: 14 }}>
+          <button onClick={() => setSel(null)} className="dim" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 700, marginBottom: 12 }}>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            Alla spelare
+          </button>
+          <PlayerMatchPanel stats={detail} optaId={sel} />
+        </div>
+      );
+    }
+    const ranked = detail.players.filter((p) => p.rating != null);
+    return (
+      <>
+        {detail.team.length > 0 && (
+          <div className="card card-pad" style={{ marginTop: 14 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13 }}><Flag iso={home?.iso} code={m.home} size={20} />{home?.name}</span>
+              <span className="kicker">Lagstatistik</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13, flexDirection: "row-reverse" }}><Flag iso={away?.iso} code={m.away} size={20} />{away?.name}</span>
+            </div>
+            {detail.team.map((t) => <DetailBar key={t.key} label={t.label} h={t.home} a={t.away} />)}
+          </div>
+        )}
+
+        {detail.shots.length > 0 && (
+          <Block title="Skottkarta">
+            <Shotmap shots={detail.shots} homeTla={detail.homeTla} />
+          </Block>
+        )}
+
+        {ranked.length > 0 && (
+          <div className="card card-pad" style={{ marginTop: 14 }}>
+            <div className="kicker" style={{ marginBottom: 10 }}>Spelarbetyg — tryck för heatmap & statistik</div>
+            <div style={{ display: "grid", gap: 5 }}>
+              {ranked.map((p) => {
+                const t = p.tla ? ds.teams[p.tla] : null;
+                return (
+                  <button key={p.optaId} onClick={() => setSel(p.optaId)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 9px", borderRadius: 9, background: "var(--surface)", width: "100%", textAlign: "left" }}>
+                    <span className="num" style={{ fontSize: 13.5, fontWeight: 800, padding: "2px 7px", borderRadius: 7, background: ratingColor(p.rating!), color: "#0a0712", minWidth: 38, textAlign: "center" }}>{p.rating!.toFixed(1)}</span>
+                    <Flag iso={t?.iso} code={p.tla} size={15} />
+                    <span style={{ flex: 1, fontWeight: 700, fontSize: 13, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</span>
+                    <span className="dim" style={{ fontSize: 10.5 }}>{p.gk ? "MV" : p.pos || ""}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  if (!m.stats) return <div className="card card-pad" style={{ marginTop: 14 }}><div className="dim" style={{ fontSize: 12.5 }}>Detaljerad statistik dyker upp när matchen analyserats.</div></div>;
+  const s = m.stats as MatchStats;
   const ri = (x: number | null) => (x == null ? null : Math.round(x)); // integer
   // Possession: round and force the pair to sum to 100 (no decimals).
   let possH: number | null = null,
@@ -371,6 +433,29 @@ function StatBar({ label, h, a }: { label: string; h: number; a: number }) {
   const total = h + a || 1;
   const hp = (h / total) * 100;
   const lead = h === a ? "" : h > a ? "h" : "a";
+  return (
+    <div style={{ marginBottom: 11 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, marginBottom: 4 }}>
+        <span className="num" style={{ color: lead === "h" ? "var(--ink)" : "var(--ink-3)" }}>{h}</span>
+        <span className="dim" style={{ fontWeight: 700 }}>{label}</span>
+        <span className="num" style={{ color: lead === "a" ? "var(--ink)" : "var(--ink-3)" }}>{a}</span>
+      </div>
+      <div style={{ display: "flex", height: 6, borderRadius: 999, overflow: "hidden", background: "var(--surface-3)", gap: 2 }}>
+        <div style={{ width: `${hp}%`, background: "var(--hot)" }} />
+        <div style={{ width: `${100 - hp}%`, background: "var(--cool)" }} />
+      </div>
+    </div>
+  );
+}
+
+// Like StatBar but accepts the raw FotMob values (which may be strings like "1.46"
+// for xG) — shows them verbatim, bars by their numeric magnitude.
+function DetailBar({ label, h, a }: { label: string; h: number | string; a: number | string }) {
+  const hn = typeof h === "number" ? h : parseFloat(h) || 0;
+  const an = typeof a === "number" ? a : parseFloat(a) || 0;
+  const total = hn + an || 1;
+  const hp = (hn / total) * 100;
+  const lead = hn === an ? "" : hn > an ? "h" : "a";
   return (
     <div style={{ marginBottom: 11 }}>
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, marginBottom: 4 }}>
