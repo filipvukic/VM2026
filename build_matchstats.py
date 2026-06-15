@@ -146,6 +146,22 @@ def extract_shots(content, tla_of):
     return out
 
 
+def extract_starters(team):
+    """FotMob starters with their exact pitch coords (horizontalLayout x/y, 0-1)."""
+    out = []
+    for p in (team or {}).get("starters", []):
+        h = p.get("horizontalLayout") or {}
+        if h.get("x") is None:
+            continue
+        out.append({
+            "name": p.get("name"),
+            "shirt": p.get("shirtNumber"),
+            "x": round(h["x"], 3),
+            "y": round(h.get("y", 0.5), 3),
+        })
+    return out
+
+
 def extract_heatmap(fm_match_id):
     url = (f"https://www.fotmob.com/api/data/heatmap/match/{fm_match_id}/heatmaps"
            f"?heatmapUrl=https://pub.fotmob.com/prod/db/api/heatmap/match/{fm_match_id}")
@@ -254,19 +270,25 @@ def main():
             for t in team:
                 t["home"], t["away"] = t["away"], t["home"]
 
-        # FotMob formations (accurate, unlike ESPN), oriented to our home/away
+        # FotMob formations + exact pitch coords (accurate, unlike ESPN), oriented
         fm_home_form = (lineup.get("homeTeam") or {}).get("formation")
         fm_away_form = (lineup.get("awayTeam") or {}).get("formation")
         formations = {
             "home": fm_home_form if fm_home_is_our_home else fm_away_form,
             "away": fm_away_form if fm_home_is_our_home else fm_home_form,
         }
+        fm_home_lu = extract_starters(lineup.get("homeTeam"))
+        fm_away_lu = extract_starters(lineup.get("awayTeam"))
+        lineups = {
+            "home": fm_home_lu if fm_home_is_our_home else fm_away_lu,
+            "away": fm_away_lu if fm_home_is_our_home else fm_home_lu,
+        }
 
         out = {
             "fixtureId": fx["id"], "fmMatchId": fm_match_id,
             "homeTla": fx["homeTla"], "awayTla": fx["awayTla"],
             "finished": finished, "updated": now.isoformat(),
-            "formations": formations,
+            "formations": formations, "lineup": lineups,
             "team": team, "players": players, "shots": shots, "heatmap": heatmap,
         }
         out_path.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

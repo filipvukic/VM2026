@@ -20,6 +20,7 @@ export function Pitch({
   onPlayer,
   getRating,
   getMin,
+  coords,
 }: {
   lineup: RawLineup;
   color: string;
@@ -28,12 +29,35 @@ export function Pitch({
   onPlayer: (name: string, espnId?: string | null) => void;
   getRating?: (name: string) => number | null;
   getMin?: (name: string) => number | null;
+  coords?: { name: string; shirt?: string | number | null; x: number; y: number }[];
 }) {
   const db = usePlayersDb();
-  const rows = buildRows(lineup); // back-to-front: [GK], defence, midfield(s), attack
-  const nRows = rows.length;
-  // keep the top row clear of the pitch edge and give the rows breathing room
-  const rowY = (idx: number) => 88 - (idx / Math.max(1, nRows - 1)) * 75;
+  // Each placed player → its position on the pitch (%). Prefer FotMob's exact
+  // per-player coords (correct formation & placement); else infer rows from the
+  // formation string. FotMob x: 0=own goal→1=attack; y: 0-1 across. Our pitch is
+  // portrait (GK bottom, attack up), so x→vertical, y→horizontal.
+  const placed: { p: RawLineupPlayer; xPct: number; yPct: number }[] =
+    coords && coords.length
+      ? coords.map((c) => ({
+          p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
+          xPct: 8 + c.y * 84,
+          yPct: 92 - c.x * 84,
+        }))
+      : (() => {
+          const rows = buildRows(lineup);
+          const n = rows.length;
+          const out: { p: RawLineupPlayer; xPct: number; yPct: number }[] = [];
+          rows.forEach((row, idx) => {
+            const ordered = row
+              .map((p, i) => ({ p, i }))
+              .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
+              .map((x) => x.p);
+            ordered.forEach((p, i) =>
+              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 88 - (idx / Math.max(1, n - 1)) * 75 })
+            );
+          });
+          return out;
+        })();
 
   // count goals/assists per player so multiples show as ⚽×2 / A×2
   const goalCount = new Map<string, number>();
@@ -52,32 +76,25 @@ export function Pitch({
   return (
     <div className="pitch">
       <div className="pitch-lines" />
-      {rows.map((row, idx) => {
-        const ordered = row
-          .map((p, i) => ({ p, i }))
-          .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
-          .map((x) => x.p);
-        return ordered.map((p, i) => {
-          const x = ((i + 1) / (ordered.length + 1)) * 100;
-          const nm = (p.name || "").toLowerCase();
-          return (
-            <PitchPlayer
-              key={p.name + "-" + idx + "-" + i}
-              p={p}
-              photo={lineupPhoto(p.name, p.espnId, db)}
-              color={color}
-              x={x}
-              y={rowY(idx)}
-              goals={goalCount.get(nm) || 0}
-              assists={assistCount.get(nm) || 0}
-              red={redNames.has(nm)}
-              outAt={subOut.get(nm)}
-              minutes={getMin ? getMin(p.name) : null}
-              rating={getRating ? getRating(p.name) : null}
-              onClick={() => onPlayer(p.name, p.espnId)}
-            />
-          );
-        });
+      {placed.map(({ p, xPct, yPct }, i) => {
+        const nm = (p.name || "").toLowerCase();
+        return (
+          <PitchPlayer
+            key={p.name + "-" + i}
+            p={p}
+            photo={lineupPhoto(p.name, p.espnId, db)}
+            color={color}
+            x={xPct}
+            y={yPct}
+            goals={goalCount.get(nm) || 0}
+            assists={assistCount.get(nm) || 0}
+            red={redNames.has(nm)}
+            outAt={subOut.get(nm)}
+            minutes={getMin ? getMin(p.name) : null}
+            rating={getRating ? getRating(p.name) : null}
+            onClick={() => onPlayer(p.name, p.espnId)}
+          />
+        );
       })}
       <style>{`
         .pitch{ position:relative; width:100%; aspect-ratio:7/10.2; max-width:440px; margin:0 auto;

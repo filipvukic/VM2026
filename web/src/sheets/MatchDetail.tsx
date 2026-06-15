@@ -279,13 +279,15 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
     rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
   const getMin = (name: string): number | null =>
     mFull.get(ratingNorm(name)) ?? mLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
-  // FotMob formation is accurate (ESPN's is often wrong, e.g. 3-1-4-2 vs 3-4-1-2)
+  // FotMob formation + exact coords are accurate (ESPN's is often wrong, e.g.
+  // 3-1-4-2 vs 3-4-1-2). Prefer the FotMob coords for placement.
   const fmFormation = detail?.formations?.[side === "h" ? "home" : "away"];
-  const lu = rawLu && fmFormation ? { ...rawLu, formation: fmFormation } : rawLu;
+  const coords = detail?.lineup?.[side === "h" ? "home" : "away"];
+  const lu: typeof rawLu = rawLu && fmFormation ? { ...rawLu, formation: fmFormation } : rawLu;
   const t = code ? ds.teams[code] : null;
-  if (!lu?.lineup?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
+  if (!lu?.lineup?.length && !coords?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
   const coachRec = code ? coaches?.[code] : null;
-  const coach = coachRec?.name || lu.coach || (code ? TEAM_DETAILS[code]?.coach : null);
+  const coach = coachRec?.name || lu?.coach || (code ? TEAM_DETAILS[code]?.coach : null);
   const coachPhoto = coachRec?.photo || null;
 
   // who came on (bench player → minute + replaced)
@@ -315,13 +317,13 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
             <div className="kicker" style={{ fontSize: 9 }}>Förbundskapten ›</div>
             <div style={{ fontWeight: 800, fontSize: 14 }}>{coach}</div>
           </div>
-          {lu.formation && <span className="chip">{lu.formation}</span>}
+          {(fmFormation || lu?.formation) && <span className="chip">{fmFormation || lu?.formation}</span>}
         </button>
       ) : (
-        lu.formation && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {lu.formation}</span></div>
+        (fmFormation || lu?.formation) && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {fmFormation || lu?.formation}</span></div>
       )}
-      <Pitch lineup={lu} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} getMin={getMin} />
-      {lu.bench && lu.bench.length > 0 && (
+      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} getMin={getMin} coords={coords} />
+      {lu?.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>

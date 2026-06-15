@@ -263,6 +263,7 @@ export interface MatchShot {
   player: string; optaId: string; goal: boolean; onTarget: boolean; outcome: string;
 }
 export interface MatchHeatmap { viewBox: string; players: Record<string, [number, number][]> }
+export interface MatchLineupPlayer { name: string; shirt?: string | number | null; x: number; y: number }
 export interface MatchStatsDetail {
   fixtureId: number;
   fmMatchId?: number;
@@ -270,6 +271,7 @@ export interface MatchStatsDetail {
   awayTla: string;
   finished: boolean;
   formations?: { home?: string | null; away?: string | null } | null;
+  lineup?: { home: MatchLineupPlayer[]; away: MatchLineupPlayer[] } | null;
   team: MatchTeamStat[];
   players: MatchPlayerStat[];
   shots: MatchShot[];
