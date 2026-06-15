@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
@@ -24,6 +25,13 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const tipped = ds.allMatches
     .filter((m) => p.tips[m.id])
     .sort((a, b) => +a.kickoff - +b.kickoff);
+  // the next match this player has tipped that hasn't finished (live or upcoming)
+  const nextId = tipped.find((m) => m.status !== "played")?.id;
+  const nextRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = nextRef.current;
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 250);
+  }, [nextId]);
 
   return (
     <Sheet {...chrome} accent={p.color}>
@@ -86,11 +94,13 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const pts = played ? classifyTip(tip, m.ga!, m.gb!).points : null;
               const color = pts === 5 ? "var(--gold)" : pts === 2 ? "var(--win)" : pts === 1 ? "var(--ink-3)" : "var(--ink-2)";
               const openThis = () => m._realId && openMatch(m.id);
+              const isNext = m.id === nextId;
               return (
                 // a row of separate click targets: the team names open the team,
                 // the date + score open the match (nested buttons aren't allowed,
                 // so the container is a div).
-                <div key={m.id} className="card" style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 11px", borderRadius: "var(--r-md)" }}>
+                <div key={m.id} ref={isNext ? nextRef : undefined} className="card" style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 11px", borderRadius: "var(--r-md)", border: isNext ? "1.5px solid var(--cool)" : undefined, background: isNext ? "color-mix(in srgb, var(--cool) 12%, var(--surface))" : undefined, position: "relative" }}>
+                  {isNext && <span className="chip" style={{ position: "absolute", top: -8, left: 10, fontSize: 8.5, padding: "1px 7px", background: "var(--cool)", color: "#0a0712", fontWeight: 800, letterSpacing: ".05em" }}>NÄSTA</span>}
                   <button onClick={openThis} className="dim" style={{ width: 46, fontSize: 10.5, fontWeight: 700, padding: 0, textAlign: "left" }}>{svDayMonth(m.kickoff)}</button>
                   <button onClick={() => m.home && openTeam(m.home)} disabled={!m.home} style={{ flex: 1, display: "flex", alignItems: "center", gap: 6, minWidth: 0, padding: 0 }}>
                     <Flag iso={home?.iso} code={m.home} size={16} />

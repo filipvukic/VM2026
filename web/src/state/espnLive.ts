@@ -45,12 +45,14 @@ export function startEspnLive() {
       const next = { ...cur };
       const want = events.filter((e) => {
         const ko = Date.parse(e.koUtc || "");
+        // ~75 min before kickoff (line-ups) until ~4 h after (so just-finished
+        // matches keep their subs/cards/odds even after full-time)
         const win = !Number.isNaN(ko) && now - ko > -90 * 60000 && now - ko < 4 * 3600 * 1000;
-        return win && (e.state === "in" || e.state === "pre");
+        return win && (e.state === "in" || e.state === "pre" || e.state === "post");
       });
       await Promise.all(
         want.map(async (e) => {
-          if (e.state !== "in" && next[e.id]) return; // pre fetched once; live always refetched
+          if (e.state !== "in" && next[e.id]) return; // pre/post fetched once; live refetched
           const sm = await fetchEventSummary(e.id);
           if (sm) next[e.id] = sm;
         })

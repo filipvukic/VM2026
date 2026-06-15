@@ -85,7 +85,7 @@ describe("overlayFixtures", () => {
         homeLineup: { formation: "4-3-3", lineup: [{ name: "GK" } as any], bench: [] },
         awayLineup: { formation: "4-4-2", lineup: [{ name: "GK2" } as any], bench: [] },
         subs: [{ minute: "60", espnHome: true, playerIn: "In A", playerOut: "Out A" }],
-        cards: [{ minute: "30", espnHome: false, player: "Booked", card: "YELLOW" }],
+        cards: [{ minute: "30", espnHome: false, player: "Booked", card: "YELLOW" }], odds: null,
       },
     };
     const [m] = overlayFixtures([fx({})], [ev({ state: "in", home: 1, away: 0 })], summaries, NOW);
@@ -97,7 +97,7 @@ describe("overlayFixtures", () => {
 
   it("shows an announced XI for a not-yet-started match without changing status", () => {
     const summaries: Record<string, EspnSummary> = {
-      e1: { homeLineup: { formation: "4-3-3", lineup: [{ name: "GK" } as any], bench: [] }, awayLineup: null, subs: [], cards: [] },
+      e1: { homeLineup: { formation: "4-3-3", lineup: [{ name: "GK" } as any], bench: [] }, awayLineup: null, subs: [], cards: [], odds: null },
     };
     const [m] = overlayFixtures([fx({})], [ev({ state: "pre", home: 0, away: 0 })], summaries, NOW);
     expect(m.status).toBe("TIMED");

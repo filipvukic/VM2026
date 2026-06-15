@@ -3,9 +3,41 @@ import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Flag, groupColor } from "../lib/flags";
 import { isLive } from "../lib/liveState";
+import { liveMinuteText } from "../lib/liveMinute";
 import { classifyTip } from "../data/scoring";
 import { Avatar } from "../components/Avatar";
-import type { Dataset } from "../data/types";
+import { svTime, svDayMonth } from "../lib/format";
+import { useNow } from "../state/useNow";
+import type { Dataset, GroupTableRow, Match } from "../data/types";
+
+// The committed group table (from the engine) lags when the cron is throttled.
+// Recompute it from the matches we actually have results for (kept fresh by the
+// ESPN overlay) when those reflect MORE played games than the engine's table.
+function liveGroupTable(ds: Dataset, letter: string, engineRows: GroupTableRow[]): GroupTableRow[] {
+  const codes = engineRows.map((r) => r.code).filter((c) => c.indexOf("TBD") !== 0);
+  if (!codes.length) return engineRows;
+  const enginePlayed = engineRows.reduce((n, r) => n + r.sp, 0);
+  const s: Record<string, { v: number; o: number; f: number; gm: number; im: number; p: number; sp: number }> = {};
+  codes.forEach((c) => (s[c] = { v: 0, o: 0, f: 0, gm: 0, im: 0, p: 0, sp: 0 }));
+  ds.allMatches.forEach((m) => {
+    if (m.group !== letter || m.status !== "played" || m.ga == null || m.gb == null || !m.home || !m.away) return;
+    const H = s[m.home], A = s[m.away];
+    if (!H || !A) return;
+    H.sp++; A.sp++; H.gm += m.ga; H.im += m.gb; A.gm += m.gb; A.im += m.ga;
+    if (m.ga > m.gb) { H.v++; A.f++; H.p += 3; }
+    else if (m.ga < m.gb) { A.v++; H.f++; A.p += 3; }
+    else { H.o++; A.o++; H.p++; A.p++; }
+  });
+  const recPlayed = codes.reduce((n, c) => n + s[c].sp, 0);
+  if (recPlayed <= enginePlayed) return engineRows; // engine table already current
+  const rows: GroupTableRow[] = codes.map((c) => ({
+    code: c, sp: s[c].sp, v: s[c].v, o: s[c].o, f: s[c].f, gm: s[c].gm, im: s[c].im, ms: s[c].gm - s[c].im, p: s[c].p, pos: 0,
+  }));
+  rows.sort((a, b) => b.p - a.p || b.ms - a.ms || b.gm - a.gm ||
+    (ds.teams[a.code]?.name || a.code).localeCompare(ds.teams[b.code]?.name || b.code));
+  rows.forEach((r, i) => (r.pos = i + 1));
+  return rows;
+}
 
 function groupTipLeaders(ds: Dataset, letter: string) {
   const matches = ds.matches.filter((m) => m.group === letter && m.status === "played" && m.home && m.away);
@@ -125,7 +157,7 @@ function GroupCard({
   onTeam: (c: string) => void;
   leaders: ReturnType<typeof groupTipLeaders>;
 }) {
-  const rows = ds.groupTables[letter] || [];
+  const rows = liveGroupTable(ds, letter, ds.groupTables[letter] || []);
   const color = groupColor(letter);
   // which teams are playing live RIGHT NOW (per team, not per group)
   const liveTeams = new Set(ds.allMatches.filter(isLive).flatMap((m) => [m.home, m.away]));
@@ -195,6 +227,8 @@ function GroupCard({
         })}
       </div>
 
+      <GroupMatches ds={ds} letter={letter} />
+
       {leaders.length > 0 && <GroupTipBoard leaders={leaders} />}
 
       <style>{`
@@ -205,6 +239,57 @@ function GroupCard({
         .gt-row:not(:disabled):hover{ background:var(--surface-2); }
         .gt-num{ width:30px; text-align:center; font-size:12.5px; font-weight:700; color:var(--ink-2); font-variant-numeric:tabular-nums; }
       `}</style>
+    </div>
+  );
+}
+
+// Collapsible list of the group's matches (results + upcoming), clickable.
+function GroupMatches({ ds, letter }: { ds: Dataset; letter: string }) {
+  const openMatch = useSheets((s) => s.openMatch);
+  const [open, setOpen] = useState(false);
+  const matches = useMemo(
+    () => ds.allMatches.filter((m) => m.group === letter && m.stage === "group").sort((a, b) => +a.kickoff - +b.kickoff),
+    [ds, letter]
+  );
+  const anyLive = matches.some(isLive);
+  const now = useNow(anyLive ? 30000 : 0);
+  if (!matches.length) return null;
+  return (
+    <div style={{ borderTop: "1px solid var(--line)", background: "var(--bg-2)" }}>
+      <button onClick={() => setOpen((v) => !v)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 9, padding: "10px 14px", textAlign: "left" }}>
+        <div className="kicker" style={{ flex: 1, fontSize: 9.5 }}>Matcher i gruppen ({matches.length})</div>
+        {anyLive && <span className="live-dot" style={{ background: "var(--hot)" }} />}
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ink-3)" strokeWidth="2.4" style={{ transition: "transform .25s", transform: open ? "rotate(180deg)" : "none" }}>
+          <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <div style={{ maxHeight: open ? matches.length * 42 + 14 : 0, overflow: "hidden", transition: "max-height .32s cubic-bezier(.2,.7,.2,1)" }}>
+        <div style={{ padding: "0 10px 12px", display: "grid", gap: 4 }}>
+          {matches.map((m) => {
+            const home = m.home ? ds.teams[m.home] : null;
+            const away = m.away ? ds.teams[m.away] : null;
+            const live = isLive(m);
+            const ended = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
+            return (
+              <button key={m.id} onClick={() => m._realId && openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 4px", borderRadius: 7, width: "100%", textAlign: "left" }}>
+                <span className="dim" style={{ width: 30, fontSize: 9.5, fontWeight: 700, flexShrink: 0 }}>{svDayMonth(m.kickoff)}</span>
+                <span style={{ flex: 1, display: "flex", alignItems: "center", gap: 5, justifyContent: "flex-end", minWidth: 0 }}>
+                  <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{home?.name || m.home || "?"}</span>
+                  <Flag iso={home?.iso} code={m.home} size={14} />
+                </span>
+                <span className="num" style={{ minWidth: 48, textAlign: "center", fontSize: 12.5, color: live ? "var(--hot)" : "var(--ink)", lineHeight: 1.05 }}>
+                  {ended || live ? `${m.ga ?? 0}–${m.gb ?? 0}` : svTime(m.kickoff)}
+                  {live && <span className="dim" style={{ fontSize: 8.5, display: "block" }}>{liveMinuteText(m, null, now)}</span>}
+                </span>
+                <span style={{ flex: 1, display: "flex", alignItems: "center", gap: 5, minWidth: 0 }}>
+                  <Flag iso={away?.iso} code={m.away} size={14} />
+                  <span style={{ fontSize: 11.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{away?.name || m.away || "?"}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
