@@ -7,6 +7,7 @@ import { DatasetProvider } from "./state/dataset";
 import { useStore } from "./state/store";
 import { loadRealData } from "./data/load";
 import { startPolling } from "./state/polling";
+import { startEspnLive } from "./state/espnLive";
 
 function Root() {
   const status = useStore((s) => s.status);
@@ -22,7 +23,10 @@ function Root() {
         if (alive) useStore.getState().setError();
       })
       .finally(() => {
-        if (alive) startPolling();
+        if (alive) {
+          startPolling();
+          startEspnLive(); // real-time live overlay straight from ESPN (cron-independent)
+        }
       });
     return () => {
       alive = false;
