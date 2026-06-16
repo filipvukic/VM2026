@@ -150,6 +150,23 @@ export interface EspnSummary {
   subs: { minute: string; espnHome: boolean; playerIn?: string; playerOut?: string }[];
   cards: { minute: string; espnHome: boolean; player?: string; card: string }[];
   odds: { homeML: number; awayML: number } | null; // ESPN home/away moneyline (real odds)
+  homeStats: Record<string, number> | null; // ESPN boxscore team stats (possession, shots…)
+  awayStats: Record<string, number> | null;
+}
+
+// ESPN boxscore stats live in displayValue (a string like "55%"/"451"); coerce to
+// the same {name: number} shape the engine writes so build()'s getStat reads both.
+function parseTeamStats(statsList: any[]): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const s of statsList || []) {
+    const name = s?.name;
+    if (!name) continue;
+    const raw = s.displayValue ?? s.value;
+    if (raw == null) continue;
+    const n = parseFloat(String(raw).replace("%", "").replace(",", "."));
+    if (!Number.isNaN(n)) out[name] = n;
+  }
+  return out;
 }
 
 function rosterPlayer(p: any): RawLineupPlayer {
@@ -208,12 +225,24 @@ export async function fetchEventSummary(eventId: string): Promise<EspnSummary | 
     const aml = pc?.awayTeamOdds?.moneyLine;
     if (typeof hml === "number" && typeof aml === "number") odds = { homeML: hml, awayML: aml };
 
+    // live team statistics (possession, shots, passes…) from the boxscore
+    let homeStats: Record<string, number> | null = null;
+    let awayStats: Record<string, number> | null = null;
+    for (const t of (d.boxscore?.teams || []) as any[]) {
+      const ps = parseTeamStats(t.statistics || []);
+      if (!Object.keys(ps).length) continue;
+      if (t.homeAway === "home") homeStats = ps;
+      else if (t.homeAway === "away") awayStats = ps;
+    }
+
     return {
       homeLineup: hr ? lineupSide(hr, eventId) : null,
       awayLineup: ar ? lineupSide(ar, eventId) : null,
       subs,
       cards,
       odds,
+      homeStats,
+      awayStats,
     };
   } catch {
     return null;
@@ -305,8 +334,9 @@ export function overlayFixtures(
           ? { stadium: best.venue.stadium, city: best.venue.city, country: best.venue.country }
           : f.venue;
 
-    // lineups + subs + cards + real odds from the per-match summary
+    // lineups + subs + cards + team stats + real odds from the per-match summary
     let homeLineup = f.homeLineup, awayLineup = f.awayLineup, subs = f.subs, bookings = f.bookings, espnOdds = f.espnOdds;
+    let homeStats = f.homeStats, awayStats = f.awayStats;
     const sm = summaries[best.id];
     if (sm) {
       const luH = sameOrient ? sm.homeLineup : sm.awayLineup;
@@ -319,6 +349,11 @@ export function overlayFixtures(
       if (sm.cards.length > (f.bookings?.length || 0)) {
         bookings = sm.cards.map((c) => ({ minute: c.minute, team: ourTla(c.espnHome), player: c.player, card: c.card }));
       }
+      // live team stats — fresher than committed; orient to OUR home/away
+      const stH = sameOrient ? sm.homeStats : sm.awayStats;
+      const stA = sameOrient ? sm.awayStats : sm.homeStats;
+      if (stH) homeStats = stH;
+      if (stA) awayStats = stA;
       if (!espnOdds && sm.odds) {
         espnOdds = sameOrient
           ? { homeML: sm.odds.homeML, awayML: sm.odds.awayML }
@@ -327,9 +362,9 @@ export function overlayFixtures(
     }
 
     // Engine result is authoritative for finished matches — only ENRICH missing
-    // detail (line-up, subs, cards, real odds), never touch the score/status.
+    // detail (line-up, subs, cards, stats, real odds), never touch the score/status.
     if (f.status === "FINISHED" || f.status === "AWARDED") {
-      return { ...f, venue, homeLineup, awayLineup, subs, bookings, espnOdds };
+      return { ...f, venue, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds };
     }
 
     if (best.state === "pre") {
@@ -350,8 +385,8 @@ export function overlayFixtures(
     }
 
     if (best.state === "post") {
-      return { ...f, status: "FINISHED", score: [h, a], venue, goals, homeLineup, awayLineup, subs, bookings, espnOdds };
+      return { ...f, status: "FINISHED", score: [h, a], venue, goals, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds };
     }
-    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, homeLineup, awayLineup, subs, bookings, espnOdds, _liveOverlay: true };
+    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds, _liveOverlay: true };
   });
 }

@@ -86,6 +86,7 @@ describe("overlayFixtures", () => {
         awayLineup: { formation: "4-4-2", lineup: [{ name: "GK2" } as any], bench: [] },
         subs: [{ minute: "60", espnHome: true, playerIn: "In A", playerOut: "Out A" }],
         cards: [{ minute: "30", espnHome: false, player: "Booked", card: "YELLOW" }], odds: null,
+        homeStats: null, awayStats: null,
       },
     };
     const [m] = overlayFixtures([fx({})], [ev({ state: "in", home: 1, away: 0 })], summaries, NOW);
@@ -95,9 +96,24 @@ describe("overlayFixtures", () => {
     expect(m.bookings![0]).toMatchObject({ team: "TUN", card: "YELLOW" }); // espnHome:false → away
   });
 
+  it("overlays live team statistics, oriented to our home/away", () => {
+    const summaries: Record<string, EspnSummary> = {
+      e1: {
+        homeLineup: null, awayLineup: null, subs: [], cards: [], odds: null,
+        homeStats: { possessionPct: 58, totalShots: 9 },
+        awayStats: { possessionPct: 42, totalShots: 4 },
+      },
+    };
+    // ESPN lists Tunisia first → overlay must flip stats to our Sweden(home)/Tunisia(away)
+    const e = ev({ homeNorm: "tunisia", awayNorm: "sweden", state: "in", home: 0, away: 1 });
+    const [m] = overlayFixtures([fx({})], [e], summaries, NOW);
+    expect(m.homeStats?.possessionPct).toBe(42); // Sweden = ESPN away
+    expect(m.awayStats?.totalShots).toBe(9); // Tunisia = ESPN home
+  });
+
   it("shows an announced XI for a not-yet-started match without changing status", () => {
     const summaries: Record<string, EspnSummary> = {
-      e1: { homeLineup: { formation: "4-3-3", lineup: [{ name: "GK" } as any], bench: [] }, awayLineup: null, subs: [], cards: [], odds: null },
+      e1: { homeLineup: { formation: "4-3-3", lineup: [{ name: "GK" } as any], bench: [] }, awayLineup: null, subs: [], cards: [], odds: null, homeStats: null, awayStats: null },
     };
     const [m] = overlayFixtures([fx({})], [ev({ state: "pre", home: 0, away: 0 })], summaries, NOW);
     expect(m.status).toBe("TIMED");
