@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-16T15:27:25+00:00",
+  "updated_at": "2026-06-16T19:02:18+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4289,7 +4289,13 @@
       "bookings": [],
       "subs": [],
       "venue": null,
-      "referees": [],
+      "referees": [
+        {
+          "name": "Alireza Faghani",
+          "role": "REFEREE",
+          "nationality": "Iran"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -11360,14 +11366,26 @@
         {
           "team": "France",
           "tla": "FRA",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
+          "points": 1
+        },
+        {
+          "team": "Senegal",
+          "tla": "SEN",
+          "played": 1,
+          "won": 0,
+          "draw": 1,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 1
         },
         {
           "team": "Iraq",
@@ -11384,18 +11402,6 @@
         {
           "team": "Norway",
           "tla": "NOR",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Senegal",
-          "tla": "SEN",
           "played": 0,
           "won": 0,
           "draw": 0,
