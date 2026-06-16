@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-16T19:02:18+00:00",
+  "updated_at": "2026-06-16T20:38:45+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -614,7 +614,7 @@
           "period": 2
         },
         {
-          "minute": "90+2",
+          "minute": "90'+2",
           "team": "MEX",
           "player": "César Montes",
           "card": "RED",
@@ -665,7 +665,7 @@
           "period": 2
         },
         {
-          "minute": "76",
+          "minute": "77",
           "team": "RSA",
           "playerIn": "Evidence Makgopa",
           "playerOut": "Iqraam Rayners",
@@ -1652,28 +1652,15 @@
       "minute": null,
       "goals": [
         {
-          "minute": "17",
-          "team": "SUI",
-          "scorer": "Breel Embolo",
-          "assist": null,
-          "type": "PENALTY",
-          "description": "Goal! Qatar 0, Switzerland 1. Breel Embolo (Switzerland) converts the penalty with a right footed shot to the bottom left corner.",
-          "score": [
-            0,
-            1
-          ],
-          "period": 1
-        },
-        {
-          "minute": "90+4",
+          "minute": "90'+4",
           "team": "QAT",
-          "scorer": "Miro Muheim",
+          "scorer": "Boualem Khoukhi",
           "assist": "Homam Ahmed",
-          "type": "OWN",
-          "description": "Own Goal by Miro Muheim, Switzerland. Qatar 1, Switzerland 1.",
+          "type": "HEADER",
+          "description": "Goal! Qatar 1, Switzerland 1. Boualem Khoukhi (Qatar) header from the centre of the box to the bottom right corner. Assisted by Homam El Amin with a cross.",
           "score": [
             1,
-            1
+            0
           ],
           "period": 2
         }
@@ -1906,7 +1893,7 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "90+15",
       "goals": [
         {
           "minute": "21",
@@ -2188,14 +2175,14 @@
           "period": 2
         },
         {
-          "minute": "90+1",
+          "minute": "90'+1",
           "team": "SCO",
           "player": "Findlay Curtis",
           "card": "YELLOW",
           "period": 2
         },
         {
-          "minute": "90+5",
+          "minute": "90'+5",
           "team": "SCO",
           "player": "Kenny McLean",
           "card": "YELLOW",
@@ -2272,7 +2259,7 @@
         }
       ],
       "odds": null,
-      "attendance": 64146,
+      "attendance": 0,
       "tips": [
         {
           "name": "Albin",
@@ -2696,7 +2683,7 @@
           "scorer": "Jamal Musiala",
           "assist": "Joshua Kimmich",
           "type": "REGULAR",
-          "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich with a through ball.",
+          "description": "Goal! Germany 4, Curaçao 1. Jamal Musiala (Germany) right footed shot from the right side of the box to the bottom left corner. Assisted by Joshua Kimmich.",
           "score": [
             4,
             1
@@ -2735,7 +2722,7 @@
           "scorer": "Kai Havertz",
           "assist": "Deniz Undav",
           "type": "REGULAR",
-          "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav with a through ball following a fast break.",
+          "description": "Goal! Germany 7, Curaçao 1. Kai Havertz (Germany) left footed shot from the centre of the box to the centre of the goal. Assisted by Deniz Undav following a fast break.",
           "score": [
             7,
             1
@@ -2935,7 +2922,7 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "90+5",
       "goals": [
         {
           "minute": "51",
@@ -3522,7 +3509,7 @@
           "scorer": "Mattias Svanberg",
           "assist": "Alexander Isak",
           "type": "REGULAR",
-          "description": "Goal! Sweden 4, Tunisia 1. Mattias Svanberg (Sweden) right footed shot from the centre of the box to the centre of the goal. Assisted by Alexander Isak following a set piece situation.Goal awarded following VAR Review.",
+          "description": "Goal! Sweden 4, Tunisia 1. Mattias Svanberg (Sweden) right footed shot from the centre of the box to the centre of the goal. Assisted by Alexander Isak following a set piece situation.",
           "score": [
             4,
             1
@@ -3610,7 +3597,7 @@
           "period": 2
         },
         {
-          "minute": "90",
+          "minute": "90+1",
           "team": "SWE",
           "playerIn": "Anthony Elanga",
           "playerOut": "Alexander Isak",
@@ -3636,7 +3623,7 @@
         }
       ],
       "odds": null,
-      "attendance": 50987,
+      "attendance": 0,
       "tips": [
         {
           "name": "Albin",
@@ -3759,18 +3746,100 @@
       },
       "minute": null,
       "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "bookings": [
+        {
+          "minute": "16",
+          "team": "CPV",
+          "player": "Sidny Lopes Cabral",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "90+3",
+          "team": "ESP",
+          "player": "Pedri",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "61",
+          "team": "CPV",
+          "playerIn": "Willy Semedo",
+          "playerOut": "Jovane Cabral",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CPV",
+          "playerIn": "Deroy Duarte",
+          "playerOut": "Laros Duarte",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CPV",
+          "playerIn": "Nuno da Costa",
+          "playerOut": "Dailon Livramento",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "ESP",
+          "playerIn": "Mikel Merino",
+          "playerOut": "Fabián Ruiz",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "ESP",
+          "playerIn": "Lamine Yamal",
+          "playerOut": "Gavi",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "CPV",
+          "playerIn": "João Paulo",
+          "playerOut": "Sidny Lopes Cabral",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "CPV",
+          "playerIn": "Telmo Arcanjo",
+          "playerOut": "Jamiro Monteiro",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "ESP",
+          "playerIn": "Dani Olmo",
+          "playerOut": "Ferran Torres",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "ESP",
+          "playerIn": "Nico Williams",
+          "playerOut": "Rodri",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
       "referees": [
         {
-          "name": "Adham Makhadmeh",
-          "role": "REFEREE",
-          "nationality": "Jordan"
+          "name": "Adham Mohammad",
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 67640,
       "tips": [
         {
           "name": "Albin",
@@ -3892,19 +3961,149 @@
         "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "20",
+          "team": "EGY",
+          "scorer": "Emam Ashour",
+          "assist": "Mohamed Salah",
+          "type": "REGULAR",
+          "description": "Goal! Belgium 0, Egypt 1. Emam Ashour (Egypt) right footed shot from outside the box to the bottom left corner. Assisted by Mohamed Salah.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "66",
+          "team": "BEL",
+          "scorer": "Mohamed Hany",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Mohamed Hany, Egypt. Belgium 1, Egypt 1.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "13",
+          "team": "EGY",
+          "player": "Marawan Attia",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "14",
+          "team": "BEL",
+          "player": "Timothy Castagne",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "34",
+          "team": "EGY",
+          "player": "Ahmed Fatouh",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "75",
+          "team": "BEL",
+          "player": "Maxim De Cuyper",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "56",
+          "team": "BEL",
+          "playerIn": "Nicolas Raskin",
+          "playerOut": "Timothy Castagne",
+          "period": 2
+        },
+        {
+          "minute": "56",
+          "team": "BEL",
+          "playerIn": "Maxim De Cuyper",
+          "playerOut": "Amadou Onana",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "BEL",
+          "playerIn": "Romelu Lukaku",
+          "playerOut": "Charles De Ketelaere",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "EGY",
+          "playerIn": "Ramy Rabia",
+          "playerOut": "Emam Ashour",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "EGY",
+          "playerIn": "Zizo",
+          "playerOut": "Mostafa Zico",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "EGY",
+          "playerIn": "Hamza Abdelkarim",
+          "playerOut": "Mohamed Salah",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "BEL",
+          "playerIn": "Matias Fernandez-Pardo",
+          "playerOut": "Jérémy Doku",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "BEL",
+          "playerIn": "Hans Vanaken",
+          "playerOut": "Kevin De Bruyne",
+          "period": 2
+        },
+        {
+          "minute": "88",
+          "team": "EGY",
+          "playerIn": "Karim Hafez",
+          "playerOut": "Ahmed Fatouh",
+          "period": 2
+        },
+        {
+          "minute": "88",
+          "team": "EGY",
+          "playerIn": "Ibrahim Adel",
+          "playerOut": "Hamdy Fathy",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Ramon Abatti Abel",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 66775,
       "tips": [
         {
           "name": "Albin",
@@ -4026,19 +4225,128 @@
         "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "41",
+          "team": "KSA",
+          "scorer": "Abdulelah Al-Amri",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Saudi Arabia 1, Uruguay 0. Abdulelah Al Amri (Saudi Arabia) right footed shot from very close range to the centre of the goal following a corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "80",
+          "team": "URY",
+          "scorer": "Maxi Araújo",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Saudi Arabia 1, Uruguay 1. Maxi Araújo (Uruguay) left footed shot from the left side of the six yard box to the bottom left corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "44",
+          "team": "KSA",
+          "player": "Abdulelah Al-Amri",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "URY",
+          "playerIn": "Juan Manuel Sanabria",
+          "playerOut": "Matías Viña",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "URY",
+          "playerIn": "Agustín Canobbio",
+          "playerOut": "Darwin Núñez",
+          "period": 2
+        },
+        {
+          "minute": "63",
+          "team": "KSA",
+          "playerIn": "Nasser Al-Dawsari",
+          "playerOut": "Musab Al-Juwayr",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "URY",
+          "playerIn": "Nicolás de la Cruz",
+          "playerOut": "Manuel Ugarte",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "URY",
+          "playerIn": "Brian Rodríguez",
+          "playerOut": "Maxi Araújo",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "KSA",
+          "playerIn": "Nawaf Boushal",
+          "playerOut": "Mohammed Abu Al-Shamat",
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "URY",
+          "playerIn": "Rodrigo Aguirre",
+          "playerOut": "Federico Viñas",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "KSA",
+          "playerIn": "Abdullah Al-Hamdan",
+          "playerOut": "Moteb Al-Harbi",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "KSA",
+          "playerIn": "Ala Al-Hajji",
+          "playerOut": "Feras Al-Brikan",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "KSA",
+          "playerIn": "Ali Lajami",
+          "playerOut": "Saud Abdulhamid",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "Hard Rock Stadium",
+        "city": "Miami Gardens, Florida",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Maurizio Mariani",
-          "role": "REFEREE",
-          "nationality": "Italy"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 62764,
       "tips": [
         {
           "name": "Albin",
@@ -4160,19 +4468,147 @@
         "winnerSide": "DRAW"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": null,
+      "goals": [
+        {
+          "minute": "7",
+          "team": "NZL",
+          "scorer": "Elijah Just",
+          "assist": "Chris Wood",
+          "type": "REGULAR",
+          "description": "Goal! IR Iran 0, New Zealand 1. Elijah Just (New Zealand) right footed shot from the centre of the box to the high centre of the goal. Assisted by Chris Wood.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "32",
+          "team": "IRN",
+          "scorer": "Ramin Rezaeian",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! IR Iran 1, New Zealand 1. Ramin Rezaeian (IR Iran) right footed shot from the centre of the box to the bottom left corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "54",
+          "team": "NZL",
+          "scorer": "Elijah Just",
+          "assist": "Chris Wood",
+          "type": "REGULAR",
+          "description": "Goal! IR Iran 1, New Zealand 2. Elijah Just (New Zealand) right footed shot from the right side of the box to the centre of the goal. Assisted by Chris Wood following a fast break.",
+          "score": [
+            1,
+            2
+          ],
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "IRN",
+          "scorer": "Mohammad Mohebbi",
+          "assist": "Ramin Rezaeian",
+          "type": "HEADER",
+          "description": "Goal! IR Iran 2, New Zealand 2. Mohammad Mohebbi (IR Iran) header from the centre of the box to the bottom left corner. Assisted by Ramin Rezaeian with a cross.",
+          "score": [
+            2,
+            2
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "89",
+          "team": "IRN",
+          "player": "Ehsan Hajsafi",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "IRN",
+          "playerIn": "Mehdi Ghayedi",
+          "playerOut": "Arya Yousefi",
+          "period": 2
+        },
+        {
+          "minute": "53",
+          "team": "IRN",
+          "playerIn": "Ali Alipour",
+          "playerOut": "Shahriyar Moghanloo",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "IRN",
+          "playerIn": "Ehsan Hajsafi",
+          "playerOut": "Saman Ghoddos",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "NZL",
+          "playerIn": "Ryan Thomas",
+          "playerOut": "Callum McCowatt",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "NZL",
+          "playerIn": "Ben Old",
+          "playerOut": "Liberato Cacace",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "NZL",
+          "playerIn": "Callan Elliot",
+          "playerOut": "Tim Payne",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "IRN",
+          "playerIn": "Amirhossein Hosseinzadeh",
+          "playerOut": "Mehdi Taremi",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "NZL",
+          "playerIn": "Jesse Randall",
+          "playerOut": "Sarpreet Singh",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "NZL",
+          "playerIn": "Tyler Bindon",
+          "playerOut": "Marko Stamenic",
+          "period": 2
+        }
+      ],
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
       "referees": [
         {
-          "name": "César Ramos",
-          "role": "REFEREE",
-          "nationality": "Mexico"
+          "name": "César Arturo Ramos Palazuelos",
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70108,
       "tips": [
         {
           "name": "Albin",
@@ -4274,26 +4710,52 @@
       "homeTla": "FRA",
       "away": "Senegal",
       "awayTla": "SEN",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "73",
+      "goals": [
+        {
+          "minute": "66",
+          "team": "FRA",
+          "scorer": "Kylian Mbappé",
+          "assist": "Michael Olise",
+          "type": "REGULAR",
+          "description": "Goal! France 1, Senegal 0. Kylian Mbappé (France) right footed shot from the centre of the box to the centre of the goal. Assisted by Michael Olise with a through ball.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "MetLife Stadium",
+        "city": "East Rutherford, New Jersey",
+        "country": "USA"
+      },
       "referees": [
         {
           "name": "Alireza Faghani",
-          "role": "REFEREE",
-          "nationality": "Iran"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -4413,8 +4875,18 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
-      "referees": [],
+      "venue": {
+        "stadium": "Gillette Stadium",
+        "city": "Foxborough, Massachusetts",
+        "country": "USA"
+      },
+      "referees": [
+        {
+          "name": "Pierre Atcho",
+          "role": "REFEREE",
+          "nationality": "Gabon"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -4532,7 +5004,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "GEHA Field at Arrowhead Stadium",
+        "city": "Kansas City, Missouri",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -4651,7 +5127,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Levi's Stadium",
+        "city": "Santa Clara, California",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -4770,7 +5250,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "NRG Stadium",
+        "city": "Houston, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -4889,7 +5373,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5008,7 +5496,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5127,7 +5619,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Estadio Banorte",
+        "city": "Mexico City",
+        "country": "Mexico"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5246,7 +5742,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5365,7 +5865,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5484,7 +5988,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BC Place",
+        "city": "Vancouver",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5603,7 +6111,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Estadio Akron",
+        "city": "Guadalajara",
+        "country": "Mexico"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5722,7 +6234,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5841,7 +6357,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Gillette Stadium",
+        "city": "Foxborough, Massachusetts",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -5960,7 +6480,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lincoln Financial Field",
+        "city": "Philadelphia, Pennsylvania",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6079,7 +6603,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Levi's Stadium",
+        "city": "Santa Clara, California",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6198,7 +6726,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "NRG Stadium",
+        "city": "Houston, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6317,7 +6849,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6436,7 +6972,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "GEHA Field at Arrowhead Stadium",
+        "city": "Kansas City, Missouri",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6555,7 +7095,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Estadio BBVA",
+        "city": "Guadalupe",
+        "country": "Mexico"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -6674,7 +7218,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
