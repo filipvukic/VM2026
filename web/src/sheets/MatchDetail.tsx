@@ -260,7 +260,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const openCoach = useSheets((s) => s.openCoach);
   const coaches = useCoaches();
   const db = usePlayersDb();
-  const detail = useMatchStats(m._realId ?? null);
+  const detail = useMatchStats(m._realId ?? null, isLive(m));
   const [side, setSide] = useState<"h" | "a">("h");
   const rawLu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
@@ -355,7 +355,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
 
 // ---------- Stats tab ----------
 function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
-  const detail = useMatchStats(m._realId ?? null);
+  const detail = useMatchStats(m._realId ?? null, isLive(m));
   const [sel, setSel] = useState<string | null>(null);
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
