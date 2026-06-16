@@ -4062,7 +4062,7 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "90+15",
+    "minute": null,
     "goals": [
       {
         "minute": "21",
@@ -7234,7 +7234,7 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "90+5",
+    "minute": null,
     "goals": [
       {
         "minute": "51",
@@ -12752,10 +12752,10 @@
     "homeTla": "FRA",
     "away": "Senegal",
     "awayTla": "SEN",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      1,
-      0
+      3,
+      1
     ],
     "scoreDetail": {
       "halfTime": [
@@ -12763,15 +12763,15 @@
         0
       ],
       "fullTime": [
-        1,
-        0
+        3,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "73",
+    "minute": null,
     "goals": [
       {
         "minute": "66",
@@ -12785,10 +12785,99 @@
           0
         ],
         "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "FRA",
+        "scorer": "Bradley Barcola",
+        "assist": "Adrien Rabiot",
+        "type": "REGULAR",
+        "description": "Goal! France 2, Senegal 0. Bradley Barcola (France) right footed shot from the right side of the box to the bottom right corner. Assisted by Adrien Rabiot with a through ball following a fast break.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "SEN",
+        "scorer": "Ibrahim Mbaye",
+        "assist": "Iliman Ndiaye",
+        "type": "REGULAR",
+        "description": "Goal! France 2, Senegal 1. Ibrahim Mbaye (Senegal) right footed shot from the right side of the box to the top right corner. Assisted by Iliman Ndiaye following a fast break.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! France 3, Senegal 1. Kylian Mbappé (France) right footed shot from outside the box to the top left corner.",
+        "score": [
+          3,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "75",
+        "team": "SEN",
+        "playerIn": "Ibrahim Mbaye",
+        "playerOut": "Ismaïla Sarr",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "SEN",
+        "playerIn": "Habib Diarra",
+        "playerOut": "Lamine Camara",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "FRA",
+        "playerIn": "Bradley Barcola",
+        "playerOut": "Ousmane Dembélé",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "SEN",
+        "playerIn": "Iliman Ndiaye",
+        "playerOut": "Pape Gueye",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "SEN",
+        "playerIn": "Bamba Dieng",
+        "playerOut": "Nicolas Jackson",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "FRA",
+        "playerIn": "Rayan Cherki",
+        "playerOut": "Désiré Doué",
+        "period": 2
+      },
+      {
+        "minute": "88",
+        "team": "SEN",
+        "playerIn": "Pathé Ciss",
+        "playerOut": "Idrissa Gueye",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
@@ -12801,7 +12890,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 80545,
     "espnOdds": {
       "homeML": -200,
       "awayML": 550,
@@ -12866,7 +12955,7 @@
           "jersey": "7",
           "espnId": "229744",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Adrien Rabiot",
@@ -12902,7 +12991,7 @@
           "jersey": "20",
           "espnId": "336388",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Michael Olise",
@@ -13002,7 +13091,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "298008",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13020,7 +13109,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "328238",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13109,7 +13198,7 @@
           "jersey": "8",
           "espnId": "38721",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pape Gueye",
@@ -13118,7 +13207,7 @@
           "jersey": "26",
           "espnId": "255889",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Idrissa Gueye",
@@ -13127,7 +13216,7 @@
           "jersey": "5",
           "espnId": "144517",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nicolas Jackson",
@@ -13136,7 +13225,7 @@
           "jersey": "11",
           "espnId": "308524",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sadio Mané",
@@ -13154,7 +13243,7 @@
           "jersey": "18",
           "espnId": "241012",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -13182,7 +13271,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "324991",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13200,7 +13289,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "294228",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13236,7 +13325,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "313889",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13254,7 +13343,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "388522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -13290,7 +13379,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "268641",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -13298,64 +13387,64 @@
       "_espnEventId": "760432"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 5.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 5.0,
-      "saves": 1.0,
-      "possessionPct": 55.5,
-      "totalShots": 7.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.6,
+      "wonCorners": 6.0,
+      "saves": 2.0,
+      "possessionPct": 53.7,
+      "totalShots": 11.0,
+      "shotsOnTarget": 8.0,
+      "shotPct": 0.7,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 388.0,
-      "totalPasses": 442.0,
+      "accuratePasses": 505.0,
+      "totalPasses": 576.0,
       "passPct": 0.9,
       "accurateCrosses": 0.0,
       "totalCrosses": 9.0,
       "crossPct": 0.0,
-      "totalLongBalls": 32.0,
-      "accurateLongBalls": 13.0,
-      "longballPct": 0.4,
+      "totalLongBalls": 46.0,
+      "accurateLongBalls": 21.0,
+      "longballPct": 0.5,
       "blockedShots": 2.0,
-      "effectiveTackles": 11.0,
-      "totalTackles": 14.0,
+      "effectiveTackles": 14.0,
+      "totalTackles": 18.0,
       "tacklePct": 0.8,
-      "interceptions": 4.0,
-      "effectiveClearance": 6.0,
-      "totalClearance": 6.0
+      "interceptions": 7.0,
+      "effectiveClearance": 14.0,
+      "totalClearance": 14.0
     },
     "awayStats": {
-      "foulsCommitted": 6.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 2.0,
-      "wonCorners": 2.0,
-      "saves": 3.0,
-      "possessionPct": 44.5,
-      "totalShots": 5.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.2,
+      "offsides": 3.0,
+      "wonCorners": 4.0,
+      "saves": 5.0,
+      "possessionPct": 46.3,
+      "totalShots": 6.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 308.0,
-      "totalPasses": 360.0,
+      "accuratePasses": 427.0,
+      "totalPasses": 497.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 39.0,
-      "accurateLongBalls": 18.0,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 48.0,
+      "accurateLongBalls": 25.0,
       "longballPct": 0.5,
       "blockedShots": 1.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 12.0,
-      "tacklePct": 0.7,
-      "interceptions": 7.0,
-      "effectiveClearance": 13.0,
-      "totalClearance": 13.0
+      "effectiveTackles": 9.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.6,
+      "interceptions": 8.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
     },
     "homeForm": [
       {
@@ -15971,17 +16060,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "SoFi Stadium",
+      "city": "Inglewood, California",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -235,
+      "awayML": 700,
+      "spread": "BEL -1.5",
+      "overUnder": 2.5,
+      "overOdds": -115.0,
+      "underOdds": -105.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 0.0,
+      "totalGoals": 1.0,
+      "goalAssists": 0.0,
+      "goalsConceded": 1.0
+    },
+    "awayStats": {
+      "goalDifference": 0.0,
+      "totalGoals": 2.0,
+      "goalAssists": 1.0,
+      "goalsConceded": 2.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-02",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-04-01",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-03-28",
+        "result": "F",
+        "gf": 2,
+        "ga": 5,
+        "home": false
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-16",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-04",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-05-29",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537372,
