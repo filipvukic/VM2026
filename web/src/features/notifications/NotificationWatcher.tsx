@@ -1,24 +1,31 @@
 import { useEffect, useRef } from "react";
 import { useData } from "../../state/dataset";
-import { useNotif, fireNotification, syncKickoffTriggers } from "../../state/notifications";
+import { useNotif, fireNotification, syncKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
 
-// Watches the dataset across polls and fires foreground notifications for goals,
-// kickoffs and full-time. Works on desktop + mobile WHILE the page is open.
-// (Background/closed-tab push would need a server — not available for a static site.)
+// Watches the dataset across polls and fires notifications for goals, kickoffs and
+// full-time. Real-time while the app is OPEN; the last-seen state is persisted so a
+// goal scored while the app was backgrounded/closed still alerts the moment it's
+// reopened. True closed-app/locked-phone push would need a server — not available
+// for a static site.
 export function NotificationWatcher() {
   const ds = useData();
   const subscribed = useNotif((s) => s.subscribed);
   const kickoffAll = useNotif((s) => s.kickoffAll);
-  const prev = useRef<Map<string, { g: number; status: string }>>(new Map());
-  const primed = useRef(false);
+  // Seed from persisted state so a match we already tracked fires a catch-up after
+  // a tab reload. A match with NO prior record is only baselined (never alerted),
+  // so a first-ever visit mid-match doesn't spam already-played goals.
+  const prev = useRef<Map<string, { g: number; status: string }>>(
+    new Map(Object.entries(loadSeen()))
+  );
 
   useEffect(() => {
     const subs = new Set(subscribed);
     const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
+    let changed = false;
     for (const m of ds.allMatches) {
       const cur = { g: (m.ga ?? 0) + (m.gb ?? 0), status: m.status };
       const p = prev.current.get(m.id);
-      if (primed.current && p) {
+      if (p) {
         const h = name(m.home, m.fromA), a = name(m.away, m.fromB);
         const sub = subs.has(m.id);
         const wentLive = p.status !== "live" && m.status === "live";
@@ -31,9 +38,23 @@ export function NotificationWatcher() {
           fireNotification(`Slut: ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ft-" + m.id);
         }
       }
-      prev.current.set(m.id, cur);
+      if (!p || p.g !== cur.g || p.status !== cur.status) {
+        prev.current.set(m.id, cur);
+        changed = true;
+      }
     }
-    primed.current = true;
+    if (changed) {
+      // Persist only live / recently-relevant / watched matches so the store stays
+      // small (not all 104 fixtures) but survives a reload for anything in play.
+      const out: Record<string, { g: number; status: string }> = {};
+      for (const m of ds.allMatches) {
+        const rec = prev.current.get(m.id);
+        if (!rec) continue;
+        const within12h = Math.abs(Date.now() - +m.kickoff) < 12 * 3600 * 1000;
+        if (rec.status === "live" || within12h || subs.has(m.id)) out[m.id] = rec;
+      }
+      saveSeen(out);
+    }
   }, [ds, subscribed, kickoffAll]);
 
   // Schedule closed-tab kickoff notifications (Chromium) for upcoming matches

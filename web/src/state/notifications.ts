@@ -2,12 +2,34 @@ import { create } from "zustand";
 
 const SUBS_KEY = "vm_notify_subs_v1";
 const KO_KEY = "vm_notify_kickoff_v1";
+const SEEN_KEY = "vm_notify_seen_v1";
 
 function loadSubs(): string[] {
   try {
     return JSON.parse(localStorage.getItem(SUBS_KEY) || "[]");
   } catch {
     return [];
+  }
+}
+
+// Per-match {goals, status} we've already alerted on, persisted so that a goal
+// scored while the app was backgrounded/closed still fires a catch-up alert the
+// moment the user reopens it (mobile browsers kill the tab, wiping in-memory
+// state — without this the watcher would re-baseline to the current score and
+// stay silent about everything that happened while away).
+export type SeenMap = Record<string, { g: number; status: string }>;
+export function loadSeen(): SeenMap {
+  try {
+    return JSON.parse(localStorage.getItem(SEEN_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+export function saveSeen(map: SeenMap) {
+  try {
+    localStorage.setItem(SEEN_KEY, JSON.stringify(map));
+  } catch {
+    /* ignore */
   }
 }
 

@@ -171,7 +171,7 @@ function WatchButton({ id, label }: { id: string; label: string }) {
       <div className="dim" style={{ fontSize: 10.5, marginTop: 6 }}>
         {notif.permission === "denied"
           ? "⚠️ Notiser är blockerade i webbläsaren — tillåt dem via hänglåset bredvid adressfältet."
-          : "Notis vid avspark, mål och slutsignal. Håll fliken öppen (även i bakgrundsflik) — stängd flik kan inte ta emot notiser."}
+          : "Notis vid avspark, mål och slut medan appen är öppen — och missade mål visas så fort du öppnar appen igen. (Notiser med appen helt stängd/telefonen låst kräver en server och finns inte än.)"}
       </div>
     </div>
   );
