@@ -473,14 +473,18 @@ def parse_espn_summary(data, home_tla, away_tla):
     }
 
 
-def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
+def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=30):
     """Hämtar matchdetaljer från ESPN:
-      1. Pågående matcher – alltid (live-händelser ändras kontinuerligt)
-      2. FINISHED utan cachad ESPN-data – en gång tills händelser dyker upp
-      3. Kommande matcher inom 24 h – en gång per 6 h (odds, venue, form)
-      4. Stale TIMED (avspark 2.5–12 h sedan) – kan ha blivit klara
+      0. Pågående matcher – alltid (live-händelser ändras kontinuerligt). Räknar
+         även en TIMED-match med avspark −15 min … +2.5 h som live (fd.org släpar).
+      1. Stale TIMED (avspark 2.5–12 h sedan) – kan ha blivit klara
+      2. FINISHED utan SLUT-ögonblicksbild i cachen – tills den är komplett
+      3. Kommande matcher (upp till 5 dygn) – en gång per 6 h (odds, venue, form)
 
-    FINISHED-matcher cachelagras permanent i espn_cache.json.
+    espn_cache.json committas i CI (se update.yml) så att färdiga matcher inte
+    hämtas om varje körning — annars trängs de nyaste matcherna ut av max_calls
+    och får aldrig sina händelser/uppställningar. FINISHED-matcher cachelagras
+    permanent när vi väl fått en slut-ögonblicksbild.
     """
     cache = _jload(cache_path)
     id_map = build_espn_id_map(fd_matches)
@@ -509,9 +513,15 @@ def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
             age_h = 0
 
         if status in ("TIMED", "SCHEDULED"):
-            if 2.5 <= age_h <= 12:
+            if -0.25 <= age_h < 2.5:
+                # Avspark har precis varit (eller är <15 min bort) men fd.org:s
+                # gratisfeed har inte hunnit flagga matchen som live — den släpar
+                # ofta 1-2 h. Behandla som LIVE: hämta varje körning så att
+                # uppställning/händelser/statistik fångas i realtid ändå.
+                to_fetch.append((0, m, espn_id))
+            elif 2.5 <= age_h <= 12:
                 to_fetch.append((1, m, espn_id))  # Borde vara klar
-            elif -120 <= age_h <= 0:
+            elif -120 <= age_h < -0.25:
                 # Kommande match (upp till 5 dygn före): hämta odds/uppställning/venue.
                 # Hämta om ej cachad eller cache > 6 h gammal
                 cached = cache.get(espn_id, {})

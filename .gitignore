@@ -1,7 +1,9 @@
 __pycache__/
 *.pyc
-espn_cache.json
 match_details_cache.json
+# espn_cache.json committas avsiktligt (se update.yml): den måste persistera
+# mellan CI-körningar, annars hämtas alla matcher om varje gång och de nyaste
+# trängs ut av max_calls och får aldrig sina händelser/uppställningar.
 
 # New frontend (web/) — build alongside; not deployed until the approved swap
 web/node_modules/
