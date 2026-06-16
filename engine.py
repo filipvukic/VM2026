@@ -118,9 +118,15 @@ def api_get(path, token):
 ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world"
 ESPN_WC_DATES = "20260611-20260719"
 
-# ESPN live-statusar (state == "in")
-ESPN_LIVE = {"STATUS_IN_PROGRESS", "STATUS_HALFTIME", "STATUS_EXTRA_TIME",
-             "STATUS_PENALTY", "STATUS_SHOOTOUT"}
+# ESPN live-statusar (status.type.state == "in"). Vi förlitar oss i första hand
+# på `state`/`completed` (kanoniskt, se refresh_espn_data) — den här namnlistan är
+# en defensiv fallback. STATUS_FIRST_HALF/SECOND_HALF MÅSTE finnas med: utan dem
+# behandlades pågående matcher som "ej live" och cachelagrades mitt i andra halvlek,
+# varpå händelser/uppställning aldrig uppdaterades till sluttillståndet.
+ESPN_LIVE = {"STATUS_IN_PROGRESS", "STATUS_FIRST_HALF", "STATUS_SECOND_HALF",
+             "STATUS_HALFTIME", "STATUS_EXTRA_TIME", "STATUS_FIRST_EXTRA_TIME",
+             "STATUS_SECOND_EXTRA_TIME", "STATUS_END_OF_EXTRATIME",
+             "STATUS_OVERTIME", "STATUS_PENALTY", "STATUS_SHOOTOUT"}
 ESPN_FINISHED = {"STATUS_FULL_TIME", "STATUS_FT", "STATUS_AWARDED",
                  "STATUS_FULL_PEN", "STATUS_FINAL"}
 
@@ -432,11 +438,15 @@ def parse_espn_summary(data, home_tla, away_tla):
 
     # --- ESPN-status ---
     espn_status = ""
+    espn_state = ""        # kanoniskt: "pre" | "in" | "post"
+    espn_completed = False
     espn_clock = None
     espn_display_clock = None
     for comp in (data.get("header", {}).get("competitions") or []):
         st = comp.get("status", {}).get("type", {})
         espn_status = st.get("name", "")
+        espn_state = st.get("state", "")
+        espn_completed = bool(st.get("completed"))
         espn_clock = comp.get("status", {}).get("clock")
         espn_display_clock = comp.get("status", {}).get("displayClock")
         break
@@ -456,6 +466,8 @@ def parse_espn_summary(data, home_tla, away_tla):
         "homeForm": home_form,
         "awayForm": away_form,
         "espnStatus": espn_status,
+        "espnState": espn_state,
+        "espnCompleted": espn_completed,
         "espnClock": espn_clock,
         "espnDisplayClock": espn_display_clock,
     }
@@ -518,10 +530,17 @@ def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
 
         if status == "FINISHED":
             cached = cache.get(espn_id, {})
-            has_events = bool(cached.get("goals") or cached.get("bookings"))
-            # backfill events for finished matches even days later (cron can lag /
-            # be throttled, and the events cache permanently once fetched)
-            if not has_events and age_h < 720:
+            # Re-fetch unless we already hold a snapshot captured AT full-time.
+            # A snapshot taken mid-match (e.g. 2nd half) has events but is
+            # INCOMPLETE — late goals/cards/subs are missing — so it must be
+            # refreshed once. This also auto-heals legacy cache entries written
+            # before state/completed were tracked.
+            cached_final = bool(
+                cached.get("espnCompleted")
+                or cached.get("espnState") == "post"
+                or cached.get("espnStatus") in ESPN_FINISHED
+            )
+            if not cached_final and age_h < 720:
                 to_fetch.append((2, m, espn_id))
 
     # Applicera befintlig cache direkt
@@ -550,13 +569,23 @@ def refresh_espn_data(fd_matches, cache_path="espn_cache.json", max_calls=12):
                     parsed[side]["_espnEventId"] = espn_id
             parsed["_fetched_at"] = now.isoformat()
 
+            # Kanoniska signaler: status.type.state ("in"/"post") + completed.
+            # Namnlistorna är fallback om ESPN nån gång saknar state.
             espn_status = parsed.get("espnStatus", "")
-            is_finished = espn_status in ESPN_FINISHED
-            is_live = espn_status in ESPN_LIVE
+            espn_state = parsed.get("espnState", "")
+            is_finished = (parsed.get("espnCompleted")
+                           or espn_state == "post"
+                           or espn_status in ESPN_FINISHED)
+            is_live = espn_state == "in" or espn_status in ESPN_LIVE
 
             if is_finished:
                 cache[espn_id] = parsed   # Permanent cache för FINISHED
-            elif not is_live:
+            elif is_live:
+                # Live: cachelagra ALDRIG (ögonblicksbilden blir snabbt inaktuell).
+                # Ta dessutom bort en ev. gammal pre-match-post så att den inte
+                # återappliceras längre ned och skriver över färska live-data.
+                cache.pop(espn_id, None)
+            else:
                 cache[espn_id] = parsed   # Korttidscache för pre-match
 
             _apply_espn(m, parsed)
