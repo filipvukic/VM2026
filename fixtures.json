@@ -8981,26 +8981,135 @@
     "homeTla": "KSA",
     "away": "Uruguay",
     "awayTla": "URY",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      1,
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
-        0,
+      "halfTime": [
+        1,
         0
+      ],
+      "fullTime": [
+        1,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "21",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "41",
+        "team": "KSA",
+        "scorer": "Abdulelah Al-Amri",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Saudi Arabia 1, Uruguay 0. Abdulelah Al Amri (Saudi Arabia) right footed shot from very close range to the centre of the goal following a corner.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "80",
+        "team": "URY",
+        "scorer": "Maxi Araújo",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Saudi Arabia 1, Uruguay 1. Maxi Araújo (Uruguay) left footed shot from the left side of the six yard box to the bottom left corner.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "44",
+        "team": "KSA",
+        "player": "Abdulelah Al-Amri",
+        "card": "YELLOW",
+        "period": 1
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "URY",
+        "playerIn": "Juan Manuel Sanabria",
+        "playerOut": "Matías Viña",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "URY",
+        "playerIn": "Agustín Canobbio",
+        "playerOut": "Darwin Núñez",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "KSA",
+        "playerIn": "Nasser Al-Dawsari",
+        "playerOut": "Musab Al-Juwayr",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "URY",
+        "playerIn": "Nicolás de la Cruz",
+        "playerOut": "Manuel Ugarte",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "URY",
+        "playerIn": "Brian Rodríguez",
+        "playerOut": "Maxi Araújo",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "KSA",
+        "playerIn": "Nawaf Boushal",
+        "playerOut": "Mohammed Abu Al-Shamat",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "URY",
+        "playerIn": "Rodrigo Aguirre",
+        "playerOut": "Federico Viñas",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "KSA",
+        "playerIn": "Abdullah Al-Hamdan",
+        "playerOut": "Moteb Al-Harbi",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "KSA",
+        "playerIn": "Ala Al-Hajji",
+        "playerOut": "Feras Al-Brikan",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "KSA",
+        "playerIn": "Ali Lajami",
+        "playerOut": "Saud Abdulhamid",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -9013,7 +9122,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 0,
     "espnOdds": {
       "homeML": 650,
       "awayML": -205,
@@ -9060,7 +9169,7 @@
           "jersey": "24",
           "espnId": "330543",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Saud Abdulhamid",
@@ -9069,7 +9178,7 @@
           "jersey": "12",
           "espnId": "286011",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Abdullah Al-Khaibari",
@@ -9105,7 +9214,7 @@
           "jersey": "26",
           "espnId": "361692",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Musab Al-Juwayr",
@@ -9114,7 +9223,7 @@
           "jersey": "7",
           "espnId": "315523",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Feras Al-Brikan",
@@ -9123,7 +9232,7 @@
           "jersey": "9",
           "espnId": "283331",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -9178,7 +9287,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "296972",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9187,7 +9296,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "294239",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9196,7 +9305,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "270417",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9223,7 +9332,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "357660",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9232,7 +9341,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "331918",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9267,7 +9376,7 @@
       "_espnEventId": "760429"
     },
     "awayLineup": {
-      "formation": "4-4-2",
+      "formation": "4-2-3-1",
       "lineup": [
         {
           "name": "Fernando Muslera",
@@ -9303,7 +9412,7 @@
           "jersey": "17",
           "espnId": "254032",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Guillermo Varela",
@@ -9315,9 +9424,18 @@
           "subbedOut": false
         },
         {
+          "name": "Federico Viñas",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "21",
+          "espnId": "295847",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
           "name": "Rodrigo Bentancur",
-          "position": "CM-L",
-          "positionName": "Center Left Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "6",
           "espnId": "215772",
           "subbedIn": false,
@@ -9325,46 +9443,37 @@
         },
         {
           "name": "Manuel Ugarte",
-          "position": "CM-R",
-          "positionName": "Center Right Midfielder",
+          "position": "RM",
+          "positionName": "Right Midfielder",
           "jersey": "5",
           "espnId": "241468",
           "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Maxi Araújo",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "20",
-          "espnId": "287025",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Federico Valverde",
-          "position": "RM",
-          "positionName": "Right Midfielder",
-          "jersey": "8",
-          "espnId": "235818",
-          "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Darwin Núñez",
-          "position": "CF-L",
-          "positionName": "Center Left Forward",
+          "position": "F",
+          "positionName": "Forward",
           "jersey": "9",
           "espnId": "271788",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
-          "name": "Federico Viñas",
-          "position": "CF-R",
-          "positionName": "Center Right Forward",
-          "jersey": "21",
-          "espnId": "295847",
+          "name": "Maxi Araújo",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "20",
+          "espnId": "287025",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Federico Valverde",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "8",
+          "espnId": "235818",
           "subbedIn": false,
           "subbedOut": false
         }
@@ -9376,7 +9485,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "251889",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9403,7 +9512,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "159042",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9412,7 +9521,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "287497",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9421,7 +9530,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "241466",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9466,7 +9575,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "144325",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -9492,64 +9601,64 @@
       "_espnEventId": "760429"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 11.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 46.2,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "wonCorners": 4.0,
+      "saves": 9.0,
+      "possessionPct": 33.2,
+      "totalShots": 7.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 112.0,
-      "totalPasses": 134.0,
-      "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 1.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 7.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.3,
-      "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.5,
-      "interceptions": 4.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "accuratePasses": 234.0,
+      "totalPasses": 320.0,
+      "passPct": 0.7,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 7.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 10.0,
+      "longballPct": 0.2,
+      "blockedShots": 1.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.8,
+      "interceptions": 7.0,
+      "effectiveClearance": 42.0,
+      "totalClearance": 42.0
     },
     "awayStats": {
-      "foulsCommitted": 1.0,
+      "foulsCommitted": 6.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 53.8,
-      "totalShots": 2.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.5,
+      "offsides": 6.0,
+      "wonCorners": 14.0,
+      "saves": 2.0,
+      "possessionPct": 66.8,
+      "totalShots": 28.0,
+      "shotsOnTarget": 10.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 132.0,
-      "totalPasses": 154.0,
+      "accuratePasses": 540.0,
+      "totalPasses": 610.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 14.0,
-      "accurateLongBalls": 7.0,
-      "longballPct": 0.5,
-      "blockedShots": 1.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 1.0,
-      "tacklePct": 1.0,
-      "interceptions": 3.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "accurateCrosses": 16.0,
+      "totalCrosses": 47.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.6,
+      "blockedShots": 7.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 3.0,
+      "tacklePct": 0.7,
+      "interceptions": 10.0,
+      "effectiveClearance": 18.0,
+      "totalClearance": 18.0
     },
     "homeForm": [
       {
@@ -9650,7 +9759,13 @@
     "bookings": [],
     "subs": [],
     "venue": null,
-    "referees": [],
+    "referees": [
+      {
+        "name": "César Ramos",
+        "role": "REFEREE",
+        "nationality": "Mexico"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": null,
