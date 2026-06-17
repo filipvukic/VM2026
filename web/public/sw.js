@@ -1,7 +1,38 @@
-// Service worker for VM 2026 — enables scheduled kickoff notifications via the
-// Notification Triggers API (Chromium), which fire even when the tab is closed.
+// Service worker for VM 2026 — handles Web Push (goal/kickoff/full-time alerts
+// sent by the Cloudflare push worker, fire even when the app is closed) and
+// scheduled kickoff notifications via the Notification Triggers API (Chromium).
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => e.waitUntil(self.clients.claim()));
+
+// Always fetch fresh HTML on a page load so a new deploy is picked up immediately
+// (no stale cached index.html on mobile / installed PWA). The JS/CSS are
+// content-hashed and immutable, so only top-level navigations need this; on a
+// network error fall back to the browser default (its HTTP cache).
+self.addEventListener("fetch", (event) => {
+  if (event.request.mode !== "navigate") return;
+  event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => fetch(event.request)));
+});
+
+// Web Push: the push worker sends an encrypted JSON payload {title, body, tag, url}.
+self.addEventListener("push", (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { title: event.data && event.data.text ? event.data.text() : "VM 2026" };
+  }
+  const title = data.title || "VM 2026";
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: data.body || "",
+      tag: data.tag,
+      renotify: true,
+      icon: "/images/wc2026-logo.svg",
+      badge: "/images/wc2026-logo.svg",
+      data: { url: data.url || "/" },
+    })
+  );
+});
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
