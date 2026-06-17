@@ -69,3 +69,32 @@ export async function syncPush(notifyAll: boolean): Promise<boolean> {
     return false;
   }
 }
+
+// Ask the worker to send a REAL push to this browser right now — used as the
+// "notifications on" confirmation so the user sees the full closed-app path work.
+// Returns false if push isn't configured/granted or the send failed.
+export async function sendTestPush(): Promise<boolean> {
+  if (!pushConfigured() || Notification.permission !== "granted") return false;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) {
+      const key = await getVapidKey();
+      if (!key) return false;
+      sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(key) as BufferSource,
+      });
+    }
+    const r = await fetch(PUSH_WORKER_URL + "/test", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subscription: sub.toJSON() }),
+    });
+    if (!r.ok) return false;
+    const j = await r.json().catch(() => ({}));
+    return !!j.ok;
+  } catch {
+    return false;
+  }
+}

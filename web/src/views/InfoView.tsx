@@ -1,6 +1,7 @@
 import { useData } from "../state/dataset";
 import { useNotif, fireNotification } from "../state/notifications";
-import { pushConfigured } from "../state/push";
+import { pushConfigured, sendTestPush } from "../state/push";
+import { iosNeedsInstall } from "../lib/platform";
 import { kr } from "../lib/format";
 import { PRIZES } from "../data/static/names";
 
@@ -17,45 +18,63 @@ export function InfoView() {
       </div>
 
       {/* notifications */}
-      {notif.supported && (
+      {(notif.supported || iosNeedsInstall()) && (
         <div className="card card-pad" style={{ marginBottom: 16 }}>
           <div className="kicker" style={{ marginBottom: 6 }}>Notiser</div>
-          <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
-            Slå på en gång så får du en notis vid <b>avspark, mål och slutsignal</b> för <b>alla matcher</b>
-            {pushConfigured()
-              ? " — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
-              : " medan appen är öppen."}
-          </div>
-          <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
-            <button
-              role="switch"
-              aria-checked={notif.notifyAll}
-              onClick={async () => {
-                const turningOn = !notif.notifyAll;
-                await notif.setNotifyAll(turningOn);
-                if (turningOn && useNotif.getState().notifyAll) {
-                  fireNotification("🔔 Notiser på", "Du får notis vid avspark, mål och slut för alla matcher.", "notify-on");
-                }
-              }}
-              style={{
-                width: 46, height: 27, borderRadius: 999, flexShrink: 0, position: "relative",
-                background: notif.notifyAll ? "var(--win)" : "var(--surface-3)", border: "1px solid var(--line-2)", transition: "background .2s",
-              }}
-            >
-              <span style={{ position: "absolute", top: 2, left: notif.notifyAll ? 21 : 2, width: 21, height: 21, borderRadius: "50%", background: "#fff", transition: "left .2s" }} />
-            </button>
-            <span style={{ fontWeight: 700, fontSize: 13.5 }}>Notiser för alla matcher</span>
-          </label>
-
-          <div style={{ marginTop: 12 }}>
-            {notif.permission === "denied" ? (
-              <div className="dim" style={{ fontSize: 11, color: "var(--loss)" }}>
-                Notiser är blockerade i webbläsaren — tillåt dem via hänglåset/inställningarna bredvid adressfältet.
+          {iosNeedsInstall() ? (
+            <>
+              <div className="dim" style={{ fontSize: 12.5, marginBottom: 10 }}>
+                På <b>iPhone/iPad</b> måste sajten först läggas till på hemskärmen — sen får du notis vid
+                <b> avspark, mål och slutsignal</b> för alla matcher, även när appen är stängd:
               </div>
-            ) : notif.notifyAll ? (
-              <span className="chip" style={{ fontSize: 10.5, color: "var(--win)" }}>Notiser är på ✓</span>
-            ) : null}
-          </div>
+              <ol style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.9 }}>
+                <li>Tryck på <b>Dela</b>-ikonen (rutan med en pil uppåt ⬆️) i Safaris menyrad längst ner.</li>
+                <li>Bläddra ned och välj <b>”Lägg till på hemskärmen”</b>, tryck sedan <b>Lägg till</b>.</li>
+                <li>Öppna <b>VM26</b> från hemskärmen (ikonen) och slå på notiser här.</li>
+              </ol>
+              <div className="dim" style={{ fontSize: 11, marginTop: 10 }}>
+                Måste göras från <b>Safari</b> (inte Chrome) på iPhone.
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
+                Slå på en gång så får du en notis vid <b>avspark, mål och slutsignal</b> för <b>alla matcher</b>
+                {pushConfigured() ? " — även när appen är stängd." : " medan appen är öppen."}
+              </div>
+              <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
+                <button
+                  role="switch"
+                  aria-checked={notif.notifyAll}
+                  onClick={async () => {
+                    const turningOn = !notif.notifyAll;
+                    await notif.setNotifyAll(turningOn);
+                    if (turningOn && useNotif.getState().notifyAll) {
+                      const real = pushConfigured() ? await sendTestPush() : false;
+                      if (!real) fireNotification("🔔 Notiser på", "Du får notis vid avspark, mål och slut för alla matcher.", "notify-on");
+                    }
+                  }}
+                  style={{
+                    width: 46, height: 27, borderRadius: 999, flexShrink: 0, position: "relative",
+                    background: notif.notifyAll ? "var(--win)" : "var(--surface-3)", border: "1px solid var(--line-2)", transition: "background .2s",
+                  }}
+                >
+                  <span style={{ position: "absolute", top: 2, left: notif.notifyAll ? 21 : 2, width: 21, height: 21, borderRadius: "50%", background: "#fff", transition: "left .2s" }} />
+                </button>
+                <span style={{ fontWeight: 700, fontSize: 13.5 }}>Notiser för alla matcher</span>
+              </label>
+
+              <div style={{ marginTop: 12 }}>
+                {notif.permission === "denied" ? (
+                  <div className="dim" style={{ fontSize: 11, color: "var(--loss)" }}>
+                    Notiser är blockerade i webbläsaren — tillåt dem via hänglåset/inställningarna bredvid adressfältet.
+                  </div>
+                ) : notif.notifyAll ? (
+                  <span className="chip" style={{ fontSize: 10.5, color: "var(--win)" }}>Notiser är på ✓</span>
+                ) : null}
+              </div>
+            </>
+          )}
         </div>
       )}
 
