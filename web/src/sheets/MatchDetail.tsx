@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useNotif, fireNotification } from "../state/notifications";
-import { pushConfigured } from "../state/push";
+import { pushConfigured, sendTestPush } from "../state/push";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Pitch } from "../components/Pitch";
 import { GroupTable } from "../components/GroupTable";
@@ -150,31 +150,69 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
 
 function WatchButton({ id, label }: { id: string; label: string }) {
   const notif = useNotif();
+  const [msg, setMsg] = useState<string | null>(null);
+  const [testing, setTesting] = useState(false);
   if (!notif.supported) return null;
   const watching = notif.subscribed.includes(id);
   const onClick = async () => {
     const wasWatching = notif.subscribed.includes(id);
     await notif.toggleMatch(id);
-    // confirm immediately so the user SEES it works (and knows permission was granted)
-    if (!wasWatching && useNotif.getState().subscribed.includes(id)) {
+    const nowWatching = useNotif.getState().subscribed.includes(id);
+    if (!wasWatching && nowWatching) {
       fireNotification("🔔 Du bevakar matchen", `${label} — notiser vid avspark, mål & slut`, "watch-" + id);
+      setMsg("✓ Du bevakar matchen — du får notis vid mål.");
+    } else if (!nowWatching && Notification.permission !== "granted") {
+      setMsg(
+        Notification.permission === "denied"
+          ? "⚠️ Notiser är blockerade — tillåt via hänglåset i adressfältet."
+          : "Du måste välja Tillåt i rutan för att få notiser."
+      );
+    } else if (!nowWatching) {
+      setMsg("Du bevakar inte längre matchen.");
     }
+  };
+  const onTest = async () => {
+    setTesting(true);
+    const ok = await notif.request();
+    if (!ok) {
+      setMsg(
+        Notification.permission === "denied"
+          ? "⚠️ Notiser är blockerade — tillåt via hänglåset i adressfältet."
+          : "Du måste välja Tillåt i rutan för att få notiser."
+      );
+      setTesting(false);
+      return;
+    }
+    await fireNotification("✅ Testnotis", "Notiser fungerar! Du får besked vid mål.", "test-" + Date.now());
+    const real = pushConfigured() ? await sendTestPush() : false;
+    setMsg(
+      (real ? "Skickade testnotis (även som push). " : "Skickade testnotis. ") +
+        "Ser du ingen banner? Kolla macOS → Systeminställningar → Notiser → Chrome och stäng av Stör ej."
+    );
+    setTesting(false);
   };
   return (
     <div style={{ marginTop: 14 }}>
-      <button className="btn" onClick={onClick} style={watching ? { borderColor: "var(--gold)", color: "var(--gold)" } : {}}>
-        <svg viewBox="0 0 24 24" width="16" height="16" fill={watching ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M13.7 21a2 2 0 0 1-3.4 0" strokeLinecap="round" />
-        </svg>
-        {watching ? "Bevakar matchen ✓" : "Bevaka matchen"}
-      </button>
+      <div style={{ display: "flex", gap: 8 }}>
+        <button className="btn" onClick={onClick} style={{ flex: 1, ...(watching ? { borderColor: "var(--gold)", color: "var(--gold)" } : {}) }}>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill={watching ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M13.7 21a2 2 0 0 1-3.4 0" strokeLinecap="round" />
+          </svg>
+          {watching ? "Bevakar matchen ✓" : "Bevaka matchen"}
+        </button>
+        <button className="btn" onClick={onTest} disabled={testing} style={{ flex: "0 0 auto" }}>
+          {testing ? "Skickar…" : "Testa notis"}
+        </button>
+      </div>
       <div className="dim" style={{ fontSize: 10.5, marginTop: 6 }}>
-        {notif.permission === "denied"
-          ? "⚠️ Notiser är blockerade i webbläsaren — tillåt dem via hänglåset bredvid adressfältet."
-          : pushConfigured()
-            ? "Notis vid avspark, mål och slut — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
-            : "Notis vid avspark, mål och slut medan appen är öppen — och missade mål visas så fort du öppnar appen igen."}
+        {msg
+          ? msg
+          : notif.permission === "denied"
+            ? "⚠️ Notiser är blockerade i webbläsaren — tillåt dem via hänglåset bredvid adressfältet."
+            : pushConfigured()
+              ? "Notis vid avspark, mål och slut — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
+              : "Notis vid avspark, mål och slut medan appen är öppen — och missade mål visas så fort du öppnar appen igen."}
       </div>
     </div>
   );

@@ -109,6 +109,28 @@ export default {
       return json({ ok: true }, env);
     }
 
+    if (url.pathname === "/test" && request.method === "POST") {
+      let body: any;
+      try {
+        body = await request.json();
+      } catch {
+        return json({ error: "bad json" }, env, 400);
+      }
+      const subscription = body?.subscription;
+      if (!subscription?.endpoint) return json({ error: "missing subscription" }, env, 400);
+      try {
+        await sendPush(env, subscription, {
+          title: "✅ Testnotis",
+          body: "Push fungerar — du får besked vid mål.",
+          tag: "test-" + Date.now(),
+          url: env.ALLOW_ORIGIN,
+        });
+        return json({ ok: true }, env);
+      } catch (e: any) {
+        return json({ ok: false, status: e?.status || 0 }, env, 200);
+      }
+    }
+
     if (url.pathname === "/unsubscribe" && request.method === "POST") {
       let body: any;
       try {
