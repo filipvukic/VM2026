@@ -1,0 +1,270 @@
+// VM2026 Web Push backend (Cloudflare Worker).
+//
+//  • POST /subscribe        — store a browser push subscription + the matches it
+//                             wants alerts for (orientation-independent team-pair
+//                             keys) + a kickoffAll flag.
+//  • POST /unsubscribe      — drop a subscription.
+//  • GET  /vapidPublicKey   — hand the frontend the public VAPID key to subscribe.
+//  • cron (every minute)    — poll ESPN's scoreboard, diff against the last-seen
+//                             goal state, and push goal / kickoff / full-time
+//                             alerts to the subscribers watching each match.
+//
+// Pairs subscribers to ESPN events by a normalised team-name key, identical to the
+// client overlay's matcher (norm + canon below MUST stay in sync with
+// web/src/lib/espnLive.ts). Sending uses @pushforge/builder (Web Crypto, runs on
+// the edge) so no Node crypto / external service is needed.
+import { buildPushHTTPRequest } from "@pushforge/builder";
+
+interface Env {
+  SUBS: KVNamespace;
+  VAPID_PRIVATE_KEY: string; // private JWK JSON string (secret)
+  VAPID_PUBLIC_KEY: string; // base64url public key (var)
+  ADMIN_CONTACT: string; // mailto:...
+  ALLOW_ORIGIN: string; // site origin allowed to call /subscribe
+}
+
+const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=";
+
+// --- team-name matching (keep in sync with web/src/lib/espnLive.ts) ---
+function norm(s: string): string {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]/g, "");
+}
+const CANON: Record<string, string> = {
+  usa: "usa", unitedstates: "usa",
+  turkey: "turkiye", turkiye: "turkiye",
+  capeverde: "capeverde", capeverdeislands: "capeverde",
+  bosniaandherzegovina: "bosnia", bosniaherzegovina: "bosnia",
+  drcongo: "congodr", congodr: "congodr", democraticrepublicofcongo: "congodr",
+  southkorea: "korea", korearepublic: "korea", republicofkorea: "korea",
+  ivorycoast: "ivorycoast", cotedivoire: "ivorycoast",
+};
+const canon = (n: string) => CANON[n] || n;
+function pairKey(home: string, away: string): string {
+  return [canon(norm(home)), canon(norm(away))].sort().join("|");
+}
+
+function utcDates(nowMs: number): string[] {
+  return [-1, 0, 1].map((off) => {
+    const d = new Date(nowMs + off * 86400000);
+    return `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, "0")}${String(d.getUTCDate()).padStart(2, "0")}`;
+  });
+}
+
+function cors(env: Env): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": env.ALLOW_ORIGIN || "*",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+function json(data: unknown, env: Env, status = 200): Response {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json", ...cors(env) },
+  });
+}
+
+async function hashEndpoint(endpoint: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(endpoint));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 32);
+}
+
+interface StoredSub {
+  subscription: { endpoint: string; keys: { p256dh: string; auth: string } };
+  matches: { key: string; label?: string }[];
+  kickoffAll: boolean;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    if (request.method === "OPTIONS") return new Response(null, { headers: cors(env) });
+
+    if (url.pathname === "/vapidPublicKey") {
+      return json({ key: env.VAPID_PUBLIC_KEY }, env);
+    }
+
+    if (url.pathname === "/subscribe" && request.method === "POST") {
+      let body: StoredSub;
+      try {
+        body = (await request.json()) as StoredSub;
+      } catch {
+        return json({ error: "bad json" }, env, 400);
+      }
+      const endpoint = body?.subscription?.endpoint;
+      if (!endpoint) return json({ error: "missing subscription" }, env, 400);
+      const id = await hashEndpoint(endpoint);
+      const record: StoredSub = {
+        subscription: body.subscription,
+        matches: Array.isArray(body.matches) ? body.matches : [],
+        kickoffAll: !!body.kickoffAll,
+      };
+      // 40-day TTL; the client re-syncs on every load so live subs stay fresh.
+      await env.SUBS.put("sub:" + id, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 40 });
+      return json({ ok: true }, env);
+    }
+
+    if (url.pathname === "/unsubscribe" && request.method === "POST") {
+      let body: any;
+      try {
+        body = await request.json();
+      } catch {
+        return json({ error: "bad json" }, env, 400);
+      }
+      const endpoint = body?.endpoint || body?.subscription?.endpoint;
+      if (endpoint) await env.SUBS.delete("sub:" + (await hashEndpoint(endpoint)));
+      return json({ ok: true }, env);
+    }
+
+    return new Response("VM2026 push worker", { status: 404, headers: cors(env) });
+  },
+
+  async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(poll(env));
+  },
+};
+
+interface LiveEvent {
+  id: string;
+  key: string;
+  homeName: string;
+  awayName: string;
+  home: number;
+  away: number;
+  state: string; // pre | in | post
+  note: string;
+}
+
+async function fetchEvents(): Promise<LiveEvent[]> {
+  const out: LiveEvent[] = [];
+  const seen = new Set<string>();
+  for (const day of utcDates(Date.now())) {
+    try {
+      const r = await fetch(SCOREBOARD + day, { cf: { cacheTtl: 0 } } as RequestInit);
+      if (!r.ok) continue;
+      const j: any = await r.json();
+      for (const ev of j.events || []) {
+        const id = String(ev.id || ev.uid || "");
+        if (!id || seen.has(id)) continue;
+        seen.add(id);
+        const comp = (ev.competitions || [])[0];
+        if (!comp) continue;
+        const cs = comp.competitors || [];
+        const h = cs.find((c: any) => c.homeAway === "home");
+        const a = cs.find((c: any) => c.homeAway === "away");
+        if (!h || !a) continue;
+        const type = (ev.status || comp.status || {}).type || {};
+        const homeName = h.team?.displayName || h.team?.name || h.team?.shortDisplayName || "";
+        const awayName = a.team?.displayName || a.team?.name || a.team?.shortDisplayName || "";
+        const note = (comp.notes && comp.notes[0]?.headline) || "VM 2026";
+        out.push({
+          id,
+          key: pairKey(homeName, awayName),
+          homeName,
+          awayName,
+          home: Number(h.score) || 0,
+          away: Number(a.score) || 0,
+          state: type.state || "",
+          note,
+        });
+      }
+    } catch {
+      /* best-effort per day */
+    }
+  }
+  return out;
+}
+
+interface Alert {
+  key: string;
+  kind: "goal" | "ko" | "ft";
+  total: number;
+  title: string;
+  body: string;
+}
+
+async function poll(env: Env): Promise<void> {
+  const events = await fetchEvents();
+  if (!events.length) return;
+
+  const prevRaw = await env.SUBS.get("goalstate");
+  const prev: Record<string, { g: number; state: string }> = prevRaw ? JSON.parse(prevRaw) : {};
+  const next: Record<string, { g: number; state: string }> = {};
+  const alerts: Alert[] = [];
+
+  for (const e of events) {
+    const g = e.home + e.away;
+    next[e.id] = { g, state: e.state };
+    const p = prev[e.id];
+    if (!p) continue; // first time we see it — baseline only, no alert
+    const score = `${e.homeName} ${e.home}–${e.away} ${e.awayName}`;
+    if (e.state === "in" && g > p.g) {
+      alerts.push({ key: e.key, kind: "goal", total: g, title: `⚽ Mål! ${score}`, body: e.note });
+    } else if (p.state === "pre" && e.state === "in") {
+      alerts.push({ key: e.key, kind: "ko", total: g, title: `🟢 Avspark: ${e.homeName} – ${e.awayName}`, body: e.note });
+    } else if (p.state !== "post" && e.state === "post") {
+      alerts.push({ key: e.key, kind: "ft", total: g, title: `Slut: ${score}`, body: e.note });
+    }
+  }
+
+  await env.SUBS.put("goalstate", JSON.stringify(next));
+  if (!alerts.length) return;
+
+  // gather subscriptions
+  const subs: { name: string; rec: StoredSub }[] = [];
+  let cursor: string | undefined;
+  do {
+    const page = await env.SUBS.list({ prefix: "sub:", cursor });
+    for (const k of page.keys) {
+      const v = await env.SUBS.get(k.name);
+      if (v) subs.push({ name: k.name, rec: JSON.parse(v) as StoredSub });
+    }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  if (!subs.length) return;
+
+  const sends: Promise<void>[] = [];
+  for (const a of alerts) {
+    for (const s of subs) {
+      const watches = (s.rec.matches || []).some((m) => m.key === a.key);
+      const wantsKo = a.kind === "ko" && (s.rec.kickoffAll || watches);
+      if (!watches && !wantsKo) continue;
+      const tag = `${a.kind}-${a.key}-${a.total}`;
+      sends.push(
+        sendPush(env, s.rec.subscription, { title: a.title, body: a.body, tag, url: env.ALLOW_ORIGIN }).catch(
+          async (err: any) => {
+            if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
+          }
+        )
+      );
+    }
+  }
+  await Promise.allSettled(sends);
+}
+
+async function sendPush(
+  env: Env,
+  subscription: StoredSub["subscription"],
+  payload: { title: string; body: string; tag: string; url: string }
+): Promise<void> {
+  const { endpoint, headers, body } = await buildPushHTTPRequest({
+    privateJWK: JSON.parse(env.VAPID_PRIVATE_KEY),
+    subscription,
+    message: {
+      payload,
+      adminContact: env.ADMIN_CONTACT,
+      options: { ttl: 1800, urgency: "high" },
+    },
+  });
+  const res = await fetch(endpoint, { method: "POST", headers, body });
+  if (!res.ok) {
+    const err: any = new Error(`push failed ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+}

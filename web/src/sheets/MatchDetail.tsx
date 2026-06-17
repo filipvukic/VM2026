@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useNotif, fireNotification } from "../state/notifications";
+import { pushConfigured } from "../state/push";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Pitch } from "../components/Pitch";
 import { GroupTable } from "../components/GroupTable";
@@ -171,7 +172,9 @@ function WatchButton({ id, label }: { id: string; label: string }) {
       <div className="dim" style={{ fontSize: 10.5, marginTop: 6 }}>
         {notif.permission === "denied"
           ? "⚠️ Notiser är blockerade i webbläsaren — tillåt dem via hänglåset bredvid adressfältet."
-          : "Notis vid avspark, mål och slut medan appen är öppen — och missade mål visas så fort du öppnar appen igen. (Notiser med appen helt stängd/telefonen låst kräver en server och finns inte än.)"}
+          : pushConfigured()
+            ? "Notis vid avspark, mål och slut — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
+            : "Notis vid avspark, mål och slut medan appen är öppen — och missade mål visas så fort du öppnar appen igen."}
       </div>
     </div>
   );

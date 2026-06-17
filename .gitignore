@@ -10,6 +10,10 @@ web/node_modules/
 web/dist/
 /app/
 
+# Push worker deps
+push-worker/node_modules/
+push-worker/.wrangler/
+
 # TS build cache
 web/tsconfig.tsbuildinfo
 web/*.tsbuildinfo

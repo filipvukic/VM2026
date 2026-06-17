@@ -36,6 +36,11 @@ import { buildKnockout, KO_ROUNDS } from "./bracket";
 import { maxLiveMin } from "../lib/liveState";
 import { classifyTip, outcomeOf } from "./scoring";
 
+// football-data sometimes tags a goal/card/sub team with an ISO alpha-3 code that
+// differs from the FIFA code used in the team list (e.g. Uruguay: URY vs URU),
+// which would otherwise spawn a phantom, flag-less team. Normalise the known ones.
+const TLA_ALIAS: Record<string, string> = { URY: "URU" };
+
 const STAGE_MAP: Record<string, "group" | "ko"> = {
   GROUP_STAGE: "group",
   LAST_32: "ko",
@@ -190,7 +195,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
 
     function refCode(ref?: string | null): string | null {
       if (!ref) return null;
-      const upper = String(ref).toUpperCase();
+      const upper = TLA_ALIAS[String(ref).toUpperCase()] || String(ref).toUpperCase();
       return TEAMS[upper] ? upper : codeOf(ref, null);
     }
     const goalsSrc = f.goals && f.goals.length ? f.goals : tipped && tipped.goals ? tipped.goals : [];

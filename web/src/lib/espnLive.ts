@@ -52,6 +52,12 @@ function canon(n: string): string {
   return CANON[n] || n;
 }
 
+// Orientation-independent key for a team pair, used to match a watched match to an
+// ESPN event for push (the push worker computes the identical key — keep in sync).
+export function matchPairKey(home: string, away: string): string {
+  return [canon(norm(home)), canon(norm(away))].sort().join("|");
+}
+
 // Dice bigram similarity for a fuzzy fallback on odd spellings.
 function bigrams(s: string): Set<string> {
   const out = new Set<string>();

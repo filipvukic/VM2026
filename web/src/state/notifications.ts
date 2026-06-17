@@ -38,9 +38,11 @@ interface NotifState {
   permission: NotificationPermission;
   subscribed: string[]; // match ids you want notified about (goals/kickoff/full-time)
   kickoffAll: boolean; // notify when ANY match kicks off
+  pushActive: boolean; // Web Push worker is covering this browser → suppress foreground dupes
   request: () => Promise<boolean>;
   toggleMatch: (id: string) => Promise<void>;
   setKickoffAll: (v: boolean) => Promise<void>;
+  setPushActive: (v: boolean) => void;
 }
 
 export const useNotif = create<NotifState>((set, get) => ({
@@ -54,6 +56,7 @@ export const useNotif = create<NotifState>((set, get) => ({
       return false;
     }
   })(),
+  pushActive: false,
 
   request: async () => {
     if (!("Notification" in window)) return false;
@@ -88,6 +91,8 @@ export const useNotif = create<NotifState>((set, get) => ({
     }
     set({ kickoffAll: v });
   },
+
+  setPushActive: (v) => set({ pushActive: v }),
 }));
 
 // Notification Triggers (Chromium) let us schedule a kickoff notification that

@@ -1,0 +1,17 @@
+{
+  "name": "vm2026-push-worker",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Web Push backend for VM2026 Tippningsligan: stores subscriptions, polls ESPN every minute, pushes goal/kickoff/full-time alerts.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "vapid": "pushforge vapid"
+  },
+  "dependencies": {
+    "@pushforge/builder": "latest"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

@@ -1,0 +1,28 @@
+# Cloudflare Worker config for the VM2026 Web Push backend.
+# Fill in the three REPLACE_* placeholders, then `npx wrangler deploy`.
+name = "vm2026-push"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+
+# Poll ESPN once a minute and push new goals/kickoffs/full-times.
+[triggers]
+crons = ["* * * * *"]
+
+# KV stores: push subscriptions (sub:*) + the last-seen goal state (goalstate).
+# Create it once:  npx wrangler kv namespace create SUBS
+# then paste the printed id below.
+[[kv_namespaces]]
+binding = "SUBS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+# Public VAPID key (base64url) from `npx @pushforge/builder vapid` — also served
+# to the frontend at GET /vapidPublicKey.
+VAPID_PUBLIC_KEY = "REPLACE_WITH_VAPID_PUBLIC_KEY"
+ADMIN_CONTACT = "mailto:filipvukic@outlook.com"
+# The site origin allowed to call /subscribe (CORS). Your GitHub Pages domain.
+ALLOW_ORIGIN = "REPLACE_WITH_SITE_ORIGIN"
+
+# The private VAPID key is a SECRET, not a var. Set it once with:
+#   npx wrangler secret put VAPID_PRIVATE_KEY
+# and paste the private JWK JSON (the {"kty":"EC",...,"d":"..."} object).

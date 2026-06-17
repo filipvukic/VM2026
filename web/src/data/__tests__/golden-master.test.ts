@@ -18,9 +18,13 @@ const fixtures: RawFixture[] = readJson("fixtures.json");
 // not-yet-counted state so the parity check stays about FINISHED-match scoring and
 // is deterministic regardless of what's live when the suite runs.
 const LIVE_STATUS = new Set(["IN_PLAY", "PAUSED", "LIVE", "SUSPENDED"]);
-const fixturesNoLive: RawFixture[] = fixtures.map((f) =>
-  LIVE_STATUS.has(f.status) ? { ...f, status: "TIMED", score: null, minute: null } : f
-);
+const fixturesNoLive: RawFixture[] = fixtures.map((f) => {
+  if (!LIVE_STATUS.has(f.status)) return f;
+  const { score, minute, ...rest } = f; // drop the in-progress result
+  void score;
+  void minute;
+  return { ...rest, status: "TIMED" };
+});
 
 // --- extract the legacy adapter IIFE from legacy.html (the original single-file
 // site, kept as the parity reference after the swap) and run it in Node ---
@@ -144,7 +148,9 @@ describe("golden master: TS build() == legacy window.VM.build()", () => {
   });
 
   it("team set, match counts, state and pot match", () => {
-    expect(pN.teamsKeys).toEqual(pL.teamsKeys);
+    // build() aliases ISO-vs-FIFA code mismatches (URY→URU) so it does NOT spawn
+    // the phantom, flag-less team the legacy adapter left behind. Otherwise equal.
+    expect(pN.teamsKeys).toEqual(pL.teamsKeys.filter((k: string) => k !== "URY"));
     expect(pN.matchesCount).toBe(pL.matchesCount);
     expect(pN.allMatchesCount).toBe(pL.allMatchesCount);
     expect(pN.state).toBe(pL.state);
