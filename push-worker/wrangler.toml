@@ -13,15 +13,15 @@ crons = ["* * * * *"]
 # then paste the printed id below.
 [[kv_namespaces]]
 binding = "SUBS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "867743eb42944c648924c31c43802113"
 
 [vars]
 # Public VAPID key (base64url) from `npx @pushforge/builder vapid` — also served
 # to the frontend at GET /vapidPublicKey.
-VAPID_PUBLIC_KEY = "REPLACE_WITH_VAPID_PUBLIC_KEY"
+VAPID_PUBLIC_KEY = "BN1BJ4vvvscQCMN7Vq6LA2rEFyP_I_-YlgSua9zCwJ2and9v39pn2aKnRPhAQfsbBzBkQsKVYNEHaYbLGjSCtgc"
 ADMIN_CONTACT = "mailto:filipvukic@outlook.com"
 # The site origin allowed to call /subscribe (CORS). Your GitHub Pages domain.
-ALLOW_ORIGIN = "REPLACE_WITH_SITE_ORIGIN"
+ALLOW_ORIGIN = "https://vmtipp.se"
 
 # The private VAPID key is a SECRET, not a var. Set it once with:
 #   npx wrangler secret put VAPID_PRIVATE_KEY
