@@ -1,7 +1,6 @@
 import { create } from "zustand";
 
 const ALL_KEY = "vm_notify_all_v1";
-const KO_KEY = "vm_notify_kickoff_v1"; // legacy (per-kickoff-all) — migrated into notifyAll
 const SEEN_KEY = "vm_notify_seen_v1";
 
 // Per-match {goals, status} we've already alerted on, persisted so that a goal
@@ -38,11 +37,11 @@ interface NotifState {
 export const useNotif = create<NotifState>((set, get) => ({
   supported: typeof window !== "undefined" && "Notification" in window,
   permission: typeof window !== "undefined" && "Notification" in window ? Notification.permission : "denied",
+  // Off until the user explicitly turns it on (no auto-migration from any legacy
+  // setting — that wrongly showed "Notiser är på" for people who never opted in).
   notifyAll: (() => {
     try {
-      const v = localStorage.getItem(ALL_KEY);
-      if (v != null) return v === "1";
-      return localStorage.getItem(KO_KEY) === "1"; // migrate legacy kickoff-all setting
+      return localStorage.getItem(ALL_KEY) === "1";
     } catch {
       return false;
     }
