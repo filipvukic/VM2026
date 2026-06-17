@@ -107,8 +107,10 @@ export function Sheet({
         .sheet-body{ padding:20px 16px 22px; }
         @media(min-width:560px){ .sheet-body{ padding:24px 22px 26px; } }
         @media(max-width:559px){
-          .sheet-root{ padding:0; align-items:flex-end; }
-          .sheet-panel{ max-height:94dvh; border-radius:var(--r-xl) var(--r-xl) 0 0; border-bottom:none; }
+          /* Modern floating sheet: lifted off the bottom (clear of the home
+             indicator), small side gaps, fully rounded — not glued to the edge. */
+          .sheet-root{ padding:0 10px calc(env(safe-area-inset-bottom) + 16px); align-items:flex-end; }
+          .sheet-panel{ max-height:88dvh; }
         }
       `}</style>
     </div>

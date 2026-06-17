@@ -39,7 +39,9 @@ export function Pitch({
       ? coords.map((c) => ({
           p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
           xPct: 8 + c.y * 84,
-          yPct: 92 - c.x * 84,
+          // vertical band kept off the edges so the top row isn't crammed against
+          // the goal line (and the GK isn't glued to the bottom)
+          yPct: 89 - c.x * 75,
         }))
       : (() => {
           const rows = buildRows(lineup);
@@ -51,7 +53,7 @@ export function Pitch({
               .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
               .map((x) => x.p);
             ordered.forEach((p, i) =>
-              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 88 - (idx / Math.max(1, n - 1)) * 75 })
+              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 89 - (idx / Math.max(1, n - 1)) * 75 })
             );
           });
           return out;
