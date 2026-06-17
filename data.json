@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-17T14:33:27+00:00",
+  "updated_at": "2026-06-17T17:34:07+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -1055,10 +1055,7 @@
         1
       ],
       "scoreDetail": {
-        "halfTime": [
-          0,
-          1
-        ],
+        "halfTime": null,
         "fullTime": [
           1,
           1
@@ -4204,7 +4201,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -5749,26 +5746,66 @@
       "homeTla": "POR",
       "away": "Congo DR",
       "awayTla": "COD",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "32",
+      "goals": [
+        {
+          "minute": "6",
+          "team": "POR",
+          "scorer": "João Neves",
+          "assist": "Pedro Neto",
+          "type": "HEADER",
+          "description": "Goal! Portugal 1, Congo DR 0. João Neves (Portugal) header from the centre of the box to the bottom right corner. Assisted by Pedro Neto with a cross.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "13",
+          "team": "POR",
+          "player": "Bernardo Silva",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "32",
+          "team": "COD",
+          "player": "Chancel Mbemba",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "NRG Stadium",
         "city": "Houston, Texas",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Abdulrahman Al-Jassim",
+          "role": "Referee"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -7960,7 +7997,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -8223,7 +8260,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -10943,7 +10984,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -12543,32 +12584,20 @@
       "code": "K",
       "table": [
         {
-          "team": "Congo DR",
-          "tla": "COD",
-          "played": 0,
-          "won": 0,
+          "team": "Portugal",
+          "tla": "POR",
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
+          "gf": 1,
           "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Colombia",
           "tla": "COL",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Portugal",
-          "tla": "POR",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -12588,6 +12617,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Congo DR",
+          "tla": "COD",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
