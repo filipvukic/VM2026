@@ -34,6 +34,7 @@ import { GROUP_HOST, STADIUM_COUNTRY } from "./static/venues";
 import { PLAYER_COLORS, playerPhoto } from "./static/players";
 import { buildKnockout, KO_ROUNDS } from "./bracket";
 import { maxLiveMin } from "../lib/liveState";
+import { classifyTip, outcomeOf } from "./scoring";
 
 const STAGE_MAP: Record<string, "group" | "ko"> = {
   GROUP_STAGE: "group",
@@ -553,24 +554,47 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     return out;
   }
 
+  // Provisional points for a LIVE (or overlay-finished-but-engine-not-yet) match,
+  // mirroring score_one_match in engine.py so the number doesn't jump when the
+  // engine later finalises it. Group: outcome = result. Knockout: outcome =
+  // advancing side (m.winner) once known, else current result while live.
+  function provisionalPoints(m: Match, tip: [number, number]): number {
+    if (m.ga == null || m.gb == null) return 0;
+    if (m.stage === "group") return classifyTip(tip, m.ga, m.gb).points;
+    if (tip[0] === m.ga && tip[1] === m.gb) return 5; // exact (after ET)
+    const tipSide = tip[0] > tip[1] ? m.home : tip[0] < tip[1] ? m.away : null;
+    const advanced = m.winner ? tipSide != null && tipSide === m.winner : outcomeOf(tip[0], tip[1]) === outcomeOf(m.ga, m.gb);
+    return advanced ? 2 : 1;
+  }
+
   const leaderboard = D.leaderboard || [];
   const players: PlayerStanding[] = leaderboard.map((p) => {
     const tips = buildPlayerTips(p.name);
-    const exact = p.exact_count || 0;
-    let correct = 0,
+    // Recompute match points across played AND live matches so the leaderboard
+    // moves the instant a goal is scored — not only when the (throttled) engine
+    // cron re-commits. Finished matches use the engine's authoritative per-match
+    // points; live / not-yet-finalised matches use the provisional score above.
+    let matchPoints = 0,
+      exact = 0,
+      correct = 0,
       other = 0;
     allMatches.forEach((m) => {
-      if (m.status !== "played" || !m.home || !m.away) return;
+      if (!m.home || !m.away) return;
       const tip = tips[m.id];
       if (!tip) return;
-      if (tip[0] === m.ga && tip[1] === m.gb) {
-        /* exact — counted via engine exact_count */
-      } else {
-        const o1 = tip[0] > tip[1] ? "H" : tip[0] < tip[1] ? "B" : "X";
-        const o2 = m.ga! > m.gb! ? "H" : m.ga! < m.gb! ? "B" : "X";
-        if (o1 === o2) correct++;
-        else other++;
+      const rm = m._realId != null ? tipsByMatchId[m._realId] : undefined;
+      const engineFinished = !!rm && (rm.status === "FINISHED" || rm.status === "AWARDED");
+      let pts: number | null = null;
+      if (engineFinished) {
+        const et = (rm!.tips || []).find((x) => x.name === p.name);
+        if (et && et.points != null) pts = et.points;
       }
+      if (pts == null && (m.status === "live" || m.status === "played")) pts = provisionalPoints(m, tip);
+      if (pts == null) return;
+      matchPoints += pts;
+      if (pts >= 5) exact++;
+      else if (pts >= 2) correct++;
+      else other++;
     });
     const pid = p.name
       .toLowerCase()
@@ -583,14 +607,14 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       color: PLAYER_COLORS[p.name] || "#7A3CF0",
       photo: playerPhoto(p.name),
       tips,
-      points: p.match_points || 0,
+      points: matchPoints,
       exact,
       correct,
       other,
       bonus: buildBonus(p.bonus_detail),
       bonusPts: p.bonus_points || 0,
       rank: p.rank || 0,
-      total: (p.match_points || 0) + (p.bonus_points || 0),
+      total: matchPoints + (p.bonus_points || 0),
     };
   });
 

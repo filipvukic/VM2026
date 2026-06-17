@@ -131,6 +131,7 @@ export interface RawTip {
 
 export interface RawDataMatch {
   id: number;
+  status?: string;
   tips?: RawTip[];
   goals?: RawGoal[];
   bookings?: RawBooking[];

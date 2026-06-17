@@ -13,6 +13,15 @@ const readJson = (p: string) => JSON.parse(readFileSync(root(p), "utf-8"));
 const data: RawData = readJson("data.json");
 const fixtures: RawFixture[] = readJson("fixtures.json");
 
+// build() now scores LIVE matches provisionally (so the leaderboard moves on every
+// goal), which the legacy engine did not. Neutralise any in-progress match to a
+// not-yet-counted state so the parity check stays about FINISHED-match scoring and
+// is deterministic regardless of what's live when the suite runs.
+const LIVE_STATUS = new Set(["IN_PLAY", "PAUSED", "LIVE", "SUSPENDED"]);
+const fixturesNoLive: RawFixture[] = fixtures.map((f) =>
+  LIVE_STATUS.has(f.status) ? { ...f, status: "TIMED", score: null, minute: null } : f
+);
+
 // --- extract the legacy adapter IIFE from legacy.html (the original single-file
 // site, kept as the parity reference after the swap) and run it in Node ---
 function legacyBuild(d: RawData, fx: RawFixture[]): any {
@@ -95,8 +104,8 @@ function project(ds: Dataset | any) {
 }
 
 describe("golden master: TS build() == legacy window.VM.build()", () => {
-  const legacy = legacyBuild(data, fixtures);
-  const next = build(data, fixtures);
+  const legacy = legacyBuild(data, fixturesNoLive);
+  const next = build(data, fixturesNoLive);
 
   const pL = project(legacy);
   const pN = project(next);
@@ -122,6 +131,18 @@ describe("golden master: TS build() == legacy window.VM.build()", () => {
       for (const key of mine) expect(legacySet.has(key)).toBe(true);
     }
   });
+  it("live matches add provisional points to the leaderboard (every goal counts)", () => {
+    const liveFx = fixtures.filter((f) => LIVE_STATUS.has(f.status));
+    const liveIds = new Set(liveFx.map((f) => f.id));
+    const liveTipped = (data.matches || []).some((m) => liveIds.has(m.id) && (m.tips || []).length > 0);
+    if (!liveTipped) return; // committed snapshot has no live, tipped match — nothing to assert
+    const sum = (ds: any) => ds.standings.reduce((a: number, s: any) => a + s.points, 0);
+    const withLive = sum(build(data, fixtures));
+    const without = sum(build(data, fixturesNoLive));
+    // a live group match awards >=1 (floor) to everyone who tipped it
+    expect(withLive).toBeGreaterThan(without);
+  });
+
   it("team set, match counts, state and pot match", () => {
     expect(pN.teamsKeys).toEqual(pL.teamsKeys);
     expect(pN.matchesCount).toBe(pL.matchesCount);
