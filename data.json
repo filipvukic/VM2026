@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-17T17:34:07+00:00",
+  "updated_at": "2026-06-17T19:38:53+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Albin",
-      "match_points": 46,
+      "match_points": 47,
       "bonus_points": 0,
-      "total": 46,
+      "total": 47,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 41,
+      "match_points": 43,
       "bonus_points": 0,
-      "total": 41,
+      "total": 43,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 41,
+      "match_points": 42,
       "bonus_points": 0,
-      "total": 41,
+      "total": 42,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 38,
+      "match_points": 39,
       "bonus_points": 0,
-      "total": 38,
+      "total": 39,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 37,
+      "match_points": 38,
       "bonus_points": 0,
-      "total": 37,
+      "total": 38,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 35,
+      "match_points": 36,
       "bonus_points": 0,
-      "total": 35,
+      "total": 36,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 34,
+      "match_points": 35,
       "bonus_points": 0,
-      "total": 34,
+      "total": 35,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 33,
+      "match_points": 34,
       "bonus_points": 0,
-      "total": 33,
+      "total": 34,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 32,
+      "match_points": 33,
       "bonus_points": 0,
-      "total": 32,
+      "total": 33,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 32,
+      "match_points": 33,
       "bonus_points": 0,
-      "total": 32,
+      "total": 33,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 29,
+      "match_points": 30,
       "bonus_points": 0,
-      "total": 29,
+      "total": 30,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -1055,7 +1055,10 @@
         1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
         "fullTime": [
           1,
           1
@@ -5746,23 +5749,26 @@
       "homeTla": "POR",
       "away": "Congo DR",
       "awayTla": "COD",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         1,
-        0
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          1,
+          1
+        ],
         "fullTime": [
           1,
-          0
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "HOME_TEAM"
+        "winnerSide": "DRAW"
       },
-      "minute": "32",
+      "minute": null,
       "goals": [
         {
           "minute": "6",
@@ -5774,6 +5780,19 @@
           "score": [
             1,
             0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+5",
+          "team": "COD",
+          "scorer": "Yoane Wissa",
+          "assist": "Arthur Masuaku",
+          "type": "HEADER",
+          "description": "Goal! Portugal 1, Congo DR 1. Yoane Wissa (Congo DR) header from very close range to the top left corner. Assisted by Arthur Masuaku with a cross following a corner.",
+          "score": [
+            1,
+            1
           ],
           "period": 1
         }
@@ -5792,9 +5811,87 @@
           "player": "Chancel Mbemba",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "88",
+          "team": "POR",
+          "player": "Nélson Semedo",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "POR",
+          "player": "Tomás Araújo",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "POR",
+          "playerIn": "Francisco Conceição",
+          "playerOut": "Bernardo Silva",
+          "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "COD",
+          "playerIn": "Noah Sadiki",
+          "playerOut": "Ngal'ayel Mukau",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "POR",
+          "playerIn": "Rafael Leão",
+          "playerOut": "Pedro Neto",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "POR",
+          "playerIn": "Nélson Semedo",
+          "playerOut": "Nuno Mendes",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "COD",
+          "playerIn": "Charles Pickel",
+          "playerOut": "Edo Kayembe",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "COD",
+          "playerIn": "Joris Kayembe",
+          "playerOut": "Arthur Masuaku",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "POR",
+          "playerIn": "Gonçalo Ramos",
+          "playerOut": "Vitinha ",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "COD",
+          "playerIn": "Gédéon Kalulu",
+          "playerOut": "Aaron Wan-Bissaka",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "COD",
+          "playerIn": "Simon Banza",
+          "playerOut": "Cédric Bakambu",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "NRG Stadium",
         "city": "Houston, Texas",
@@ -5807,7 +5904,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 68777,
       "tips": [
         {
           "name": "Albin",
@@ -5815,7 +5912,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -5823,7 +5920,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -5831,7 +5928,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -5839,7 +5936,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -5847,7 +5944,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -5855,7 +5952,7 @@
             5,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -5863,7 +5960,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -5871,7 +5968,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -5879,7 +5976,7 @@
             5,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Hampus",
@@ -5887,7 +5984,7 @@
             4,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -5895,7 +5992,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -5928,7 +6025,13 @@
         "city": "Arlington, Texas",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Clément Turpin",
+          "role": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -12584,16 +12687,28 @@
       "code": "K",
       "table": [
         {
+          "team": "Congo DR",
+          "tla": "COD",
+          "played": 1,
+          "won": 0,
+          "draw": 1,
+          "lost": 0,
+          "gf": 1,
+          "ga": 1,
+          "gd": 0,
+          "points": 1
+        },
+        {
           "team": "Portugal",
           "tla": "POR",
           "played": 1,
-          "won": 1,
-          "draw": 0,
+          "won": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 1,
-          "ga": 0,
-          "gd": 1,
-          "points": 3
+          "ga": 1,
+          "gd": 0,
+          "points": 1
         },
         {
           "team": "Colombia",
@@ -12617,18 +12732,6 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Congo DR",
-          "tla": "COD",
-          "played": 1,
-          "won": 0,
-          "draw": 0,
-          "lost": 1,
-          "gf": 0,
-          "ga": 1,
-          "gd": -1,
           "points": 0
         }
       ]

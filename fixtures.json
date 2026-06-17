@@ -1610,7 +1610,10 @@
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
       "fullTime": [
         1,
         1
@@ -15940,23 +15943,26 @@
     "homeTla": "POR",
     "away": "Congo DR",
     "awayTla": "COD",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       1,
-      0
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        1,
+        1
+      ],
       "fullTime": [
         1,
-        0
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "HOME_TEAM"
+      "winnerSide": "DRAW"
     },
-    "minute": "32",
+    "minute": null,
     "goals": [
       {
         "minute": "6",
@@ -15968,6 +15974,19 @@
         "score": [
           1,
           0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "45+5",
+        "team": "COD",
+        "scorer": "Yoane Wissa",
+        "assist": "Arthur Masuaku",
+        "type": "HEADER",
+        "description": "Goal! Portugal 1, Congo DR 1. Yoane Wissa (Congo DR) header from very close range to the top left corner. Assisted by Arthur Masuaku with a cross following a corner.",
+        "score": [
+          1,
+          1
         ],
         "period": 1
       }
@@ -15986,9 +16005,87 @@
         "player": "Chancel Mbemba",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "88",
+        "team": "POR",
+        "player": "Nélson Semedo",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "POR",
+        "player": "Tomás Araújo",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "POR",
+        "playerIn": "Francisco Conceição",
+        "playerOut": "Bernardo Silva",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "COD",
+        "playerIn": "Noah Sadiki",
+        "playerOut": "Ngal'ayel Mukau",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "POR",
+        "playerIn": "Rafael Leão",
+        "playerOut": "Pedro Neto",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "POR",
+        "playerIn": "Nélson Semedo",
+        "playerOut": "Nuno Mendes",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "COD",
+        "playerIn": "Charles Pickel",
+        "playerOut": "Edo Kayembe",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "COD",
+        "playerIn": "Joris Kayembe",
+        "playerOut": "Arthur Masuaku",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "POR",
+        "playerIn": "Gonçalo Ramos",
+        "playerOut": "Vitinha ",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "COD",
+        "playerIn": "Gédéon Kalulu",
+        "playerOut": "Aaron Wan-Bissaka",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "COD",
+        "playerIn": "Simon Banza",
+        "playerOut": "Cédric Bakambu",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "NRG Stadium",
       "city": "Houston, Texas",
@@ -16001,7 +16098,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 68777,
     "espnOdds": {
       "homeML": -350,
       "awayML": 1100,
@@ -16048,7 +16145,7 @@
           "jersey": "25",
           "espnId": "290591",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "João Cancelo",
@@ -16075,7 +16172,7 @@
           "jersey": "23",
           "espnId": "288897",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "João Neves",
@@ -16102,7 +16199,7 @@
           "jersey": "18",
           "espnId": "256115",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bernardo Silva",
@@ -16111,7 +16208,7 @@
           "jersey": "10",
           "espnId": "199833",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -16193,7 +16290,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "312659",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16202,7 +16299,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "222670",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16211,7 +16308,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "288896",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16229,7 +16326,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "258917",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16300,7 +16397,7 @@
           "jersey": "26",
           "espnId": "165892",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Aaron Wan-Bissaka",
@@ -16309,7 +16406,7 @@
           "jersey": "2",
           "espnId": "250945",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Samuel Moutoussamy",
@@ -16327,7 +16424,7 @@
           "jersey": "25",
           "espnId": "268986",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ngal'ayel Mukau",
@@ -16336,7 +16433,7 @@
           "jersey": "6",
           "espnId": "345988",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cédric Bakambu",
@@ -16345,7 +16442,7 @@
           "jersey": "17",
           "espnId": "147193",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Yoane Wissa",
@@ -16364,7 +16461,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "204329",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16391,7 +16488,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "291345",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16409,7 +16506,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "231161",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16418,7 +16515,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "340240",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16481,7 +16578,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "235875",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -16498,64 +16595,64 @@
       "_espnEventId": "760435"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 3.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 79.5,
-      "totalShots": 1.0,
+      "offsides": 3.0,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 75.4,
+      "totalShots": 7.0,
       "shotsOnTarget": 1.0,
-      "shotPct": 1.0,
+      "shotPct": 0.1,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 289.0,
-      "totalPasses": 307.0,
+      "accuratePasses": 724.0,
+      "totalPasses": 783.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 9.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 11.0,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 23.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 65.0,
+      "accurateLongBalls": 42.0,
       "longballPct": 0.6,
-      "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 3.0,
-      "tacklePct": 0.7,
-      "interceptions": 0.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
-    },
-    "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 20.5,
-      "totalShots": 2.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 65.0,
-      "totalPasses": 79.0,
-      "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 12.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.3,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 4.0,
+      "blockedShots": 2.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 11.0,
       "tacklePct": 0.5,
-      "interceptions": 1.0,
+      "interceptions": 2.0,
       "effectiveClearance": 10.0,
       "totalClearance": 10.0
+    },
+    "awayStats": {
+      "foulsCommitted": 10.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 4.0,
+      "saves": 0.0,
+      "possessionPct": 24.6,
+      "totalShots": 8.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 197.0,
+      "totalPasses": 251.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 11.0,
+      "longballPct": 0.3,
+      "blockedShots": 3.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 19.0,
+      "tacklePct": 0.6,
+      "interceptions": 5.0,
+      "effectiveClearance": 28.0,
+      "totalClearance": 28.0
     },
     "homeForm": [
       {
@@ -16660,7 +16757,13 @@
       "city": "Arlington, Texas",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Clément Turpin",
+        "role": "REFEREE",
+        "nationality": "France"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
