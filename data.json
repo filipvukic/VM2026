@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-17T21:33:45+00:00",
+  "updated_at": "2026-06-17T23:04:38+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Albin",
-      "match_points": 47,
+      "match_points": 49,
       "bonus_points": 0,
-      "total": 47,
+      "total": 49,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 43,
+      "match_points": 45,
       "bonus_points": 0,
-      "total": 43,
+      "total": 45,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 42,
+      "match_points": 44,
       "bonus_points": 0,
-      "total": 42,
+      "total": 44,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 39,
+      "match_points": 41,
       "bonus_points": 0,
-      "total": 39,
+      "total": 41,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 38,
+      "match_points": 39,
       "bonus_points": 0,
-      "total": 38,
+      "total": 39,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 36,
+      "match_points": 38,
       "bonus_points": 0,
-      "total": 36,
+      "total": 38,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 35,
+      "match_points": 37,
       "bonus_points": 0,
-      "total": 35,
+      "total": 37,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 34,
+      "match_points": 36,
       "bonus_points": 0,
-      "total": 34,
+      "total": 36,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 33,
+      "match_points": 35,
       "bonus_points": 0,
-      "total": 33,
+      "total": 35,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 33,
+      "match_points": 35,
       "bonus_points": 0,
-      "total": 33,
+      "total": 35,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 30,
+      "match_points": 32,
       "bonus_points": 0,
-      "total": 30,
+      "total": 32,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -6006,9 +6006,9 @@
       "homeTla": "ENG",
       "away": "Croatia",
       "awayTla": "CRO",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        3,
+        4,
         2
       ],
       "scoreDetail": {
@@ -6017,7 +6017,7 @@
           2
         ],
         "fullTime": [
-          3,
+          4,
           2
         ],
         "extraTime": null,
@@ -6025,7 +6025,7 @@
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "69",
+      "minute": null,
       "goals": [
         {
           "minute": "12",
@@ -6083,11 +6083,24 @@
           "minute": "47",
           "team": "ENG",
           "scorer": "Jude Bellingham",
-          "assist": null,
+          "assist": "Elliot Anderson",
           "type": "REGULAR",
-          "description": "Goal! England 3, Croatia 2. Jude Bellingham (England) right footed shot from the right side of the box to the bottom left corner.",
+          "description": "Goal! England 3, Croatia 2. Jude Bellingham (England) right footed shot from the right side of the box to the bottom left corner. Assisted by Elliot Anderson.",
           "score": [
             3,
+            2
+          ],
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "ENG",
+          "scorer": "Marcus Rashford",
+          "assist": "Bukayo Saka",
+          "type": "REGULAR",
+          "description": "Goal! England 4, Croatia 2. Marcus Rashford (England) right footed shot from the centre of the box to the bottom right corner. Assisted by Bukayo Saka.",
+          "score": [
+            4,
             2
           ],
           "period": 2
@@ -6115,6 +6128,55 @@
           "playerIn": "Marco Pasalic",
           "playerOut": "Luka Vuskovic",
           "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ENG",
+          "playerIn": "Morgan Rogers",
+          "playerOut": "Declan Rice",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ENG",
+          "playerIn": "Bukayo Saka",
+          "playerOut": "Noni Madueke",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ENG",
+          "playerIn": "Marcus Rashford",
+          "playerOut": "Anthony Gordon",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "CRO",
+          "playerIn": "Nikola Vlasic",
+          "playerOut": "Martin Baturina",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "CRO",
+          "playerIn": "Andrej Kramaric",
+          "playerOut": "Mario Pasalic",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "ENG",
+          "playerIn": "Djed Spence",
+          "playerOut": "Jude Bellingham",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "ENG",
+          "playerIn": "Marc Guéhi",
+          "playerOut": "John Stones",
+          "period": 2
         }
       ],
       "venue": {
@@ -6129,7 +6191,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70389,
       "tips": [
         {
           "name": "Albin",
@@ -6137,7 +6199,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -6145,7 +6207,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -6153,7 +6215,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -6161,7 +6223,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -6169,7 +6231,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -6177,7 +6239,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -6185,7 +6247,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -6193,7 +6255,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -6201,7 +6263,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -6209,7 +6271,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -6217,7 +6279,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -6241,7 +6303,7 @@
         "duration": "REGULAR",
         "winnerSide": null
       },
-      "minute": null,
+      "minute": "3",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -6253,8 +6315,7 @@
       "referees": [
         {
           "name": "Glenn Nyberg",
-          "role": "REFEREE",
-          "nationality": "Sweden"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -12852,34 +12913,34 @@
           "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 3,
+          "gf": 4,
           "ga": 2,
-          "gd": 1,
+          "gd": 2,
           "points": 3
         },
         {
           "team": "Ghana",
           "tla": "GHA",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Panama",
           "tla": "PAN",
-          "played": 0,
+          "played": 1,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 0,
           "ga": 0,
           "gd": 0,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Croatia",
@@ -12889,8 +12950,8 @@
           "draw": 0,
           "lost": 1,
           "gf": 2,
-          "ga": 3,
-          "gd": -1,
+          "ga": 4,
+          "gd": -2,
           "points": 0
         }
       ]
