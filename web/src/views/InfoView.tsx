@@ -21,7 +21,7 @@ export function InfoView() {
         <div className="card card-pad" style={{ marginBottom: 16 }}>
           <div className="kicker" style={{ marginBottom: 6 }}>Notiser</div>
           <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
-            Slå på en gång så får du en avi vid <b>avspark, mål och slutsignal</b> för <b>alla matcher</b>
+            Slå på en gång så får du en notis vid <b>avspark, mål och slutsignal</b> för <b>alla matcher</b>
             {pushConfigured()
               ? " — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
               : " medan appen är öppen."}
@@ -34,7 +34,7 @@ export function InfoView() {
                 const turningOn = !notif.notifyAll;
                 await notif.setNotifyAll(turningOn);
                 if (turningOn && useNotif.getState().notifyAll) {
-                  fireNotification("🔔 Notiser på", "Du får avi vid avspark, mål och slut för alla matcher.", "notify-on");
+                  fireNotification("🔔 Notiser på", "Du får notis vid avspark, mål och slut för alla matcher.", "notify-on");
                 }
               }}
               style={{

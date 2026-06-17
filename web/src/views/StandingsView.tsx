@@ -9,6 +9,7 @@ import { isLive } from "../lib/liveState";
 import { PRIZES } from "../data/static/names";
 import { kr, svTime, svDateKey, svDayLabel } from "../lib/format";
 import { asset } from "../lib/assets";
+import { NotifyPrompt } from "../features/notifications/NotifyPrompt";
 
 const MEDAL = ["var(--gold)", "#cfd6e6", "#e8965a"];
 
@@ -76,6 +77,8 @@ export function StandingsView() {
           )}
         </div>
       </div>
+
+      <NotifyPrompt />
 
       {/* podium */}
       {podiumOrder.length === 3 && (
