@@ -1,18 +1,17 @@
 // VM2026 Web Push backend (Cloudflare Worker).
 //
-//  • POST /subscribe        — store a browser push subscription + the matches it
-//                             wants alerts for (orientation-independent team-pair
-//                             keys) + a kickoffAll flag.
+//  • POST /subscribe        — store a browser push subscription + a notifyAll flag
+//                             (one global opt-in for all matches).
 //  • POST /unsubscribe      — drop a subscription.
+//  • POST /test             — send a test push to a given subscription.
 //  • GET  /vapidPublicKey   — hand the frontend the public VAPID key to subscribe.
 //  • cron (every minute)    — poll ESPN's scoreboard, diff against the last-seen
 //                             goal state, and push goal / kickoff / full-time
-//                             alerts to the subscribers watching each match.
+//                             alerts to every subscriber with notifyAll on.
 //
-// Pairs subscribers to ESPN events by a normalised team-name key, identical to the
-// client overlay's matcher (norm + canon below MUST stay in sync with
-// web/src/lib/espnLive.ts). Sending uses @pushforge/builder (Web Crypto, runs on
-// the edge) so no Node crypto / external service is needed.
+// One global opt-in per browser: a subscriber with notifyAll gets every goal /
+// kickoff / full-time alert for every match. Sending uses @pushforge/builder
+// (Web Crypto, runs on the edge) so no Node crypto / external service is needed.
 import { buildPushHTTPRequest } from "@pushforge/builder";
 
 interface Env {
@@ -24,29 +23,6 @@ interface Env {
 }
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=";
-
-// --- team-name matching (keep in sync with web/src/lib/espnLive.ts) ---
-function norm(s: string): string {
-  return (s || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]/g, "");
-}
-const CANON: Record<string, string> = {
-  usa: "usa", unitedstates: "usa",
-  turkey: "turkiye", turkiye: "turkiye",
-  capeverde: "capeverde", capeverdeislands: "capeverde",
-  bosniaandherzegovina: "bosnia", bosniaherzegovina: "bosnia",
-  drcongo: "congodr", congodr: "congodr", democraticrepublicofcongo: "congodr",
-  southkorea: "korea", korearepublic: "korea", republicofkorea: "korea",
-  ivorycoast: "ivorycoast", cotedivoire: "ivorycoast",
-};
-const canon = (n: string) => CANON[n] || n;
-function pairKey(home: string, away: string): string {
-  return [canon(norm(home)), canon(norm(away))].sort().join("|");
-}
 
 function utcDates(nowMs: number): string[] {
   return [-1, 0, 1].map((off) => {
@@ -76,8 +52,7 @@ async function hashEndpoint(endpoint: string): Promise<string> {
 
 interface StoredSub {
   subscription: { endpoint: string; keys: { p256dh: string; auth: string } };
-  matches: { key: string; label?: string }[];
-  kickoffAll: boolean;
+  notifyAll: boolean;
 }
 
 export default {
@@ -101,8 +76,7 @@ export default {
       const id = await hashEndpoint(endpoint);
       const record: StoredSub = {
         subscription: body.subscription,
-        matches: Array.isArray(body.matches) ? body.matches : [],
-        kickoffAll: !!body.kickoffAll,
+        notifyAll: !!body.notifyAll,
       };
       // 40-day TTL; the client re-syncs on every load so live subs stay fresh.
       await env.SUBS.put("sub:" + id, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 40 });
@@ -153,7 +127,6 @@ export default {
 
 interface LiveEvent {
   id: string;
-  key: string;
   homeName: string;
   awayName: string;
   home: number;
@@ -186,7 +159,6 @@ async function fetchEvents(): Promise<LiveEvent[]> {
         const note = (comp.notes && comp.notes[0]?.headline) || "VM 2026";
         out.push({
           id,
-          key: pairKey(homeName, awayName),
           homeName,
           awayName,
           home: Number(h.score) || 0,
@@ -203,7 +175,7 @@ async function fetchEvents(): Promise<LiveEvent[]> {
 }
 
 interface Alert {
-  key: string;
+  eid: string;
   kind: "goal" | "ko" | "ft";
   total: number;
   title: string;
@@ -226,11 +198,11 @@ async function poll(env: Env): Promise<void> {
     if (!p) continue; // first time we see it — baseline only, no alert
     const score = `${e.homeName} ${e.home}–${e.away} ${e.awayName}`;
     if (e.state === "in" && g > p.g) {
-      alerts.push({ key: e.key, kind: "goal", total: g, title: `⚽ Mål! ${score}`, body: e.note });
+      alerts.push({ eid: e.id, kind: "goal", total: g, title: `⚽ Mål! ${score}`, body: e.note });
     } else if (p.state === "pre" && e.state === "in") {
-      alerts.push({ key: e.key, kind: "ko", total: g, title: `🟢 Avspark: ${e.homeName} – ${e.awayName}`, body: e.note });
+      alerts.push({ eid: e.id, kind: "ko", total: g, title: `🟢 Avspark: ${e.homeName} – ${e.awayName}`, body: e.note });
     } else if (p.state !== "post" && e.state === "post") {
-      alerts.push({ key: e.key, kind: "ft", total: g, title: `Slut: ${score}`, body: e.note });
+      alerts.push({ eid: e.id, kind: "ft", total: g, title: `Slut: ${score}`, body: e.note });
     }
   }
 
@@ -250,13 +222,13 @@ async function poll(env: Env): Promise<void> {
   } while (cursor);
   if (!subs.length) return;
 
+  const recipients = subs.filter((s) => s.rec.notifyAll);
+  if (!recipients.length) return;
+
   const sends: Promise<void>[] = [];
   for (const a of alerts) {
-    for (const s of subs) {
-      const watches = (s.rec.matches || []).some((m) => m.key === a.key);
-      const wantsKo = a.kind === "ko" && (s.rec.kickoffAll || watches);
-      if (!watches && !wantsKo) continue;
-      const tag = `${a.kind}-${a.key}-${a.total}`;
+    const tag = `${a.kind}-${a.eid}-${a.total}`;
+    for (const s of recipients) {
       sends.push(
         sendPush(env, s.rec.subscription, { title: a.title, body: a.body, tag, url: env.ALLOW_ORIGIN }).catch(
           async (err: any) => {

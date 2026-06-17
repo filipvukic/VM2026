@@ -1,5 +1,6 @@
 import { useData } from "../state/dataset";
 import { useNotif, fireNotification } from "../state/notifications";
+import { pushConfigured } from "../state/push";
 import { kr } from "../lib/format";
 import { PRIZES } from "../data/static/names";
 
@@ -20,51 +21,40 @@ export function InfoView() {
         <div className="card card-pad" style={{ marginBottom: 16 }}>
           <div className="kicker" style={{ marginBottom: 6 }}>Notiser</div>
           <div className="dim" style={{ fontSize: 12.5, marginBottom: 12 }}>
-            Få en avi för <b>mål, avspark och slutsignal</b> — bevaka en enskild match via klockan inne på
-            matchen, eller slå på avisering när <b>vilken match som helst</b> börjar här nedan.
-            Notiserna fungerar så länge <b>fliken är öppen</b> (även som bakgrundsflik) — en helt stängd flik
-            kan tyvärr inte ta emot notiser utan en server.
+            Slå på en gång så får du en avi vid <b>avspark, mål och slutsignal</b> för <b>alla matcher</b>
+            {pushConfigured()
+              ? " — även när appen är stängd. (På iPhone: lägg till sajten på hemskärmen först.)"
+              : " medan appen är öppen."}
           </div>
           <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
             <button
               role="switch"
-              aria-checked={notif.kickoffAll}
+              aria-checked={notif.notifyAll}
               onClick={async () => {
-                const turningOn = !notif.kickoffAll;
-                await notif.setKickoffAll(turningOn);
-                if (turningOn && useNotif.getState().kickoffAll) {
-                  fireNotification("🔔 Avspark-notiser på", "Du får en avi när en match börjar (håll fliken öppen).", "ko-all-on");
+                const turningOn = !notif.notifyAll;
+                await notif.setNotifyAll(turningOn);
+                if (turningOn && useNotif.getState().notifyAll) {
+                  fireNotification("🔔 Notiser på", "Du får avi vid avspark, mål och slut för alla matcher.", "notify-on");
                 }
               }}
               style={{
                 width: 46, height: 27, borderRadius: 999, flexShrink: 0, position: "relative",
-                background: notif.kickoffAll ? "var(--win)" : "var(--surface-3)", border: "1px solid var(--line-2)", transition: "background .2s",
+                background: notif.notifyAll ? "var(--win)" : "var(--surface-3)", border: "1px solid var(--line-2)", transition: "background .2s",
               }}
             >
-              <span style={{ position: "absolute", top: 2, left: notif.kickoffAll ? 21 : 2, width: 21, height: 21, borderRadius: "50%", background: "#fff", transition: "left .2s" }} />
+              <span style={{ position: "absolute", top: 2, left: notif.notifyAll ? 21 : 2, width: 21, height: 21, borderRadius: "50%", background: "#fff", transition: "left .2s" }} />
             </button>
-            <span style={{ fontWeight: 700, fontSize: 13.5 }}>Notis när en match börjar</span>
+            <span style={{ fontWeight: 700, fontSize: 13.5 }}>Notiser för alla matcher</span>
           </label>
 
-          {/* permission state + a way to grant and to verify it works */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-            {notif.permission === "granted" ? (
-              <>
-                <span className="chip" style={{ fontSize: 10.5, color: "var(--win)" }}>Notiser är på ✓</span>
-                <button className="btn" style={{ fontSize: 12, padding: "6px 12px" }}
-                  onClick={() => fireNotification("✅ Notiser funkar!", "Du får aviseringar härifrån.", "vm-test")}>
-                  Skicka testnotis
-                </button>
-              </>
-            ) : notif.permission === "denied" ? (
+          <div style={{ marginTop: 12 }}>
+            {notif.permission === "denied" ? (
               <div className="dim" style={{ fontSize: 11, color: "var(--loss)" }}>
                 Notiser är blockerade i webbläsaren — tillåt dem via hänglåset/inställningarna bredvid adressfältet.
               </div>
-            ) : (
-              <button className="btn" style={{ fontSize: 12, padding: "6px 12px" }} onClick={() => notif.request()}>
-                Tillåt notiser
-              </button>
-            )}
+            ) : notif.notifyAll ? (
+              <span className="chip" style={{ fontSize: 10.5, color: "var(--win)" }}>Notiser är på ✓</span>
+            ) : null}
           </div>
         </div>
       )}

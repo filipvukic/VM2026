@@ -63,10 +63,12 @@ wire it in, rebuild and redeploy. Once set, the "Bevaka matchen" button subscrib
 the browser and alerts arrive with the app closed.
 
 ## Notes
+- One global opt-in per browser: the app sends `{ subscription, notifyAll }` and the
+  Worker pushes every goal/kickoff/full-time alert (all matches) to subscribers with
+  `notifyAll` on. No per-match selection.
 - **iPhone**: web push only works for a PWA — open the site in Safari, Share → "Add
   to Home Screen", then enable notifications from the installed app.
 - The Worker auto-removes dead subscriptions (HTTP 404/410) on send.
-- Team matching uses the same normalised name keys as the client overlay
-  (`norm`/`canon`/`pairKey` in `src/index.ts` must stay in sync with
-  `web/src/lib/espnLive.ts`).
-- Endpoints: `GET /vapidPublicKey`, `POST /subscribe`, `POST /unsubscribe`.
+- Endpoints: `GET /vapidPublicKey`, `POST /subscribe`, `POST /unsubscribe`, `POST /test`.
+- **Re-deploy (`npx wrangler deploy`) whenever `src/index.ts` changes** so the live
+  Worker matches the frontend's request shape.

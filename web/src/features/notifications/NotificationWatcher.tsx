@@ -1,47 +1,42 @@
 import { useEffect, useRef } from "react";
 import { useData } from "../../state/dataset";
 import { useNotif, fireNotification, syncKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
-import { useStore } from "../../state/store";
-import { syncPush, pushConfigured, type WatchedMatch } from "../../state/push";
-import { matchPairKey } from "../../lib/espnLive";
+import { syncPush, pushConfigured } from "../../state/push";
 
-// Watches the dataset across polls and fires notifications for goals, kickoffs and
-// full-time. Real-time while the app is OPEN; the last-seen state is persisted so a
-// goal scored while the app was backgrounded/closed still alerts the moment it's
-// reopened. When the Web Push worker is configured + active it covers the
-// closed-app case too, and the foreground alerts below stand down to avoid dupes.
+// One global switch (notifyAll): alerts for goals / kickoff / full-time across ALL
+// matches. Real-time while the app is OPEN (foreground), persisted so a goal scored
+// while backgrounded still alerts on reopen, and — when the Web Push worker is
+// active — delivered even with the app CLOSED (then the foreground alerts below
+// stand down to avoid dupes).
 export function NotificationWatcher() {
   const ds = useData();
-  const subscribed = useNotif((s) => s.subscribed);
-  const kickoffAll = useNotif((s) => s.kickoffAll);
+  const notifyAll = useNotif((s) => s.notifyAll);
   const pushActive = useNotif((s) => s.pushActive);
   const setPushActive = useNotif((s) => s.setPushActive);
-  const rawFixtures = useStore((s) => s.raw?.fixtures);
-  const fixturesLoaded = !!rawFixtures;
-  // Seed from persisted state so a match we already tracked fires a catch-up after
-  // a tab reload. A match with NO prior record is only baselined (never alerted),
-  // so a first-ever visit mid-match doesn't spam already-played goals.
-  const prev = useRef<Map<string, { g: number; status: string }>>(
-    new Map(Object.entries(loadSeen()))
-  );
+  const prev = useRef<Map<string, { g: number; status: string }>>(new Map(Object.entries(loadSeen())));
 
+  // Register on/off with the push worker (subscribes on first enable). pushActive
+  // gates the foreground alerts so a covered browser doesn't double-notify.
   useEffect(() => {
-    const subs = new Set(subscribed);
+    if (!pushConfigured()) return;
+    syncPush(notifyAll).then(setPushActive);
+  }, [notifyAll, setPushActive]);
+
+  // Foreground watcher (+ persisted catch-up on reopen).
+  useEffect(() => {
     const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
     let changed = false;
     for (const m of ds.allMatches) {
       const cur = { g: (m.ga ?? 0) + (m.gb ?? 0), status: m.status };
       const p = prev.current.get(m.id);
-      if (p && !pushActive) {
+      if (p && notifyAll && !pushActive) {
         const h = name(m.home, m.fromA), a = name(m.away, m.fromB);
-        const sub = subs.has(m.id);
         const wentLive = p.status !== "live" && m.status === "live";
-        if (sub && m.status === "live" && cur.g > p.g) {
-          // unique tag per goal so a 2nd/3rd goal alerts instead of replacing the first
+        if (m.status === "live" && cur.g > p.g) {
           fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, `goal-${m.id}-${cur.g}`);
-        } else if (wentLive && (sub || kickoffAll)) {
+        } else if (wentLive) {
           fireNotification(`🟢 Avspark: ${h} – ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ko-" + m.id);
-        } else if (sub && p.status !== "played" && m.status === "played") {
+        } else if (p.status !== "played" && m.status === "played") {
           fireNotification(`Slut: ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ft-" + m.id);
         }
       }
@@ -51,53 +46,32 @@ export function NotificationWatcher() {
       }
     }
     if (changed) {
-      // Persist only live / recently-relevant / watched matches so the store stays
-      // small (not all 104 fixtures) but survives a reload for anything in play.
+      // persist only live / recently-relevant matches so the store stays small but
+      // survives a reload for anything in play
       const out: Record<string, { g: number; status: string }> = {};
       for (const m of ds.allMatches) {
         const rec = prev.current.get(m.id);
         if (!rec) continue;
         const within12h = Math.abs(Date.now() - +m.kickoff) < 12 * 3600 * 1000;
-        if (rec.status === "live" || within12h || subs.has(m.id)) out[m.id] = rec;
+        if (rec.status === "live" || within12h) out[m.id] = rec;
       }
       saveSeen(out);
     }
-  }, [ds, subscribed, kickoffAll, pushActive]);
+  }, [ds, notifyAll, pushActive]);
 
-  // Keep the push worker's copy of this browser's watch-list in sync. Runs when
-  // the watch-list changes and once fixtures are first available; syncPush no-ops
-  // when the payload is unchanged. pushActive gates the foreground alerts above.
-  const dsRef = useRef(ds);
-  dsRef.current = ds;
-  const fxRef = useRef(rawFixtures);
-  fxRef.current = rawFixtures;
+  // Closed-tab kickoff notifications via Notification Triggers (Chromium) — a
+  // fallback for browsers the push worker doesn't cover. When push is active it
+  // already handles kickoffs, so clear these to avoid duplicates. Capped to the
+  // next 3 days so we don't schedule ~90 triggers at once.
   useEffect(() => {
-    if (!pushConfigured()) return;
-    const d = dsRef.current;
-    const rf = fxRef.current;
-    if (!rf) {
-      setPushActive(false);
+    const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
+    if (!notifyAll || pushActive) {
+      syncKickoffTriggers([]);
       return;
     }
-    const subs = new Set(subscribed);
-    const fxById = new Map(rf.map((f) => [f.id, f] as const));
-    const matches: WatchedMatch[] = [];
-    for (const m of d.allMatches) {
-      if (!subs.has(m.id)) continue;
-      const f = m._realId != null ? fxById.get(m._realId) : undefined;
-      if (!f?.home || !f?.away) continue;
-      matches.push({ key: matchPairKey(f.home, f.away), label: m.group ? `Grupp ${m.group}` : m.round });
-    }
-    syncPush(matches, kickoffAll).then(setPushActive);
-  }, [subscribed, kickoffAll, fixturesLoaded, setPushActive]);
-
-  // Schedule closed-tab kickoff notifications (Chromium) for upcoming matches
-  // that are watched or, with kickoffAll, all of them.
-  useEffect(() => {
-    const subs = new Set(subscribed);
-    const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
+    const horizon = Date.now() + 3 * 24 * 3600 * 1000;
     const items = ds.allMatches
-      .filter((m) => m.status === "upcoming" && (kickoffAll || subs.has(m.id)))
+      .filter((m) => m.status === "upcoming" && +m.kickoff <= horizon)
       .map((m) => ({
         tag: "kosched-" + m.id,
         ts: +m.kickoff,
@@ -105,7 +79,7 @@ export function NotificationWatcher() {
         body: m.group ? `Grupp ${m.group}` : m.round,
       }));
     syncKickoffTriggers(items);
-  }, [ds, subscribed, kickoffAll]);
+  }, [ds, notifyAll, pushActive]);
 
   return null;
 }

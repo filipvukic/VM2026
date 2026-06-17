@@ -1,16 +1,8 @@
 import { create } from "zustand";
 
-const SUBS_KEY = "vm_notify_subs_v1";
-const KO_KEY = "vm_notify_kickoff_v1";
+const ALL_KEY = "vm_notify_all_v1";
+const KO_KEY = "vm_notify_kickoff_v1"; // legacy (per-kickoff-all) — migrated into notifyAll
 const SEEN_KEY = "vm_notify_seen_v1";
-
-function loadSubs(): string[] {
-  try {
-    return JSON.parse(localStorage.getItem(SUBS_KEY) || "[]");
-  } catch {
-    return [];
-  }
-}
 
 // Per-match {goals, status} we've already alerted on, persisted so that a goal
 // scored while the app was backgrounded/closed still fires a catch-up alert the
@@ -36,22 +28,21 @@ export function saveSeen(map: SeenMap) {
 interface NotifState {
   supported: boolean;
   permission: NotificationPermission;
-  subscribed: string[]; // match ids you want notified about (goals/kickoff/full-time)
-  kickoffAll: boolean; // notify when ANY match kicks off
+  notifyAll: boolean; // one switch: alerts for goals/kickoff/full-time on ALL matches
   pushActive: boolean; // Web Push worker is covering this browser → suppress foreground dupes
   request: () => Promise<boolean>;
-  toggleMatch: (id: string) => Promise<void>;
-  setKickoffAll: (v: boolean) => Promise<void>;
+  setNotifyAll: (v: boolean) => Promise<void>;
   setPushActive: (v: boolean) => void;
 }
 
 export const useNotif = create<NotifState>((set, get) => ({
   supported: typeof window !== "undefined" && "Notification" in window,
   permission: typeof window !== "undefined" && "Notification" in window ? Notification.permission : "denied",
-  subscribed: loadSubs(),
-  kickoffAll: (() => {
+  notifyAll: (() => {
     try {
-      return localStorage.getItem(KO_KEY) === "1";
+      const v = localStorage.getItem(ALL_KEY);
+      if (v != null) return v === "1";
+      return localStorage.getItem(KO_KEY) === "1"; // migrate legacy kickoff-all setting
     } catch {
       return false;
     }
@@ -66,30 +57,17 @@ export const useNotif = create<NotifState>((set, get) => ({
     return perm === "granted";
   },
 
-  toggleMatch: async (id) => {
-    const ok = await get().request();
-    if (!ok) return;
-    const cur = get().subscribed;
-    const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
-    try {
-      localStorage.setItem(SUBS_KEY, JSON.stringify(next));
-    } catch {
-      /* ignore */
-    }
-    set({ subscribed: next });
-  },
-
-  setKickoffAll: async (v) => {
+  setNotifyAll: async (v) => {
     if (v) {
       const ok = await get().request();
       if (!ok) return;
     }
     try {
-      localStorage.setItem(KO_KEY, v ? "1" : "0");
+      localStorage.setItem(ALL_KEY, v ? "1" : "0");
     } catch {
       /* ignore */
     }
-    set({ kickoffAll: v });
+    set({ notifyAll: v });
   },
 
   setPushActive: (v) => set({ pushActive: v }),
