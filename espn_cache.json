@@ -13143,111 +13143,6 @@
     "espnDisplayClock": null,
     "_fetched_at": "2026-06-17T11:24:44.261875+00:00"
   },
-  "760437": {
-    "goals": [],
-    "bookings": [],
-    "subs": [],
-    "homeLineup": null,
-    "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "venue": {
-      "stadium": "AT&T Stadium",
-      "city": "Arlington, Texas",
-      "country": "USA"
-    },
-    "attendance": null,
-    "referees": [],
-    "espnOdds": {
-      "homeML": -150,
-      "awayML": 450,
-      "spread": "ENG -0.5",
-      "overUnder": 2.5,
-      "overOdds": 105.0,
-      "underOdds": -130.0,
-      "provider": "DraftKings"
-    },
-    "homeForm": [
-      {
-        "date": "2026-06-10",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-06-06",
-        "result": "V",
-        "gf": 1,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-03-31",
-        "result": "V",
-        "gf": 1,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-03-27",
-        "result": "O",
-        "gf": 1,
-        "ga": 1,
-        "home": true
-      },
-      {
-        "date": "2025-11-16",
-        "result": "F",
-        "gf": 0,
-        "ga": 2,
-        "home": false
-      }
-    ],
-    "awayForm": [
-      {
-        "date": "2026-06-07",
-        "result": "V",
-        "gf": 2,
-        "ga": 1,
-        "home": true
-      },
-      {
-        "date": "2026-06-02",
-        "result": "V",
-        "gf": 2,
-        "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-04-01",
-        "result": "F",
-        "gf": 1,
-        "ga": 3,
-        "home": false
-      },
-      {
-        "date": "2026-03-26",
-        "result": "F",
-        "gf": 1,
-        "ga": 2,
-        "home": false
-      },
-      {
-        "date": "2025-11-17",
-        "result": "F",
-        "gf": 2,
-        "ga": 3,
-        "home": false
-      }
-    ],
-    "espnStatus": "STATUS_SCHEDULED",
-    "espnState": "pre",
-    "espnCompleted": false,
-    "espnClock": null,
-    "espnDisplayClock": null,
-    "_fetched_at": "2026-06-17T17:33:43.882483+00:00"
-  },
   "760434": {
     "goals": [],
     "bookings": [],
@@ -18499,5 +18394,120 @@
     "espnClock": null,
     "espnDisplayClock": null,
     "_fetched_at": "2026-06-17T19:38:51.334272+00:00"
+  },
+  "760457": {
+    "goals": [],
+    "bookings": [],
+    "subs": [],
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {
+      "goalDifference": 2.0,
+      "totalGoals": 3.0,
+      "goalAssists": 2.0,
+      "goalsConceded": 1.0
+    },
+    "awayStats": {
+      "goalDifference": -3.0,
+      "totalGoals": 1.0,
+      "goalAssists": 1.0,
+      "goalsConceded": 4.0
+    },
+    "venue": {
+      "stadium": "Lincoln Financial Field",
+      "city": "Philadelphia, Pennsylvania",
+      "country": "USA"
+    },
+    "attendance": null,
+    "referees": [],
+    "espnOdds": {
+      "homeML": -1100,
+      "awayML": 2500,
+      "spread": "FRA -2.5",
+      "overUnder": 3.5,
+      "overOdds": -105.0,
+      "underOdds": -120.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-16",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-08",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-04",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-29",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-03-26",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-16",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-04",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-05-29",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-04-01",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_SCHEDULED",
+    "espnState": "pre",
+    "espnCompleted": false,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-06-17T21:33:42.960475+00:00"
   }
 }

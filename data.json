@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-17T19:38:53+00:00",
+  "updated_at": "2026-06-17T21:33:45+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -6006,20 +6006,117 @@
       "homeTla": "ENG",
       "away": "Croatia",
       "awayTla": "CRO",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        3,
+        2
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          2,
+          2
+        ],
+        "fullTime": [
+          3,
+          2
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "69",
+      "goals": [
+        {
+          "minute": "12",
+          "team": "ENG",
+          "scorer": "Harry Kane",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! England 1, Croatia 0. Harry Kane (England) converts the penalty with a right footed shot to the bottom right corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "36",
+          "team": "CRO",
+          "scorer": "Martin Baturina",
+          "assist": "Petar Sucic",
+          "type": "REGULAR",
+          "description": "Goal! England 1, Croatia 1. Martin Baturina (Croatia) right footed shot from outside the box to the top left corner. Assisted by Petar Sucic.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "42",
+          "team": "ENG",
+          "scorer": "Harry Kane",
+          "assist": "Declan Rice",
+          "type": "HEADER",
+          "description": "Goal! England 2, Croatia 1. Harry Kane (England) header from the centre of the box to the bottom left corner. Assisted by Declan Rice with a cross following a corner.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+5",
+          "team": "CRO",
+          "scorer": "Petar Musa",
+          "assist": "Ivan Perisic",
+          "type": "REGULAR",
+          "description": "Goal! England 2, Croatia 2. Petar Musa (Croatia) right footed shot from the centre of the box to the centre of the goal. Assisted by Ivan Perisic with a headed pass.",
+          "score": [
+            2,
+            2
+          ],
+          "period": 1
+        },
+        {
+          "minute": "47",
+          "team": "ENG",
+          "scorer": "Jude Bellingham",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! England 3, Croatia 2. Jude Bellingham (England) right footed shot from the right side of the box to the bottom left corner.",
+          "score": [
+            3,
+            2
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "58",
+          "team": "CRO",
+          "playerIn": "Mateo Kovacic",
+          "playerOut": "Luka Modric",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "CRO",
+          "playerIn": "Igor Matanovic",
+          "playerOut": "Petar Musa",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "CRO",
+          "playerIn": "Marco Pasalic",
+          "playerOut": "Luka Vuskovic",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "AT&T Stadium",
         "city": "Arlington, Texas",
@@ -6028,8 +6125,7 @@
       "referees": [
         {
           "name": "Clément Turpin",
-          "role": "REFEREE",
-          "nationality": "France"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -6154,7 +6250,13 @@
         "city": "Toronto",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Glenn Nyberg",
+          "role": "REFEREE",
+          "nationality": "Sweden"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -8100,7 +8202,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -8486,7 +8588,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lincoln Financial Field",
+        "city": "Philadelphia, Pennsylvania",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -11087,7 +11193,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -12742,30 +12848,18 @@
         {
           "team": "England",
           "tla": "ENG",
-          "played": 0,
-          "won": 0,
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gf": 3,
+          "ga": 2,
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Ghana",
           "tla": "GHA",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
-          "team": "Croatia",
-          "tla": "CRO",
           "played": 0,
           "won": 0,
           "draw": 0,
@@ -12785,6 +12879,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Croatia",
+          "tla": "CRO",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 2,
+          "ga": 3,
+          "gd": -1,
           "points": 0
         }
       ]
