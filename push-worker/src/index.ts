@@ -94,9 +94,9 @@ export default {
       if (!subscription?.endpoint) return json({ error: "missing subscription" }, env, 400);
       try {
         await sendPush(env, subscription, {
-          title: "✅ Testnotis",
-          body: "Push fungerar — du får besked vid mål.",
-          tag: "test-" + Date.now(),
+          title: "🔔 Notiser på — mål, avspark & slut",
+          body: "",
+          tag: "vm26-welcome",
           url: env.ALLOW_ORIGIN,
         });
         return json({ ok: true }, env);
@@ -156,7 +156,9 @@ async function fetchEvents(): Promise<LiveEvent[]> {
         const type = (ev.status || comp.status || {}).type || {};
         const homeName = h.team?.displayName || h.team?.name || h.team?.shortDisplayName || "";
         const awayName = a.team?.displayName || a.team?.name || a.team?.shortDisplayName || "";
-        const note = (comp.notes && comp.notes[0]?.headline) || "VM 2026";
+        // Group/round label if ESPN provides one — else empty (the title already
+        // carries the teams + score; "VM 2026" as a body just duplicates the app name).
+        const note = (comp.notes && comp.notes[0]?.headline) || "";
         out.push({
           id,
           homeName,

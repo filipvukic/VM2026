@@ -1,10 +1,13 @@
-import { useData, useCoaches } from "../state/dataset";
+import { useData, useCoaches, usePlayersDb } from "../state/dataset";
 import { useSheets } from "../state/sheets";
+import { useMatchStats } from "../state/matchStats";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { GroupTable } from "../components/GroupTable";
 import { PlayerImg } from "../components/PlayerImg";
+import { Pitch } from "../components/Pitch";
 import { Flag, groupColor } from "../lib/flags";
 import { FormDots } from "../components/FormDots";
+import { lineupPhoto } from "../lib/playerPhoto";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
 import { svDayMonth } from "../lib/format";
 
@@ -68,6 +71,8 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
         </div>
       )}
 
+      <LatestLineup code={code} color={t.c1 || "var(--cool)"} />
+
       <div className="card card-pad" style={{ marginTop: 12 }}>
         <div className="kicker" style={{ marginBottom: 8 }}>Form</div>
         <FormDots form={ds.forms[code] || []} />
@@ -105,6 +110,73 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
         </div>
       )}
     </Sheet>
+  );
+}
+
+const ratingNorm = (s: string) =>
+  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+
+// The team's most recent match line-up (starting XI + bench) — shows who they have
+// and how they set up. Uses FotMob coords/ratings when available (same as the
+// match view), else falls back to formation rows.
+function LatestLineup({ code, color }: { code: string; color: string }) {
+  const ds = useData();
+  const openFb = useSheets((s) => s.openFbPlayer);
+  const db = usePlayersDb();
+  const m = [...ds.allMatches]
+    .filter((x) => x.home === code || x.away === code)
+    .sort((a, b) => +b.kickoff - +a.kickoff)
+    .find((x) => {
+      const lu = x.home === code ? x.homeLineup : x.awayLineup;
+      return !!lu?.lineup?.length;
+    });
+  const detail = useMatchStats(m?._realId ?? null);
+  if (!m) return null;
+  const isHome = m.home === code;
+  const rawLu = isHome ? m.homeLineup : m.awayLineup;
+  if (!rawLu?.lineup?.length) return null;
+  const sideKey = isHome ? "home" : "away";
+  const coords = detail?.lineup?.[sideKey];
+  const fmFormation = detail?.formations?.[sideKey];
+  const lu = fmFormation ? { ...rawLu, formation: fmFormation } : rawLu;
+
+  const rFull = new Map<string, number>(), rLast = new Map<string, number>();
+  (detail?.players || []).forEach((p) => {
+    if (p.tla !== code || p.rating == null) return;
+    const fn = ratingNorm(p.name), ln = ratingNorm((p.name || "").split(" ").slice(-1)[0]);
+    rFull.set(fn, p.rating);
+    if (ln && !rLast.has(ln)) rLast.set(ln, p.rating);
+  });
+  const getRating = (name: string): number | null =>
+    rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+
+  const opp = isHome ? m.away : m.home;
+  const oppT = opp ? ds.teams[opp] : null;
+  const formation = fmFormation || lu.formation;
+
+  return (
+    <div style={{ marginTop: 14 }}>
+      <div className="kicker" style={{ marginBottom: 6 }}>Senaste laguppställning</div>
+      <div className="dim" style={{ fontSize: 12, marginBottom: 10 }}>
+        mot {oppT?.name || "?"} · {svDayMonth(m.kickoff)}{formation ? ` · ${formation}` : ""}
+      </div>
+      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} />
+      {lu.bench && lu.bench.length > 0 && (
+        <div style={{ marginTop: 16 }}>
+          <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>
+            {lu.bench.map((p, i) => (
+              <button key={i} onClick={() => openFb(p.name, p.espnId)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: "var(--surface)", border: "1px solid var(--line)" }}>
+                <PlayerImg src={lineupPhoto(p.name, p.espnId, db)} name={p.name} size={46} radius={13} fontSize={16} />
+                <span style={{ fontSize: 11, fontWeight: 700, textAlign: "center", lineHeight: 1.1, maxWidth: 78, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {p.jersey || p.shirtNumber} {(p.name || "").split(" ").slice(-1)[0]}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

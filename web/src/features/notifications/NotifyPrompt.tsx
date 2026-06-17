@@ -26,7 +26,7 @@ export function NotifyPrompt() {
     // notification if the worker isn't reachable.
     const real = pushConfigured() ? await sendTestPush() : false;
     if (!real) {
-      fireNotification("🔔 Notiser på", "Du får notis vid avspark, mål och slut för alla matcher.", "notify-on");
+      fireNotification("🔔 Notiser på — mål, avspark & slut", "", "notify-on");
     }
   };
 

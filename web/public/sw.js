@@ -22,16 +22,15 @@ self.addEventListener("push", (event) => {
     data = { title: event.data && event.data.text ? event.data.text() : "VM 2026" };
   }
   const title = data.title || "VM 2026";
-  event.waitUntil(
-    self.registration.showNotification(title, {
-      body: data.body || "",
-      tag: data.tag,
-      renotify: true,
-      icon: "/images/wc2026-logo.svg",
-      badge: "/images/wc2026-logo.svg",
-      data: { url: data.url || "/" },
-    })
-  );
+  const opts = {
+    tag: data.tag,
+    renotify: true,
+    icon: "/images/icon-192.png",
+    badge: "/images/icon-192.png",
+    data: { url: data.url || "/" },
+  };
+  if (data.body) opts.body = data.body; // omit empty body → no blank line
+  event.waitUntil(self.registration.showNotification(title, opts));
 });
 
 self.addEventListener("notificationclick", (event) => {

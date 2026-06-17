@@ -124,13 +124,14 @@ function swReady(): Promise<ServiceWorkerRegistration | null> {
 export async function fireNotification(title: string, body: string, tag: string) {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const opts: NotificationOptions & { renotify?: boolean } = {
-    body,
     tag,
     renotify: true,
-    icon: "/images/wc2026-logo.svg",
-    badge: "/images/wc2026-logo.svg",
+    icon: "/images/icon-192.png",
+    badge: "/images/icon-192.png",
     data: { url: "/" },
   };
+  if (body) opts.body = body; // omit empty body so there's no blank line
+
   // Prefer the service worker's showNotification(): on Chrome for ANDROID the
   // `new Notification()` constructor throws ("Illegal constructor"), so the old
   // path silently failed on mobile. The SW path works on desktop AND mobile.
