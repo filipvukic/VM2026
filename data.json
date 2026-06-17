@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-16T23:11:27+00:00",
+  "updated_at": "2026-06-17T01:40:58+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Albin",
-      "match_points": 37,
+      "match_points": 39,
       "bonus_points": 0,
-      "total": 37,
+      "total": 39,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 35,
+      "match_points": 37,
       "bonus_points": 0,
-      "total": 35,
+      "total": 37,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 32,
+      "match_points": 34,
       "bonus_points": 0,
-      "total": 32,
+      "total": 34,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 32,
+      "match_points": 34,
       "bonus_points": 0,
-      "total": 32,
+      "total": 34,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 29,
+      "match_points": 31,
       "bonus_points": 0,
-      "total": 29,
+      "total": 31,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 29,
+      "match_points": 31,
       "bonus_points": 0,
-      "total": 29,
+      "total": 31,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 28,
+      "match_points": 30,
       "bonus_points": 0,
-      "total": 28,
+      "total": 30,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 27,
+      "match_points": 29,
       "bonus_points": 0,
-      "total": 27,
+      "total": 29,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 26,
+      "match_points": 28,
       "bonus_points": 0,
-      "total": 26,
+      "total": 28,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 26,
+      "match_points": 28,
       "bonus_points": 0,
-      "total": 26,
+      "total": 28,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 23,
+      "match_points": 25,
       "bonus_points": 0,
-      "total": 23,
+      "total": 25,
       "exact_count": 0,
       "bonus_detail": {
         "best_young": {
@@ -4950,10 +4950,10 @@
       "homeTla": "IRQ",
       "away": "Norway",
       "awayTla": "NOR",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "score": [
         1,
-        2
+        4
       ],
       "scoreDetail": {
         "halfTime": [
@@ -4962,14 +4962,14 @@
         ],
         "fullTime": [
           1,
-          2
+          4
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "AWAY_TEAM"
       },
-      "minute": "48",
+      "minute": null,
       "goals": [
         {
           "minute": "29",
@@ -5009,10 +5009,115 @@
             2
           ],
           "period": 1
+        },
+        {
+          "minute": "76",
+          "team": "NOR",
+          "scorer": "Leo Østigard",
+          "assist": "Martin Ødegaard",
+          "type": "HEADER",
+          "description": "Goal! Iraq 1, Norway 3. Leo Østigård (Norway) header from very close range to the high centre of the goal. Assisted by Martin Ødegaard with a cross following a corner.",
+          "score": [
+            1,
+            3
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+6",
+          "team": "NOR",
+          "scorer": "Aymen Hussein",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Aymen Hussein, Iraq. Iraq 1, Norway 4.",
+          "score": [
+            1,
+            4
+          ],
+          "period": 2
         }
       ],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "86",
+          "team": "IRQ",
+          "player": "Zaid Tahseen",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "59",
+          "team": "IRQ",
+          "playerIn": "Zidane Iqbal",
+          "playerOut": "Zaid Ismael",
+          "period": 2
+        },
+        {
+          "minute": "59",
+          "team": "IRQ",
+          "playerIn": "Marko Farji",
+          "playerOut": "Ali Al-Hamadi",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "NOR",
+          "playerIn": "Andreas Schjelderup",
+          "playerOut": "Antonio Nusa",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "NOR",
+          "playerIn": "Kristian Thorstvedt",
+          "playerOut": "Fredrik Aursnes",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "NOR",
+          "playerIn": "Leo Østigard",
+          "playerOut": "David Møller Wolfe",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "NOR",
+          "playerIn": "Oscar Bobb",
+          "playerOut": "Alexander Sørloth",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "IRQ",
+          "playerIn": "Mustafa Saadoon",
+          "playerOut": "Hussein Ali",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "IRQ",
+          "playerIn": "Ahmed Qasim",
+          "playerOut": "Ali Jasim",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "IRQ",
+          "playerIn": "Mohanad Ali",
+          "playerOut": "Ibrahim Bayesh",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "NOR",
+          "playerIn": "Patrick Berg",
+          "playerOut": "Martin Ødegaard",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Gillette Stadium",
         "city": "Foxborough, Massachusetts",
@@ -5025,7 +5130,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 63106,
       "tips": [
         {
           "name": "Albin",
@@ -5033,7 +5138,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -5041,7 +5146,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -5049,7 +5154,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -5057,7 +5162,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -5065,7 +5170,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -5073,7 +5178,7 @@
             0,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -5081,7 +5186,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -5089,7 +5194,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -5097,7 +5202,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -5105,7 +5210,7 @@
             0,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -5113,7 +5218,7 @@
             0,
             3
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -5127,18 +5232,38 @@
       "homeTla": "ARG",
       "away": "Algeria",
       "awayTla": "ALG",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "38",
+      "goals": [
+        {
+          "minute": "17",
+          "team": "ARG",
+          "scorer": "Lionel Messi",
+          "assist": "Rodrigo De Paul",
+          "type": "REGULAR",
+          "description": "Goal! Argentina 1, Algeria 0. Lionel Messi (Argentina) left footed shot from outside the box to the top right corner. Assisted by Rodrigo De Paul.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -5149,8 +5274,7 @@
       "referees": [
         {
           "name": "Szymon Marciniak",
-          "role": "REFEREE",
-          "nationality": "Poland"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -7730,7 +7854,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BC Place",
+        "city": "Vancouver",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12063,6 +12191,18 @@
       "code": "I",
       "table": [
         {
+          "team": "Norway",
+          "tla": "NOR",
+          "played": 1,
+          "won": 1,
+          "draw": 0,
+          "lost": 0,
+          "gf": 4,
+          "ga": 1,
+          "gd": 3,
+          "points": 3
+        },
+        {
           "team": "France",
           "tla": "FRA",
           "played": 1,
@@ -12075,30 +12215,6 @@
           "points": 3
         },
         {
-          "team": "Norway",
-          "tla": "NOR",
-          "played": 1,
-          "won": 1,
-          "draw": 0,
-          "lost": 0,
-          "gf": 2,
-          "ga": 1,
-          "gd": 1,
-          "points": 3
-        },
-        {
-          "team": "Iraq",
-          "tla": "IRQ",
-          "played": 1,
-          "won": 0,
-          "draw": 0,
-          "lost": 1,
-          "gf": 1,
-          "ga": 2,
-          "gd": -1,
-          "points": 0
-        },
-        {
           "team": "Senegal",
           "tla": "SEN",
           "played": 1,
@@ -12109,6 +12225,18 @@
           "ga": 3,
           "gd": -2,
           "points": 0
+        },
+        {
+          "team": "Iraq",
+          "tla": "IRQ",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 1,
+          "ga": 4,
+          "gd": -3,
+          "points": 0
         }
       ]
     },
@@ -12116,28 +12244,16 @@
       "code": "J",
       "table": [
         {
-          "team": "Algeria",
-          "tla": "ALG",
-          "played": 0,
-          "won": 0,
-          "draw": 0,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
-          "gd": 0,
-          "points": 0
-        },
-        {
           "team": "Argentina",
           "tla": "ARG",
-          "played": 0,
-          "won": 0,
+          "played": 1,
+          "won": 1,
           "draw": 0,
           "lost": 0,
-          "gf": 0,
+          "gf": 1,
           "ga": 0,
-          "gd": 0,
-          "points": 0
+          "gd": 1,
+          "points": 3
         },
         {
           "team": "Jordan",
@@ -12161,6 +12277,18 @@
           "gf": 0,
           "ga": 0,
           "gd": 0,
+          "points": 0
+        },
+        {
+          "team": "Algeria",
+          "tla": "ALG",
+          "played": 1,
+          "won": 0,
+          "draw": 0,
+          "lost": 1,
+          "gf": 0,
+          "ga": 1,
+          "gd": -1,
           "points": 0
         }
       ]
