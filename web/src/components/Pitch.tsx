@@ -60,15 +60,16 @@ export function Pitch({
         })();
 
   // Size players to the densest row: a back-4 / 4-man line gets roomy cards, and
-  // only a 5-man line shrinks (special case). Width is a % of the pitch (capped),
-  // so it scales with screen size and never overlaps regardless of the formation.
+  // only a 5-man line shrinks (special case). Fixed px (not %), so the value is
+  // the same wherever the CSS var is used (card size, fonts) and never collapses.
   const rowCount: Record<number, number> = {};
   placed.forEach(({ yPct }) => {
     const b = Math.round(yPct / 6);
     rowCount[b] = (rowCount[b] || 0) + 1;
   });
   const maxRow = Math.max(2, ...Object.values(rowCount));
-  const pplW = `min(78px, ${(94 / maxRow).toFixed(1)}%)`;
+  const cardPx = maxRow >= 5 ? 44 : maxRow === 4 ? 54 : 56;
+  const wPx = maxRow >= 5 ? 56 : maxRow === 4 ? 64 : 70;
 
   // count goals/assists per player so multiples show as ⚽×2 / A×2
   const goalCount = new Map<string, number>();
@@ -85,7 +86,7 @@ export function Pitch({
   });
 
   return (
-    <div className="pitch" style={{ ["--ppl-w" as string]: pplW } as React.CSSProperties}>
+    <div className="pitch" style={{ ["--ppl-w" as string]: `${wPx}px`, ["--ppl-card" as string]: `${cardPx}px` } as React.CSSProperties}>
       <div className="pitch-lines" />
       {placed.map(({ p, xPct, yPct }, i) => {
         const nm = (p.name || "").toLowerCase();
@@ -119,13 +120,13 @@ export function Pitch({
         .pitch-lines::before,.pitch-lines::after{ content:""; position:absolute; left:28%; width:44%; height:13%; border:1px solid rgba(255,255,255,.14); }
         .pitch-lines::before{ top:0; border-top:none; } .pitch-lines::after{ bottom:0; border-bottom:none; }
         .ppl{ position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:7px; width:var(--ppl-w,72px); }
-        .ppl-card{ position:relative; width:calc(var(--ppl-w,72px) * .74); height:calc(var(--ppl-w,72px) * .74); border-radius:calc(var(--ppl-w,72px) * .22); overflow:visible; }
+        .ppl-card{ position:relative; width:var(--ppl-card,54px); height:var(--ppl-card,54px); border-radius:calc(var(--ppl-card,54px) * .3); overflow:visible; }
         .ppl-img{ width:100%; height:100%; border-radius:inherit; overflow:hidden; background:var(--surface-3);
           display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); border:2px solid rgba(255,255,255,.85); }
         .ppl-img img{ width:100%; height:100%; object-fit:cover; }
-        .ppl-fallnum{ font-family:var(--font-display); font-weight:800; font-size:calc(var(--ppl-w,72px) * .32); color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
-        .ppl-name{ font-size:clamp(9px, calc(var(--ppl-w,72px) * .15), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
-          white-space:nowrap; max-width:calc(var(--ppl-w,72px) + 10px); overflow:hidden; text-overflow:ellipsis; }
+        .ppl-fallnum{ font-family:var(--font-display); font-weight:800; font-size:calc(var(--ppl-card,54px) * .44); color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+        .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
+          white-space:nowrap; max-width:var(--ppl-w,72px); overflow:hidden; text-overflow:ellipsis; }
         .ppl-name-num{ color:var(--ink-3); margin-right:3px; }
         .ppl-badges{ position:absolute; right:-6px; top:-6px; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
         .ppl-b{ min-width:18px; height:18px; padding:0 3px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; gap:1px; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,.5); }
