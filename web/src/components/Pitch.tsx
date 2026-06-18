@@ -130,6 +130,19 @@ export function Pitch({
           font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 2px 5px rgba(0,0,0,.55); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
+        /* Narrow phones: shrink players so a row of 5 (back-5 / 5-man midfield)
+           fits without overlapping, and keep sensible spacing. */
+        @media(max-width:559px){
+          .ppl{ width:56px; gap:6px; }
+          .ppl-card{ width:44px; height:44px; }
+          .ppl-img{ border-radius:13px; }
+          .ppl-fallnum{ font-size:19px; }
+          .ppl-name{ font-size:9.5px; max-width:64px; }
+          .ppl-rating{ min-width:19px; height:14px; font-size:9px; }
+          .ppl-b{ min-width:16px; height:16px; }
+          .ppl-bi,.ppl-bn{ font-size:9px; }
+          .ppl-out{ height:14px; font-size:8.5px; }
+        }
       `}</style>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useData } from "../../state/dataset";
-import { useNotif, fireNotification, syncKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
+import { useNotif, fireNotification, clearKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
 import { syncPush, pushConfigured } from "../../state/push";
 
 // One global switch (notifyAll): alerts for goals / kickoff / full-time across ALL
@@ -29,12 +29,17 @@ export function NotificationWatcher() {
     for (const m of ds.allMatches) {
       const cur = { g: (m.ga ?? 0) + (m.gb ?? 0), status: m.status };
       const p = prev.current.get(m.id);
-      if (p && notifyAll && !pushActive) {
+      // Only alert for matches that are actually current — within ~4 h of kickoff —
+      // so reopening the app never fires a stale alert for a long-finished match.
+      const sinceKo = Date.now() - +m.kickoff;
+      const recent = sinceKo < 4 * 3600 * 1000;
+      if (p && notifyAll && !pushActive && recent) {
         const h = name(m.home, m.fromA), a = name(m.away, m.fromB);
         const wentLive = p.status !== "live" && m.status === "live";
         if (m.status === "live" && cur.g > p.g) {
           fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, `goal-${m.id}-${cur.g}`);
-        } else if (wentLive) {
+        } else if (wentLive && sinceKo < 12 * 60000) {
+          // kickoff alert only right when it kicks off (not late on reopen)
           fireNotification(`🟢 Avspark: ${h} – ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ko-" + m.id);
         } else if (p.status !== "played" && m.status === "played") {
           fireNotification(`Slut: ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ft-" + m.id);
@@ -59,27 +64,12 @@ export function NotificationWatcher() {
     }
   }, [ds, notifyAll, pushActive]);
 
-  // Closed-tab kickoff notifications via Notification Triggers (Chromium) — a
-  // fallback for browsers the push worker doesn't cover. When push is active it
-  // already handles kickoffs, so clear these to avoid duplicates. Capped to the
-  // next 3 days so we don't schedule ~90 triggers at once.
+  // Remove any leftover pre-scheduled kickoff triggers from older versions so they
+  // can't fire late on app open — the push worker delivers kickoff alerts at the
+  // exact moment now.
   useEffect(() => {
-    const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
-    if (!notifyAll || pushActive) {
-      syncKickoffTriggers([]);
-      return;
-    }
-    const horizon = Date.now() + 3 * 24 * 3600 * 1000;
-    const items = ds.allMatches
-      .filter((m) => m.status === "upcoming" && +m.kickoff <= horizon)
-      .map((m) => ({
-        tag: "kosched-" + m.id,
-        ts: +m.kickoff,
-        title: `🟢 Avspark: ${name(m.home, m.fromA)} – ${name(m.away, m.fromB)}`,
-        body: m.group ? `Grupp ${m.group}` : m.round,
-      }));
-    syncKickoffTriggers(items);
-  }, [ds, notifyAll, pushActive]);
+    clearKickoffTriggers();
+  }, []);
 
   return null;
 }

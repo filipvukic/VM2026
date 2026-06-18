@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useData } from "../state/dataset";
 
 // Per-group accent colors (broadcast-style), used for group badges/tints.
@@ -18,12 +19,17 @@ interface FlagProps {
   className?: string;
 }
 
-/** Country flag via flagcdn, with a graceful fallback to the team code. */
+/** Country flag via flagcdn. Loads eagerly (lazy-loading sometimes left flags
+ *  blank on open) and, on a failed/flaky CDN response, retries a couple of times
+ *  before falling back to the team code so a flag is never silently invisible. */
 export function Flag({ iso, code, size = 22, rounded = true, className }: FlagProps) {
   const ratio = 4 / 3;
   const w = Math.round(size * ratio);
   const radius = rounded ? Math.max(2, Math.round(size * 0.18)) : 0;
-  if (!iso) {
+  const [tries, setTries] = useState(0);
+  useEffect(() => setTries(0), [iso]); // reset retries when the flag changes
+
+  if (!iso || tries > 2) {
     return (
       <span
         className={className}
@@ -47,15 +53,17 @@ export function Flag({ iso, code, size = 22, rounded = true, className }: FlagPr
     );
   }
   const px = size <= 22 ? 40 : size <= 40 ? 80 : 160;
+  const bust = tries ? `?r=${tries}` : "";
   return (
     <img
       className={className}
-      src={`https://flagcdn.com/w${px}/${iso}.png`}
-      srcSet={`https://flagcdn.com/w${px * 2}/${iso}.png 2x`}
+      src={`https://flagcdn.com/w${px}/${iso}.png${bust}`}
+      srcSet={`https://flagcdn.com/w${px * 2}/${iso}.png${bust} 2x`}
       alt=""
-      loading="lazy"
+      decoding="async"
       width={w}
       height={size}
+      onError={() => setTries((t) => t + 1)}
       style={{
         width: w,
         height: size,

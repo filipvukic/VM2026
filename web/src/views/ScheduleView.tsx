@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { MatchCard } from "../components/MatchCard";
@@ -38,6 +38,7 @@ export function ScheduleView() {
 function ScheduleList({ ds }: { ds: Dataset }) {
   const openMatch = useSheets((s) => s.openMatch);
   const [filter, setFilter] = useState<Filter>("all");
+  const nextRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     let list = ds.allMatches.slice().sort((a, b) => +a.kickoff - +b.kickoff);
@@ -46,6 +47,23 @@ function ScheduleList({ ds }: { ds: Dataset }) {
     else if (filter === "played") list = list.filter(isEnded);
     return list;
   }, [ds, filter]);
+
+  // Day key of the "next" match (a live one, else the first upcoming) so opening
+  // the tab jumps straight there instead of starting at the long played list.
+  const nextKey = useMemo(() => {
+    const target = ds.allMatches.filter(isLive).sort((a, b) => +a.kickoff - +b.kickoff)[0]
+      || ds.allMatches.filter((m) => m.status === "upcoming").sort((a, b) => +a.kickoff - +b.kickoff)[0];
+    return target ? svDateKey(target.kickoff) : null;
+  }, [ds]);
+
+  // Scroll to it once when the tab opens (smooth). Only when the unfiltered list
+  // is shown (the default), so it doesn't fight an explicit filter choice.
+  useEffect(() => {
+    if (filter === "all" && nextRef.current) {
+      nextRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // group by day
   const byDay = useMemo(() => {
@@ -94,7 +112,11 @@ function ScheduleList({ ds }: { ds: Dataset }) {
       {byDay.length === 0 && <div className="dim" style={{ textAlign: "center", padding: 40 }}>Inga matcher.</div>}
 
       {byDay.map(([key, ms]) => (
-        <div key={key} style={{ marginBottom: 22 }}>
+        <div
+          key={key}
+          ref={key === nextKey ? nextRef : undefined}
+          style={{ marginBottom: 22, scrollMarginTop: "calc(var(--header-h) + 64px)" }}
+        >
           <div className="day-head">
             <span>{svDayLabel(ms[0].kickoff, ds.now)}</span>
             <span className="dim" style={{ fontWeight: 700 }}>{ms.length} matcher</span>

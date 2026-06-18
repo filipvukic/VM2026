@@ -88,24 +88,22 @@ export function triggersSupported(): boolean {
   }
 }
 
-export async function syncKickoffTriggers(items: { tag: string; ts: number; title: string; body: string }[]) {
-  if (!triggersSupported() || Notification.permission !== "granted") return;
+// Cancel any scheduled (and shown) kickoff triggers. We used to pre-schedule
+// closed-tab kickoff notifications here, but the push worker now sends kickoff
+// alerts at the exact moment — and the old pending triggers could fire LATE on app
+// open (a kickoff alert for a match that already finished). So this just clears
+// them. `includeTriggered` is needed to reach not-yet-fired pending triggers.
+export async function clearKickoffTriggers() {
+  if (!("serviceWorker" in navigator)) return;
   try {
     const reg = await navigator.serviceWorker.ready;
-    const existing = await reg.getNotifications();
-    existing.filter((n) => (n.tag || "").startsWith("kosched-")).forEach((n) => n.close());
-    const TT = (window as unknown as { TimestampTrigger: new (t: number) => unknown }).TimestampTrigger;
-    for (const it of items) {
-      if (it.ts <= Date.now()) continue;
-      await reg.showNotification(it.title, {
-        body: it.body,
-        tag: it.tag,
-        icon: "/images/wc2026-logo.svg",
-        // @ts-expect-error showTrigger is experimental
-        showTrigger: new TT(it.ts),
-        data: { url: "/" },
-      });
+    let existing: Notification[] = [];
+    try {
+      existing = await (reg.getNotifications as (o?: unknown) => Promise<Notification[]>)({ includeTriggered: true });
+    } catch {
+      existing = await reg.getNotifications();
     }
+    existing.filter((n) => (n.tag || "").startsWith("kosched-") || (n.tag || "").startsWith("ko-")).forEach((n) => n.close());
   } catch {
     /* ignore */
   }

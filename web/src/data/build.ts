@@ -458,6 +458,31 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
         });
       }
     }
+
+    // Overlay LIVE group matches provisionally — the engine's committed table only
+    // counts finished matches, so without this a 1–1 in progress wouldn't move the
+    // standings. (A live match isn't in football-data's standings yet, so no double
+    // count.) Re-sort by points → goal diff → goals scored, same as the engine.
+    const liveMs = allMatches.filter(
+      (m) => m.stage === "group" && m.group === L && m.status === "live" && m.home && m.away && m.ga != null && m.gb != null
+    );
+    if (liveMs.length && groupTables[L].length) {
+      const byCode: Record<string, GroupTableRow> = {};
+      groupTables[L].forEach((r) => (byCode[r.code] = { ...r }));
+      liveMs.forEach((m) => {
+        const h = byCode[m.home!], a = byCode[m.away!];
+        if (!h || !a) return;
+        h.sp++; a.sp++;
+        h.gm += m.ga!; h.im += m.gb!; a.gm += m.gb!; a.im += m.ga!;
+        h.ms = h.gm - h.im; a.ms = a.gm - a.im;
+        if (m.ga! > m.gb!) { h.v++; h.p += 3; a.f++; }
+        else if (m.ga! < m.gb!) { a.v++; a.p += 3; h.f++; }
+        else { h.o++; h.p += 1; a.o++; a.p += 1; }
+      });
+      groupTables[L] = Object.values(byCode)
+        .sort((x, y) => y.p - x.p || y.ms - x.ms || y.gm - x.gm)
+        .map((r, i) => ({ ...r, pos: i + 1 }));
+    }
   });
 
   // ============= knockout =============

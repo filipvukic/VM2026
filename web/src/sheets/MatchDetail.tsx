@@ -325,6 +325,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
 function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
   const detail = useMatchStats(m._realId ?? null, isLive(m));
   const [sel, setSel] = useState<string | null>(null);
+  const live = isLive(m);
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
 
@@ -360,7 +361,11 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
           </button>
         )}
 
-        {detail.team.length > 0 && (
+        {/* Team stats: a LIVE match uses the fresh ESPN overlay (updates ~every
+            minute); a finished match uses FotMob's richer final figures. */}
+        {live && m.stats ? (
+          <MatchStatsBars m={m} ds={ds} />
+        ) : detail.team.length > 0 ? (
           <div className="card card-pad" style={{ marginTop: 14 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
               <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13 }}><Flag iso={home?.iso} code={m.home} size={20} />{home?.name}</span>
@@ -369,7 +374,7 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
             </div>
             {detail.team.map((t) => <DetailBar key={t.key} label={t.label} h={t.home} a={t.away} />)}
           </div>
-        )}
+        ) : null}
 
         {detail.shots.length > 0 && (
           <Block title="Skottkarta">
@@ -399,6 +404,14 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
     );
   }
 
+  return <MatchStatsBars m={m} ds={ds} />;
+}
+
+// Team-comparison bars from the (possibly live) match-level stats — used for live
+// matches in the Stats tab and as the fallback when FotMob detail isn't loaded.
+function MatchStatsBars({ m, ds }: { m: Match; ds: Dataset }) {
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
   if (!m.stats) return <div className="card card-pad" style={{ marginTop: 14 }}><div className="dim" style={{ fontSize: 12.5 }}>Detaljerad statistik dyker upp när matchen analyserats.</div></div>;
   const s = m.stats as MatchStats;
   const ri = (x: number | null) => (x == null ? null : Math.round(x)); // integer
