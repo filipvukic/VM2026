@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T13:54:04+00:00",
+  "updated_at": "2026-06-18T16:50:48+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -6806,26 +6806,66 @@
       "homeTla": "CZE",
       "away": "South Africa",
       "awayTla": "RSA",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "HT",
+      "goals": [
+        {
+          "minute": "6",
+          "team": "CZE",
+          "scorer": "Michal Sadílek",
+          "assist": "Alexandr Sojka",
+          "type": "REGULAR",
+          "description": "Goal! Czechia 1, South Africa 0. Michal Sadílek (Czechia) left footed shot from the centre of the box to the centre of the goal. Assisted by Alexandr Sojka.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "33",
+          "team": "RSA",
+          "player": "Teboho Mokoena",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "40",
+          "team": "RSA",
+          "player": "Thalente Mbatha",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
         "city": "Atlanta, Georgia",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Tori Penso",
+          "role": "Referee"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -8525,7 +8565,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -11524,7 +11564,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -12620,25 +12660,25 @@
         {
           "team": "Czechia",
           "tla": "CZE",
-          "played": 1,
-          "won": 0,
+          "played": 2,
+          "won": 1,
           "draw": 0,
           "lost": 1,
-          "gf": 1,
+          "gf": 2,
           "ga": 2,
-          "gd": -1,
-          "points": 0
+          "gd": 0,
+          "points": 3
         },
         {
           "team": "South Africa",
           "tla": "RSA",
-          "played": 1,
+          "played": 2,
           "won": 0,
           "draw": 0,
-          "lost": 1,
+          "lost": 2,
           "gf": 0,
-          "ga": 2,
-          "gd": -2,
+          "ga": 3,
+          "gd": -3,
           "points": 0
         }
       ]
