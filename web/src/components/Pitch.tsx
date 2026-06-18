@@ -4,8 +4,22 @@ import { lineupPhoto } from "../lib/playerPhoto";
 import { initials } from "../lib/format";
 import { buildRows, sideScore } from "../lib/formation";
 import { ratingColor } from "../lib/rating";
+import { PlayerImg } from "./PlayerImg";
 import type { Match, RawLineup, RawLineupPlayer } from "../data/types";
 
+// FotMob shows the player of the match with a blue rating badge + a star.
+export const MOTM_BLUE = "#2483e0";
+
+// Short Swedish position label from an ESPN/FotMob position abbreviation.
+export function posLabel(pos?: string | null): string {
+  if (!pos) return "";
+  const p = pos.toUpperCase();
+  if (p === "G" || p.startsWith("GK") || p === "GOALKEEPER") return "Målvakt";
+  if (p[0] === "D" || ["CB", "LB", "RB", "LWB", "RWB", "SW"].includes(p)) return "Back";
+  if (p[0] === "M" || ["CM", "DM", "CDM", "AM", "CAM", "LM", "RM"].includes(p)) return "Mittfält";
+  if (p[0] === "F" || ["ST", "CF", "LW", "RW", "SS"].includes(p)) return "Anfall";
+  return pos;
+}
 
 export interface SubInfo {
   outAt?: string | number; // starter subbed out at minute
@@ -154,8 +168,7 @@ export function Pitch({
         .ppl-chip.card{ width:10px; min-width:10px; height:14px; border-radius:2px; padding:0; }
         .ppl-chip.card.y{ background:var(--gold); } .ppl-chip.card.r{ background:var(--loss); }
         .ppl-rt{ position:absolute; right:-4px; top:-4px; min-width:19px; height:17px; padding:0 4px; border-radius:9px;
-          display:grid; place-items:center; font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 1px 4px rgba(0,0,0,.45); }
-        .ppl-rt.motm{ box-shadow:0 0 0 1.6px var(--gold), 0 1px 4px rgba(0,0,0,.5); }
+          display:grid; place-items:center; font-size:10px; font-weight:800; color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.45); }
         .ppl-star{ position:absolute; right:-8px; top:-10px; font-size:11px; color:var(--gold); line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.6); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
@@ -212,11 +225,55 @@ function PitchPlayer({
           {subOut !== undefined && <span className="ppl-chip sub" title="Utbytt">↓{subOut}'</span>}
         </div>
         {rating != null && (
-          <span className={`ppl-rt num${motm ? " motm" : ""}`} style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>
+          <span className="ppl-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>
         )}
         {motm && <span className="ppl-star" title="Matchens spelare">★</span>}
       </div>
       <span className="ppl-name">{num ? <span className="ppl-name-num">{num}</span> : null}{last}</span>
+    </button>
+  );
+}
+
+// A bench player — same circular look as the pitch, plus their position. Styles
+// live in globals.css (.bp*). Used by the match view and the team view.
+export function BenchPlayer({
+  p,
+  photo,
+  rating,
+  goals = 0,
+  assists = 0,
+  card,
+  cameAt,
+  forName,
+  onClick,
+}: {
+  p: RawLineupPlayer;
+  photo: string | null;
+  rating?: number | null;
+  goals?: number;
+  assists?: number;
+  card?: "yellow" | "red";
+  cameAt?: string | number;
+  forName?: string;
+  onClick: () => void;
+}) {
+  const num = p.jersey || p.shirtNumber;
+  const last = (p.name || "").split(" ").slice(-1)[0];
+  const pos = posLabel(p.position);
+  return (
+    <button className="bp" onClick={onClick}>
+      <span className="bp-ph">
+        <PlayerImg src={photo} name={p.name} size={48} radius={24} fontSize={17} />
+        {rating != null && <span className="bp-rt num" style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>}
+        {cameAt != null && <span className="bp-in num">↑{cameAt}'</span>}
+        {goals > 0 && <span className="bp-ev goal">⚽{goals > 1 ? goals : ""}</span>}
+        {goals === 0 && assists > 0 && <span className="bp-ev assist">A</span>}
+        {card && <span className={`bp-ev card ${card === "red" ? "r" : "y"}`} />}
+      </span>
+      <span className="bp-name">{num ? <span className="bp-num">{num}</span> : null}{last}</span>
+      {(pos || forName) && (
+        <span className="bp-pos">{[pos, forName ? `för ${forName.split(" ").slice(-1)[0]}` : ""].filter(Boolean).join(" · ")}</span>
+      )}
     </button>
   );
 }

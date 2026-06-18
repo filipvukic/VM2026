@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
-import { Pitch } from "../components/Pitch";
+import { Pitch, BenchPlayer } from "../components/Pitch";
 import { GroupTable } from "../components/GroupTable";
 import { PlayerImg } from "../components/PlayerImg";
 import { Avatar } from "../components/Avatar";
@@ -295,23 +295,19 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>
             {lu.bench.map((p, i) => {
               const came = subIn.get(p.name);
-              const scored = goalNames.has((p.name || "").toLowerCase());
-              const assisted = assistNames.has((p.name || "").toLowerCase());
-              const rb = getRating(p.name);
+              const nm = (p.name || "").toLowerCase();
               return (
-                <button key={i} onClick={() => openFb(p.name, p.espnId)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, padding: "8px 4px", borderRadius: 12, background: came ? "color-mix(in srgb,var(--win) 12%, var(--surface))" : "var(--surface)", border: "1px solid var(--line)" }}>
-                  <span style={{ position: "relative" }}>
-                    <PlayerImg src={lineupPhoto(p.name, p.espnId, db)} name={p.name} size={46} radius={13} fontSize={16} />
-                    {came && <span style={{ position: "absolute", right: -4, bottom: -3, height: 16, padding: "0 4px", borderRadius: 8, background: "var(--win)", color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>↑{came.at}'</span>}
-                    {scored && <span style={{ position: "absolute", left: -5, top: -5, fontSize: 12 }}>⚽</span>}
-                    {assisted && <span style={{ position: "absolute", left: 9, top: -7, width: 15, height: 15, borderRadius: "50%", background: "var(--cool)", color: "#fff", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center", fontFamily: "var(--font-display)" }}>A</span>}
-                    {rb != null && <span className="num" style={{ position: "absolute", left: -5, bottom: -3, minWidth: 20, height: 15, padding: "0 3px", borderRadius: 5, background: ratingColor(rb), color: "#0a0712", fontSize: 9, fontWeight: 800, display: "grid", placeItems: "center" }}>{rb.toFixed(1)}</span>}
-                  </span>
-                  <span style={{ fontSize: 11, fontWeight: 700, textAlign: "center", lineHeight: 1.1, maxWidth: 78, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxInlineSize: 78 }}>
-                    {p.jersey || p.shirtNumber} {(p.name || "").split(" ").slice(-1)[0]}
-                  </span>
-                  {came?.forName && <span className="dim" style={{ fontSize: 9 }}>för {came.forName.split(" ").slice(-1)[0]}</span>}
-                </button>
+                <BenchPlayer
+                  key={i}
+                  p={p}
+                  photo={lineupPhoto(p.name, p.espnId, db)}
+                  rating={getRating(p.name)}
+                  goals={goalNames.has(nm) ? 1 : 0}
+                  assists={assistNames.has(nm) ? 1 : 0}
+                  cameAt={came?.at}
+                  forName={came?.forName}
+                  onClick={() => openFb(p.name, p.espnId)}
+                />
               );
             })}
           </div>
