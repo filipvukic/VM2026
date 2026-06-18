@@ -11,10 +11,12 @@ export function bestPhoto(p?: PlayerRecord | null): string | null {
   return p.photo || p.cutout || p.render || p.wiki || p.thumb || p.espnPhoto || espnHeadshot(p.espnId) || null;
 }
 
-// Photo for a lineup player by name (+ espnId fallback for players not in db).
+// Photo for a lineup player. Uses the same robust resolver as the player sheet
+// (exact name → fuzzy last-name → espnId) so a pitch player whose FotMob name
+// spelling differs from the db key — and has no espnId on the coords path — still
+// gets the photo it clearly has when you open the player.
 export function lineupPhoto(name: string, espnId: string | null | undefined, db: PlayersDb | null): string | null {
-  const p = db?.[name];
-  return bestPhoto(p) || espnHeadshot(espnId);
+  return bestPhoto(findPlayer(name, db, espnId)) || espnHeadshot(espnId);
 }
 
 // Resolve a player record from players.json by name (with a light last-name
