@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T16:50:48+00:00",
+  "updated_at": "2026-06-18T19:14:07+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -12,10 +12,56 @@
   },
   "leaderboard": [
     {
-      "name": "Albin",
-      "match_points": 53,
+      "name": "Oskar",
+      "match_points": 57,
       "bonus_points": 0,
-      "total": 53,
+      "total": 57,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Tyskland",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Brasilien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 1,
+      "prize": 1650
+    },
+    {
+      "name": "Albin",
+      "match_points": 54,
+      "bonus_points": 0,
+      "total": 54,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -54,60 +100,14 @@
           "points": 0
         }
       },
-      "rank": 1,
-      "prize": 1650
-    },
-    {
-      "name": "Oskar",
-      "match_points": 52,
-      "bonus_points": 0,
-      "total": 52,
-      "exact_count": 5,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Tyskland",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Brasilien",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 2,
       "prize": 990
     },
     {
       "name": "Martin",
-      "match_points": 50,
+      "match_points": 51,
       "bonus_points": 0,
-      "total": 50,
+      "total": 51,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 45,
+      "match_points": 46,
       "bonus_points": 0,
-      "total": 45,
+      "total": 46,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -196,56 +196,10 @@
       "prize": 0
     },
     {
-      "name": "Isac",
-      "match_points": 42,
-      "bonus_points": 0,
-      "total": 42,
-      "exact_count": 2,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 5,
-      "prize": 0
-    },
-    {
       "name": "Johan",
-      "match_points": 42,
+      "match_points": 44,
       "bonus_points": 0,
-      "total": 42,
+      "total": 44,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -284,14 +238,60 @@
           "points": 0
         }
       },
+      "rank": 5,
+      "prize": 0
+    },
+    {
+      "name": "Isac",
+      "match_points": 43,
+      "bonus_points": 0,
+      "total": 43,
+      "exact_count": 2,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 6,
       "prize": 0
     },
     {
       "name": "Alexander",
-      "match_points": 41,
+      "match_points": 42,
       "bonus_points": 0,
-      "total": 41,
+      "total": 42,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 41,
+      "match_points": 42,
       "bonus_points": 0,
-      "total": 41,
+      "total": 42,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 40,
+      "match_points": 41,
       "bonus_points": 0,
-      "total": 40,
+      "total": 41,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 39,
+      "match_points": 40,
       "bonus_points": 0,
-      "total": 39,
+      "total": 40,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 39,
+      "match_points": 40,
       "bonus_points": 0,
-      "total": 39,
+      "total": 40,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -6806,23 +6806,26 @@
       "homeTla": "CZE",
       "away": "South Africa",
       "awayTla": "RSA",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         1,
-        0
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           1,
           0
+        ],
+        "fullTime": [
+          1,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "HOME_TEAM"
+        "winnerSide": "DRAW"
       },
-      "minute": "HT",
+      "minute": null,
       "goals": [
         {
           "minute": "6",
@@ -6836,6 +6839,19 @@
             0
           ],
           "period": 1
+        },
+        {
+          "minute": "83",
+          "team": "RSA",
+          "scorer": "Teboho Mokoena",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! Czechia 1, South Africa 1. Teboho Mokoena (South Africa) converts the penalty with a right footed shot to the bottom left corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
         }
       ],
       "bookings": [
@@ -6852,9 +6868,73 @@
           "player": "Thalente Mbatha",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "75",
+          "team": "CZE",
+          "player": "Ladislav Krejcí",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "RSA",
+          "playerIn": "Relebohile Mofokeng",
+          "playerOut": "Jayden Adams",
+          "period": 2
+        },
+        {
+          "minute": "55",
+          "team": "CZE",
+          "playerIn": "Pavel Sulc",
+          "playerOut": "Vladimír Darida",
+          "period": 2
+        },
+        {
+          "minute": "55",
+          "team": "CZE",
+          "playerIn": "Jaroslav Zelený",
+          "playerOut": "Alexandr Sojka",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "RSA",
+          "playerIn": "Evidence Makgopa",
+          "playerOut": "Iqraam Rayners",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "CZE",
+          "playerIn": "Tomás Soucek",
+          "playerOut": "Michal Sadílek",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "CZE",
+          "playerIn": "Lukás Provod",
+          "playerOut": "Adam Hlozek",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "CZE",
+          "playerIn": "David Zima",
+          "playerOut": "Lukás Cerv",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "RSA",
+          "playerIn": "Kamogelo Sebelebele",
+          "playerOut": "Thapelo Maseko",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
         "city": "Atlanta, Georgia",
@@ -6867,7 +6947,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 67442,
       "tips": [
         {
           "name": "Albin",
@@ -6875,7 +6955,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -6883,7 +6963,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -6891,7 +6971,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -6899,7 +6979,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Isac",
@@ -6907,7 +6987,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -6915,7 +6995,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -6923,7 +7003,7 @@
             0,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -6931,7 +7011,7 @@
             0,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -6939,7 +7019,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Hampus",
@@ -6947,7 +7027,7 @@
             0,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -6955,7 +7035,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -6979,7 +7059,7 @@
         "duration": "REGULAR",
         "winnerSide": null
       },
-      "minute": null,
+      "minute": "13",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -6988,7 +7068,12 @@
         "city": "Inglewood, California",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "João Pinheiro",
+          "role": "Referee"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -9320,7 +9405,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "NRG Stadium",
+        "city": "Houston, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12661,25 +12750,25 @@
           "team": "Czechia",
           "tla": "CZE",
           "played": 2,
-          "won": 1,
-          "draw": 0,
+          "won": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 2,
-          "ga": 2,
-          "gd": 0,
-          "points": 3
+          "ga": 3,
+          "gd": -1,
+          "points": 1
         },
         {
           "team": "South Africa",
           "tla": "RSA",
           "played": 2,
           "won": 0,
-          "draw": 0,
-          "lost": 2,
-          "gf": 0,
+          "draw": 1,
+          "lost": 1,
+          "gf": 1,
           "ga": 3,
-          "gd": -3,
-          "points": 0
+          "gd": -2,
+          "points": 1
         }
       ]
     },
@@ -12689,14 +12778,26 @@
         {
           "team": "Switzerland",
           "tla": "SUI",
-          "played": 1,
+          "played": 2,
           "won": 0,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 1,
           "ga": 1,
           "gd": 0,
-          "points": 1
+          "points": 2
+        },
+        {
+          "team": "Bosnia-Herzegovina",
+          "tla": "BIH",
+          "played": 2,
+          "won": 0,
+          "draw": 2,
+          "lost": 0,
+          "gf": 1,
+          "ga": 1,
+          "gd": 0,
+          "points": 2
         },
         {
           "team": "Canada",
@@ -12713,18 +12814,6 @@
         {
           "team": "Qatar",
           "tla": "QAT",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 1
-        },
-        {
-          "team": "Bosnia-Herzegovina",
-          "tla": "BIH",
           "played": 1,
           "won": 0,
           "draw": 1,
