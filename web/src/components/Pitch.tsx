@@ -138,7 +138,7 @@ export function Pitch({
         .ppl{ position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:7px; width:var(--ppl-w,72px); }
         .ppl-card{ position:relative; width:var(--ppl-card,54px); height:var(--ppl-card,54px); border-radius:50%; overflow:visible; }
         .ppl-img{ width:100%; height:100%; border-radius:inherit; overflow:hidden; background:var(--surface-3);
-          display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); border:2px solid rgba(255,255,255,.85); }
+          display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); }
         .ppl-img img{ width:100%; height:100%; object-fit:cover; }
         .ppl-fallnum{ font-family:var(--font-display); font-weight:800; font-size:calc(var(--ppl-card,54px) * .44); color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
         .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
@@ -198,7 +198,7 @@ function PitchPlayer({
   return (
     <button className="ppl" style={{ left: `${x}%`, top: `${y}%` }} onClick={onClick}>
       <div className="ppl-card">
-        <div className="ppl-img" style={!showImg ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))`, borderColor: "rgba(255,255,255,.4)" } : undefined}>
+        <div className="ppl-img" style={!showImg ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
           {showImg ? (
             <img src={photo!} alt="" loading="lazy" onError={() => setFailed(true)} />
           ) : (
