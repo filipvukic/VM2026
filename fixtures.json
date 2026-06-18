@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -18320,20 +18320,168 @@
     "homeTla": "UZB",
     "away": "Colombia",
     "awayTla": "COL",
-    "status": "TIMED",
-    "score": null,
+    "status": "FINISHED",
+    "score": [
+      1,
+      3
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
+      "fullTime": [
+        1,
+        3
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
     "minute": null,
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "goals": [
+      {
+        "minute": "40",
+        "team": "COL",
+        "scorer": "Daniel Muñoz",
+        "assist": "Luis Díaz",
+        "type": "REGULAR",
+        "description": "Goal! Uzbekistan 0, Colombia 1. Daniel Muñoz (Colombia) right footed shot from the centre of the box to the high centre of the goal. Assisted by Luis Díaz with a through ball.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "UZB",
+        "scorer": "Abbosbek Fayzullaev",
+        "assist": null,
+        "type": "HEADER",
+        "description": "Goal! Uzbekistan 1, Colombia 1. Abbosbek Fayzullaev (Uzbekistan) header from very close range to the top left corner.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "COL",
+        "scorer": "Luis Díaz",
+        "assist": "Gustavo Puerta",
+        "type": "REGULAR",
+        "description": "Goal! Uzbekistan 1, Colombia 2. Luis Díaz (Colombia) right footed shot from the centre of the box to the bottom right corner. Assisted by Gustavo Puerta.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+9",
+        "team": "COL",
+        "scorer": "Jáminton Campaz",
+        "assist": "Cucho Hernández",
+        "type": "HEADER",
+        "description": "Goal! Uzbekistan 1, Colombia 3. Jaminton Campaz (Colombia) header from the centre of the box to the bottom left corner. Assisted by Cucho Hernández with a cross.",
+        "score": [
+          1,
+          3
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "7",
+        "team": "COL",
+        "player": "Johan Mojica",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "34",
+        "team": "UZB",
+        "player": "Abdukodir Khusanov",
+        "card": "YELLOW",
+        "period": 1
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "UZB",
+        "playerIn": "Dostonbek Khamdamov",
+        "playerOut": "Oston Urunov",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "UZB",
+        "playerIn": "Farrukh Sayfiev",
+        "playerOut": "Sherzod Nasrullaev",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "COL",
+        "playerIn": "Jáminton Campaz",
+        "playerOut": "James Rodríguez",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "UZB",
+        "playerIn": "Jakhongir Urozov",
+        "playerOut": "Rustam Ashurmatov",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "UZB",
+        "playerIn": "Azizbek Amonov",
+        "playerOut": "Abbosbek Fayzullaev",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "COL",
+        "playerIn": "Richard Ríos",
+        "playerOut": "Gustavo Puerta",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "COL",
+        "playerIn": "Cucho Hernández",
+        "playerOut": "Luis Suárez",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "COL",
+        "playerIn": "Andrés Gómez",
+        "playerOut": "Luis Díaz",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "COL",
+        "playerIn": "Kevin Castaño",
+        "playerOut": "Jhon Arias",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "UZB",
+        "playerIn": "Igor Sergeev",
+        "playerOut": "Eldor Shomurodov",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Estadio Banorte",
       "city": "Mexico City",
@@ -18342,19 +18490,18 @@
     "referees": [
       {
         "name": "Anthony Taylor",
-        "role": "REFEREE",
-        "nationality": "England"
+        "role": "Referee"
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 80824,
     "espnOdds": {
-      "homeML": 850,
-      "awayML": -270,
+      "homeML": 1000,
+      "awayML": -330,
       "spread": "COL -1.5",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -145.0,
+      "underOdds": 115.0,
       "provider": "DraftKings"
     },
     "homeLineup": {
@@ -18366,35 +18513,35 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "282145",
-          "subbedIn": true,
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Abdulla Abdullaev",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "18",
+          "espnId": "326928",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rustam Ashurmatov",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "5",
+          "espnId": "195282",
+          "subbedIn": false,
           "subbedOut": true
         },
         {
           "name": "Abdukodir Khusanov",
-          "position": "CD",
-          "positionName": "Center Defender",
-          "jersey": "2",
-          "espnId": "362211",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Abdulla Abdullaev",
-          "position": "CD-L",
-          "positionName": "Center Left Defender",
-          "jersey": "18",
-          "espnId": "326928",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Rustam Ashurmatov",
           "position": "CD-R",
           "positionName": "Center Right Defender",
-          "jersey": "5",
-          "espnId": "195282",
-          "subbedIn": true,
-          "subbedOut": true
+          "jersey": "2",
+          "espnId": "362211",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Otabek Shukurov",
@@ -18402,8 +18549,8 @@
           "positionName": "Center Left Midfielder",
           "jersey": "7",
           "espnId": "195281",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Akmal Mozgovoy",
@@ -18411,8 +18558,8 @@
           "positionName": "Center Right Midfielder",
           "jersey": "6",
           "espnId": "270461",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Sherzod Nasrullaev",
@@ -18420,7 +18567,7 @@
           "positionName": "Left Midfielder",
           "jersey": "13",
           "espnId": "321728",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -18429,8 +18576,8 @@
           "positionName": "Right Midfielder",
           "jersey": "24",
           "espnId": "376370",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Eldor Shomurodov",
@@ -18438,7 +18585,7 @@
           "positionName": "Forward",
           "jersey": "14",
           "espnId": "216937",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -18447,7 +18594,7 @@
           "positionName": "Center Left Forward",
           "jersey": "11",
           "espnId": "288949",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -18456,7 +18603,7 @@
           "positionName": "Center Right Forward",
           "jersey": "22",
           "espnId": "317793",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         }
       ],
@@ -18467,8 +18614,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "286596",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Botirali Ergashev",
@@ -18476,8 +18623,8 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "219561",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Farrukh Sayfiev",
@@ -18486,7 +18633,7 @@
           "jersey": "4",
           "espnId": "211537",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Azizbek Amonov",
@@ -18495,7 +18642,7 @@
           "jersey": "20",
           "espnId": "253231",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Jakhongir Urozov",
@@ -18504,7 +18651,7 @@
           "jersey": "26",
           "espnId": "362329",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Khojiakbar Alijonov",
@@ -18512,8 +18659,8 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "274005",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Umar Eshmurodov",
@@ -18521,8 +18668,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "270463",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Azizjon Ganiev",
@@ -18530,8 +18677,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "268558",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Dostonbek Khamdamov",
@@ -18540,7 +18687,7 @@
           "jersey": "17",
           "espnId": "195274",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Odiljon Xamrobekov",
@@ -18548,8 +18695,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "195266",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Igor Sergeev",
@@ -18558,7 +18705,7 @@
           "jersey": "21",
           "espnId": "156663",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Jamshid Iskanderov",
@@ -18566,8 +18713,8 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "185631",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Sherzod Esanov",
@@ -18575,8 +18722,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "362333",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ruslanbek Jiyanov",
@@ -18584,8 +18731,8 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "354940",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Abduvohid Nematov",
@@ -18593,15 +18740,15 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "308612",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "UZB",
       "_espnEventId": "760436"
     },
     "awayLineup": {
-      "formation": "4-2-3-1",
+      "formation": "4-3-3",
       "lineup": [
         {
           "name": "Camilo Vargas",
@@ -18609,8 +18756,8 @@
           "positionName": "Goalkeeper",
           "jersey": "12",
           "espnId": "185147",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jhon Lucumí",
@@ -18618,8 +18765,8 @@
           "positionName": "Center Left Defender",
           "jersey": "3",
           "espnId": "227697",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Davinson Sánchez",
@@ -18627,8 +18774,8 @@
           "positionName": "Center Right Defender",
           "jersey": "23",
           "espnId": "197105",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Johan Mojica",
@@ -18636,8 +18783,8 @@
           "positionName": "Left Back",
           "jersey": "17",
           "espnId": "173247",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Daniel Muñoz",
@@ -18645,34 +18792,34 @@
           "positionName": "Right Back",
           "jersey": "2",
           "espnId": "146679",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
-          "name": "James Rodríguez",
-          "position": "AM",
-          "positionName": "Attacking Midfielder",
-          "jersey": "10",
-          "espnId": "82816",
-          "subbedIn": true,
+          "name": "Jefferson Lerma",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "16",
+          "espnId": "197399",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jhon Arias",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "11",
+          "espnId": "239566",
+          "subbedIn": false,
           "subbedOut": true
         },
         {
           "name": "Gustavo Puerta",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "14",
-          "espnId": "341736",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Jefferson Lerma",
           "position": "RM",
           "positionName": "Right Midfielder",
-          "jersey": "16",
-          "espnId": "197399",
-          "subbedIn": true,
+          "jersey": "14",
+          "espnId": "341736",
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -18681,25 +18828,25 @@
           "positionName": "Forward",
           "jersey": "25",
           "espnId": "272722",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
           "name": "Luis Díaz",
-          "position": "AM-L",
-          "positionName": "Attacking Midfielder Left",
+          "position": "LF",
+          "positionName": "Left Forward",
           "jersey": "7",
           "espnId": "257390",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
-          "name": "Jhon Arias",
-          "position": "AM-R",
-          "positionName": "Attacking Midfielder Right",
-          "jersey": "11",
-          "espnId": "239566",
-          "subbedIn": true,
+          "name": "James Rodríguez",
+          "position": "RF",
+          "positionName": "Right Forward",
+          "jersey": "10",
+          "espnId": "82816",
+          "subbedIn": false,
           "subbedOut": true
         }
       ],
@@ -18710,8 +18857,8 @@
           "positionName": "Substitute",
           "jersey": "1",
           "espnId": "121842",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yerry Mina",
@@ -18719,8 +18866,8 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "196901",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Juan Fernando Quintero",
@@ -18728,8 +18875,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "177780",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jhon Córdoba",
@@ -18737,8 +18884,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "176058",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Willer Ditta",
@@ -18746,8 +18893,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "270229",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Álvaro Montero",
@@ -18755,8 +18902,8 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "166323",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Santiago Arias",
@@ -18764,8 +18911,8 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "164756",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jáminton Campaz",
@@ -18774,7 +18921,7 @@
           "jersey": "21",
           "espnId": "255295",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Deiver Machado",
@@ -18782,8 +18929,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "197401",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kevin Castaño",
@@ -18792,7 +18939,7 @@
           "jersey": "5",
           "espnId": "307756",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Juan Portilla",
@@ -18800,8 +18947,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "94976",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jorge Carrascal",
@@ -18809,8 +18956,8 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "208700",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Andrés Gómez",
@@ -18819,7 +18966,7 @@
           "jersey": "26",
           "espnId": "330924",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Richard Ríos",
@@ -18828,7 +18975,7 @@
           "jersey": "6",
           "espnId": "301520",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Cucho Hernández",
@@ -18837,15 +18984,80 @@
           "jersey": "19",
           "espnId": "336809",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         }
       ],
       "tla": "COL",
       "_espnEventId": "760436"
     },
-    "homeStats": {},
-    "awayStats": {},
+    "homeStats": {
+      "foulsCommitted": 14.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 3.0,
+      "saves": 1.0,
+      "possessionPct": 38.5,
+      "totalShots": 8.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 242.0,
+      "totalPasses": 318.0,
+      "passPct": 0.8,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 52.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.3,
+      "blockedShots": 2.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.7,
+      "interceptions": 7.0,
+      "effectiveClearance": 26.0,
+      "totalClearance": 26.0
+    },
+    "awayStats": {
+      "foulsCommitted": 11.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 4.0,
+      "saves": 1.0,
+      "possessionPct": 61.5,
+      "totalShots": 15.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 446.0,
+      "totalPasses": 521.0,
+      "passPct": 0.9,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 15.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.3,
+      "blockedShots": 4.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.4,
+      "interceptions": 6.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
+    },
     "homeForm": [
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
       {
         "date": "2026-06-08",
         "result": "F",
@@ -18873,16 +19085,16 @@
         "gf": 3,
         "ga": 1,
         "home": true
-      },
-      {
-        "date": "2026-01-26",
-        "result": "O",
-        "gf": 2,
-        "ga": 2,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-18",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
       {
         "date": "2026-06-07",
         "result": "V",
@@ -18909,13 +19121,6 @@
         "result": "V",
         "gf": 2,
         "ga": 1,
-        "home": true
-      },
-      {
-        "date": "2025-11-19",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
         "home": true
       }
     ]
@@ -20732,7 +20937,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -21146,7 +21351,7 @@
     "attendance": null,
     "espnOdds": {
       "homeML": -1100,
-      "awayML": 2500,
+      "awayML": 2800,
       "spread": "FRA -2.5",
       "overUnder": 3.5,
       "overOdds": -105.0,
@@ -21394,17 +21599,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Levi's Stadium",
+      "city": "Santa Clara, California",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 500,
+      "awayML": -175,
+      "spread": "ALG -0.5",
+      "overUnder": 2.5,
+      "overOdds": -105.0,
+      "underOdds": -120.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": -2.0,
+      "totalGoals": 1.0,
+      "goalAssists": 1.0,
+      "goalsConceded": 3.0
+    },
+    "awayStats": {
+      "goalDifference": -3.0,
+      "totalGoals": 0.0,
+      "goalAssists": 0.0,
+      "goalsConceded": 3.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-17",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-07",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-05-31",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-03-31",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-17",
+        "result": "F",
+        "gf": 0,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-11",
+        "result": "F",
+        "gf": 0,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-03",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-03-31",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "V",
+        "gf": 7,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537405,
@@ -22042,7 +22341,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
