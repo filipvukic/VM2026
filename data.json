@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T21:29:43+00:00",
+  "updated_at": "2026-06-18T23:19:21+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -7352,20 +7352,120 @@
       "homeTla": "CAN",
       "away": "Qatar",
       "awayTla": "QAT",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        3,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          3,
+          0
+        ],
+        "fullTime": [
+          3,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "57",
+      "goals": [
+        {
+          "minute": "16",
+          "team": "CAN",
+          "scorer": "Cyle Larin",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Canada 1, Qatar 0. Cyle Larin (Canada) left footed shot from very close range to the bottom right corner following a corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "29",
+          "team": "CAN",
+          "scorer": "Jonathan David",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Canada 2, Qatar 0. Jonathan David (Canada) right footed shot from the right side of the box to the bottom right corner.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+3",
+          "team": "CAN",
+          "scorer": "Jonathan David",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Canada 3, Qatar 0. Jonathan David (Canada) right footed shot from very close range to the centre of the goal.",
+          "score": [
+            3,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "9",
+          "team": "CAN",
+          "player": "Derek Cornelius",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "33",
+          "team": "QAT",
+          "player": "Homam Ahmed",
+          "card": "RED",
+          "period": 1
+        },
+        {
+          "minute": "53",
+          "team": "QAT",
+          "player": "Assim Madibo",
+          "card": "RED",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "40",
+          "team": "QAT",
+          "playerIn": "Sultan Al-Brake",
+          "playerOut": "Yusuf Abdurisag",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "QAT",
+          "playerIn": "Ahmed Fathy",
+          "playerOut": "Edmílson Junior",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "QAT",
+          "playerIn": "Mohamed Manai",
+          "playerOut": "Jassem Gaber",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "CAN",
+          "playerIn": "Moïse Bombito",
+          "playerOut": "Derek Cornelius",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "BC Place",
         "city": "Vancouver",
@@ -7374,8 +7474,7 @@
       "referees": [
         {
           "name": "Cristián Garay",
-          "role": "REFEREE",
-          "nationality": "Chile"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -7500,7 +7599,13 @@
         "city": "Guadalajara",
         "country": "Mexico"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Gustavo Tejera",
+          "role": "REFEREE",
+          "nationality": "Uruguay"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -9832,7 +9937,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12975,14 +13084,14 @@
         {
           "team": "Canada",
           "tla": "CAN",
-          "played": 1,
-          "won": 0,
+          "played": 2,
+          "won": 1,
           "draw": 1,
           "lost": 0,
-          "gf": 1,
+          "gf": 4,
           "ga": 1,
-          "gd": 0,
-          "points": 1
+          "gd": 3,
+          "points": 4
         },
         {
           "team": "Bosnia-Herzegovina",
@@ -12999,13 +13108,13 @@
         {
           "team": "Qatar",
           "tla": "QAT",
-          "played": 1,
+          "played": 2,
           "won": 0,
           "draw": 1,
-          "lost": 0,
+          "lost": 1,
           "gf": 1,
-          "ga": 1,
-          "gd": 0,
+          "ga": 4,
+          "gd": -3,
           "points": 1
         }
       ]
