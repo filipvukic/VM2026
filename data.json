@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T06:24:58+00:00",
+  "updated_at": "2026-06-18T10:00:28+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -8525,7 +8525,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -11524,7 +11524,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -13617,12 +13617,72 @@
         "r": "F"
       }
     ],
-    "POR": [],
-    "COD": [],
-    "ENG": [],
-    "CRO": [],
-    "GHA": [],
-    "PAN": [],
+    "POR": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "Congo DR",
+        "oppTla": "COD",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "COD": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "Portugal",
+        "oppTla": "POR",
+        "gf": 1,
+        "ga": 1,
+        "r": "O"
+      }
+    ],
+    "ENG": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "Croatia",
+        "oppTla": "CRO",
+        "gf": 4,
+        "ga": 2,
+        "r": "V"
+      }
+    ],
+    "CRO": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "England",
+        "oppTla": "ENG",
+        "gf": 2,
+        "ga": 4,
+        "r": "F"
+      }
+    ],
+    "GHA": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "Panama",
+        "oppTla": "PAN",
+        "gf": 1,
+        "ga": 0,
+        "r": "V"
+      }
+    ],
+    "PAN": [
+      {
+        "date": "2026-06-17",
+        "competition": "WC",
+        "opp": "Ghana",
+        "oppTla": "GHA",
+        "gf": 0,
+        "ga": 1,
+        "r": "F"
+      }
+    ],
     "UZB": [],
     "ECU": [
       {
