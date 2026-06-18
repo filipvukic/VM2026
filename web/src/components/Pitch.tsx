@@ -87,11 +87,18 @@ export function Pitch({
     goalCount.set(n, (goalCount.get(n) || 0) + 1);
     if (g.assist) { const a = g.assist.toLowerCase(); assistCount.set(a, (assistCount.get(a) || 0) + 1); }
   });
-  const redNames = new Set(match.cards.filter((c) => c.type === "red").map((c) => (c.name || "").toLowerCase()));
+  const cardByName = new Map<string, "yellow" | "red">();
+  match.cards.forEach((c) => {
+    const n = (c.name || "").toLowerCase();
+    if (c.type === "red" || !cardByName.has(n)) cardByName.set(n, c.type === "red" ? "red" : "yellow");
+  });
   const subOut = new Map<string, string | number>();
   match.subs.filter((s) => s.team === teamCode).forEach((s) => {
     if (s.playerOut) subOut.set(s.playerOut.toLowerCase(), s.minute ?? "");
   });
+  // highest rating = player of the match (gets a star)
+  let maxRating = 0;
+  if (getRating) placed.forEach(({ p }) => { const r = getRating(p.name); if (r != null && r > maxRating) maxRating = r; });
 
   return (
     <div className="pitch" style={{ ["--ppl-w" as string]: `${wPx}px`, ["--ppl-card" as string]: `${cardPx}px` } as React.CSSProperties}>
@@ -108,9 +115,10 @@ export function Pitch({
             y={yPct}
             goals={goalCount.get(nm) || 0}
             assists={assistCount.get(nm) || 0}
-            red={redNames.has(nm)}
-            outAt={subOut.get(nm)}
+            card={cardByName.get(nm)}
+            subOut={subOut.get(nm)}
             rating={getRating ? getRating(p.name) : null}
+            motm={!!getRating && maxRating > 0 && getRating(p.name) === maxRating}
             onClick={() => onPlayer(p.name, p.espnId)}
           />
         );
@@ -136,18 +144,19 @@ export function Pitch({
         .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
           white-space:nowrap; max-width:var(--ppl-w,72px); overflow:hidden; text-overflow:ellipsis; }
         .ppl-name-num{ color:var(--ink-3); margin-right:3px; }
-        .ppl-badges{ position:absolute; right:-6px; top:-6px; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
-        .ppl-b{ min-width:18px; height:18px; padding:0 3px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; gap:1px; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,.5); }
-        .ppl-bi{ font-size:10px; line-height:1; display:block; }
-        .ppl-bn{ font-size:10px; font-weight:800; line-height:1; font-family:var(--font-display); }
-        .ppl-b.goal{ background:#fff; color:#0a0712; }
-        .ppl-b.assist{ background:color-mix(in srgb, var(--cool) 90%, #000); color:#fff; }
-        .ppl-b.red{ width:11px; height:15px; border-radius:2px; background:var(--loss); }
-        .ppl-out{ position:absolute; right:-7px; bottom:-5px; display:flex; align-items:center; gap:1px; height:16px; padding:0 4px;
-          border-radius:8px; background:var(--loss); color:#fff; font-size:9px; font-weight:800; box-shadow:0 2px 5px rgba(0,0,0,.5); }
-        .ppl-rating{ position:absolute; left:-6px; bottom:-7px;
-          min-width:22px; height:16px; padding:0 3px; border-radius:5px; display:grid; place-items:center;
-          font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 2px 5px rgba(0,0,0,.55); }
+        /* events stacked top-left, rating top-right — clean, like FotMob */
+        .ppl-ev{ position:absolute; left:-3px; top:-3px; display:flex; flex-direction:column; gap:2px; align-items:flex-start; }
+        .ppl-chip{ height:15px; min-width:15px; padding:0 3px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; gap:1px;
+          font-size:9px; font-weight:800; line-height:1; font-family:var(--font-display); box-shadow:0 1px 3px rgba(0,0,0,.4); }
+        .ppl-chip.goal{ background:#fff; color:#0a0712; }
+        .ppl-chip.assist{ background:var(--cool); color:#fff; }
+        .ppl-chip.sub{ background:rgba(8,6,15,.78); color:#fff; }
+        .ppl-chip.card{ width:10px; min-width:10px; height:14px; border-radius:2px; padding:0; }
+        .ppl-chip.card.y{ background:var(--gold); } .ppl-chip.card.r{ background:var(--loss); }
+        .ppl-rt{ position:absolute; right:-4px; top:-4px; min-width:19px; height:17px; padding:0 4px; border-radius:9px;
+          display:grid; place-items:center; font-size:10px; font-weight:800; color:#0a0712; box-shadow:0 1px 4px rgba(0,0,0,.45); }
+        .ppl-rt.motm{ box-shadow:0 0 0 1.6px var(--gold), 0 1px 4px rgba(0,0,0,.5); }
+        .ppl-star{ position:absolute; right:-8px; top:-10px; font-size:11px; color:var(--gold); line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.6); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
       `}</style>
@@ -163,9 +172,10 @@ function PitchPlayer({
   y,
   goals,
   assists,
-  red,
-  outAt,
+  card,
+  subOut,
   rating,
+  motm,
   onClick,
 }: {
   p: RawLineupPlayer;
@@ -175,9 +185,10 @@ function PitchPlayer({
   y: number;
   goals: number;
   assists: number;
-  red: boolean;
-  outAt?: string | number;
+  card?: "yellow" | "red";
+  subOut?: string | number;
   rating?: number | null;
+  motm?: boolean;
   onClick: () => void;
 }) {
   const [failed, setFailed] = useState(false);
@@ -194,15 +205,16 @@ function PitchPlayer({
             <span className="ppl-fallnum">{num || initials(p.name)}</span>
           )}
         </div>
-        <div className="ppl-badges">
-          {goals > 0 && <span className="ppl-b goal"><span className="ppl-bi">⚽</span>{goals > 1 && <span className="ppl-bn">{goals}</span>}</span>}
-          {assists > 0 && <span className="ppl-b assist" title="Assist"><span className="ppl-bi">👟</span>{assists > 1 && <span className="ppl-bn">{assists}</span>}</span>}
-          {red && <span className="ppl-b red" />}
+        <div className="ppl-ev">
+          {goals > 0 && <span className="ppl-chip goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>}
+          {assists > 0 && <span className="ppl-chip assist" title="Assist">A{assists > 1 ? assists : ""}</span>}
+          {card && <span className={`ppl-chip card ${card === "red" ? "r" : "y"}`} title={card === "red" ? "Rött kort" : "Gult kort"} />}
+          {subOut !== undefined && <span className="ppl-chip sub" title="Utbytt">↓{subOut}'</span>}
         </div>
-        {outAt !== undefined && <span className="ppl-out">↓{outAt}'</span>}
         {rating != null && (
-          <span className="ppl-rating num" style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>
+          <span className={`ppl-rt num${motm ? " motm" : ""}`} style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>
         )}
+        {motm && <span className="ppl-star" title="Matchens spelare">★</span>}
       </div>
       <span className="ppl-name">{num ? <span className="ppl-name-num">{num}</span> : null}{last}</span>
     </button>
