@@ -14,6 +14,7 @@ export const MOTM_BLUE = "#2483e0";
 export function posLabel(pos?: string | null): string {
   if (!pos) return "";
   const p = pos.toUpperCase();
+  if (p === "SUB" || p === "SUBSTITUTE") return ""; // ESPN tags all bench "SUB" — useless
   if (p === "G" || p.startsWith("GK") || p === "GOALKEEPER") return "Målvakt";
   if (p[0] === "D" || ["CB", "LB", "RB", "LWB", "RWB", "SW"].includes(p)) return "Back";
   if (p[0] === "M" || ["CM", "DM", "CDM", "AM", "CAM", "LM", "RM"].includes(p)) return "Mittfält";
