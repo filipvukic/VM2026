@@ -36,13 +36,20 @@ export function Pitch({
   // portrait (GK bottom, attack up), so x→vertical, y→horizontal.
   const placed: { p: RawLineupPlayer; xPct: number; yPct: number }[] =
     coords && coords.length
-      ? coords.map((c) => ({
-          p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
-          xPct: 8 + c.y * 84,
-          // vertical band kept off the edges so the top row isn't crammed against
-          // the goal line (and the GK isn't glued to the bottom)
-          yPct: 89 - c.x * 75,
-        }))
+      ? (() => {
+          // FotMob's raw coords sit in a compact band, leaving big empty margins
+          // top/bottom and at the sides. Stretch the actual min→max range to fill
+          // the pitch so players spread out in both directions (10–90 vertical,
+          // 11–89 across) instead of bunching up.
+          const xs = coords.map((c) => c.x), ys = coords.map((c) => c.y);
+          const minX = Math.min(...xs), maxX = Math.max(...xs), spanX = maxX - minX || 1;
+          const minY = Math.min(...ys), maxY = Math.max(...ys), spanY = maxY - minY || 1;
+          return coords.map((c) => ({
+            p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
+            xPct: 11 + ((c.y - minY) / spanY) * 78,
+            yPct: 90 - ((c.x - minX) / spanX) * 80,
+          }));
+        })()
       : (() => {
           const rows = buildRows(lineup);
           const n = rows.length;
@@ -53,7 +60,7 @@ export function Pitch({
               .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
               .map((x) => x.p);
             ordered.forEach((p, i) =>
-              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 89 - (idx / Math.max(1, n - 1)) * 75 })
+              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 90 - (idx / Math.max(1, n - 1)) * 80 })
             );
           });
           return out;
