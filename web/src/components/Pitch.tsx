@@ -12,15 +12,6 @@ export interface SubInfo {
   inFor?: string; // who replaced them
 }
 
-// Count distinct depth rows among outfield players (fallback when no formation
-// string) — group x-values that are close together.
-function countRows(xvals: number[]): number {
-  if (!xvals.length) return 1;
-  const sorted = [...xvals].sort((a, b) => a - b);
-  let rows = 1;
-  for (let i = 1; i < sorted.length; i++) if (sorted[i] - sorted[i - 1] > 0.07) rows++;
-  return rows;
-}
 
 export function Pitch({
   lineup,
@@ -47,29 +38,21 @@ export function Pitch({
   const placed: { p: RawLineupPlayer; xPct: number; yPct: number }[] =
     coords && coords.length
       ? (() => {
-          // Keep the keeper at the bottom; spread the OUTFIELD up the pitch with a
-          // fixed gap per row, so the formation is taller when there are more rows
-          // (4-2-3-1 → 4 rows, higher) and lower/compacter when fewer (4-3-3 → 3).
-          // Horizontal fills 11–89; relative coords are preserved within each band.
+          // Render FotMob's actual player coordinates, normalised to fill the pitch
+          // (their raw coords sit in a compact band). This reproduces FotMob's
+          // layout: keeper deep, outfield spread evenly up the pitch, full width.
           const xs = coords.map((c) => c.x), ys = coords.map((c) => c.y);
+          const minX = Math.min(...xs), maxX = Math.max(...xs), spanX = maxX - minX || 1;
           const minY = Math.min(...ys), maxY = Math.max(...ys), spanY = maxY - minY || 1;
-          const gkIdx = xs.indexOf(Math.min(...xs)); // deepest player = keeper
-          const ofX = coords.filter((_, i) => i !== gkIdx).map((c) => c.x);
-          const ofMin = Math.min(...ofX), ofMax = Math.max(...ofX), ofSpan = ofMax - ofMin || 1;
-          const fparts = (lineup.formation || "").split("-").map(Number).filter((n) => n > 0);
-          const rowCount = Math.max(2, Math.min(6, fparts.length >= 2 ? fparts.length : countRows(ofX)));
-          const DEF = 75, GK_Y = 91; // deepest outfield row / keeper
-          const TOP = Math.max(11, DEF - (rowCount - 1) * 16);
-          return coords.map((c, i) => ({
+          return coords.map((c) => ({
             p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
             xPct: 11 + ((c.y - minY) / spanY) * 78,
-            yPct: i === gkIdx ? GK_Y : DEF - ((c.x - ofMin) / ofSpan) * (DEF - TOP),
+            yPct: 90 - ((c.x - minX) / spanX) * 80,
           }));
         })()
       : (() => {
           const rows = buildRows(lineup);
-          const n = rows.length; // row 0 = keeper, then outfield rows
-          const gap = Math.min(16, 79 / Math.max(1, n - 1));
+          const n = rows.length;
           const out: { p: RawLineupPlayer; xPct: number; yPct: number }[] = [];
           rows.forEach((row, idx) => {
             const ordered = row
@@ -77,7 +60,7 @@ export function Pitch({
               .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
               .map((x) => x.p);
             ordered.forEach((p, i) =>
-              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: idx === 0 ? 91 : 91 - idx * gap })
+              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 90 - (idx / Math.max(1, n - 1)) * 80 })
             );
           });
           return out;
@@ -92,8 +75,9 @@ export function Pitch({
     rowCount[b] = (rowCount[b] || 0) + 1;
   });
   const maxRow = Math.max(2, ...Object.values(rowCount));
-  const cardPx = maxRow >= 5 ? 44 : maxRow === 4 ? 54 : 56;
-  const wPx = maxRow >= 5 ? 56 : maxRow === 4 ? 64 : 70;
+  // FotMob-style round photos — medium size, scaled down a touch for a 5-man row.
+  const cardPx = maxRow >= 5 ? 42 : maxRow === 4 ? 48 : 50;
+  const wPx = cardPx + 24;
 
   // count goals/assists per player so multiples show as ⚽×2 / A×2
   const goalCount = new Map<string, number>();
@@ -144,7 +128,7 @@ export function Pitch({
         .pitch-lines::before,.pitch-lines::after{ content:""; position:absolute; left:28%; width:44%; height:13%; border:1px solid rgba(255,255,255,.14); }
         .pitch-lines::before{ top:0; border-top:none; } .pitch-lines::after{ bottom:0; border-bottom:none; }
         .ppl{ position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:7px; width:var(--ppl-w,72px); }
-        .ppl-card{ position:relative; width:var(--ppl-card,54px); height:var(--ppl-card,54px); border-radius:calc(var(--ppl-card,54px) * .3); overflow:visible; }
+        .ppl-card{ position:relative; width:var(--ppl-card,54px); height:var(--ppl-card,54px); border-radius:50%; overflow:visible; }
         .ppl-img{ width:100%; height:100%; border-radius:inherit; overflow:hidden; background:var(--surface-3);
           display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); border:2px solid rgba(255,255,255,.85); }
         .ppl-img img{ width:100%; height:100%; object-fit:cover; }
