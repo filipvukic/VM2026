@@ -12,6 +12,16 @@ export interface SubInfo {
   inFor?: string; // who replaced them
 }
 
+// Count distinct depth rows among outfield players (fallback when no formation
+// string) — group x-values that are close together.
+function countRows(xvals: number[]): number {
+  if (!xvals.length) return 1;
+  const sorted = [...xvals].sort((a, b) => a - b);
+  let rows = 1;
+  for (let i = 1; i < sorted.length; i++) if (sorted[i] - sorted[i - 1] > 0.07) rows++;
+  return rows;
+}
+
 export function Pitch({
   lineup,
   color,
@@ -37,22 +47,29 @@ export function Pitch({
   const placed: { p: RawLineupPlayer; xPct: number; yPct: number }[] =
     coords && coords.length
       ? (() => {
-          // FotMob's raw coords sit in a compact band, leaving big empty margins
-          // top/bottom and at the sides. Stretch the actual min→max range to fill
-          // the pitch so players spread out in both directions (10–90 vertical,
-          // 11–89 across) instead of bunching up.
+          // Keep the keeper at the bottom; spread the OUTFIELD up the pitch with a
+          // fixed gap per row, so the formation is taller when there are more rows
+          // (4-2-3-1 → 4 rows, higher) and lower/compacter when fewer (4-3-3 → 3).
+          // Horizontal fills 11–89; relative coords are preserved within each band.
           const xs = coords.map((c) => c.x), ys = coords.map((c) => c.y);
-          const minX = Math.min(...xs), maxX = Math.max(...xs), spanX = maxX - minX || 1;
           const minY = Math.min(...ys), maxY = Math.max(...ys), spanY = maxY - minY || 1;
-          return coords.map((c) => ({
+          const gkIdx = xs.indexOf(Math.min(...xs)); // deepest player = keeper
+          const ofX = coords.filter((_, i) => i !== gkIdx).map((c) => c.x);
+          const ofMin = Math.min(...ofX), ofMax = Math.max(...ofX), ofSpan = ofMax - ofMin || 1;
+          const fparts = (lineup.formation || "").split("-").map(Number).filter((n) => n > 0);
+          const rowCount = Math.max(2, Math.min(6, fparts.length >= 2 ? fparts.length : countRows(ofX)));
+          const DEF = 75, GK_Y = 91; // deepest outfield row / keeper
+          const TOP = Math.max(11, DEF - (rowCount - 1) * 16);
+          return coords.map((c, i) => ({
             p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
             xPct: 11 + ((c.y - minY) / spanY) * 78,
-            yPct: 90 - ((c.x - minX) / spanX) * 80,
+            yPct: i === gkIdx ? GK_Y : DEF - ((c.x - ofMin) / ofSpan) * (DEF - TOP),
           }));
         })()
       : (() => {
           const rows = buildRows(lineup);
-          const n = rows.length;
+          const n = rows.length; // row 0 = keeper, then outfield rows
+          const gap = Math.min(16, 79 / Math.max(1, n - 1));
           const out: { p: RawLineupPlayer; xPct: number; yPct: number }[] = [];
           rows.forEach((row, idx) => {
             const ordered = row
@@ -60,7 +77,7 @@ export function Pitch({
               .sort((a, b) => sideScore(a.p.position || "") - sideScore(b.p.position || "") || a.i - b.i)
               .map((x) => x.p);
             ordered.forEach((p, i) =>
-              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: 90 - (idx / Math.max(1, n - 1)) * 80 })
+              out.push({ p, xPct: ((i + 1) / (ordered.length + 1)) * 100, yPct: idx === 0 ? 91 : 91 - idx * gap })
             );
           });
           return out;
