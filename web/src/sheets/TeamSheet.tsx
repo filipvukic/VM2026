@@ -172,23 +172,30 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
         <div style={{ marginTop: 16 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>
-            {lu.bench.map((p, i) => {
-              const came = subIn.get(p.name);
-              const nm = (p.name || "").toLowerCase();
-              return (
-                <BenchPlayer
-                  key={i}
-                  p={p}
-                  photo={lineupPhoto(p.name, p.espnId, db)}
-                  rating={getRating(p.name)}
-                  goals={goalNames.has(nm) ? 1 : 0}
-                  assists={assistNames.has(nm) ? 1 : 0}
-                  cameAt={came?.at}
-                  forName={came?.forName}
-                  onClick={() => openFb(p.name, p.espnId)}
-                />
-              );
-            })}
+            {(() => {
+              const squadMax = [...(lu.lineup || []), ...lu.bench].reduce((mx, pl) => {
+                const r = getRating(pl.name);
+                return r != null && r > mx ? r : mx;
+              }, 0);
+              return lu.bench.map((p, i) => {
+                const came = subIn.get(p.name);
+                const nm = (p.name || "").toLowerCase();
+                return (
+                  <BenchPlayer
+                    key={i}
+                    p={p}
+                    photo={lineupPhoto(p.name, p.espnId, db)}
+                    rating={getRating(p.name)}
+                    goals={goalNames.has(nm) ? 1 : 0}
+                    assists={assistNames.has(nm) ? 1 : 0}
+                    cameAt={came?.at}
+                    forName={came?.forName}
+                    motm={squadMax > 0 && getRating(p.name) === squadMax}
+                    onClick={() => openFb(p.name, p.espnId)}
+                  />
+                );
+              });
+            })()}
           </div>
         </div>
       )}

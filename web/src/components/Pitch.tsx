@@ -110,9 +110,13 @@ export function Pitch({
   match.subs.filter((s) => s.team === teamCode).forEach((s) => {
     if (s.playerOut) subOut.set(s.playerOut.toLowerCase(), s.minute ?? "");
   });
-  // highest rating = player of the match (gets a star)
+  // highest rating across XI + bench = player of the match (gets the blue + star)
   let maxRating = 0;
-  if (getRating) placed.forEach(({ p }) => { const r = getRating(p.name); if (r != null && r > maxRating) maxRating = r; });
+  if (getRating) {
+    const consider = (nm: string) => { const r = getRating(nm); if (r != null && r > maxRating) maxRating = r; };
+    placed.forEach(({ p }) => consider(p.name));
+    (lineup.bench || []).forEach((p) => consider(p.name));
+  }
 
   return (
     <div className="pitch" style={{ ["--ppl-w" as string]: `${wPx}px`, ["--ppl-card" as string]: `${cardPx}px` } as React.CSSProperties}>
@@ -245,6 +249,7 @@ export function BenchPlayer({
   card,
   cameAt,
   forName,
+  motm,
   onClick,
 }: {
   p: RawLineupPlayer;
@@ -255,6 +260,7 @@ export function BenchPlayer({
   card?: "yellow" | "red";
   cameAt?: string | number;
   forName?: string;
+  motm?: boolean;
   onClick: () => void;
 }) {
   const num = p.jersey || p.shirtNumber;
@@ -264,7 +270,8 @@ export function BenchPlayer({
     <button className="bp" onClick={onClick}>
       <span className="bp-ph">
         <PlayerImg src={photo} name={p.name} size={48} radius={24} fontSize={17} />
-        {rating != null && <span className="bp-rt num" style={{ background: ratingColor(rating) }}>{rating.toFixed(1)}</span>}
+        {rating != null && <span className="bp-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>}
+        {motm && <span className="bp-star">★</span>}
         {cameAt != null && <span className="bp-in num">↑{cameAt}'</span>}
         {goals > 0 && <span className="bp-ev goal">⚽{goals > 1 ? goals : ""}</span>}
         {goals === 0 && assists > 0 && <span className="bp-ev assist">A</span>}
