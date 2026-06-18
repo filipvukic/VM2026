@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T19:14:07+00:00",
+  "updated_at": "2026-06-18T21:29:43+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 57,
+      "match_points": 59,
       "bonus_points": 0,
-      "total": 57,
+      "total": 59,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 54,
+      "match_points": 56,
       "bonus_points": 0,
-      "total": 54,
+      "total": 56,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 51,
+      "match_points": 52,
       "bonus_points": 0,
-      "total": 51,
+      "total": 52,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 46,
+      "match_points": 47,
       "bonus_points": 0,
-      "total": 46,
+      "total": 47,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 44,
+      "match_points": 46,
       "bonus_points": 0,
-      "total": 44,
+      "total": 46,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -242,56 +242,10 @@
       "prize": 0
     },
     {
-      "name": "Isac",
-      "match_points": 43,
-      "bonus_points": 0,
-      "total": 43,
-      "exact_count": 2,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 6,
-      "prize": 0
-    },
-    {
       "name": "Alexander",
-      "match_points": 42,
+      "match_points": 44,
       "bonus_points": 0,
-      "total": 42,
+      "total": 44,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -330,14 +284,60 @@
           "points": 0
         }
       },
+      "rank": 6,
+      "prize": 0
+    },
+    {
+      "name": "Isac",
+      "match_points": 44,
+      "bonus_points": 0,
+      "total": 44,
+      "exact_count": 2,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 7,
       "prize": 0
     },
     {
       "name": "Filip",
-      "match_points": 42,
+      "match_points": 44,
       "bonus_points": 0,
-      "total": 42,
+      "total": 44,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 41,
+      "match_points": 43,
       "bonus_points": 0,
-      "total": 41,
+      "total": 43,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 40,
+      "match_points": 42,
       "bonus_points": 0,
-      "total": 40,
+      "total": 42,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 40,
+      "match_points": 41,
       "bonus_points": 0,
-      "total": 40,
+      "total": 41,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -7049,20 +7049,195 @@
       "homeTla": "SUI",
       "away": "Bosnia-Herzegovina",
       "awayTla": "BIH",
-      "status": "TIMED",
-      "score": null,
+      "status": "FINISHED",
+      "score": [
+        4,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          4,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": "13",
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": null,
+      "goals": [
+        {
+          "minute": "74",
+          "team": "SUI",
+          "scorer": "Johan Manzambi",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Switzerland 1, Bosnia and Herzegovina 0. Johan Manzambi (Switzerland) right footed shot from the centre of the box to the top right corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "SUI",
+          "scorer": "Rubén Vargas",
+          "assist": "Breel Embolo",
+          "type": "REGULAR",
+          "description": "Goal! Switzerland 2, Bosnia and Herzegovina 0. Rubén Vargas (Switzerland) right footed shot from the centre of the box to the bottom right corner. Assisted by Breel Embolo.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "SUI",
+          "scorer": "Johan Manzambi",
+          "assist": "Rubén Vargas",
+          "type": "REGULAR",
+          "description": "Goal! Switzerland 3, Bosnia and Herzegovina 0. Johan Manzambi (Switzerland) right footed shot from the centre of the box to the centre of the goal. Assisted by Rubén Vargas.",
+          "score": [
+            3,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "BIH",
+          "scorer": "Ermin Mahmic",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Switzerland 3, Bosnia and Herzegovina 1. Ermin Mahmic (Bosnia and Herzegovina) right footed shot from the centre of the box to the high centre of the goal following a corner.",
+          "score": [
+            3,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+7",
+          "team": "SUI",
+          "scorer": "Granit Xhaka",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! Switzerland 4, Bosnia and Herzegovina 1. Granit Xhaka (Switzerland) converts the penalty with a left footed shot to the bottom right corner.",
+          "score": [
+            4,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "59",
+          "team": "BIH",
+          "player": "Amar Dedic",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "BIH",
+          "player": "Edin Dzeko",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "SUI",
+          "player": "Nico Elvedi",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "BIH",
+          "player": "Tarik Muharemovic",
+          "card": "RED",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "63",
+          "team": "BIH",
+          "playerIn": "Ivan Basic",
+          "playerOut": "Benjamin Tahirovic",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "BIH",
+          "playerIn": "Esmir Bajraktarevic",
+          "playerOut": "Edin Dzeko",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "SUI",
+          "playerIn": "Djibril Sow",
+          "playerOut": "Michel Aebischer",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "SUI",
+          "playerIn": "Johan Manzambi",
+          "playerOut": "Dan Ndoye",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "SUI",
+          "playerIn": "Rubén Vargas",
+          "playerOut": "Fabian Rieder",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "BIH",
+          "playerIn": "Jovo Lukic",
+          "playerOut": "Ermedin Demirovic",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "BIH",
+          "playerIn": "Amir Hadziahmetovic",
+          "playerOut": "Ivan Sunjic",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "SUI",
+          "playerIn": "Luca Jaquez",
+          "playerOut": "Silvan Widmer",
+          "period": 2
+        },
+        {
+          "minute": "89",
+          "team": "SUI",
+          "playerIn": "Cedric Itten",
+          "playerOut": "Breel Embolo",
+          "period": 2
+        },
+        {
+          "minute": "90+1",
+          "team": "BIH",
+          "playerIn": "Ermin Mahmic",
+          "playerOut": "Kerim Alajbegovic",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "SoFi Stadium",
         "city": "Inglewood, California",
@@ -7075,7 +7250,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70026,
       "tips": [
         {
           "name": "Albin",
@@ -7083,7 +7258,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -7091,7 +7266,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -7099,7 +7274,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -7107,7 +7282,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -7115,7 +7290,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -7123,7 +7298,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -7131,7 +7306,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -7139,7 +7314,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -7147,7 +7322,7 @@
             4,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -7155,7 +7330,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -7163,7 +7338,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -7196,7 +7371,13 @@
         "city": "Vancouver",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Cristián Garay",
+          "role": "REFEREE",
+          "nationality": "Chile"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -9528,7 +9709,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Gillette Stadium",
+        "city": "Foxborough, Massachusetts",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12779,25 +12964,13 @@
           "team": "Switzerland",
           "tla": "SUI",
           "played": 2,
-          "won": 0,
-          "draw": 2,
+          "won": 1,
+          "draw": 1,
           "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 2
-        },
-        {
-          "team": "Bosnia-Herzegovina",
-          "tla": "BIH",
-          "played": 2,
-          "won": 0,
-          "draw": 2,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 2
+          "gf": 5,
+          "ga": 2,
+          "gd": 3,
+          "points": 4
         },
         {
           "team": "Canada",
@@ -12809,6 +12982,18 @@
           "gf": 1,
           "ga": 1,
           "gd": 0,
+          "points": 1
+        },
+        {
+          "team": "Bosnia-Herzegovina",
+          "tla": "BIH",
+          "played": 2,
+          "won": 0,
+          "draw": 1,
+          "lost": 1,
+          "gf": 2,
+          "ga": 5,
+          "gd": -3,
           "points": 1
         },
         {
