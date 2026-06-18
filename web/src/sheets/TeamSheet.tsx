@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { useData, useCoaches, usePlayersDb } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useMatchStats } from "../state/matchStats";
@@ -10,6 +11,9 @@ import { FormDots } from "../components/FormDots";
 import { lineupPhoto } from "../lib/playerPhoto";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
 import { svDayMonth } from "../lib/format";
+
+// Heavy (Three.js) — only loaded when a team sheet's globe actually renders.
+const CountryGlobe = lazy(() => import("../features/globe/CountryGlobe"));
 
 export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
   const ds = useData();
@@ -41,6 +45,15 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
 
       {/* group standings */}
       {t.group && <div style={{ marginTop: 12 }}><GroupTable letter={t.group} highlight={[code]} /></div>}
+
+      {/* 3D globe + country facts */}
+      {t.iso && (
+        <div style={{ marginTop: 14 }}>
+          <Suspense fallback={<div className="card card-pad dim" style={{ textAlign: "center", padding: 28 }}>Laddar klot…</div>}>
+            <CountryGlobe iso={t.iso} name={t.name} />
+          </Suspense>
+        </div>
+      )}
 
       {(coachName || hist || detail?.stars) && (
         <div className="card card-pad" style={{ marginTop: 12 }}>
