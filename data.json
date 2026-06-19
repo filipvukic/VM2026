@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T23:19:21+00:00",
+  "updated_at": "2026-06-19T02:09:31+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 59,
+      "match_points": 61,
       "bonus_points": 0,
-      "total": 59,
+      "total": 61,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 56,
+      "match_points": 58,
       "bonus_points": 0,
-      "total": 56,
+      "total": 58,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 52,
+      "match_points": 54,
       "bonus_points": 0,
-      "total": 52,
+      "total": 54,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 47,
+      "match_points": 49,
       "bonus_points": 0,
-      "total": 47,
+      "total": 49,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 46,
+      "match_points": 48,
       "bonus_points": 0,
-      "total": 46,
+      "total": 48,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 44,
+      "match_points": 46,
       "bonus_points": 0,
-      "total": 44,
+      "total": 46,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 44,
+      "match_points": 46,
       "bonus_points": 0,
-      "total": 44,
+      "total": 46,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 44,
+      "match_points": 46,
       "bonus_points": 0,
-      "total": 44,
+      "total": 46,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 43,
+      "match_points": 45,
       "bonus_points": 0,
-      "total": 43,
+      "total": 45,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 42,
+      "match_points": 44,
       "bonus_points": 0,
-      "total": 42,
+      "total": 44,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 41,
+      "match_points": 43,
       "bonus_points": 0,
-      "total": 41,
+      "total": 43,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -7352,9 +7352,9 @@
       "homeTla": "CAN",
       "away": "Qatar",
       "awayTla": "QAT",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        3,
+        6,
         0
       ],
       "scoreDetail": {
@@ -7363,7 +7363,7 @@
           0
         ],
         "fullTime": [
-          3,
+          6,
           0
         ],
         "extraTime": null,
@@ -7371,7 +7371,7 @@
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "57",
+      "minute": null,
       "goals": [
         {
           "minute": "16",
@@ -7411,6 +7411,45 @@
             0
           ],
           "period": 1
+        },
+        {
+          "minute": "64",
+          "team": "CAN",
+          "scorer": "Nathan Saliba",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Canada 4, Qatar 0. Nathan Saliba (Canada) from a free kick with a right footed shot to the bottom right corner.",
+          "score": [
+            4,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "CAN",
+          "scorer": "Mohamed Manai",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Mohammad Al Manai, Qatar. Canada 5, Qatar 0.",
+          "score": [
+            5,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "CAN",
+          "scorer": "Jonathan David",
+          "assist": "Nathan Saliba",
+          "type": "REGULAR",
+          "description": "Goal! Canada 6, Qatar 0. Jonathan David (Canada) left footed shot from the centre of the box to the top left corner. Assisted by Nathan Saliba.",
+          "score": [
+            6,
+            0
+          ],
+          "period": 2
         }
       ],
       "bookings": [
@@ -7433,6 +7472,13 @@
           "team": "QAT",
           "player": "Assim Madibo",
           "card": "RED",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "QAT",
+          "player": "Ahmed Fathy",
+          "card": "YELLOW",
           "period": 2
         }
       ],
@@ -7464,6 +7510,48 @@
           "playerIn": "Moïse Bombito",
           "playerOut": "Derek Cornelius",
           "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "CAN",
+          "playerIn": "Nathan Saliba",
+          "playerOut": "Ismaël Koné",
+          "period": 2
+        },
+        {
+          "minute": "59",
+          "team": "QAT",
+          "playerIn": "Al-Hashmi Al-Hussain",
+          "playerOut": "Akram Afif",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "CAN",
+          "playerIn": "Jacob Shaffelburg",
+          "playerOut": "Luc de Fougerolles",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "CAN",
+          "playerIn": "Tani Oluwaseyi",
+          "playerOut": "Ali Ahmed",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "CAN",
+          "playerIn": "Niko Sigur",
+          "playerOut": "Tajon Buchanan",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "QAT",
+          "playerIn": "Lucas Mendes",
+          "playerOut": "Ahmed Fathy",
+          "period": 2
         }
       ],
       "venue": {
@@ -7478,7 +7566,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 52497,
       "tips": [
         {
           "name": "Albin",
@@ -7486,7 +7574,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -7494,7 +7582,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -7502,7 +7590,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -7510,7 +7598,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -7518,7 +7606,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -7526,7 +7614,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -7534,7 +7622,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -7542,7 +7630,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -7550,7 +7638,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -7558,7 +7646,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -7566,7 +7654,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -7580,19 +7668,36 @@
       "homeTla": "MEX",
       "away": "South Korea",
       "awayTla": "KOR",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "49",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "4",
+          "team": "KOR",
+          "player": "Lee Kang-In",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Estadio Akron",
@@ -7602,8 +7707,7 @@
       "referees": [
         {
           "name": "Gustavo Tejera",
-          "role": "REFEREE",
-          "nationality": "Uruguay"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -10060,7 +10164,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Estadio Akron",
+        "city": "Guadalajara",
+        "country": "Mexico"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -13019,26 +13127,26 @@
         {
           "team": "Mexico",
           "tla": "MEX",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 2,
           "ga": 0,
           "gd": 2,
-          "points": 3
+          "points": 4
         },
         {
           "team": "South Korea",
           "tla": "KOR",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 2,
           "ga": 1,
           "gd": 1,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Czechia",
@@ -13070,6 +13178,18 @@
       "code": "B",
       "table": [
         {
+          "team": "Canada",
+          "tla": "CAN",
+          "played": 2,
+          "won": 1,
+          "draw": 1,
+          "lost": 0,
+          "gf": 7,
+          "ga": 1,
+          "gd": 6,
+          "points": 4
+        },
+        {
           "team": "Switzerland",
           "tla": "SUI",
           "played": 2,
@@ -13078,18 +13198,6 @@
           "lost": 0,
           "gf": 5,
           "ga": 2,
-          "gd": 3,
-          "points": 4
-        },
-        {
-          "team": "Canada",
-          "tla": "CAN",
-          "played": 2,
-          "won": 1,
-          "draw": 1,
-          "lost": 0,
-          "gf": 4,
-          "ga": 1,
           "gd": 3,
           "points": 4
         },
@@ -13113,8 +13221,8 @@
           "draw": 1,
           "lost": 1,
           "gf": 1,
-          "ga": 4,
-          "gd": -3,
+          "ga": 7,
+          "gd": -6,
           "points": 1
         }
       ]
