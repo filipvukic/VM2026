@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URY",
+    "awayTla": "URU",
     "status": "FINISHED",
     "score": [
       1,
@@ -23151,7 +23151,10 @@
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
       "fullTime": [
         0,
         1
@@ -23161,7 +23164,7 @@
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "40",
+    "minute": "84",
     "goals": [
       {
         "minute": "2",
@@ -23184,9 +23187,59 @@
         "player": "Issa Diop",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "65",
+        "team": "SCO",
+        "player": "Andy Robertson",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "60",
+        "team": "SCO",
+        "playerIn": "Ben Gannon-Doak",
+        "playerOut": "Kieran Tierney",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "SCO",
+        "playerIn": "Lyndon Dykes",
+        "playerOut": "Ché Adams",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "SCO",
+        "playerIn": "Kenny McLean",
+        "playerOut": "Ryan Christie",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "MAR",
+        "playerIn": "Soufiane Rahimi",
+        "playerOut": "Ismael Saibari",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "MAR",
+        "playerIn": "Chemsdine Talbi",
+        "playerOut": "Bilal El Khannouss",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "MAR",
+        "playerIn": "Ayoube Amaimouni",
+        "playerOut": "Brahim Díaz",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
@@ -23273,7 +23326,7 @@
           "jersey": "11",
           "espnId": "93435",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kieran Tierney",
@@ -23282,7 +23335,7 @@
           "jersey": "6",
           "espnId": "214794",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "John McGinn",
@@ -23300,7 +23353,7 @@
           "jersey": "10",
           "espnId": "213725",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Scott McTominay",
@@ -23364,7 +23417,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "141870",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -23391,7 +23444,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "332948",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -23418,7 +23471,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "207538",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -23534,7 +23587,7 @@
           "jersey": "11",
           "espnId": "304572",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bilal El Khannouss",
@@ -23543,7 +23596,7 @@
           "jersey": "23",
           "espnId": "336595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Brahim Díaz",
@@ -23552,7 +23605,7 @@
           "jersey": "10",
           "espnId": "246532",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -23571,7 +23624,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "416636",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -23616,7 +23669,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "360062",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -23688,7 +23741,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "276139",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -23696,64 +23749,64 @@
       "_espnEventId": "760445"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 10.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
+      "offsides": 1.0,
       "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 34.6,
-      "totalShots": 0.0,
+      "saves": 1.0,
+      "possessionPct": 38.3,
+      "totalShots": 3.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 139.0,
-      "totalPasses": 159.0,
+      "accuratePasses": 332.0,
+      "totalPasses": 382.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 1.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 19.0,
-      "accurateLongBalls": 11.0,
-      "longballPct": 0.6,
-      "blockedShots": 0.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "accurateCrosses": 2.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 38.0,
+      "accurateLongBalls": 15.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 15.0,
+      "tacklePct": 0.6,
+      "interceptions": 8.0,
+      "effectiveClearance": 18.0,
+      "totalClearance": 18.0
     },
     "awayStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 6.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 3.0,
+      "wonCorners": 5.0,
       "saves": 0.0,
-      "possessionPct": 65.4,
-      "totalShots": 5.0,
-      "shotsOnTarget": 1.0,
+      "possessionPct": 61.7,
+      "totalShots": 9.0,
+      "shotsOnTarget": 2.0,
       "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 277.0,
-      "totalPasses": 300.0,
+      "accuratePasses": 568.0,
+      "totalPasses": 624.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 4.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 14.0,
-      "accurateLongBalls": 5.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.8,
-      "interceptions": 3.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
+      "accurateCrosses": 2.0,
+      "totalCrosses": 10.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 11.0,
+      "longballPct": 0.3,
+      "blockedShots": 3.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.6,
+      "interceptions": 4.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
     },
     "homeForm": [
       {
@@ -24874,7 +24927,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -27030,7 +27083,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
