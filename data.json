@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-19T21:49:07+00:00",
+  "updated_at": "2026-06-19T22:40:26+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -8190,19 +8190,47 @@
       "homeTla": "SCO",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "40",
+      "goals": [
+        {
+          "minute": "2",
+          "team": "MAR",
+          "scorer": "Ismael Saibari",
+          "assist": "Brahim Díaz",
+          "type": "REGULAR",
+          "description": "Goal! Scotland 0, Morocco 1. Ismael Saibari (Morocco) right footed shot from the right side of the box to the high centre of the goal. Assisted by Brahim Díaz with a through ball.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "23",
+          "team": "MAR",
+          "player": "Issa Diop",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Gillette Stadium",
@@ -8211,9 +8239,8 @@
       },
       "referees": [
         {
-          "name": "Il'giz Tantashev",
-          "role": "REFEREE",
-          "nationality": "Uzbekistan"
+          "name": "Ilgiz Tantashev",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -8338,7 +8365,13 @@
         "city": "Philadelphia, Pennsylvania",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Alejandro Hernández Hernández",
+          "role": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -9300,7 +9333,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -10793,7 +10826,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -10912,7 +10949,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Hard Rock Stadium",
+        "city": "Miami Gardens, Florida",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12323,7 +12364,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -13499,28 +13540,28 @@
       "code": "C",
       "table": [
         {
-          "team": "Scotland",
-          "tla": "SCO",
-          "played": 1,
-          "won": 1,
-          "draw": 0,
-          "lost": 0,
-          "gf": 1,
-          "ga": 0,
-          "gd": 1,
-          "points": 3
-        },
-        {
           "team": "Morocco",
           "tla": "MAR",
-          "played": 1,
-          "won": 0,
+          "played": 2,
+          "won": 1,
           "draw": 1,
           "lost": 0,
+          "gf": 2,
+          "ga": 1,
+          "gd": 1,
+          "points": 4
+        },
+        {
+          "team": "Scotland",
+          "tla": "SCO",
+          "played": 2,
+          "won": 1,
+          "draw": 0,
+          "lost": 1,
           "gf": 1,
           "ga": 1,
           "gd": 0,
-          "points": 1
+          "points": 3
         },
         {
           "team": "Brazil",
