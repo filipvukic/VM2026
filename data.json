@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-19T17:00:14+00:00",
+  "updated_at": "2026-06-19T19:01:31+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -10385,7 +10385,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "BC Place",
+        "city": "Vancouver",
+        "country": "Canada"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -10504,7 +10508,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -13384,26 +13392,26 @@
         {
           "team": "United States",
           "tla": "USA",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 4,
           "ga": 1,
           "gd": 3,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Australia",
           "tla": "AUS",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 2,
           "ga": 0,
           "gd": 2,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Turkey",
