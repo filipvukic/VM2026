@@ -6377,7 +6377,7 @@
     "home": "Germany",
     "homeTla": "GER",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "FINISHED",
     "score": [
       7,
@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -26339,9 +26339,9 @@
     "homeTla": "GER",
     "away": "Ivory Coast",
     "awayTla": "CIV",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
-      0,
+      2,
       1
     ],
     "scoreDetail": {
@@ -26350,15 +26350,15 @@
         1
       ],
       "fullTime": [
-        0,
+        2,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
+    "minute": null,
     "goals": [
       {
         "minute": "30",
@@ -26372,10 +26372,107 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "68",
+        "team": "GER",
+        "scorer": "Deniz Undav",
+        "assist": "Nadiem Amiri",
+        "type": "REGULAR",
+        "description": "Goal! Germany 1, Côte d'Ivoire 1. Deniz Undav (Germany) left footed shot from very close range to the high centre of the goal. Assisted by Nadiem Amiri with a cross.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "GER",
+        "scorer": "Deniz Undav",
+        "assist": "Felix Nmecha",
+        "type": "REGULAR",
+        "description": "Goal! Germany 2, Côte d'Ivoire 1. Deniz Undav (Germany) left footed shot from the centre of the box to the bottom left corner. Assisted by Felix Nmecha with a through ball.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "GER",
+        "playerIn": "Antonio Rüdiger",
+        "playerOut": "Nico Schlotterbeck",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "GER",
+        "playerIn": "Jamie Leweling",
+        "playerOut": "Leroy Sané",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "GER",
+        "playerIn": "Deniz Undav",
+        "playerOut": "Jamal Musiala",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "GER",
+        "playerIn": "Nadiem Amiri",
+        "playerOut": "Aleksandar Pavlovic",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "CIV",
+        "playerIn": "Evann Guessand",
+        "playerOut": "Ange-Yoan Bonny",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "CIV",
+        "playerIn": "Seko Fofana",
+        "playerOut": "Ibrahim Sangaré",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "CIV",
+        "playerIn": "Simon Adingra",
+        "playerOut": "Amad Diallo",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "CIV",
+        "playerIn": "Guela Doué",
+        "playerOut": "Wilfried Singo",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "CIV",
+        "playerIn": "Nicolas Pépé",
+        "playerOut": "Yan Diomande",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "GER",
+        "playerIn": "Leon Goretzka",
+        "playerOut": "Kai Havertz",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BMO Field",
       "city": "Toronto",
@@ -26388,7 +26485,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 43036,
     "espnOdds": {
       "homeML": -215,
       "awayML": 550,
@@ -26417,7 +26514,7 @@
           "jersey": "15",
           "espnId": "286828",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan Tah",
@@ -26453,7 +26550,7 @@
           "jersey": "10",
           "espnId": "303821",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Aleksandar Pavlovic",
@@ -26462,7 +26559,7 @@
           "jersey": "5",
           "espnId": "359370",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Felix Nmecha",
@@ -26480,7 +26577,7 @@
           "jersey": "7",
           "espnId": "231182",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Florian Wirtz",
@@ -26498,7 +26595,7 @@
           "jersey": "19",
           "espnId": "202641",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -26517,7 +26614,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "273300",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26535,7 +26632,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "210818",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26553,7 +26650,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "290811",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26580,7 +26677,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "174550",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26589,7 +26686,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "169438",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26678,7 +26775,7 @@
           "jersey": "18",
           "espnId": "213718",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ghislain Konan",
@@ -26696,7 +26793,7 @@
           "jersey": "5",
           "espnId": "286569",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Christ Inao Oulaï",
@@ -26723,7 +26820,7 @@
           "jersey": "11",
           "espnId": "402479",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Amad Diallo",
@@ -26732,7 +26829,7 @@
           "jersey": "15",
           "espnId": "291630",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ange-Yoan Bonny",
@@ -26741,7 +26838,7 @@
           "jersey": "9",
           "espnId": "309185",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -26760,7 +26857,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "210397",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26769,7 +26866,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "346636",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26814,7 +26911,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "317404",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26832,7 +26929,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "184118",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -26877,7 +26974,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "288924",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -26885,64 +26982,64 @@
       "_espnEventId": "760448"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
+      "foulsCommitted": 5.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 3.0,
+      "wonCorners": 8.0,
       "saves": 1.0,
-      "possessionPct": 61.1,
-      "totalShots": 8.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "possessionPct": 59.4,
+      "totalShots": 16.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 287.0,
-      "totalPasses": 323.0,
+      "accuratePasses": 554.0,
+      "totalPasses": 622.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 20.0,
-      "accurateLongBalls": 11.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 21.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 30.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.6,
       "blockedShots": 4.0,
-      "effectiveTackles": 9.0,
-      "totalTackles": 13.0,
+      "effectiveTackles": 17.0,
+      "totalTackles": 26.0,
       "tacklePct": 0.7,
-      "interceptions": 3.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "interceptions": 7.0,
+      "effectiveClearance": 16.0,
+      "totalClearance": 16.0
     },
     "awayStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 38.9,
-      "totalShots": 4.0,
+      "wonCorners": 3.0,
+      "saves": 5.0,
+      "possessionPct": 40.6,
+      "totalShots": 9.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.5,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 182.0,
-      "totalPasses": 208.0,
+      "accuratePasses": 367.0,
+      "totalPasses": 431.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 28.0,
-      "accurateLongBalls": 16.0,
-      "longballPct": 0.6,
-      "blockedShots": 2.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 14.0,
-      "tacklePct": 0.5,
-      "interceptions": 6.0,
-      "effectiveClearance": 13.0,
-      "totalClearance": 13.0
+      "accurateCrosses": 5.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.6,
+      "totalLongBalls": 58.0,
+      "accurateLongBalls": 29.0,
+      "longballPct": 0.5,
+      "blockedShots": 5.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 20.0,
+      "tacklePct": 0.6,
+      "interceptions": 13.0,
+      "effectiveClearance": 26.0,
+      "totalClearance": 26.0
     },
     "homeForm": [
       {
@@ -27027,7 +27124,7 @@
     "home": "Ecuador",
     "homeTla": "ECU",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -27047,7 +27144,13 @@
       "city": "Kansas City, Missouri",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Ning Ma",
+        "role": "REFEREE",
+        "nationality": "China PR"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -27541,7 +27644,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -29734,7 +29837,7 @@
     "stage": "GROUP_STAGE",
     "group": "E",
     "home": "Curaçao",
-    "homeTla": "CUW",
+    "homeTla": "CUR",
     "away": "Ivory Coast",
     "awayTla": "CIV",
     "status": "TIMED",
@@ -30073,7 +30176,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
