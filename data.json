@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-20T22:08:37+00:00",
+  "updated_at": "2026-06-20T23:35:18+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -9993,7 +9993,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -11961,7 +11961,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUR",
+      "homeTla": "CUW",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -12224,7 +12224,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "GEHA Field at Arrowhead Stadium",
+        "city": "Kansas City, Missouri",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -12343,7 +12347,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -13040,7 +13048,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
