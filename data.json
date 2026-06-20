@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-20T13:08:21+00:00",
+  "updated_at": "2026-06-20T15:10:38+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -8960,7 +8960,13 @@
         "city": "Houston, Texas",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Michael Oliver",
+          "role": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -9186,7 +9192,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "TIMED",
       "score": null,
       "scoreDetail": {
@@ -9676,7 +9682,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -11644,7 +11650,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -12715,7 +12721,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",

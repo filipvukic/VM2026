@@ -6377,7 +6377,7 @@
     "home": "Germany",
     "homeTla": "GER",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "FINISHED",
     "score": [
       7,
@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -25520,7 +25520,13 @@
       "city": "Houston, Texas",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Michael Oliver",
+        "role": "REFEREE",
+        "nationality": "England"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -25758,7 +25764,7 @@
     "home": "Ecuador",
     "homeTla": "ECU",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -26272,7 +26278,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -28371,7 +28377,7 @@
     "stage": "GROUP_STAGE",
     "group": "E",
     "home": "Curaçao",
-    "homeTla": "CUW",
+    "homeTla": "CUR",
     "away": "Ivory Coast",
     "awayTla": "CIV",
     "status": "TIMED",
@@ -28616,7 +28622,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
