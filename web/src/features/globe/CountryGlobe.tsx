@@ -108,7 +108,10 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     animatedFor.current = iso2;
     const targetAlt = altitudeForArea(facts.area);
     const startAlt = Math.min(Math.max(targetAlt + 1.1, 2.6), 3.8);
-    g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: startAlt }, 0);
+    // Start a little to the west and rotate east into place while zooming in, for
+    // a subtle spin — not a full turn.
+    const spin = 34;
+    g.pointOfView({ lat: facts.lat, lng: facts.lng - spin, altitude: startAlt }, 0);
     const t = setTimeout(
       () => g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: targetAlt }, 2200),
       350
