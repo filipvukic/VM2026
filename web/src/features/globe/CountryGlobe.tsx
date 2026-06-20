@@ -20,8 +20,8 @@ const norm = (s?: string) =>
 // whole country fits. Uses sqrt(area) since area grows with the square of extent.
 function altitudeForArea(area?: number | null): number {
   if (!area || area <= 0) return 1.6;
-  const alt = 0.63 + 0.00064 * Math.sqrt(area);
-  return Math.max(0.55, Math.min(2.85, alt));
+  const alt = 0.55 + 0.0006 * Math.sqrt(area);
+  return Math.max(0.45, Math.min(2.85, alt));
 }
 
 export default function CountryGlobe({ iso, name }: { iso?: string | null; name: string }) {
@@ -29,7 +29,9 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
   const globeRef = useRef<any>(undefined);
   const wrapRef = useRef<HTMLDivElement>(null);
   const animatedFor = useRef<string | null>(null);
+  const setupDone = useRef(false);
   const [size, setSize] = useState(320);
+  const [ready, setReady] = useState(false);
   const [feature, setFeature] = useState<Feat | null>(null);
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
@@ -68,35 +70,40 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     };
   }, [iso2, facts, name]);
 
-  // Configure the orbit controls once the globe exists: enable pinch/scroll zoom
-  // (the key fix for mobile), disable pan so it can't drift off-centre, and set a
-  // sane zoom range. minDistance/maxDistance are camera distances from the centre
-  // (globe radius is 100), so 110 ≈ right on the surface, 480 ≈ far out.
-  useEffect(() => {
+  // Configure the orbit controls once the globe's camera/controls exist. This is
+  // the key to mobile zoom: enable pinch/scroll dolly, disable pan, set a sane
+  // distance range (globe radius is 100, so 110 ≈ surface, 480 ≈ far out). Runs
+  // from onGlobeReady, with a polling fallback in case that callback is missed.
+  const configure = () => {
+    if (setupDone.current) return;
     const g = globeRef.current;
-    if (!g) return;
-    let tries = 0;
-    const setup = () => {
-      const c = g.controls?.();
-      if (!c) {
-        if (tries++ < 30) requestAnimationFrame(setup);
-        return;
-      }
-      c.enableZoom = true;
-      c.zoomSpeed = 1.0;
-      c.enablePan = false;
-      c.rotateSpeed = 0.45;
-      c.minDistance = 110;
-      c.maxDistance = 480;
-    };
-    setup();
-  }, [size]);
+    const c = g?.controls?.();
+    if (!c) return;
+    setupDone.current = true;
+    c.enableZoom = true;
+    c.zoomSpeed = 1.1;
+    c.enablePan = false;
+    c.rotateSpeed = 0.45;
+    c.minDistance = 110;
+    c.maxDistance = 480;
+    setReady(true);
+  };
+  useEffect(() => {
+    if (ready) return;
+    let n = 0;
+    const id = setInterval(() => {
+      configure();
+      if (setupDone.current || n++ > 50) clearInterval(id);
+    }, 100);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, size]);
 
-  // Fly-in: snap to the country pulled back, then glide in to the size-based
-  // altitude. Runs once per country (not on every resize) so it doesn't re-trigger.
+  // Fly-in: once the globe is ready, snap to the country pulled back then glide in
+  // to the size-based altitude. Once per country (not on every resize).
   useEffect(() => {
     const g = globeRef.current;
-    if (!g || !facts) return;
+    if (!g || !facts || !ready) return;
     if (animatedFor.current === iso2) return;
     animatedFor.current = iso2;
     const targetAlt = altitudeForArea(facts.area);
@@ -107,7 +114,7 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
       350
     );
     return () => clearTimeout(t);
-  }, [iso2, facts, size]);
+  }, [iso2, facts, ready, size]);
 
   const polys = useMemo(() => (feature ? [feature] : []), [feature]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
@@ -116,14 +123,19 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     <div>
       <div
         ref={wrapRef}
+        className="globe-stage"
         style={{ width: "100%", height: size, display: "grid", placeItems: "center", borderRadius: "var(--r-lg)", overflow: "hidden", touchAction: "none", background: "radial-gradient(circle at 50% 42%, #16306e, #05070f 72%)" }}
       >
+        {/* The canvas itself must opt out of browser touch handling, or the
+            scrollable sheet eats the pinch before the globe controls see it. */}
+        <style>{`.globe-stage canvas{ touch-action:none !important; }`}</style>
         {size > 0 && (
           <Globe
             ref={globeRef}
             width={size}
             height={size}
             animateIn={false}
+            onGlobeReady={configure}
             backgroundColor="rgba(0,0,0,0)"
             globeImageUrl={EARTH_TEXTURE}
             showAtmosphere
