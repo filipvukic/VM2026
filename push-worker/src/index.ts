@@ -74,12 +74,32 @@ export default {
       const endpoint = body?.subscription?.endpoint;
       if (!endpoint) return json({ error: "missing subscription" }, env, 400);
       const id = await hashEndpoint(endpoint);
-      const record: StoredSub = {
+      const key = "sub:" + id;
+      const record = {
         subscription: body.subscription,
         notifyAll: !!body.notifyAll,
+        ts: Date.now(),
       };
-      // 40-day TTL; the client re-syncs on every load so live subs stay fresh.
-      await env.SUBS.put("sub:" + id, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 40 });
+      // The client re-syncs on every page load. Writing every time would burn
+      // through KV's ~1000/day free write limit, so only write when something
+      // actually changed or the 40-day TTL needs a refresh (>7 days old). Reads
+      // are far cheaper (100k/day), so the get-before-put is a good trade.
+      const existing = await env.SUBS.get(key);
+      let skip = false;
+      if (existing) {
+        try {
+          const ex = JSON.parse(existing);
+          skip =
+            ex.notifyAll === record.notifyAll &&
+            ex.subscription?.endpoint === record.subscription.endpoint &&
+            ex.subscription?.keys?.p256dh === record.subscription.keys?.p256dh &&
+            typeof ex.ts === "number" &&
+            Date.now() - ex.ts < 7 * 86400000;
+        } catch {
+          /* corrupt record — fall through and overwrite */
+        }
+      }
+      if (!skip) await env.SUBS.put(key, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 40 });
       return json({ ok: true }, env);
     }
 
@@ -208,7 +228,14 @@ async function poll(env: Env): Promise<void> {
     }
   }
 
-  await env.SUBS.put("goalstate", JSON.stringify(next));
+  // Only write when the state actually changed. The cron fires every minute, but
+  // KV's free tier allows ~1000 writes/day — an unconditional put here (1440/day)
+  // blows the daily limit. Canonicalise with sorted keys so an unchanged poll is
+  // byte-identical to what's stored and we skip the write entirely.
+  const sorted: Record<string, { g: number; state: string }> = {};
+  for (const k of Object.keys(next).sort()) sorted[k] = next[k];
+  const nextRaw = JSON.stringify(sorted);
+  if (nextRaw !== prevRaw) await env.SUBS.put("goalstate", nextRaw);
   if (!alerts.length) return;
 
   // gather subscriptions
