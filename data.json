@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-21T22:16:57+00:00",
+  "updated_at": "2026-06-21T23:47:07+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -10511,22 +10511,78 @@
       "awayTla": "CPV",
       "status": "IN_PLAY",
       "score": [
-        0,
-        0
+        2,
+        2
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          2,
+          1
+        ],
         "fullTime": [
-          0,
-          0
+          2,
+          2
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "16",
-      "goals": [],
+      "minute": "82",
+      "goals": [
+        {
+          "minute": "21",
+          "team": "CPV",
+          "scorer": "Kevin Pina",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Uruguay 0, Cabo Verde 1. Kevin Pina (Cabo Verde) from a free kick with a right footed shot to the bottom right corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "44",
+          "team": "URY",
+          "scorer": "Maxi Araújo",
+          "assist": null,
+          "type": "HEADER",
+          "description": "Goal! Uruguay 1, Cabo Verde 1. Maxi Araújo (Uruguay) header from very close range to the centre of the goal.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+6",
+          "team": "URY",
+          "scorer": "Agustín Cano",
+          "assist": "Maxi Araújo",
+          "type": "REGULAR",
+          "description": "Goal! Uruguay 2, Cabo Verde 1. Agustín Canobbio (Uruguay) right footed shot from the centre of the box to the centre of the goal. Assisted by Maxi Araújo with a headed pass.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "61",
+          "team": "CPV",
+          "scorer": "Hélio Varela",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Uruguay 2, Cabo Verde 2. Hélio Varela (Cabo Verde) right footed shot from outside the box to the centre of the goal.",
+          "score": [
+            2,
+            2
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [
         {
           "minute": "5",
@@ -10534,9 +10590,80 @@
           "player": "Sidny Lopes Cabral",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "20",
+          "team": "URY",
+          "player": "Rodrigo Bentancur",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "58",
+          "team": "URY",
+          "player": "Mathías Olivera",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "CPV",
+          "playerIn": "Deroy Duarte",
+          "playerOut": "Telmo Arcanjo",
+          "period": 2
+        },
+        {
+          "minute": "58",
+          "team": "CPV",
+          "playerIn": "Nuno da Costa",
+          "playerOut": "Gilson Benchimol",
+          "period": 2
+        },
+        {
+          "minute": "58",
+          "team": "CPV",
+          "playerIn": "Hélio Varela",
+          "playerOut": "Garry Rodrigues",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "URY",
+          "playerIn": "Darwin Núñez",
+          "playerOut": "Federico Viñas",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "URY",
+          "playerIn": "Nicolás de la Cruz",
+          "playerOut": "Manuel Ugarte",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "CPV",
+          "playerIn": "Laros Duarte",
+          "playerOut": "Kevin Pina",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "CPV",
+          "playerIn": "Yannick Semedo",
+          "playerOut": "Jamiro Monteiro",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "URY",
+          "playerIn": "Brian Rodríguez",
+          "playerOut": "Maxi Araújo",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Hard Rock Stadium",
         "city": "Miami Gardens, Florida",
@@ -10670,7 +10797,13 @@
         "city": "Vancouver",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Omar Mohamed Al Ali",
+          "role": "REFEREE",
+          "nationality": "United Arab Emirates"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -15055,8 +15188,8 @@
           "won": 0,
           "draw": 2,
           "lost": 0,
-          "gf": 1,
-          "ga": 1,
+          "gf": 3,
+          "ga": 3,
           "gd": 0,
           "points": 2
         },
@@ -15067,8 +15200,8 @@
           "won": 0,
           "draw": 2,
           "lost": 0,
-          "gf": 0,
-          "ga": 0,
+          "gf": 2,
+          "ga": 2,
           "gd": 0,
           "points": 2
         },

@@ -30254,22 +30254,78 @@
     "awayTla": "CPV",
     "status": "IN_PLAY",
     "score": [
-      0,
-      0
+      2,
+      2
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        2,
+        1
+      ],
       "fullTime": [
-        0,
-        0
+        2,
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "16",
-    "goals": [],
+    "minute": "82",
+    "goals": [
+      {
+        "minute": "21",
+        "team": "CPV",
+        "scorer": "Kevin Pina",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Uruguay 0, Cabo Verde 1. Kevin Pina (Cabo Verde) from a free kick with a right footed shot to the bottom right corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "44",
+        "team": "URY",
+        "scorer": "Maxi Araújo",
+        "assist": null,
+        "type": "HEADER",
+        "description": "Goal! Uruguay 1, Cabo Verde 1. Maxi Araújo (Uruguay) header from very close range to the centre of the goal.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "45+6",
+        "team": "URY",
+        "scorer": "Agustín Cano",
+        "assist": "Maxi Araújo",
+        "type": "REGULAR",
+        "description": "Goal! Uruguay 2, Cabo Verde 1. Agustín Canobbio (Uruguay) right footed shot from the centre of the box to the centre of the goal. Assisted by Maxi Araújo with a headed pass.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "61",
+        "team": "CPV",
+        "scorer": "Hélio Varela",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Uruguay 2, Cabo Verde 2. Hélio Varela (Cabo Verde) right footed shot from outside the box to the centre of the goal.",
+        "score": [
+          2,
+          2
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "5",
@@ -30277,9 +30333,80 @@
         "player": "Sidny Lopes Cabral",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "20",
+        "team": "URY",
+        "player": "Rodrigo Bentancur",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "58",
+        "team": "URY",
+        "player": "Mathías Olivera",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "CPV",
+        "playerIn": "Deroy Duarte",
+        "playerOut": "Telmo Arcanjo",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "CPV",
+        "playerIn": "Nuno da Costa",
+        "playerOut": "Gilson Benchimol",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "CPV",
+        "playerIn": "Hélio Varela",
+        "playerOut": "Garry Rodrigues",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "URY",
+        "playerIn": "Darwin Núñez",
+        "playerOut": "Federico Viñas",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "URY",
+        "playerIn": "Nicolás de la Cruz",
+        "playerOut": "Manuel Ugarte",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "CPV",
+        "playerIn": "Laros Duarte",
+        "playerOut": "Kevin Pina",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "CPV",
+        "playerIn": "Yannick Semedo",
+        "playerOut": "Jamiro Monteiro",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "URY",
+        "playerIn": "Brian Rodríguez",
+        "playerOut": "Maxi Araújo",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -30339,7 +30466,7 @@
           "jersey": "5",
           "espnId": "241468",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Juan Manuel Sanabria",
@@ -30402,7 +30529,7 @@
           "jersey": "21",
           "espnId": "295847",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -30421,7 +30548,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "251889",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30511,7 +30638,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "271788",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30564,7 +30691,7 @@
           "jersey": "6",
           "espnId": "327173",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sidny Lopes Cabral",
@@ -30591,7 +30718,7 @@
           "jersey": "10",
           "espnId": "227441",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Telmo Arcanjo",
@@ -30600,7 +30727,7 @@
           "jersey": "18",
           "espnId": "304076",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Garry Rodrigues",
@@ -30609,7 +30736,7 @@
           "jersey": "11",
           "espnId": "175012",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ryan Mendes",
@@ -30627,7 +30754,7 @@
           "jersey": "9",
           "espnId": "310261",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -30664,7 +30791,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "246442",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30673,7 +30800,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "101251",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30700,7 +30827,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "224798",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30709,7 +30836,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "222236",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30763,7 +30890,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "366092",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -30771,64 +30898,64 @@
       "_espnEventId": "760450"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 8.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 2.0,
-      "wonCorners": 3.0,
+      "offsides": 3.0,
+      "wonCorners": 6.0,
       "saves": 0.0,
-      "possessionPct": 65.8,
-      "totalShots": 2.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 64.9,
+      "totalShots": 13.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 76.0,
-      "totalPasses": 95.0,
+      "accuratePasses": 372.0,
+      "totalPasses": 443.0,
       "passPct": 0.8,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 1.0,
-      "tacklePct": 0.0,
-      "interceptions": 3.0,
-      "effectiveClearance": 1.0,
-      "totalClearance": 1.0
+      "accurateCrosses": 3.0,
+      "totalCrosses": 17.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.5,
+      "blockedShots": 5.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.3,
+      "interceptions": 7.0,
+      "effectiveClearance": 8.0,
+      "totalClearance": 8.0
     },
     "awayStats": {
-      "foulsCommitted": 2.0,
+      "foulsCommitted": 3.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
+      "wonCorners": 3.0,
       "saves": 0.0,
-      "possessionPct": 34.2,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 35.1,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 33.0,
-      "totalPasses": 50.0,
+      "accuratePasses": 180.0,
+      "totalPasses": 241.0,
       "passPct": 0.7,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 1.0,
-      "crossPct": 1.0,
-      "totalLongBalls": 12.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.2,
-      "blockedShots": 0.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 3.0,
-      "tacklePct": 1.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "accurateCrosses": 2.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 48.0,
+      "accurateLongBalls": 13.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 12.0,
+      "totalTackles": 13.0,
+      "tacklePct": 0.9,
+      "interceptions": 8.0,
+      "effectiveClearance": 31.0,
+      "totalClearance": 31.0
     },
     "homeForm": [
       {
@@ -30933,7 +31060,13 @@
       "city": "Vancouver",
       "country": "Canada"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Omar Mohamed Al Ali",
+        "role": "REFEREE",
+        "nationality": "United Arab Emirates"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
