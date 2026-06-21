@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-21T14:40:43+00:00",
+  "updated_at": "2026-06-21T16:20:23+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         0,
@@ -10003,18 +10003,38 @@
       "homeTla": "ESP",
       "away": "Saudi Arabia",
       "awayTla": "KSA",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "19",
+      "goals": [
+        {
+          "minute": "10",
+          "team": "ESP",
+          "scorer": "Lamine Yamal",
+          "assist": "Mikel Oyarzabal",
+          "type": "REGULAR",
+          "description": "Goal! Spain 1, Saudi Arabia 0. Lamine Yamal (Spain) right footed shot from the right side of the six yard box to the bottom right corner. Assisted by Mikel Oyarzabal with a cross following a fast break.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -10025,8 +10045,7 @@
       "referees": [
         {
           "name": "Raphael Claus",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -10252,7 +10271,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -12220,7 +12239,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -13315,7 +13334,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -14756,6 +14775,30 @@
       "code": "H",
       "table": [
         {
+          "team": "Saudi Arabia",
+          "tla": "KSA",
+          "played": 2,
+          "won": 0,
+          "draw": 2,
+          "lost": 0,
+          "gf": 1,
+          "ga": 1,
+          "gd": 0,
+          "points": 2
+        },
+        {
+          "team": "Spain",
+          "tla": "ESP",
+          "played": 2,
+          "won": 0,
+          "draw": 2,
+          "lost": 0,
+          "gf": 0,
+          "ga": 0,
+          "gd": 0,
+          "points": 2
+        },
+        {
           "team": "Uruguay",
           "tla": "URU",
           "played": 1,
@@ -14764,30 +14807,6 @@
           "lost": 0,
           "gf": 1,
           "ga": 1,
-          "gd": 0,
-          "points": 1
-        },
-        {
-          "team": "Saudi Arabia",
-          "tla": "KSA",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 1
-        },
-        {
-          "team": "Spain",
-          "tla": "ESP",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 0,
-          "ga": 0,
           "gd": 0,
           "points": 1
         },
