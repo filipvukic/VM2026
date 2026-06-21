@@ -6377,7 +6377,7 @@
     "home": "Germany",
     "homeTla": "GER",
     "away": "Curaçao",
-    "awayTla": "CUR",
+    "awayTla": "CUW",
     "status": "FINISHED",
     "score": [
       7,
@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URY",
+    "awayTla": "URU",
     "status": "FINISHED",
     "score": [
       1,
@@ -27124,7 +27124,7 @@
     "home": "Ecuador",
     "homeTla": "ECU",
     "away": "Curaçao",
-    "awayTla": "CUR",
+    "awayTla": "CUW",
     "status": "FINISHED",
     "score": [
       0,
@@ -28690,13 +28690,16 @@
     "awayTla": "KSA",
     "status": "IN_PLAY",
     "score": [
-      1,
+      4,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        3,
+        0
+      ],
       "fullTime": [
-        1,
+        4,
         0
       ],
       "extraTime": null,
@@ -28704,7 +28707,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "19",
+    "minute": "90+5",
     "goals": [
       {
         "minute": "10",
@@ -28718,10 +28721,135 @@
           0
         ],
         "period": 1
+      },
+      {
+        "minute": "21",
+        "team": "ESP",
+        "scorer": "Mikel Oyarzabal",
+        "assist": "Aymeric Laporte",
+        "type": "REGULAR",
+        "description": "Goal! Spain 2, Saudi Arabia 0. Mikel Oyarzabal (Spain) left footed shot from the left side of the six yard box to the bottom right corner. Assisted by Aymeric Laporte with a headed pass following a corner.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "24",
+        "team": "ESP",
+        "scorer": "Mikel Oyarzabal",
+        "assist": "Dani Olmo",
+        "type": "REGULAR",
+        "description": "Goal! Spain 3, Saudi Arabia 0. Mikel Oyarzabal (Spain) left footed shot from very close range to the top right corner. Assisted by Dani Olmo with a headed pass.",
+        "score": [
+          3,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "49",
+        "team": "ESP",
+        "scorer": "Hassan Al-Tambakti",
+        "assist": null,
+        "type": "OWN",
+        "description": "Own Goal by Hassan Al Tambakti, Saudi Arabia. Spain 4, Saudi Arabia 0.",
+        "score": [
+          4,
+          0
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "30",
+        "team": "KSA",
+        "player": "Salem Al-Dawsari",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "KSA",
+        "player": "Mohamed Kanno",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "ESP",
+        "playerIn": "Yéremy Pino",
+        "playerOut": "Lamine Yamal",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "ESP",
+        "playerIn": "Ferran Torres",
+        "playerOut": "Mikel Oyarzabal",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "KSA",
+        "playerIn": "Mohamed Kanno",
+        "playerOut": "Abdullah Al-Khaibari",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "KSA",
+        "playerIn": "Abdullah Al-Hamdan",
+        "playerOut": "Musab Al-Juwayr",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "KSA",
+        "playerIn": "Mohammed Abu Al-Shamat",
+        "playerOut": "Feras Al-Brikan",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "KSA",
+        "playerIn": "Ala Al-Hajji",
+        "playerOut": "Abdulelah Al-Amri",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "ESP",
+        "playerIn": "Mikel Merino",
+        "playerOut": "Dani Olmo",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "ESP",
+        "playerIn": "Nico Williams",
+        "playerOut": "Álex Baena",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "ESP",
+        "playerIn": "Fabián Ruiz",
+        "playerOut": "Pedri ",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "KSA",
+        "playerIn": "Khalid Al-Ghannam",
+        "playerOut": "Nasser Al-Dawsari",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
@@ -28808,7 +28936,7 @@
           "jersey": "20",
           "espnId": "250465",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Dani Olmo",
@@ -28817,7 +28945,7 @@
           "jersey": "10",
           "espnId": "227765",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Mikel Oyarzabal",
@@ -28826,7 +28954,7 @@
           "jersey": "21",
           "espnId": "229018",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Álex Baena",
@@ -28835,7 +28963,7 @@
           "jersey": "15",
           "espnId": "297373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lamine Yamal",
@@ -28844,7 +28972,7 @@
           "jersey": "19",
           "espnId": "362150",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -28854,7 +28982,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "265869",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -28863,7 +28991,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "209581",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -28935,7 +29063,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "214596",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -28962,7 +29090,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "297370",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -28980,7 +29108,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "312146",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -29024,7 +29152,7 @@
           "jersey": "4",
           "espnId": "256667",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Moteb Al-Harbi",
@@ -29051,7 +29179,7 @@
           "jersey": "6",
           "espnId": "270417",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Abdullah Al-Khaibari",
@@ -29060,7 +29188,7 @@
           "jersey": "15",
           "espnId": "271461",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Salem Al-Dawsari",
@@ -29078,7 +29206,7 @@
           "jersey": "7",
           "espnId": "315523",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Feras Al-Brikan",
@@ -29087,7 +29215,7 @@
           "jersey": "9",
           "espnId": "283331",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -29097,7 +29225,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "294239",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29124,7 +29252,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "357660",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29151,7 +29279,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "361692",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29196,7 +29324,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "288570",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29223,7 +29351,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "262468",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -29231,64 +29359,64 @@
       "_espnEventId": "760453"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
+      "foulsCommitted": 10.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 2.0,
-      "saves": 0.0,
-      "possessionPct": 75.0,
-      "totalShots": 8.0,
-      "shotsOnTarget": 2.0,
+      "offsides": 1.0,
+      "wonCorners": 6.0,
+      "saves": 1.0,
+      "possessionPct": 66.5,
+      "totalShots": 22.0,
+      "shotsOnTarget": 9.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 635.0,
+      "totalPasses": 691.0,
+      "passPct": 0.9,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 24.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 25.0,
+      "longballPct": 0.7,
+      "blockedShots": 1.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.9,
+      "interceptions": 14.0,
+      "effectiveClearance": 14.0,
+      "totalClearance": 14.0
+    },
+    "awayStats": {
+      "foulsCommitted": 2.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 1.0,
+      "saves": 5.0,
+      "possessionPct": 33.5,
+      "totalShots": 3.0,
+      "shotsOnTarget": 1.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 136.0,
-      "totalPasses": 147.0,
-      "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 10.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 8.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.8,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 4.0,
-      "effectiveClearance": 0.0,
-      "totalClearance": 0.0
-    },
-    "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 25.0,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 34.0,
-      "totalPasses": 51.0,
-      "passPct": 0.7,
+      "accuratePasses": 287.0,
+      "totalPasses": 356.0,
+      "passPct": 0.8,
       "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
+      "totalCrosses": 5.0,
       "crossPct": 0.0,
-      "totalLongBalls": 8.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.3,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 1.0,
-      "tacklePct": 1.0,
-      "interceptions": 0.0,
-      "effectiveClearance": 13.0,
-      "totalClearance": 13.0
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 12.0,
+      "totalTackles": 15.0,
+      "tacklePct": 0.8,
+      "interceptions": 12.0,
+      "effectiveClearance": 35.0,
+      "totalClearance": 35.0
     },
     "homeForm": [
       {
@@ -29393,7 +29521,13 @@
       "city": "Inglewood, California",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Darío Herrera",
+        "role": "REFEREE",
+        "nationality": "Argentina"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -29500,7 +29634,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -31079,7 +31213,7 @@
       "spread": "MAR -1.5",
       "overUnder": 2.5,
       "overOdds": -175.0,
-      "underOdds": 145.0,
+      "underOdds": 140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -31203,12 +31337,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 650,
-      "awayML": -250,
+      "homeML": 600,
+      "awayML": -245,
       "spread": "BRA -1.5",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -120.0,
+      "underOdds": -105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -31693,7 +31827,7 @@
     "stage": "GROUP_STAGE",
     "group": "E",
     "home": "Curaçao",
-    "homeTla": "CUR",
+    "homeTla": "CUW",
     "away": "Ivory Coast",
     "awayTla": "CIV",
     "status": "TIMED",
@@ -32106,12 +32240,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 220,
-      "awayML": 105,
+      "homeML": 235,
+      "awayML": 100,
       "spread": "USA -0.5",
       "overUnder": 2.5,
-      "overOdds": -145.0,
-      "underOdds": 115.0,
+      "overOdds": -135.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -32240,7 +32374,7 @@
       "spread": "PAR -0.5",
       "overUnder": 1.5,
       "overOdds": -165.0,
-      "underOdds": 135.0,
+      "underOdds": 130.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -32408,7 +32542,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",

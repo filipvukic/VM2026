@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-21T16:20:23+00:00",
+  "updated_at": "2026-06-21T17:58:16+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "FINISHED",
       "score": [
         0,
@@ -10005,13 +10005,16 @@
       "awayTla": "KSA",
       "status": "IN_PLAY",
       "score": [
-        1,
+        4,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          3,
+          0
+        ],
         "fullTime": [
-          1,
+          4,
           0
         ],
         "extraTime": null,
@@ -10019,7 +10022,7 @@
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "19",
+      "minute": "90+5",
       "goals": [
         {
           "minute": "10",
@@ -10033,10 +10036,135 @@
             0
           ],
           "period": 1
+        },
+        {
+          "minute": "21",
+          "team": "ESP",
+          "scorer": "Mikel Oyarzabal",
+          "assist": "Aymeric Laporte",
+          "type": "REGULAR",
+          "description": "Goal! Spain 2, Saudi Arabia 0. Mikel Oyarzabal (Spain) left footed shot from the left side of the six yard box to the bottom right corner. Assisted by Aymeric Laporte with a headed pass following a corner.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "24",
+          "team": "ESP",
+          "scorer": "Mikel Oyarzabal",
+          "assist": "Dani Olmo",
+          "type": "REGULAR",
+          "description": "Goal! Spain 3, Saudi Arabia 0. Mikel Oyarzabal (Spain) left footed shot from very close range to the top right corner. Assisted by Dani Olmo with a headed pass.",
+          "score": [
+            3,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "49",
+          "team": "ESP",
+          "scorer": "Hassan Al-Tambakti",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Hassan Al Tambakti, Saudi Arabia. Spain 4, Saudi Arabia 0.",
+          "score": [
+            4,
+            0
+          ],
+          "period": 2
         }
       ],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "30",
+          "team": "KSA",
+          "player": "Salem Al-Dawsari",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "60",
+          "team": "KSA",
+          "player": "Mohamed Kanno",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "ESP",
+          "playerIn": "Yéremy Pino",
+          "playerOut": "Lamine Yamal",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "ESP",
+          "playerIn": "Ferran Torres",
+          "playerOut": "Mikel Oyarzabal",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "KSA",
+          "playerIn": "Mohamed Kanno",
+          "playerOut": "Abdullah Al-Khaibari",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "KSA",
+          "playerIn": "Abdullah Al-Hamdan",
+          "playerOut": "Musab Al-Juwayr",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "KSA",
+          "playerIn": "Mohammed Abu Al-Shamat",
+          "playerOut": "Feras Al-Brikan",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "KSA",
+          "playerIn": "Ala Al-Hajji",
+          "playerOut": "Abdulelah Al-Amri",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "ESP",
+          "playerIn": "Mikel Merino",
+          "playerOut": "Dani Olmo",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "ESP",
+          "playerIn": "Nico Williams",
+          "playerOut": "Álex Baena",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "ESP",
+          "playerIn": "Fabián Ruiz",
+          "playerOut": "Pedri ",
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "KSA",
+          "playerIn": "Khalid Al-Ghannam",
+          "playerOut": "Nasser Al-Dawsari",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
         "city": "Atlanta, Georgia",
@@ -10170,7 +10298,13 @@
         "city": "Inglewood, California",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Darío Herrera",
+          "role": "REFEREE",
+          "nationality": "Argentina"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -10271,7 +10405,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "TIMED",
@@ -12239,7 +12373,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUR",
+      "homeTla": "CUW",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -13334,7 +13468,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -14775,28 +14909,16 @@
       "code": "H",
       "table": [
         {
-          "team": "Saudi Arabia",
-          "tla": "KSA",
-          "played": 2,
-          "won": 0,
-          "draw": 2,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 2
-        },
-        {
           "team": "Spain",
           "tla": "ESP",
           "played": 2,
-          "won": 0,
-          "draw": 2,
+          "won": 1,
+          "draw": 1,
           "lost": 0,
-          "gf": 0,
+          "gf": 4,
           "ga": 0,
-          "gd": 0,
-          "points": 2
+          "gd": 4,
+          "points": 4
         },
         {
           "team": "Uruguay",
@@ -14808,6 +14930,18 @@
           "gf": 1,
           "ga": 1,
           "gd": 0,
+          "points": 1
+        },
+        {
+          "team": "Saudi Arabia",
+          "tla": "KSA",
+          "played": 2,
+          "won": 0,
+          "draw": 1,
+          "lost": 1,
+          "gf": 1,
+          "ga": 5,
+          "gd": -4,
           "points": 1
         },
         {
