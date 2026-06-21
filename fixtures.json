@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -27907,20 +27907,153 @@
     "homeTla": "TUN",
     "away": "Japan",
     "awayTla": "JPN",
-    "status": "TIMED",
-    "score": null,
+    "status": "FINISHED",
+    "score": [
+      0,
+      4
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        2
+      ],
+      "fullTime": [
+        0,
+        4
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
     "minute": null,
-    "goals": [],
+    "goals": [
+      {
+        "minute": "4",
+        "team": "JPN",
+        "scorer": "Daichi Kamada",
+        "assist": "Keito Nakamura",
+        "type": "REGULAR",
+        "description": "Goal! Tunisia 0, Japan 1. Daichi Kamada (Japan) left footed shot from very close range to the centre of the goal. Assisted by Keito Nakamura.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "31",
+        "team": "JPN",
+        "scorer": "Ayase Ueda",
+        "assist": "Kou Itakura",
+        "type": "REGULAR",
+        "description": "Goal! Tunisia 0, Japan 2. Ayase Ueda (Japan) right footed shot from the right side of the box to the bottom left corner. Assisted by Ko Itakura following a fast break.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "69",
+        "team": "JPN",
+        "scorer": "Junya Ito",
+        "assist": "Ayase Ueda",
+        "type": "REGULAR",
+        "description": "Goal! Tunisia 0, Japan 3. Junya Ito (Japan) right footed shot from the centre of the box to the bottom right corner. Assisted by Ayase Ueda with a through ball.",
+        "score": [
+          0,
+          3
+        ],
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "JPN",
+        "scorer": "Ayase Ueda",
+        "assist": "Kaishu Sano",
+        "type": "HEADER",
+        "description": "Goal! Tunisia 0, Japan 4. Ayase Ueda (Japan) header from the centre of the box to the bottom right corner. Assisted by Kaishu Sano with a cross.",
+        "score": [
+          0,
+          4
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "TUN",
+        "playerIn": "Ismaël Gharbi",
+        "playerOut": "Elias Saad",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "TUN",
+        "playerIn": "Mohamed Amine Ben Hamida",
+        "playerOut": "Dylan Bronn",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "TUN",
+        "playerIn": "Firas Chaouat",
+        "playerOut": "Sebastian Tounekti",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "JPN",
+        "playerIn": "Junnosuke Suzuki",
+        "playerOut": "Daichi Kamada",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "JPN",
+        "playerIn": "Yukinari Sugawara",
+        "playerOut": "Ritsu Doan",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "JPN",
+        "playerIn": "Yuito Suzuki",
+        "playerOut": "Keito Nakamura",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "JPN",
+        "playerIn": "Ayumu Seko",
+        "playerOut": "Takehiro Tomiyasu",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "JPN",
+        "playerIn": "Keisuke Goto",
+        "playerOut": "Ayase Ueda",
+        "period": 2
+      },
+      {
+        "minute": "90+1",
+        "team": "TUN",
+        "playerIn": "Rani Khedira",
+        "playerOut": "Ellyes Skhiri",
+        "period": 2
+      },
+      {
+        "minute": "90+1",
+        "team": "TUN",
+        "playerIn": "Elias Achouri",
+        "playerOut": "Ali Abdi",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Estadio BBVA",
       "city": "Guadalupe",
@@ -27928,37 +28061,557 @@
     },
     "referees": [
       {
-        "name": "István Kovács",
-        "role": "REFEREE",
-        "nationality": "Romania"
+        "name": "Istvan Kovacs",
+        "role": "Referee"
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 51243,
     "espnOdds": {
-      "homeML": 650,
-      "awayML": -215,
+      "homeML": 800,
+      "awayML": -225,
       "spread": "JPN -1.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
-      "underOdds": -135.0,
+      "underOdds": -130.0,
       "provider": "DraftKings"
     },
-    "homeLineup": null,
-    "awayLineup": null,
+    "homeLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Aymen Dahmen",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "16",
+          "espnId": "265272",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Montassar Talbi",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "3",
+          "espnId": "265099",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Omar Rekik",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "4",
+          "espnId": "303848",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Dylan Bronn",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "6",
+          "espnId": "240371",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ellyes Skhiri",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "17",
+          "espnId": "209595",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Anis Slimane",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "25",
+          "espnId": "302944",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ali Abdi",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "2",
+          "espnId": "265234",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Yan Valery",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "20",
+          "espnId": "240588",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sebastian Tounekti",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "26",
+          "espnId": "303702",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "10",
+          "espnId": "300007",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Elias Saad",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "8",
+          "espnId": "323950",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Adem Arous",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "410358",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ismaël Gharbi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "317473",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Firas Chaouat",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "265207",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Raed Chikhaoui",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "420890",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rayan Elloumi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "405591",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sabri Ben Hessen",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "195253",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rani Khedira",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "159152",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Khalil Ayari",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "404769",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Moutaz Neffati",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "345975",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Elias Achouri",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "324510",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Hazem Mastouri",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "396085",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mohamed Amine Ben Hamida",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "296982",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Mouhib Chamakh",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "420888",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mohamed Hadj Mahmoud",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "299861",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mortadha Ben Ouanes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "273170",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "TUN",
+      "_espnEventId": "760449"
+    },
+    "awayLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Zion Suzuki",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "265958",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kou Itakura",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "4",
+          "espnId": "238033",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Hiroki Ito",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "21",
+          "espnId": "97111",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Takehiro Tomiyasu",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "22",
+          "espnId": "238004",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ao Tanaka",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "7",
+          "espnId": "253173",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kaishu Sano",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "24",
+          "espnId": "357030",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Keito Nakamura",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "13",
+          "espnId": "265953",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ritsu Doan",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "10",
+          "espnId": "219627",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ayase Ueda",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "18",
+          "espnId": "274277",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Daichi Kamada",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "15",
+          "espnId": "219362",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Junya Ito",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "14",
+          "espnId": "219350",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Ayumu Seko",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "258270",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Yuito Suzuki",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "303031",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Junnosuke Suzuki",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "333663",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Tsuyoshi Watanabe",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "276279",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yuto Nagatomo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "119082",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Keisuke Osako",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "255723",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Koki Ogawa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "238016",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Shogo Taniguchi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "202728",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Keisuke Goto",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "346208",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Tomoki Hayakawa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "312924",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Daizen Maeda",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "286347",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yukinari Sugawara",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "265965",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Kento Shiogai",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "362959",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "JPN",
+      "_espnEventId": "760449"
+    },
     "homeStats": {
-      "goalDifference": -4.0,
-      "totalGoals": 1.0,
-      "goalAssists": 1.0,
-      "goalsConceded": 5.0
+      "foulsCommitted": 8.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 3.0,
+      "saves": 1.0,
+      "possessionPct": 37.9,
+      "totalShots": 2.0,
+      "shotsOnTarget": 0.0,
+      "shotPct": 0.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 284.0,
+      "totalPasses": 353.0,
+      "passPct": 0.8,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 10.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 56.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 16.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.9,
+      "interceptions": 14.0,
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
     },
     "awayStats": {
-      "goalDifference": 0.0,
-      "totalGoals": 2.0,
-      "goalAssists": 2.0,
-      "goalsConceded": 2.0
+      "foulsCommitted": 15.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 0.0,
+      "possessionPct": 62.1,
+      "totalShots": 11.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.5,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 521.0,
+      "totalPasses": 582.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 11.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.6,
+      "blockedShots": 3.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.6,
+      "interceptions": 6.0,
+      "effectiveClearance": 25.0,
+      "totalClearance": 25.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-21",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-15",
         "result": "F",
@@ -27986,16 +28639,16 @@
         "gf": 0,
         "ga": 0,
         "home": false
-      },
-      {
-        "date": "2026-03-29",
-        "result": "F",
-        "gf": 0,
-        "ga": 1,
-        "home": false
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-21",
+        "result": "F",
+        "gf": 0,
+        "ga": 4,
+        "home": false
+      },
       {
         "date": "2026-06-14",
         "result": "O",
@@ -28023,13 +28676,6 @@
         "gf": 0,
         "ga": 1,
         "home": false
-      },
-      {
-        "date": "2025-11-18",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
-        "home": true
       }
     ]
   },
@@ -28065,12 +28711,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -1000,
-      "awayML": 2500,
+      "homeML": -900,
+      "awayML": 2200,
       "spread": "ESP -2.5",
       "overUnder": 3.5,
-      "overOdds": 120.0,
-      "underOdds": -145.0,
+      "overOdds": 100.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -28194,8 +28840,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -235,
-      "awayML": 650,
+      "homeML": -220,
+      "awayML": 600,
       "spread": "BEL -1.5",
       "overUnder": 2.5,
       "overOdds": -125.0,
@@ -28297,7 +28943,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -28323,12 +28969,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -220,
-      "awayML": 750,
+      "homeML": -210,
+      "awayML": 700,
       "spread": "URU -1.5",
       "overUnder": 2.5,
-      "overOdds": 125.0,
-      "underOdds": -155.0,
+      "overOdds": 130.0,
+      "underOdds": -160.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -28452,7 +29098,7 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 450,
+      "homeML": 500,
       "awayML": -165,
       "spread": "EGY -0.5",
       "overUnder": 2.5,
@@ -28581,12 +29227,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -170,
-      "awayML": 500,
+      "homeML": -175,
+      "awayML": 550,
       "spread": "ARG -0.5",
       "overUnder": 2.5,
       "overOdds": -105.0,
-      "underOdds": -120.0,
+      "underOdds": -115.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -28843,8 +29489,8 @@
       "awayML": 210,
       "spread": "NOR -0.5",
       "overUnder": 2.5,
-      "overOdds": -105.0,
-      "underOdds": -115.0,
+      "overOdds": -115.0,
+      "underOdds": -110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -29097,12 +29743,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -500,
-      "awayML": 1400,
+      "homeML": -475,
+      "awayML": 1300,
       "spread": "POR -1.5",
       "overUnder": 2.5,
       "overOdds": -170.0,
-      "underOdds": 140.0,
+      "underOdds": 135.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -30129,8 +30775,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 255,
-      "awayML": 100,
+      "homeML": 265,
+      "awayML": -105,
       "spread": "MEX -0.5",
       "overUnder": 2.5,
       "overOdds": 115.0,
@@ -30387,8 +31033,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 425,
-      "awayML": -150,
+      "homeML": 250,
+      "awayML": 100,
       "spread": "GER -0.5",
       "overUnder": 2.5,
       "overOdds": -120.0,
@@ -30410,6 +31056,13 @@
       "goalsConceded": 1.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-14",
         "result": "F",
@@ -30437,16 +31090,16 @@
         "gf": 1,
         "ga": 1,
         "home": false
-      },
-      {
-        "date": "2026-03-27",
-        "result": "O",
-        "gf": 1,
-        "ga": 1,
-        "home": false
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-20",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
       {
         "date": "2026-06-14",
         "result": "V",
@@ -30474,13 +31127,6 @@
         "gf": 2,
         "ga": 1,
         "home": true
-      },
-      {
-        "date": "2026-03-27",
-        "result": "F",
-        "gf": 3,
-        "ga": 4,
-        "home": false
       }
     ]
   },
@@ -30516,8 +31162,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1600,
-      "awayML": -650,
+      "homeML": 1800,
+      "awayML": -700,
       "spread": "CIV -2.5",
       "overUnder": 3.5,
       "overOdds": 125.0,
@@ -30539,6 +31185,13 @@
       "goalsConceded": 0.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      },
       {
         "date": "2026-06-14",
         "result": "F",
@@ -30566,16 +31219,16 @@
         "gf": 1,
         "ga": 5,
         "home": false
-      },
-      {
-        "date": "2026-03-27",
-        "result": "F",
-        "gf": 0,
-        "ga": 2,
-        "home": false
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-20",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
       {
         "date": "2026-06-14",
         "result": "V",
@@ -30602,13 +31255,6 @@
         "result": "F",
         "gf": 0,
         "ga": 4,
-        "home": false
-      },
-      {
-        "date": "2026-01-10",
-        "result": "F",
-        "gf": 2,
-        "ga": 3,
         "home": false
       }
     ]
@@ -30645,12 +31291,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1000,
-      "awayML": -370,
-      "spread": "NED -1.5",
-      "overUnder": 2.5,
-      "overOdds": -165.0,
-      "underOdds": 130.0,
+      "homeML": 1500,
+      "awayML": -575,
+      "spread": "NED -2.5",
+      "overUnder": 3.5,
+      "overOdds": 135.0,
+      "underOdds": -165.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -30668,6 +31314,13 @@
       "goalsConceded": 2.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-21",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-15",
         "result": "F",
@@ -30694,13 +31347,6 @@
         "result": "O",
         "gf": 0,
         "ga": 0,
-        "home": false
-      },
-      {
-        "date": "2026-03-29",
-        "result": "F",
-        "gf": 0,
-        "ga": 1,
         "home": false
       }
     ],
@@ -30778,8 +31424,8 @@
       "awayML": 280,
       "spread": "JPN -0.5",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -30797,6 +31443,13 @@
       "goalsConceded": 1.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-21",
+        "result": "F",
+        "gf": 0,
+        "ga": 4,
+        "home": false
+      },
       {
         "date": "2026-06-14",
         "result": "O",
@@ -30824,13 +31477,6 @@
         "gf": 0,
         "ga": 1,
         "home": false
-      },
-      {
-        "date": "2025-11-18",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
-        "home": true
       }
     ],
     "awayForm": [
@@ -31205,7 +31851,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
