@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -28690,7 +28690,7 @@
     "awayTla": "KSA",
     "status": "FINISHED",
     "score": [
-      5,
+      4,
       0
     ],
     "scoreDetail": {
@@ -28699,7 +28699,7 @@
         0
       ],
       "fullTime": [
-        5,
+        4,
         0
       ],
       "extraTime": null,
@@ -29505,20 +29505,23 @@
     "status": "IN_PLAY",
     "score": [
       0,
-      1
+      0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
       "fullTime": [
         0,
-        1
+        0
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "DRAW"
     },
-    "minute": "44",
+    "minute": "90+3",
     "goals": [],
     "bookings": [
       {
@@ -29534,9 +29537,87 @@
         "player": "Saeid Ezatolahi",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "66",
+        "team": "BEL",
+        "player": "Nathan Ngoy",
+        "card": "RED",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "IRN",
+        "playerIn": "Alireza Jahanbakhsh",
+        "playerOut": "Saleh Hardani",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "BEL",
+        "playerIn": "Timothy Castagne",
+        "playerOut": "Thomas Meunier",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "BEL",
+        "playerIn": "Hans Vanaken",
+        "playerOut": "Nicolas Raskin",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "BEL",
+        "playerIn": "Dodi Lukébakio",
+        "playerOut": "Alexis Saelemaekers",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "IRN",
+        "playerIn": "Mehdi Torabi",
+        "playerOut": "Mohammad Mohebbi",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "IRN",
+        "playerIn": "Milad Mohammadi",
+        "playerOut": "Ehsan Hajsafi",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "BEL",
+        "playerIn": "Arthur Theate",
+        "playerOut": "Romelu Lukaku",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "IRN",
+        "playerIn": "Shahriyar Moghanloo",
+        "playerOut": "Saman Ghoddos",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "IRN",
+        "playerIn": "Amirhossein Hosseinzadeh",
+        "playerOut": "Saeid Ezatolahi",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "BEL",
+        "playerIn": "Matias Fernandez-Pardo",
+        "playerOut": "Kevin De Bruyne",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "SoFi Stadium",
       "city": "Inglewood, California",
@@ -29605,7 +29686,7 @@
           "jersey": "15",
           "espnId": "166473",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kevin De Bruyne",
@@ -29614,7 +29695,7 @@
           "jersey": "7",
           "espnId": "134947",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Youri Tielemans",
@@ -29632,7 +29713,7 @@
           "jersey": "23",
           "espnId": "260027",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Romelu Lukaku",
@@ -29641,7 +29722,7 @@
           "jersey": "9",
           "espnId": "139437",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Leandro Trossard",
@@ -29659,7 +29740,7 @@
           "jersey": "22",
           "espnId": "271132",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -29714,7 +29795,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "304222",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29732,7 +29813,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "193849",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29741,7 +29822,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "197163",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29759,7 +29840,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "229443",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29768,7 +29849,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "359651",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29830,7 +29911,7 @@
           "jersey": "3",
           "espnId": "203453",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Saleh Hardani",
@@ -29839,7 +29920,7 @@
           "jersey": "2",
           "espnId": "317748",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Saeid Ezatolahi",
@@ -29848,7 +29929,7 @@
           "jersey": "6",
           "espnId": "194863",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Saman Ghoddos",
@@ -29857,7 +29938,7 @@
           "jersey": "14",
           "espnId": "235519",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Mohammad Mohebbi",
@@ -29866,7 +29947,7 @@
           "jersey": "8",
           "espnId": "296999",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ramin Rezaeian",
@@ -29903,7 +29984,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "308077",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29930,7 +30011,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "188055",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29948,7 +30029,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "266729",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29957,7 +30038,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "226301",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -29984,7 +30065,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "226302",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -30028,64 +30109,64 @@
       "_espnEventId": "760451"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 1.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 2.0,
-      "saves": 1.0,
-      "possessionPct": 78.7,
-      "totalShots": 9.0,
-      "shotsOnTarget": 3.0,
+      "redCards": 1.0,
+      "offsides": 3.0,
+      "wonCorners": 4.0,
+      "saves": 3.0,
+      "possessionPct": 70.5,
+      "totalShots": 21.0,
+      "shotsOnTarget": 7.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 235.0,
-      "totalPasses": 272.0,
+      "accuratePasses": 519.0,
+      "totalPasses": 604.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 11.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 9.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.4,
-      "blockedShots": 3.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 32.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 33.0,
+      "accurateLongBalls": 11.0,
+      "longballPct": 0.3,
+      "blockedShots": 6.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 11.0,
       "tacklePct": 0.6,
       "interceptions": 2.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "effectiveClearance": 11.0,
+      "totalClearance": 11.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 2.0,
-      "wonCorners": 1.0,
-      "saves": 3.0,
-      "possessionPct": 21.3,
-      "totalShots": 2.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.5,
+      "offsides": 4.0,
+      "wonCorners": 2.0,
+      "saves": 7.0,
+      "possessionPct": 29.5,
+      "totalShots": 7.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 44.0,
-      "totalPasses": 74.0,
-      "passPct": 0.6,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.2,
-      "blockedShots": 0.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.6,
-      "interceptions": 4.0,
-      "effectiveClearance": 18.0,
-      "totalClearance": 18.0
+      "accuratePasses": 191.0,
+      "totalPasses": 258.0,
+      "passPct": 0.7,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 46.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.5,
+      "interceptions": 13.0,
+      "effectiveClearance": 49.0,
+      "totalClearance": 49.0
     },
     "homeForm": [
       {
@@ -30168,7 +30249,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "TIMED",
@@ -30190,16 +30271,22 @@
       "city": "Miami Gardens, Florida",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Espen Eskås",
+        "role": "REFEREE",
+        "nationality": "Norway"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -220,
-      "awayML": 800,
+      "homeML": -245,
+      "awayML": 850,
       "spread": "URU -1.5",
       "overUnder": 2.5,
-      "overOdds": 130.0,
-      "underOdds": -160.0,
+      "overOdds": 120.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -30452,12 +30539,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -175,
-      "awayML": 550,
-      "spread": "ARG -0.5",
+      "homeML": -190,
+      "awayML": 600,
+      "spread": "ARG -1.5",
       "overUnder": 2.5,
-      "overOdds": -105.0,
-      "underOdds": -115.0,
+      "overOdds": -110.0,
+      "underOdds": -110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -30714,7 +30801,7 @@
       "awayML": 210,
       "spread": "NOR -0.5",
       "overUnder": 2.5,
-      "overOdds": -110.0,
+      "overOdds": -115.0,
       "underOdds": -110.0,
       "provider": "DraftKings"
     },
@@ -30968,8 +31055,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -475,
-      "awayML": 1300,
+      "homeML": -500,
+      "awayML": 1400,
       "spread": "POR -1.5",
       "overUnder": 2.5,
       "overOdds": -170.0,
@@ -32129,8 +32216,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 450,
-      "awayML": -155,
+      "homeML": 475,
+      "awayML": -160,
       "spread": "KOR -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
@@ -32645,8 +32732,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 105,
-      "awayML": 295,
+      "homeML": -105,
+      "awayML": 320,
       "spread": "JPN -0.5",
       "overUnder": 2.5,
       "overOdds": -125.0,
@@ -33264,7 +33351,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
