@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePlayersDb } from "../state/dataset";
-import { lineupPhoto } from "../lib/playerPhoto";
+import { lineupPhotoSources } from "../lib/playerPhoto";
 import { initials } from "../lib/format";
 import { buildRows, sideScore } from "../lib/formation";
 import { ratingColor } from "../lib/rating";
@@ -148,7 +148,7 @@ export function Pitch({
           <PitchPlayer
             key={p.name + "-" + i}
             p={p}
-            photo={lineupPhoto(p.name, p.espnId, db)}
+            photos={lineupPhotoSources(p.name, p.espnId, db)}
             color={color}
             x={xPct}
             y={yPct}
@@ -204,7 +204,7 @@ export function Pitch({
 
 function PitchPlayer({
   p,
-  photo,
+  photos,
   color,
   x,
   y,
@@ -217,7 +217,7 @@ function PitchPlayer({
   onClick,
 }: {
   p: RawLineupPlayer;
-  photo: string | null;
+  photos: string[];
   color: string;
   x: number;
   y: number;
@@ -229,16 +229,18 @@ function PitchPlayer({
   motm?: boolean;
   onClick: () => void;
 }) {
-  const [failed, setFailed] = useState(false);
+  const key = photos.join("|");
+  const [idx, setIdx] = useState(0);
+  useEffect(() => setIdx(0), [key]); // reset the fallback chain when the player changes
   const last = (p.name || "").split(" ").slice(-1)[0];
   const num = p.jersey || p.shirtNumber;
-  const showImg = photo && !failed;
+  const cur = idx < photos.length ? photos[idx] : null;
   return (
     <button className="ppl" style={{ left: `${x}%`, top: `${y}%` }} onClick={onClick}>
       <div className="ppl-card">
-        <div className="ppl-img" style={!showImg ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
-          {showImg ? (
-            <img src={photo!} alt="" loading="lazy" onError={() => setFailed(true)} />
+        <div className="ppl-img" style={!cur ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
+          {cur ? (
+            <img src={cur} alt="" loading="lazy" onError={() => setIdx((i) => i + 1)} />
           ) : (
             <span className="ppl-fallnum">{num || initials(p.name)}</span>
           )}
@@ -263,7 +265,7 @@ function PitchPlayer({
 // live in globals.css (.bp*). Used by the match view and the team view.
 export function BenchPlayer({
   p,
-  photo,
+  photos,
   rating,
   goals = 0,
   assists = 0,
@@ -274,7 +276,7 @@ export function BenchPlayer({
   onClick,
 }: {
   p: RawLineupPlayer;
-  photo: string | null;
+  photos: string[];
   rating?: number | null;
   goals?: number;
   assists?: number;
@@ -290,7 +292,7 @@ export function BenchPlayer({
   return (
     <button className="bp" onClick={onClick}>
       <span className="bp-ph">
-        <PlayerImg src={photo} name={p.name} size={48} radius={24} fontSize={17} />
+        <PlayerImg srcs={photos} name={p.name} size={48} radius={24} fontSize={17} />
         {rating != null && <span className="bp-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>}
         {motm && <span className="bp-star">★</span>}
         {cameAt != null && <span className="bp-in num">↑{cameAt}'</span>}

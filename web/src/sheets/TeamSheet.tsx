@@ -8,7 +8,7 @@ import { PlayerImg } from "../components/PlayerImg";
 import { Pitch, BenchPlayer } from "../components/Pitch";
 import { Flag, groupColor } from "../lib/flags";
 import { FormDots } from "../components/FormDots";
-import { lineupPhoto } from "../lib/playerPhoto";
+import { lineupPhotoSources } from "../lib/playerPhoto";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
 import { svDayMonth } from "../lib/format";
 
@@ -196,7 +196,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photo={lineupPhoto(p.name, p.espnId, db)}
+                  photos={lineupPhotoSources(p.name, p.espnId, db)}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

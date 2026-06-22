@@ -6,7 +6,7 @@ import { Pitch, BenchPlayer } from "../components/Pitch";
 import { GroupTable } from "../components/GroupTable";
 import { PlayerImg } from "../components/PlayerImg";
 import { Avatar } from "../components/Avatar";
-import { lineupPhoto } from "../lib/playerPhoto";
+import { lineupPhotoSources } from "../lib/playerPhoto";
 import { liveMinuteText } from "../lib/liveMinute";
 import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
@@ -304,7 +304,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photo={lineupPhoto(p.name, p.espnId, db)}
+                  photos={lineupPhotoSources(p.name, p.espnId, db)}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

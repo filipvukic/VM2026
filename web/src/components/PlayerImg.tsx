@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initials } from "../lib/format";
 import { useLightbox } from "../state/lightbox";
 
 // Player photo that gracefully falls back to initials when the src is missing
 // OR fails to load (ESPN headshots 404 for many players until TheSportsDB
-// enrichment adds a cutout). When `zoomable`, tapping a *loaded* photo opens it
-// large in the lightbox (only when there's a real image to enlarge).
+// enrichment adds a cutout). Pass `srcs` for a prioritised list (e.g. official
+// headshot → db photo) — each failing url advances to the next. When `zoomable`,
+// tapping a *loaded* photo opens it large in the lightbox.
 export function PlayerImg({
   src,
+  srcs,
   name,
   size = 88,
   radius = 18,
@@ -15,19 +17,24 @@ export function PlayerImg({
   zoomable = false,
 }: {
   src?: string | null;
+  srcs?: string[];
   name: string;
   size?: number;
   radius?: number;
   fontSize?: number;
   zoomable?: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
+  const list = (srcs && srcs.length ? srcs : src ? [src] : []).filter(Boolean);
+  const key = list.join("|");
+  const [idx, setIdx] = useState(0);
+  useEffect(() => setIdx(0), [key]); // reset when the player (its url list) changes
   const openLightbox = useLightbox((s) => s.open);
-  const show = src && !failed;
-  const canZoom = zoomable && !!show;
+  const cur = idx < list.length ? list[idx] : null;
+  const show = !!cur;
+  const canZoom = zoomable && show;
   return (
     <span
-      onClick={canZoom ? () => openLightbox(src!, name) : undefined}
+      onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
       style={{
         width: size,
         height: size,
@@ -43,11 +50,12 @@ export function PlayerImg({
     >
       {show ? (
         <img
-          src={src!}
+          src={cur!}
           alt={name}
           loading="lazy"
+          onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={() => setFailed(true)}
+          onError={() => setIdx((i) => i + 1)}
         />
       ) : (
         <span className="num" style={{ fontSize: fontSize ?? size * 0.34, color: "var(--ink-2)" }}>
