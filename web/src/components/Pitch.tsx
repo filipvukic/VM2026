@@ -37,6 +37,7 @@ export function Pitch({
   getRating,
   coords,
   motmRating,
+  fotmobIdByShirt,
 }: {
   lineup: RawLineup;
   color: string;
@@ -49,6 +50,8 @@ export function Pitch({
   // single match-best player gets the blue pill + star — so a team's own best
   // player who wasn't the best on the pitch shows a normal (green/orange) rating.
   motmRating?: number | null;
+  // shirt number → FotMob player id, for the (correct, official) FotMob photo.
+  fotmobIdByShirt?: Map<string, string>;
 }) {
   const db = usePlayersDb();
   // Each placed player → its position on the pitch (%). Prefer FotMob's exact
@@ -148,7 +151,7 @@ export function Pitch({
           <PitchPlayer
             key={p.name + "-" + i}
             p={p}
-            photos={lineupPhotoSources(p.name, p.espnId, db)}
+            photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt?.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
             color={color}
             x={xPct}
             y={yPct}

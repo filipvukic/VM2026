@@ -14,6 +14,11 @@ type Feat = any;
 // The world polygons never change — fetch once and share across every globe.
 let FEATURES_CACHE: Feat[] | null = null;
 
+// ISO3 → label position/name, so we can drop a code/name label on each country
+// (the geojson has no label coords; COUNTRY_FACTS has a lat/lng for every nation).
+const FACTS_BY_CCA3: Record<string, { lat: number; lng: number; name: string }> = {};
+for (const f of Object.values(COUNTRY_FACTS)) FACTS_BY_CCA3[f.cca3] = { lat: f.lat, lng: f.lng, name: f.name };
+
 const norm = (s?: string) =>
   (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 
@@ -119,8 +124,12 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
       g.pointOfView({ lat: pov.lat, lng: pov.lng, altitude }, 0);
     };
     const endPinch = (e: TouchEvent) => {
-      if (e.touches.length < 2) {
-        pinchDist = 0;
+      if (e.touches.length < 2) pinchDist = 0;
+      // Re-enable rotation ONLY when every finger is lifted. If we re-enabled it
+      // while one finger of the pinch is still down, OrbitControls would treat
+      // that lone finger as a fresh rotate from a stale anchor and the globe would
+      // "shoot off" the instant you stop zooming.
+      if (e.touches.length === 0) {
         const c = ctrl();
         if (c) c.enableRotate = true;
       }
@@ -178,9 +187,23 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     return () => clearTimeout(t);
   }, [iso2, facts, ready, size]);
 
-  // Only countries with no polygon in this (110m) dataset — micro-states like
-  // Curaçao — get a small static dot; everything else is shown by its border.
-  const pin = useMemo(() => (facts && !selected ? [{ lat: facts.lat, lng: facts.lng }] : []), [facts, selected]);
+  // Country labels for context: 3-letter codes on the major countries (LABELRANK
+  // ≤ 3 ≈ 90 nations — keeps it readable, not all 177), and the SELECTED country
+  // always, shown bigger as its full name. A micro-state with no polygon (Curaçao)
+  // still gets its name label here — that replaces the old intrusive beacon.
+  const labels = useMemo(() => {
+    const arr: { lat: number; lng: number; text: string; sel: boolean }[] = [];
+    for (const f of features) {
+      const p = f.properties || {};
+      const sel = f === selected;
+      if (!sel && (p.LABELRANK ?? 99) > 3) continue;
+      const fc = p.ADM0_A3 ? FACTS_BY_CCA3[p.ADM0_A3] : null;
+      if (!fc) continue;
+      arr.push({ lat: fc.lat, lng: fc.lng, text: sel ? fc.name : p.ADM0_A3, sel });
+    }
+    if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: facts.name, sel: true });
+    return arr;
+  }, [features, selected, facts]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
 
   return (
@@ -212,13 +235,16 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
             polygonStrokeColor={(f: Feat) => (f === selected ? "#ff4d86" : "rgba(255,255,255,.26)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
-            pointsData={pin}
-            pointLat="lat"
-            pointLng="lng"
-            pointColor={() => "#ff2d6e"}
-            pointAltitude={0.04}
-            pointRadius={0.5}
-            pointsMerge={false}
+            labelsData={labels}
+            labelLat="lat"
+            labelLng="lng"
+            labelText="text"
+            labelSize={(d: Feat) => (d.sel ? 1.3 : 0.5)}
+            labelColor={(d: Feat) => (d.sel ? "#ffd5e3" : "rgba(255,255,255,.55)")}
+            labelResolution={1}
+            labelAltitude={0.012}
+            labelIncludeDot={false}
+            labelsTransitionDuration={0}
           />
         )}
       </div>

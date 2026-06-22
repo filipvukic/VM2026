@@ -166,6 +166,11 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
   // match's player, not just this team's best. If the opponent had the best, none
   // of this team's players gets the star (correct).
   const matchMaxRating = (detail?.players || []).reduce((mx, p) => (p.rating != null && p.rating > mx ? p.rating : mx), 0);
+  // shirt → FotMob player id (this team), for the correct/official FotMob photo.
+  const fotmobIdByShirt = new Map<string, string>();
+  (detail?.players || []).forEach((p) => {
+    if (p.tla === code && p.shirt != null && p.optaId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.optaId));
+  });
 
   const opp = isHome ? m.away : m.home;
   const oppT = opp ? ds.teams[opp] : null;
@@ -184,7 +189,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
       <div className="dim" style={{ fontSize: 12, marginBottom: 10 }}>
         mot {oppT?.name || "?"} · {svDayMonth(m.kickoff)}{formation ? ` · ${formation}` : ""}
       </div>
-      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} />
+      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} />
       {lu.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 16 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
@@ -196,7 +201,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photos={lineupPhotoSources(p.name, p.espnId, db)}
+                  photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

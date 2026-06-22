@@ -249,6 +249,11 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   // match. Passed to the pitch/bench so the blue+star marks the match's best, not
   // merely this team's best.
   const matchMaxRating = (detail?.players || []).reduce((mx, p) => (p.rating != null && p.rating > mx ? p.rating : mx), 0);
+  // shirt → FotMob player id (this team), for the correct/official FotMob photo.
+  const fotmobIdByShirt = new Map<string, string>();
+  (detail?.players || []).forEach((p) => {
+    if (p.tla === code && p.shirt != null && p.optaId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.optaId));
+  });
   // FotMob formation + exact coords are accurate (ESPN's is often wrong, e.g.
   // 3-1-4-2 vs 3-4-1-2). Prefer the FotMob coords for placement.
   const fmFormation = detail?.formations?.[side === "h" ? "home" : "away"];
@@ -292,7 +297,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         (fmFormation || lu?.formation) && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {fmFormation || lu?.formation}</span></div>
       )}
-      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} />
+      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} />
       {lu?.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
@@ -304,7 +309,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photos={lineupPhotoSources(p.name, p.espnId, db)}
+                  photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

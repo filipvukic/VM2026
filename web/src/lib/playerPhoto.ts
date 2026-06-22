@@ -3,6 +3,13 @@ import type { PlayerRecord, PlayersDb } from "../data/types";
 export const espnHeadshot = (espnId?: string | null) =>
   espnId ? `https://a.espncdn.com/i/headshots/soccer/players/full/${espnId}.png` : null;
 
+// FotMob's player image, keyed by the FotMob player id (our matchstats `optaId`).
+// This is the most reliable source for lineup photos: the id comes from the SAME
+// FotMob feed as the line-up, so it can't show the wrong player — unlike some
+// stored db photos (e.g. Pedri's db photo was a different, older player).
+export const fotmobImage = (id?: string | number | null) =>
+  id != null && id !== "" ? `https://images.fotmob.com/image_resources/playerimages/${id}.png` : null;
+
 // Best available photo URL for a player record, in quality order:
 // TheSportsDB cutout/render → Wikipedia → TheSportsDB thumb → ESPN headshot.
 export function bestPhoto(p?: PlayerRecord | null): string | null {
@@ -26,8 +33,13 @@ export function lineupPhoto(name: string, espnId: string | null | undefined, db:
 // face (the "fel bild på spelare" bug). If we can't confidently identify the
 // player we return [] and the pitch shows their number/initials instead. (ESPN's
 // headshot CDN 404s for these players, so photos come from the curated db.)
-export function lineupPhotoSources(name: string, espnId: string | null | undefined, db: PlayersDb | null): string[] {
-  if (!db) return [];
+export function lineupPhotoSources(name: string, espnId: string | null | undefined, db: PlayersDb | null, fotmobId?: string | number | null): string[] {
+  const out: string[] = [];
+  // FotMob photo first — keyed by the FotMob id, it's guaranteed the right player
+  // and overrides any wrong stored db photo. If it 404/403s, the img falls through.
+  const fm = fotmobImage(fotmobId);
+  if (fm) out.push(fm);
+  if (!db) return out;
   let rec: PlayerRecord | undefined = db[name];
   if (!rec && espnId != null && espnId !== "") {
     const eid = String(espnId);
@@ -41,8 +53,7 @@ export function lineupPhotoSources(name: string, espnId: string | null | undefin
       if (key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "") === n) { rec = db[key]; break; }
     }
   }
-  if (!rec) return [];
-  const out: string[] = [];
+  if (!rec) return [...new Set(out)];
   for (const u of [rec.photo, rec.cutout, rec.render, rec.wiki, rec.thumb, rec.espnPhoto]) if (u) out.push(u);
   return [...new Set(out)];
 }
