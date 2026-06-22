@@ -539,6 +539,10 @@ input {
   position: relative;
   display: inline-grid;
 }
+/* match's player — gold ring on the bench photo too */
+.bp-ph.motm > span {
+  box-shadow: 0 0 0 2px var(--gold), 0 0 10px -1px color-mix(in srgb, var(--gold) 70%, transparent);
+}
 .bp-rt {
   position: absolute;
   right: -4px;
@@ -547,12 +551,18 @@ input {
   height: 16px;
   padding: 0 3px;
   border-radius: 8px;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
   font-size: 9.5px;
   font-weight: 800;
   color: #fff;
+  border: 1.5px solid var(--surface);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+.bp-rt-star {
+  font-size: 8px;
 }
 .bp-in {
   position: absolute;
@@ -605,15 +615,6 @@ input {
 }
 .bp-ev.card.r {
   background: var(--loss);
-}
-.bp-star {
-  position: absolute;
-  right: -7px;
-  top: -10px;
-  font-size: 11px;
-  color: var(--gold);
-  line-height: 1;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 .bp-name {
   font-size: 11px;

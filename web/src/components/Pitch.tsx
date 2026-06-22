@@ -186,19 +186,23 @@ export function Pitch({
         .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
           white-space:nowrap; max-width:var(--ppl-w,72px); overflow:hidden; text-overflow:ellipsis; }
         .ppl-name-num{ color:var(--ink-3); margin-right:3px; }
-        /* Small badges tucked into the corners so the face stays visible: events
-           top-right, rating pill at the bottom-right (off the face), star top-left. */
-        .ppl-ev{ position:absolute; right:-2px; top:-2px; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
-        .ppl-chip{ height:13px; min-width:13px; padding:0 2px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; gap:1px;
-          font-size:8px; font-weight:800; line-height:1; font-family:var(--font-display); box-shadow:0 1px 3px rgba(0,0,0,.5); }
-        .ppl-chip.goal{ background:#fff; color:#0a0712; }
-        .ppl-chip.assist{ background:var(--cool); color:#fff; }
-        .ppl-chip.sub{ background:rgba(8,6,15,.82); color:#fff; }
-        .ppl-chip.card{ width:9px; min-width:9px; height:12px; border-radius:2px; padding:0; }
-        .ppl-chip.card.y{ background:var(--gold); } .ppl-chip.card.r{ background:var(--loss); }
-        .ppl-rt{ position:absolute; right:-3px; bottom:-3px; min-width:16px; height:15px; padding:0 3px; border-radius:8px;
-          display:grid; place-items:center; font-size:9px; font-weight:800; color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.5); }
-        .ppl-star{ position:absolute; left:-5px; top:-6px; font-size:10px; color:var(--gold); line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.6); }
+        /* Match's player gets a gold ring; the photo stays borderless otherwise. */
+        .ppl-card.motm .ppl-img{ box-shadow:0 0 0 2px var(--gold), 0 0 11px -1px color-mix(in srgb,var(--gold) 70%,transparent), 0 6px 14px -6px rgba(0,0,0,.8); }
+        /* FotMob-clean badges — one small element per corner, none over the face:
+           sub-off minute ABOVE · rating top-right · card bottom-left · goal/assist bottom-right. */
+        .ppl-min{ position:absolute; top:-12px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:2px;
+          font-family:var(--font-display); font-size:8.5px; font-weight:800; color:var(--ink-2); white-space:nowrap; text-shadow:0 1px 2px rgba(0,0,0,.9); }
+        .ppl-min .arr{ color:var(--loss); }
+        .ppl-rt{ position:absolute; right:-4px; top:-4px; min-width:18px; height:16px; padding:0 3px; border-radius:7px;
+          display:inline-flex; align-items:center; justify-content:center; gap:1px; font-family:var(--font-display); font-size:9.5px; font-weight:800;
+          color:#fff; border:1.5px solid rgba(7,26,16,.92); box-shadow:0 1px 3px rgba(0,0,0,.5); }
+        .ppl-rt .star{ font-size:8px; }
+        .ppl-mark{ position:absolute; display:grid; place-items:center; font-family:var(--font-display); font-weight:800; line-height:1;
+          border:1.5px solid rgba(7,26,16,.92); box-shadow:0 1px 3px rgba(0,0,0,.5); }
+        .ppl-mark.goal{ right:-4px; bottom:-3px; min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:#fff; color:#0a0712; font-size:8.5px; }
+        .ppl-mark.assist{ right:-4px; bottom:-3px; min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:var(--cool); color:#fff; font-size:8.5px; }
+        .ppl-mark.card{ left:-3px; bottom:-3px; width:10px; height:13px; border-radius:2px; }
+        .ppl-mark.card.y{ background:var(--gold); } .ppl-mark.card.r{ background:var(--loss); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
       `}</style>
@@ -241,7 +245,10 @@ function PitchPlayer({
   const cur = idx < photos.length ? photos[idx] : null;
   return (
     <button className="ppl" style={{ left: `${x}%`, top: `${y}%` }} onClick={onClick}>
-      <div className="ppl-card">
+      <div className={`ppl-card${motm ? " motm" : ""}`}>
+        {subOut !== undefined && (
+          <span className="ppl-min" title={`Utbytt ${subOut}'`}><span className="arr">↓</span>{subOut}'</span>
+        )}
         <div className="ppl-img" style={!cur ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
           {cur ? (
             <img src={cur} alt="" loading="lazy" onError={() => setIdx((i) => i + 1)} />
@@ -249,16 +256,17 @@ function PitchPlayer({
             <span className="ppl-fallnum">{num || initials(p.name)}</span>
           )}
         </div>
-        <div className="ppl-ev">
-          {goals > 0 && <span className="ppl-chip goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>}
-          {assists > 0 && <span className="ppl-chip assist" title="Assist">A{assists > 1 ? assists : ""}</span>}
-          {card && <span className={`ppl-chip card ${card === "red" ? "r" : "y"}`} title={card === "red" ? "Rött kort" : "Gult kort"} />}
-          {subOut !== undefined && <span className="ppl-chip sub" title={`Utbytt ${subOut}'`}>↓{subOut}</span>}
-        </div>
         {rating != null && (
-          <span className="ppl-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>
+          <span className="ppl-rt" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>
+            {motm && <span className="star" title="Matchens spelare">★</span>}{rating.toFixed(1)}
+          </span>
         )}
-        {motm && <span className="ppl-star" title="Matchens spelare">★</span>}
+        {goals > 0 ? (
+          <span className="ppl-mark goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>
+        ) : assists > 0 ? (
+          <span className="ppl-mark assist" title="Assist">A{assists > 1 ? assists : ""}</span>
+        ) : null}
+        {card && <span className={`ppl-mark card ${card === "red" ? "r" : "y"}`} title={card === "red" ? "Rött kort" : "Gult kort"} />}
       </div>
       <span className="ppl-name">{num ? <span className="ppl-name-num">{num}</span> : null}{last}</span>
     </button>
@@ -295,10 +303,13 @@ export function BenchPlayer({
   const pos = posLabel(p.position);
   return (
     <button className="bp" onClick={onClick}>
-      <span className="bp-ph">
+      <span className={`bp-ph${motm ? " motm" : ""}`}>
         <PlayerImg srcs={photos} name={p.name} size={48} radius={24} fontSize={17} />
-        {rating != null && <span className="bp-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>}
-        {motm && <span className="bp-star">★</span>}
+        {rating != null && (
+          <span className="bp-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>
+            {motm && <span className="bp-rt-star">★</span>}{rating.toFixed(1)}
+          </span>
+        )}
         {cameAt != null && <span className="bp-in num">↑{cameAt}'</span>}
         {goals > 0 && <span className="bp-ev goal">⚽{goals > 1 ? goals : ""}</span>}
         {goals === 0 && assists > 0 && <span className="bp-ev assist">A</span>}
