@@ -42,7 +42,7 @@ function altitudeForArea(area?: number | null): number {
   return Math.max(0.8, Math.min(2.85, alt));
 }
 
-export default function CountryGlobe({ iso, name }: { iso?: string | null; name: string }) {
+export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(undefined);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -159,6 +159,35 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
       el.removeEventListener("touchcancel", endPinch);
     };
   }, []);
+
+  // Free the WebGL context when this globe unmounts. Browsers cap live WebGL
+  // contexts (~8–16); opening many team sheets in a row would otherwise pile up
+  // contexts until the oldest get force-dropped and everything crawls. dispose +
+  // forceContextLoss releases it immediately instead of waiting for GC.
+  useEffect(() => {
+    return () => {
+      const g = globeRef.current;
+      try {
+        g?.pauseAnimation?.();
+        const r = g?.renderer?.();
+        if (r) {
+          r.dispose?.();
+          r.forceContextLoss?.();
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+  }, []);
+
+  // Pause the render loop while this globe's sheet sits behind another (not
+  // interactive) — no point spending a rAF loop + GPU on an off-screen globe.
+  useEffect(() => {
+    const g = globeRef.current;
+    if (!g || !ready) return;
+    if (active === false) g.pauseAnimation?.();
+    else g.resumeAnimation?.();
+  }, [active, ready]);
 
   // Configure the orbit controls once they exist: we drive zoom ourselves (above),
   // so leave only rotation to OrbitControls. onGlobeReady + polling fallback.

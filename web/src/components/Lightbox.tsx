@@ -32,7 +32,9 @@ export function Lightbox() {
         onClick={(e) => e.stopPropagation()}
         onError={close}
         style={{
-          maxWidth: "92vw", maxHeight: "86dvh", width: "auto", height: "auto", objectFit: "contain",
+          // Player photos are small (FotMob headshots are ~192px), so width:auto
+          // rendered them tiny — force them to fill most of the screen instead.
+          width: "min(90vw, 460px)", maxHeight: "82dvh", height: "auto", objectFit: "contain",
           borderRadius: 18, boxShadow: "0 30px 80px -20px rgba(0,0,0,.9)", border: "1px solid var(--line-2)",
           background: "var(--surface-2)", animation: "lbZoom .22s cubic-bezier(.2,.7,.2,1)",
         }}
