@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-22T17:56:19+00:00",
+  "updated_at": "2026-06-22T20:39:58+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 85,
+      "match_points": 86,
       "bonus_points": 0,
-      "total": 85,
+      "total": 86,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 78,
+      "match_points": 80,
       "bonus_points": 0,
-      "total": 78,
+      "total": 80,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 75,
+      "match_points": 77,
       "bonus_points": 0,
-      "total": 75,
+      "total": 77,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 74,
+      "match_points": 76,
       "bonus_points": 0,
-      "total": 74,
+      "total": 76,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 72,
+      "match_points": 74,
       "bonus_points": 0,
-      "total": 72,
+      "total": 74,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 71,
+      "match_points": 73,
       "bonus_points": 0,
-      "total": 71,
+      "total": 73,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 71,
+      "match_points": 73,
       "bonus_points": 0,
-      "total": 71,
+      "total": 73,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 70,
+      "match_points": 71,
       "bonus_points": 0,
-      "total": 70,
+      "total": 71,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 68,
+      "match_points": 70,
       "bonus_points": 0,
-      "total": 68,
+      "total": 70,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 68,
+      "match_points": 69,
       "bonus_points": 0,
-      "total": 68,
+      "total": 69,
       "exact_count": 2,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 67,
+      "match_points": 69,
       "bonus_points": 0,
-      "total": 67,
+      "total": 69,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -11075,15 +11075,18 @@
       "homeTla": "ARG",
       "away": "Austria",
       "awayTla": "AUT",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        1,
+        2,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           1,
+          0
+        ],
+        "fullTime": [
+          2,
           0
         ],
         "extraTime": null,
@@ -11091,7 +11094,7 @@
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "HT",
+      "minute": null,
       "goals": [
         {
           "minute": "38",
@@ -11105,6 +11108,19 @@
             0
           ],
           "period": 1
+        },
+        {
+          "minute": "90+5",
+          "team": "ARG",
+          "scorer": "Lionel Messi",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Argentina 2, Austria 0. Lionel Messi (Argentina) left footed shot from the left side of the six yard box to the centre of the goal following a fast break.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 2
         }
       ],
       "bookings": [
@@ -11114,9 +11130,101 @@
           "player": "Stefan Posch",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "76",
+          "team": "ARG",
+          "player": "Facundo Medina",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "AUT",
+          "player": "Konrad Laimer",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "ARG",
+          "player": "Leandro Paredes",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "57",
+          "team": "ARG",
+          "playerIn": "Nicolás Otamendi",
+          "playerOut": "Cristian Romero",
+          "period": 2
+        },
+        {
+          "minute": "64",
+          "team": "ARG",
+          "playerIn": "Julián Álvarez",
+          "playerOut": "Thiago Almada",
+          "period": 2
+        },
+        {
+          "minute": "65",
+          "team": "ARG",
+          "playerIn": "Nico González",
+          "playerOut": "Lautaro Martínez",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "AUT",
+          "playerIn": "Marco Friedl",
+          "playerOut": "David Alaba",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "AUT",
+          "playerIn": "Alexander Prass",
+          "playerOut": "Stefan Posch",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "AUT",
+          "playerIn": "Marko Arnautovic",
+          "playerOut": "Paul Wanner",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "AUT",
+          "playerIn": "Patrick Wimmer",
+          "playerOut": "Romano Schmid",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ARG",
+          "playerIn": "Leandro Paredes",
+          "playerOut": "Rodrigo De Paul",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ARG",
+          "playerIn": "Nicolás Tagliafico",
+          "playerOut": "Facundo Medina",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "AUT",
+          "playerIn": "Carney Chukwuemeka",
+          "playerOut": "Michael Gregoritsch",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "AT&T Stadium",
         "city": "Arlington, Texas",
@@ -11129,7 +11237,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70649,
       "tips": [
         {
           "name": "Albin",
@@ -11137,7 +11245,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -11145,7 +11253,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -11153,7 +11261,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -11161,7 +11269,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -11169,7 +11277,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -11177,7 +11285,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -11185,7 +11293,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -11193,7 +11301,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -11201,7 +11309,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Hampus",
@@ -11209,7 +11317,7 @@
             2,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -11217,7 +11325,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -11250,7 +11358,13 @@
         "city": "Philadelphia, Pennsylvania",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Drew Fischer",
+          "role": "REFEREE",
+          "nationality": "Canada"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -15496,25 +15610,25 @@
           "team": "Argentina",
           "tla": "ARG",
           "played": 2,
-          "won": 1,
-          "draw": 1,
+          "won": 2,
+          "draw": 0,
           "lost": 0,
-          "gf": 3,
+          "gf": 5,
           "ga": 0,
-          "gd": 3,
-          "points": 4
+          "gd": 5,
+          "points": 6
         },
         {
           "team": "Austria",
           "tla": "AUT",
           "played": 2,
           "won": 1,
-          "draw": 1,
-          "lost": 0,
+          "draw": 0,
+          "lost": 1,
           "gf": 3,
-          "ga": 1,
-          "gd": 2,
-          "points": 4
+          "ga": 3,
+          "gd": 0,
+          "points": 3
         },
         {
           "team": "Jordan",
