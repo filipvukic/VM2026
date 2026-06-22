@@ -24,17 +24,23 @@ export function lineupPhoto(name: string, espnId: string | null | undefined, db:
 // doesn't exactly match a db key still resolves to the right record.
 export function findPlayer(name: string, db: PlayersDb | null, espnId?: string | null): (PlayerRecord & { name: string }) | null {
   if (!db) return null;
+  // 1. Exact key.
   if (db[name]) return { name, ...db[name] };
-  const n = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  for (const key of Object.keys(db)) {
-    const k = key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-    if (k === n || k.endsWith(" " + n) || n.endsWith(" " + k)) return { name: key, ...db[key] };
-  }
-  if (espnId) {
+  // 2. ESPN id — the reliable identity for ESPN-sourced players (correct even when
+  //    the name spelling differs). MUST come BEFORE the fuzzy name match: a light
+  //    surname match maps a common last name (e.g. "Silva", "Hernández") to the
+  //    wrong player and so the wrong photo — the bug behind "fel bild på spelare".
+  if (espnId != null && espnId !== "") {
     const eid = String(espnId);
     for (const key of Object.keys(db)) {
       if (String(db[key].espnId) === eid) return { name: key, ...db[key] };
     }
+  }
+  // 3. Name match: accent-insensitive exact, then a light surname fuzzy (last resort).
+  const n = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  for (const key of Object.keys(db)) {
+    const k = key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    if (k === n || k.endsWith(" " + n) || n.endsWith(" " + k)) return { name: key, ...db[key] };
   }
   return null;
 }

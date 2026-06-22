@@ -55,6 +55,15 @@ export function Pitch({
   // per-player coords (correct formation & placement); else infer rows from the
   // formation string. FotMob x: 0=own goal→1=attack; y: 0-1 across. Our pitch is
   // portrait (GK bottom, attack up), so x→vertical, y→horizontal.
+  // FotMob coords carry only name + shirt (no espnId), so recover each player's
+  // ESPN id by their shirt number from the ESPN line-up — otherwise the photo
+  // lookup falls back to fuzzy name matching and shows the wrong player's face.
+  const espnByShirt = new Map<string, RawLineupPlayer>();
+  [...(lineup.lineup || []), ...(lineup.bench || [])].forEach((pl) => {
+    const sh = String(pl.jersey ?? pl.shirtNumber ?? "").trim();
+    if (sh) espnByShirt.set(sh, pl);
+  });
+
   const placed: { p: RawLineupPlayer; xPct: number; yPct: number }[] =
     coords && coords.length
       ? (() => {
@@ -64,11 +73,15 @@ export function Pitch({
           const xs = coords.map((c) => c.x), ys = coords.map((c) => c.y);
           const minX = Math.min(...xs), maxX = Math.max(...xs), spanX = maxX - minX || 1;
           const minY = Math.min(...ys), maxY = Math.max(...ys), spanY = maxY - minY || 1;
-          return coords.map((c) => ({
-            p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined } as RawLineupPlayer,
-            xPct: 11 + ((c.y - minY) / spanY) * 78,
-            yPct: 90 - ((c.x - minX) / spanX) * 80,
-          }));
+          return coords.map((c) => {
+            const sh = c.shirt != null ? String(c.shirt).trim() : "";
+            const ep = sh ? espnByShirt.get(sh) : undefined;
+            return {
+              p: { name: c.name, jersey: c.shirt != null ? String(c.shirt) : undefined, shirtNumber: c.shirt ?? undefined, espnId: ep?.espnId, position: ep?.position } as RawLineupPlayer,
+              xPct: 11 + ((c.y - minY) / spanY) * 78,
+              yPct: 90 - ((c.x - minX) / spanX) * 80,
+            };
+          });
         })()
       : (() => {
           const rows = buildRows(lineup);

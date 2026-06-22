@@ -46,17 +46,52 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     return () => ro.disconnect();
   }, []);
 
-  // Stop a two-finger pinch from scrolling/zooming the page (the sheet is a scroll
-  // container, so on mobile the gesture would otherwise drag the page up/down
-  // instead of zooming the globe). Non-passive so preventDefault actually applies.
+  // Centered zoom. We change ONLY the altitude (keeping the current lat/lng) via
+  // pointOfView, instead of letting OrbitControls dolly — its dolly drifts the
+  // sphere down as you zoom in and up as you zoom out. Wheel on desktop, pinch on
+  // mobile; both keep the country put. Non-passive so preventDefault stops the
+  // page (the sheet is a scroll container) from scrolling/zooming instead.
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches && e.touches.length >= 2) e.preventDefault();
+    const MIN = 0.2, MAX = 3.4;
+    const onWheel = (e: WheelEvent) => {
+      const g = globeRef.current;
+      if (!g) return;
+      e.preventDefault();
+      const pov = g.pointOfView();
+      const altitude = Math.max(MIN, Math.min(MAX, pov.altitude * Math.exp(e.deltaY * 0.0012)));
+      g.pointOfView({ lat: pov.lat, lng: pov.lng, altitude }, 0);
     };
+    let pinchDist = 0, pinchAlt = 1;
+    const dist = (t: TouchList) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        pinchDist = dist(e.touches);
+        const g = globeRef.current;
+        pinchAlt = g ? g.pointOfView().altitude : 1;
+      }
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length < 2) return;
+      e.preventDefault();
+      const g = globeRef.current;
+      if (!g || pinchDist <= 0) return;
+      const pov = g.pointOfView();
+      const altitude = Math.max(MIN, Math.min(MAX, pinchAlt * (pinchDist / dist(e.touches))));
+      g.pointOfView({ lat: pov.lat, lng: pov.lng, altitude }, 0);
+    };
+    const onTouchEnd = (e: TouchEvent) => { if (e.touches.length < 2) pinchDist = 0; };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: false });
     el.addEventListener("touchmove", onTouchMove, { passive: false });
-    return () => el.removeEventListener("touchmove", onTouchMove);
+    el.addEventListener("touchend", onTouchEnd);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
   }, []);
 
   // Fetch the world polygons once, then keep ONLY the selected country's shape.
@@ -93,12 +128,11 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     const c = g?.controls?.();
     if (!c) return;
     setupDone.current = true;
-    c.enableZoom = true;
-    c.zoomSpeed = 1.1;
+    // We drive zoom ourselves (see the wheel/pinch effect) — OrbitControls' dolly
+    // drifts the sphere vertically on this globe. Leave only rotation to it.
+    c.enableZoom = false;
     c.enablePan = false;
     c.rotateSpeed = 0.45;
-    c.minDistance = 110;
-    c.maxDistance = 480;
     setReady(true);
   };
   useEffect(() => {
@@ -136,8 +170,11 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
   // A pin at the country centroid, always shown. For micro-states (Curaçao, Malta,
   // Singapore) the 110m polygon set has no shape at all, so the pulsing pin is the
   // ONLY thing marking the country — make it bigger then so you can actually find it.
-  const marker = useMemo(() => (facts ? [{ lat: facts.lat, lng: facts.lng }] : []), [facts]);
-  const tiny = !feature || (facts?.area != null && facts.area < 25000);
+  // Only micro-states / countries with no polygon in the 110m set (Curaçao, Malta,
+  // Singapore) get a pin — for normal countries the (now subtle) polygon shows the
+  // shape and a pin would just cover it.
+  const tiny = !feature || (facts?.area != null && facts.area < 20000);
+  const pin = useMemo(() => (facts && tiny ? [{ lat: facts.lat, lng: facts.lng }] : []), [facts, tiny]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
 
   return (
@@ -163,26 +200,26 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
             atmosphereColor="#9ec1ff"
             atmosphereAltitude={0.22}
             polygonsData={polys}
-            polygonAltitude={0.06}
-            polygonCapColor={() => "rgba(255,45,110,.55)"}
-            polygonSideColor={() => "rgba(255,45,110,.35)"}
-            polygonStrokeColor={() => "#ff2d6e"}
+            polygonAltitude={0.025}
+            polygonCapColor={() => "rgba(255,45,110,.2)"}
+            polygonSideColor={() => "rgba(255,45,110,.12)"}
+            polygonStrokeColor={() => "#ff4d86"}
             polygonsTransitionDuration={0}
             polygonLabel={() => `<b>${facts?.name || name}</b>`}
-            pointsData={marker}
+            pointsData={pin}
             pointLat="lat"
             pointLng="lng"
             pointColor={() => "#ff2d6e"}
-            pointAltitude={0.07}
-            pointRadius={tiny ? 1.1 : 0.5}
+            pointAltitude={0.04}
+            pointRadius={0.45}
             pointsMerge={false}
-            ringsData={marker}
+            ringsData={pin}
             ringLat="lat"
             ringLng="lng"
-            ringColor={() => "rgba(255,45,110,0.9)"}
-            ringMaxRadius={tiny ? 6 : 3}
-            ringPropagationSpeed={1.6}
-            ringRepeatPeriod={1100}
+            ringColor={() => "rgba(255,77,134,0.8)"}
+            ringMaxRadius={2.2}
+            ringPropagationSpeed={1.3}
+            ringRepeatPeriod={1300}
           />
         )}
       </div>
