@@ -186,18 +186,19 @@ export function Pitch({
         .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
           white-space:nowrap; max-width:var(--ppl-w,72px); overflow:hidden; text-overflow:ellipsis; }
         .ppl-name-num{ color:var(--ink-3); margin-right:3px; }
-        /* events stacked top-left, rating top-right — clean, like FotMob */
-        .ppl-ev{ position:absolute; left:-3px; top:-3px; display:flex; flex-direction:column; gap:2px; align-items:flex-start; }
-        .ppl-chip{ height:15px; min-width:15px; padding:0 3px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; gap:1px;
-          font-size:9px; font-weight:800; line-height:1; font-family:var(--font-display); box-shadow:0 1px 3px rgba(0,0,0,.4); }
+        /* Small badges tucked into the corners so the face stays visible: events
+           top-right, rating pill at the bottom-right (off the face), star top-left. */
+        .ppl-ev{ position:absolute; right:-2px; top:-2px; display:flex; flex-direction:column; gap:2px; align-items:flex-end; }
+        .ppl-chip{ height:13px; min-width:13px; padding:0 2px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; gap:1px;
+          font-size:8px; font-weight:800; line-height:1; font-family:var(--font-display); box-shadow:0 1px 3px rgba(0,0,0,.5); }
         .ppl-chip.goal{ background:#fff; color:#0a0712; }
         .ppl-chip.assist{ background:var(--cool); color:#fff; }
-        .ppl-chip.sub{ background:rgba(8,6,15,.78); color:#fff; }
-        .ppl-chip.card{ width:10px; min-width:10px; height:14px; border-radius:2px; padding:0; }
+        .ppl-chip.sub{ background:rgba(8,6,15,.82); color:#fff; }
+        .ppl-chip.card{ width:9px; min-width:9px; height:12px; border-radius:2px; padding:0; }
         .ppl-chip.card.y{ background:var(--gold); } .ppl-chip.card.r{ background:var(--loss); }
-        .ppl-rt{ position:absolute; right:-4px; top:-4px; min-width:19px; height:17px; padding:0 4px; border-radius:9px;
-          display:grid; place-items:center; font-size:10px; font-weight:800; color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.45); }
-        .ppl-star{ position:absolute; right:-8px; top:-10px; font-size:11px; color:var(--gold); line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.6); }
+        .ppl-rt{ position:absolute; right:-3px; bottom:-3px; min-width:16px; height:15px; padding:0 3px; border-radius:8px;
+          display:grid; place-items:center; font-size:9px; font-weight:800; color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+        .ppl-star{ position:absolute; left:-5px; top:-6px; font-size:10px; color:var(--gold); line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.6); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
       `}</style>
@@ -252,7 +253,7 @@ function PitchPlayer({
           {goals > 0 && <span className="ppl-chip goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>}
           {assists > 0 && <span className="ppl-chip assist" title="Assist">A{assists > 1 ? assists : ""}</span>}
           {card && <span className={`ppl-chip card ${card === "red" ? "r" : "y"}`} title={card === "red" ? "Rött kort" : "Gult kort"} />}
-          {subOut !== undefined && <span className="ppl-chip sub" title="Utbytt">↓{subOut}'</span>}
+          {subOut !== undefined && <span className="ppl-chip sub" title={`Utbytt ${subOut}'`}>↓{subOut}</span>}
         </div>
         {rating != null && (
           <span className="ppl-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>{rating.toFixed(1)}</span>

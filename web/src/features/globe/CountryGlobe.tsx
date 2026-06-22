@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Globe from "react-globe.gl";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
+import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
 
 // 3D globe that zooms into the country + shows facts. Facts/centroid come from a
 // bundled dataset (no flaky runtime API). We draw ALL country borders for context
 // and highlight the selected one. Lazy-loaded so Three.js never lands in the main
-// bundle. 50m Natural Earth (≈242 nations) so even micro-states — Cape Verde,
-// Curaçao, Malta — have a real polygon (the 110m set drops them).
-const GEOJSON_URL = "https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_50m_admin_0_countries.geojson";
+// bundle. We use the LIGHT 110m world set (≈177 simple polygons) for smoothness,
+// and bundle the couple of WC nations it omits (Cape Verde, Curaçao) separately.
+const GEOJSON_URL = "https://vasturiano.github.io/react-globe.gl/example/datasets/ne_110m_admin_0_countries.geojson";
 const EARTH_TEXTURE = "https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,11 +22,11 @@ const FACTS_BY_CCA3: Record<string, { lat: number; lng: number; area: number | n
 for (const f of Object.values(COUNTRY_FACTS)) FACTS_BY_CCA3[f.cca3] = { lat: f.lat, lng: f.lng, area: f.area };
 
 // Label size from country area: big nations get big codes, tiny ones small codes —
-// so when zoomed out only the large labels are legible and the rest "appear" as you
-// zoom in. (LOD by zoom also hides the smallest until you're close — see `labels`.)
+// so when zoomed out only the large labels are legible and the small ones "appear"
+// (become readable) as you zoom in, without any per-frame recompute.
 function labelSizeForArea(area?: number | null): number {
-  if (!area || area <= 0) return 0.4;
-  return Math.max(0.34, Math.min(1.0, 0.34 + Math.sqrt(area) / 3500));
+  if (!area || area <= 0) return 0.42;
+  return Math.max(0.36, Math.min(1.0, 0.36 + Math.sqrt(area) / 3600));
 }
 
 const norm = (s?: string) =>
@@ -37,8 +38,7 @@ const norm = (s?: string) =>
 function altitudeForArea(area?: number | null): number {
   if (!area || area <= 0) return 1.6;
   const alt = 0.6 + 0.00058 * Math.sqrt(area);
-  // Don't dive too close on micro-states — keep some ocean/neighbour context so a
-  // tiny island nation doesn't fill the view with empty water.
+  // Don't dive too close on micro-states — keep some ocean/neighbour context.
   return Math.max(0.8, Math.min(2.85, alt));
 }
 
@@ -51,7 +51,6 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
   const [size, setSize] = useState(320);
   const [ready, setReady] = useState(false);
   const [features, setFeatures] = useState<Feat[]>(FEATURES_CACHE || []);
-  const [zoomAlt, setZoomAlt] = useState(1.5); // coarse current altitude, for label LOD
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
 
@@ -65,17 +64,20 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     return () => ro.disconnect();
   }, []);
 
-  // Fetch all world polygons once (cached across opens).
+  // Fetch all world polygons once (cached across opens), plus the bundled extras.
   useEffect(() => {
     if (FEATURES_CACHE) { setFeatures(FEATURES_CACHE); return; }
     let alive = true;
     fetch(GEOJSON_URL)
       .then((r) => r.json())
       .then((d) => {
-        FEATURES_CACHE = d.features || [];
+        FEATURES_CACHE = [...(d.features || []), ...(EXTRA_COUNTRIES as Feat[])];
         if (alive) setFeatures(FEATURES_CACHE!);
       })
-      .catch(() => {});
+      .catch(() => {
+        FEATURES_CACHE = [...(EXTRA_COUNTRIES as Feat[])];
+        if (alive) setFeatures(FEATURES_CACHE!);
+      });
     return () => {
       alive = false;
     };
@@ -107,8 +109,6 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     if (!el) return;
     const MIN = 0.2, MAX = 3.4;
     const ctrl = () => globeRef.current?.controls?.();
-    // Coarse-bucket the altitude into the LOD state (only a few recomputes per zoom).
-    const reportAlt = (a: number) => setZoomAlt((prev) => { const b = Math.round(a * 3) / 3; return prev === b ? prev : b; });
     const onWheel = (e: WheelEvent) => {
       const g = globeRef.current;
       if (!g) return;
@@ -116,7 +116,6 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
       const pov = g.pointOfView();
       const altitude = Math.max(MIN, Math.min(MAX, pov.altitude * Math.exp(e.deltaY * 0.0012)));
       g.pointOfView({ lat: pov.lat, lng: pov.lng, altitude }, 0);
-      reportAlt(altitude);
     };
     let pinchDist = 0, pinchAlt = 1;
     const dist = (t: TouchList) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
@@ -137,14 +136,11 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
       const pov = g.pointOfView();
       const altitude = Math.max(MIN, Math.min(MAX, pinchAlt * (pinchDist / dist(e.touches))));
       g.pointOfView({ lat: pov.lat, lng: pov.lng, altitude }, 0);
-      reportAlt(altitude);
     };
     const endPinch = (e: TouchEvent) => {
       if (e.touches.length < 2) pinchDist = 0;
-      // Re-enable rotation ONLY when every finger is lifted. If we re-enabled it
-      // while one finger of the pinch is still down, OrbitControls would treat
-      // that lone finger as a fresh rotate from a stale anchor and the globe would
-      // "shoot off" the instant you stop zooming.
+      // Re-enable rotation ONLY when every finger is lifted, or the lone remaining
+      // finger gets treated as a rotate from a stale anchor and the globe shoots off.
       if (e.touches.length === 0) {
         const c = ctrl();
         if (c) c.enableRotate = true;
@@ -200,32 +196,27 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     const spin = 34;
     g.pointOfView({ lat: facts.lat, lng: facts.lng - spin, altitude: startAlt }, 0);
     const t = setTimeout(() => g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: targetAlt }, 2200), 350);
-    setZoomAlt(Math.round(targetAlt * 3) / 3); // reflect the zoomed-in level for label LOD
     return () => clearTimeout(t);
   }, [iso2, facts, ready, size]);
 
-  // Country code labels (ISO3 — initials, never the full name) on EVERY country,
-  // sized by area. Level-of-detail by zoom: important/bigger nations (low LABELRANK)
-  // show even when zoomed out; smaller ones only appear as you zoom in. The selected
-  // country is always shown, bigger and pink.
+  // Country code labels (ISO3 — initials, never the full name) on every country,
+  // sized by area. Static (no per-zoom recompute → no jank); the size gives a
+  // natural level-of-detail (tiny labels only become legible once you zoom in).
+  // The selected country is always shown, bigger and pink.
   const labels = useMemo(() => {
     const arr: { lat: number; lng: number; text: string; sel: boolean; sz: number }[] = [];
     for (const f of features) {
       const p = f.properties || {};
+      const code = p.ADM0_A3;
+      const fc = code ? FACTS_BY_CCA3[code] : null;
+      if (!fc || !code) continue;
       const sel = f === selected;
-      const fc = p.ADM0_A3 ? FACTS_BY_CCA3[p.ADM0_A3] : null;
-      if (!fc) continue;
-      // Show a label once you've zoomed in past a per-country threshold (bigger /
-      // more important countries surface earlier, at higher altitude).
-      const lr = p.LABELRANK ?? 6;
-      const showBelow = 3.6 - (lr - 2) * 0.42;
-      if (!sel && zoomAlt > showBelow) continue;
       const sz = labelSizeForArea(fc.area);
-      arr.push({ lat: fc.lat, lng: fc.lng, text: p.ADM0_A3, sel, sz: sel ? Math.max(sz * 1.5, 0.85) : sz });
+      arr.push({ lat: fc.lat, lng: fc.lng, text: code, sel, sz: sel ? Math.max(sz * 1.5, 0.85) : sz });
     }
     if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: iso2, sel: true, sz: 0.9 });
     return arr;
-  }, [features, selected, facts, iso2, zoomAlt]);
+  }, [features, selected, facts, iso2]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
 
   return (
@@ -252,9 +243,9 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
             atmosphereAltitude={0.22}
             polygonsData={features}
             polygonAltitude={(f: Feat) => (f === selected ? 0.02 : 0.005)}
-            polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.3)" : "rgba(0,0,0,0)")}
+            polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.32)" : "rgba(0,0,0,0)")}
             polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.18)" : "rgba(0,0,0,0)")}
-            polygonStrokeColor={(f: Feat) => (f === selected ? "#ff4d86" : "rgba(255,255,255,.26)")}
+            polygonStrokeColor={(f: Feat) => (f === selected ? "#ff5c97" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
             labelsData={labels}
