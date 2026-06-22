@@ -46,6 +46,19 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
     return () => ro.disconnect();
   }, []);
 
+  // Stop a two-finger pinch from scrolling/zooming the page (the sheet is a scroll
+  // container, so on mobile the gesture would otherwise drag the page up/down
+  // instead of zooming the globe). Non-passive so preventDefault actually applies.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches.length >= 2) e.preventDefault();
+    };
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => el.removeEventListener("touchmove", onTouchMove);
+  }, []);
+
   // Fetch the world polygons once, then keep ONLY the selected country's shape.
   useEffect(() => {
     let alive = true;
@@ -120,6 +133,11 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
   }, [iso2, facts, ready, size]);
 
   const polys = useMemo(() => (feature ? [feature] : []), [feature]);
+  // A pin at the country centroid, always shown. For micro-states (Curaçao, Malta,
+  // Singapore) the 110m polygon set has no shape at all, so the pulsing pin is the
+  // ONLY thing marking the country — make it bigger then so you can actually find it.
+  const marker = useMemo(() => (facts ? [{ lat: facts.lat, lng: facts.lng }] : []), [facts]);
+  const tiny = !feature || (facts?.area != null && facts.area < 25000);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
 
   return (
@@ -151,6 +169,20 @@ export default function CountryGlobe({ iso, name }: { iso?: string | null; name:
             polygonStrokeColor={() => "#ff2d6e"}
             polygonsTransitionDuration={0}
             polygonLabel={() => `<b>${facts?.name || name}</b>`}
+            pointsData={marker}
+            pointLat="lat"
+            pointLng="lng"
+            pointColor={() => "#ff2d6e"}
+            pointAltitude={0.07}
+            pointRadius={tiny ? 1.1 : 0.5}
+            pointsMerge={false}
+            ringsData={marker}
+            ringLat="lat"
+            ringLng="lng"
+            ringColor={() => "rgba(255,45,110,0.9)"}
+            ringMaxRadius={tiny ? 6 : 3}
+            ringPropagationSpeed={1.6}
+            ringRepeatPeriod={1100}
           />
         )}
       </div>

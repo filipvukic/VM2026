@@ -36,7 +36,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   return (
     <Sheet {...chrome} accent={p.color}>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <Avatar name={p.name} photo={p.photo} color={p.color} size={58} ring={p.rank <= 3 ? "var(--gold)" : null} />
+        <Avatar name={p.name} photo={p.photo} color={p.color} size={58} ring={p.rank <= 3 ? "var(--gold)" : null} zoomable />
         <div style={{ flex: 1 }}>
           <div className="display" style={{ fontSize: 28 }}>{p.name}</div>
           <div className="dim" style={{ fontWeight: 700, fontSize: 13 }}>#{p.rank} i ligan</div>

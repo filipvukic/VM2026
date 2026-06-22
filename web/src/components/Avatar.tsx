@@ -1,5 +1,6 @@
 import { asset } from "../lib/assets";
 import { initials } from "../lib/format";
+import { useLightbox } from "../state/lightbox";
 
 interface AvatarProps {
   name: string;
@@ -7,13 +8,17 @@ interface AvatarProps {
   color?: string;
   size?: number;
   ring?: string | null; // ring color (e.g. rank highlight)
+  zoomable?: boolean; // tap the photo to open it large in the lightbox
 }
 
-export function Avatar({ name, photo, color = "#7b6cff", size = 40, ring }: AvatarProps) {
+export function Avatar({ name, photo, color = "#7b6cff", size = 40, ring, zoomable = false }: AvatarProps) {
   const border = ring ? `2px solid ${ring}` : "1px solid var(--line-2)";
+  const openLightbox = useLightbox((s) => s.open);
+  const canZoom = zoomable && !!photo;
   return (
     <span
       title={name}
+      onClick={canZoom ? () => openLightbox(asset(photo!), name) : undefined}
       style={{
         width: size,
         height: size,
@@ -30,6 +35,7 @@ export function Avatar({ name, photo, color = "#7b6cff", size = 40, ring }: Avat
         fontSize: size * 0.4,
         color: "#fff",
         letterSpacing: 0,
+        cursor: canZoom ? "zoom-in" : undefined,
       }}
     >
       {photo ? (

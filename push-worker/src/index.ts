@@ -24,6 +24,32 @@ interface Env {
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=";
 
+// Orientation-independent key for a team pair, embedded in the push URL so a tap
+// opens the right match. MUST stay in sync with matchPairKey() in the frontend's
+// lib/espnLive.ts (same norm + canon), since the app resolves the key against OUR
+// fixtures.
+function norm(s: string): string {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]/g, "");
+}
+const CANON: Record<string, string> = {
+  usa: "usa", unitedstates: "usa",
+  turkey: "turkiye", turkiye: "turkiye",
+  capeverde: "capeverde", capeverdeislands: "capeverde",
+  bosniaandherzegovina: "bosnia", bosniaherzegovina: "bosnia",
+  drcongo: "congodr", congodr: "congodr", democraticrepublicofcongo: "congodr",
+  southkorea: "korea", korearepublic: "korea", republicofkorea: "korea",
+  ivorycoast: "ivorycoast", cotedivoire: "ivorycoast",
+};
+function matchPairKey(home: string, away: string): string {
+  const c = (n: string) => CANON[n] || n;
+  return [c(norm(home)), c(norm(away))].sort().join("|");
+}
+
 function utcDates(nowMs: number): string[] {
   return [-1, 0, 1].map((off) => {
     const d = new Date(nowMs + off * 86400000);
@@ -198,6 +224,7 @@ async function fetchEvents(): Promise<LiveEvent[]> {
 
 interface Alert {
   eid: string;
+  key: string; // team-pair key → deep-links the notification to the match
   kind: "goal" | "ko" | "ft";
   total: number;
   title: string;
@@ -219,12 +246,13 @@ async function poll(env: Env): Promise<void> {
     const p = prev[e.id];
     if (!p) continue; // first time we see it — baseline only, no alert
     const score = `${e.homeName} ${e.home}–${e.away} ${e.awayName}`;
+    const key = matchPairKey(e.homeName, e.awayName);
     if (e.state === "in" && g > p.g) {
-      alerts.push({ eid: e.id, kind: "goal", total: g, title: `⚽ Mål! ${score}`, body: e.note });
+      alerts.push({ eid: e.id, key, kind: "goal", total: g, title: `⚽ Mål! ${score}`, body: e.note });
     } else if (p.state === "pre" && e.state === "in") {
-      alerts.push({ eid: e.id, kind: "ko", total: g, title: `🟢 Avspark: ${e.homeName} – ${e.awayName}`, body: e.note });
+      alerts.push({ eid: e.id, key, kind: "ko", total: g, title: `🟢 Avspark: ${e.homeName} – ${e.awayName}`, body: e.note });
     } else if (p.state !== "post" && e.state === "post") {
-      alerts.push({ eid: e.id, kind: "ft", total: g, title: `Slut: ${score}`, body: e.note });
+      alerts.push({ eid: e.id, key, kind: "ft", total: g, title: `Slut: ${score}`, body: e.note });
     }
   }
 
@@ -255,11 +283,13 @@ async function poll(env: Env): Promise<void> {
   if (!recipients.length) return;
 
   const sends: Promise<void>[] = [];
+  const origin = (env.ALLOW_ORIGIN || "").replace(/\/$/, "");
   for (const a of alerts) {
     const tag = `${a.kind}-${a.eid}-${a.total}`;
+    const url = a.key ? `${origin}/?m=${encodeURIComponent(a.key)}` : origin || "/";
     for (const s of recipients) {
       sends.push(
-        sendPush(env, s.rec.subscription, { title: a.title, body: a.body, tag, url: env.ALLOW_ORIGIN }).catch(
+        sendPush(env, s.rec.subscription, { title: a.title, body: a.body, tag, url }).catch(
           async (err: any) => {
             if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
           }

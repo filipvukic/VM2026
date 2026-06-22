@@ -19,14 +19,26 @@ export function depthScore(code: string): number {
   if (c.startsWith("DM") || c === "CDM") return 2;
   if (c.includes("B") || c.startsWith("CD") || c.startsWith("CB") || c.startsWith("D")) return 1;
   if (c.startsWith("AM") || c === "CAM") return 3.4;
+  // An out-and-out striker (plain F/ST/CF) is the most advanced — rank it just
+  // above the withdrawn forwards (CF-L/CF-R), so e.g. a 3-4-2-1 puts the lone "F"
+  // in the front row and the two "CF-L/CF-R" in the band behind (not the reverse).
+  if (c === "F" || c === "ST" || c === "CF") return 4.2;
   if (c.startsWith("F") || c.startsWith("ST") || c.startsWith("CF") || c.startsWith("LW") || c.startsWith("RW") || c.endsWith("W")) return 4;
   return 3; // generic midfield (M/CM/LM/RM all land here)
 }
 
-// Left/centre/right hint for ordering players across a row.
+// Left→right ordering hint for placing players across a row. ESPN encodes width
+// precisely: a prefix L/R = a WIDE player (LB/LM/LW … RB/RM/RW), while a suffix
+// -L/-R = the centre-left/centre-right of a pair (CD-L, CM-R …). So a back four
+// orders LB < CD-L < CD-R < RB — not CD-L < LB (which a coarse "contains L" gives,
+// the old bug that put full-backs inside the centre-backs pre-match).
 export function sideScore(code: string): number {
   const c = (code || "").toUpperCase();
-  return c.includes("L") ? -1 : c.includes("R") ? 1 : 0;
+  if (c.startsWith("L")) return -2; // wide left
+  if (c.startsWith("R")) return 2; // wide right
+  if (c.endsWith("L")) return -1; // centre-left of a pair
+  if (c.endsWith("R")) return 1; // centre-right of a pair
+  return 0; // central
 }
 
 // Build the pitch rows back-to-front: [GK], defence, midfield band(s), attack.

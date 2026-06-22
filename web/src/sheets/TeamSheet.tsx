@@ -162,6 +162,10 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
   });
   const getRating = (name: string): number | null =>
     rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+  // Best rating across the WHOLE match (both teams) — so the blue+star marks the
+  // match's player, not just this team's best. If the opponent had the best, none
+  // of this team's players gets the star (correct).
+  const matchMaxRating = (detail?.players || []).reduce((mx, p) => (p.rating != null && p.rating > mx ? p.rating : mx), 0);
 
   const opp = isHome ? m.away : m.home;
   const oppT = opp ? ds.teams[opp] : null;
@@ -180,35 +184,29 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
       <div className="dim" style={{ fontSize: 12, marginBottom: 10 }}>
         mot {oppT?.name || "?"} · {svDayMonth(m.kickoff)}{formation ? ` · ${formation}` : ""}
       </div>
-      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} />
+      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} />
       {lu.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 16 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>
-            {(() => {
-              const squadMax = [...(lu.lineup || []), ...lu.bench].reduce((mx, pl) => {
-                const r = getRating(pl.name);
-                return r != null && r > mx ? r : mx;
-              }, 0);
-              return lu.bench.map((p, i) => {
-                const came = subIn.get(p.name);
-                const nm = (p.name || "").toLowerCase();
-                return (
-                  <BenchPlayer
-                    key={i}
-                    p={p}
-                    photo={lineupPhoto(p.name, p.espnId, db)}
-                    rating={getRating(p.name)}
-                    goals={goalNames.has(nm) ? 1 : 0}
-                    assists={assistNames.has(nm) ? 1 : 0}
-                    cameAt={came?.at}
-                    forName={came?.forName}
-                    motm={squadMax > 0 && getRating(p.name) === squadMax}
-                    onClick={() => openFb(p.name, p.espnId)}
-                  />
-                );
-              });
-            })()}
+            {lu.bench.map((p, i) => {
+              const came = subIn.get(p.name);
+              const nm = (p.name || "").toLowerCase();
+              return (
+                <BenchPlayer
+                  key={i}
+                  p={p}
+                  photo={lineupPhoto(p.name, p.espnId, db)}
+                  rating={getRating(p.name)}
+                  goals={goalNames.has(nm) ? 1 : 0}
+                  assists={assistNames.has(nm) ? 1 : 0}
+                  cameAt={came?.at}
+                  forName={came?.forName}
+                  motm={matchMaxRating > 0 && getRating(p.name) === matchMaxRating}
+                  onClick={() => openFb(p.name, p.espnId)}
+                />
+              );
+            })}
           </div>
         </div>
       )}

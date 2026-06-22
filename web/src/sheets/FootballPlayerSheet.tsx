@@ -56,7 +56,7 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
   return (
     <Sheet {...chrome} accent="var(--cool)" maxWidth={520}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <PlayerImg src={photo} name={p?.name || name} size={88} radius={18} fontSize={30} />
+        <PlayerImg src={photo} name={p?.name || name} size={88} radius={18} fontSize={30} zoomable />
         <div style={{ minWidth: 0 }}>
           <div className="display" style={{ fontSize: 24, lineHeight: 1 }}>{p?.name || name}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 8, flexWrap: "wrap" }}>

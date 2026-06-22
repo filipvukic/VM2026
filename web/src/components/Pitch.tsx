@@ -36,6 +36,7 @@ export function Pitch({
   onPlayer,
   getRating,
   coords,
+  motmRating,
 }: {
   lineup: RawLineup;
   color: string;
@@ -44,6 +45,10 @@ export function Pitch({
   onPlayer: (name: string, espnId?: string | null) => void;
   getRating?: (name: string) => number | null;
   coords?: { name: string; shirt?: string | number | null; x: number; y: number }[];
+  // The highest rating in the WHOLE match (both teams). When given, only the
+  // single match-best player gets the blue pill + star — so a team's own best
+  // player who wasn't the best on the pitch shows a normal (green/orange) rating.
+  motmRating?: number | null;
 }) {
   const db = usePlayersDb();
   // Each placed player → its position on the pitch (%). Prefer FotMob's exact
@@ -111,13 +116,15 @@ export function Pitch({
   match.subs.filter((s) => s.team === teamCode).forEach((s) => {
     if (s.playerOut) subOut.set(s.playerOut.toLowerCase(), s.minute ?? "");
   });
-  // highest rating across XI + bench = player of the match (gets the blue + star)
+  // Player of the match gets the blue pill + star. Prefer the match-wide best
+  // (passed in); else fall back to this team's best across XI + bench.
   let maxRating = 0;
   if (getRating) {
     const consider = (nm: string) => { const r = getRating(nm); if (r != null && r > maxRating) maxRating = r; };
     placed.forEach(({ p }) => consider(p.name));
     (lineup.bench || []).forEach((p) => consider(p.name));
   }
+  const starRating = motmRating != null ? motmRating : maxRating;
 
   return (
     <div className="pitch" style={{ ["--ppl-w" as string]: `${wPx}px`, ["--ppl-card" as string]: `${cardPx}px` } as React.CSSProperties}>
@@ -137,7 +144,7 @@ export function Pitch({
             card={cardByName.get(nm)}
             subOut={subOut.get(nm)}
             rating={getRating ? getRating(p.name) : null}
-            motm={!!getRating && maxRating > 0 && getRating(p.name) === maxRating}
+            motm={!!getRating && starRating > 0 && getRating(p.name) === starRating}
             onClick={() => onPlayer(p.name, p.espnId)}
           />
         );

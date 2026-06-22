@@ -245,6 +245,10 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   })();
   const getRating = (name: string): number | null =>
     rFull.get(ratingNorm(name)) ?? rLast.get(ratingNorm((name || "").split(" ").slice(-1)[0])) ?? null;
+  // Highest rating across the WHOLE match (both teams) → the one player of the
+  // match. Passed to the pitch/bench so the blue+star marks the match's best, not
+  // merely this team's best.
+  const matchMaxRating = (detail?.players || []).reduce((mx, p) => (p.rating != null && p.rating > mx ? p.rating : mx), 0);
   // FotMob formation + exact coords are accurate (ESPN's is often wrong, e.g.
   // 3-1-4-2 vs 3-4-1-2). Prefer the FotMob coords for placement.
   const fmFormation = detail?.formations?.[side === "h" ? "home" : "away"];
@@ -288,35 +292,29 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         (fmFormation || lu?.formation) && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {fmFormation || lu?.formation}</span></div>
       )}
-      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} />
+      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} />
       {lu?.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(82px,1fr))", gap: 10 }}>
-            {(() => {
-              const squadMax = [...(lu.lineup || []), ...lu.bench].reduce((mx, pl) => {
-                const r = getRating(pl.name);
-                return r != null && r > mx ? r : mx;
-              }, 0);
-              return lu.bench.map((p, i) => {
-                const came = subIn.get(p.name);
-                const nm = (p.name || "").toLowerCase();
-                return (
-                  <BenchPlayer
-                    key={i}
-                    p={p}
-                    photo={lineupPhoto(p.name, p.espnId, db)}
-                    rating={getRating(p.name)}
-                    goals={goalNames.has(nm) ? 1 : 0}
-                    assists={assistNames.has(nm) ? 1 : 0}
-                    cameAt={came?.at}
-                    forName={came?.forName}
-                    motm={squadMax > 0 && getRating(p.name) === squadMax}
-                    onClick={() => openFb(p.name, p.espnId)}
-                  />
-                );
-              });
-            })()}
+            {lu.bench.map((p, i) => {
+              const came = subIn.get(p.name);
+              const nm = (p.name || "").toLowerCase();
+              return (
+                <BenchPlayer
+                  key={i}
+                  p={p}
+                  photo={lineupPhoto(p.name, p.espnId, db)}
+                  rating={getRating(p.name)}
+                  goals={goalNames.has(nm) ? 1 : 0}
+                  assists={assistNames.has(nm) ? 1 : 0}
+                  cameAt={came?.at}
+                  forName={came?.forName}
+                  motm={matchMaxRating > 0 && getRating(p.name) === matchMaxRating}
+                  onClick={() => openFb(p.name, p.espnId)}
+                />
+              );
+            })}
           </div>
         </div>
       )}
@@ -370,11 +368,7 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
           <MatchStatsBars m={m} ds={ds} />
         ) : detail.team.length > 0 ? (
           <div className="card card-pad" style={{ marginTop: 14 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13 }}><Flag iso={home?.iso} code={m.home} size={20} />{home?.name}</span>
-              <span className="kicker">Lagstatistik</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13, flexDirection: "row-reverse" }}><Flag iso={away?.iso} code={m.away} size={20} />{away?.name}</span>
-            </div>
+            <StatTeamsHeader home={home} away={away} homeCode={m.home} awayCode={m.away} label="Lagstatistik" />
             {detail.team.map((t) => <DetailBar key={t.key} label={t.label} h={t.home} a={t.away} />)}
           </div>
         ) : null}
@@ -443,15 +437,7 @@ function MatchStatsBars({ m, ds }: { m: Match; ds: Dataset }) {
   const shown = rows.filter(([, h, a]) => h != null || a != null);
   return (
     <div className="card card-pad" style={{ marginTop: 14 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13 }}>
-          <Flag iso={home?.iso} code={m.home} size={20} />{home?.name}
-        </span>
-        <span className="kicker">Statistik</span>
-        <span style={{ display: "flex", alignItems: "center", gap: 7, fontWeight: 800, fontSize: 13, flexDirection: "row-reverse" }}>
-          <Flag iso={away?.iso} code={m.away} size={20} />{away?.name}
-        </span>
-      </div>
+      <StatTeamsHeader home={home} away={away} homeCode={m.home} awayCode={m.away} label="Statistik" />
       {shown.length ? (
         shown.map(([label, h, a]) => <StatBar key={label} label={label} h={h ?? 0} a={a ?? 0} />)
       ) : (
@@ -466,6 +452,32 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
     <div className="card card-pad" style={{ marginTop: 14 }}>
       <div className="kicker" style={{ marginBottom: 12 }}>{title}</div>
       {children}
+    </div>
+  );
+}
+
+// Header for the team-stats card: flag + name on each side, label centred. Uses a
+// 1fr/auto/1fr grid with min-width:0 so a long national-team name wraps onto two
+// lines instead of overflowing the card or shoving the centre label off (the old
+// flex+space-between did the latter for names like "Bosnia-Hercegovina").
+function StatTeamsHeader({ home, away, homeCode, awayCode, label }: {
+  home: { iso?: string | null; name?: string } | null;
+  away: { iso?: string | null; name?: string } | null;
+  homeCode: string | null;
+  awayCode: string | null;
+  label: string;
+}) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: 8, marginBottom: 14 }}>
+      <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0, fontWeight: 800, fontSize: 13 }}>
+        <Flag iso={home?.iso} code={homeCode} size={20} />
+        <span style={{ minWidth: 0, lineHeight: 1.15, overflowWrap: "anywhere" }}>{home?.name}</span>
+      </span>
+      <span className="kicker" style={{ whiteSpace: "nowrap" }}>{label}</span>
+      <span style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0, fontWeight: 800, fontSize: 13, flexDirection: "row-reverse", textAlign: "right" }}>
+        <Flag iso={away?.iso} code={awayCode} size={20} />
+        <span style={{ minWidth: 0, lineHeight: 1.15, overflowWrap: "anywhere" }}>{away?.name}</span>
+      </span>
     </div>
   );
 }

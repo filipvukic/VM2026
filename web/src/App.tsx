@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Nav, TopNav, type TabId } from "./components/Nav";
 import { SheetHost } from "./sheets/SheetHost";
 import { StandingsView } from "./views/StandingsView";
@@ -10,10 +10,29 @@ import { InfoView } from "./views/InfoView";
 import { InsightsView } from "./features/insights/InsightsView";
 import { SearchCommand } from "./features/search/SearchCommand";
 import { NotificationWatcher } from "./features/notifications/NotificationWatcher";
+import { Lightbox } from "./components/Lightbox";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
 import { isLive } from "./lib/liveState";
 import { asset } from "./lib/assets";
+import { matchPairKey } from "./lib/espnLive";
+import type { Dataset } from "./data/types";
+
+// Resolve which match a notification points at. Foreground alerts carry our own
+// match id (?mid=); push alerts from the worker carry a team-pair key (?m=, the
+// only stable id the worker shares with us). Returns the match id or null.
+function matchFromParams(ds: Dataset, params: URLSearchParams): string | null {
+  const mid = params.get("mid");
+  if (mid && ds.allMatches.some((m) => m.id === mid)) return mid;
+  const key = params.get("m");
+  if (key) {
+    const found = ds.allMatches.find(
+      (m) => m.home && m.away && matchPairKey(ds.teams[m.home]?.name || m.home, ds.teams[m.away]?.name || m.away) === key
+    );
+    return found?.id ?? null;
+  }
+  return null;
+}
 
 export default function App() {
   const ds = useData();
@@ -32,6 +51,37 @@ export default function App() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // Notification → match. Two paths: (1) the app was launched/reopened from a
+  // notification, so the deep-link is in the URL (?mid=/?m=) — open it once data
+  // is loaded, then strip the param; (2) the app is already open and the service
+  // worker posts the clicked notification's URL — resolve and open it live.
+  const handledUrl = useRef(false);
+  useEffect(() => {
+    if (handledUrl.current || !ds.allMatches.length) return;
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has("mid") && !params.has("m")) { handledUrl.current = true; return; }
+    const id = matchFromParams(ds, params);
+    handledUrl.current = true;
+    if (id) openMatch(id);
+    window.history.replaceState(null, "", window.location.pathname);
+  }, [ds, openMatch]);
+
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+    const onMsg = (e: MessageEvent) => {
+      if (e.data?.type !== "open-match" || !e.data.url) return;
+      try {
+        const url = new URL(e.data.url, window.location.origin);
+        const id = matchFromParams(ds, url.searchParams);
+        if (id) openMatch(id);
+      } catch {
+        /* ignore malformed url */
+      }
+    };
+    navigator.serviceWorker.addEventListener("message", onMsg);
+    return () => navigator.serviceWorker.removeEventListener("message", onMsg);
+  }, [ds, openMatch]);
 
   return (
     <div className="app">
@@ -81,6 +131,7 @@ export default function App() {
       {searchOpen && <SearchCommand onClose={() => setSearchOpen(false)} />}
       <NotificationWatcher />
       <SheetHost />
+      <Lightbox />
     </div>
   );
 }

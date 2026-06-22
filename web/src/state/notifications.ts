@@ -119,14 +119,15 @@ function swReady(): Promise<ServiceWorkerRegistration | null> {
   ]);
 }
 
-export async function fireNotification(title: string, body: string, tag: string) {
+export async function fireNotification(title: string, body: string, tag: string, matchId?: string) {
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const opts: NotificationOptions & { renotify?: boolean } = {
     tag,
     renotify: true,
     icon: "/images/icon-192.png",
     badge: "/images/icon-192.png",
-    data: { url: "/" },
+    // Deep-link to the match so a tap opens it (the SW reads data.url on click).
+    data: { url: matchId ? `/?mid=${encodeURIComponent(matchId)}` : "/" },
   };
   if (body) opts.body = body; // omit empty body so there's no blank line
 

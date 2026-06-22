@@ -37,12 +37,12 @@ export function NotificationWatcher() {
         const h = name(m.home, m.fromA), a = name(m.away, m.fromB);
         const wentLive = p.status !== "live" && m.status === "live";
         if (m.status === "live" && cur.g > p.g) {
-          fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, `goal-${m.id}-${cur.g}`);
+          fireNotification(`⚽ Mål! ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, `goal-${m.id}-${cur.g}`, m.id);
         } else if (wentLive && sinceKo < 12 * 60000) {
           // kickoff alert only right when it kicks off (not late on reopen)
-          fireNotification(`🟢 Avspark: ${h} – ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ko-" + m.id);
+          fireNotification(`🟢 Avspark: ${h} – ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ko-" + m.id, m.id);
         } else if (p.status !== "played" && m.status === "played") {
-          fireNotification(`Slut: ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ft-" + m.id);
+          fireNotification(`Slut: ${h} ${m.ga}–${m.gb} ${a}`, m.group ? `Grupp ${m.group}` : m.round, "ft-" + m.id, m.id);
         }
       }
       if (!p || p.g !== cur.g || p.status !== cur.status) {
