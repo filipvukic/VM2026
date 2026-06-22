@@ -169,7 +169,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
   // shirt → FotMob player id (this team), for the correct/official FotMob photo.
   const fotmobIdByShirt = new Map<string, string>();
   (detail?.players || []).forEach((p) => {
-    if (p.tla === code && p.shirt != null && p.optaId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.optaId));
+    if (p.tla === code && p.shirt != null && p.fmId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.fmId));
   });
 
   const opp = isHome ? m.away : m.home;

@@ -250,6 +250,7 @@ export type CoachesDb = Record<string, Coach>; // keyed by team TLA
 export interface MatchTeamStat { key: string; label: string; home: number | string; away: number | string }
 export interface MatchPlayerStat {
   optaId: string;
+  fmId?: string; // FotMob player id — keys FotMob's player-image CDN (≠ optaId)
   name: string;
   tla: string | null;
   gk: boolean;
@@ -280,7 +281,7 @@ export interface MatchStatsDetail {
 }
 export interface MatchStatsIndex {
   fixtures: Record<string, { h: string; a: string; d: string }>;
-  players: Record<string, { opta: string; name: string; fx: { id: string; r: number | null }[] }>;
+  players: Record<string, { opta: string; fmId?: string; name: string; fx: { id: string; r: number | null }[] }>;
 }
 
 export interface OddsFile {

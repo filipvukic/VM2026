@@ -118,6 +118,9 @@ def extract_players(content, tla_of):
         ordered = {lbl: flat[lbl] for lbl in order if lbl in flat}
         out.append({
             "optaId": str(p.get("optaId") or ""),
+            # FotMob's own player id (the playerStats key / p.id) — the one its
+            # player-image CDN is keyed by. Distinct from optaId; needed for photos.
+            "fmId": str(p.get("id") or pid or ""),
             "name": p.get("name"),
             "tla": tla_of(p.get("teamId")),
             "gk": bool(p.get("isGoalkeeper")),
@@ -320,7 +323,9 @@ def rebuild_index(fixtures):
             if not p.get("name") or p.get("rating") is None:
                 continue
             key = norm(p["name"])
-            entry = idx["players"].setdefault(key, {"opta": p.get("optaId"), "name": p["name"], "fx": []})
+            entry = idx["players"].setdefault(key, {"opta": p.get("optaId"), "fmId": p.get("fmId"), "name": p["name"], "fx": []})
+            if not entry.get("fmId") and p.get("fmId"):
+                entry["fmId"] = p.get("fmId")
             entry["fx"].append({"id": fid, "r": p.get("rating")})
     # most-recent match first
     for e in idx["players"].values():

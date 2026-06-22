@@ -4,7 +4,7 @@ import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Flag } from "../lib/flags";
 import { PlayerImg } from "../components/PlayerImg";
-import { findPlayer, bestPhoto, espnHeadshot } from "../lib/playerPhoto";
+import { findPlayer, bestPhoto, espnHeadshot, fotmobImage } from "../lib/playerPhoto";
 import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
 import { useStatsIndex, useMatchStats } from "../state/matchStats";
@@ -44,7 +44,12 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
   const p = findPlayer(name, db, espnId);
-  const photo = bestPhoto(p) || espnHeadshot(espnId);
+  // Photo: FotMob image (keyed by the FotMob id from the stats index — the right
+  // player, fixes wrong db photos) → db photo → ESPN. Same priority as the line-up,
+  // so the profile and the pitch always show the SAME, correct face.
+  const statsIndex = useStatsIndex();
+  const fmId = statsIndex?.players[idxNorm(p?.name || name)]?.fmId;
+  const photoSrcs = [fotmobImage(fmId), bestPhoto(p), espnHeadshot(espnId)].filter(Boolean) as string[];
   const wc = wcStats(ds, p?.name || name);
   const hasWc = wc.apps > 0 || wc.goals > 0;
   // Fall back to national-team context (flag, team) for stars not yet in players.json.
@@ -56,7 +61,7 @@ export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string;
   return (
     <Sheet {...chrome} accent="var(--cool)" maxWidth={520}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <PlayerImg src={photo} name={p?.name || name} size={88} radius={18} fontSize={30} zoomable />
+        <PlayerImg srcs={photoSrcs} name={p?.name || name} size={88} radius={18} fontSize={30} zoomable />
         <div style={{ minWidth: 0 }}>
           <div className="display" style={{ fontSize: 24, lineHeight: 1 }}>{p?.name || name}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 8, flexWrap: "wrap" }}>

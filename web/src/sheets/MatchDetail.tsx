@@ -252,7 +252,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   // shirt → FotMob player id (this team), for the correct/official FotMob photo.
   const fotmobIdByShirt = new Map<string, string>();
   (detail?.players || []).forEach((p) => {
-    if (p.tla === code && p.shirt != null && p.optaId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.optaId));
+    if (p.tla === code && p.shirt != null && p.fmId) fotmobIdByShirt.set(String(p.shirt).trim(), String(p.fmId));
   });
   // FotMob formation + exact coords are accurate (ESPN's is often wrong, e.g.
   // 3-1-4-2 vs 3-4-1-2). Prefer the FotMob coords for placement.
