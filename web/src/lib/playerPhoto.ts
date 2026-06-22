@@ -1,5 +1,29 @@
 import type { PlayerRecord, PlayersDb } from "../data/types";
 
+type Rec = PlayerRecord & { name: string };
+const pnorm = (s: string) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+// Index the player DB ONCE per db object (it's loaded once and stable) so each
+// lookup is O(1) instead of scanning all ~1250 keys. Lineups call this per player,
+// so the old per-call scans were ~27k iterations per pitch render.
+const DB_INDEX = new WeakMap<object, { byEspn: Map<string, Rec>; byNorm: Map<string, Rec> }>();
+function dbIndex(db: PlayersDb) {
+  let idx = DB_INDEX.get(db);
+  if (idx) return idx;
+  const byEspn = new Map<string, Rec>();
+  const byNorm = new Map<string, Rec>();
+  for (const key of Object.keys(db)) {
+    const rec = { name: key, ...db[key] } as Rec;
+    const e = db[key].espnId;
+    if (e != null && String(e) !== "" && !byEspn.has(String(e))) byEspn.set(String(e), rec);
+    const n = pnorm(key);
+    if (!byNorm.has(n)) byNorm.set(n, rec);
+  }
+  idx = { byEspn, byNorm };
+  DB_INDEX.set(db, idx);
+  return idx;
+}
+
 export const espnHeadshot = (espnId?: string | null) =>
   espnId ? `https://a.espncdn.com/i/headshots/soccer/players/full/${espnId}.png` : null;
 
@@ -40,19 +64,11 @@ export function lineupPhotoSources(name: string, espnId: string | null | undefin
   const fm = fotmobImage(fotmobId);
   if (fm) out.push(fm);
   if (!db) return out;
+  const idx = dbIndex(db);
+  // Confident match only (exact key → espnId → accent-insensitive exact), all O(1).
   let rec: PlayerRecord | undefined = db[name];
-  if (!rec && espnId != null && espnId !== "") {
-    const eid = String(espnId);
-    for (const key of Object.keys(db)) {
-      if (String(db[key].espnId) === eid) { rec = db[key]; break; }
-    }
-  }
-  if (!rec) {
-    const n = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-    for (const key of Object.keys(db)) {
-      if (key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "") === n) { rec = db[key]; break; }
-    }
-  }
+  if (!rec && espnId != null && espnId !== "") rec = idx.byEspn.get(String(espnId));
+  if (!rec) rec = idx.byNorm.get(pnorm(name));
   if (!rec) return [...new Set(out)];
   for (const u of [rec.photo, rec.cutout, rec.render, rec.wiki, rec.thumb, rec.espnPhoto]) if (u) out.push(u);
   return [...new Set(out)];
@@ -65,21 +81,22 @@ export function findPlayer(name: string, db: PlayersDb | null, espnId?: string |
   if (!db) return null;
   // 1. Exact key.
   if (db[name]) return { name, ...db[name] };
-  // 2. ESPN id — the reliable identity for ESPN-sourced players (correct even when
-  //    the name spelling differs). MUST come BEFORE the fuzzy name match: a light
-  //    surname match maps a common last name (e.g. "Silva", "Hernández") to the
-  //    wrong player and so the wrong photo — the bug behind "fel bild på spelare".
+  const idx = dbIndex(db);
+  // 2. ESPN id — the reliable identity for ESPN-sourced players (O(1)). MUST come
+  //    BEFORE the fuzzy name match: a light surname match maps a common last name
+  //    (e.g. "Silva", "Hernández") to the wrong player → wrong photo.
   if (espnId != null && espnId !== "") {
-    const eid = String(espnId);
-    for (const key of Object.keys(db)) {
-      if (String(db[key].espnId) === eid) return { name: key, ...db[key] };
-    }
+    const r = idx.byEspn.get(String(espnId));
+    if (r) return r;
   }
-  // 3. Name match: accent-insensitive exact, then a light surname fuzzy (last resort).
-  const n = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  // 3. Accent-insensitive exact (O(1)).
+  const n = pnorm(name);
+  const exact = idx.byNorm.get(n);
+  if (exact) return exact;
+  // 4. Light surname fuzzy — last resort, only for the rare unmatched player.
   for (const key of Object.keys(db)) {
-    const k = key.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-    if (k === n || k.endsWith(" " + n) || n.endsWith(" " + k)) return { name: key, ...db[key] };
+    const k = pnorm(key);
+    if (k.endsWith(" " + n) || n.endsWith(" " + k)) return { name: key, ...db[key] };
   }
   return null;
 }

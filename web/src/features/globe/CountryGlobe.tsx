@@ -15,6 +15,7 @@ const EARTH_TEXTURE = "https://unpkg.com/three-globe/example/img/earth-blue-marb
 type Feat = any;
 // The world polygons never change — fetch once and share across every globe.
 let FEATURES_CACHE: Feat[] | null = null;
+const EMPTY: Feat[] = []; // stable empty ref for deferred label data
 
 // ISO3 → label position + area, to drop a code label on each country sized by how
 // big it is (the geojson has no label coords; COUNTRY_FACTS has a lat/lng + area).
@@ -50,9 +51,25 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   const setupDone = useRef(false);
   const [size, setSize] = useState(320);
   const [ready, setReady] = useState(false);
+  const [mounted, setMounted] = useState(false); // defer WebGL init past the sheet-open animation
+  const [showLabels, setShowLabels] = useState(false); // defer the 170+ text labels past the fly-in
   const [features, setFeatures] = useState<Feat[]>(FEATURES_CACHE || []);
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
+
+  // Let the sheet's open animation finish before spinning up the WebGL globe — the
+  // heavy mount (context + earth texture + border meshes) otherwise janks the
+  // open. The space-gradient background shows in the meantime.
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 300);
+    return () => clearTimeout(t);
+  }, []);
+  // Labels (the heaviest part) come in after the fly-in motion has settled.
+  useEffect(() => {
+    if (!ready) return;
+    const t = setTimeout(() => setShowLabels(true), 1100);
+    return () => clearTimeout(t);
+  }, [ready]);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -224,7 +241,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
     const startAlt = Math.min(Math.max(targetAlt + 1.1, 2.6), 3.8);
     const spin = 34;
     g.pointOfView({ lat: facts.lat, lng: facts.lng - spin, altitude: startAlt }, 0);
-    const t = setTimeout(() => g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: targetAlt }, 2200), 350);
+    const t = setTimeout(() => g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: targetAlt }, 1600), 300);
     return () => clearTimeout(t);
   }, [iso2, facts, ready, size]);
 
@@ -258,7 +275,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
         {/* The canvas must opt out of browser touch handling, or the scrollable
             sheet eats the pinch before our zoom handler sees it. */}
         <style>{`.globe-stage canvas{ touch-action:none !important; }`}</style>
-        {size > 0 && (
+        {mounted && size > 0 && (
           <Globe
             ref={globeRef}
             width={size}
@@ -277,7 +294,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             polygonStrokeColor={(f: Feat) => (f === selected ? "#ff5c97" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
-            labelsData={labels}
+            labelsData={showLabels ? labels : EMPTY}
             labelLat="lat"
             labelLng="lng"
             labelText="text"
