@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-22T20:39:58+00:00",
+  "updated_at": "2026-06-22T22:25:19+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -11339,20 +11339,59 @@
       "homeTla": "FRA",
       "away": "Iraq",
       "awayTla": "IRQ",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          1,
+          0
+        ],
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "goals": [
+        {
+          "minute": "14",
+          "team": "FRA",
+          "scorer": "Kylian Mbappé",
+          "assist": "Michael Olise",
+          "type": "REGULAR",
+          "description": "Goal! France 1, Iraq 0. Kylian Mbappé (France) left footed shot from outside the box to the bottom left corner. Assisted by Michael Olise.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "6",
+          "team": "IRQ",
+          "player": "Amir Al-Ammari",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "26",
+          "team": "IRQ",
+          "playerIn": "Ali Al-Hamadi",
+          "playerOut": "Aymen Hussein",
+          "period": 1
+        }
+      ],
       "venue": {
         "stadium": "Lincoln Financial Field",
         "city": "Philadelphia, Pennsylvania",
@@ -11361,8 +11400,7 @@
       "referees": [
         {
           "name": "Drew Fischer",
-          "role": "REFEREE",
-          "nationality": "Canada"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -11487,7 +11525,13 @@
         "city": "East Rutherford, New Jersey",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Wilton Sampaio",
+          "role": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -14434,7 +14478,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "MetLife Stadium",
+        "city": "East Rutherford, New Jersey",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -14553,7 +14601,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "Lincoln Financial Field",
+        "city": "Philadelphia, Pennsylvania",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -15554,6 +15606,18 @@
       "code": "I",
       "table": [
         {
+          "team": "France",
+          "tla": "FRA",
+          "played": 2,
+          "won": 2,
+          "draw": 0,
+          "lost": 0,
+          "gf": 4,
+          "ga": 1,
+          "gd": 3,
+          "points": 6
+        },
+        {
           "team": "Norway",
           "tla": "NOR",
           "played": 1,
@@ -15563,18 +15627,6 @@
           "gf": 4,
           "ga": 1,
           "gd": 3,
-          "points": 3
-        },
-        {
-          "team": "France",
-          "tla": "FRA",
-          "played": 1,
-          "won": 1,
-          "draw": 0,
-          "lost": 0,
-          "gf": 3,
-          "ga": 1,
-          "gd": 2,
           "points": 3
         },
         {
@@ -15592,13 +15644,13 @@
         {
           "team": "Iraq",
           "tla": "IRQ",
-          "played": 1,
+          "played": 2,
           "won": 0,
           "draw": 0,
-          "lost": 1,
+          "lost": 2,
           "gf": 1,
-          "ga": 4,
-          "gd": -3,
+          "ga": 5,
+          "gd": -4,
           "points": 0
         }
       ]
