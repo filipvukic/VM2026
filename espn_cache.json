@@ -23146,8 +23146,492 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "homeLineup": null,
-    "awayLineup": null,
+    "homeLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Jordan Pickford",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "159443",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Ezri Konsa",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "2",
+          "espnId": "231859",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Reece James",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "24",
+          "espnId": "189007",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Marc Guéhi",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "6",
+          "espnId": "265907",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Djed Spence",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "25",
+          "espnId": "267711",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Jude Bellingham",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "10",
+          "espnId": "291281",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Elliot Anderson",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "8",
+          "espnId": "238472",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Declan Rice",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "4",
+          "espnId": "238262",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Noni Madueke",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "20",
+          "espnId": "293236",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Anthony Gordon",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "18",
+          "espnId": "268782",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Harry Kane",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "142200",
+          "subbedIn": true,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Jordan Henderson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "127262",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "227784",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Ivan Toney",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "180639",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Morgan Rogers",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "265653",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Eberechi Eze",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "251400",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Jarell Quansah",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "298524",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Ollie Watkins",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "198825",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "John Stones",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "157974",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Dean Henderson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "234172",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Marcus Rashford",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "230945",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Dan Burn",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "198138",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Nico O'Reilly",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "328464",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Bukayo Saka",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "280555",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Kobbie Mainoo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "328466",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "James Trafford",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "307118",
+          "subbedIn": true,
+          "subbedOut": true
+        }
+      ],
+      "tla": "ENG",
+      "_espnEventId": "760458"
+    },
+    "awayLineup": {
+      "formation": "4-3-3",
+      "lineup": [
+        {
+          "name": "Benjamin Asare",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "16",
+          "espnId": "378501",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Jonas Adjetey",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "4",
+          "espnId": "341627",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Gideon Mensah",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "14",
+          "espnId": "264484",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Marvin Senaya",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "26",
+          "espnId": "309638",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Jerome Opoku",
+          "position": "D",
+          "positionName": "Defender",
+          "jersey": "18",
+          "espnId": "261505",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Thomas Partey",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "5",
+          "espnId": "189972",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Kwasi Sibo",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "8",
+          "espnId": "274697",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Caleb Yirenkyi",
+          "position": "M",
+          "positionName": "Midfielder",
+          "jersey": "3",
+          "espnId": "387659",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Antoine Semenyo",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "11",
+          "espnId": "273292",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Jordan Ayew",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "123518",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Iñaki Williams",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "19",
+          "espnId": "214412",
+          "subbedIn": true,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Joseph Anang",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "280808",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Prince Adu",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "387861",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Kojo Peprah Oppong",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "357205",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Augustine Boakye",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "326183",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Kamaldeen Sulemana",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "303115",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Alidu Seidu",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "305669",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Elisha Owusu",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "266057",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Abdul Mumin",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "241139",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Derrick Luckassen",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "205737",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Baba Rahman",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "174508",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Brandon Thomas-Asante",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "240495",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Christopher Bonsu Baah",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "360279",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Ernest Nuamah",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "333310",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Lawrence Ati Zigi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "219562",
+          "subbedIn": true,
+          "subbedOut": true
+        },
+        {
+          "name": "Fatawu Issahaku",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "318680",
+          "subbedIn": true,
+          "subbedOut": true
+        }
+      ],
+      "tla": "GHA",
+      "_espnEventId": "760458"
+    },
     "homeStats": {
       "goalDifference": 2.0,
       "totalGoals": 4.0,
@@ -23168,12 +23652,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": -525,
+      "homeML": -550,
       "awayML": 1500,
       "spread": "ENG -2.5",
-      "overUnder": 2.5,
-      "overOdds": -175.0,
-      "underOdds": 140.0,
+      "overUnder": 3.5,
+      "overOdds": 130.0,
+      "underOdds": -165.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -23255,7 +23739,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760460": {
     "goals": [],
@@ -23283,12 +23767,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 600,
-      "awayML": -205,
+      "homeML": 650,
+      "awayML": -225,
       "spread": "CRO -1.5",
       "overUnder": 2.5,
-      "overOdds": -140.0,
-      "underOdds": 110.0,
+      "overOdds": -150.0,
+      "underOdds": 120.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -23370,7 +23854,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760440": {
     "goals": [
@@ -26104,7 +26588,7 @@
       "spread": "MAR -2.5",
       "overUnder": 3.5,
       "overOdds": 145.0,
-      "underOdds": -175.0,
+      "underOdds": -180.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -26186,7 +26670,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760465": {
     "goals": [],
@@ -26301,7 +26785,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760445": {
     "goals": [
@@ -30212,7 +30696,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760469": {
     "goals": [],
@@ -30244,7 +30728,7 @@
       "awayML": 295,
       "spread": "PAR -0.5",
       "overUnder": 1.5,
-      "overOdds": -160.0,
+      "overOdds": -155.0,
       "underOdds": 125.0,
       "provider": "DraftKings"
     },
@@ -30327,7 +30811,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760453": {
     "goals": [
@@ -31146,11 +31630,11 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 400,
+      "homeML": 425,
       "awayML": -160,
       "spread": "FRA -0.5",
       "overUnder": 2.5,
-      "overOdds": -145.0,
+      "overOdds": -150.0,
       "underOdds": 120.0,
       "provider": "DraftKings"
     },
@@ -31233,7 +31717,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760474": {
     "goals": [],
@@ -31261,12 +31745,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": -425,
+      "homeML": -450,
       "awayML": 1100,
       "spread": "SEN -1.5",
       "overUnder": 3.5,
-      "overOdds": 140.0,
-      "underOdds": -170.0,
+      "overOdds": 135.0,
+      "underOdds": -165.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -31348,7 +31832,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760451": {
     "goals": [],
@@ -32876,12 +33360,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 650,
-      "awayML": -205,
+      "homeML": 600,
+      "awayML": -200,
       "spread": "ESP -1.5",
       "overUnder": 2.5,
       "overOdds": -120.0,
-      "underOdds": 100.0,
+      "underOdds": -105.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -32963,7 +33447,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760478": {
     "goals": [],
@@ -32991,8 +33475,8 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 140,
-      "awayML": 200,
+      "homeML": 145,
+      "awayML": 195,
       "spread": "CPV -0.5",
       "overUnder": 2.5,
       "overOdds": -105.0,
@@ -33078,7 +33562,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760452": {
     "goals": [
@@ -35007,7 +35491,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760480": {
     "goals": [],
@@ -35035,7 +35519,7 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": -150,
+      "homeML": -145,
       "awayML": 475,
       "spread": "CRO -0.5",
       "overUnder": 2.5,
@@ -35122,7 +35606,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760481": {
     "goals": [],
@@ -35150,12 +35634,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 265,
-      "awayML": 105,
+      "homeML": 285,
+      "awayML": -105,
       "spread": "POR -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
-      "underOdds": -135.0,
+      "underOdds": -130.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -35197,6 +35681,13 @@
     ],
     "awayForm": [
       {
+        "date": "2026-06-23",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
         "date": "2026-06-17",
         "result": "O",
         "gf": 1,
@@ -35223,13 +35714,6 @@
         "gf": 0,
         "ga": 2,
         "home": false
-      },
-      {
-        "date": "2026-03-29",
-        "result": "O",
-        "gf": 0,
-        "ga": 0,
-        "home": false
       }
     ],
     "espnStatus": "STATUS_SCHEDULED",
@@ -35237,7 +35721,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760482": {
     "goals": [],
@@ -35265,12 +35749,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 110,
-      "awayML": 235,
+      "homeML": -110,
+      "awayML": 275,
       "spread": "COD -0.5",
       "overUnder": 2.5,
-      "overOdds": 110.0,
-      "underOdds": -135.0,
+      "overOdds": 105.0,
+      "underOdds": -130.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -35312,6 +35796,13 @@
     ],
     "awayForm": [
       {
+        "date": "2026-06-23",
+        "result": "F",
+        "gf": 0,
+        "ga": 5,
+        "home": false
+      },
+      {
         "date": "2026-06-18",
         "result": "V",
         "gf": 3,
@@ -35338,13 +35829,6 @@
         "gf": 0,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2026-03-27",
-        "result": "V",
-        "gf": 3,
-        "ga": 1,
-        "home": true
       }
     ],
     "espnStatus": "STATUS_SCHEDULED",
@@ -35352,7 +35836,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760457": {
     "goals": [
@@ -37027,7 +37511,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   },
   "760484": {
     "goals": [],
@@ -37055,12 +37539,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 275,
-      "awayML": 185,
+      "homeML": 280,
+      "awayML": 190,
       "spread": "AUT -0.5",
-      "overUnder": 2.5,
-      "overOdds": 155.0,
-      "underOdds": -190.0,
+      "overUnder": 1.5,
+      "overOdds": -195.0,
+      "underOdds": 160.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -37142,6 +37626,810 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-23T12:19:47.328243+00:00"
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
+  },
+  "760461": {
+    "goals": [
+      {
+        "minute": "6",
+        "team": "POR",
+        "scorer": "Cristiano Ronaldo",
+        "assist": "João Cancelo",
+        "type": "REGULAR",
+        "description": "Goal! Portugal 1, Uzbekistan 0. Cristiano Ronaldo (Portugal) right footed shot from the centre of the box to the bottom right corner. Assisted by João Cancelo with a cross.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "17",
+        "team": "POR",
+        "scorer": "Nuno Mendes",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Portugal 2, Uzbekistan 0. Nuno Mendes (Portugal) from a free kick with a left footed shot to the bottom left corner.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "39",
+        "team": "POR",
+        "scorer": "Cristiano Ronaldo",
+        "assist": "Bruno Fernandes",
+        "type": "REGULAR",
+        "description": "Goal! Portugal 3, Uzbekistan 0. Cristiano Ronaldo (Portugal) right footed shot from the right side of the box to the bottom left corner. Assisted by Bruno Fernandes with a through ball following a fast break.",
+        "score": [
+          3,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "POR",
+        "scorer": "Abduvohid Nematov",
+        "assist": null,
+        "type": "OWN",
+        "description": "Own Goal by Abduvokhid Nematov, Uzbekistan. Portugal 4, Uzbekistan 0.",
+        "score": [
+          4,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "POR",
+        "scorer": "Rafael Leão",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Portugal 5, Uzbekistan 0. Rafael Leão (Portugal) right footed shot from the centre of the box to the top left corner.",
+        "score": [
+          5,
+          0
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "14",
+        "team": "UZB",
+        "player": "Odiljon Xamrobekov",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "68",
+        "team": "POR",
+        "player": "Renato Veiga",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "UZB",
+        "playerIn": "Khojiakbar Alijonov",
+        "playerOut": "Sherzod Nasrullaev",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "UZB",
+        "playerIn": "Akmal Mozgovoy",
+        "playerOut": "Odiljon Xamrobekov",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "POR",
+        "playerIn": "Nélson Semedo",
+        "playerOut": "João Cancelo",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "POR",
+        "playerIn": "Francisco Conceição",
+        "playerOut": "Pedro Neto",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "POR",
+        "playerIn": "Francisco Trincão",
+        "playerOut": "João Félix",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "UZB",
+        "playerIn": "Igor Sergeev",
+        "playerOut": "Abbosbek Fayzullaev",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "POR",
+        "playerIn": "Bernardo Silva",
+        "playerOut": "João Neves",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "POR",
+        "playerIn": "Rafael Leão",
+        "playerOut": "Vitinha ",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "UZB",
+        "playerIn": "Ruslanbek Jiyanov",
+        "playerOut": "Behruzjon Karimov",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "UZB",
+        "playerIn": "Sherzod Esanov",
+        "playerOut": "Otabek Shukurov",
+        "period": 2
+      }
+    ],
+    "homeLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Diogo Costa",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "238903",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Renato Veiga",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "13",
+          "espnId": "337011",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rúben Dias",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "espnId": "234878",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nuno Mendes",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "25",
+          "espnId": "290591",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "João Cancelo",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "20",
+          "espnId": "176399",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Bruno Fernandes",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "8",
+          "espnId": "124091",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Vitinha ",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "23",
+          "espnId": "288897",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "João Neves",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "15",
+          "espnId": "355061",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Cristiano Ronaldo",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "7",
+          "espnId": "22774",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "João Félix",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "11",
+          "espnId": "276350",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Pedro Neto",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "18",
+          "espnId": "256115",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "José Sá",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "181278",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nélson Semedo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "222670",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Bernardo Silva",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "199833",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Francisco Trincão",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "274159",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Rúben Neves",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "208128",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Inácio",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "304106",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rafael Leão",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "258917",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Rui Silva",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "177898",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Samú Costa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "183466",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Diogo Dalot",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "238902",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Matheus Nunes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "303785",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Ramos",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "288896",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Guedes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "213141",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Francisco Conceição",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "312659",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Tomás Araújo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "329691",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "POR",
+      "_espnEventId": "760461"
+    },
+    "awayLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Abduvohid Nematov",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "12",
+          "espnId": "308612",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Abdulla Abdullaev",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "18",
+          "espnId": "326928",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rustam Ashurmatov",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "5",
+          "espnId": "195282",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Abdukodir Khusanov",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "2",
+          "espnId": "362211",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Otabek Shukurov",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "7",
+          "espnId": "195281",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Odiljon Xamrobekov",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "9",
+          "espnId": "195266",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Sherzod Nasrullaev",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "13",
+          "espnId": "321728",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Behruzjon Karimov",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "24",
+          "espnId": "376370",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Eldor Shomurodov",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "14",
+          "espnId": "216937",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Abbosbek Fayzullaev",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "22",
+          "espnId": "317793",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Azizjon Ganiev",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "19",
+          "espnId": "268558",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Oston Urunov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "288949",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Khojiakbar Alijonov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "274005",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Azizbek Amonov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "253231",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Igor Sergeev",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "156663",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Botirali Ergashev",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "219561",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ruslanbek Jiyanov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "354940",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Dostonbek Khamdamov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "195274",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Avazbek Ulmasaliyev",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "286596",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Akmal Mozgovoy",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "270461",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Umar Eshmurodov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "270463",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jamshid Iskanderov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "8",
+          "espnId": "185631",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jakhongir Urozov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "362329",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Utkir Yusupov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "282145",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Farrukh Sayfiev",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "211537",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sherzod Esanov",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "362333",
+          "subbedIn": true,
+          "subbedOut": false
+        }
+      ],
+      "tla": "UZB",
+      "_espnEventId": "760461"
+    },
+    "homeStats": {
+      "foulsCommitted": 14.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 3.0,
+      "saves": 2.0,
+      "possessionPct": 66.0,
+      "totalShots": 17.0,
+      "shotsOnTarget": 9.0,
+      "shotPct": 0.5,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 562.0,
+      "totalPasses": 624.0,
+      "passPct": 0.9,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 22.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 42.0,
+      "accurateLongBalls": 23.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 12.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.9,
+      "interceptions": 5.0,
+      "effectiveClearance": 16.0,
+      "totalClearance": 16.0
+    },
+    "awayStats": {
+      "foulsCommitted": 15.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 2.0,
+      "saves": 4.0,
+      "possessionPct": 34.0,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 262.0,
+      "totalPasses": 325.0,
+      "passPct": 0.8,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 29.0,
+      "accurateLongBalls": 9.0,
+      "longballPct": 0.3,
+      "blockedShots": 3.0,
+      "effectiveTackles": 14.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.8,
+      "interceptions": 14.0,
+      "effectiveClearance": 29.0,
+      "totalClearance": 29.0
+    },
+    "venue": {
+      "stadium": "NRG Stadium",
+      "city": "Houston, Texas",
+      "country": "USA"
+    },
+    "attendance": 68777,
+    "referees": [
+      {
+        "name": "Jalal Jayed",
+        "role": "Referee"
+      }
+    ],
+    "espnOdds": {
+      "homeML": -700,
+      "awayML": 1900,
+      "spread": "POR -2.5",
+      "overUnder": 3.5,
+      "overOdds": 105.0,
+      "underOdds": -135.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-17",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-03-31",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-03-29",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-08",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-02",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-03-30",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-27",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_FULL_TIME",
+    "espnState": "post",
+    "espnCompleted": true,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-06-23T19:24:51.047892+00:00"
   }
 }
