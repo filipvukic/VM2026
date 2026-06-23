@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T15:28:19+00:00",
+  "updated_at": "2026-06-23T17:26:10+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -12132,19 +12132,60 @@
       "homeTla": "POR",
       "away": "Uzbekistan",
       "awayTla": "UZB",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        2,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          2,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "26",
+      "goals": [
+        {
+          "minute": "6",
+          "team": "POR",
+          "scorer": "Cristiano Ronaldo",
+          "assist": "João Cancelo",
+          "type": "REGULAR",
+          "description": "Goal! Portugal 1, Uzbekistan 0. Cristiano Ronaldo (Portugal) right footed shot from the centre of the box to the bottom right corner. Assisted by João Cancelo with a cross.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "17",
+          "team": "POR",
+          "scorer": "Nuno Mendes",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Portugal 2, Uzbekistan 0. Nuno Mendes (Portugal) from a free kick with a left footed shot to the bottom left corner.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "14",
+          "team": "UZB",
+          "player": "Odiljon Xamrobekov",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "NRG Stadium",
@@ -12154,8 +12195,7 @@
       "referees": [
         {
           "name": "Jalal Jayed",
-          "role": "REFEREE",
-          "nationality": "Morocco"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -14472,7 +14512,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -16120,6 +16160,18 @@
           "points": 3
         },
         {
+          "team": "Portugal",
+          "tla": "POR",
+          "played": 2,
+          "won": 0,
+          "draw": 2,
+          "lost": 0,
+          "gf": 1,
+          "ga": 1,
+          "gd": 0,
+          "points": 2
+        },
+        {
           "team": "Congo DR",
           "tla": "COD",
           "played": 1,
@@ -16132,28 +16184,16 @@
           "points": 1
         },
         {
-          "team": "Portugal",
-          "tla": "POR",
-          "played": 1,
-          "won": 0,
-          "draw": 1,
-          "lost": 0,
-          "gf": 1,
-          "ga": 1,
-          "gd": 0,
-          "points": 1
-        },
-        {
           "team": "Uzbekistan",
           "tla": "UZB",
-          "played": 1,
+          "played": 2,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 1,
           "ga": 3,
           "gd": -2,
-          "points": 0
+          "points": 1
         }
       ]
     },
