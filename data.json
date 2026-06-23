@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T19:25:10+00:00",
+  "updated_at": "2026-06-23T21:11:43+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -12421,19 +12421,36 @@
       "homeTla": "ENG",
       "away": "Ghana",
       "awayTla": "GHA",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "48",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "41",
+          "team": "ENG",
+          "player": "Declan Rice",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Gillette Stadium",
@@ -12442,9 +12459,8 @@
       },
       "referees": [
         {
-          "name": "Said Martinez",
-          "role": "REFEREE",
-          "nationality": "Honduras"
+          "name": "Martínez, Héctor",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -16329,26 +16345,26 @@
         {
           "team": "England",
           "tla": "ENG",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 4,
           "ga": 2,
           "gd": 2,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Ghana",
           "tla": "GHA",
-          "played": 1,
+          "played": 2,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 1,
           "ga": 0,
           "gd": 1,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Panama",
