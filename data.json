@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T22:38:07+00:00",
+  "updated_at": "2026-06-23T23:38:45+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUR",
+      "awayTla": "CUW",
       "status": "FINISHED",
       "score": [
         0,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -12637,17 +12637,23 @@
       "homeTla": "PAN",
       "away": "Croatia",
       "awayTla": "CRO",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "38",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -12656,7 +12662,12 @@
         "city": "Toronto",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Pierre Atcho",
+          "role": "Referee"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -13618,7 +13629,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUR",
+      "homeTla": "CUW",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -14725,7 +14736,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -16440,26 +16451,26 @@
         {
           "team": "Panama",
           "tla": "PAN",
-          "played": 1,
+          "played": 2,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 0,
           "ga": 1,
           "gd": -1,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Croatia",
           "tla": "CRO",
-          "played": 1,
+          "played": 2,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 2,
           "ga": 4,
           "gd": -2,
-          "points": 0
+          "points": 1
         }
       ]
     }
