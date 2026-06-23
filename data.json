@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T01:50:38+00:00",
+  "updated_at": "2026-06-23T05:55:15+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 91,
+      "match_points": 94,
       "bonus_points": 0,
-      "total": 91,
+      "total": 94,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 85,
+      "match_points": 88,
       "bonus_points": 0,
-      "total": 85,
+      "total": 88,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -104,10 +104,56 @@
       "prize": 990
     },
     {
-      "name": "Isac",
-      "match_points": 82,
+      "name": "Johan",
+      "match_points": 88,
       "bonus_points": 0,
-      "total": 82,
+      "total": 88,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Unai Simón",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Bruno Fernanch",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 3,
+      "prize": 660
+    },
+    {
+      "name": "Isac",
+      "match_points": 86,
+      "bonus_points": 0,
+      "total": 86,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -146,60 +192,106 @@
           "points": 0
         }
       },
-      "rank": 3,
-      "prize": 660
-    },
-    {
-      "name": "Johan",
-      "match_points": 81,
-      "bonus_points": 0,
-      "total": 81,
-      "exact_count": 5,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Unai Simón",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Bruno Fernanch",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 4,
       "prize": 0
     },
     {
-      "name": "Martin",
-      "match_points": 76,
+      "name": "Björn",
+      "match_points": 81,
       "bonus_points": 0,
-      "total": 76,
+      "total": 81,
+      "exact_count": 4,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 5,
+      "prize": 0
+    },
+    {
+      "name": "Vilgot",
+      "match_points": 81,
+      "bonus_points": 0,
+      "total": 81,
+      "exact_count": 4,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "pedri",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "england",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 6,
+      "prize": 0
+    },
+    {
+      "name": "Martin",
+      "match_points": 80,
+      "bonus_points": 0,
+      "total": 80,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -238,60 +330,14 @@
           "points": 0
         }
       },
-      "rank": 5,
-      "prize": 0
-    },
-    {
-      "name": "Björn",
-      "match_points": 75,
-      "bonus_points": 0,
-      "total": 75,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 6,
+      "rank": 7,
       "prize": 0
     },
     {
       "name": "Casper",
-      "match_points": 75,
+      "match_points": 79,
       "bonus_points": 0,
-      "total": 75,
+      "total": 79,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -330,106 +376,14 @@
           "points": 0
         }
       },
-      "rank": 7,
-      "prize": 0
-    },
-    {
-      "name": "Vilgot",
-      "match_points": 75,
-      "bonus_points": 0,
-      "total": 75,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "pedri",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "england",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 8,
       "prize": 0
     },
     {
-      "name": "Hampus",
-      "match_points": 74,
-      "bonus_points": 0,
-      "total": 74,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Bart Verbruggen",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Bruno Fernandes",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Nederländerna",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 9,
-      "prize": 0
-    },
-    {
       "name": "Alexander",
-      "match_points": 73,
+      "match_points": 77,
       "bonus_points": 0,
-      "total": 73,
+      "total": 77,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -468,14 +422,60 @@
           "points": 0
         }
       },
+      "rank": 9,
+      "prize": 0
+    },
+    {
+      "name": "Hampus",
+      "match_points": 76,
+      "bonus_points": 0,
+      "total": 76,
+      "exact_count": 3,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Bart Verbruggen",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Bruno Fernandes",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Nederländerna",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 10,
       "prize": 0
     },
     {
       "name": "Filip",
-      "match_points": 71,
+      "match_points": 75,
       "bonus_points": 0,
-      "total": 71,
+      "total": 75,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -11595,10 +11595,10 @@
       "homeTla": "NOR",
       "away": "Senegal",
       "awayTla": "SEN",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         3,
-        1
+        2
       ],
       "scoreDetail": {
         "halfTime": [
@@ -11607,14 +11607,14 @@
         ],
         "fullTime": [
           3,
-          1
+          2
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "90+1",
+      "minute": null,
       "goals": [
         {
           "minute": "43",
@@ -11622,7 +11622,7 @@
           "scorer": "Marcus Holmgren Pedersen",
           "assist": null,
           "type": "REGULAR",
-          "description": "Goal! Norway 1, Senegal 0. Marcus Pedersen (Norway) right footed shot from the right side of the box to the high centre of the goal.",
+          "description": "Goal! Norway 1, Senegal 0. Marcus Pedersen (Norway) right footed shot from the right side of the box to the top right corner.",
           "score": [
             1,
             0
@@ -11635,7 +11635,7 @@
           "scorer": "Erling Haaland",
           "assist": "Martin Ødegaard",
           "type": "REGULAR",
-          "description": "Goal! Norway 2, Senegal 0. Erling Haaland (Norway) left footed shot from the centre of the box to the top right corner. Assisted by Martin Ødegaard following a fast break.",
+          "description": "Goal! Norway 2, Senegal 0. Erling Haaland (Norway) left footed shot from the centre of the box to the top right corner. Assisted by Martin Ødegaard with a through ball following a fast break.",
           "score": [
             2,
             0
@@ -11665,6 +11665,19 @@
           "score": [
             3,
             1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "SEN",
+          "scorer": "Ismaïla Sarr",
+          "assist": "Nicolas Jackson",
+          "type": "REGULAR",
+          "description": "Goal! Norway 3, Senegal 2. Ismaïla Sarr (Senegal) right footed shot from the centre of the box to the top right corner. Assisted by Nicolas Jackson.",
+          "score": [
+            3,
+            2
           ],
           "period": 2
         }
@@ -11754,7 +11767,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 80663,
       "tips": [
         {
           "name": "Albin",
@@ -11762,7 +11775,7 @@
             2,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -11770,7 +11783,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -11778,7 +11791,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -11786,7 +11799,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -11794,7 +11807,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -11802,7 +11815,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -11810,7 +11823,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -11818,7 +11831,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -11826,7 +11839,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Hampus",
@@ -11834,7 +11847,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -11842,7 +11855,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -11856,20 +11869,155 @@
       "homeTla": "JOR",
       "away": "Algeria",
       "awayTla": "ALG",
-      "status": "TIMED",
-      "score": null,
+      "status": "FINISHED",
+      "score": [
+        1,
+        2
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          1,
+          0
+        ],
+        "fullTime": [
+          1,
+          2
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "goals": [
+        {
+          "minute": "36",
+          "team": "JOR",
+          "scorer": "Nizar Al-Rashdan",
+          "assist": "Mousa Al-Tamari",
+          "type": "REGULAR",
+          "description": "Goal! Jordan 1, Algeria 0. Nizar Al Rashdan (Jordan) right footed shot from the centre of the box to the bottom right corner. Assisted by Mousa Al Tamari.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "69",
+          "team": "ALG",
+          "scorer": "Nadhir Benbouali",
+          "assist": "Riyad Mahrez",
+          "type": "HEADER",
+          "description": "Goal! Jordan 1, Algeria 1. Nadhir Benbouali (Algeria) header from the centre of the box to the bottom left corner. Assisted by Riyad Mahrez with a cross following a corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ALG",
+          "scorer": "Amine Gouiri",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Jordan 1, Algeria 2. Amine Gouiri (Algeria) right footed shot from very close range to the centre of the goal following a corner.",
+          "score": [
+            1,
+            2
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "44",
+          "team": "ALG",
+          "player": "Ramiz Zerrouki",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "64",
+          "team": "JOR",
+          "player": "Husam Abu Dahab",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "ALG",
+          "playerIn": "Nabil Bentaleb",
+          "playerOut": "Ramiz Zerrouki",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "ALG",
+          "playerIn": "Nadhir Benbouali",
+          "playerOut": "Hicham Boudaoui",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "ALG",
+          "playerIn": "Anis Hadj Moussa",
+          "playerOut": "Riyad Mahrez",
+          "period": 2
+        },
+        {
+          "minute": "76",
+          "team": "JOR",
+          "playerIn": "Odeh Fakhoury",
+          "playerOut": "Mahmoud Al-Mardi",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "JOR",
+          "playerIn": "Ali Azaizeh",
+          "playerOut": "Mousa Al-Tamari",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "JOR",
+          "playerIn": "Mohammad Abu Hasheesh",
+          "playerOut": "Mohannad Abu Taha",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "ALG",
+          "playerIn": "Jaouen Hadjam",
+          "playerOut": "Rayan Aït-Nouri",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "ALG",
+          "playerIn": "Zineddine Belaïd",
+          "playerOut": "Amine Gouiri",
+          "period": 2
+        },
+        {
+          "minute": "90+1",
+          "team": "JOR",
+          "playerIn": "Saleem Obaid",
+          "playerOut": "Husam Abu Dahab",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "JOR",
+          "playerIn": "Mohammed Abu Zraiq",
+          "playerOut": "Ali Olwan",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Levi's Stadium",
         "city": "Santa Clara, California",
@@ -11877,13 +12025,12 @@
       },
       "referees": [
         {
-          "name": "Slavko Vinčič",
-          "role": "REFEREE",
-          "nationality": "Slovenia"
+          "name": "Slavko Vincici",
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 68371,
       "tips": [
         {
           "name": "Albin",
@@ -11891,7 +12038,7 @@
             1,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -11899,7 +12046,7 @@
             0,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -11907,7 +12054,7 @@
             0,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -11915,7 +12062,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -11923,7 +12070,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -11931,7 +12078,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -11939,7 +12086,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Vilgot",
@@ -11947,7 +12094,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Björn",
@@ -11955,7 +12102,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Hampus",
@@ -11963,7 +12110,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -11971,7 +12118,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -15197,7 +15344,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "GEHA Field at Arrowhead Stadium",
+        "city": "Kansas City, Missouri",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -15316,7 +15467,11 @@
       "goals": [],
       "bookings": [],
       "subs": [],
-      "venue": null,
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
       "referees": [],
       "odds": null,
       "attendance": null,
@@ -15841,18 +15996,6 @@
       "code": "I",
       "table": [
         {
-          "team": "Norway",
-          "tla": "NOR",
-          "played": 2,
-          "won": 2,
-          "draw": 0,
-          "lost": 0,
-          "gf": 7,
-          "ga": 2,
-          "gd": 5,
-          "points": 6
-        },
-        {
           "team": "France",
           "tla": "FRA",
           "played": 2,
@@ -15865,15 +16008,27 @@
           "points": 6
         },
         {
+          "team": "Norway",
+          "tla": "NOR",
+          "played": 2,
+          "won": 2,
+          "draw": 0,
+          "lost": 0,
+          "gf": 7,
+          "ga": 3,
+          "gd": 4,
+          "points": 6
+        },
+        {
           "team": "Senegal",
           "tla": "SEN",
           "played": 2,
           "won": 0,
           "draw": 0,
           "lost": 2,
-          "gf": 2,
+          "gf": 3,
           "ga": 6,
-          "gd": -4,
+          "gd": -3,
           "points": 0
         },
         {
@@ -15918,26 +16073,26 @@
           "points": 3
         },
         {
-          "team": "Jordan",
-          "tla": "JOR",
-          "played": 1,
-          "won": 0,
-          "draw": 0,
-          "lost": 1,
-          "gf": 1,
-          "ga": 3,
-          "gd": -2,
-          "points": 0
-        },
-        {
           "team": "Algeria",
           "tla": "ALG",
-          "played": 1,
-          "won": 0,
+          "played": 2,
+          "won": 1,
           "draw": 0,
           "lost": 1,
-          "gf": 0,
-          "ga": 3,
+          "gf": 2,
+          "ga": 4,
+          "gd": -2,
+          "points": 3
+        },
+        {
+          "team": "Jordan",
+          "tla": "JOR",
+          "played": 2,
+          "won": 0,
+          "draw": 0,
+          "lost": 2,
+          "gf": 2,
+          "ga": 5,
           "gd": -3,
           "points": 0
         }
