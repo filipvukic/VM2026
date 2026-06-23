@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-23T21:11:43+00:00",
+  "updated_at": "2026-06-23T22:38:07+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 96,
+      "match_points": 97,
       "bonus_points": 0,
-      "total": 96,
+      "total": 97,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 90,
+      "match_points": 91,
       "bonus_points": 0,
-      "total": 90,
+      "total": 91,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 90,
+      "match_points": 91,
       "bonus_points": 0,
-      "total": 90,
+      "total": 91,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 88,
+      "match_points": 89,
       "bonus_points": 0,
-      "total": 88,
+      "total": 89,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 83,
+      "match_points": 84,
       "bonus_points": 0,
-      "total": 83,
+      "total": 84,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 83,
+      "match_points": 84,
       "bonus_points": 0,
-      "total": 83,
+      "total": 84,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 82,
+      "match_points": 83,
       "bonus_points": 0,
-      "total": 82,
+      "total": 83,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 81,
+      "match_points": 82,
       "bonus_points": 0,
-      "total": 81,
+      "total": 82,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 79,
+      "match_points": 80,
       "bonus_points": 0,
-      "total": 79,
+      "total": 80,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 78,
+      "match_points": 79,
       "bonus_points": 0,
-      "total": 78,
+      "total": 79,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 77,
+      "match_points": 78,
       "bonus_points": 0,
-      "total": 77,
+      "total": 78,
       "exact_count": 1,
       "bonus_detail": {
         "best_young": {
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         0,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -12421,7 +12421,7 @@
       "homeTla": "ENG",
       "away": "Ghana",
       "awayTla": "GHA",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "score": [
         0,
         0
@@ -12440,7 +12440,7 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "48",
+      "minute": null,
       "goals": [],
       "bookings": [
         {
@@ -12449,9 +12449,80 @@
           "player": "Declan Rice",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "60",
+          "team": "GHA",
+          "player": "Iñaki Williams",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "65",
+          "team": "ENG",
+          "playerIn": "Bukayo Saka",
+          "playerOut": "Anthony Gordon",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "ENG",
+          "playerIn": "Nico O'Reilly",
+          "playerOut": "Djed Spence",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "GHA",
+          "playerIn": "Fatawu Issahaku",
+          "playerOut": "Iñaki Williams",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "GHA",
+          "playerIn": "Prince Adu",
+          "playerOut": "Jordan Ayew",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "ENG",
+          "playerIn": "Morgan Rogers",
+          "playerOut": "Jude Bellingham",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "ENG",
+          "playerIn": "Eberechi Eze",
+          "playerOut": "Elliot Anderson",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "ENG",
+          "playerIn": "Marcus Rashford",
+          "playerOut": "Noni Madueke",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "GHA",
+          "playerIn": "Kojo Peprah Oppong",
+          "playerOut": "Marvin Senaya",
+          "period": 2
+        },
+        {
+          "minute": "90+5",
+          "team": "GHA",
+          "playerIn": "Baba Rahman",
+          "playerOut": "Prince Adu",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Gillette Stadium",
         "city": "Foxborough, Massachusetts",
@@ -12464,7 +12535,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 63983,
       "tips": [
         {
           "name": "Albin",
@@ -12472,7 +12543,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -12480,7 +12551,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -12488,7 +12559,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -12496,7 +12567,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -12504,7 +12575,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -12512,7 +12583,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -12520,7 +12591,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -12528,7 +12599,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -12536,7 +12607,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Hampus",
@@ -12544,7 +12615,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -12552,7 +12623,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -13547,7 +13618,7 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
       "status": "TIMED",
@@ -14654,7 +14725,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",

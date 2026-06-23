@@ -6377,7 +6377,7 @@
     "home": "Germany",
     "homeTla": "GER",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "FINISHED",
     "score": [
       7,
@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -27124,7 +27124,7 @@
     "home": "Ecuador",
     "homeTla": "ECU",
     "away": "Curaçao",
-    "awayTla": "CUW",
+    "awayTla": "CUR",
     "status": "FINISHED",
     "score": [
       0,
@@ -30249,7 +30249,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "FINISHED",
@@ -35903,7 +35903,7 @@
     "homeTla": "ENG",
     "away": "Ghana",
     "awayTla": "GHA",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
       0,
       0
@@ -35922,7 +35922,7 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "48",
+    "minute": null,
     "goals": [],
     "bookings": [
       {
@@ -35931,9 +35931,80 @@
         "player": "Declan Rice",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "GHA",
+        "player": "Iñaki Williams",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "65",
+        "team": "ENG",
+        "playerIn": "Bukayo Saka",
+        "playerOut": "Anthony Gordon",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "ENG",
+        "playerIn": "Nico O'Reilly",
+        "playerOut": "Djed Spence",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "GHA",
+        "playerIn": "Fatawu Issahaku",
+        "playerOut": "Iñaki Williams",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "GHA",
+        "playerIn": "Prince Adu",
+        "playerOut": "Jordan Ayew",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "ENG",
+        "playerIn": "Morgan Rogers",
+        "playerOut": "Jude Bellingham",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "ENG",
+        "playerIn": "Eberechi Eze",
+        "playerOut": "Elliot Anderson",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "ENG",
+        "playerIn": "Marcus Rashford",
+        "playerOut": "Noni Madueke",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "GHA",
+        "playerIn": "Kojo Peprah Oppong",
+        "playerOut": "Marvin Senaya",
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "GHA",
+        "playerIn": "Baba Rahman",
+        "playerOut": "Prince Adu",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
@@ -35946,7 +36017,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 63983,
     "espnOdds": {
       "homeML": -550,
       "awayML": 1500,
@@ -35993,7 +36064,7 @@
           "jersey": "25",
           "espnId": "267711",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Reece James",
@@ -36011,7 +36082,7 @@
           "jersey": "10",
           "espnId": "291281",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Declan Rice",
@@ -36029,7 +36100,7 @@
           "jersey": "8",
           "espnId": "238472",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Harry Kane",
@@ -36047,7 +36118,7 @@
           "jersey": "18",
           "espnId": "268782",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Noni Madueke",
@@ -36056,7 +36127,7 @@
           "jersey": "20",
           "espnId": "293236",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -36093,7 +36164,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "265653",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36102,7 +36173,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "251400",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36147,7 +36218,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "230945",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36165,7 +36236,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "328464",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36174,7 +36245,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "280555",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36254,7 +36325,7 @@
           "jersey": "26",
           "espnId": "309638",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kwasi Sibo",
@@ -36290,7 +36361,7 @@
           "jersey": "19",
           "espnId": "214412",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jordan Ayew",
@@ -36299,7 +36370,7 @@
           "jersey": "9",
           "espnId": "123518",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -36318,8 +36389,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "387861",
-          "subbedIn": false,
-          "subbedOut": false
+          "subbedIn": true,
+          "subbedOut": true
         },
         {
           "name": "Kojo Peprah Oppong",
@@ -36327,7 +36398,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "357205",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36390,7 +36461,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "174508",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36435,7 +36506,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "318680",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -36443,64 +36514,64 @@
       "_espnEventId": "760458"
     },
     "homeStats": {
-      "foulsCommitted": 9.0,
+      "foulsCommitted": 14.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 3.0,
+      "offsides": 2.0,
+      "wonCorners": 9.0,
       "saves": 0.0,
-      "possessionPct": 77.4,
-      "totalShots": 6.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 78.8,
+      "totalShots": 19.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 338.0,
-      "totalPasses": 358.0,
+      "accuratePasses": 586.0,
+      "totalPasses": 633.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 12.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 11.0,
-      "longballPct": 0.6,
-      "blockedShots": 4.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.8,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 30.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.5,
+      "blockedShots": 6.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.5,
       "interceptions": 1.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "effectiveClearance": 6.0,
+      "totalClearance": 6.0
     },
     "awayStats": {
-      "foulsCommitted": 9.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 24.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 22.6,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 2.0,
+      "saves": 3.0,
+      "possessionPct": 21.2,
+      "totalShots": 2.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 85.0,
-      "totalPasses": 106.0,
-      "passPct": 0.8,
+      "accuratePasses": 128.0,
+      "totalPasses": 173.0,
+      "passPct": 0.7,
       "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
+      "totalCrosses": 5.0,
       "crossPct": 0.0,
-      "totalLongBalls": 29.0,
-      "accurateLongBalls": 17.0,
-      "longballPct": 0.6,
-      "blockedShots": 0.0,
-      "effectiveTackles": 11.0,
-      "totalTackles": 12.0,
-      "tacklePct": 0.9,
-      "interceptions": 6.0,
-      "effectiveClearance": 20.0,
-      "totalClearance": 20.0
+      "totalLongBalls": 57.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 17.0,
+      "totalTackles": 22.0,
+      "tacklePct": 0.8,
+      "interceptions": 8.0,
+      "effectiveClearance": 39.0,
+      "totalClearance": 39.0
     },
     "homeForm": [
       {
@@ -36738,12 +36809,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -190,
+      "homeML": -180,
       "awayML": 600,
       "spread": "COL -0.5",
       "overUnder": 2.5,
-      "overOdds": 115.0,
-      "underOdds": -140.0,
+      "overOdds": 120.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -36871,8 +36942,8 @@
       "awayML": 240,
       "spread": "SUI -0.5",
       "overUnder": 2.5,
-      "overOdds": 105.0,
-      "underOdds": -130.0,
+      "overOdds": 100.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -37000,8 +37071,8 @@
       "awayML": 650,
       "spread": "BIH -1.5",
       "overUnder": 2.5,
-      "overOdds": -165.0,
-      "underOdds": 135.0,
+      "overOdds": -175.0,
+      "underOdds": 140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -37512,7 +37583,7 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 425,
+      "homeML": 400,
       "awayML": -145,
       "spread": "KOR -0.5",
       "overUnder": 2.5,
@@ -37645,8 +37716,8 @@
       "awayML": -110,
       "spread": "GER -0.5",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -135.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -37744,7 +37815,7 @@
     "stage": "GROUP_STAGE",
     "group": "E",
     "home": "Curaçao",
-    "homeTla": "CUW",
+    "homeTla": "CUR",
     "away": "Ivory Coast",
     "awayTla": "CIV",
     "status": "TIMED",
@@ -38032,7 +38103,7 @@
       "awayML": 330,
       "spread": "JPN -0.5",
       "overUnder": 2.5,
-      "overOdds": -125.0,
+      "overOdds": -130.0,
       "underOdds": 105.0,
       "provider": "DraftKings"
     },
@@ -38647,7 +38718,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
@@ -38931,12 +39002,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1300,
-      "awayML": -500,
+      "homeML": 1400,
+      "awayML": -525,
       "spread": "BEL -1.5",
       "overUnder": 3.5,
-      "overOdds": 140.0,
-      "underOdds": -175.0,
+      "overOdds": 135.0,
+      "underOdds": -170.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -40006,8 +40077,8 @@
     "utcDate": "2026-06-29T20:30:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "Germany",
-    "homeTla": "GER",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -40146,8 +40217,8 @@
     "utcDate": "2026-07-01T01:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "Mexico",
-    "homeTla": "MEX",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -40251,8 +40322,8 @@
     "utcDate": "2026-07-02T00:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "United States",
-    "homeTla": "USA",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
