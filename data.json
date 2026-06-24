@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T18:00:36+00:00",
+  "updated_at": "2026-06-24T19:57:35+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13097,19 +13097,43 @@
       "homeTla": "SUI",
       "away": "Canada",
       "awayTla": "CAN",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "HT",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "32",
+          "team": "CAN",
+          "player": "Cyle Larin",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "32",
+          "team": "SUI",
+          "player": "Granit Xhaka",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "BC Place",
@@ -13119,8 +13143,7 @@
       "referees": [
         {
           "name": "Ramon Abatti Abel",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -13226,18 +13249,67 @@
       "homeTla": "BIH",
       "away": "Qatar",
       "awayTla": "QAT",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        2,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          2,
+          1
+        ],
+        "fullTime": [
+          2,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "HT",
+      "goals": [
+        {
+          "minute": "29",
+          "team": "BIH",
+          "scorer": "Kerim Alajbegovic",
+          "assist": "Ivan Basic",
+          "type": "REGULAR",
+          "description": "Goal! Bosnia and Herzegovina 1, Qatar 0. Kerim Alajbegovic (Bosnia and Herzegovina) right footed shot from outside the box to the top right corner. Assisted by Ivan Basic.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "34",
+          "team": "BIH",
+          "scorer": "Sultan Al-Brake",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Sultan Al Brake, Qatar. Bosnia and Herzegovina 2, Qatar 0.",
+          "score": [
+            2,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "42",
+          "team": "QAT",
+          "scorer": "Hassan Al-Haydos",
+          "assist": "Edmílson Junior",
+          "type": "REGULAR",
+          "description": "Goal! Bosnia and Herzegovina 2, Qatar 1. Hassan Al Haydos (Qatar) right footed shot from very close range to the centre of the goal. Assisted by Edmílson Junior.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -13248,8 +13320,7 @@
       "referees": [
         {
           "name": "Jesús Valenzuela",
-          "role": "REFEREE",
-          "nationality": "Venezuela"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -16112,49 +16183,49 @@
         {
           "team": "Canada",
           "tla": "CAN",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 7,
           "ga": 1,
           "gd": 6,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Switzerland",
           "tla": "SUI",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 5,
           "ga": 2,
           "gd": 3,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Bosnia-Herzegovina",
           "tla": "BIH",
-          "played": 2,
-          "won": 0,
+          "played": 3,
+          "won": 1,
           "draw": 1,
           "lost": 1,
-          "gf": 2,
+          "gf": 3,
           "ga": 5,
-          "gd": -3,
-          "points": 1
+          "gd": -2,
+          "points": 4
         },
         {
           "team": "Qatar",
           "tla": "QAT",
-          "played": 2,
+          "played": 3,
           "won": 0,
           "draw": 1,
-          "lost": 1,
+          "lost": 2,
           "gf": 1,
-          "ga": 7,
-          "gd": -6,
+          "ga": 8,
+          "gd": -7,
           "points": 1
         }
       ]
