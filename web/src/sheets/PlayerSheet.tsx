@@ -6,6 +6,9 @@ import { Avatar } from "../components/Avatar";
 import { Flag } from "../lib/flags";
 import { classifyTip } from "../data/scoring";
 import { svDayMonth } from "../lib/format";
+import { isLive } from "../lib/liveState";
+import { liveMinuteText } from "../lib/liveMinute";
+import { useNow } from "../state/useNow";
 import type { BonusSlot } from "../data/types";
 
 const BONUS_LABEL: Record<BonusSlot, string> = {
@@ -18,8 +21,14 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const openMatch = useSheets((s) => s.openMatch);
   const openTeam = useSheets((s) => s.openTeam);
   const openFbPlayer = useSheets((s) => s.openFbPlayer);
+  const now = useNow(30_000); // tick the live minute while the sheet is open
   const p = ds.players.find((x) => x.id === id);
   if (!p) return null;
+
+  // Matches being played right now (so a tipster's profile shows the live action +
+  // how their tip is doing against the running score).
+  const live = ds.allMatches.filter(isLive).sort((a, b) => +a.kickoff - +b.kickoff);
+  const updatedAt = ds.updatedAt ? new Date(ds.updatedAt).getTime() : null;
 
   // chronological: the WC's first played match at the top
   const tipped = ds.allMatches
@@ -52,6 +61,36 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
       <div className="dim" style={{ fontSize: 11.5, marginTop: 8, textAlign: "center" }}>
         {p.exact} exakta · {p.correct} rätt utgång · {p.other} tröstpoäng
       </div>
+
+      {/* live now — current results of matches being played + this player's tip */}
+      {live.length > 0 && (
+        <div className="card card-pad" style={{ marginTop: 14, border: "1px solid color-mix(in srgb, var(--hot) 30%, var(--line-2))", background: "color-mix(in srgb, var(--hot) 5%, var(--surface))" }}>
+          <div className="kicker" style={{ marginBottom: 10, display: "inline-flex", alignItems: "center", gap: 8, color: "var(--hot-2)" }}>
+            <span className="live-dot" style={{ background: "var(--hot)" }} />Pågår nu
+          </div>
+          <div style={{ display: "grid", gap: 7 }}>
+            {live.map((m) => {
+              const tip = p.tips[m.id];
+              const home = m.home ? ds.teams[m.home] : null;
+              const away = m.away ? ds.teams[m.away] : null;
+              const res = tip && m.ga != null && m.gb != null ? classifyTip(tip, m.ga, m.gb).result : null;
+              const tipCol = res === "exact" ? "var(--gold)" : res === "outcome" ? "var(--win)" : res === "floor" ? "var(--ink-3)" : "var(--ink-2)";
+              return (
+                <button key={m.id} onClick={() => m._realId && openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 9px", borderRadius: 9, background: "var(--surface)", width: "100%", textAlign: "left", minWidth: 0 }}>
+                  <span className="live-pill" style={{ flex: "0 0 auto", fontSize: 8.5, padding: "2px 6px" }}><span className="live-dot" style={{ width: 5, height: 5 }} />{liveMinuteText(m, updatedAt, now)}</span>
+                  <Flag iso={home?.iso} code={m.home} size={15} />
+                  <span style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: 700, textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{home?.name || "?"}</span>
+                  <span className="num" style={{ flex: "0 0 auto", fontSize: 15, fontWeight: 800, color: "var(--hot)" }}>{m.ga ?? 0}–{m.gb ?? 0}</span>
+                  <span style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{away?.name || "?"}</span>
+                  <Flag iso={away?.iso} code={m.away} size={15} />
+                  <span className="num" title="tips" style={{ flex: "0 0 auto", width: 46, textAlign: "right", fontSize: 11.5, fontWeight: 800, color: tipCol }}>{tip ? `${tip[0]}–${tip[1]}` : "–"}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="dim" style={{ fontSize: 10, marginTop: 8 }}>Live-resultat · {p.name}s tips till höger (guld = exakt, grön = rätt utgång just nu).</div>
+        </div>
+      )}
 
       {/* bonus picks */}
       <div className="card card-pad" style={{ marginTop: 14 }}>

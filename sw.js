@@ -42,6 +42,17 @@ self.addEventListener("notificationclick", (event) => {
   const url = (event.notification.data && event.notification.data.url) || "/";
   event.waitUntil(
     (async () => {
+      // Stash the target FIRST, on EVERY path: on installed iOS PWAs the query string
+      // we pass to openWindow() is dropped (the app starts at start_url), and the tap
+      // can race the app's boot — so the page reads + clears this cache on load,
+      // on short timers, and whenever it next becomes visible. The postMessage path
+      // below clears it once it has handled the tap live.
+      try {
+        const cache = await caches.open("vm-nav");
+        await cache.put("/__pending_match", new Response(url));
+      } catch {
+        /* cache unavailable */
+      }
       const all = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
       for (const c of all) {
         if ("focus" in c) {
@@ -49,16 +60,6 @@ self.addEventListener("notificationclick", (event) => {
           c.postMessage({ type: "open-match", url });
           return;
         }
-      }
-      // No window open → a cold launch. On installed iOS PWAs the query string we
-      // pass to openWindow() is dropped (the app starts at start_url), so the
-      // ?m=/?mid= deep-link is lost and the match never opens. Stash it in a cache
-      // the page reads + clears on boot, so the tapped match opens either way.
-      try {
-        const cache = await caches.open("vm-nav");
-        await cache.put("/__pending_match", new Response(url));
-      } catch {
-        /* cache unavailable — fall through to openWindow */
       }
       if (self.clients.openWindow) return self.clients.openWindow(url);
     })()

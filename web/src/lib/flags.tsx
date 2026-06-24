@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 
 // Per-group accent colors (broadcast-style), used for group badges/tints.
@@ -22,14 +22,39 @@ interface FlagProps {
 /** Country flag via flagcdn. Loads eagerly (lazy-loading sometimes left flags
  *  blank on open) and, on a failed/flaky CDN response, retries a couple of times
  *  before falling back to the team code so a flag is never silently invisible. */
+const FLAG_MAX_TRIES = 4;
+
 export function Flag({ iso, code, size = 22, rounded = true, className }: FlagProps) {
   const ratio = 4 / 3;
   const w = Math.round(size * ratio);
   const radius = rounded ? Math.max(2, Math.round(size * 0.18)) : 0;
   const [tries, setTries] = useState(0);
-  useEffect(() => setTries(0), [iso]); // reset retries when the flag changes
+  const loaded = useRef(false);
+  const timer = useRef<number | undefined>(undefined);
+  // (re)arm a single retry timer → after `delay` bump `tries`, which cache-busts the
+  // url (?r=) and refetches. One shared timer so onError and the hung-load backstop
+  // never double-fire.
+  const arm = (delay: number) => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setTries((t) => t + 1), delay);
+  };
+  useEffect(() => {
+    loaded.current = false;
+    setTries(0);
+    return () => { if (timer.current) clearTimeout(timer.current); };
+  }, [iso]);
+  // Hung-load backstop: a cold open fires MANY flag requests at once and flagcdn can
+  // drop some WITHOUT an error event, leaving a blank flag until you restart. If an
+  // attempt neither loads nor errors within a few seconds, retry it. The window is
+  // generous so slow-but-OK connections aren't interrupted.
+  useEffect(() => {
+    if (!iso || loaded.current || tries > FLAG_MAX_TRIES) return;
+    arm(4500);
+    return () => { if (timer.current) clearTimeout(timer.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iso, tries]);
 
-  if (!iso || tries > 2) {
+  if (!iso || tries > FLAG_MAX_TRIES) {
     return (
       <span
         className={className}
@@ -63,7 +88,10 @@ export function Flag({ iso, code, size = 22, rounded = true, className }: FlagPr
       decoding="async"
       width={w}
       height={size}
-      onError={() => setTries((t) => t + 1)}
+      onLoad={() => { loaded.current = true; if (timer.current) clearTimeout(timer.current); }}
+      // Definite failure → retry after a short backoff (cache-busted), so a transient
+      // flagcdn hiccup / cold-open burst recovers instead of burning all tries at once.
+      onError={() => arm(500 + tries * 500)}
       style={{
         width: w,
         height: size,

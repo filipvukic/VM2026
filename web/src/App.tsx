@@ -60,46 +60,64 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Notification → match. Two paths: (1) the app was launched/reopened from a
-  // notification, so the deep-link is in the URL (?mid=/?m=) — open it once data
-  // is loaded, then strip the param; (2) the app is already open and the service
-  // worker posts the clicked notification's URL — resolve and open it live.
-  const handledUrl = useRef(false);
+  // Notification → match. Three paths, all funnelling to openMatch:
+  //  (1) deep-link in the URL (?mid=/?m=) when the launch query survived;
+  //  (2) a target the SW stashed in the "vm-nav" cache — covers a COLD launch (iOS
+  //      drops the openWindow() query) AND the tap racing the app's boot, so we read
+  //      it on load, again on short timers, and whenever the app becomes visible;
+  //  (3) a live postMessage from the SW when the app is already open (below).
+  const handledParam = useRef(false);
+  const drainedCache = useRef(false);
   useEffect(() => {
-    if (handledUrl.current || !ds.allMatches.length) return;
-    handledUrl.current = true;
-    (async () => {
+    if (!ds.allMatches.length) return;
+    // (1) URL param — once.
+    if (!handledParam.current) {
+      handledParam.current = true;
       const params = new URLSearchParams(window.location.search);
-      let id: string | null = null;
       if (params.has("mid") || params.has("m")) {
-        id = matchFromParams(ds, params);
+        const id = matchFromParams(ds, params);
         window.history.replaceState(null, "", window.location.pathname);
+        if (id) openMatch(id);
       }
-      // Cold launch from a push on an installed iOS PWA: the query string we pass
-      // to openWindow() is dropped (the app boots at start_url), so ?m= never
-      // reaches us via the URL. The service worker stashes the target in a cache
-      // instead — read and clear it. Always clear (even when a URL param WAS
-      // present) so a stale stash can't reopen a match on a later cold start.
-      if ("caches" in window) {
-        try {
-          const cache = await caches.open("vm-nav");
-          const res = await cache.match("/__pending_match");
-          if (res) {
-            await cache.delete("/__pending_match");
-            if (!id) id = matchFromParams(ds, new URL(await res.text(), window.location.origin).searchParams);
-          }
-        } catch {
-          /* cache unavailable — ignore */
-        }
+    }
+    // (2) SW cache stash — read + clear. Retry because the SW may write it a moment
+    // AFTER we boot (the notification tap and the app launch race on iOS).
+    if (drainedCache.current || !("caches" in window)) return;
+    let stop = false;
+    const drain = async () => {
+      if (drainedCache.current || stop) return;
+      try {
+        const cache = await caches.open("vm-nav");
+        const res = await cache.match("/__pending_match");
+        if (!res) return;
+        drainedCache.current = true;
+        await cache.delete("/__pending_match");
+        const id = matchFromParams(ds, new URL(await res.text(), window.location.origin).searchParams);
+        if (id && !stop) openMatch(id);
+      } catch {
+        /* cache unavailable — ignore */
       }
-      if (id) openMatch(id);
-    })();
+    };
+    drain();
+    const t1 = setTimeout(drain, 700);
+    const t2 = setTimeout(drain, 1800);
+    const onVis = () => document.visibilityState === "visible" && drain();
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      stop = true;
+      clearTimeout(t1);
+      clearTimeout(t2);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, [ds, openMatch]);
 
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
     const onMsg = (e: MessageEvent) => {
       if (e.data?.type !== "open-match" || !e.data.url) return;
+      // The SW also stashed this in the cache; clear it now we've handled the tap
+      // live, so it can't reopen the match on a later cold boot.
+      if ("caches" in window) caches.open("vm-nav").then((c) => c.delete("/__pending_match")).catch(() => {});
       try {
         const url = new URL(e.data.url, window.location.origin);
         const id = matchFromParams(ds, url.searchParams);

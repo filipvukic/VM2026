@@ -43,8 +43,11 @@ export function StandingsView() {
   const todayMatches = ds.allMatches
     .filter((m) => svDateKey(m.kickoff) === todayKey)
     .sort((a, b) => +a.kickoff - +b.kickoff);
-  const homeMatches = (todayMatches.length ? todayMatches : upcoming.slice(0, 4));
-  const homeMatchesTitle = todayMatches.length ? (live.length ? "Live & idag" : "Idag") : "Kommande matcher";
+  // Live matches get their own prominent "Pågår nu" section below, so the today /
+  // upcoming strip shows only what's NOT currently being played.
+  const todayRest = todayMatches.filter((m) => !isLive(m));
+  const homeMatches = todayRest.length ? todayRest : upcoming.slice(0, 4);
+  const homeMatchesTitle = todayRest.length ? "Idag" : "Kommande matcher";
   const climber = [...st].sort((a, b) => move[b.id].deltaRank - move[a.id].deltaRank)[0];
   const hasMovement = st.some((p) => move[p.id].pointsToday > 0);
 
@@ -79,6 +82,23 @@ export function StandingsView() {
       </div>
 
       <NotifyPrompt />
+
+      {/* live now — every match being played, up top and prominent */}
+      {live.length > 0 && (
+        <>
+          <div className="section-head" style={{ margin: "20px 0 10px" }}>
+            <div className="section-title" style={{ fontSize: 18, display: "inline-flex", alignItems: "center", gap: 9 }}>
+              <span className="live-dot" style={{ background: "var(--hot)" }} />Pågår nu
+            </div>
+            <span className="chip" style={{ background: "var(--hot)", color: "#fff", borderColor: "transparent", fontWeight: 800 }}>{live.length} live</span>
+          </div>
+          <div className="home-matches">
+            {[...live].sort((a, b) => +a.kickoff - +b.kickoff).map((m) => (
+              <MatchCard key={m.id} match={m} onOpen={() => openMatch(m.id)} compact />
+            ))}
+          </div>
+        </>
+      )}
 
       {/* podium */}
       {podiumOrder.length === 3 && (
