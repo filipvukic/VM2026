@@ -41,10 +41,12 @@ const norm = (s?: string) =>
 // (Qatar, Malta) zoom in close; giants (Russia, Brazil, USA) pull way back so the
 // whole country fits. Uses sqrt(area) since area grows with the square of extent.
 function altitudeForArea(area?: number | null): number {
-  if (!area || area <= 0) return 1.6;
-  const alt = 0.6 + 0.00058 * Math.sqrt(area);
-  // Don't dive too close on micro-states — keep some ocean/neighbour context.
-  return Math.max(0.8, Math.min(2.85, alt));
+  if (!area || area <= 0) return 1.3;
+  // Zoom tracks the country's extent (√area). Lower base + floor than before so
+  // SMALL countries (Qatar, Switzerland, Cape Verde…) actually fill the view instead
+  // of sitting far out; giants still pull back enough to fit.
+  const alt = 0.32 + 0.0006 * Math.sqrt(area);
+  return Math.max(0.35, Math.min(2.85, alt));
 }
 
 export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
