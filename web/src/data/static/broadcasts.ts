@@ -10,13 +10,15 @@
 
 export type Broadcaster = "svt" | "tv4";
 
-// Hubs (fallback when we have no team names to search for).
+// WC pages on each platform (every match is listed here as a video).
 const SVT_HUB = "https://www.svtplay.se/fifa-fotbolls-vm-2026";
 const TV4_HUB = "https://www.tv4play.se/kategorier/fifa-fotbolls-vm-2026";
-// Deep-link straight to THIS match by searching the platform for the two teams
-// (Swedish names) — lands on the actual match instead of the generic WC page.
-const svtSearch = (q: string) => `https://www.svtplay.se/sok?q=${encodeURIComponent(q)}`;
-const tv4Search = (q: string) => `https://www.tv4play.se/sok?q=${encodeURIComponent(q)}`;
+// SVT Play's search reliably surfaces THIS match by the two teams' Swedish names
+// (e.g. ?q=Sverige+Tunisien) → lands right on the match. TV4 Play's search does NOT
+// index the matches (returns 0 hits), so for TV4 we link to the WC page that lists
+// them rather than a dead search.
+const svtSearch = (home: string, away: string) =>
+  `https://www.svtplay.se/sok?q=${encodeURIComponent(home)}+${encodeURIComponent(away)}`;
 
 const BY_TLA_PAIR: Record<string, Broadcaster> = {
   "ALG|ARG": "tv4",
@@ -107,9 +109,9 @@ export interface BroadcastInfo {
 }
 
 // Look up where a match airs from its two team codes (the frontend's m.home /
-// m.away are the uppercase TLAs). Pass the teams' Swedish names to get a link that
-// opens THIS match on the platform (via search) rather than the WC hub. Unknown
-// pairings (knockouts, gaps) return the generic SVT / TV4 fallback.
+// m.away are the uppercase TLAs). Pass the teams' Swedish names so an SVT match
+// links straight to it via SVT Play search; a TV4 match links to TV4's WC page
+// (its search doesn't surface matches). Unknown pairings (knockouts) → generic.
 export function broadcastForPair(
   homeTla?: string | null,
   awayTla?: string | null,
@@ -118,8 +120,8 @@ export function broadcastForPair(
 ): BroadcastInfo {
   const key = homeTla && awayTla ? [homeTla.toUpperCase(), awayTla.toUpperCase()].sort().join("|") : "";
   const b = key ? BY_TLA_PAIR[key] : undefined;
-  const q = homeName && awayName ? `${homeName} ${awayName}` : "";
-  if (b === "svt") return { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: q ? svtSearch(q) : SVT_HUB, free: true };
-  if (b === "tv4") return { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: q ? tv4Search(q) : TV4_HUB, free: false };
-  return { broadcaster: null, label: "SVT / TV4", channels: ["SVT Play", "TV4 Play"], url: q ? svtSearch(q) : SVT_HUB, free: false };
+  const svt = homeName && awayName ? svtSearch(homeName, awayName) : SVT_HUB;
+  if (b === "svt") return { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: svt, free: true };
+  if (b === "tv4") return { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
+  return { broadcaster: null, label: "SVT / TV4", channels: ["SVT Play", "TV4 Play"], url: svt, free: false };
 }
