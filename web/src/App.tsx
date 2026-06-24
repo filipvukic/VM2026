@@ -16,7 +16,16 @@ import { useSheets } from "./state/sheets";
 import { isLive } from "./lib/liveState";
 import { asset } from "./lib/assets";
 import { matchPairKey } from "./lib/espnLive";
+import { EN_TO_SV } from "./data/static/names";
 import type { Dataset } from "./data/types";
+
+// Swedish display name → every English (football-data / ESPN) spelling that maps to
+// it. The push worker builds its team-pair key from ESPN's ENGLISH names, but our
+// teams carry SWEDISH names — so to match the key we must rebuild it from the English
+// name(s). Some Swedish names have several English spellings (Tjeckien = Czech
+// Republic / Czechia) — try them all; matchPairKey's CANON bridges the rest.
+const SV_TO_EN: Record<string, string[]> = {};
+for (const [en, sv] of Object.entries(EN_TO_SV)) (SV_TO_EN[sv] ||= []).push(en);
 
 // Resolve which match a notification points at. Foreground alerts carry our own
 // match id (?mid=); push alerts from the worker carry a team-pair key (?m=, the
@@ -25,13 +34,19 @@ function matchFromParams(ds: Dataset, params: URLSearchParams): string | null {
   const mid = params.get("mid");
   if (mid && ds.allMatches.some((m) => m.id === mid)) return mid;
   const key = params.get("m");
-  if (key) {
-    const found = ds.allMatches.find(
-      (m) => m.home && m.away && matchPairKey(ds.teams[m.home]?.name || m.home, ds.teams[m.away]?.name || m.away) === key
-    );
-    return found?.id ?? null;
-  }
-  return null;
+  if (!key) return null;
+  // Candidate names for a team: its Swedish display name + all English variants.
+  const names = (sv: string) => [sv, ...(SV_TO_EN[sv] || [])];
+  const found = ds.allMatches.find((m) => {
+    if (!m.home || !m.away) return false;
+    const hs = ds.teams[m.home]?.name || m.home;
+    const as = ds.teams[m.away]?.name || m.away;
+    for (const h of names(hs)) for (const a of names(as)) {
+      if (matchPairKey(h, a) === key) return true;
+    }
+    return false;
+  });
+  return found?.id ?? null;
 }
 
 export default function App() {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useData } from "../../state/dataset";
 import { useNotif, fireNotification, clearKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
 import { syncPush, pushConfigured } from "../../state/push";
@@ -14,16 +14,23 @@ export function NotificationWatcher() {
   const pushActive = useNotif((s) => s.pushActive);
   const setPushActive = useNotif((s) => s.setPushActive);
   const prev = useRef<Map<string, { g: number; status: string }>>(new Map(Object.entries(loadSeen())));
+  // Whether we've resolved if the push worker covers THIS browser yet. The foreground
+  // watcher must wait for this — otherwise, on opening the app from a goal push, it
+  // fires its catch-up alert before pushActive flips true and double-notifies the
+  // very goal the push just delivered.
+  const [pushChecked, setPushChecked] = useState(false);
 
   // Register on/off with the push worker (subscribes on first enable). pushActive
   // gates the foreground alerts so a covered browser doesn't double-notify.
   useEffect(() => {
-    if (!pushConfigured()) return;
-    syncPush(notifyAll).then(setPushActive);
+    if (!pushConfigured()) { setPushChecked(true); return; }
+    syncPush(notifyAll).then((v) => { setPushActive(v); setPushChecked(true); });
   }, [notifyAll, setPushActive]);
 
-  // Foreground watcher (+ persisted catch-up on reopen).
+  // Foreground watcher (+ persisted catch-up on reopen). Held until we know whether
+  // push covers us, so we never re-alert a goal the push worker already delivered.
   useEffect(() => {
+    if (!pushChecked) return;
     const name = (code: string | null, fb?: string | null) => (code ? ds.teams[code]?.name || code : fb || "TBD");
     let changed = false;
     for (const m of ds.allMatches) {
@@ -62,7 +69,7 @@ export function NotificationWatcher() {
       }
       saveSeen(out);
     }
-  }, [ds, notifyAll, pushActive]);
+  }, [ds, notifyAll, pushActive, pushChecked]);
 
   // Remove any leftover pre-scheduled kickoff triggers from older versions so they
   // can't fire late on app open — the push worker delivers kickoff alerts at the
