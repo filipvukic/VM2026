@@ -128,22 +128,34 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin("anonymous");
     loader.load(
-      `https://flagcdn.com/w640/${iso2.toLowerCase()}.png`,
+      // Hi-res flag + trilinear/anisotropic filtering → smooth (no aliasing) as it
+      // curves away on the sphere, instead of crisp/pixelated.
+      `https://flagcdn.com/w1280/${iso2.toLowerCase()}.png`,
       (t) => {
         if (!alive) { t.dispose(); return; }
         t.colorSpace = THREE.SRGBColorSpace;
-        t.anisotropy = 8;
+        t.anisotropy = 16;
+        t.minFilter = THREE.LinearMipmapLinearFilter;
         tex = t;
         // Mutate the existing cap material in place — the globe already painted it
         // onto the selected country, so the flag shows on the next render frame.
-        // Slightly translucent + faintly muted so it reads as a soft, clean overlay
-        // on the globe rather than a harsh full-saturation sticker.
+        // Translucent + faintly muted so it's a soft, clean overlay rather than a
+        // harsh full-saturation sticker.
         capMat.map = t;
-        capMat.color.set(0xe9e9e9);
+        capMat.color.set(0xeaeaea);
         capMat.transparent = true;
-        capMat.opacity = 0.82;
         capMat.depthWrite = false;
         capMat.needsUpdate = true;
+        // Ease the flag in (easeOutCubic) instead of popping — the globe's render
+        // loop picks up each opacity step. `alive` stops it on unmount.
+        const TARGET = 0.72, start = performance.now(), DUR = 560;
+        const tick = () => {
+          if (!alive) return;
+          const k = Math.min(1, (performance.now() - start) / DUR);
+          capMat.opacity = TARGET * (1 - Math.pow(1 - k, 3));
+          if (k < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
       },
       undefined,
       () => {
@@ -352,11 +364,11 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             atmosphereColor="#9ec1ff"
             atmosphereAltitude={0.22}
             polygonsData={features}
-            polygonAltitude={(f: Feat) => (f === selected ? 0.016 : 0.005)}
+            polygonAltitude={(f: Feat) => (f === selected ? 0.012 : 0.005)}
             polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.32)" : "rgba(0,0,0,0)")}
             polygonCapMaterial={(f: Feat) => (f === selected ? capMat : emptyMat)}
-            polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.10)" : "rgba(0,0,0,0)")}
-            polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.5)" : "rgba(255,255,255,.42)")}
+            polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.06)" : "rgba(0,0,0,0)")}
+            polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.32)" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
             labelsData={showLabels ? labels : EMPTY}
