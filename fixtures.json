@@ -38193,10 +38193,10 @@
     "homeTla": "SUI",
     "away": "Canada",
     "awayTla": "CAN",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      2,
+      1
     ],
     "scoreDetail": {
       "halfTime": [
@@ -38204,16 +38204,56 @@
         0
       ],
       "fullTime": [
-        0,
-        0
+        2,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
-    "goals": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "46",
+        "team": "SUI",
+        "scorer": "Rubén Vargas",
+        "assist": "Johan Manzambi",
+        "type": "REGULAR",
+        "description": "Goal! Switzerland 1, Canada 0. Rubén Vargas (Switzerland) right footed shot from the centre of the box to the bottom left corner. Assisted by Johan Manzambi with a cross.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "SUI",
+        "scorer": "Johan Manzambi",
+        "assist": "Breel Embolo",
+        "type": "REGULAR",
+        "description": "Goal! Switzerland 2, Canada 0. Johan Manzambi (Switzerland) right footed shot from the right side of the box to the centre of the goal. Assisted by Breel Embolo.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "CAN",
+        "scorer": "Promise David",
+        "assist": "Nathan Saliba",
+        "type": "REGULAR",
+        "description": "Goal! Switzerland 2, Canada 1. Promise David (Canada) right footed shot from the centre of the box to the bottom left corner. Assisted by Nathan Saliba.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "32",
@@ -38228,9 +38268,87 @@
         "player": "Granit Xhaka",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "87",
+        "team": "CAN",
+        "player": "Liam Millar",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "58",
+        "team": "CAN",
+        "playerIn": "Stephen Eustáquio",
+        "playerOut": "Mathieu Choinière",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "CAN",
+        "playerIn": "Tani Oluwaseyi",
+        "playerOut": "Cyle Larin",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "CAN",
+        "playerIn": "Liam Millar",
+        "playerOut": "Ali Ahmed",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "SUI",
+        "playerIn": "Michel Aebischer",
+        "playerOut": "Djibril Sow",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "SUI",
+        "playerIn": "Silvan Widmer",
+        "playerOut": "Luca Jaquez",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "CAN",
+        "playerIn": "Promise David",
+        "playerOut": "Tajon Buchanan",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "SUI",
+        "playerIn": "Dan Ndoye",
+        "playerOut": "Rubén Vargas",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "CAN",
+        "playerIn": "Jacob Shaffelburg",
+        "playerOut": "Richie Laryea",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "SUI",
+        "playerIn": "Christian Fassnacht",
+        "playerOut": "Johan Manzambi",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "SUI",
+        "playerIn": "Cedric Itten",
+        "playerOut": "Breel Embolo",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BC Place",
       "city": "Vancouver",
@@ -38243,7 +38361,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 52497,
     "espnOdds": {
       "homeML": 165,
       "awayML": 210,
@@ -38299,7 +38417,7 @@
           "jersey": "25",
           "espnId": "332574",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Johan Manzambi",
@@ -38308,7 +38426,7 @@
           "jersey": "9",
           "espnId": "386992",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Granit Xhaka",
@@ -38335,7 +38453,7 @@
           "jersey": "7",
           "espnId": "202099",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rubén Vargas",
@@ -38344,7 +38462,7 @@
           "jersey": "17",
           "espnId": "259513",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Djibril Sow",
@@ -38353,7 +38471,7 @@
           "jersey": "15",
           "espnId": "222446",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -38363,7 +38481,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "175905",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38390,7 +38508,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "275842",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38399,7 +38517,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "234153",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38417,7 +38535,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "245623",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38426,7 +38544,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "238502",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38524,7 +38642,7 @@
           "jersey": "22",
           "espnId": "230626",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Alistair Johnston",
@@ -38542,7 +38660,7 @@
           "jersey": "6",
           "espnId": "274296",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nathan Saliba",
@@ -38560,7 +38678,7 @@
           "jersey": "20",
           "espnId": "340228",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tajon Buchanan",
@@ -38569,7 +38687,7 @@
           "jersey": "17",
           "espnId": "284769",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cyle Larin",
@@ -38578,7 +38696,7 @@
           "jersey": "9",
           "espnId": "205024",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan David",
@@ -38615,7 +38733,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "294039",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38642,7 +38760,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "286214",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38651,7 +38769,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "270505",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38669,7 +38787,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "271879",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38696,7 +38814,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "318522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -38713,64 +38831,64 @@
       "_espnEventId": "760463"
     },
     "homeStats": {
-      "foulsCommitted": 11.0,
+      "foulsCommitted": 19.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 1.0,
       "wonCorners": 2.0,
-      "saves": 3.0,
-      "possessionPct": 69.8,
-      "totalShots": 4.0,
-      "shotsOnTarget": 2.0,
+      "saves": 6.0,
+      "possessionPct": 55.2,
+      "totalShots": 6.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.7,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 367.0,
+      "totalPasses": 441.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 47.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 15.0,
+      "tacklePct": 0.5,
+      "interceptions": 5.0,
+      "effectiveClearance": 43.0,
+      "totalClearance": 43.0
+    },
+    "awayStats": {
+      "foulsCommitted": 13.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 7.0,
+      "saves": 2.0,
+      "possessionPct": 44.8,
+      "totalShots": 13.0,
+      "shotsOnTarget": 7.0,
       "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 251.0,
-      "totalPasses": 293.0,
-      "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 26.0,
-      "accurateLongBalls": 12.0,
-      "longballPct": 0.5,
-      "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.4,
-      "interceptions": 2.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
-    },
-    "awayStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 1.0,
-      "redCards": 0.0,
-      "offsides": 3.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 30.2,
-      "totalShots": 5.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.6,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 93.0,
-      "totalPasses": 123.0,
+      "accuratePasses": 271.0,
+      "totalPasses": 339.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 4.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 23.0,
-      "accurateLongBalls": 11.0,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 26.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 20.0,
       "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.8,
-      "interceptions": 4.0,
-      "effectiveClearance": 11.0,
-      "totalClearance": 11.0
+      "blockedShots": 3.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.7,
+      "interceptions": 12.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
     },
     "homeForm": [
       {
@@ -38856,9 +38974,9 @@
     "homeTla": "BIH",
     "away": "Qatar",
     "awayTla": "QAT",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
-      2,
+      3,
       1
     ],
     "scoreDetail": {
@@ -38867,7 +38985,7 @@
         1
       ],
       "fullTime": [
-        2,
+        3,
         1
       ],
       "extraTime": null,
@@ -38875,7 +38993,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
+    "minute": null,
     "goals": [
       {
         "minute": "29",
@@ -38893,10 +39011,10 @@
       {
         "minute": "34",
         "team": "BIH",
-        "scorer": "Sultan Al-Brake",
+        "scorer": "Mahmoud Abunada",
         "assist": null,
         "type": "OWN",
-        "description": "Own Goal by Sultan Al Brake, Qatar. Bosnia and Herzegovina 2, Qatar 0.",
+        "description": "Own Goal by Mahmoud Abunada, Qatar. Bosnia and Herzegovina 2, Qatar 0.",
         "score": [
           2,
           0
@@ -38915,10 +39033,109 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "80",
+        "team": "BIH",
+        "scorer": "Ermin Mahmic",
+        "assist": "Dennis Hadzikadunic",
+        "type": "REGULAR",
+        "description": "Goal! Bosnia and Herzegovina 3, Qatar 1. Ermin Mahmic (Bosnia and Herzegovina) right footed shot from the centre of the box to the centre of the goal. Assisted by Dennis Hadzikadunic following a corner.",
+        "score": [
+          3,
+          1
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "78",
+        "team": "QAT",
+        "player": "Ahmed Fathy",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "BIH",
+        "player": "Ermin Mahmic",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "BIH",
+        "playerIn": "Benjamin Tahirovic",
+        "playerOut": "Ivan Sunjic",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "BIH",
+        "playerIn": "Amar Memic",
+        "playerOut": "Arjan Malic",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "QAT",
+        "playerIn": "Abdulaziz Hatem",
+        "playerOut": "Jassem Gaber",
+        "period": 2
+      },
+      {
+        "minute": "56",
+        "team": "QAT",
+        "playerIn": "Ahmed Al-Ganehi",
+        "playerOut": "Hassan Al-Haydos",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "BIH",
+        "playerIn": "Dennis Hadzikadunic",
+        "playerOut": "Nikola Katic",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "BIH",
+        "playerIn": "Ermin Mahmic",
+        "playerOut": "Edin Dzeko",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "QAT",
+        "playerIn": "Almoez Ali",
+        "playerOut": "Karim Boudiaf",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "QAT",
+        "playerIn": "Ahmed Alaaeldin",
+        "playerOut": "Edmílson Junior",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "QAT",
+        "playerIn": "Mohamed Manai",
+        "playerOut": "Ahmed Fathy",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "BIH",
+        "playerIn": "Dzenis Burnic",
+        "playerOut": "Kerim Alajbegovic",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Lumen Field",
       "city": "Seattle, Washington",
@@ -38931,7 +39148,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 66925,
     "espnOdds": {
       "homeML": -235,
       "awayML": 600,
@@ -38969,7 +39186,7 @@
           "jersey": "18",
           "espnId": "220538",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sead Kolasinac",
@@ -38987,7 +39204,7 @@
           "jersey": "24",
           "espnId": "374533",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ivan Sunjic",
@@ -38996,7 +39213,7 @@
           "jersey": "14",
           "espnId": "194767",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ivan Basic",
@@ -39014,7 +39231,7 @@
           "jersey": "19",
           "espnId": "391034",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Esmir Bajraktarevic",
@@ -39032,7 +39249,7 @@
           "jersey": "11",
           "espnId": "102337",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ermedin Demirovic",
@@ -39060,7 +39277,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "352660",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39087,7 +39304,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "246836",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39096,7 +39313,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "225571",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39114,7 +39331,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "414676",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39150,7 +39367,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "338199",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39230,7 +39447,7 @@
           "jersey": "20",
           "espnId": "268018",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Karim Boudiaf",
@@ -39239,7 +39456,7 @@
           "jersey": "12",
           "espnId": "172245",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jassem Gaber",
@@ -39248,7 +39465,7 @@
           "jersey": "5",
           "espnId": "310373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Akram Afif",
@@ -39266,7 +39483,7 @@
           "jersey": "10",
           "espnId": "236586",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Edmílson Junior",
@@ -39275,7 +39492,7 @@
           "jersey": "8",
           "espnId": "109204",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -39303,7 +39520,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "309315",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39321,7 +39538,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "336120",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39339,7 +39556,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "263311",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39357,7 +39574,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "143613",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39375,7 +39592,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "219252",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39401,64 +39618,64 @@
       "_espnEventId": "760462"
     },
     "homeStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 4.0,
-      "saves": 0.0,
-      "possessionPct": 58.7,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 2.0,
+      "possessionPct": 54.5,
+      "totalShots": 14.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 453.0,
+      "totalPasses": 517.0,
+      "passPct": 0.9,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 22.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 52.0,
+      "accurateLongBalls": 31.0,
+      "longballPct": 0.6,
+      "blockedShots": 5.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.9,
+      "interceptions": 4.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
+    },
+    "awayStats": {
+      "foulsCommitted": 14.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 5.0,
+      "saves": 3.0,
+      "possessionPct": 45.5,
       "totalShots": 9.0,
       "shotsOnTarget": 3.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 255.0,
-      "totalPasses": 288.0,
+      "accuratePasses": 370.0,
+      "totalPasses": 434.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 16.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 26.0,
-      "accurateLongBalls": 16.0,
-      "longballPct": 0.6,
-      "blockedShots": 3.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 3.0,
-      "tacklePct": 0.7,
-      "interceptions": 1.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
-    },
-    "awayStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 2.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 41.3,
-      "totalShots": 4.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 179.0,
-      "totalPasses": 208.0,
-      "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 25.0,
-      "accurateLongBalls": 7.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 17.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 53.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.3,
       "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.3,
-      "interceptions": 1.0,
-      "effectiveClearance": 17.0,
-      "totalClearance": 17.0
+      "effectiveTackles": 5.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.4,
+      "interceptions": 4.0,
+      "effectiveClearance": 24.0,
+      "totalClearance": 24.0
     },
     "homeForm": [
       {
@@ -39563,7 +39780,13 @@
       "city": "Atlanta, Georgia",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Danny Makkelie",
+        "role": "REFEREE",
+        "nationality": "Netherlands"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -39692,7 +39915,13 @@
       "city": "Miami Gardens, Florida",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "César Ramos",
+        "role": "REFEREE",
+        "nationality": "Mexico"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
