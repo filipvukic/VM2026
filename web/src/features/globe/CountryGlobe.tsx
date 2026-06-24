@@ -142,13 +142,16 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
         // Translucent + faintly muted so it's a soft, clean overlay rather than a
         // harsh full-saturation sticker.
         capMat.map = t;
-        capMat.color.set(0xeaeaea);
+        capMat.color.set(0xf2f2f2);
         capMat.transparent = true;
         capMat.depthWrite = false;
         capMat.needsUpdate = true;
-        // Ease the flag in (easeOutCubic) instead of popping — the globe's render
-        // loop picks up each opacity step. `alive` stops it on unmount.
-        const TARGET = 0.72, start = performance.now(), DUR = 560;
+        // Ease the flag in (easeOutCubic) instead of popping — the globe's render loop
+        // picks up each opacity step. `alive` stops it on unmount. Opacity stays high so
+        // the flag is clearly visible even where it sits over a dark part of the globe;
+        // smoothness comes from the hi-res texture + filtering + soft edges, not from
+        // being see-through.
+        const TARGET = 0.92, start = performance.now(), DUR = 560;
         const tick = () => {
           if (!alive) return;
           const k = Math.min(1, (performance.now() - start) / DUR);
