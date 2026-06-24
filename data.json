@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T21:22:00+00:00",
+  "updated_at": "2026-06-24T22:42:30+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URY",
+      "awayTla": "URU",
       "status": "FINISHED",
       "score": [
         1,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -13643,18 +13643,51 @@
       "homeTla": "MAR",
       "away": "Haiti",
       "awayTla": "HAI",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "41",
+      "goals": [
+        {
+          "minute": "10",
+          "team": "HAI",
+          "scorer": "Yassine Bounou",
+          "assist": "Jean-Kévin Duverne",
+          "type": "OWN",
+          "description": "Own Goal by Yassine Bounou, Morocco. Morocco 0, Haiti 1.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "39",
+          "team": "MAR",
+          "scorer": "Achraf Hakimi",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Morocco 1, Haiti 1. Achraf Hakimi (Morocco) left footed shot from very close range to the centre of the goal.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -13665,8 +13698,7 @@
       "referees": [
         {
           "name": "Danny Makkelie",
-          "role": "REFEREE",
-          "nationality": "Netherlands"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -13772,18 +13804,38 @@
       "homeTla": "SCO",
       "away": "Brazil",
       "awayTla": "BRA",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        2
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          2
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "41",
+      "goals": [
+        {
+          "minute": "7",
+          "team": "BRA",
+          "scorer": "Vinícius Júnior",
+          "assist": "Rayan",
+          "type": "REGULAR",
+          "description": "Goal! Scotland 0, Brazil 1. Vinícius Júnior (Brazil) right footed shot from the centre of the box to the centre of the goal. Assisted by Rayan.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -13793,9 +13845,8 @@
       },
       "referees": [
         {
-          "name": "César Ramos",
-          "role": "REFEREE",
-          "nationality": "Mexico"
+          "name": "César Arturo Ramos Palazuelos",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -15251,7 +15302,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URY",
+      "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -16465,50 +16516,50 @@
         {
           "team": "Brazil",
           "tla": "BRA",
-          "played": 2,
-          "won": 1,
+          "played": 3,
+          "won": 2,
           "draw": 1,
           "lost": 0,
-          "gf": 4,
+          "gf": 5,
           "ga": 1,
-          "gd": 3,
-          "points": 4
+          "gd": 4,
+          "points": 7
         },
         {
           "team": "Morocco",
           "tla": "MAR",
-          "played": 2,
+          "played": 3,
           "won": 1,
           "draw": 1,
-          "lost": 0,
+          "lost": 1,
           "gf": 2,
-          "ga": 1,
-          "gd": 1,
+          "ga": 2,
+          "gd": 0,
           "points": 4
         },
         {
           "team": "Scotland",
           "tla": "SCO",
-          "played": 2,
+          "played": 3,
           "won": 1,
           "draw": 0,
-          "lost": 1,
+          "lost": 2,
           "gf": 1,
-          "ga": 1,
-          "gd": 0,
+          "ga": 2,
+          "gd": -1,
           "points": 3
         },
         {
           "team": "Haiti",
           "tla": "HAI",
-          "played": 2,
-          "won": 0,
+          "played": 3,
+          "won": 1,
           "draw": 0,
           "lost": 2,
-          "gf": 0,
+          "gf": 1,
           "ga": 4,
-          "gd": -4,
-          "points": 0
+          "gd": -3,
+          "points": 3
         }
       ]
     },
