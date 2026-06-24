@@ -36657,26 +36657,122 @@
     "homeTla": "PAN",
     "away": "Croatia",
     "awayTla": "CRO",
-    "status": "LIVE",
+    "status": "FINISHED",
     "score": [
       0,
-      0
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        0,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "38",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "54",
+        "team": "CRO",
+        "scorer": "Ante Budimir",
+        "assist": "Josip Stanisic",
+        "type": "REGULAR",
+        "description": "Goal! Panama 0, Croatia 1. Ante Budimir (Croatia) left footed shot from very close range to the bottom left corner. Assisted by Josip Stanisic with a cross.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "61",
+        "team": "PAN",
+        "player": "Édgar Yoel Bárcenas",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "CRO",
+        "player": "Petar Sucic",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "CRO",
+        "playerIn": "Ante Budimir",
+        "playerOut": "Petar Musa",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "CRO",
+        "playerIn": "Andrej Kramaric",
+        "playerOut": "Josko Gvardiol",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "CRO",
+        "playerIn": "Luka Sucic",
+        "playerOut": "Marco Pasalic",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "CRO",
+        "playerIn": "Petar Sucic",
+        "playerOut": "Mateo Kovacic",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "PAN",
+        "playerIn": "Cecilio Waterman",
+        "playerOut": "Jiovany Ramos",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "CRO",
+        "playerIn": "Mario Pasalic",
+        "playerOut": "Luka Modric",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "PAN",
+        "playerIn": "Azarias Londoño",
+        "playerOut": "José Fajardo",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "PAN",
+        "playerIn": "Éric Davis",
+        "playerOut": "César Blackman",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "PAN",
+        "playerIn": "Tomás Rodríguez",
+        "playerOut": "Édgar Yoel Bárcenas",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BMO Field",
       "city": "Toronto",
@@ -36689,7 +36785,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 43036,
     "espnOdds": {
       "homeML": 700,
       "awayML": -230,
@@ -36736,7 +36832,7 @@
           "jersey": "13",
           "espnId": "291014",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "César Blackman",
@@ -36745,7 +36841,7 @@
           "jersey": "2",
           "espnId": "260346",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Amir Murillo",
@@ -36763,7 +36859,7 @@
           "jersey": "11",
           "espnId": "201919",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Carlos Harvey",
@@ -36799,7 +36895,7 @@
           "jersey": "17",
           "espnId": "267996",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -36881,7 +36977,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "138183",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36908,7 +37004,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "288563",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36926,7 +37022,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "155913",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -36935,7 +37031,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "340539",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -36979,7 +37075,7 @@
           "jersey": "4",
           "espnId": "299910",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Josip Stanisic",
@@ -37006,7 +37102,7 @@
           "jersey": "8",
           "espnId": "154595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Luka Modric",
@@ -37015,7 +37111,7 @@
           "jersey": "10",
           "espnId": "76762",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Petar Musa",
@@ -37024,7 +37120,7 @@
           "jersey": "26",
           "espnId": "277128",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ivan Perisic",
@@ -37042,7 +37138,7 @@
           "jersey": "24",
           "espnId": "324270",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -37052,7 +37148,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "207288",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -37061,7 +37157,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "341494",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -37097,7 +37193,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139520",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -37133,7 +37229,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "189668",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -37169,7 +37265,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "306263",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -37186,64 +37282,64 @@
       "_espnEventId": "760460"
     },
     "homeStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 19.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 35.8,
-      "totalShots": 1.0,
+      "offsides": 1.0,
+      "wonCorners": 7.0,
+      "saves": 1.0,
+      "possessionPct": 42.1,
+      "totalShots": 8.0,
       "shotsOnTarget": 1.0,
-      "shotPct": 0.0,
+      "shotPct": 0.1,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 101.0,
-      "totalPasses": 130.0,
+      "accuratePasses": 278.0,
+      "totalPasses": 357.0,
       "passPct": 0.8,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 9.0,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 29.0,
       "crossPct": 0.2,
-      "totalLongBalls": 25.0,
-      "accurateLongBalls": 11.0,
+      "totalLongBalls": 57.0,
+      "accurateLongBalls": 24.0,
       "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.4,
-      "interceptions": 2.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
+      "blockedShots": 2.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.5,
+      "interceptions": 3.0,
+      "effectiveClearance": 29.0,
+      "totalClearance": 29.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 12.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 64.2,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 2.0,
+      "saves": 1.0,
+      "possessionPct": 57.9,
+      "totalShots": 6.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 209.0,
-      "totalPasses": 238.0,
-      "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 11.0,
+      "accuratePasses": 432.0,
+      "totalPasses": 515.0,
+      "passPct": 0.8,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 17.0,
       "crossPct": 0.2,
-      "totalLongBalls": 13.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.2,
-      "interceptions": 2.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "totalLongBalls": 51.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.4,
+      "interceptions": 5.0,
+      "effectiveClearance": 36.0,
+      "totalClearance": 36.0
     },
     "homeForm": [
       {
@@ -37329,7 +37425,7 @@
     "homeTla": "COL",
     "away": "Congo DR",
     "awayTla": "COD",
-    "status": "TIMED",
+    "status": "SCHEDULED",
     "score": null,
     "scoreDetail": {
       "halfTime": null,
@@ -37739,9 +37835,9 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -575,
-      "awayML": 1600,
-      "spread": "MAR -2.5",
+      "homeML": -525,
+      "awayML": 1500,
+      "spread": "MAR -1.5",
       "overUnder": 3.5,
       "overOdds": 145.0,
       "underOdds": -180.0,
@@ -38775,7 +38871,7 @@
       "awayML": -105,
       "spread": "USA -0.5",
       "overUnder": 2.5,
-      "overOdds": -140.0,
+      "overOdds": -135.0,
       "underOdds": 110.0,
       "provider": "DraftKings"
     },
@@ -38900,8 +38996,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 195,
-      "awayML": 295,
+      "homeML": 200,
+      "awayML": 310,
       "spread": "PAR -0.5",
       "overUnder": 1.5,
       "overOdds": -155.0,
@@ -39029,11 +39125,11 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 425,
-      "awayML": -160,
+      "homeML": 400,
+      "awayML": -155,
       "spread": "FRA -0.5",
       "overUnder": 2.5,
-      "overOdds": -150.0,
+      "overOdds": -145.0,
       "underOdds": 120.0,
       "provider": "DraftKings"
     },
@@ -39420,8 +39516,8 @@
       "awayML": 195,
       "spread": "CPV -0.5",
       "overUnder": 2.5,
-      "overOdds": -105.0,
-      "underOdds": -120.0,
+      "overOdds": 100.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -39803,12 +39899,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1200,
-      "awayML": -500,
-      "spread": "ENG -1.5",
+      "homeML": 1300,
+      "awayML": -550,
+      "spread": "ENG -2.5",
       "overUnder": 3.5,
-      "overOdds": 125.0,
-      "underOdds": -155.0,
+      "overOdds": 115.0,
+      "underOdds": -140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -39826,6 +39922,13 @@
       "goalsConceded": 2.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-23",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-17",
         "result": "F",
@@ -39853,16 +39956,16 @@
         "gf": 2,
         "ga": 6,
         "home": false
-      },
-      {
-        "date": "2026-03-31",
-        "result": "F",
-        "gf": 1,
-        "ga": 2,
-        "home": false
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-23",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-17",
         "result": "V",
@@ -39889,13 +39992,6 @@
         "result": "V",
         "gf": 1,
         "ga": 0,
-        "home": true
-      },
-      {
-        "date": "2026-03-27",
-        "result": "O",
-        "gf": 1,
-        "ga": 1,
         "home": true
       }
     ]
@@ -39932,12 +40028,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -145,
+      "homeML": -140,
       "awayML": 475,
       "spread": "CRO -0.5",
       "overUnder": 2.5,
-      "overOdds": 110.0,
-      "underOdds": -135.0,
+      "overOdds": 120.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -39955,6 +40051,13 @@
       "goalsConceded": 0.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-23",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
       {
         "date": "2026-06-17",
         "result": "F",
@@ -39982,16 +40085,16 @@
         "gf": 1,
         "ga": 3,
         "home": false
-      },
-      {
-        "date": "2026-03-26",
-        "result": "F",
-        "gf": 1,
-        "ga": 2,
-        "home": false
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-23",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      },
       {
         "date": "2026-06-17",
         "result": "V",
@@ -40018,13 +40121,6 @@
         "result": "F",
         "gf": 1,
         "ga": 2,
-        "home": false
-      },
-      {
-        "date": "2026-03-27",
-        "result": "F",
-        "gf": 1,
-        "ga": 5,
         "home": false
       }
     ]
@@ -40190,8 +40286,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -110,
-      "awayML": 275,
+      "homeML": -115,
+      "awayML": 295,
       "spread": "COD -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
@@ -40319,7 +40415,7 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1200,
+      "homeML": 1300,
       "awayML": -475,
       "spread": "ARG -1.5",
       "overUnder": 2.5,
@@ -40448,12 +40544,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 280,
+      "homeML": 300,
       "awayML": 190,
       "spread": "AUT -0.5",
       "overUnder": 1.5,
-      "overOdds": -195.0,
-      "underOdds": 160.0,
+      "overOdds": -185.0,
+      "underOdds": 150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -41040,8 +41136,8 @@
     "utcDate": "2026-07-03T22:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": null,
-    "homeTla": null,
+    "home": "Argentina",
+    "homeTla": "ARG",
     "away": null,
     "awayTla": null,
     "status": "TIMED",
