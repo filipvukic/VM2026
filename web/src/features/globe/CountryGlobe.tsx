@@ -27,8 +27,11 @@ for (const f of Object.values(COUNTRY_FACTS)) FACTS_BY_CCA3[f.cca3] = { lat: f.l
 // so when zoomed out only the large labels are legible and the small ones "appear"
 // (become readable) as you zoom in, without any per-frame recompute.
 function labelSizeForArea(area?: number | null): number {
-  if (!area || area <= 0) return 0.42;
-  return Math.max(0.36, Math.min(1.0, 0.36 + Math.sqrt(area) / 3600));
+  if (!area || area <= 0) return 0.25;
+  // Size tracks the country's on-globe EXTENT (∝ √area), so a code is proportional to
+  // how big the country actually is — giants (Russia/Canada/USA) get big labels, small
+  // nations small ones (a natural level-of-detail: they only become legible zoomed in).
+  return Math.max(0.22, Math.min(2.0, Math.sqrt(area) / 1500));
 }
 
 const norm = (s?: string) =>
@@ -88,8 +91,12 @@ export default function CountryGlobe({ iso, name, active, code }: { iso?: string
   // the accessor). Starts invisible; the flag (or a pink fallback) fills it once
   // loaded. Non-selected countries share `emptyMat`, an invisible cap (the accessor
   // must return a Material, so we can't just return undefined).
-  const capMat = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), []);
-  const emptyMat = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), []);
+  // side:DoubleSide is REQUIRED — three-globe's cap geometry winds so a single-sided
+  // material gets back-face culled (invisible). Its own default cap material is
+  // DoubleSide+depthWrite for the same reason. Starts invisible (opacity 0) until the
+  // flag texture loads and fills it.
+  const capMat = useMemo(() => new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, depthWrite: true, transparent: true, opacity: 0 }), []);
+  const emptyMat = useMemo(() => new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, opacity: 0, depthWrite: false }), []);
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
 
@@ -346,13 +353,14 @@ export default function CountryGlobe({ iso, name, active, code }: { iso?: string
       const sz = labelSizeForArea(fc.area);
       if (sel) {
         const pos = selCentroid || { lat: fc.lat, lng: fc.lng };
-        arr.push({ lat: pos.lat, lng: pos.lng, text: selText || cca3, sel: true, sz: Math.max(sz * 1.5, 0.92) });
+        // Still proportional, but always readable (you opened this country) and capped.
+        arr.push({ lat: pos.lat, lng: pos.lng, text: selText || cca3, sel: true, sz: Math.max(Math.min(sz * 1.4, 2.4), 0.95) });
       } else {
         arr.push({ lat: fc.lat, lng: fc.lng, text: cca3, sel: false, sz });
       }
     }
     // No polygon matched (rare) → still label the team's centre with its code.
-    if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: selText || iso2, sel: true, sz: 0.92 });
+    if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: selText || iso2, sel: true, sz: 0.95 });
     return arr;
   }, [features, selected, selCentroid, facts, iso2, code]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
