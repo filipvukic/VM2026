@@ -39,16 +39,18 @@ function wcStats(ds: ReturnType<typeof useData>, name: string) {
   return { goals, assists, yellow, red, apps };
 }
 
-export function FootballPlayerSheet({ name, espnId, ...chrome }: { name: string; espnId?: string | null } & SheetChrome) {
+export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }: { name: string; espnId?: string | null; fmId?: string | null } & SheetChrome) {
   const db = usePlayersDb();
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
   const p = findPlayer(name, db, espnId);
-  // Photo: FotMob image (keyed by the FotMob id from the stats index — the right
-  // player, fixes wrong db photos) → db photo → ESPN. Same priority as the line-up,
-  // so the profile and the pitch always show the SAME, correct face.
+  // Photo: FotMob image (keyed by the FotMob id — the right player, fixes wrong db
+  // photos) → db photo → ESPN. Same priority as the line-up, so the profile and the
+  // pitch always show the SAME, correct face. When opened from a pitch we get the
+  // line-up's own FotMob id (recovered by shirt); prefer it so the two ALWAYS match,
+  // instead of re-deriving by name (which can land on a different id).
   const statsIndex = useStatsIndex();
-  const fmId = statsIndex?.players[idxNorm(p?.name || name)]?.fmId;
+  const fmId = fmIdProp ?? statsIndex?.players[idxNorm(p?.name || name)]?.fmId;
   const photoSrcs = [fotmobImage(fmId), bestPhoto(p), espnHeadshot(espnId)].filter(Boolean) as string[];
   const wc = wcStats(ds, p?.name || name);
   const hasWc = wc.apps > 0 || wc.goals > 0;

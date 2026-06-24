@@ -50,7 +50,7 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
       {t.iso && (
         <div style={{ marginTop: 14 }}>
           <Suspense fallback={<div className="card card-pad dim" style={{ textAlign: "center", padding: 28 }}>Laddar klot…</div>}>
-            <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} />
+            <CountryGlobe iso={t.iso} name={t.name} code={code} active={chrome.interactive !== false} />
           </Suspense>
         </div>
       )}
@@ -197,18 +197,19 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
             {lu.bench.map((p, i) => {
               const came = subIn.get(p.name);
               const nm = (p.name || "").toLowerCase();
+              const benchFmId = fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim());
               return (
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
+                  photos={lineupPhotoSources(p.name, p.espnId, db, benchFmId)}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}
                   cameAt={came?.at}
                   forName={came?.forName}
                   motm={matchMaxRating > 0 && getRating(p.name) === matchMaxRating}
-                  onClick={() => openFb(p.name, p.espnId)}
+                  onClick={() => openFb(p.name, p.espnId, benchFmId)}
                 />
               );
             })}

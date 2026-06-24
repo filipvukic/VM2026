@@ -17,10 +17,11 @@ import { ratingColor } from "../lib/rating";
 import { Flag, groupColor } from "../lib/flags";
 import { TLA_TO_ISO, NAME_TO_ISO } from "../data/static/names";
 import { TEAM_DETAILS } from "../data/static/history";
+import { broadcastForPair } from "../data/static/broadcasts";
 import { svFullDate, svTime } from "../lib/format";
 import { winChance, winChanceFromEspn } from "../data/odds";
 import { useFixtureOdds } from "../state/fixtureOdds";
-import { classifyTip } from "../data/scoring";
+import { classifyTip, type TipResult } from "../data/scoring";
 import type { Dataset, Match, MatchStats } from "../data/types";
 
 // Points each team gets from THIS match (3 win / 1 draw / 0 loss) — shown in the
@@ -48,7 +49,11 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
   const m = ds.allMatches.find((x) => x.id === id);
-  const [tab, setTab] = useState<Tab>("overview");
+  // Open straight on everyone's tips for a match that hasn't kicked off yet — that's
+  // what you most want pre-match. Played / live matches open on the overview (score
+  // + events), with Tips one tap away as the 2nd tab.
+  const wantTips = !!m && m.tippas && m.tips.length > 0 && m.status === "upcoming";
+  const [tab, setTab] = useState<Tab>(wantTips ? "tips" : "overview");
   const now = useNow(m && isLive(m) ? 30_000 : 0);
   if (!m) return null;
 
@@ -58,17 +63,21 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const live = isLive(m);
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const vIso = venueIso(m.venue);
+  // Where to watch on Swedish TV — only useful before/while it airs, not after.
+  const bc = !played ? broadcastForPair(m.home, m.away) : null;
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
   const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too
   const hasTips = m.tippas && m.tips.length > 0;
   const hasTable = m.stage === "group" && !!m.group;
+  // Short labels so all visible tabs fit the sheet width (no horizontal scroll),
+  // with Tips promoted to 2nd so everyone's tips are right there on open.
   const tabs: { id: Tab; label: string; show: boolean }[] = [
     { id: "overview", label: "Översikt", show: true },
-    { id: "lineup", label: "Uppställning", show: hasPitch },
-    { id: "stats", label: "Statistik", show: hasStats },
-    { id: "table", label: "Tabell", show: hasTable },
     { id: "tips", label: "Tips", show: hasTips },
+    { id: "lineup", label: "Elva", show: hasPitch },
+    { id: "stats", label: "Stats", show: hasStats },
+    { id: "table", label: "Tabell", show: hasTable },
   ];
 
   return (
@@ -104,6 +113,18 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
             {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{m.attendance ? ` · ${m.attendance.toLocaleString("sv-SE")} i publiken` : ""}
           </div>
         )}
+        {bc && (
+          <div style={{ marginTop: 14 }}>
+            <a className="md-tv" href={bc.url} target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2.5" y="7" width="19" height="12.5" rx="2" /><path d="M8 3.2l4 3.8 4-3.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Visas på <b>{bc.label}</b></span>
+              {bc.free && <span className="md-tv-free">GRATIS</span>}
+              <span className="md-tv-go">Öppna ›</span>
+            </a>
+          </div>
+        )}
       </div>
 
       {/* tabs */}
@@ -134,10 +155,16 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
       </div>
 
       <style>{`
-        .md-tabs{ display:flex; gap:4px; margin-top:18px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; overflow-x:auto; scrollbar-width:none; }
-        .md-tabs::-webkit-scrollbar{ display:none; }
-        .md-tabs button{ flex:1 0 auto; white-space:nowrap; padding:8px 12px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
+        .md-tabs{ display:flex; gap:4px; margin-top:18px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
+        /* flex:1 1 0 + min-width:0 → every tab shares the width and shrinks to fit,
+           so all of them stay on one row instead of scrolling off the side. */
+        .md-tabs button{ flex:1 1 0; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:8px 6px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
         .md-tabs button.on{ background:var(--grad-soft); color:#fff; }
+        .md-tv{ display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:var(--r-pill); background:var(--surface); border:1px solid var(--line-2); font-size:12.5px; font-weight:700; color:var(--ink-2); }
+        .md-tv:hover{ background:var(--surface-2); }
+        .md-tv b{ color:var(--ink); }
+        .md-tv-free{ color:var(--win); font-weight:800; font-size:10px; letter-spacing:.04em; }
+        .md-tv-go{ color:var(--cool-2); font-weight:800; }
         .md-tab-content{ animation:tabIn .26s cubic-bezier(.2,.7,.2,1); }
         @keyframes tabIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
       `}</style>
@@ -305,18 +332,19 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
             {lu.bench.map((p, i) => {
               const came = subIn.get(p.name);
               const nm = (p.name || "").toLowerCase();
+              const benchFmId = fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim());
               return (
                 <BenchPlayer
                   key={i}
                   p={p}
-                  photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
+                  photos={lineupPhotoSources(p.name, p.espnId, db, benchFmId)}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}
                   cameAt={came?.at}
                   forName={came?.forName}
                   motm={matchMaxRating > 0 && getRating(p.name) === matchMaxRating}
-                  onClick={() => openFb(p.name, p.espnId)}
+                  onClick={() => openFb(p.name, p.espnId, benchFmId)}
                 />
               );
             })}
@@ -568,33 +596,62 @@ function WinChanceBlock({ m }: { m: Match }) {
   );
 }
 
+// result → color: exact = gold, right outcome = green, wrong = grey, not started = neutral.
+const tipColor = (res: TipResult | null) =>
+  res === "exact" ? "var(--gold)" : res === "outcome" ? "var(--win)" : res === "floor" ? "var(--ink-3)" : "var(--ink-2)";
+
 function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
-  if (!m.tippas || !m.tips.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>;
-  const played = m.status === "played";
   const openPlayer = useSheets((s) => s.openPlayer);
+  if (!m.tippas || !m.tips.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>;
+  const live = isLive(m);
+  const played = m.status === "played";
+  // Score every tip — final when played, PROVISIONAL against the running score when
+  // live, so you see who'd cash in if it ended right now. null = not kicked off yet.
+  const scored = (played || live) && m.ga != null && m.gb != null;
   const rows = m.tips
     .map((t) => {
-      let pts: number | null = null;
-      if (played && m.ga != null && m.gb != null) pts = classifyTip([t.tip[0], t.tip[1]], m.ga, m.gb).points;
-      return { name: t.name, tip: t.tip, pts };
+      const c = scored ? classifyTip([t.tip[0], t.tip[1]], m.ga!, m.gb!) : null;
+      return { name: t.name, tip: t.tip, result: c?.result ?? null, pts: c?.points ?? null };
     })
-    .sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1));
+    .sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1) || a.name.localeCompare(b.name, "sv"));
+  const exactCount = rows.filter((r) => r.result === "exact").length;
+  const outcomeCount = rows.filter((r) => r.result === "outcome").length;
   return (
-    <Block title="Poolens tips">
+    <Block title={live ? "Poolens tips · just nu" : "Poolens tips"}>
+      {scored && (
+        <div className="dim" style={{ fontSize: 11.5, marginBottom: 11, display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <span><b style={{ color: "var(--gold)" }}>{exactCount}</b> exakt rätt{live ? " just nu" : ""}</span>
+          <span><b style={{ color: "var(--win)" }}>{outcomeCount}</b> rätt utgång</span>
+        </div>
+      )}
       <div style={{ display: "grid", gap: 6 }}>
         {rows.map((r) => {
           const p = ds.players.find((x) => x.name === r.name);
-          const color = r.pts === 5 ? "var(--gold)" : r.pts === 2 ? "var(--win)" : r.pts === 1 ? "var(--ink-3)" : "var(--ink-2)";
+          const color = tipColor(r.result);
+          const lit = r.result === "exact" || r.result === "outcome";
           return (
-            <button key={r.name} onClick={() => p && openPlayer(p.id)} style={{ display: "flex", alignItems: "center", gap: 9, padding: "6px 8px", borderRadius: 8, background: "var(--surface)", width: "100%", textAlign: "left" }}>
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: p?.color || "var(--cool)" }} />
-              <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{r.name}</span>
-              <span className="num" style={{ fontSize: 14 }}>{r.tip[0]}–{r.tip[1]}</span>
-              {r.pts != null && <span className="num" style={{ width: 34, textAlign: "right", color }}>{r.pts}p</span>}
+            <button
+              key={r.name}
+              onClick={() => p && openPlayer(p.id)}
+              style={{
+                display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", borderRadius: 9, width: "100%", textAlign: "left",
+                background: lit ? `color-mix(in srgb, ${color} 11%, var(--surface))` : "var(--surface)",
+                border: `1px solid ${lit ? `color-mix(in srgb, ${color} 32%, transparent)` : "transparent"}`,
+              }}
+            >
+              <span style={{ width: 9, height: 9, borderRadius: "50%", background: p?.color || "var(--cool)", flexShrink: 0 }} />
+              <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</span>
+              <span className="num" style={{ fontSize: 14, fontWeight: 800, color: r.result ? color : "var(--ink)" }}>{r.tip[0]}–{r.tip[1]}</span>
+              {r.pts != null && <span className="num" style={{ width: 30, textAlign: "right", fontWeight: 800, color }}>{r.pts}p</span>}
             </button>
           );
         })}
       </div>
+      {live && (
+        <div className="dim" style={{ fontSize: 10.5, marginTop: 10, textAlign: "center" }}>
+          Färgen visar läget just nu — <b style={{ color: "var(--gold)" }}>guld</b> = exakt, <b style={{ color: "var(--win)" }}>grön</b> = rätt utgång.
+        </div>
+      )}
     </Block>
   );
 }

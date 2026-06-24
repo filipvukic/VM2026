@@ -35,13 +35,32 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  // The notification's data.url deep-links to the match (?mid= for foreground
+  // alerts, ?m=<team-pair-key> for push alerts). If a window is already open,
+  // focus it and post the url so the SPA opens the match without a reload;
+  // otherwise open a new window at that url and let the app read it on load.
+  const url = (event.notification.data && event.notification.data.url) || "/";
   event.waitUntil(
     (async () => {
       const all = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
       for (const c of all) {
-        if ("focus" in c) return c.focus();
+        if ("focus" in c) {
+          await c.focus();
+          c.postMessage({ type: "open-match", url });
+          return;
+        }
       }
-      if (self.clients.openWindow) return self.clients.openWindow("/");
+      // No window open → a cold launch. On installed iOS PWAs the query string we
+      // pass to openWindow() is dropped (the app starts at start_url), so the
+      // ?m=/?mid= deep-link is lost and the match never opens. Stash it in a cache
+      // the page reads + clears on boot, so the tapped match opens either way.
+      try {
+        const cache = await caches.open("vm-nav");
+        await cache.put("/__pending_match", new Response(url));
+      } catch {
+        /* cache unavailable — fall through to openWindow */
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
     })()
   );
 });

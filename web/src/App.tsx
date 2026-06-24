@@ -41,6 +41,14 @@ export default function App() {
   const openMatch = useSheets((s) => s.openMatch);
   const live = ds.allMatches.filter(isLive);
 
+  // Switching tabs resets the scroll position. Without this, opening ranking /
+  // bonus / info after scrolling down a long tab (schedule, standings) left you
+  // landed near the bottom on mobile — the window scroll persisted across the swap.
+  const goTab = (t: TabId) => {
+    setTab(t);
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -59,12 +67,33 @@ export default function App() {
   const handledUrl = useRef(false);
   useEffect(() => {
     if (handledUrl.current || !ds.allMatches.length) return;
-    const params = new URLSearchParams(window.location.search);
-    if (!params.has("mid") && !params.has("m")) { handledUrl.current = true; return; }
-    const id = matchFromParams(ds, params);
     handledUrl.current = true;
-    if (id) openMatch(id);
-    window.history.replaceState(null, "", window.location.pathname);
+    (async () => {
+      const params = new URLSearchParams(window.location.search);
+      let id: string | null = null;
+      if (params.has("mid") || params.has("m")) {
+        id = matchFromParams(ds, params);
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+      // Cold launch from a push on an installed iOS PWA: the query string we pass
+      // to openWindow() is dropped (the app boots at start_url), so ?m= never
+      // reaches us via the URL. The service worker stashes the target in a cache
+      // instead — read and clear it. Always clear (even when a URL param WAS
+      // present) so a stale stash can't reopen a match on a later cold start.
+      if ("caches" in window) {
+        try {
+          const cache = await caches.open("vm-nav");
+          const res = await cache.match("/__pending_match");
+          if (res) {
+            await cache.delete("/__pending_match");
+            if (!id) id = matchFromParams(ds, new URL(await res.text(), window.location.origin).searchParams);
+          }
+        } catch {
+          /* cache unavailable — ignore */
+        }
+      }
+      if (id) openMatch(id);
+    })();
   }, [ds, openMatch]);
 
   useEffect(() => {
@@ -87,16 +116,16 @@ export default function App() {
     <div className="app">
       <header className="header">
         <div className="container header-bar">
-          <button className="brand" onClick={() => setTab("standings")}>
+          <button className="brand" onClick={() => goTab("standings")}>
             <img className="brand-logo" src={asset("images/wc2026-logo.svg")} alt="" />
             <span>VM26 <span className="accent">Tippning</span></span>
           </button>
 
-          <TopNav active={tab} onChange={setTab} />
+          <TopNav active={tab} onChange={goTab} />
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto", flexShrink: 0 }}>
             {live.length > 0 && (
-              <button className="live-pill" onClick={() => (live.length === 1 ? openMatch(live[0].id) : setTab("schedule"))} style={{ cursor: "pointer" }}>
+              <button className="live-pill" onClick={() => (live.length === 1 ? openMatch(live[0].id) : goTab("schedule"))} style={{ cursor: "pointer" }}>
                 <span className="live-dot" />{live.length} LIVE
               </button>
             )}
@@ -116,7 +145,7 @@ export default function App() {
         </div>
       </header>
 
-      <Nav active={tab} onChange={setTab} />
+      <Nav active={tab} onChange={goTab} />
 
       <main>
         {tab === "standings" && <StandingsView />}

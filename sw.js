@@ -50,6 +50,16 @@ self.addEventListener("notificationclick", (event) => {
           return;
         }
       }
+      // No window open → a cold launch. On installed iOS PWAs the query string we
+      // pass to openWindow() is dropped (the app starts at start_url), so the
+      // ?m=/?mid= deep-link is lost and the match never opens. Stash it in a cache
+      // the page reads + clears on boot, so the tapped match opens either way.
+      try {
+        const cache = await caches.open("vm-nav");
+        await cache.put("/__pending_match", new Response(url));
+      } catch {
+        /* cache unavailable — fall through to openWindow */
+      }
       if (self.clients.openWindow) return self.clients.openWindow(url);
     })()
   );

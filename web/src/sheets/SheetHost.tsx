@@ -46,7 +46,7 @@ export function SheetHost() {
         const key = `${entry.type}-${"id" in entry ? entry.id : "code" in entry ? entry.code : entry.name}-${i}`;
         if (entry.type === "match") return <MatchDetail key={key} id={entry.id} {...common} />;
         if (entry.type === "team") return <TeamSheet key={key} code={entry.code} {...common} />;
-        if (entry.type === "fbplayer") return <FootballPlayerSheet key={key} name={entry.name} espnId={entry.espnId} {...common} />;
+        if (entry.type === "fbplayer") return <FootballPlayerSheet key={key} name={entry.name} espnId={entry.espnId} fmId={entry.fmId} {...common} />;
         if (entry.type === "coach") return <CoachSheet key={key} code={entry.code} {...common} />;
         return <PlayerSheet key={key} id={entry.id} {...common} />;
       })}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Globe from "react-globe.gl";
+import * as THREE from "three";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
 import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
 
@@ -43,7 +44,35 @@ function altitudeForArea(area?: number | null): number {
   return Math.max(0.8, Math.min(2.85, alt));
 }
 
-export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
+// Geographic centre of a country polygon, averaged on the unit sphere (so it's
+// antimeridian-safe for USA/New Zealand and lands INSIDE the country, unlike a
+// plain lat/lng mean). Uses the ring with the most vertices (≈ the main landmass).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function polyCentroid(geom: any): { lat: number; lng: number } | null {
+  if (!geom) return null;
+  // Outer rings only (index 0) — never an interior hole (e.g. Lesotho inside
+  // South Africa), which could otherwise win the most-vertices pick.
+  const rings: number[][][] =
+    geom.type === "Polygon" ? [geom.coordinates[0]] :
+    geom.type === "MultiPolygon" ? geom.coordinates.map((p: number[][][]) => p[0]) : [];
+  let best: number[][] | null = null;
+  for (const r of rings) if (r && (!best || r.length > best.length)) best = r;
+  if (!best || !best.length) return null;
+  let x = 0, y = 0, z = 0;
+  for (const [lng, lat] of best) {
+    const la = (lat * Math.PI) / 180, lo = (lng * Math.PI) / 180;
+    x += Math.cos(la) * Math.cos(lo);
+    y += Math.cos(la) * Math.sin(lo);
+    z += Math.sin(la);
+  }
+  const n = best.length;
+  return {
+    lng: (Math.atan2(y / n, x / n) * 180) / Math.PI,
+    lat: (Math.atan2(z / n, Math.hypot(x / n, y / n)) * 180) / Math.PI,
+  };
+}
+
+export default function CountryGlobe({ iso, name, active, code }: { iso?: string | null; name: string; active?: boolean; code?: string | null }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(undefined);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -54,6 +83,13 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   const [mounted, setMounted] = useState(false); // defer WebGL init past the sheet-open animation
   const [showLabels, setShowLabels] = useState(false); // defer the 170+ text labels past the fly-in
   const [features, setFeatures] = useState<Feat[]>(FEATURES_CACHE || []);
+  // The selected country's cap material — ONE stable instance we mutate in place
+  // when the flag texture arrives (so we never depend on the globe wrapper re-running
+  // the accessor). Starts invisible; the flag (or a pink fallback) fills it once
+  // loaded. Non-selected countries share `emptyMat`, an invisible cap (the accessor
+  // must return a Material, so we can't just return undefined).
+  const capMat = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), []);
+  const emptyMat = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), []);
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
 
@@ -99,6 +135,50 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
       alive = false;
     };
   }, []);
+
+  // Drape the country's flag over the selected polygon. We load the flag as a
+  // texture and hand it in as the cap material: three-conic-polygon-geometry maps
+  // the cap's UVs from the lng/lat bounding box, so the flag lands oriented on the
+  // country's actual shape (west→east left→right, south→north bottom→top). If the
+  // flag CDN fails (CORS / 404) we fall back to the old pink highlight so the
+  // selected country is never left unmarked.
+  useEffect(() => {
+    if (!iso2) return;
+    let alive = true;
+    let tex: THREE.Texture | null = null;
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin("anonymous");
+    loader.load(
+      `https://flagcdn.com/w640/${iso2.toLowerCase()}.png`,
+      (t) => {
+        if (!alive) { t.dispose(); return; }
+        t.colorSpace = THREE.SRGBColorSpace;
+        t.anisotropy = 8;
+        tex = t;
+        // Mutate the existing cap material in place — the globe already painted it
+        // onto the selected country, so the flag shows on the next render frame.
+        capMat.map = t;
+        capMat.transparent = false;
+        capMat.opacity = 1;
+        capMat.needsUpdate = true;
+      },
+      undefined,
+      () => {
+        // Flag CDN failed (CORS / 404) — keep the old pink highlight instead.
+        if (!alive) return;
+        capMat.color.set(0xff2d6e);
+        capMat.opacity = 0.34;
+        capMat.needsUpdate = true;
+      }
+    );
+    return () => {
+      alive = false;
+      tex?.dispose();
+    };
+  }, [iso2, capMat]);
+
+  // Free the cap materials (and any loaded flag texture) when this globe unmounts.
+  useEffect(() => () => { capMat.map?.dispose(); capMat.dispose(); emptyMat.dispose(); }, [capMat, emptyMat]);
 
   // The selected country's polygon (by ISO3 / name), found among all features.
   const selected = useMemo(() => {
@@ -249,20 +329,32 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   // sized by area. Static (no per-zoom recompute → no jank); the size gives a
   // natural level-of-detail (tiny labels only become legible once you zoom in).
   // The selected country is always shown, bigger and pink.
+  // The selected country shows the abbreviation the country ACTUALLY uses — its
+  // FIFA/team code (GER, NED, SUI…), not Natural Earth's ISO3 (DEU, NLD, CHE) —
+  // centred on the polygon's true centre. Other countries keep their ISO3 at the
+  // bundled point (faint background context).
+  const selCentroid = useMemo(() => polyCentroid(selected?.geometry), [selected]);
   const labels = useMemo(() => {
     const arr: { lat: number; lng: number; text: string; sel: boolean; sz: number }[] = [];
+    const selText = (code || iso2 || "").toUpperCase();
     for (const f of features) {
       const p = f.properties || {};
-      const code = p.ADM0_A3;
-      const fc = code ? FACTS_BY_CCA3[code] : null;
-      if (!fc || !code) continue;
+      const cca3 = p.ADM0_A3;
+      const fc = cca3 ? FACTS_BY_CCA3[cca3] : null;
+      if (!fc || !cca3) continue;
       const sel = f === selected;
       const sz = labelSizeForArea(fc.area);
-      arr.push({ lat: fc.lat, lng: fc.lng, text: code, sel, sz: sel ? Math.max(sz * 1.5, 0.85) : sz });
+      if (sel) {
+        const pos = selCentroid || { lat: fc.lat, lng: fc.lng };
+        arr.push({ lat: pos.lat, lng: pos.lng, text: selText || cca3, sel: true, sz: Math.max(sz * 1.5, 0.92) });
+      } else {
+        arr.push({ lat: fc.lat, lng: fc.lng, text: cca3, sel: false, sz });
+      }
     }
-    if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: iso2, sel: true, sz: 0.9 });
+    // No polygon matched (rare) → still label the team's centre with its code.
+    if (facts && !selected) arr.push({ lat: facts.lat, lng: facts.lng, text: selText || iso2, sel: true, sz: 0.92 });
     return arr;
-  }, [features, selected, facts, iso2]);
+  }, [features, selected, selCentroid, facts, iso2, code]);
   const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
 
   return (
@@ -288,10 +380,11 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             atmosphereColor="#9ec1ff"
             atmosphereAltitude={0.22}
             polygonsData={features}
-            polygonAltitude={(f: Feat) => (f === selected ? 0.02 : 0.005)}
+            polygonAltitude={(f: Feat) => (f === selected ? 0.025 : 0.005)}
             polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.32)" : "rgba(0,0,0,0)")}
-            polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.18)" : "rgba(0,0,0,0)")}
-            polygonStrokeColor={(f: Feat) => (f === selected ? "#ff5c97" : "rgba(255,255,255,.42)")}
+            polygonCapMaterial={(f: Feat) => (f === selected ? capMat : emptyMat)}
+            polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.22)" : "rgba(0,0,0,0)")}
+            polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
             labelsData={showLabels ? labels : EMPTY}
@@ -299,9 +392,9 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             labelLng="lng"
             labelText="text"
             labelSize={(d: Feat) => d.sz}
-            labelColor={(d: Feat) => (d.sel ? "#ffd5e3" : "rgba(255,255,255,.62)")}
-            labelResolution={1}
-            labelAltitude={(d: Feat) => (d.sel ? 0.014 : 0.008)}
+            labelColor={(d: Feat) => (d.sel ? "#ffffff" : "rgba(255,255,255,.62)")}
+            labelResolution={2}
+            labelAltitude={(d: Feat) => (d.sel ? 0.032 : 0.008)}
             labelIncludeDot={false}
             labelsTransitionDuration={0}
           />

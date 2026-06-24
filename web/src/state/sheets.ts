@@ -6,7 +6,7 @@ export type SheetEntry =
   | { type: "match"; id: string }
   | { type: "team"; code: string }
   | { type: "player"; id: string }
-  | { type: "fbplayer"; name: string; espnId?: string | null }
+  | { type: "fbplayer"; name: string; espnId?: string | null; fmId?: string | null }
   | { type: "coach"; code: string };
 
 interface SheetState {
@@ -14,7 +14,7 @@ interface SheetState {
   openMatch: (id: string) => void;
   openTeam: (code: string) => void;
   openPlayer: (id: string) => void;
-  openFbPlayer: (name: string, espnId?: string | null) => void;
+  openFbPlayer: (name: string, espnId?: string | null, fmId?: string | null) => void;
   openCoach: (code: string) => void;
   close: () => void;
   closeAll: () => void;
@@ -32,7 +32,11 @@ export const useSheets = create<SheetState>((set) => ({
   openMatch: (id) => set((s) => ({ stack: push(s.stack, { type: "match", id }) })),
   openTeam: (code) => set((s) => ({ stack: push(s.stack, { type: "team", code }) })),
   openPlayer: (id) => set((s) => ({ stack: push(s.stack, { type: "player", id }) })),
-  openFbPlayer: (name, espnId) => set((s) => ({ stack: push(s.stack, { type: "fbplayer", name, espnId }) })),
+  // fmId: the FotMob player id recovered from the line-up (by shirt → match
+  // stats). Passing it through means the profile resolves the SAME photo as the
+  // pitch (instead of re-deriving a possibly-different id by name) — so the
+  // line-up thumbnail and the profile picture always match.
+  openFbPlayer: (name, espnId, fmId) => set((s) => ({ stack: push(s.stack, { type: "fbplayer", name, espnId, fmId }) })),
   openCoach: (code) => set((s) => ({ stack: push(s.stack, { type: "coach", code }) })),
   close: () => set((s) => ({ stack: s.stack.slice(0, -1) })),
   closeAll: () => set({ stack: [] }),

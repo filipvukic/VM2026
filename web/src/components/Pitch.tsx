@@ -43,7 +43,7 @@ export function Pitch({
   color: string;
   match: Match;
   teamCode: string | null;
-  onPlayer: (name: string, espnId?: string | null) => void;
+  onPlayer: (name: string, espnId?: string | null, fmId?: string | null) => void;
   getRating?: (name: string) => number | null;
   coords?: { name: string; shirt?: string | number | null; x: number; y: number }[];
   // The highest rating in the WHOLE match (both teams). When given, only the
@@ -147,11 +147,12 @@ export function Pitch({
       <div className="pitch-lines" />
       {placed.map(({ p, xPct, yPct }, i) => {
         const nm = (p.name || "").toLowerCase();
+        const fmId = fotmobIdByShirt?.get(String(p.jersey ?? p.shirtNumber ?? "").trim());
         return (
           <PitchPlayer
             key={p.name + "-" + i}
             p={p}
-            photos={lineupPhotoSources(p.name, p.espnId, db, fotmobIdByShirt?.get(String(p.jersey ?? p.shirtNumber ?? "").trim()))}
+            photos={lineupPhotoSources(p.name, p.espnId, db, fmId)}
             color={color}
             x={xPct}
             y={yPct}
@@ -161,7 +162,7 @@ export function Pitch({
             subOut={subOut.get(nm)}
             rating={getRating ? getRating(p.name) : null}
             motm={!!getRating && starRating > 0 && getRating(p.name) === starRating}
-            onClick={() => onPlayer(p.name, p.espnId)}
+            onClick={() => onPlayer(p.name, p.espnId, fmId)}
           />
         );
       })}
