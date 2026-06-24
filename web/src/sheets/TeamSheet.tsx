@@ -50,7 +50,7 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
       {t.iso && (
         <div style={{ marginTop: 14 }}>
           <Suspense fallback={<div className="card card-pad dim" style={{ textAlign: "center", padding: 28 }}>Laddar klot…</div>}>
-            <CountryGlobe iso={t.iso} name={t.name} code={code} active={chrome.interactive !== false} />
+            <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} />
           </Suspense>
         </div>
       )}
