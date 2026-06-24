@@ -73,7 +73,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   // Short labels so all visible tabs fit the sheet width (no horizontal scroll),
   // with Tips promoted to 2nd so everyone's tips are right there on open.
   const tabs: { id: Tab; label: string; show: boolean }[] = [
-    { id: "overview", label: "Översikt", show: true },
+    { id: "overview", label: "Match", show: true },
     { id: "tips", label: "Tips", show: hasTips },
     { id: "lineup", label: "Elva", show: hasPitch },
     { id: "stats", label: "Stats", show: hasStats },
