@@ -10,7 +10,7 @@ import { lineupPhotoSources } from "../lib/playerPhoto";
 import { liveMinuteText } from "../lib/liveMinute";
 import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
-import { useMatchStats } from "../state/matchStats";
+import { useMatchStats, liveStatsUrl } from "../state/matchStats";
 import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
 import { Shotmap } from "../components/Shotmap";
 import { ratingColor } from "../lib/rating";
@@ -255,7 +255,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const openCoach = useSheets((s) => s.openCoach);
   const coaches = useCoaches();
   const db = usePlayersDb();
-  const detail = useMatchStats(m._realId ?? null, isLive(m));
+  const detail = useMatchStats(m._realId ?? null, isLive(m), liveStatsUrl(m, ds.teams));
   const [side, setSide] = useState<"h" | "a">("h");
   const rawLu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
@@ -357,7 +357,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
 
 // ---------- Stats tab ----------
 function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
-  const detail = useMatchStats(m._realId ?? null, isLive(m));
+  const detail = useMatchStats(m._realId ?? null, isLive(m), liveStatsUrl(m, ds.teams));
   const [sel, setSel] = useState<string | null>(null);
   const live = isLive(m);
   const home = m.home ? ds.teams[m.home] : null;

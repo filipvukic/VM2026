@@ -81,10 +81,232 @@ interface StoredSub {
   notifyAll: boolean;
 }
 
+// ===================== Live FotMob match-stats proxy =====================
+// FotMob sends no CORS headers (so the browser can't fetch it) and the GitHub stats
+// job is throttled to ~hourly. This endpoint fetches + parses FotMob's server-
+// rendered match page on demand and returns the SAME shape as matchstats/<id>.json,
+// edge-cached ~25s — so the app shows near-live ratings/xG/shots during a match.
+// Faithful port of build_matchstats.py.
+const FM_LEAGUE = "https://www.fotmob.com/leagues/77/matches/world-cup";
+const FM_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126 Safari/537.36";
+const NEXT_RE = /<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/;
+
+const TEAM_LABELS: Record<string, string> = {
+  BallPossesion: "Bollinnehav (%)", expected_goals: "xG", total_shots: "Skott",
+  ShotsOnTarget: "Skott på mål", big_chance: "Stora målchanser",
+  touches_opp_box: "Kontakter i straffområdet", accurate_passes: "Lyckade passningar",
+  fk_foul_won: "Frisparkar", corners: "Hörnor", Saves: "Räddningar",
+  yellow_card: "Gula kort", red_card: "Röda kort", tackles_succeeded: "Tacklingar",
+  interceptions: "Brytningar", duel_won: "Närkamper vunna",
+};
+const PLAYER_LABELS: [string, string][] = [
+  ["goals", "Mål"], ["assists", "Assist"], ["expected_goals", "xG"], ["expected_assists", "xA"],
+  ["total_shots", "Skott"], ["ShotsOnTarget", "Skott på mål"], ["chances_created", "Målchanser skapade"],
+  ["touches", "Bollkontakter"], ["touches_opp_box", "Kontakter i straffområdet"],
+  ["dribbles_succeeded", "Lyckade dribblingar"], ["accurate_passes", "Lyckade passningar"],
+  ["passes_into_final_third", "Passningar sista tredjedelen"], ["accurate_crosses", "Inlägg"],
+  ["long_balls_accurate", "Långa bollar"], ["dispossessed", "Tappade bollen"],
+  ["matchstats.headers.tackles", "Tacklingar"], ["shot_blocks", "Blockeringar"],
+  ["clearances", "Rensningar"], ["interceptions", "Brytningar"], ["recoveries", "Återerövringar"],
+  ["dribbled_past", "Dribblad förbi"], ["ground_duels_won", "Markdueller vunna"],
+  ["aerials_won", "Luftdueller vunna"], ["duel_won", "Närkamper vunna"], ["duel_lost", "Närkamper förlorade"],
+  ["was_fouled", "Blev fälld"], ["fouls", "Frisparkar emot"], ["saves", "Räddningar"],
+  ["goals_conceded", "Insläppta mål"], ["goals_prevented", "Mål förhindrade"],
+];
+
+function fnorm(s: string): string {
+  return (s || "").toLowerCase().replace(/&/g, "and").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+}
+function dice(a: string, b: string): number {
+  if (a && a === b) return 1;
+  if (a.length < 2 || b.length < 2) return 0;
+  const grams = (s: string) => { const m = new Map<string, number>(); for (let i = 0; i < s.length - 1; i++) { const g = s.slice(i, i + 2); m.set(g, (m.get(g) || 0) + 1); } return m; };
+  const A = grams(a), B = grams(b); let inter = 0, total = 0;
+  for (const [g, c] of A) { total += c; const d = B.get(g); if (d) inter += Math.min(c, d); }
+  for (const c of B.values()) total += c;
+  return total ? (2 * inter) / total : 0;
+}
+// best similarity of a FotMob name vs any of the candidate spellings the client sent
+function bestSim(fmName: string, candidates: string[]): number {
+  const f = fnorm(fmName);
+  let best = 0;
+  for (const c of candidates) best = Math.max(best, dice(f, fnorm(c)));
+  return best;
+}
+function fmNum(v: any): any {
+  if (typeof v === "string") {
+    const m = v.trim().match(/^-?\d+(\.\d+)?/);
+    if (!m) return v;
+    const f = parseFloat(m[0]);
+    return Number.isInteger(f) ? f : Math.round(f * 100) / 100;
+  }
+  return v;
+}
+function getNext(html: string): any {
+  const m = NEXT_RE.exec(html);
+  return m ? JSON.parse(m[1]) : null;
+}
+async function fmText(u: string): Promise<string> {
+  const r = await fetch(u, { headers: { "User-Agent": FM_UA, Referer: "https://www.fotmob.com/" } });
+  if (!r.ok) throw new Error("fm " + r.status);
+  return r.text();
+}
+function extractTeam(content: any): any[] {
+  const out: any[] = []; const seen = new Set<string>();
+  const groups = content?.stats?.Periods?.All?.stats || [];
+  for (const g of groups) for (const s of (g?.stats || [])) {
+    const key = s?.key, vals = s?.stats;
+    if (TEAM_LABELS[key] && !seen.has(key) && Array.isArray(vals) && vals.length === 2) {
+      seen.add(key);
+      out.push({ key, label: TEAM_LABELS[key], home: fmNum(vals[0]), away: fmNum(vals[1]) });
+    }
+  }
+  return out;
+}
+function extractPlayers(content: any, tlaOf: (id: any) => string | null): any[] {
+  const labelMap = new Map(PLAYER_LABELS); const order = PLAYER_LABELS.map(([, l]) => l);
+  const out: any[] = []; const ps = content?.playerStats || {};
+  for (const pid of Object.keys(ps)) {
+    const p = ps[pid]; const flat: Record<string, any> = {}; let rating: any = null, minutes: any = null;
+    for (const grp of (p?.stats || [])) for (const label of Object.keys(grp?.stats || {})) {
+      const v = grp.stats[label]; const key = v?.key; const val = v?.stat?.value;
+      if (key === "rating_title") { rating = val; continue; }
+      if (key === "minutes_played") { minutes = val; continue; }
+      if (labelMap.has(key) && val != null) flat[labelMap.get(key)!] = fmNum(val);
+    }
+    const ordered: Record<string, any> = {};
+    for (const lbl of order) if (lbl in flat) ordered[lbl] = flat[lbl];
+    out.push({
+      optaId: String(p?.optaId || ""), fmId: String(p?.id || pid || ""), name: p?.name,
+      tla: tlaOf(p?.teamId), gk: !!p?.isGoalkeeper, pos: p?.usualPosition,
+      shirt: p?.shirtNumber, rating, min: minutes, stats: ordered,
+    });
+  }
+  out.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  return out;
+}
+function extractShots(content: any, tlaOf: (id: any) => string | null): any[] {
+  const out: any[] = [];
+  for (const s of (content?.shotmap?.shots || [])) {
+    const et = (s?.eventType || "").toLowerCase();
+    out.push({
+      x: Math.round((s?.x || 0) * 100) / 100, y: Math.round((s?.y || 0) * 100) / 100, min: s?.min,
+      xg: Math.round((s?.expectedGoals || 0) * 1000) / 1000, tla: tlaOf(s?.teamId),
+      player: s?.playerName, optaId: String(s?.playerId || ""), goal: et === "goal",
+      onTarget: !!s?.isOnTarget, outcome: s?.eventType,
+    });
+  }
+  return out;
+}
+function extractStarters(team: any): any[] {
+  const out: any[] = [];
+  for (const p of (team?.starters || [])) {
+    const h = p?.horizontalLayout || {};
+    if (h.x == null) continue;
+    out.push({ name: p?.name, shirt: p?.shirtNumber, x: Math.round(h.x * 1000) / 1000, y: Math.round((h.y ?? 0.5) * 1000) / 1000 });
+  }
+  return out;
+}
+async function extractHeatmap(fmMatchId: any): Promise<any> {
+  try {
+    const u = `https://www.fotmob.com/api/data/heatmap/match/${fmMatchId}/heatmaps?heatmapUrl=https://pub.fotmob.com/prod/db/api/heatmap/match/${fmMatchId}`;
+    const d = JSON.parse(await fmText(u));
+    const vb = /viewBox="([^"]+)"/.exec(d?.template || "");
+    const players: Record<string, number[][]> = {};
+    for (const pkey of Object.keys(d?.players || {})) {
+      const opta = pkey.startsWith("p") ? pkey.slice(1) : pkey;
+      const pts: number[][] = []; const re = /<circle cx="([\d.]+)" cy="([\d.]+)"/g; let mm: RegExpExecArray | null;
+      while ((mm = re.exec(d.players[pkey]))) pts.push([Math.round(parseFloat(mm[1]) * 10) / 10, Math.round(parseFloat(mm[2]) * 10) / 10]);
+      if (pts.length) players[opta] = pts;
+    }
+    return { viewBox: vb ? vb[1] : "0 0 105 68", players };
+  } catch { return null; }
+}
+// Cached, trimmed list of all WC matches (id, pageUrl, names, ids, time) so the big
+// league-page parse only happens ~every 3 min, not on every match request.
+async function leagueMatches(ctx: ExecutionContext): Promise<any[]> {
+  const cacheKey = new Request("https://vm2026-cache.invalid/fm-league");
+  const hit = await (caches as any).default.match(cacheKey);
+  if (hit) return hit.json();
+  const all = (getNext(await fmText(FM_LEAGUE))?.props?.pageProps?.overview?.matches?.allMatches || []).map((m: any) => ({
+    id: m?.id, pageUrl: m?.pageUrl, h: m?.home?.name, a: m?.away?.name,
+    hid: m?.home?.id, aid: m?.away?.id, t: m?.status?.utcTime || "",
+  }));
+  const resp = new Response(JSON.stringify(all), { headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=180" } });
+  ctx.waitUntil((caches as any).default.put(cacheKey, resp.clone()));
+  return all;
+}
+
+async function matchStats(url: URL, env: Env, ctx: ExecutionContext): Promise<Response> {
+  const homeC = (url.searchParams.get("home") || "").split("~").filter(Boolean);
+  const awayC = (url.searchParams.get("away") || "").split("~").filter(Boolean);
+  const date = (url.searchParams.get("date") || "").slice(0, 10);
+  const hTla = url.searchParams.get("hTla") || "";
+  const aTla = url.searchParams.get("aTla") || "";
+  const fx = Number(url.searchParams.get("fx") || 0);
+  if (!homeC.length || !awayC.length || !hTla || !aTla) return json({ error: "missing params" }, env, 400);
+
+  const cacheKey = new Request(url.toString());
+  const cached = await (caches as any).default.match(cacheKey);
+  if (cached) return cached;
+
+  try {
+    // 1) find the FotMob match by team-name similarity (either orientation) + date
+    const all = await leagueMatches(ctx);
+    let best: any = null, bestScore = 0, bestSwap = false;
+    for (const fm of all) {
+      const direct = Math.min(bestSim(fm.h, homeC), bestSim(fm.a, awayC));
+      const swap = Math.min(bestSim(fm.h, awayC), bestSim(fm.a, homeC));
+      const base = Math.max(direct, swap);
+      const sc = base + (date && (fm.t || "").slice(0, 10) === date ? 0.25 : 0);
+      if (base >= 0.6 && sc > bestScore) { bestScore = sc; best = fm; bestSwap = swap > direct; }
+    }
+    if (!best) return json({ error: "match not found on FotMob" }, env, 404);
+
+    // 2) fetch + parse the match page
+    const pageUrl = "https://www.fotmob.com" + String(best.pageUrl || "").split("#")[0];
+    const content = getNext(await fmText(pageUrl))?.props?.pageProps?.content || {};
+    const lineup = content?.lineup || {};
+    const fmMatchId = lineup?.matchId || best?.id;
+
+    const fmHomeIsOurHome = !bestSwap; // matched in direct (FotMob home == our home)?
+    const fmHomeId = lineup?.homeTeam?.id ?? best?.hid;
+    const fmAwayId = lineup?.awayTeam?.id ?? best?.aid;
+    const id2tla = new Map<any, string>();
+    if (fmHomeId != null) id2tla.set(fmHomeId, fmHomeIsOurHome ? hTla : aTla);
+    if (fmAwayId != null) id2tla.set(fmAwayId, fmHomeIsOurHome ? aTla : hTla);
+    const tlaOf = (id: any) => id2tla.get(id) ?? null;
+
+    const team = extractTeam(content);
+    if (!fmHomeIsOurHome) for (const t of team) { const tmp = t.home; t.home = t.away; t.away = tmp; }
+    const players = extractPlayers(content, tlaOf);
+    const shots = extractShots(content, tlaOf);
+    const heatmap = fmMatchId ? await extractHeatmap(fmMatchId) : null;
+    const hForm = lineup?.homeTeam?.formation, aForm = lineup?.awayTeam?.formation;
+    const formations = { home: fmHomeIsOurHome ? hForm : aForm, away: fmHomeIsOurHome ? aForm : hForm };
+    const hLu = extractStarters(lineup?.homeTeam), aLu = extractStarters(lineup?.awayTeam);
+    const lineups = { home: fmHomeIsOurHome ? hLu : aLu, away: fmHomeIsOurHome ? aLu : hLu };
+
+    const out = {
+      fixtureId: fx, fmMatchId, homeTla: hTla, awayTla: aTla,
+      finished: false, live: true, formations, lineup: lineups, team, players, shots, heatmap,
+    };
+    const resp = new Response(JSON.stringify(out), {
+      headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=25", ...cors(env) },
+    });
+    ctx.waitUntil((caches as any).default.put(cacheKey, resp.clone()));
+    return resp;
+  } catch (e: any) {
+    return json({ error: "fetch failed", detail: String(e?.message || e) }, env, 502);
+  }
+}
+
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     if (request.method === "OPTIONS") return new Response(null, { headers: cors(env) });
+
+    if (url.pathname === "/matchstats") return matchStats(url, env, ctx);
 
     if (url.pathname === "/vapidPublicKey") {
       return json({ key: env.VAPID_PUBLIC_KEY }, env);
