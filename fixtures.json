@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URU",
+    "awayTla": "URY",
     "status": "FINISHED",
     "score": [
       1,
@@ -30249,7 +30249,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "FINISHED",
@@ -39761,23 +39761,26 @@
     "homeTla": "MAR",
     "away": "Haiti",
     "awayTla": "HAI",
-    "status": "LIVE",
+    "status": "IN_PLAY",
     "score": [
-      0,
-      1
+      3,
+      2
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        2,
+        2
+      ],
       "fullTime": [
-        0,
-        1
+        3,
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "41",
+    "minute": "86",
     "goals": [
       {
         "minute": "10",
@@ -39804,10 +39807,135 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "43",
+        "team": "HAI",
+        "scorer": "Wilson Isidor",
+        "assist": "Jean-Kévin Duverne",
+        "type": "REGULAR",
+        "description": "Goal! Morocco 1, Haiti 2. Wilson Isidor (Haiti) right footed shot from outside the box to the top left corner. Assisted by Jean-Kévin Duverne.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "45+1",
+        "team": "MAR",
+        "scorer": "Ismael Saibari",
+        "assist": "Achraf Hakimi",
+        "type": "REGULAR",
+        "description": "Goal! Morocco 2, Haiti 2. Ismael Saibari (Morocco) right footed shot from the centre of the box to the bottom left corner. Assisted by Achraf Hakimi.",
+        "score": [
+          2,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "78",
+        "team": "MAR",
+        "scorer": "Soufiane Rahimi",
+        "assist": "Chadi Riad",
+        "type": "REGULAR",
+        "description": "Goal! Morocco 3, Haiti 2. Soufiane Rahimi (Morocco) right footed shot from the centre of the box to the top right corner. Assisted by Chadi Riad following a corner.",
+        "score": [
+          3,
+          2
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "78",
+        "team": "HAI",
+        "player": "Johny Placide",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "HAI",
+        "player": "Duckens Nazon",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "67",
+        "team": "HAI",
+        "playerIn": "Duckens Nazon",
+        "playerOut": "Ruben Providence",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "HAI",
+        "playerIn": "Louicius Deedson",
+        "playerOut": "Wilson Isidor",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "MAR",
+        "playerIn": "Soufiane Rahimi",
+        "playerOut": "Ismael Saibari",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "MAR",
+        "playerIn": "Azzedine Ounahi",
+        "playerOut": "Brahim Díaz",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "MAR",
+        "playerIn": "Gessime Yassine",
+        "playerOut": "Ayoub El Kaabi",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "HAI",
+        "playerIn": "Carlens Arcus",
+        "playerOut": "Jean-Kévin Duverne",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "HAI",
+        "playerIn": "Dominique Simon",
+        "playerOut": "Danley Jean Jacques",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "MAR",
+        "playerIn": "Noussair Mazraoui",
+        "playerOut": "Anass Salah-Eddine",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "MAR",
+        "playerIn": "Samir El Mourabet",
+        "playerOut": "Neil El Aynaoui",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "HAI",
+        "playerIn": "Frantzdy Pierrot",
+        "playerOut": "Lenny Joseph",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
@@ -39867,7 +39995,7 @@
           "jersey": "26",
           "espnId": "297296",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Achraf Hakimi",
@@ -39885,25 +40013,25 @@
           "jersey": "11",
           "espnId": "304572",
           "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Neil El Aynaoui",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "24",
-          "espnId": "323807",
-          "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sofyan Amrabat",
-          "position": "RM",
-          "positionName": "Right Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "4",
           "espnId": "195226",
           "subbedIn": false,
           "subbedOut": false
+        },
+        {
+          "name": "Neil El Aynaoui",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "24",
+          "espnId": "323807",
+          "subbedIn": false,
+          "subbedOut": true
         },
         {
           "name": "Ayoub El Kaabi",
@@ -39912,7 +40040,7 @@
           "jersey": "20",
           "espnId": "269562",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bilal El Khannouss",
@@ -39930,7 +40058,7 @@
           "jersey": "10",
           "espnId": "246532",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -39949,7 +40077,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "379012",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39958,7 +40086,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "239350",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -39976,7 +40104,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "378491",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40021,7 +40149,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "276139",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40057,7 +40185,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "291552",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40074,7 +40202,7 @@
       "_espnEventId": "760464"
     },
     "awayLineup": {
-      "formation": "4-4-2",
+      "formation": "4-4-1-1",
       "lineup": [
         {
           "name": "Johny Placide",
@@ -40119,7 +40247,7 @@
           "jersey": "22",
           "espnId": "241032",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jean-Ricner Bellegarde",
@@ -40137,7 +40265,7 @@
           "jersey": "17",
           "espnId": "333939",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ruben Providence",
@@ -40146,7 +40274,7 @@
           "jersey": "15",
           "espnId": "307861",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Josué Casimir",
@@ -40159,21 +40287,21 @@
         },
         {
           "name": "Lenny Joseph",
-          "position": "CF-L",
-          "positionName": "Center Left Forward",
+          "position": "F",
+          "positionName": "Forward",
           "jersey": "16",
           "espnId": "301093",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Wilson Isidor",
-          "position": "CF-R",
-          "positionName": "Center Right Forward",
+          "position": "RCF",
+          "positionName": "Rear Center Forward",
           "jersey": "18",
           "espnId": "265915",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -40219,7 +40347,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "342631",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40228,7 +40356,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "210778",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40246,7 +40374,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "218703",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40273,7 +40401,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "291608",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40309,7 +40437,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "250241",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -40317,64 +40445,64 @@
       "_espnEventId": "760464"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 8.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 3.0,
-      "wonCorners": 3.0,
+      "offsides": 5.0,
+      "wonCorners": 8.0,
       "saves": 0.0,
-      "possessionPct": 66.6,
-      "totalShots": 9.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.4,
+      "possessionPct": 70.5,
+      "totalShots": 19.0,
+      "shotsOnTarget": 9.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 213.0,
-      "totalPasses": 236.0,
+      "accuratePasses": 459.0,
+      "totalPasses": 516.0,
       "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 10.0,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 21.0,
       "crossPct": 0.3,
-      "totalLongBalls": 13.0,
-      "accurateLongBalls": 8.0,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 19.0,
       "longballPct": 0.6,
-      "blockedShots": 1.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 11.0,
-      "tacklePct": 0.6,
-      "interceptions": 3.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
+      "blockedShots": 4.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 17.0,
+      "tacklePct": 0.5,
+      "interceptions": 6.0,
+      "effectiveClearance": 13.0,
+      "totalClearance": 13.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 16.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
       "wonCorners": 0.0,
-      "saves": 4.0,
-      "possessionPct": 33.4,
-      "totalShots": 3.0,
+      "saves": 7.0,
+      "possessionPct": 29.5,
+      "totalShots": 5.0,
       "shotsOnTarget": 1.0,
-      "shotPct": 0.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 106.0,
-      "totalPasses": 123.0,
-      "passPct": 0.9,
+      "accuratePasses": 178.0,
+      "totalPasses": 223.0,
+      "passPct": 0.8,
       "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
+      "totalCrosses": 1.0,
       "crossPct": 0.0,
-      "totalLongBalls": 19.0,
-      "accurateLongBalls": 9.0,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 19.0,
       "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 6.0,
-      "totalTackles": 11.0,
-      "tacklePct": 0.5,
-      "interceptions": 3.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "blockedShots": 1.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.4,
+      "interceptions": 12.0,
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
     },
     "homeForm": [
       {
@@ -40460,23 +40588,26 @@
     "homeTla": "SCO",
     "away": "Brazil",
     "awayTla": "BRA",
-    "status": "LIVE",
+    "status": "PAUSED",
     "score": [
       0,
-      2
+      3
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         2
+      ],
+      "fullTime": [
+        0,
+        3
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "41",
+    "minute": "83",
     "goals": [
       {
         "minute": "7",
@@ -40490,10 +40621,108 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "45+3",
+        "team": "BRA",
+        "scorer": "Vinícius Júnior",
+        "assist": "Bruno Guimarães",
+        "type": "HEADER",
+        "description": "Goal! Scotland 0, Brazil 2. Vinícius Júnior (Brazil) header from very close range to the top left corner. Assisted by Bruno Guimarães with a cross.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "BRA",
+        "scorer": "Matheus Cunha",
+        "assist": "Bruno Guimarães",
+        "type": "REGULAR",
+        "description": "Goal! Scotland 0, Brazil 3. Matheus Cunha (Brazil) right footed shot from the centre of the box to the bottom right corner. Assisted by Bruno Guimarães.",
+        "score": [
+          0,
+          3
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "62",
+        "team": "BRA",
+        "player": "Danilo",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "BRA",
+        "player": "Fabinho",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "SCO",
+        "playerIn": "Kieran Tierney",
+        "playerOut": "Andy Robertson",
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "BRA",
+        "playerIn": "Fabinho",
+        "playerOut": "Casemiro",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "BRA",
+        "playerIn": "Gabriel Martinelli",
+        "playerOut": "Lucas Paquetá",
+        "period": 2
+      },
+      {
+        "minute": "76",
+        "team": "BRA",
+        "playerIn": "Neymar",
+        "playerOut": "Matheus Cunha",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "SCO",
+        "playerIn": "Anthony Ralston",
+        "playerOut": "Nathan Patterson",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "BRA",
+        "playerIn": "Endrick",
+        "playerOut": "Rayan",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "BRA",
+        "playerIn": "Alex Sandro",
+        "playerOut": "Douglas Santos",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "SCO",
+        "playerIn": "Ryan Christie",
+        "playerOut": "Ben Gannon-Doak",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -40553,7 +40782,7 @@
           "jersey": "3",
           "espnId": "104943",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nathan Patterson",
@@ -40562,7 +40791,7 @@
           "jersey": "22",
           "espnId": "271191",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Scott McTominay",
@@ -40616,7 +40845,7 @@
           "jersey": "17",
           "espnId": "332948",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -40689,7 +40918,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "224305",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40698,7 +40927,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "93435",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40716,7 +40945,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "214794",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40796,7 +41025,7 @@
           "jersey": "16",
           "espnId": "186575",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Danilo",
@@ -40814,7 +41043,7 @@
           "jersey": "5",
           "espnId": "173666",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lucas Paquetá",
@@ -40823,7 +41052,7 @@
           "jersey": "20",
           "espnId": "234715",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bruno Guimarães",
@@ -40841,7 +41070,7 @@
           "jersey": "9",
           "espnId": "259902",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Vinícius Júnior",
@@ -40859,7 +41088,7 @@
           "jersey": "26",
           "espnId": "357719",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -40869,7 +41098,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "176287",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40941,7 +41170,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "132948",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40950,7 +41179,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "346612",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40959,7 +41188,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "269844",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40968,7 +41197,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "125514",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -40994,64 +41223,64 @@
       "_espnEventId": "760465"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 3.0,
-      "saves": 0.0,
-      "possessionPct": 51.1,
-      "totalShots": 2.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "wonCorners": 6.0,
+      "saves": 4.0,
+      "possessionPct": 49.7,
+      "totalShots": 11.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 190.0,
-      "totalPasses": 213.0,
+      "accuratePasses": 433.0,
+      "totalPasses": 480.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 18.0,
-      "accurateLongBalls": 9.0,
+      "accurateCrosses": 8.0,
+      "totalCrosses": 20.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.5,
       "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.8,
-      "interceptions": 0.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
-    },
-    "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 48.9,
-      "totalShots": 6.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.2,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 192.0,
-      "totalPasses": 207.0,
-      "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 8.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.3,
-      "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 6.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 9.0,
       "tacklePct": 0.7,
-      "interceptions": 5.0,
+      "interceptions": 1.0,
       "effectiveClearance": 11.0,
       "totalClearance": 11.0
+    },
+    "awayStats": {
+      "foulsCommitted": 8.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 3.0,
+      "possessionPct": 50.3,
+      "totalShots": 18.0,
+      "shotsOnTarget": 8.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 464.0,
+      "totalPasses": 501.0,
+      "passPct": 0.9,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 26.0,
+      "accurateLongBalls": 10.0,
+      "longballPct": 0.4,
+      "blockedShots": 3.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.5,
+      "interceptions": 10.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
     },
     "homeForm": [
       {
@@ -41156,7 +41385,13 @@
       "city": "Mexico City",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Yael Falcón",
+        "role": "REFEREE",
+        "nationality": "Argentina"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -41285,7 +41520,13 @@
       "city": "Guadalupe",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Facundo Tello",
+        "role": "REFEREE",
+        "nationality": "Argentina"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -42424,7 +42665,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URU",
+    "homeTla": "URY",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
@@ -43783,8 +44024,8 @@
     "utcDate": "2026-06-29T20:30:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "Germany",
-    "homeTla": "GER",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -43923,8 +44164,8 @@
     "utcDate": "2026-07-01T01:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "Mexico",
-    "homeTla": "MEX",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -44028,8 +44269,8 @@
     "utcDate": "2026-07-02T00:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "United States",
-    "homeTla": "USA",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -44203,8 +44444,8 @@
     "utcDate": "2026-07-03T22:00:00Z",
     "stage": "LAST_32",
     "group": null,
-    "home": "Argentina",
-    "homeTla": "ARG",
+    "home": null,
+    "homeTla": null,
     "away": null,
     "awayTla": null,
     "status": "TIMED",
