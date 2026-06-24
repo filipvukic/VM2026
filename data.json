@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-24T15:59:29+00:00",
+  "updated_at": "2026-06-24T18:00:36+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -13116,7 +13116,13 @@
         "city": "Vancouver",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Ramon Abatti Abel",
+          "role": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -13239,7 +13245,13 @@
         "city": "Seattle, Washington",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Jesús Valenzuela",
+          "role": "REFEREE",
+          "nationality": "Venezuela"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -14939,7 +14951,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
