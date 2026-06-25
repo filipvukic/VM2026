@@ -27,6 +27,7 @@ import {
   GROUP_LETTERS,
   brandFromName,
   codeFromName,
+  fixName,
   isoFor,
   teamCodeFromPick,
 } from "./static/names";
@@ -35,6 +36,15 @@ import { PLAYER_COLORS, playerPhoto } from "./static/players";
 import { buildKnockout, KO_ROUNDS } from "./bracket";
 import { maxLiveMin } from "../lib/liveState";
 import { classifyTip, outcomeOf } from "./scoring";
+
+// Correct garbled feed names (e.g. "Bruno Fernanch") on a line-up so the pitch,
+// photo lookup and profile all use the same right name.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function fixLineupNames(lu: any): any {
+  if (!lu) return null;
+  const fix = (arr: any[] | undefined) => arr?.map((p: any) => (p?.name ? { ...p, name: fixName(p.name) } : p));
+  return { ...lu, lineup: fix(lu.lineup) ?? lu.lineup, bench: fix(lu.bench) ?? lu.bench };
+}
 
 // football-data sometimes tags a goal/card/sub team with an ISO alpha-3 code that
 // differs from the FIFA code used in the team list (e.g. Uruguay: URY vs URU),
@@ -379,8 +389,8 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       cards,
       subs,
       scoreDetail: sd,
-      homeLineup: f.homeLineup || null,
-      awayLineup: f.awayLineup || null,
+      homeLineup: fixLineupNames(f.homeLineup),
+      awayLineup: fixLineupNames(f.awayLineup),
       stats: matchStats,
       attendance: f.attendance || null,
       espnOdds: f.espnOdds || null,

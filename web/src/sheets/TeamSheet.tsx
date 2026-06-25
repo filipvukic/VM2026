@@ -91,6 +91,8 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
         <FormDots form={ds.forms[code] || []} />
       </div>
 
+      <TeamWcStats ds={ds} code={code} />
+
       {matches.length > 0 && (
         <div style={{ marginTop: 14 }}>
           <div className="kicker" style={{ marginBottom: 8 }}>Matcher i VM</div>
@@ -216,6 +218,49 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// Aggregate performance across the team's PLAYED WC matches, oriented to the team.
+function TeamWcStats({ ds, code }: { ds: ReturnType<typeof useData>; code: string }) {
+  const matches = ds.allMatches.filter(
+    (m) => (m.home === code || m.away === code) && m.status === "played" && m.ga != null && m.gb != null
+  );
+  if (!matches.length) return null;
+  let gf = 0, ga = 0, possSum = 0, possN = 0, shots = 0, shotsN = 0, sot = 0, sotN = 0, xgSum = 0, xgN = 0;
+  matches.forEach((m) => {
+    const isHome = m.home === code;
+    const idx = isHome ? 0 : 1;
+    gf += isHome ? m.ga! : m.gb!;
+    ga += isHome ? m.gb! : m.ga!;
+    const s = m.stats;
+    if (s) {
+      if (s.poss?.[idx] != null) { possSum += s.poss[idx]; possN++; }
+      if (s.shots?.[idx] != null) { shots += s.shots[idx]; shotsN++; }
+      if (s.sot?.[idx] != null) { sot += s.sot[idx]; sotN++; }
+    }
+    if (m.xg && m.xg[idx] != null) { xgSum += m.xg[idx]!; xgN++; }
+  });
+  const tiles: { label: string; value: string; hot?: boolean }[] = [
+    { label: "Matcher", value: String(matches.length) },
+    { label: "Mål", value: `${gf}–${ga}`, hot: true },
+  ];
+  if (possN) tiles.push({ label: "Snitt innehav", value: `${Math.round(possSum / possN)}%` });
+  if (shotsN) tiles.push({ label: "Skott/match", value: (shots / shotsN).toFixed(1) });
+  if (sotN) tiles.push({ label: "På mål/match", value: (sot / sotN).toFixed(1) });
+  if (xgN) tiles.push({ label: "xG totalt", value: xgSum.toFixed(1) });
+  return (
+    <div className="card card-pad" style={{ marginTop: 12 }}>
+      <div className="kicker" style={{ marginBottom: 12 }}>Statistik i VM</div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(80px,1fr))", gap: 10 }}>
+        {tiles.map((t) => (
+          <div key={t.label} className="card" style={{ padding: "11px 9px", textAlign: "center" }}>
+            <div className="num" style={{ fontSize: 21, color: t.hot ? "var(--gold)" : "var(--ink)" }}>{t.value}</div>
+            <div className="kicker" style={{ fontSize: 8.5, marginTop: 3 }}>{t.label}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

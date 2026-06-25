@@ -63,19 +63,16 @@ export const WC_HISTORY: Record<string, WcHistoryEntry> = {
   SRB: { titles: 0, apps: 4, best: "Som FR Jugoslavien: kvart 1990" },
 };
 
-export const FIFA_RANKING_DATE = "Nov 2025";
+// Official FIFA/Coca-Cola Men's World Ranking (keyed by OUR team TLAs). Updated each
+// FIFA release (≈4×/year; next after this one is 20 Jul 2026).
+export const FIFA_RANKING_DATE = "Juni 2026";
 export const FIFA_RANKING: Record<string, number> = {
-  ARG: 1, FRA: 2, ESP: 3, ENG: 4, BRA: 5, POR: 6, NED: 7, BEL: 8,
-  CRO: 9, ITA: 10, URU: 11, GER: 12, COL: 13, MAR: 14, JPN: 15,
-  USA: 16, SUI: 17, IRN: 18, MEX: 19, SEN: 20, DEN: 21, KOR: 22,
-  AUT: 23, ECU: 24, CHI: 25, AUS: 26, TUR: 28, WAL: 30,
-  SRB: 30, CAN: 31, CMR: 32, POL: 33, EGY: 35, ALG: 36, HUN: 38, CIV: 39,
-  SCO: 39, PAN: 39, NGA: 41, NOR: 42, CZE: 43, FIN: 44, SWE: 46,
-  PER: 47, ROU: 47, TUN: 49, PAR: 50, GRE: 50,
-  SVK: 51, QAT: 53, CRC: 54, VEN: 54, RSA: 56, SVN: 56, UZB: 57, KSA: 58,
-  IRQ: 58, COD: 60, IRL: 60, CPV: 64, JOR: 64, ALB: 65, MKD: 65,
-  NIR: 67, JAM: 67, ISL: 73, GHA: 73, MNE: 74, BIH: 76,
-  HON: 81, BOL: 84, KOS: 88, HAI: 88, NZL: 89, CUR: 90,
+  ARG: 1, ESP: 2, FRA: 3, ENG: 4, POR: 5, BRA: 6, MAR: 7, NED: 8,
+  BEL: 9, GER: 10, CRO: 11, COL: 13, MEX: 14, SEN: 15, URU: 16, USA: 17,
+  JPN: 18, SUI: 19, IRN: 20, TUR: 22, ECU: 23, AUT: 24, KOR: 25, AUS: 27,
+  ALG: 28, EGY: 29, CAN: 30, NOR: 31, CIV: 33, PAN: 34, SWE: 38, CZE: 40,
+  PAR: 41, SCO: 42, TUN: 45, COD: 46, UZB: 50, QAT: 56, IRQ: 57, RSA: 60,
+  KSA: 61, JOR: 63, BIH: 64, CPV: 67, GHA: 73, CUW: 82, HAI: 83, NZL: 85,
 };
 
 export interface TeamDetail {

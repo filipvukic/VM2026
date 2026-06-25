@@ -92,6 +92,13 @@ export const EN_TO_SV: Record<string, string> = {
   "New Zealand": "Nya Zeeland",
 };
 
+// Garbled/truncated player names from the live feed → correct spelling. Applied to
+// line-ups in build.ts so the pitch, the photo lookup and the profile all agree.
+const NAME_FIX: Record<string, string> = {
+  "Bruno Fernanch": "Bruno Fernandes",
+};
+export const fixName = (n?: string | null): string => (n ? NAME_FIX[n] || n : n || "");
+
 export function isoFor(name?: string | null, tla?: string | null): string | null {
   if (tla && TLA_TO_ISO[String(tla).toUpperCase()] !== undefined) {
     const v = TLA_TO_ISO[String(tla).toUpperCase()];

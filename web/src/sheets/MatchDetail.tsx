@@ -49,10 +49,10 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
   const m = ds.allMatches.find((x) => x.id === id);
-  // Open straight on everyone's tips for a match that hasn't kicked off yet — that's
-  // what you most want pre-match. Played / live matches open on the overview (score
-  // + events), with Tips one tap away as the 2nd tab.
-  const wantTips = !!m && m.tippas && m.tips.length > 0 && m.status === "upcoming";
+  // Open straight on everyone's tips — that's the first thing you want to see for a
+  // match, whether it's about to be played or already finished. (Match overview /
+  // events are one tap away.)
+  const wantTips = !!m && m.tippas && m.tips.length > 0;
   const [tab, setTab] = useState<Tab>(wantTips ? "tips" : "overview");
   const now = useNow(m && isLive(m) ? 30_000 : 0);
   if (!m) return null;
@@ -70,11 +70,11 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too
   const hasTips = m.tippas && m.tips.length > 0;
   const hasTable = m.stage === "group" && !!m.group;
-  // Short labels so all visible tabs fit the sheet width (no horizontal scroll),
-  // with Tips promoted to 2nd so everyone's tips are right there on open.
+  // Tips first (it's the default + what you most want to see), then the rest. Short
+  // labels so all visible tabs fit the sheet width with no horizontal scroll.
   const tabs: { id: Tab; label: string; show: boolean }[] = [
-    { id: "overview", label: "Match", show: true },
     { id: "tips", label: "Tips", show: hasTips },
+    { id: "overview", label: "Match", show: true },
     { id: "lineup", label: "Elva", show: hasPitch },
     { id: "stats", label: "Stats", show: hasStats },
     { id: "table", label: "Tabell", show: hasTable },
@@ -181,24 +181,29 @@ function TeamHead({ code, name, iso, onClick }: { code: string | null; name?: st
   );
 }
 
-// ---------- Overview: chronological timeline + win chance ----------
+// ---------- Overview: chronological event list + win chance ----------
 function Overview({ m }: { m: Match }) {
+  const ds = useData();
   const events = buildTimeline(m);
   return (
     <>
       {events.length > 0 ? (
         <Block title={isLive(m) ? "Händelser · live" : "Händelser"}>
-          <div className="tl">
+          <div className="ev">
             {events.map((e, i) => {
-              const homeSide = e.side === "h";
+              const t = e.team ? ds.teams[e.team] : null;
               return (
-                <div key={i} className={`tl-row ${homeSide ? "h" : "a"}`}>
-                  <div className="tl-when num">{e.minute}</div>
-                  <div className="tl-ico">{e.icon}</div>
-                  <div className="tl-txt">
-                    <span style={{ fontWeight: 700 }}>{e.main}</span>
-                    {e.sub && <span className="dim" style={{ fontSize: 11.5, display: "block" }}>{e.sub}</span>}
-                  </div>
+                <div key={i} className={`ev-row${e.kind === "goal" ? " goal" : ""}`}>
+                  <span className="ev-min num">{e.minute}</span>
+                  <span className="ev-ico">{e.icon}</span>
+                  <Flag iso={t?.iso} code={e.team} size={15} />
+                  <span className="ev-txt">
+                    <span className="ev-main">{e.main}</span>
+                    {e.sub && <span className="ev-sub dim">{e.sub}</span>}
+                  </span>
+                  {e.kind === "goal" && e.score && (
+                    <span className="ev-score num">{e.score[0]}–{e.score[1]}</span>
+                  )}
                 </div>
               );
             })}
@@ -211,20 +216,22 @@ function Overview({ m }: { m: Match }) {
       )}
       <WinChanceBlock m={m} />
       <style>{`
-        .tl{ position:relative; }
-        .tl::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; background:var(--line); transform:translateX(-50%); }
-        .tl-row{ display:flex; align-items:center; gap:8px; padding:5px 0; width:50%; position:relative; }
-        .tl-row.h{ flex-direction:row-reverse; text-align:right; margin-right:50%; padding-right:14px; }
-        .tl-row.a{ margin-left:50%; padding-left:14px; }
-        .tl-when{ color:var(--ink-3); font-size:12px; min-width:26px; }
-        .tl-ico{ font-size:13px; }
-        .tl-txt{ flex:1; min-width:0; font-size:13px; }
+        .ev{ display:flex; flex-direction:column; gap:2px; }
+        .ev-row{ display:flex; align-items:center; gap:10px; padding:8px; border-radius:10px; }
+        .ev-row.goal{ background:color-mix(in srgb, var(--gold) 10%, transparent); }
+        .ev-min{ flex:0 0 auto; width:36px; text-align:right; color:var(--ink-3); font-size:12.5px; }
+        .ev-ico{ flex:0 0 auto; width:18px; text-align:center; font-size:14px; }
+        .ev-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
+        .ev-main{ font-weight:700; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ev-row.goal .ev-main{ font-weight:800; }
+        .ev-sub{ font-size:11px; }
+        .ev-score{ flex:0 0 auto; font-size:14px; font-weight:800; color:var(--ink); padding:2px 9px; border-radius:7px; background:var(--surface-3); }
       `}</style>
     </>
   );
 }
 
-interface TLEvent { minute: string; side: "h" | "a"; icon: string; main: string; sub?: string; order: number }
+interface TLEvent { minute: string; team: string | null; icon: string; main: string; sub?: string; kind: "goal" | "card" | "sub"; score?: [number, number] | null; order: number }
 function buildTimeline(m: Match): TLEvent[] {
   const ev: TLEvent[] = [];
   // "45+5" → 45.05 so stoppage-time events sort within their minute (not collapsed
@@ -235,13 +242,13 @@ function buildTimeline(m: Match): TLEvent[] {
     return parseInt(mt[1], 10) + (mt[2] ? parseInt(mt[2], 10) / 100 : 0);
   };
   m.scorers.forEach((g) =>
-    ev.push({ minute: `${g.minute}'`, side: g.team === m.home ? "h" : "a", icon: "⚽", main: `${g.name}${g.pen ? " (str)" : ""}`, sub: g.assist ? `assist: ${g.assist}` : undefined, order: min(g.minute) })
+    ev.push({ minute: `${g.minute}'`, team: g.team, icon: "⚽", main: `${g.name}${g.pen ? " (straff)" : ""}`, sub: g.assist ? `Assist: ${g.assist}` : undefined, kind: "goal", score: g.score, order: min(g.minute) })
   );
   m.cards.forEach((c) =>
-    ev.push({ minute: `${c.minute}'`, side: c.team === m.home ? "h" : "a", icon: c.type === "red" ? "🟥" : "🟨", main: c.name, order: min(c.minute) + 0.001 })
+    ev.push({ minute: `${c.minute}'`, team: c.team, icon: c.type === "red" ? "🟥" : "🟨", main: c.name, kind: "card", order: min(c.minute) + 0.001 })
   );
   m.subs.forEach((s) =>
-    ev.push({ minute: `${s.minute}'`, side: s.team === m.home ? "h" : "a", icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `ut: ${s.playerOut}` : undefined, order: min(s.minute) + 0.002 })
+    ev.push({ minute: `${s.minute}'`, team: s.team, icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `Ut: ${s.playerOut}` : undefined, kind: "sub", order: min(s.minute) + 0.002 })
   );
   return ev.sort((a, b) => a.order - b.order);
 }

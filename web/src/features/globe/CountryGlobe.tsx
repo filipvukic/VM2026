@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
+import ConicPolygonGeometry from "three-conic-polygon-geometry";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
 import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
 
@@ -49,6 +50,53 @@ function altitudeForArea(area?: number | null): number {
   return Math.max(0.35, Math.min(2.85, alt));
 }
 
+// Build the selected country's flag as ONE flat cap spread across the WHOLE country
+// instead of one full flag per island: three-conic-polygon-geometry UV-maps each
+// polygon to its OWN bbox (→ a full flag on every disconnected part), so we remap each
+// polygon's cap UVs from its own bbox to the country's GLOBAL bbox. Each scattered part
+// then shows the correct SLICE of a single flag.
+function ringBBox(ring: number[][]) {
+  let mnLng = Infinity, mxLng = -Infinity, mnLat = Infinity, mxLat = -Infinity;
+  for (const [lng, lat] of ring) {
+    if (lng < mnLng) mnLng = lng; if (lng > mxLng) mxLng = lng;
+    if (lat < mnLat) mnLat = lat; if (lat > mxLat) mxLat = lat;
+  }
+  return { mnLng, mxLng, mnLat, mxLat };
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildFlagMesh(feature: any, R: number, material: THREE.Material): THREE.Object3D {
+  const geom = feature?.geometry;
+  const polys: number[][][][] =
+    geom?.type === "Polygon" ? [geom.coordinates] : geom?.type === "MultiPolygon" ? geom.coordinates : [];
+  if (!polys.length) return new THREE.Object3D();
+  // global bbox over every polygon's outer ring
+  let G = { mnLng: Infinity, mxLng: -Infinity, mnLat: Infinity, mxLat: -Infinity };
+  for (const rings of polys) {
+    const b = ringBBox(rings[0]);
+    G = { mnLng: Math.min(G.mnLng, b.mnLng), mxLng: Math.max(G.mxLng, b.mxLng), mnLat: Math.min(G.mnLat, b.mnLat), mxLat: Math.max(G.mxLat, b.mxLat) };
+  }
+  const gLng = (G.mxLng - G.mnLng) || 1, gLat = (G.mxLat - G.mnLat) || 1;
+  const group = new THREE.Group();
+  for (const rings of polys) {
+    let g: THREE.BufferGeometry;
+    try { g = new ConicPolygonGeometry(rings, R * 1.008, R * 1.01, false, true, false, 3) as unknown as THREE.BufferGeometry; }
+    catch { continue; }
+    const uv = g.getAttribute("uv");
+    if (uv) {
+      const p = ringBBox(rings[0]);
+      const uOff = (p.mnLng - G.mnLng) / gLng, uScale = ((p.mxLng - p.mnLng) || 1) / gLng;
+      const vOff = (p.mnLat - G.mnLat) / gLat, vScale = ((p.mxLat - p.mnLat) || 1) / gLat;
+      for (let i = 0; i < uv.count; i++) {
+        uv.setX(i, uOff + uv.getX(i) * uScale);
+        uv.setY(i, vOff + uv.getY(i) * vScale);
+      }
+      uv.needsUpdate = true;
+    }
+    group.add(new THREE.Mesh(g, material));
+  }
+  return group;
+}
+
 export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(undefined);
@@ -60,17 +108,11 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   const [mounted, setMounted] = useState(false); // defer WebGL init past the sheet-open animation
   const [showLabels, setShowLabels] = useState(false); // defer the 170+ text labels past the fly-in
   const [features, setFeatures] = useState<Feat[]>(FEATURES_CACHE || []);
-  // The selected country's cap material — ONE stable instance we mutate in place
-  // when the flag texture arrives (so we never depend on the globe wrapper re-running
-  // the accessor). Starts invisible; the flag (or a pink fallback) fills it once
-  // loaded. Non-selected countries share `emptyMat`, an invisible cap (the accessor
-  // must return a Material, so we can't just return undefined).
-  // side:DoubleSide is REQUIRED — three-globe's cap geometry winds so a single-sided
-  // material gets back-face culled (invisible). Its own default cap material is
-  // DoubleSide+depthWrite for the same reason. Starts invisible (opacity 0) until the
-  // flag texture loads and fills it.
+  // The flag material for the selected country's custom cap mesh — ONE stable instance
+  // we mutate in place when the flag texture arrives. side:DoubleSide is REQUIRED (the
+  // conic cap winds so a single-sided material is back-face culled → invisible). Starts
+  // invisible (opacity 0) and fades in once the texture (or a pink fallback) loads.
   const capMat = useMemo(() => new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, depthWrite: false, transparent: true, opacity: 0 }), []);
-  const emptyMat = useMemo(() => new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, opacity: 0, depthWrite: false }), []);
   const iso2 = (iso || "").toUpperCase();
   const facts = COUNTRY_FACTS[iso2] || null;
 
@@ -178,7 +220,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   }, [iso2, capMat]);
 
   // Free the cap materials (and any loaded flag texture) when this globe unmounts.
-  useEffect(() => () => { capMat.map?.dispose(); capMat.dispose(); emptyMat.dispose(); }, [capMat, emptyMat]);
+  useEffect(() => () => { capMat.map?.dispose(); capMat.dispose(); }, [capMat]);
 
   // The selected country's polygon (by ISO3 / name), found among all features.
   const selected = useMemo(() => {
@@ -195,6 +237,13 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
       }) || null
     );
   }, [features, facts, name]);
+
+  // The flag is a CUSTOM cap mesh (one flag spread across the whole country), not the
+  // polygon layer's per-polygon cap. Stable data ref so the mesh builds once.
+  const flagLayer = useMemo(() => (selected ? [selected] : []), [selected]);
+  // r defaults so TS accepts the 1-arg accessor type; three-globe passes the real
+  // globe radius (100) at runtime.
+  const flagObject = useCallback((f: Feat, r = 100) => buildFlagMesh(f, r, capMat), [capMat]);
 
   // Centered zoom + pinch. We change ONLY the altitude (keeping the current
   // lat/lng) via pointOfView instead of OrbitControls' dolly, which drifts the
@@ -369,13 +418,14 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             atmosphereColor="#9ec1ff"
             atmosphereAltitude={0.22}
             polygonsData={features}
-            polygonAltitude={(f: Feat) => (f === selected ? 0.012 : 0.005)}
-            polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.32)" : "rgba(0,0,0,0)")}
-            polygonCapMaterial={(f: Feat) => (f === selected ? capMat : emptyMat)}
-            polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.06)" : "rgba(0,0,0,0)")}
-            polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.32)" : "rgba(255,255,255,.42)")}
+            polygonAltitude={(f: Feat) => (f === selected ? 0.014 : 0.005)}
+            polygonCapColor={() => "rgba(0,0,0,0)"}
+            polygonSideColor={() => "rgba(0,0,0,0)"}
+            polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.5)" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
+            customLayerData={flagLayer}
+            customThreeObject={flagObject}
             labelsData={showLabels ? labels : EMPTY}
             labelLat="lat"
             labelLng="lng"
