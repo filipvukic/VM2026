@@ -117,7 +117,7 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
   // Separate width/height: a square in normal mode, a wide "hero" banner in hero mode,
   // and the full viewport in fullscreen.
   const [dims, setDims] = useState({ w: 320, h: 320 });
-  const [isFs, setIsFs] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [ready, setReady] = useState(false);
   const [mounted, setMounted] = useState(false); // defer WebGL init past the sheet-open animation
   const [showLabels, setShowLabels] = useState(false); // defer the 170+ text labels past the fly-in
@@ -150,29 +150,32 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
     const el = wrapRef.current;
     if (!el) return;
     const set = () => {
-      const fs = !!document.fullscreenElement && document.fullscreenElement === el;
       const cw = el.clientWidth || 320;
-      if (fs) { setDims({ w: cw, h: el.clientHeight || window.innerHeight }); return; }
-      // Hero: full-width banner, height a fraction of the width (clamped) so the globe
-      // reads as a cinematic strip rather than a square card.
-      if (hero) { setDims({ w: cw, h: Math.min(440, Math.max(300, Math.round(cw * 0.78))) }); return; }
+      // Expanded = fixed full-viewport overlay; use the element's measured box.
+      if (expanded) { setDims({ w: cw, h: el.clientHeight || window.innerHeight }); return; }
+      // Hero: a landscape banner — height a modest fraction of the width (clamped) so
+      // it reads as a strip, not a tall card.
+      if (hero) { setDims({ w: cw, h: Math.min(320, Math.max(225, Math.round(cw * 0.5))) }); return; }
       const s = Math.max(240, Math.min(cw, 460));
       setDims({ w: s, h: s });
     };
     set();
     const ro = new ResizeObserver(set);
     ro.observe(el);
-    const onFs = () => { setIsFs(document.fullscreenElement === el); set(); };
-    document.addEventListener("fullscreenchange", onFs);
-    return () => { ro.disconnect(); document.removeEventListener("fullscreenchange", onFs); };
-  }, [hero]);
+    return () => ro.disconnect();
+  }, [hero, expanded]);
 
-  const toggleFs = useCallback(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    if (document.fullscreenElement === el) document.exitFullscreen?.();
-    else el.requestFullscreen?.().catch(() => {});
-  }, []);
+  // Expand into a full-viewport overlay. We deliberately AVOID the native Fullscreen
+  // API: iOS Safari doesn't support requestFullscreen() on non-video elements, so the
+  // button just did nothing there. A fixed CSS overlay works on every device; ESC
+  // closes it on desktop.
+  const toggleFs = useCallback(() => setExpanded((v) => !v), []);
+  useEffect(() => {
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setExpanded(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expanded]);
 
   // Fetch all world polygons once (cached across opens), plus the bundled extras.
   useEffect(() => {
@@ -449,18 +452,26 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
       <div
         ref={wrapRef}
         className="globe-stage"
-        style={{ position: "relative", width: "100%", height: isFs ? "100%" : dims.h, display: "grid", placeItems: "center", borderRadius: hero ? 0 : "var(--r-lg)", overflow: "hidden", touchAction: "none", background: "radial-gradient(circle at 50% 42%, #16306e, #05070f 72%)" }}
+        style={{
+          ...(expanded
+            ? { position: "fixed" as const, inset: 0, width: "100vw", height: "100dvh", zIndex: 2000, borderRadius: 0 }
+            : { position: "relative" as const, width: "100%", height: dims.h, borderRadius: hero ? 0 : "var(--r-lg)" }),
+          display: "grid",
+          placeItems: "center",
+          overflow: "hidden",
+          touchAction: "none",
+          background: "radial-gradient(circle at 50% 42%, #16306e, #05070f 72%)",
+        }}
       >
         {/* The canvas must opt out of browser touch handling, or the scrollable
             sheet eats the pinch before our zoom handler sees it. */}
         <style>{`
           .globe-stage canvas{ touch-action:none !important; }
-          .globe-stage:fullscreen{ width:100vw; height:100vh; border-radius:0; }
-          .globe-fs{ position:absolute; right:10px; bottom:10px; z-index:5; width:34px; height:34px; display:grid; place-items:center;
-            border-radius:10px; color:#fff; background:rgba(8,12,24,.5); border:1px solid rgba(255,255,255,.16);
+          .globe-fs{ position:absolute; right:10px; bottom:10px; z-index:2147483647; width:38px; height:38px; display:grid; place-items:center;
+            border-radius:11px; color:#fff; background:rgba(8,12,24,.55); border:1px solid rgba(255,255,255,.18);
             backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background .15s, transform .12s; }
-          .globe-fs:hover{ background:rgba(8,12,24,.8); } .globe-fs:active{ transform:scale(.92); }
-          .globe-hint{ position:absolute; left:12px; bottom:12px; z-index:5; font-size:10.5px; color:rgba(255,255,255,.55);
+          .globe-fs:hover{ background:rgba(8,12,24,.85); } .globe-fs:active{ transform:scale(.92); }
+          .globe-hint{ position:absolute; left:12px; bottom:14px; z-index:5; font-size:10.5px; color:rgba(255,255,255,.55);
             pointer-events:none; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); }
         `}</style>
         {mounted && dims.w > 0 && (
@@ -499,15 +510,15 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
           />
         )}
         {ready && (
-          <button className="globe-fs" onClick={toggleFs} aria-label={isFs ? "Stäng helskärm" : "Helskärm"}>
-            {isFs ? (
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M15 20v-3a2 2 0 0 1 2-2h3M4 15h3a2 2 0 0 1 2 2v3" /></svg>
+          <button className="globe-fs" onClick={toggleFs} aria-label={expanded ? "Stäng helskärm" : "Helskärm"}>
+            {expanded ? (
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M15 20v-3a2 2 0 0 1 2-2h3M4 15h3a2 2 0 0 1 2 2v3" /></svg>
             ) : (
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4" /></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4" /></svg>
             )}
           </button>
         )}
-        {hero && ready && <div className="globe-hint">Dra för att snurra · nyp för att zooma</div>}
+        {hero && ready && !expanded && <div className="globe-hint">Dra för att snurra · nyp för att zooma</div>}
       </div>
       {!hero && (
         <div className="card card-pad" style={{ marginTop: 10 }}>
