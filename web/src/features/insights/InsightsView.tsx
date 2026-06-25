@@ -69,36 +69,40 @@ export function InsightsView() {
           <div className="card" style={{ overflow: "hidden" }}>
             <div className="ins2-grid ins2-head">
               <span></span>
-              <span></span>
               <span>Spelare</span>
               <button className={`ins2-sort${sort === "hitRate" ? " on" : ""}`} onClick={() => setSort("hitRate")}>Träff%{sort === "hitRate" ? " ↓" : ""}</button>
               <button className={`ins2-sort${sort === "exact" ? " on" : ""}`} onClick={() => setSort("exact")}>Exakt{sort === "exact" ? " ↓" : ""}</button>
               <button className={`ins2-sort${sort === "total" ? " on" : ""}`} onClick={() => setSort("total")}>Poäng{sort === "total" ? " ↓" : ""}</button>
               <span className="ins2-fh">Form</span>
             </div>
-            {ranked.map((s, i) => (
-              <button key={s.p.id} className="ins2-grid ins2-row" onClick={() => openPlayer(s.p.id)}>
-                <span className="ins2-rk num">{i + 1}</span>
-                <Avatar name={s.p.name} photo={s.p.photo} color={s.p.color} size={30} />
-                <span className="ins2-nm">{s.p.name}</span>
-                <span className="ins2-hr">
-                  <span className="num">{Math.round(s.hitRate * 100)}%</span>
-                  <span className="ins2-bar"><i style={{ width: `${s.hitRate * 100}%` }} /></span>
-                </span>
-                <span className="ins2-ex num">{s.exact}</span>
-                <span className="ins2-pts num">{s.p.total}</span>
-                <span className="ins2-form">
-                  {Array.from({ length: 6 }).map((_, j) => {
-                    const r = s.recent[s.recent.length - 6 + j];
-                    return <i key={j} style={{ background: r ? RES_COLOR[r] : "var(--surface-3)" }} />;
-                  })}
-                </span>
-              </button>
-            ))}
+            {ranked.map((s, i) => {
+              const rank = i + 1;
+              const medal = rank === 1 ? "var(--gold)" : rank === 2 ? "#cfd6e6" : rank === 3 ? "#e8965a" : null;
+              return (
+                <button key={s.p.id} className="ins2-grid ins2-row" onClick={() => openPlayer(s.p.id)}>
+                  <span className="ins2-av">
+                    <Avatar name={s.p.name} photo={s.p.photo} color={s.p.color} size={40} ring={medal} />
+                    <span className="ins2-rk" style={{ background: medal || "var(--surface-3)", color: medal ? "#0a0712" : "var(--ink-2)" }}>{rank}</span>
+                  </span>
+                  <span className="ins2-nm">{s.p.name}</span>
+                  <span className={`ins2-hr${sort === "hitRate" ? " on" : ""}`}>
+                    <span className="num">{Math.round(s.hitRate * 100)}%</span>
+                    <span className="ins2-bar"><i style={{ width: `${s.hitRate * 100}%` }} /></span>
+                  </span>
+                  <span className={`ins2-stat${sort === "exact" ? " on" : ""}`}>{s.exact}</span>
+                  <span className={`ins2-stat${sort === "total" ? " on" : ""}`}>{s.p.total}</span>
+                  <span className="ins2-form">
+                    {Array.from({ length: 6 }).map((_, j) => {
+                      const r = s.recent[s.recent.length - 6 + j];
+                      return <i key={j} style={{ background: r ? RES_COLOR[r] : "var(--surface-3)" }} />;
+                    })}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-          <div className="dim" style={{ fontSize: 11, margin: "10px 2px 0" }}>
-            <b>Träff%</b> = andel rätt utgång eller exakt. Form = senaste matcherna —{" "}
-            <b style={{ color: "var(--gold)" }}>guld</b> exakt, <b style={{ color: "var(--win)" }}>grön</b> rätt utgång, grått tröst.
+          <div className="dim" style={{ fontSize: 11, margin: "10px 4px 0" }}>
+            <b>Träff%</b> = andel rätt utgång eller exakt resultat · <b>Exakt</b> = antal exakta resultat.
           </div>
 
           <FormGrid ds={ds} />
@@ -106,32 +110,35 @@ export function InsightsView() {
       )}
 
       <style>{`
-        /* mobile: drop the inline Form dots (the Formrutnät heatmap below shows the same
-           thing) so the name + stat columns get real breathing room. Form returns ≥560px. */
-        /* wider avatar track = breathing room between photo and name; stat columns are
-           CENTERED (not right-pinned) so they read airy; Form is compact + only ≥560px. */
-        .ins2-grid{ display:grid; grid-template-columns:16px 34px minmax(0,1fr) 48px 34px 42px; align-items:center; gap:8px; }
+        /* Roomy leaderboard: the rank rides as a badge on the avatar (frees a whole
+           column for the name), stat values are big + centered with the active sort in
+           gold, rows are tall. Form returns ≥560px (on phones it's in the Formrutnät). */
+        .ins2-grid{ display:grid; grid-template-columns:40px minmax(0,1fr) 52px 38px 46px; align-items:center; gap:10px; }
         .ins2-fh, .ins2-form{ display:none; }
         @media(min-width:560px){
-          .ins2-grid{ grid-template-columns:16px 36px minmax(0,1fr) 54px 40px 46px 46px; gap:10px; }
+          .ins2-grid{ grid-template-columns:44px minmax(0,1fr) 62px 48px 54px 50px; gap:14px; }
           .ins2-fh{ display:block; } .ins2-form{ display:flex; }
         }
-        .ins2-head{ padding:10px 13px; border-bottom:1px solid var(--line); }
+        .ins2-head{ padding:9px 14px; border-bottom:1px solid var(--line); }
         .ins2-head > span, .ins2-fh, .ins2-sort{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
-        .ins2-fh{ text-align:center; }
-        .ins2-sort{ text-align:center; cursor:pointer; white-space:nowrap; }
+        .ins2-fh, .ins2-sort{ text-align:center; }
+        .ins2-sort{ cursor:pointer; white-space:nowrap; }
         .ins2-sort.on{ color:var(--gold); }
-        .ins2-row{ width:100%; padding:9px 13px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
+        .ins2-row{ width:100%; padding:11px 14px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
         .ins2-row:last-child{ border-bottom:none; }
         .ins2-row:hover{ background:var(--surface-2); }
-        .ins2-rk{ color:var(--ink-3); font-size:12.5px; text-align:center; }
-        .ins2-nm{ font-weight:700; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ins2-av{ position:relative; width:40px; height:40px; }
+        .ins2-rk{ position:absolute; right:-5px; bottom:-4px; min-width:17px; height:17px; padding:0 3px; box-sizing:border-box;
+          border-radius:9px; border:2px solid var(--surface-2); display:grid; place-items:center;
+          font-size:10px; font-weight:900; font-variant-numeric:tabular-nums; }
+        .ins2-nm{ font-weight:800; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .ins2-hr{ text-align:center; }
-        .ins2-hr .num{ font-size:13px; font-weight:800; }
-        .ins2-bar{ display:block; height:4px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-top:3px; }
+        .ins2-hr .num{ font-size:14.5px; font-weight:800; color:var(--ink); }
+        .ins2-hr.on .num{ color:var(--gold); }
+        .ins2-bar{ display:block; height:4px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-top:4px; }
         .ins2-bar i{ display:block; height:100%; border-radius:999px; background:var(--grad-soft); }
-        .ins2-ex{ text-align:center; font-size:14px; font-weight:800; color:var(--ink); }
-        .ins2-pts{ text-align:center; font-size:15px; font-weight:800; color:var(--gold); }
+        .ins2-stat{ text-align:center; font-size:16px; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; }
+        .ins2-stat.on{ color:var(--gold); }
         .ins2-form{ gap:2px; justify-content:center; }
         .ins2-form i{ width:6px; height:6px; border-radius:50%; flex:0 0 auto; }
         .fg-scroll{ overflow-x:auto; scrollbar-width:thin; }
