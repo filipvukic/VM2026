@@ -60,7 +60,6 @@ export function InsightsView() {
     <div className="view container" style={{ maxWidth: 820 }}>
       <div className="section-head" style={{ marginTop: 6 }}>
         <div className="section-title">Insikter</div>
-        <div className="kicker">tryck på Träff% / Exakt / Poäng för att sortera</div>
       </div>
 
       {!ranked.length ? (
@@ -109,30 +108,32 @@ export function InsightsView() {
       <style>{`
         /* mobile: drop the inline Form dots (the Formrutnät heatmap below shows the same
            thing) so the name + stat columns get real breathing room. Form returns ≥560px. */
-        .ins2-grid{ display:grid; grid-template-columns:16px 28px minmax(0,1fr) 50px 40px 46px; align-items:center; gap:7px; }
+        /* wider avatar track = breathing room between photo and name; stat columns are
+           CENTERED (not right-pinned) so they read airy; Form is compact + only ≥560px. */
+        .ins2-grid{ display:grid; grid-template-columns:16px 34px minmax(0,1fr) 48px 34px 42px; align-items:center; gap:8px; }
         .ins2-fh, .ins2-form{ display:none; }
         @media(min-width:560px){
-          .ins2-grid{ grid-template-columns:16px 30px minmax(0,1fr) 54px 42px 48px 60px; gap:9px; }
+          .ins2-grid{ grid-template-columns:16px 36px minmax(0,1fr) 54px 40px 46px 46px; gap:10px; }
           .ins2-fh{ display:block; } .ins2-form{ display:flex; }
         }
         .ins2-head{ padding:10px 13px; border-bottom:1px solid var(--line); }
         .ins2-head > span, .ins2-fh, .ins2-sort{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
-        .ins2-fh{ text-align:right; }
-        .ins2-sort{ text-align:right; cursor:pointer; white-space:nowrap; }
+        .ins2-fh{ text-align:center; }
+        .ins2-sort{ text-align:center; cursor:pointer; white-space:nowrap; }
         .ins2-sort.on{ color:var(--gold); }
-        .ins2-row{ width:100%; padding:9px 12px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
+        .ins2-row{ width:100%; padding:9px 13px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
         .ins2-row:last-child{ border-bottom:none; }
         .ins2-row:hover{ background:var(--surface-2); }
         .ins2-rk{ color:var(--ink-3); font-size:12.5px; text-align:center; }
         .ins2-nm{ font-weight:700; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .ins2-hr{ text-align:right; }
+        .ins2-hr{ text-align:center; }
         .ins2-hr .num{ font-size:13px; font-weight:800; }
         .ins2-bar{ display:block; height:4px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-top:3px; }
         .ins2-bar i{ display:block; height:100%; border-radius:999px; background:var(--grad-soft); }
-        .ins2-ex{ text-align:right; font-size:14px; font-weight:800; color:var(--ink); }
-        .ins2-pts{ text-align:right; font-size:15px; font-weight:800; color:var(--gold); }
-        .ins2-form{ gap:3px; justify-content:flex-end; }
-        .ins2-form i{ width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
+        .ins2-ex{ text-align:center; font-size:14px; font-weight:800; color:var(--ink); }
+        .ins2-pts{ text-align:center; font-size:15px; font-weight:800; color:var(--gold); }
+        .ins2-form{ gap:2px; justify-content:center; }
+        .ins2-form i{ width:6px; height:6px; border-radius:50%; flex:0 0 auto; }
         .fg-scroll{ overflow-x:auto; scrollbar-width:thin; }
         .fg{ display:grid; }
         .fg-cell{ display:grid; place-items:center; }
