@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
 import ConicPolygonGeometry from "three-conic-polygon-geometry";
+import polylabel from "polylabel";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
 import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
 
@@ -106,6 +107,38 @@ function buildFlagGroup(feature: Feat, material: THREE.Material, globeR: number)
   return group;
 }
 const maxAbs = (n: number) => (Math.abs(n) < 1e-6 ? 1e-6 : n);
+
+// Where to drop a country's code label. The geographic centroid (and the bundled
+// rounded representative point) often lands in an odd spot — outside concave shapes,
+// drifting toward a far-flung territory, or sitting on a border. Instead we use the
+// POLE OF INACCESSIBILITY (polylabel) of the country's biggest landmass: the point
+// deepest inside the visible polygon — the natural "reasonable" place for a label.
+// Computed once per country and cached (the world set never changes).
+const LABEL_PT: Record<string, { lat: number; lng: number }> = {};
+function labelPointFor(feature: Feat): { lat: number; lng: number } | null {
+  const key: string = feature?.properties?.ADM0_A3 || feature?.properties?.ISO_A3 || feature?.properties?.NAME || "";
+  if (key && LABEL_PT[key]) return LABEL_PT[key];
+  const geom = feature?.geometry;
+  const polys: number[][][][] =
+    geom?.type === "MultiPolygon" ? geom.coordinates : geom?.type === "Polygon" ? [geom.coordinates] : [];
+  if (!polys.length) return null;
+  // pick the largest landmass (by bbox area) so the label sits on the main body
+  let best = polys[0], bestA = -1;
+  for (const rings of polys) {
+    const e = ringsExtent(rings);
+    const a = (e.maxLng - e.minLng) * (e.maxLat - e.minLat);
+    if (a > bestA) { bestA = a; best = rings; }
+  }
+  let res: { lat: number; lng: number } | null = null;
+  try {
+    const pt = polylabel(best, 0.8);
+    res = { lng: pt[0], lat: pt[1] };
+  } catch {
+    res = null;
+  }
+  if (key && res) LABEL_PT[key] = res;
+  return res;
+}
 
 
 export default function CountryGlobe({ iso, name, active, hero }: { iso?: string | null; name: string; active?: boolean; hero?: boolean }) {
@@ -439,9 +472,13 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
       if (f === selected) continue;
       const p = f.properties || {};
       const cca3 = p.ADM0_A3;
-      const fc = cca3 ? FACTS_BY_CCA3[cca3] : null;
-      if (!fc || !cca3) continue;
-      arr.push({ lat: fc.lat, lng: fc.lng, text: cca3, sel: false, sz: labelSizeForArea(fc.area) });
+      if (!cca3) continue;
+      // position from the pole of inaccessibility (deep inside the main landmass);
+      // size from the bundled area (level-of-detail), falling back to the geometry.
+      const pt = labelPointFor(f);
+      if (!pt) continue;
+      const area = FACTS_BY_CCA3[cca3]?.area ?? null;
+      arr.push({ lat: pt.lat, lng: pt.lng, text: cca3, sel: false, sz: labelSizeForArea(area) });
     }
     return arr;
   }, [features, selected]);
@@ -456,6 +493,9 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
           ...(expanded
             ? { position: "fixed" as const, inset: 0, width: "100vw", height: "100dvh", zIndex: 2000, borderRadius: 0 }
             : { position: "relative" as const, width: "100%", height: dims.h, borderRadius: hero ? 0 : "var(--r-lg)" }),
+          // Own stacking context: keeps the fullscreen button layered ABOVE the canvas
+          // but never above unrelated page chrome (close button, tab bar, other sheets).
+          isolation: "isolate",
           display: "grid",
           placeItems: "center",
           overflow: "hidden",
@@ -467,11 +507,11 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
             sheet eats the pinch before our zoom handler sees it. */}
         <style>{`
           .globe-stage canvas{ touch-action:none !important; }
-          .globe-fs{ position:absolute; right:10px; bottom:10px; z-index:2147483647; width:38px; height:38px; display:grid; place-items:center;
+          .globe-fs{ position:absolute; right:10px; bottom:10px; z-index:6; width:38px; height:38px; display:grid; place-items:center;
             border-radius:11px; color:#fff; background:rgba(8,12,24,.55); border:1px solid rgba(255,255,255,.18);
             backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background .15s, transform .12s; }
           .globe-fs:hover{ background:rgba(8,12,24,.85); } .globe-fs:active{ transform:scale(.92); }
-          .globe-hint{ position:absolute; left:12px; bottom:14px; z-index:5; font-size:10.5px; color:rgba(255,255,255,.55);
+          .globe-hint{ position:absolute; left:12px; bottom:14px; z-index:4; font-size:10.5px; color:rgba(255,255,255,.55);
             pointer-events:none; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); }
         `}</style>
         {mounted && dims.w > 0 && (

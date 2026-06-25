@@ -17,6 +17,11 @@ const BONUS_LABEL: Record<BonusSlot, string> = {
   topscorer: "Skyttekung", bestplayer: "Bästa spelare", youngplayer: "Bästa unga", keeper: "Bästa målvakt",
 };
 
+// Colour a graded tip by its score: exact (5) gold, right outcome (2) green,
+// consolation (1) muted.
+const ptsBg = (pts: number) => (pts === 5 ? "var(--gold)" : pts === 2 ? "var(--win)" : "var(--surface-3)");
+const ptsFg = (pts: number) => (pts >= 2 ? "#0a0712" : "var(--ink-2)");
+
 export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const ds = useData();
   const openMatch = useSheets((s) => s.openMatch);
@@ -43,29 +48,98 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
     if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 250);
   }, [nextId]);
 
+  // Standing context + accuracy.
+  const N = ds.players.length;
+  const leaderTotal = ds.players.reduce((mx, x) => Math.max(mx, x.total), 0);
+  const behindLeader = Math.max(0, leaderTotal - p.total);
+  const rank = p.rank;
+  const medalBg = rank === 1 ? "var(--gold)" : rank === 2 ? "#cfd6e6" : rank === 3 ? "#e8965a" : "var(--surface-3)";
+  const medalFg = rank <= 3 ? "#0a0712" : "var(--ink-2)";
+  const graded = p.exact + p.correct + p.other;
+  const hitRate = graded ? Math.round(((p.exact + p.correct) / graded) * 100) : 0;
+
+  // Form: the most recent graded tips as a colour strip.
+  const form = tipped
+    .filter((m) => m.status === "played" && m.ga != null && m.gb != null)
+    .slice(-14)
+    .map((m) => ({ m, pts: classifyTip(p.tips[m.id]!, m.ga!, m.gb!).points }));
+
   return (
     <Sheet {...chrome} accent={p.color}>
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <Avatar name={p.name} photo={p.photo} color={p.color} size={58} ring={p.rank <= 3 ? "var(--gold)" : null} zoomable />
-        <div style={{ flex: 1 }}>
-          <div className="display" style={{ fontSize: 28 }}>{p.name}</div>
-          <div className="dim" style={{ fontWeight: 700, fontSize: 13 }}>#{p.rank} i ligan</div>
+      {/* HERO — identity at a glance: who, where they rank, how many points */}
+      <div
+        className="pl-hero"
+        style={{ background: `linear-gradient(150deg, color-mix(in srgb, ${p.color} 26%, var(--surface-2)), var(--surface-2) 64%)` }}
+      >
+        <Avatar name={p.name} photo={p.photo} color={p.color} size={66} ring={rank <= 3 ? "var(--gold)" : null} zoomable />
+        <div className="pl-id">
+          <div className="display pl-name">{p.name}</div>
+          <div className="pl-rankrow">
+            <span className="pl-medal" style={{ background: medalBg, color: medalFg }}>#{rank}</span>
+            <span className="pl-rankof dim">av {N} spelare</span>
+          </div>
+        </div>
+        <div className="pl-total">
+          <div><span className="pl-total-n">{p.total}</span><span className="pl-total-p">p</span></div>
+          <div className="pl-gap" style={{ color: rank === 1 ? "var(--gold)" : "var(--ink-3)" }}>
+            {rank === 1 ? "🏆 Leder ligan" : `${behindLeader} p efter ledaren`}
+          </div>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginTop: 16 }}>
-        <Kpi label="Poäng totalt" value={p.total} accent="var(--gold)" />
-        <Kpi label="Från matcher" value={p.points} />
-        <Kpi label="Från bonus" value={p.bonusPts} />
-        <Kpi label="Exakta resultat" value={p.exact} accent="var(--win)" />
+      {/* key numbers */}
+      <div className="pl-stats">
+        <StatChip label="Matchpoäng" value={p.points} />
+        <StatChip label="Bonuspoäng" value={p.bonusPts} />
+        <StatChip label="Träffsäkerhet" value={`${hitRate}%`} accent="var(--cool-2)" />
       </div>
-      <div className="dim" style={{ fontSize: 11.5, marginTop: 8, textAlign: "center" }}>
-        {p.exact} exakta · {p.correct} rätt utgång · {p.other} tröstpoäng
-      </div>
+
+      {/* accuracy breakdown */}
+      {graded > 0 && (
+        <div className="card card-pad" style={{ marginTop: 12 }}>
+          <div className="pl-sec">
+            <div className="kicker">Träffbild</div>
+            <span className="dim" style={{ fontSize: 11 }}>{graded} avgjorda tips</span>
+          </div>
+          <div className="pl-accbar">
+            {p.exact > 0 && <div style={{ width: `${(p.exact / graded) * 100}%`, background: "var(--gold)" }} />}
+            {p.correct > 0 && <div style={{ width: `${(p.correct / graded) * 100}%`, background: "var(--win)" }} />}
+            {p.other > 0 && <div style={{ width: `${(p.other / graded) * 100}%`, background: "var(--surface-3)" }} />}
+          </div>
+          <div className="pl-legend">
+            <Leg color="var(--gold)" label="Exakt" n={p.exact} />
+            <Leg color="var(--win)" label="Rätt utgång" n={p.correct} />
+            <Leg color="var(--surface-3)" label="Tröstpoäng" n={p.other} />
+          </div>
+        </div>
+      )}
+
+      {/* form strip */}
+      {form.length > 0 && (
+        <div className="card card-pad" style={{ marginTop: 12 }}>
+          <div className="pl-sec">
+            <div className="kicker">Form · senaste {form.length}</div>
+            <span className="dim" style={{ fontSize: 10.5 }}>äldst → senast</span>
+          </div>
+          <div className="pl-form">
+            {form.map(({ m, pts }) => (
+              <button
+                key={m.id}
+                onClick={() => m._realId && openMatch(m.id)}
+                className="pl-fdot"
+                style={{ background: ptsBg(pts), color: ptsFg(pts) }}
+                title={`${ds.teams[m.home!]?.name || "?"} ${m.ga}–${m.gb} ${ds.teams[m.away!]?.name || "?"} · tippade ${p.tips[m.id]![0]}–${p.tips[m.id]![1]} · ${pts}p`}
+              >
+                {pts}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* live now — current results of matches being played + this player's tip */}
       {live.length > 0 && (
-        <div className="card card-pad" style={{ marginTop: 14, border: "1px solid color-mix(in srgb, var(--hot) 30%, var(--line-2))", background: "color-mix(in srgb, var(--hot) 5%, var(--surface))" }}>
+        <div className="card card-pad" style={{ marginTop: 12, border: "1px solid color-mix(in srgb, var(--hot) 30%, var(--line-2))", background: "color-mix(in srgb, var(--hot) 5%, var(--surface))" }}>
           <div className="kicker" style={{ marginBottom: 10, display: "inline-flex", alignItems: "center", gap: 8, color: "var(--hot-2)" }}>
             <span className="live-dot" style={{ background: "var(--hot)" }} />Pågår nu
           </div>
@@ -94,9 +168,9 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
       )}
 
       {/* bonus picks */}
-      <div className="card card-pad" style={{ marginTop: 14 }}>
+      <div className="card card-pad" style={{ marginTop: 12 }}>
         <div className="kicker" style={{ marginBottom: 10 }}>Bonustips</div>
-        <div style={{ display: "grid", gap: 7 }}>
+        <div className="pl-bonus">
           {(Object.keys(BONUS_LABEL) as BonusSlot[]).map((k) => {
             const v = p.bonus[k];
             const isTeam = k === "winner" || k === "silver" || k === "bronze";
@@ -110,11 +184,13 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
             const open = () => { if (teamCode) openTeam(teamCode); else if (playerName) openFbPlayer(playerName); };
             return (
               <button key={k} onClick={clickable ? open : undefined} disabled={!clickable}
-                style={{ display: "flex", alignItems: "center", gap: 9, padding: "6px 8px", borderRadius: 8, background: "var(--surface)", width: "100%", textAlign: "left", cursor: clickable ? "pointer" : "default" }}>
-                <span className="dim" style={{ width: 104, fontSize: 11.5, fontWeight: 700 }}>{BONUS_LABEL[k]}</span>
-                {t && <Flag iso={t.iso} code={teamCode} size={16} />}
-                <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, color: clickable ? "var(--cool-2)" : undefined }}>{text}</span>
-                {correct && <span className="chip solid" style={{ background: "var(--win)", color: "#0a0712", fontSize: 9.5, padding: "1px 6px" }}>RÄTT</span>}
+                className="pl-bcard" style={{ borderColor: correct ? "color-mix(in srgb, var(--win) 45%, transparent)" : undefined }}>
+                <div className="kicker" style={{ fontSize: 9.5 }}>{BONUS_LABEL[k]}</div>
+                <div className="pl-brow">
+                  {t && <Flag iso={t.iso} code={teamCode} size={16} />}
+                  <span className="pl-bval" style={{ color: clickable ? "var(--cool-2)" : "var(--ink-3)" }}>{text}</span>
+                  {correct && <span className="chip solid" style={{ background: "var(--win)", color: "#0a0712", fontSize: 8.5, padding: "1px 5px", flex: "0 0 auto" }}>RÄTT</span>}
+                </div>
               </button>
             );
           })}
@@ -132,8 +208,6 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const away = m.away ? ds.teams[m.away] : null;
               const played = m.status === "played" && m.ga != null && m.gb != null;
               const pts = played ? classifyTip(tip, m.ga!, m.gb!).points : null;
-              // Colour the row by result: exact (5) = gold, right outcome (2) =
-              // green, wrong (1, "tröstpoäng") = red.
               const accent = pts === 5 ? "var(--gold)" : pts === 2 ? "var(--win)" : pts === 1 ? "var(--loss)" : null;
               const openThis = () => m._realId && openMatch(m.id);
               const isNext = m.id === nextId;
@@ -143,10 +217,6 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                   ? `color-mix(in srgb, ${accent} 10%, var(--surface))`
                   : undefined;
               return (
-                // a row of separate click targets: the team names open the team,
-                // the date + score open the match (nested buttons aren't allowed,
-                // so the container is a div). minWidth:0 everywhere lets the team
-                // names ellipsis instead of pushing the row off-screen.
                 <div key={m.id} ref={isNext ? nextRef : undefined} className="card" style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 10px", borderRadius: "var(--r-md)", minWidth: 0, background: bg, border: isNext ? "1.5px solid var(--cool)" : undefined, borderLeft: !isNext && accent ? `3px solid ${accent}` : undefined, position: "relative" }}>
                   {isNext && <span className="chip" style={{ position: "absolute", top: -8, left: 10, fontSize: 8.5, padding: "1px 7px", background: "var(--cool)", color: "#0a0712", fontWeight: 800, letterSpacing: ".05em" }}>NÄSTA</span>}
                   <button onClick={openThis} className="dim" style={{ flex: "0 0 auto", width: 42, fontSize: 10.5, fontWeight: 700, padding: 0, textAlign: "left" }}>{svDayMonth(m.kickoff)}</button>
@@ -169,23 +239,65 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
           </div>
         </div>
       )}
+
+      <style>{`
+        .pl-hero{ display:flex; align-items:center; gap:13px; padding:15px 16px; border-radius:var(--r-lg); border:1px solid var(--line-2); }
+        .pl-id{ flex:1; min-width:0; }
+        .pl-name{ font-size:24px; line-height:1.04; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .pl-rankrow{ display:flex; align-items:center; gap:8px; margin-top:7px; }
+        .pl-medal{ font-weight:900; font-size:12.5px; padding:2px 9px; border-radius:var(--r-pill); letter-spacing:.02em; }
+        .pl-rankof{ font-size:11.5px; font-weight:700; }
+        .pl-total{ flex:0 0 auto; text-align:right; }
+        .pl-total-n{ font-size:30px; font-weight:900; font-variant-numeric:tabular-nums; line-height:1; }
+        .pl-total-p{ font-size:14px; font-weight:800; color:var(--ink-3); margin-left:2px; }
+        .pl-gap{ font-size:10px; font-weight:800; margin-top:3px; white-space:nowrap; }
+        .pl-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px; }
+        .pl-stat{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); padding:11px 6px; text-align:center; }
+        .pl-stat .v{ font-size:21px; font-weight:900; font-variant-numeric:tabular-nums; }
+        .pl-stat .k{ font-size:9px; margin-top:2px; }
+        .pl-sec{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+        .pl-accbar{ display:flex; height:12px; border-radius:7px; overflow:hidden; background:var(--surface-3); }
+        .pl-accbar > div{ transition:width .4s ease; }
+        .pl-legend{ display:flex; gap:16px; margin-top:11px; flex-wrap:wrap; }
+        .pl-leg{ display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; }
+        .pl-leg .d{ width:9px; height:9px; border-radius:3px; }
+        .pl-leg .n{ font-variant-numeric:tabular-nums; color:var(--ink); } .pl-leg .l{ color:var(--ink-3); }
+        .pl-form{ display:flex; gap:6px; flex-wrap:wrap; }
+        .pl-fdot{ width:30px; height:30px; border-radius:8px; font-weight:900; font-size:12.5px; display:grid; place-items:center; font-variant-numeric:tabular-nums; transition:transform .12s; }
+        .pl-fdot:active{ transform:scale(.9); }
+        .pl-bonus{ display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+        .pl-bcard{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); padding:8px 10px; text-align:left; min-width:0; }
+        .pl-brow{ display:flex; align-items:center; gap:7px; margin-top:4px; }
+        .pl-bval{ flex:1; min-width:0; font-weight:800; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        @media(max-width:380px){ .pl-bonus{ grid-template-columns:1fr; } }
+      `}</style>
     </Sheet>
   );
 }
 
+function StatChip({ label, value, accent }: { label: string; value: number | string; accent?: string }) {
+  return (
+    <div className="pl-stat">
+      <div className="v" style={{ color: accent || "var(--ink)" }}>{value}</div>
+      <div className="kicker k">{label}</div>
+    </div>
+  );
+}
+
+function Leg({ color, label, n }: { color: string; label: string; n: number }) {
+  return (
+    <div className="pl-leg">
+      <span className="d" style={{ background: color }} />
+      <span className="n">{n}</span>
+      <span className="l">{label}</span>
+    </div>
+  );
+}
+
 function mapKey(k: BonusSlot): "winner" | "silver" | "bronze" | "top_scorer" | "best_player" | "best_young" | "best_keeper" {
-  const map: Record<BonusSlot, any> = {
+  const map: Record<BonusSlot, "winner" | "silver" | "bronze" | "top_scorer" | "best_player" | "best_young" | "best_keeper"> = {
     winner: "winner", silver: "silver", bronze: "bronze",
     topscorer: "top_scorer", bestplayer: "best_player", youngplayer: "best_young", keeper: "best_keeper",
   };
   return map[k];
-}
-
-function Kpi({ label, value, accent }: { label: string; value: number; accent?: string }) {
-  return (
-    <div className="card" style={{ padding: "10px 8px", textAlign: "center" }}>
-      <div className="num" style={{ fontSize: 24, color: accent || "var(--ink)" }}>{value}</div>
-      <div className="kicker" style={{ fontSize: 9 }}>{label}</div>
-    </div>
-  );
 }
