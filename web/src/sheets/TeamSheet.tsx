@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { useData, useCoaches, usePlayersDb } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useMatchStats } from "../state/matchStats";
@@ -30,6 +30,7 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
   const rank = FIFA_RANKING[code];
   const matches = ds.allMatches.filter((m) => m.home === code || m.away === code).sort((a, b) => +a.kickoff - +b.kickoff);
   const fans = ds.players.filter((p) => p.bonus.winner === code || p.bonus.silver === code || p.bonus.bronze === code);
+  const [tab, setTab] = useState<"stats" | "squad" | "matches">("stats");
 
   return (
     <Sheet {...chrome} accent={groupColor(t.group)}>
@@ -43,89 +44,114 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
         </div>
       </div>
 
-      {/* group standings */}
-      {t.group && <div style={{ marginTop: 12 }}><GroupTable letter={t.group} highlight={[code]} /></div>}
-
-      {/* performance + ranking among WC teams (the key info, up top) */}
-      <TeamStatsCompare ds={ds} code={code} />
-
-      {(coachName || hist || detail?.stars) && (
-        <div className="card card-pad" style={{ marginTop: 12 }}>
-          {coachName && (
-            <button onClick={() => openCoach(code)} style={{ display: "flex", alignItems: "center", gap: 11, width: "100%", textAlign: "left", marginBottom: detail?.stars || hist ? 12 : 0 }}>
-              {coachRec?.photo ? <PlayerImg src={coachRec.photo} name={coachName} size={36} radius={50} fontSize={13} /> : null}
-              <div>
-                <div className="kicker">Förbundskapten ›</div>
-                <div style={{ fontWeight: 800, marginTop: 2 }}>{coachName}</div>
-              </div>
-            </button>
-          )}
-          {detail?.stars && (
-            <div>
-              <div className="kicker" style={{ marginBottom: 6 }}>Nyckelspelare</div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {detail.stars.map((s) => <button key={s} className="chip" onClick={() => openFb(s)}>{s}</button>)}
-              </div>
-            </div>
-          )}
-          {hist && (
-            <div style={{ display: "flex", gap: 18, marginTop: 14, flexWrap: "wrap" }}>
-              <Mini label="VM-titlar" value={String(hist.titles)} hot={hist.titles > 0} />
-              {hist.apps != null && <Mini label="Slutspel" value={String(hist.apps)} />}
-              {hist.best && <div style={{ flex: 1, minWidth: 140 }}><div className="kicker">Bästa resultat</div><div style={{ fontSize: 13, fontWeight: 700, marginTop: 2 }}>{hist.best}</div></div>}
-            </div>
-          )}
-        </div>
-      )}
-
-      <LatestLineup code={code} color={t.c1 || "var(--cool)"} />
-
-      <div className="card card-pad" style={{ marginTop: 12 }}>
-        <div className="kicker" style={{ marginBottom: 8 }}>Form</div>
-        <FormDots form={ds.forms[code] || []} />
-      </div>
-
-      {matches.length > 0 && (
-        <div style={{ marginTop: 14 }}>
-          <div className="kicker" style={{ marginBottom: 8 }}>Matcher i VM</div>
-          <div style={{ display: "grid", gap: 7 }}>
-            {matches.map((m) => {
-              const opp = m.home === code ? m.away : m.home;
-              const oppT = opp ? ds.teams[opp] : null;
-              return (
-                <button key={m.id} className="card" onClick={() => openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderRadius: "var(--r-md)", width: "100%", textAlign: "left" }}>
-                  <span className="dim" style={{ width: 52, fontSize: 11, fontWeight: 700 }}>{svDayMonth(m.kickoff)}</span>
-                  <Flag iso={oppT?.iso} code={opp} size={18} />
-                  <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{oppT?.name || m.fromA || m.fromB || "TBD"}</span>
-                  {m.status === "played" ? <span className="num">{m.home === code ? m.ga : m.gb}–{m.home === code ? m.gb : m.ga}</span> : <span className="dim" style={{ fontSize: 12 }}>{m.stage === "group" ? `Grupp ${m.group}` : "Slutspel"}</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* 3D globe + country facts — the country context, lower down */}
+      {/* the globe is one of the first things you see */}
       {t.iso && (
-        <div style={{ marginTop: 16 }}>
-          <div className="kicker" style={{ marginBottom: 8 }}>Om {t.name}</div>
+        <div style={{ marginTop: 12 }}>
           <Suspense fallback={<div className="card card-pad dim" style={{ textAlign: "center", padding: 28 }}>Laddar klot…</div>}>
             <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} />
           </Suspense>
         </div>
       )}
 
-      {fans.length > 0 && (
-        <div className="card card-pad" style={{ marginTop: 14 }}>
-          <div className="kicker" style={{ marginBottom: 8 }}>Tror på {t.name}</div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {fans.map((p) => {
-              const role = p.bonus.winner === code ? "vinnare" : p.bonus.silver === code ? "silver" : "brons";
-              return <span key={p.id} className="chip"><span style={{ width: 7, height: 7, borderRadius: "50%", background: p.color, display: "inline-block" }} />{p.name} · {role}</span>;
-            })}
-          </div>
-        </div>
-      )}
+      {/* tabs */}
+      <div className="ts-tabs">
+        {([["stats", "Statistik"], ["squad", "Trupp"], ["matches", "Matcher"]] as const).map(([id, label]) => (
+          <button key={id} className={tab === id ? "on" : ""} onClick={() => setTab(id)}>{label}</button>
+        ))}
+      </div>
+
+      <div key={tab} className="ts-content">
+        {tab === "stats" && (
+          <>
+            {t.group && <GroupTable letter={t.group} highlight={[code]} />}
+            <TeamStatsCompare ds={ds} code={code} />
+            <div className="card card-pad" style={{ marginTop: 12 }}>
+              <div className="kicker" style={{ marginBottom: 8 }}>Form</div>
+              <FormDots form={ds.forms[code] || []} />
+            </div>
+            {hist && (
+              <div className="card card-pad" style={{ marginTop: 12 }}>
+                <div className="kicker" style={{ marginBottom: 12 }}>VM-historik</div>
+                <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+                  <Mini label="VM-titlar" value={String(hist.titles)} hot={hist.titles > 0} />
+                  {hist.apps != null && <Mini label="Slutspel" value={String(hist.apps)} />}
+                  {hist.best && <div style={{ flex: 1, minWidth: 140 }}><div className="kicker">Bästa resultat</div><div style={{ fontSize: 13, fontWeight: 700, marginTop: 2 }}>{hist.best}</div></div>}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {tab === "squad" && (
+          <>
+            {(coachName || detail?.stars) && (
+              <div className="card card-pad">
+                {coachName && (
+                  <button onClick={() => openCoach(code)} style={{ display: "flex", alignItems: "center", gap: 11, width: "100%", textAlign: "left", marginBottom: detail?.stars ? 12 : 0 }}>
+                    {coachRec?.photo ? <PlayerImg src={coachRec.photo} name={coachName} size={36} radius={50} fontSize={13} /> : null}
+                    <div>
+                      <div className="kicker">Förbundskapten ›</div>
+                      <div style={{ fontWeight: 800, marginTop: 2 }}>{coachName}</div>
+                    </div>
+                  </button>
+                )}
+                {detail?.stars && (
+                  <div>
+                    <div className="kicker" style={{ marginBottom: 6 }}>Nyckelspelare</div>
+                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                      {detail.stars.map((s) => <button key={s} className="chip" onClick={() => openFb(s)}>{s}</button>)}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            <LatestLineup code={code} color={t.c1 || "var(--cool)"} />
+          </>
+        )}
+
+        {tab === "matches" && (
+          <>
+            {matches.length > 0 ? (
+              <div style={{ display: "grid", gap: 7 }}>
+                {matches.map((m) => {
+                  const opp = m.home === code ? m.away : m.home;
+                  const oppT = opp ? ds.teams[opp] : null;
+                  return (
+                    <button key={m.id} className="card" onClick={() => openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderRadius: "var(--r-md)", width: "100%", textAlign: "left" }}>
+                      <span className="dim" style={{ width: 52, fontSize: 11, fontWeight: 700 }}>{svDayMonth(m.kickoff)}</span>
+                      <Flag iso={oppT?.iso} code={opp} size={18} />
+                      <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{oppT?.name || m.fromA || m.fromB || "TBD"}</span>
+                      {m.status === "played" ? <span className="num">{m.home === code ? m.ga : m.gb}–{m.home === code ? m.gb : m.ga}</span> : <span className="dim" style={{ fontSize: 12 }}>{m.stage === "group" ? `Grupp ${m.group}` : "Slutspel"}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga matcher ännu.</div>
+            )}
+
+            {fans.length > 0 && (
+              <div className="card card-pad" style={{ marginTop: 14 }}>
+                <div className="kicker" style={{ marginBottom: 8 }}>Tror på {t.name}</div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {fans.map((p) => {
+                    const role = p.bonus.winner === code ? "vinnare" : p.bonus.silver === code ? "silver" : "brons";
+                    return <span key={p.id} className="chip"><span style={{ width: 7, height: 7, borderRadius: "50%", background: p.color, display: "inline-block" }} />{p.name} · {role}</span>;
+                  })}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      <style>{`
+        .ts-tabs{ display:flex; gap:4px; margin-top:16px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
+        .ts-tabs button{ flex:1 1 0; min-width:0; padding:9px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13px; color:var(--ink-3); }
+        .ts-tabs button.on{ background:var(--grad-soft); color:#fff; }
+        .ts-content{ margin-top:14px; animation:tsIn .26s cubic-bezier(.2,.7,.2,1); }
+        @keyframes tsIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+      `}</style>
     </Sheet>
   );
 }
