@@ -3,7 +3,8 @@ import { useSheets } from "../state/sheets";
 import { Flag } from "../lib/flags";
 import { Avatar } from "../components/Avatar";
 import { PlayerImg } from "../components/PlayerImg";
-import { bestPhoto, findPlayer } from "../lib/playerPhoto";
+import { findPlayer, playerPhotoSources } from "../lib/playerPhoto";
+import { useStatsIndex } from "../state/matchStats";
 import type { BonusSlot, Dataset, RawBonusKey } from "../data/types";
 
 const SLOTS: { key: BonusSlot; raw: RawBonusKey; label: string; team: boolean }[] = [
@@ -77,6 +78,7 @@ export function BonusView() {
 
 function ScorerList({ title, sub, items, metric }: { title: string; sub: string; items: Scorer[]; metric: "goals" | "assists" }) {
   const db = usePlayersDb();
+  const statsIndex = useStatsIndex();
   const openFb = useSheets((s) => s.openFbPlayer);
   return (
     <div>
@@ -96,7 +98,7 @@ function ScorerList({ title, sub, items, metric }: { title: string; sub: string;
               style={{ width: "100%", display: "flex", alignItems: "center", gap: 11, padding: "9px 14px", textAlign: "left", borderBottom: i < items.length - 1 ? "1px solid var(--line)" : "none" }}
             >
               <span className="num" style={{ width: 18, color: i === 0 ? "var(--gold)" : "var(--ink-3)", fontSize: 13 }}>{i + 1}</span>
-              <PlayerImg src={bestPhoto(findPlayer(s.name, db))} name={s.name} size={30} radius={8} fontSize={11} />
+              <PlayerImg srcs={playerPhotoSources(s.name, db, statsIndex)} name={s.name} size={30} radius={8} fontSize={11} />
               <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.name}</span>
               {other > 0 && <span className="num dim" style={{ fontSize: 11.5 }}>{other} {otherLabel}</span>}
               <span className="num" style={{ color: "var(--gold)", fontSize: 16, width: 26, textAlign: "right" }}>{main}</span>
@@ -113,14 +115,15 @@ function BonusCard({ slot, ds }: { slot: (typeof SLOTS)[number]; ds: Dataset }) 
   const openFb = useSheets((s) => s.openFbPlayer);
   const openPlayer = useSheets((s) => s.openPlayer);
   const db = usePlayersDb();
+  const statsIndex = useStatsIndex();
   const points = ds.bonusPoints?.[slot.raw] ?? 0;
   const actual = ds.bonusActual?.[slot.raw] || null;
 
   // tally picks
-  const tally = new Map<string, { label: string; code: string | null; photo: string | null; people: { id: string; name: string; color: string; photo: string | null }[] }>();
+  const tally = new Map<string, { label: string; code: string | null; photoSrcs: string[]; people: { id: string; name: string; color: string; photo: string | null }[] }>();
   ds.players.forEach((p) => {
     const v = p.bonus[slot.key];
-    let key: string, label: string, code: string | null = null, photo: string | null = null;
+    let key: string, label: string, code: string | null = null, photoSrcs: string[] = [];
     if (slot.team) {
       code = (v as string | null) || null;
       if (!code) return;
@@ -131,9 +134,9 @@ function BonusCard({ slot, ds }: { slot: (typeof SLOTS)[number]; ds: Dataset }) 
       if (!name || name === "-") return;
       label = name;
       key = name.toLowerCase();
-      photo = bestPhoto(findPlayer(name, db));
+      photoSrcs = playerPhotoSources(name, db, statsIndex);
     }
-    if (!tally.has(key)) tally.set(key, { label, code, photo, people: [] });
+    if (!tally.has(key)) tally.set(key, { label, code, photoSrcs, people: [] });
     tally.get(key)!.people.push({ id: p.id, name: p.name, color: p.color, photo: p.photo });
   });
   const ranked = [...tally.values()].sort((a, b) => b.people.length - a.people.length);
@@ -163,7 +166,7 @@ function BonusCard({ slot, ds }: { slot: (typeof SLOTS)[number]; ds: Dataset }) 
             {slot.team && top.code ? (
               <Flag iso={ds.teams[top.code]?.iso} code={top.code} size={32} />
             ) : (
-              <PlayerImg src={top.photo} name={top.label} size={38} radius={11} fontSize={14} />
+              <PlayerImg srcs={top.photoSrcs} name={top.label} size={38} radius={11} fontSize={14} />
             )}
             <div style={{ minWidth: 0 }}>
               <div style={{ fontWeight: 800, fontSize: 16, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{top.label}</div>
@@ -182,7 +185,7 @@ function BonusCard({ slot, ds }: { slot: (typeof SLOTS)[number]; ds: Dataset }) 
                 {slot.team && r.code ? (
                   <Flag iso={ds.teams[r.code]?.iso} code={r.code} size={16} />
                 ) : (
-                  <PlayerImg src={r.photo} name={r.label} size={20} radius={6} fontSize={9} />
+                  <PlayerImg srcs={r.photoSrcs} name={r.label} size={20} radius={6} fontSize={9} />
                 )}
                 <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.label}</span>
               </button>

@@ -4,7 +4,7 @@ import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Flag } from "../lib/flags";
 import { PlayerImg } from "../components/PlayerImg";
-import { findPlayer, bestPhoto, espnHeadshot, fotmobImage } from "../lib/playerPhoto";
+import { findPlayer, playerPhotoSources, idxNorm } from "../lib/playerPhoto";
 import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
 import { useStatsIndex, useMatchStats } from "../state/matchStats";
@@ -44,14 +44,11 @@ export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }:
   const ds = useData();
   const openTeam = useSheets((s) => s.openTeam);
   const p = findPlayer(name, db, espnId);
-  // Photo: FotMob image (keyed by the FotMob id — the right player, fixes wrong db
-  // photos) → db photo → ESPN. Same priority as the line-up, so the profile and the
-  // pitch always show the SAME, correct face. When opened from a pitch we get the
-  // line-up's own FotMob id (recovered by shirt); prefer it so the two ALWAYS match,
-  // instead of re-deriving by name (which can land on a different id).
+  // Shared resolver → the SAME picture everywhere this player shows up (bonus page,
+  // scorer lists, pitch, this sheet). When opened from a pitch we get the line-up's
+  // own FotMob id (recovered by shirt); prefer it so the two ALWAYS match.
   const statsIndex = useStatsIndex();
-  const fmId = fmIdProp ?? statsIndex?.players[idxNorm(p?.name || name)]?.fmId;
-  const photoSrcs = [fotmobImage(fmId), bestPhoto(p), espnHeadshot(espnId)].filter(Boolean) as string[];
+  const photoSrcs = playerPhotoSources(name, db, statsIndex, espnId, fmIdProp);
   const wc = wcStats(ds, p?.name || name);
   const hasWc = wc.apps > 0 || wc.goals > 0;
   // Fall back to national-team context (flag, team) for stars not yet in players.json.
@@ -127,9 +124,6 @@ export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }:
     </Sheet>
   );
 }
-
-const idxNorm = (s: string) =>
-  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
 
 const shortDate = (d?: string) => (d && d.length >= 10 ? `${parseInt(d.slice(8, 10), 10)}/${parseInt(d.slice(5, 7), 10)}` : "");
 

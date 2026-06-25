@@ -1,4 +1,4 @@
-import type { PlayerRecord, PlayersDb } from "../data/types";
+import type { MatchStatsIndex, PlayerRecord, PlayersDb } from "../data/types";
 
 type Rec = PlayerRecord & { name: string };
 const pnorm = (s: string) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -72,6 +72,28 @@ export function lineupPhotoSources(name: string, espnId: string | null | undefin
   if (!rec) return [...new Set(out)];
   for (const u of [rec.photo, rec.cutout, rec.render, rec.wiki, rec.thumb, rec.espnPhoto]) if (u) out.push(u);
   return [...new Set(out)];
+}
+
+// Normalisation matching the matchstats index keys (build_matchstats `norm`), so a
+// player's FotMob id can be looked up by name.
+export const idxNorm = (s: string) =>
+  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
+
+// THE canonical photo source list for a football player — use this EVERYWHERE a
+// player is shown (bonus page, scorer lists, profile sheet…) so the picture never
+// changes between a list and the player's own sheet. Priority: FotMob image (keyed
+// by the FotMob id from the stats index — the right player, fixes wrong db photos) →
+// curated db photo → ESPN headshot. `fmId` overrides the lookup (e.g. from a line-up).
+export function playerPhotoSources(
+  name: string,
+  db: PlayersDb | null,
+  statsIndex?: MatchStatsIndex | null,
+  espnId?: string | null,
+  fmId?: string | null,
+): string[] {
+  const p = findPlayer(name, db, espnId);
+  const id = fmId ?? statsIndex?.players[idxNorm(p?.name || name)]?.fmId;
+  return [fotmobImage(id), bestPhoto(p), espnHeadshot(espnId)].filter(Boolean) as string[];
 }
 
 // Resolve a player record from players.json by name (with a light last-name

@@ -1,266 +1,185 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useData } from "../../state/dataset";
 import { useSheets } from "../../state/sheets";
 import { Avatar } from "../../components/Avatar";
-import { RaceChart } from "./RaceChart";
-import { computeRace } from "./movement";
-import { classifyTip } from "../../data/scoring";
-import type { Dataset, PlayerStanding } from "../../data/types";
+import { Flag } from "../../lib/flags";
+import { classifyTip, outcomeOf, type TipResult } from "../../data/scoring";
+import { svDayMonth } from "../../lib/format";
+import type { Dataset, Match, PlayerStanding } from "../../data/types";
 
-interface Acc {
+interface Stat {
   p: PlayerStanding;
   played: number;
   exact: number;
   correct: number;
-  hitRate: number; // (exact+correct)/played
-  form: number; // points in last 10 played
-  goalsAvg: number; // avg goals per tip
+  hitRate: number; // (exact + correct) / played
+  recent: TipResult[]; // last few results, newest last
 }
 
-function computeAccuracy(ds: Dataset): Acc[] {
-  const playedMatches = ds.allMatches
+function computeStats(ds: Dataset): Stat[] {
+  const played = ds.allMatches
     .filter((m) => m.status === "played" && m.ga != null && m.gb != null)
     .sort((a, b) => +a.kickoff - +b.kickoff);
   return ds.players
     .map((p) => {
-      const mine = playedMatches.filter((m) => p.tips[m.id]);
-      let exact = 0, correct = 0, goals = 0;
+      const mine = played.filter((m) => p.tips[m.id]);
+      let exact = 0, correct = 0;
       mine.forEach((m) => {
-        const t = p.tips[m.id];
-        goals += t[0] + t[1];
-        const r = classifyTip(t, m.ga!, m.gb!).result;
+        const r = classifyTip(p.tips[m.id], m.ga!, m.gb!).result;
         if (r === "exact") exact++;
         else if (r === "outcome") correct++;
       });
-      const last3 = mine.slice(-3);
-      const form = last3.reduce((s, m) => s + classifyTip(p.tips[m.id], m.ga!, m.gb!).points, 0);
       return {
         p,
         played: mine.length,
         exact,
         correct,
         hitRate: mine.length ? (exact + correct) / mine.length : 0,
-        form,
-        goalsAvg: mine.length ? goals / mine.length : 0,
+        recent: mine.slice(-6).map((m) => classifyTip(p.tips[m.id], m.ga!, m.gb!).result),
       };
     })
-    .filter((a) => a.played > 0);
+    .filter((s) => s.played > 0);
 }
+
+const RES_COLOR: Record<TipResult, string> = { exact: "var(--gold)", outcome: "var(--win)", floor: "var(--ink-3)" };
 
 export function InsightsView() {
   const ds = useData();
-  const acc = useMemo(() => computeAccuracy(ds), [ds]);
-  const race = useMemo(() => computeRace(ds), [ds]);
+  const stats = useMemo(() => computeStats(ds), [ds]);
 
   return (
-    <div className="view container" style={{ maxWidth: 980 }}>
+    <div className="view container" style={{ maxWidth: 860 }}>
       <div className="section-head" style={{ marginTop: 6 }}>
         <div className="section-title">Insikter</div>
       </div>
 
-      {race.days.length >= 2 && (
-        <div style={{ marginBottom: 14 }}>
-          <RaceChart race={race} />
-        </div>
-      )}
-
-      <div className="ins-grid">
-        <AccuracyCard acc={acc} />
-        <FormCard acc={acc} />
-      </div>
-
-      <H2HCard ds={ds} />
-
-      <TriviaCard acc={acc} ds={ds} />
+      <StatsTable stats={stats} />
+      <PoolConsensus ds={ds} />
 
       <style>{`
-        .ins-grid{ display:grid; gap:14px; grid-template-columns:minmax(0,1fr); }
-        @media(min-width:820px){ .ins-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
-        .ins-row{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:5px 6px; border-radius:8px; transition:background .12s; }
-        .ins-row:hover{ background:var(--surface-2); }
+        .ins2-grid{ display:grid; grid-template-columns:22px 30px minmax(0,1fr) 50px 38px 70px; align-items:center; gap:9px; }
+        .ins2-head{ padding:11px 14px; border-bottom:1px solid var(--line); }
+        .ins2-head span{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
+        .ins2-row{ width:100%; padding:9px 14px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
+        .ins2-row:last-child{ border-bottom:none; }
+        .ins2-row:hover{ background:var(--surface-2); }
+        .ins2-rk{ color:var(--ink-3); font-size:13px; text-align:center; }
+        .ins2-nm{ font-weight:700; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ins2-hr{ text-align:right; }
+        .ins2-hr .num{ font-size:13.5px; font-weight:800; }
+        .ins2-bar{ display:block; height:4px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-top:3px; }
+        .ins2-bar i{ display:block; height:100%; border-radius:999px; background:var(--grad-soft); }
+        .ins2-ex{ text-align:center; font-size:14px; color:var(--gold); }
+        .ins2-form{ display:flex; gap:3px; justify-content:flex-end; }
+        .ins2-form i{ width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
+        .cons-bar{ display:flex; height:9px; border-radius:999px; overflow:hidden; gap:2px; margin:9px 0 7px; }
       `}</style>
     </div>
   );
 }
 
-function AccuracyCard({ acc }: { acc: Acc[] }) {
+function StatsTable({ stats }: { stats: Stat[] }) {
   const openPlayer = useSheets((s) => s.openPlayer);
-  const ranked = [...acc].sort((a, b) => b.hitRate - a.hitRate || b.exact - a.exact);
+  if (!stats.length)
+    return <div className="card card-pad dim" style={{ textAlign: "center" }}>Statistiken dyker upp när matcher börjat spelas.</div>;
+  const ranked = [...stats].sort((a, b) => b.hitRate - a.hitRate || b.exact - a.exact || b.played - a.played);
+
   return (
-    <div className="card card-pad">
-      <div className="kicker" style={{ marginBottom: 12 }}>Träffsäkerhet</div>
-      <div style={{ display: "grid", gap: 4 }}>
-        {ranked.map((a) => (
-          <button key={a.p.id} className="ins-row" onClick={() => openPlayer(a.p.id)}>
-            <Avatar name={a.p.name} photo={a.p.photo} color={a.p.color} size={26} />
-            <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{a.p.name}</span>
-            <div className="bar" style={{ width: 90, height: 7, borderRadius: 999, background: "var(--surface-3)", overflow: "hidden" }}>
-              <div style={{ width: `${a.hitRate * 100}%`, height: "100%", background: "var(--grad-soft)" }} />
-            </div>
-            <span className="num" style={{ width: 42, textAlign: "right", fontSize: 13 }}>{Math.round(a.hitRate * 100)}%</span>
+    <>
+      <div className="card" style={{ overflow: "hidden" }}>
+        <div className="ins2-grid ins2-head">
+          <span></span>
+          <span></span>
+          <span>Spelare</span>
+          <span style={{ textAlign: "right" }}>Träff%</span>
+          <span style={{ textAlign: "center" }}>Exakta</span>
+          <span style={{ textAlign: "right" }}>Form</span>
+        </div>
+        {ranked.map((s, i) => (
+          <button key={s.p.id} className="ins2-grid ins2-row" onClick={() => openPlayer(s.p.id)}>
+            <span className="ins2-rk num">{i + 1}</span>
+            <Avatar name={s.p.name} photo={s.p.photo} color={s.p.color} size={30} />
+            <span className="ins2-nm">{s.p.name}</span>
+            <span className="ins2-hr">
+              <span className="num">{Math.round(s.hitRate * 100)}%</span>
+              <span className="ins2-bar"><i style={{ width: `${s.hitRate * 100}%` }} /></span>
+            </span>
+            <span className="ins2-ex num">{s.exact}</span>
+            <span className="ins2-form">
+              {/* pad to 6 so the column stays aligned even with few games played */}
+              {Array.from({ length: 6 }).map((_, j) => {
+                const r = s.recent[s.recent.length - 6 + j];
+                return <i key={j} style={{ background: r ? RES_COLOR[r] : "var(--surface-3)" }} />;
+              })}
+            </span>
           </button>
         ))}
       </div>
-      <div className="dim" style={{ fontSize: 11, marginTop: 10 }}>Andel tippade matcher med rätt utgång eller exakt.</div>
-    </div>
+      <div className="dim" style={{ fontSize: 11, margin: "10px 2px 0" }}>
+        Sorterat på <b>träffsäkerhet</b> (andel tippade matcher med rätt utgång eller exakt). Form = senaste matcherna —{" "}
+        <b style={{ color: "var(--gold)" }}>guld</b> exakt, <b style={{ color: "var(--win)" }}>grön</b> rätt utgång, grått tröstpoäng.
+      </div>
+    </>
   );
 }
 
-function FormCard({ acc }: { acc: Acc[] }) {
-  const openPlayer = useSheets((s) => s.openPlayer);
-  const ranked = [...acc].sort((a, b) => b.form - a.form);
-  const max = Math.max(1, ...ranked.map((a) => a.form));
+function PoolConsensus({ ds }: { ds: Dataset }) {
+  const openMatch = useSheets((s) => s.openMatch);
+  const upcoming = ds.allMatches
+    .filter((m) => m.status === "upcoming" && m.home && m.away && m.tippas && m.tips.length > 0)
+    .sort((a, b) => +a.kickoff - +b.kickoff)
+    .slice(0, 5);
+  if (!upcoming.length) return null;
+
   return (
-    <div className="card card-pad">
-      <div className="kicker" style={{ marginBottom: 12 }}>Hetast just nu <span className="dim">· senaste 3</span></div>
-      <div style={{ display: "grid", gap: 4 }}>
-        {ranked.map((a, i) => (
-          <button key={a.p.id} className="ins-row" onClick={() => openPlayer(a.p.id)}>
-            <span className="num" style={{ width: 16, color: i === 0 ? "var(--hot)" : "var(--ink-3)", fontSize: 12 }}>{i + 1}</span>
-            <Avatar name={a.p.name} photo={a.p.photo} color={a.p.color} size={26} />
-            <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5 }}>{a.p.name}</span>
-            <div className="bar" style={{ width: 80, height: 7, borderRadius: 999, background: "var(--surface-3)", overflow: "hidden" }}>
-              <div style={{ width: `${(a.form / max) * 100}%`, height: "100%", background: i === 0 ? "var(--grad)" : "var(--grad-cool)" }} />
-            </div>
-            <span className="num" style={{ width: 34, textAlign: "right", fontSize: 13 }}>{a.form}p</span>
-          </button>
-        ))}
+    <div style={{ marginTop: 22 }}>
+      <div className="section-head">
+        <div className="section-title" style={{ fontSize: 19 }}>Vad tror poolen?</div>
+        <div className="kicker">kommande matcher</div>
+      </div>
+      <div style={{ display: "grid", gap: 10 }}>
+        {upcoming.map((m) => <ConsensusRow key={m.id} m={m} ds={ds} onOpen={() => openMatch(m.id)} />)}
       </div>
     </div>
   );
 }
 
-function H2HCard({ ds }: { ds: Dataset }) {
-  const [a, setA] = useState<string>(ds.players[0]?.id);
-  const [b, setB] = useState<string>(ds.players[1]?.id);
-  const pa = ds.players.find((p) => p.id === a);
-  const pb = ds.players.find((p) => p.id === b);
-
-  const cmp = useMemo(() => {
-    if (!pa || !pb) return null;
-    const shared = ds.allMatches.filter(
-      (m) => m.status === "played" && m.ga != null && pa.tips[m.id] && pb.tips[m.id]
-    );
-    let aw = 0, bw = 0, tie = 0;
-    shared.forEach((m) => {
-      const ap = classifyTip(pa.tips[m.id], m.ga!, m.gb!).points;
-      const bp = classifyTip(pb.tips[m.id], m.ga!, m.gb!).points;
-      if (ap > bp) aw++;
-      else if (bp > ap) bw++;
-      else tie++;
-    });
-    return { shared: shared.length, aw, bw, tie };
-  }, [pa, pb, ds]);
-
-  if (!pa || !pb) return null;
+function ConsensusRow({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: () => void }) {
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
+  let H = 0, D = 0, A = 0;
+  const score = new Map<string, number>();
+  m.tips.forEach((t) => {
+    const o = outcomeOf(t.tip[0], t.tip[1]);
+    if (o === "H") H++; else if (o === "X") D++; else A++;
+    const k = `${t.tip[0]}–${t.tip[1]}`;
+    score.set(k, (score.get(k) || 0) + 1);
+  });
+  const total = m.tips.length || 1;
+  const [modalTip, modalN] = [...score.entries()].sort((a, b) => b[1] - a[1])[0] || ["", 0];
+  const lead = H >= D && H >= A ? "H" : A >= D && A >= H ? "A" : "X";
 
   return (
-    <div className="card card-pad" style={{ marginTop: 14 }}>
-      <div className="kicker" style={{ marginBottom: 2 }}>Tvekamp</div>
-      <div className="dim" style={{ fontSize: 11.5, marginBottom: 14 }}>
-        Välj två spelare och jämför dem direkt mot varandra — vem som fått flest poäng på matcher ni <b>båda</b> tippat, plus exakta, bonus och placering.
+    <button className="card card-pad" onClick={onOpen} style={{ width: "100%", textAlign: "left" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5 }}>
+        <Flag iso={home?.iso} code={m.home} size={18} />
+        <span style={{ fontWeight: lead === "H" ? 800 : 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{home?.name || "?"}</span>
+        <span className="dim" style={{ fontSize: 11 }}>vs</span>
+        <span style={{ fontWeight: lead === "A" ? 800 : 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{away?.name || "?"}</span>
+        <Flag iso={away?.iso} code={m.away} size={18} />
+        <span className="dim num" style={{ marginLeft: "auto", fontSize: 11, flexShrink: 0 }}>{svDayMonth(m.kickoff)}</span>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <PlayerPick players={ds.players} value={a} onChange={setA} align="left" />
-        <div style={{ textAlign: "center", minWidth: 70 }}>
-          <div className="num" style={{ fontSize: 26 }}>
-            <span style={{ color: pa.total >= pb.total ? "var(--ink)" : "var(--ink-3)" }}>{pa.total}</span>
-            <span className="dim" style={{ margin: "0 5px" }}>–</span>
-            <span style={{ color: pb.total >= pa.total ? "var(--ink)" : "var(--ink-3)" }}>{pb.total}</span>
-          </div>
-          <div className="kicker" style={{ fontSize: 8.5 }}>poäng</div>
-        </div>
-        <PlayerPick players={ds.players} value={b} onChange={setB} align="right" />
+      <div className="cons-bar">
+        <div style={{ width: `${(H / total) * 100}%`, background: "var(--hot)" }} />
+        <div style={{ width: `${(D / total) * 100}%`, background: "var(--ink-3)" }} />
+        <div style={{ width: `${(A / total) * 100}%`, background: "var(--cool)" }} />
       </div>
-
-      {cmp && (
-        <div style={{ marginTop: 16 }}>
-          <div style={{ display: "flex", height: 28, borderRadius: 8, overflow: "hidden", gap: 2 }}>
-            <Seg pct={pct(cmp.aw, cmp.shared)} label={`${cmp.aw}`} color="var(--hot)" />
-            <Seg pct={pct(cmp.tie, cmp.shared)} label={`${cmp.tie}`} color="var(--ink-3)" />
-            <Seg pct={pct(cmp.bw, cmp.shared)} label={`${cmp.bw}`} color="var(--cool)" />
-          </div>
-          <div className="dim" style={{ fontSize: 11, textAlign: "center", marginTop: 8 }}>
-            På {cmp.shared} gemensamma matcher: {pa.name} bäst {cmp.aw} ggr · lika {cmp.tie} · {pb.name} bäst {cmp.bw} ggr
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 }}>
-            <CmpRow label="Exakta" a={pa.exact} b={pb.exact} />
-            <CmpRow label="Rätt utgång" a={pa.correct} b={pb.correct} />
-            <CmpRow label="Bonuspoäng" a={pa.bonusPts} b={pb.bonusPts} />
-            <CmpRow label="Placering" a={pa.rank} b={pb.rank} lowerBetter />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CmpRow({ label, a, b, lowerBetter }: { label: string; a: number; b: number; lowerBetter?: boolean }) {
-  const aBetter = lowerBetter ? a < b : a > b;
-  const bBetter = lowerBetter ? b < a : b > a;
-  return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "7px 11px", borderRadius: 8, background: "var(--surface)" }}>
-      <span className="num" style={{ fontSize: 15, color: aBetter ? "var(--hot)" : "var(--ink-2)" }}>{a}</span>
-      <span className="dim" style={{ fontSize: 11, fontWeight: 700 }}>{label}</span>
-      <span className="num" style={{ fontSize: 15, color: bBetter ? "var(--cool-2)" : "var(--ink-2)" }}>{b}</span>
-    </div>
-  );
-}
-
-function PlayerPick({ players, value, onChange, align }: { players: PlayerStanding[]; value: string; onChange: (v: string) => void; align: "left" | "right" }) {
-  const p = players.find((x) => x.id === value);
-  return (
-    <label style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: align === "right" ? "flex-end" : "flex-start", gap: 8 }}>
-      {p && <Avatar name={p.name} photo={p.photo} color={p.color} size={42} />}
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{ background: "var(--surface)", color: "var(--ink)", border: "1px solid var(--line-2)", borderRadius: 8, padding: "6px 8px", fontWeight: 700, fontSize: 12.5, maxWidth: 130 }}
-      >
-        {players.map((pl) => (
-          <option key={pl.id} value={pl.id}>{pl.name}</option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
-function TriviaCard({ acc, ds }: { acc: Acc[]; ds: Dataset }) {
-  if (!acc.length) return null;
-  const optimist = [...acc].sort((a, b) => b.goalsAvg - a.goalsAvg)[0];
-  const cautious = [...acc].sort((a, b) => a.goalsAvg - b.goalsAvg)[0];
-  const sharpest = [...acc].sort((a, b) => b.exact - a.exact)[0];
-  return (
-    <div className="card card-pad" style={{ marginTop: 14 }}>
-      <div className="kicker" style={{ marginBottom: 12 }}>Kuriosa</div>
-      <div style={{ display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))" }}>
-        <Trivia emoji="🎯" label="Vassast" p={sharpest.p} sub={`${sharpest.exact} exakta`} />
-        <Trivia emoji="⚽" label="Måloptimist" p={optimist.p} sub={`${optimist.goalsAvg.toFixed(1)} mål/tips`} />
-        <Trivia emoji="🧱" label="Försiktigast" p={cautious.p} sub={`${cautious.goalsAvg.toFixed(1)} mål/tips`} />
-      </div>
-    </div>
-  );
-}
-
-function Trivia({ emoji, label, p, sub }: { emoji: string; label: string; p: PlayerStanding; sub: string }) {
-  const openPlayer = useSheets((s) => s.openPlayer);
-  return (
-    <button onClick={() => openPlayer(p.id)} style={{ padding: "12px", borderRadius: 12, background: "var(--surface)", border: "1px solid var(--line)", textAlign: "left", display: "flex", alignItems: "center", gap: 11 }}>
-      <Avatar name={p.name} photo={p.photo} color={p.color} size={38} />
-      <div style={{ minWidth: 0 }}>
-        <div className="kicker" style={{ fontSize: 9 }}>{emoji} {label}</div>
-        <div style={{ fontWeight: 800, fontSize: 14, marginTop: 2, color: p.color }}>{p.name}</div>
-        <div className="dim" style={{ fontSize: 11 }}>{sub}</div>
+      <div className="dim" style={{ fontSize: 11.5 }}>
+        <b style={{ color: "var(--hot-2)" }}>{Math.round((H / total) * 100)}%</b> {home?.name} ·{" "}
+        <b>{Math.round((D / total) * 100)}%</b> oavgjort ·{" "}
+        <b style={{ color: "var(--cool-2)" }}>{Math.round((A / total) * 100)}%</b> {away?.name}
+        {modalN > 0 && <> · vanligaste tips <b className="num" style={{ color: "var(--ink)" }}>{modalTip}</b> ({modalN} st)</>}
       </div>
     </button>
-  );
-}
-
-const pct = (n: number, total: number) => (total ? (n / total) * 100 : 33.3);
-function Seg({ pct, label, color }: { pct: number; label: string; color: string }) {
-  return (
-    <div style={{ width: `${pct}%`, minWidth: 26, background: color, display: "grid", placeItems: "center", color: "#0a0712", fontWeight: 800, fontSize: 12 }}>
-      {label}
-    </div>
   );
 }
