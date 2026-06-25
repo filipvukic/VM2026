@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URY",
+    "awayTla": "URU",
     "status": "FINISHED",
     "score": [
       1,
@@ -30249,7 +30249,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "FINISHED",
@@ -41407,26 +41407,148 @@
     "homeTla": "CZE",
     "away": "Mexico",
     "awayTla": "MEX",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       0,
-      0
+      3
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        0,
+        3
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "HT",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "55",
+        "team": "MEX",
+        "scorer": "Mateo Chávez",
+        "assist": "Luis Romo",
+        "type": "REGULAR",
+        "description": "Goal! Czechia 0, Mexico 1. Mateo Chávez (Mexico) left footed shot from the centre of the box to the bottom left corner. Assisted by Luis Romo.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "MEX",
+        "scorer": "Julián Quiñones",
+        "assist": "Jorge Sánchez",
+        "type": "REGULAR",
+        "description": "Goal! Czechia 0, Mexico 2. Julián Quiñones (Mexico) right footed shot from very close range to the centre of the goal. Assisted by Jorge Sánchez following a fast break.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "MEX",
+        "scorer": "Álvaro Fidalgo",
+        "assist": "Roberto Alvarado",
+        "type": "REGULAR",
+        "description": "Goal! Czechia 0, Mexico 3. Álvaro Fidalgo (Mexico) right footed shot from the centre of the box to the top left corner. Assisted by Roberto Alvarado.",
+        "score": [
+          0,
+          3
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "64",
+        "team": "MEX",
+        "player": "Edson Álvarez",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "56",
+        "team": "CZE",
+        "playerIn": "Lukás Provod",
+        "playerOut": "Denis Visinský",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "MEX",
+        "playerIn": "Santiago Gimenez",
+        "playerOut": "Guillermo Martínez",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "MEX",
+        "playerIn": "Obed Vargas",
+        "playerOut": "Luis Romo",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "CZE",
+        "playerIn": "Patrik Schick",
+        "playerOut": "Adam Hlozek",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "CZE",
+        "playerIn": "Tomás Soucek",
+        "playerOut": "Tomás Holes",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "MEX",
+        "playerIn": "Álvaro Fidalgo",
+        "playerOut": "Gilberto Mora",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "MEX",
+        "playerIn": "Guillermo Ochoa",
+        "playerOut": "Raúl Rangel",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "MEX",
+        "playerIn": "Jesús Gallardo",
+        "playerOut": "Mateo Chávez",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "CZE",
+        "playerIn": "Tomás Chorý",
+        "playerOut": "Lukás Cerv",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "CZE",
+        "playerIn": "Alexandr Sojka",
+        "playerOut": "Tomás Soucek",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Estadio Banorte",
       "city": "Mexico City",
@@ -41439,7 +41561,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 80824,
     "espnOdds": {
       "homeML": 380,
       "awayML": -135,
@@ -41486,7 +41608,7 @@
           "jersey": "3",
           "espnId": "280885",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Michal Sadílek",
@@ -41504,7 +41626,7 @@
           "jersey": "12",
           "espnId": "303726",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "David Doudera",
@@ -41531,7 +41653,7 @@
           "jersey": "9",
           "espnId": "292169",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Denis Visinský",
@@ -41540,7 +41662,7 @@
           "jersey": "26",
           "espnId": "310027",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pavel Sulc",
@@ -41559,7 +41681,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "294618",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41604,7 +41726,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "257336",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41622,7 +41744,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "212330",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41649,8 +41771,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "230666",
-          "subbedIn": false,
-          "subbedOut": false
+          "subbedIn": true,
+          "subbedOut": true
         },
         {
           "name": "Vladimír Darida",
@@ -41676,7 +41798,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "387865",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -41693,7 +41815,7 @@
           "jersey": "1",
           "espnId": "290899",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Israel Reyes",
@@ -41720,7 +41842,7 @@
           "jersey": "20",
           "espnId": "379193",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jorge Sánchez",
@@ -41747,7 +41869,7 @@
           "jersey": "7",
           "espnId": "242614",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gilberto Mora",
@@ -41756,7 +41878,7 @@
           "jersey": "19",
           "espnId": "389575",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Guillermo Martínez",
@@ -41765,7 +41887,7 @@
           "jersey": "22",
           "espnId": "193566",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Julián Quiñones",
@@ -41793,7 +41915,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "132098",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41874,7 +41996,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "137038",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41883,7 +42005,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "318554",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41901,7 +42023,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "283827",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41910,7 +42032,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "260775",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -41927,66 +42049,73 @@
       "_espnEventId": "760467"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 46.3,
-      "totalShots": 6.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 2.0,
+      "possessionPct": 51.9,
+      "totalShots": 13.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.1,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 163.0,
-      "totalPasses": 200.0,
+      "accuratePasses": 333.0,
+      "totalPasses": 398.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 6.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 26.0,
       "crossPct": 0.2,
-      "totalLongBalls": 29.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.3,
-      "blockedShots": 2.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.8,
-      "interceptions": 3.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "totalLongBalls": 53.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.4,
+      "blockedShots": 4.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.6,
+      "interceptions": 5.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
     },
     "awayStats": {
-      "foulsCommitted": 7.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 53.7,
-      "totalShots": 5.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.2,
+      "wonCorners": 1.0,
+      "saves": 1.0,
+      "possessionPct": 48.1,
+      "totalShots": 11.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 203.0,
-      "totalPasses": 234.0,
+      "accuratePasses": 330.0,
+      "totalPasses": 386.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 30.0,
-      "accurateLongBalls": 20.0,
-      "longballPct": 0.7,
-      "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.6,
-      "interceptions": 2.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
+      "accurateCrosses": 1.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 55.0,
+      "accurateLongBalls": 34.0,
+      "longballPct": 0.6,
+      "blockedShots": 2.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.7,
+      "interceptions": 7.0,
+      "effectiveClearance": 30.0,
+      "totalClearance": 30.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-25",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-18",
         "result": "O",
@@ -42014,16 +42143,16 @@
         "gf": 2,
         "ga": 1,
         "home": true
-      },
-      {
-        "date": "2026-03-31",
-        "result": "O",
-        "gf": 2,
-        "ga": 2,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-25",
+        "result": "F",
+        "gf": 0,
+        "ga": 3,
+        "home": false
+      },
       {
         "date": "2026-06-19",
         "result": "V",
@@ -42051,13 +42180,6 @@
         "gf": 1,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2026-05-23",
-        "result": "V",
-        "gf": 2,
-        "ga": 0,
-        "home": true
       }
     ]
   },
@@ -42070,26 +42192,115 @@
     "homeTla": "RSA",
     "away": "South Korea",
     "awayTla": "KOR",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
+      1,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
+        0
+      ],
+      "fullTime": [
+        1,
         0
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "63",
+        "team": "RSA",
+        "scorer": "Thapelo Maseko",
+        "assist": "Tshepang Moremi",
+        "type": "REGULAR",
+        "description": "Goal! South Africa 1, Korea Republic 0. Thapelo Maseko (South Africa) left footed shot from the centre of the box to the bottom right corner. Assisted by Tshepang Moremi following a fast break.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "73",
+        "team": "RSA",
+        "player": "Aubrey Modiba",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "RSA",
+        "player": "Cho Gue-Sung",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "RSA",
+        "playerIn": "Son Heung-Min",
+        "playerOut": "Hwang Hee-Chan",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "RSA",
+        "playerIn": "Kim Jin-Gyu",
+        "playerOut": "Paik Seung-Ho",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "RSA",
+        "playerIn": "Jens Castrop",
+        "playerOut": "Lee Tae-Seok",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "RSA",
+        "playerIn": "Tshepang Moremi",
+        "playerOut": "Oswin Appollis",
+        "period": 2
+      },
+      {
+        "minute": "65",
+        "team": "RSA",
+        "playerIn": "Park Jin-Seop",
+        "playerOut": "Kim Min-Jae",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "RSA",
+        "playerIn": "Cho Gue-Sung",
+        "playerOut": "Oh Hyeon-Gyu",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "RSA",
+        "playerIn": "Iqraam Rayners",
+        "playerOut": "Thapelo Maseko",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "RSA",
+        "playerIn": "Jayden Adams",
+        "playerOut": "Relebohile Mofokeng",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Estadio BBVA",
       "city": "Guadalupe",
@@ -42102,7 +42313,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 0,
     "espnOdds": {
       "homeML": 425,
       "awayML": -140,
@@ -42167,7 +42378,7 @@
           "jersey": "10",
           "espnId": "361211",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sphephelo Sithole",
@@ -42203,7 +42414,7 @@
           "jersey": "7",
           "espnId": "288771",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Thapelo Maseko",
@@ -42212,7 +42423,7 @@
           "jersey": "12",
           "espnId": "335450",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -42303,7 +42514,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "313399",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42321,7 +42532,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "304736",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42330,7 +42541,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "291141",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -42356,7 +42567,7 @@
           "jersey": "4",
           "espnId": "157688",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lee Gi-Hyuk",
@@ -42392,7 +42603,7 @@
           "jersey": "8",
           "espnId": "256598",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lee Tae-Seok",
@@ -42401,7 +42612,7 @@
           "jersey": "13",
           "espnId": "297270",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Seol Young-Woo",
@@ -42419,7 +42630,7 @@
           "jersey": "18",
           "espnId": "302434",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Hwang Hee-Chan",
@@ -42428,7 +42639,7 @@
           "jersey": "11",
           "espnId": "237224",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lee Kang-In",
@@ -42456,7 +42667,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "90721",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42465,7 +42676,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "304793",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42474,7 +42685,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "303464",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42510,7 +42721,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "336178",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42546,7 +42757,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "149945",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -42581,66 +42792,73 @@
       "_espnEventId": "760466"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 7.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 3.0,
       "wonCorners": 4.0,
-      "saves": 0.0,
-      "possessionPct": 39.4,
-      "totalShots": 10.0,
-      "shotsOnTarget": 3.0,
+      "saves": 2.0,
+      "possessionPct": 31.5,
+      "totalShots": 13.0,
+      "shotsOnTarget": 4.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 170.0,
-      "totalPasses": 200.0,
-      "passPct": 0.9,
+      "accuratePasses": 277.0,
+      "totalPasses": 338.0,
+      "passPct": 0.8,
       "accurateCrosses": 1.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 31.0,
-      "accurateLongBalls": 13.0,
-      "longballPct": 0.4,
-      "blockedShots": 3.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.4,
-      "interceptions": 9.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "totalCrosses": 8.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 55.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.3,
+      "blockedShots": 4.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 11.0,
+      "tacklePct": 0.5,
+      "interceptions": 15.0,
+      "effectiveClearance": 42.0,
+      "totalClearance": 42.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 2.0,
+      "wonCorners": 6.0,
       "saves": 3.0,
-      "possessionPct": 60.6,
-      "totalShots": 4.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "possessionPct": 68.5,
+      "totalShots": 8.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 269.0,
-      "totalPasses": 305.0,
+      "accuratePasses": 643.0,
+      "totalPasses": 720.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 12.0,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 33.0,
       "crossPct": 0.2,
-      "totalLongBalls": 22.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.5,
+      "totalLongBalls": 55.0,
+      "accurateLongBalls": 31.0,
+      "longballPct": 0.6,
       "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.7,
-      "interceptions": 1.0,
-      "effectiveClearance": 11.0,
-      "totalClearance": 11.0
+      "effectiveTackles": 9.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.8,
+      "interceptions": 4.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
     },
     "homeForm": [
+      {
+        "date": "2026-06-25",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
       {
         "date": "2026-06-18",
         "result": "O",
@@ -42668,16 +42886,16 @@
         "gf": 0,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2026-03-31",
-        "result": "V",
-        "gf": 2,
-        "ga": 1,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-06-25",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
       {
         "date": "2026-06-19",
         "result": "F",
@@ -42705,13 +42923,6 @@
         "gf": 5,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2026-03-31",
-        "result": "F",
-        "gf": 0,
-        "ga": 1,
-        "home": false
       }
     ]
   },
@@ -42747,12 +42958,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 285,
-      "awayML": -120,
-      "spread": "GER -0.5",
+      "homeML": 450,
+      "awayML": -190,
+      "spread": "GER -1.5",
       "overUnder": 2.5,
-      "overOdds": -140.0,
-      "underOdds": 115.0,
+      "overOdds": -160.0,
+      "underOdds": 130.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -42880,8 +43091,8 @@
       "awayML": -650,
       "spread": "CIV -2.5",
       "overUnder": 3.5,
-      "overOdds": 130.0,
-      "underOdds": -160.0,
+      "overOdds": 120.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -43005,12 +43216,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 2000,
-      "awayML": -900,
+      "homeML": 2500,
+      "awayML": -1000,
       "spread": "NED -2.5",
       "overUnder": 3.5,
-      "overOdds": 105.0,
-      "underOdds": -135.0,
+      "overOdds": 100.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -43134,12 +43345,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -110,
-      "awayML": 330,
+      "homeML": -115,
+      "awayML": 340,
       "spread": "JPN -0.5",
       "overUnder": 2.5,
-      "overOdds": -135.0,
-      "underOdds": 105.0,
+      "overOdds": -115.0,
+      "underOdds": -105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -43753,7 +43964,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
@@ -44038,7 +44249,7 @@
     "attendance": null,
     "espnOdds": {
       "homeML": 1600,
-      "awayML": -650,
+      "awayML": -600,
       "spread": "BEL -2.5",
       "overUnder": 3.5,
       "overOdds": 115.0,
