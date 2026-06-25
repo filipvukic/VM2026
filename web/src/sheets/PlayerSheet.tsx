@@ -240,7 +240,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                   <button className="mt-date" onClick={openThis}>{svDayMonth(m.kickoff)}</button>
                   <button className="mt-team mt-home" onClick={() => m.home && openTeam(m.home)} disabled={!m.home}>
                     <span className="mt-name">{home?.name || m.fromA || "?"}</span>
-                    <Flag iso={home?.iso} code={m.home} size={16} />
+                    <Flag iso={home?.iso} code={m.home} size={14} />
                   </button>
                   <button className="mt-score" onClick={openThis}>
                     <span className="mt-tip">{tip[0]}–{tip[1]}</span>
@@ -253,7 +253,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                     )}
                   </button>
                   <button className="mt-team mt-away" onClick={() => m.away && openTeam(m.away)} disabled={!m.away}>
-                    <Flag iso={away?.iso} code={m.away} size={16} />
+                    <Flag iso={away?.iso} code={m.away} size={14} />
                     <span className="mt-name">{away?.name || m.fromB || "?"}</span>
                   </button>
                   {pts != null ? (
@@ -300,28 +300,30 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         @media(max-width:380px){ .pl-bonus{ grid-template-columns:1fr; } }
         .pl-hrank{ font-weight:900; font-size:11.5px; padding:2px 8px; border-radius:var(--r-pill); letter-spacing:.02em; font-variant-numeric:tabular-nums; }
 
-        /* match tips */
+        /* match tips — every track is tight + min-width:0 so the row can never exceed
+           the sheet width on a narrow phone (names ellipsis instead of pushing wide). */
         .mt-list{ display:grid; gap:6px; }
-        .mt-row{ position:relative; display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:var(--r-md);
-          background:var(--surface); border:1px solid var(--line); border-left:3px solid transparent; transition:border-color .15s; }
+        .mt-row{ box-sizing:border-box; max-width:100%; overflow:hidden; position:relative; display:flex; align-items:center; gap:6px;
+          padding:7px 8px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line);
+          border-left:3px solid transparent; transition:border-color .15s; }
         .mt-row.mt-exact{ border-left-color:var(--gold); }
         .mt-row.mt-win{ border-left-color:var(--win); }
         .mt-row.mt-floor{ border-left-color:var(--loss); }
         .mt-row.mt-live{ border-left-color:var(--hot); background:color-mix(in srgb, var(--hot) 6%, var(--surface)); }
         .mt-row.mt-next{ border:1.5px solid var(--cool); border-left:3px solid var(--cool); background:color-mix(in srgb, var(--cool) 11%, var(--surface)); margin-top:5px; }
-        .mt-date{ flex:0 0 auto; width:38px; padding:0; text-align:left; font-size:10px; font-weight:800; line-height:1.15; color:var(--ink-3); }
-        .mt-team{ flex:1 1 0; min-width:0; display:flex; align-items:center; gap:6px; padding:0; }
+        .mt-date{ flex:0 0 auto; width:30px; padding:0; text-align:left; font-size:9.5px; font-weight:800; line-height:1.15; color:var(--ink-3); }
+        .mt-team{ flex:1 1 0; min-width:0; display:flex; align-items:center; gap:5px; padding:0; }
         .mt-home{ justify-content:flex-end; }
-        .mt-name{ min-width:0; font-size:12px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--cool-2); }
+        .mt-name{ min-width:0; font-size:11.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--cool-2); }
         .mt-home .mt-name{ text-align:right; }
         .mt-team:disabled .mt-name{ color:var(--ink-2); }
-        .mt-score{ flex:0 0 auto; width:48px; display:flex; flex-direction:column; align-items:center; gap:0; padding:0; }
-        .mt-tip{ font-size:14px; font-weight:900; line-height:1.1; font-variant-numeric:tabular-nums; color:var(--ink); }
+        .mt-score{ flex:0 0 auto; width:42px; display:flex; flex-direction:column; align-items:center; gap:0; padding:0; }
+        .mt-tip{ font-size:13px; font-weight:900; line-height:1.1; font-variant-numeric:tabular-nums; color:var(--ink); }
         .mt-facit{ font-size:9.5px; font-weight:800; color:var(--ink-3); font-variant-numeric:tabular-nums; }
         .mt-when{ font-size:8px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); }
         .mt-livew{ color:var(--hot); }
-        .mt-pts{ flex:0 0 auto; width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
-          font-size:11.5px; font-weight:900; font-variant-numeric:tabular-nums; }
+        .mt-pts{ flex:0 0 auto; width:20px; height:20px; border-radius:6px; display:grid; place-items:center;
+          font-size:11px; font-weight:900; font-variant-numeric:tabular-nums; }
         .mt-pts-empty{ background:transparent; }
         .mt-nextbadge{ position:absolute; top:-7px; left:9px; font-size:8px; font-weight:900; letter-spacing:.05em;
           padding:1px 7px; border-radius:var(--r-pill); background:var(--cool); color:#0a0712; }

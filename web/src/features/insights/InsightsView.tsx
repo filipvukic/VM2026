@@ -38,7 +38,7 @@ function computeStats(ds: Dataset): Stat[] {
 }
 
 const RES_COLOR: Record<TipResult, string> = { exact: "var(--gold)", outcome: "var(--win)", floor: "var(--ink-3)" };
-type SortKey = "hitRate" | "total";
+type SortKey = "hitRate" | "exact" | "total";
 
 export function InsightsView() {
   const ds = useData();
@@ -49,7 +49,9 @@ export function InsightsView() {
     () => [...stats].sort((a, b) =>
       sort === "total"
         ? b.p.total - a.p.total || b.hitRate - a.hitRate
-        : b.hitRate - a.hitRate || b.exact - a.exact || b.p.total - a.p.total
+        : sort === "exact"
+          ? b.exact - a.exact || b.hitRate - a.hitRate || b.p.total - a.p.total
+          : b.hitRate - a.hitRate || b.exact - a.exact || b.p.total - a.p.total
     ),
     [stats, sort]
   );
@@ -58,7 +60,7 @@ export function InsightsView() {
     <div className="view container" style={{ maxWidth: 820 }}>
       <div className="section-head" style={{ marginTop: 6 }}>
         <div className="section-title">Insikter</div>
-        <div className="kicker">tryck på Träff% / Poäng för att sortera</div>
+        <div className="kicker">tryck på Träff% / Exakt / Poäng för att sortera</div>
       </div>
 
       {!ranked.length ? (
@@ -71,6 +73,7 @@ export function InsightsView() {
               <span></span>
               <span>Spelare</span>
               <button className={`ins2-sort${sort === "hitRate" ? " on" : ""}`} onClick={() => setSort("hitRate")}>Träff%{sort === "hitRate" ? " ↓" : ""}</button>
+              <button className={`ins2-sort${sort === "exact" ? " on" : ""}`} onClick={() => setSort("exact")}>Exakt{sort === "exact" ? " ↓" : ""}</button>
               <button className={`ins2-sort${sort === "total" ? " on" : ""}`} onClick={() => setSort("total")}>Poäng{sort === "total" ? " ↓" : ""}</button>
               <span style={{ textAlign: "right" }}>Form</span>
             </div>
@@ -83,6 +86,7 @@ export function InsightsView() {
                   <span className="num">{Math.round(s.hitRate * 100)}%</span>
                   <span className="ins2-bar"><i style={{ width: `${s.hitRate * 100}%` }} /></span>
                 </span>
+                <span className="ins2-ex num">{s.exact}</span>
                 <span className="ins2-pts num">{s.p.total}</span>
                 <span className="ins2-form">
                   {Array.from({ length: 6 }).map((_, j) => {
@@ -103,12 +107,12 @@ export function InsightsView() {
       )}
 
       <style>{`
-        .ins2-grid{ display:grid; grid-template-columns:18px 30px minmax(0,1fr) 52px 46px 62px; align-items:center; gap:8px; }
-        .ins2-head{ padding:10px 13px; border-bottom:1px solid var(--line); }
+        .ins2-grid{ display:grid; grid-template-columns:16px 28px minmax(0,1fr) 50px 36px 44px 56px; align-items:center; gap:6px; }
+        .ins2-head{ padding:10px 12px; border-bottom:1px solid var(--line); }
         .ins2-head > span, .ins2-sort{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
         .ins2-sort{ text-align:right; cursor:pointer; white-space:nowrap; }
         .ins2-sort.on{ color:var(--gold); }
-        .ins2-row{ width:100%; padding:9px 13px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
+        .ins2-row{ width:100%; padding:9px 12px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
         .ins2-row:last-child{ border-bottom:none; }
         .ins2-row:hover{ background:var(--surface-2); }
         .ins2-rk{ color:var(--ink-3); font-size:12.5px; text-align:center; }
@@ -117,6 +121,7 @@ export function InsightsView() {
         .ins2-hr .num{ font-size:13px; font-weight:800; }
         .ins2-bar{ display:block; height:4px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-top:3px; }
         .ins2-bar i{ display:block; height:100%; border-radius:999px; background:var(--grad-soft); }
+        .ins2-ex{ text-align:right; font-size:14px; font-weight:800; color:var(--ink); }
         .ins2-pts{ text-align:right; font-size:15px; font-weight:800; color:var(--gold); }
         .ins2-form{ display:flex; gap:3px; justify-content:flex-end; }
         .ins2-form i{ width:8px; height:8px; border-radius:50%; flex:0 0 auto; }

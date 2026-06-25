@@ -5,6 +5,7 @@ import ConicPolygonGeometry from "three-conic-polygon-geometry";
 import polylabel from "polylabel";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
 import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
+import { NE_LABEL_POINTS } from "../../data/static/neLabels";
 
 // 3D globe that zooms into the country + shows facts. Facts/centroid come from a
 // bundled dataset (no flaky runtime API). We draw ALL country borders for context
@@ -116,17 +117,22 @@ function ringArea(ring: number[][]): number {
   return Math.abs(a / 2);
 }
 
-// Where to drop a country's code label. The centroid (and the bundled rounded point)
-// often lands in an odd spot — outside concave shapes, drifting toward a far-flung
-// territory, or sitting on a border. Instead we put it where there's the MOST ROOM:
-// among the country's significant landmasses we take each one's POLE OF INACCESSIBILITY
-// (polylabel — the centre of the largest circle that fits inside) and keep the one with
-// the biggest such circle (polylabel's `.distance`). That's literally "the spot with the
-// most space around the initials". Computed once per country and cached.
+// Where to drop a country's code label. The STANDARD way cartographers do this is
+// Natural Earth's hand-placed LABEL_X/LABEL_Y point — bundled in NE_LABEL_POINTS and
+// used directly. Only for the handful of bundled extras not in that set (Cape Verde,
+// Curaçao…) do we fall back to a computed point: the pole of inaccessibility (polylabel)
+// of the roomiest significant landmass. Computed once per country and cached.
 const LABEL_PT: Record<string, { lat: number; lng: number }> = {};
 function labelPointFor(feature: Feat): { lat: number; lng: number } | null {
-  const key: string = feature?.properties?.ADM0_A3 || feature?.properties?.ISO_A3 || feature?.properties?.NAME || "";
+  const a3: string = feature?.properties?.ADM0_A3 || feature?.properties?.ISO_A3 || "";
+  const key: string = a3 || feature?.properties?.NAME || "";
   if (key && LABEL_PT[key]) return LABEL_PT[key];
+  const ne = (a3 && NE_LABEL_POINTS[a3]) || (feature?.properties?.ISO_A3 && NE_LABEL_POINTS[feature.properties.ISO_A3]);
+  if (ne) {
+    const res = { lng: ne[0], lat: ne[1] };
+    if (key) LABEL_PT[key] = res;
+    return res;
+  }
   const geom = feature?.geometry;
   const polys: number[][][][] =
     geom?.type === "MultiPolygon" ? geom.coordinates : geom?.type === "Polygon" ? [geom.coordinates] : [];
