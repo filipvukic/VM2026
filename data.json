@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T22:01:23+00:00",
+  "updated_at": "2026-06-25T23:25:30+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -15235,18 +15235,51 @@
       "homeTla": "TUN",
       "away": "Netherlands",
       "awayTla": "NED",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        2
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          2
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "25",
+      "goals": [
+        {
+          "minute": "3",
+          "team": "NED",
+          "scorer": "Ellyes Skhiri",
+          "assist": null,
+          "type": "OWN",
+          "description": "Own Goal by Ellyes Skhiri, Tunisia. Tunisia 0, Netherlands 1.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "7",
+          "team": "NED",
+          "scorer": "Brian Brobbey",
+          "assist": "Virgil van Dijk",
+          "type": "REGULAR",
+          "description": "Goal! Tunisia 0, Netherlands 2. Brian Brobbey (Netherlands) right footed shot from the centre of the box to the top right corner. Assisted by Virgil van Dijk with a headed pass following a set piece situation.",
+          "score": [
+            0,
+            2
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -15256,9 +15289,8 @@
       },
       "referees": [
         {
-          "name": "Katia García",
-          "role": "REFEREE",
-          "nationality": "Mexico"
+          "name": "Katia Itzel García",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -15364,17 +15396,23 @@
       "homeTla": "JPN",
       "away": "Sweden",
       "awayTla": "SWE",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "24",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -15385,9 +15423,8 @@
       },
       "referees": [
         {
-          "name": "Ivan Barton",
-          "role": "REFEREE",
-          "nationality": null
+          "name": "Iván Arcides Barton Cisneros",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -17478,50 +17515,50 @@
         {
           "team": "Netherlands",
           "tla": "NED",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 7,
           "ga": 3,
           "gd": 4,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Japan",
           "tla": "JPN",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 6,
           "ga": 2,
           "gd": 4,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Sweden",
           "tla": "SWE",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 6,
           "ga": 6,
           "gd": 0,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Tunisia",
           "tla": "TUN",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 2,
           "gf": 1,
           "ga": 9,
           "gd": -8,
-          "points": 0
+          "points": 1
         }
       ]
     },
