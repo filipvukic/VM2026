@@ -75,7 +75,7 @@ export function InsightsView() {
               <button className={`ins2-sort${sort === "hitRate" ? " on" : ""}`} onClick={() => setSort("hitRate")}>Träff%{sort === "hitRate" ? " ↓" : ""}</button>
               <button className={`ins2-sort${sort === "exact" ? " on" : ""}`} onClick={() => setSort("exact")}>Exakt{sort === "exact" ? " ↓" : ""}</button>
               <button className={`ins2-sort${sort === "total" ? " on" : ""}`} onClick={() => setSort("total")}>Poäng{sort === "total" ? " ↓" : ""}</button>
-              <span style={{ textAlign: "right" }}>Form</span>
+              <span className="ins2-fh">Form</span>
             </div>
             {ranked.map((s, i) => (
               <button key={s.p.id} className="ins2-grid ins2-row" onClick={() => openPlayer(s.p.id)}>
@@ -107,9 +107,17 @@ export function InsightsView() {
       )}
 
       <style>{`
-        .ins2-grid{ display:grid; grid-template-columns:16px 28px minmax(0,1fr) 50px 36px 44px 56px; align-items:center; gap:6px; }
-        .ins2-head{ padding:10px 12px; border-bottom:1px solid var(--line); }
-        .ins2-head > span, .ins2-sort{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
+        /* mobile: drop the inline Form dots (the Formrutnät heatmap below shows the same
+           thing) so the name + stat columns get real breathing room. Form returns ≥560px. */
+        .ins2-grid{ display:grid; grid-template-columns:16px 28px minmax(0,1fr) 50px 40px 46px; align-items:center; gap:7px; }
+        .ins2-fh, .ins2-form{ display:none; }
+        @media(min-width:560px){
+          .ins2-grid{ grid-template-columns:16px 30px minmax(0,1fr) 54px 42px 48px 60px; gap:9px; }
+          .ins2-fh{ display:block; } .ins2-form{ display:flex; }
+        }
+        .ins2-head{ padding:10px 13px; border-bottom:1px solid var(--line); }
+        .ins2-head > span, .ins2-fh, .ins2-sort{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; font-weight:800; font-size:9.5px; color:var(--ink-3); }
+        .ins2-fh{ text-align:right; }
         .ins2-sort{ text-align:right; cursor:pointer; white-space:nowrap; }
         .ins2-sort.on{ color:var(--gold); }
         .ins2-row{ width:100%; padding:9px 12px; text-align:left; border-bottom:1px solid var(--line); transition:background .12s; }
@@ -123,7 +131,7 @@ export function InsightsView() {
         .ins2-bar i{ display:block; height:100%; border-radius:999px; background:var(--grad-soft); }
         .ins2-ex{ text-align:right; font-size:14px; font-weight:800; color:var(--ink); }
         .ins2-pts{ text-align:right; font-size:15px; font-weight:800; color:var(--gold); }
-        .ins2-form{ display:flex; gap:3px; justify-content:flex-end; }
+        .ins2-form{ gap:3px; justify-content:flex-end; }
         .ins2-form i{ width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
         .fg-scroll{ overflow-x:auto; scrollbar-width:thin; }
         .fg{ display:grid; }
