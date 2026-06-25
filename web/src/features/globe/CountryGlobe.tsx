@@ -79,7 +79,9 @@ function buildFlagMesh(feature: any, R: number, material: THREE.Material): THREE
   const group = new THREE.Group();
   for (const rings of polys) {
     let g: THREE.BufferGeometry;
-    try { g = new ConicPolygonGeometry(rings, R * 1.008, R * 1.01, false, true, false, 3) as unknown as THREE.BufferGeometry; }
+    // Cap at the surface (0..R), like three-globe's polygon layer; we lift it by
+    // SCALING the mesh (its proven altitude mechanism) so it renders reliably.
+    try { g = new ConicPolygonGeometry(rings, 0, R, false, true, false, 3) as unknown as THREE.BufferGeometry; }
     catch { continue; }
     const uv = g.getAttribute("uv");
     if (uv) {
@@ -92,10 +94,15 @@ function buildFlagMesh(feature: any, R: number, material: THREE.Material): THREE
       }
       uv.needsUpdate = true;
     }
-    group.add(new THREE.Mesh(g, material));
+    const mesh = new THREE.Mesh(g, material);
+    mesh.scale.setScalar(1.012); // lift just above the globe surface (like polygonAltitude)
+    group.add(mesh);
   }
   return group;
 }
+// No-op update: providing ANY update fn stops three-globe's custom layer from
+// emptying the scene on every render (which made the flag vanish instantly).
+const FLAG_UPDATE = () => {};
 
 export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -426,6 +433,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
             customLayerData={flagLayer}
             customThreeObject={flagObject}
+            customThreeObjectUpdate={FLAG_UPDATE}
             labelsData={showLabels ? labels : EMPTY}
             labelLat="lat"
             labelLng="lng"

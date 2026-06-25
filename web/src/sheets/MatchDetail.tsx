@@ -184,6 +184,7 @@ function TeamHead({ code, name, iso, onClick }: { code: string | null; name?: st
 // ---------- Overview: chronological event list + win chance ----------
 function Overview({ m }: { m: Match }) {
   const ds = useData();
+  const openFb = useSheets((s) => s.openFbPlayer);
   const events = buildTimeline(m);
   return (
     <>
@@ -193,7 +194,12 @@ function Overview({ m }: { m: Match }) {
             {events.map((e, i) => {
               const t = e.team ? ds.teams[e.team] : null;
               return (
-                <div key={i} className={`ev-row${e.kind === "goal" ? " goal" : ""}`}>
+                <button
+                  key={i}
+                  className={`ev-row${e.kind === "goal" ? " goal" : ""}${e.player ? " tap" : ""}`}
+                  onClick={() => e.player && openFb(e.player)}
+                  disabled={!e.player}
+                >
                   <span className="ev-min num">{e.minute}</span>
                   <span className="ev-ico">{e.icon}</span>
                   <Flag iso={t?.iso} code={e.team} size={15} />
@@ -204,7 +210,10 @@ function Overview({ m }: { m: Match }) {
                   {e.kind === "goal" && e.score && (
                     <span className="ev-score num">{e.score[0]}–{e.score[1]}</span>
                   )}
-                </div>
+                  {e.player && (
+                    <svg className="ev-go" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  )}
+                </button>
               );
             })}
           </div>
@@ -217,8 +226,11 @@ function Overview({ m }: { m: Match }) {
       <WinChanceBlock m={m} />
       <style>{`
         .ev{ display:flex; flex-direction:column; gap:2px; }
-        .ev-row{ display:flex; align-items:center; gap:10px; padding:8px; border-radius:10px; }
+        .ev-row{ display:flex; align-items:center; gap:10px; padding:8px; border-radius:10px; width:100%; text-align:left; }
+        .ev-row.tap{ cursor:pointer; transition:background .12s; }
+        .ev-row.tap:hover{ background:var(--surface-2); }
         .ev-row.goal{ background:color-mix(in srgb, var(--gold) 10%, transparent); }
+        .ev-row.goal.tap:hover{ background:color-mix(in srgb, var(--gold) 17%, transparent); }
         .ev-min{ flex:0 0 auto; width:36px; text-align:right; color:var(--ink-3); font-size:12.5px; }
         .ev-ico{ flex:0 0 auto; width:18px; text-align:center; font-size:14px; }
         .ev-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
@@ -226,12 +238,13 @@ function Overview({ m }: { m: Match }) {
         .ev-row.goal .ev-main{ font-weight:800; }
         .ev-sub{ font-size:11px; }
         .ev-score{ flex:0 0 auto; font-size:14px; font-weight:800; color:var(--ink); padding:2px 9px; border-radius:7px; background:var(--surface-3); }
+        .ev-go{ flex:0 0 auto; color:var(--ink-3); }
       `}</style>
     </>
   );
 }
 
-interface TLEvent { minute: string; team: string | null; icon: string; main: string; sub?: string; kind: "goal" | "card" | "sub"; score?: [number, number] | null; order: number }
+interface TLEvent { minute: string; team: string | null; icon: string; main: string; sub?: string; kind: "goal" | "card" | "sub"; score?: [number, number] | null; player?: string; order: number }
 function buildTimeline(m: Match): TLEvent[] {
   const ev: TLEvent[] = [];
   // "45+5" → 45.05 so stoppage-time events sort within their minute (not collapsed
@@ -242,13 +255,13 @@ function buildTimeline(m: Match): TLEvent[] {
     return parseInt(mt[1], 10) + (mt[2] ? parseInt(mt[2], 10) / 100 : 0);
   };
   m.scorers.forEach((g) =>
-    ev.push({ minute: `${g.minute}'`, team: g.team, icon: "⚽", main: `${g.name}${g.pen ? " (straff)" : ""}`, sub: g.assist ? `Assist: ${g.assist}` : undefined, kind: "goal", score: g.score, order: min(g.minute) })
+    ev.push({ minute: `${g.minute}'`, team: g.team, icon: "⚽", main: `${g.name}${g.pen ? " (straff)" : ""}`, sub: g.assist ? `Assist: ${g.assist}` : undefined, kind: "goal", score: g.score, player: g.name, order: min(g.minute) })
   );
   m.cards.forEach((c) =>
-    ev.push({ minute: `${c.minute}'`, team: c.team, icon: c.type === "red" ? "🟥" : "🟨", main: c.name, kind: "card", order: min(c.minute) + 0.001 })
+    ev.push({ minute: `${c.minute}'`, team: c.team, icon: c.type === "red" ? "🟥" : "🟨", main: c.name, kind: "card", player: c.name, order: min(c.minute) + 0.001 })
   );
   m.subs.forEach((s) =>
-    ev.push({ minute: `${s.minute}'`, team: s.team, icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `Ut: ${s.playerOut}` : undefined, kind: "sub", order: min(s.minute) + 0.002 })
+    ev.push({ minute: `${s.minute}'`, team: s.team, icon: "🔁", main: s.playerIn || "", sub: s.playerOut ? `Ut: ${s.playerOut}` : undefined, kind: "sub", player: s.playerIn, order: min(s.minute) + 0.002 })
   );
   return ev.sort((a, b) => a.order - b.order);
 }

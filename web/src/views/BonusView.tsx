@@ -4,6 +4,7 @@ import { Flag } from "../lib/flags";
 import { Avatar } from "../components/Avatar";
 import { PlayerImg } from "../components/PlayerImg";
 import { findPlayer, playerPhotoSources } from "../lib/playerPhoto";
+import { fixName } from "../data/static/names";
 import { useStatsIndex } from "../state/matchStats";
 import type { BonusSlot, Dataset, RawBonusKey } from "../data/types";
 
@@ -130,8 +131,9 @@ function BonusCard({ slot, ds }: { slot: (typeof SLOTS)[number]; ds: Dataset }) 
       label = ds.teams[code]?.name || code;
       key = code;
     } else {
-      const name = Array.isArray(v) ? v[0] : null;
-      if (!name || name === "-") return;
+      const raw = Array.isArray(v) ? v[0] : null;
+      if (!raw || raw === "-") return;
+      const name = fixName(raw); // "Bruno Fernanch" → "Bruno Fernandes" (right name + photo)
       label = name;
       key = name.toLowerCase();
       photoSrcs = playerPhotoSources(name, db, statsIndex);
