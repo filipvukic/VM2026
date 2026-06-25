@@ -10,6 +10,7 @@ import { Flag, groupColor } from "../lib/flags";
 import { FormDots } from "../components/FormDots";
 import { lineupPhotoSources } from "../lib/playerPhoto";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
+import { COUNTRY_FACTS } from "../data/static/countryFacts";
 import { svDayMonth } from "../lib/format";
 
 // Heavy (Three.js) — only loaded when a team sheet's globe actually renders.
@@ -34,7 +35,17 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
 
   return (
     <Sheet {...chrome} accent={groupColor(t.group)}>
-      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8 }}>
+      {/* HERO: the globe is the first thing you see — full-bleed at the very top, with
+          the country name as a caption underneath (tap ⤢ for fullscreen). */}
+      {t.iso ? (
+        <div className="ts-hero">
+          <Suspense fallback={<div className="ts-hero-fallback dim">Laddar klot…</div>}>
+            <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} hero />
+          </Suspense>
+        </div>
+      ) : null}
+
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: t.iso ? 16 : 0, marginBottom: 8 }}>
         <Flag iso={t.iso} code={code} size={52} />
         <div>
           <div className="display" style={{ fontSize: 28 }}>{t.name}</div>
@@ -43,15 +54,6 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
           </div>
         </div>
       </div>
-
-      {/* the globe is one of the first things you see */}
-      {t.iso && (
-        <div style={{ marginTop: 12 }}>
-          <Suspense fallback={<div className="card card-pad dim" style={{ textAlign: "center", padding: 28 }}>Laddar klot…</div>}>
-            <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} />
-          </Suspense>
-        </div>
-      )}
 
       {/* tabs */}
       <div className="ts-tabs">
@@ -79,6 +81,7 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
                 </div>
               </div>
             )}
+            <CountryFactsCard iso={t.iso} name={t.name} />
           </>
         )}
 
@@ -146,6 +149,10 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
       </div>
 
       <style>{`
+        /* Full-bleed hero: cancel the sheet-body padding so the globe runs edge-to-edge. */
+        .ts-hero{ margin:-20px -16px 0; }
+        .ts-hero-fallback{ height:300px; display:grid; place-items:center; background:radial-gradient(circle at 50% 42%, #16306e, #05070f 72%); }
+        @media(min-width:560px){ .ts-hero{ margin:-24px -22px 0; } }
         .ts-tabs{ display:flex; gap:4px; margin-top:16px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
         .ts-tabs button{ flex:1 1 0; min-width:0; padding:9px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13px; color:var(--ink-3); }
         .ts-tabs button.on{ background:var(--grad-soft); color:#fff; }
@@ -329,6 +336,33 @@ function Mini({ label, value, hot }: { label: string; value: string; hot?: boole
     <div>
       <div className="num" style={{ fontSize: 24, color: hot ? "var(--gold)" : "var(--ink)" }}>{value}</div>
       <div className="kicker">{label}</div>
+    </div>
+  );
+}
+
+// "Om landet" — the country facts that used to live under the globe; now in the stats
+// tab so the hero stays clean.
+function CountryFactsCard({ iso, name }: { iso?: string | null; name: string }) {
+  const facts = iso ? COUNTRY_FACTS[iso.toUpperCase()] : null;
+  if (!facts) return null;
+  const fmt = (n?: number | null) => (n == null ? "–" : n.toLocaleString("sv-SE"));
+  return (
+    <div className="card card-pad" style={{ marginTop: 12 }}>
+      <div className="kicker" style={{ marginBottom: 8 }}>Om {facts.name || name}</div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 14px" }}>
+        <FactCell label="Befolkning" value={fmt(facts.population)} />
+        <FactCell label="Huvudstad" value={facts.capital || "–"} />
+        <FactCell label="Region" value={facts.subregion || facts.region || "–"} />
+        <FactCell label="Yta" value={facts.area != null ? `${fmt(facts.area)} km²` : "–"} />
+      </div>
+    </div>
+  );
+}
+function FactCell({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="kicker" style={{ fontSize: 9 }}>{label}</div>
+      <div style={{ fontWeight: 800, fontSize: 14, marginTop: 1 }}>{value}</div>
     </div>
   );
 }

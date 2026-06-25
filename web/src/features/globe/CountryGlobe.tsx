@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
+import ConicPolygonGeometry from "three-conic-polygon-geometry";
 import { COUNTRY_FACTS } from "../../data/static/countryFacts";
 import { EXTRA_COUNTRIES } from "../../data/static/extraCountries";
 
@@ -49,14 +50,74 @@ function altitudeForArea(area?: number | null): number {
   return Math.max(0.35, Math.min(2.85, alt));
 }
 
+// lng/lat bounding box of a set of GeoJSON rings (outer + holes).
+function ringsExtent(rings: number[][][]) {
+  let minLng = Infinity, maxLng = -Infinity, minLat = Infinity, maxLat = -Infinity;
+  for (const ring of rings)
+    for (const [lng, lat] of ring) {
+      if (lng < minLng) minLng = lng;
+      if (lng > maxLng) maxLng = lng;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    }
+  return { minLng, maxLng, minLat, maxLat };
+}
 
-export default function CountryGlobe({ iso, name, active }: { iso?: string | null; name: string; active?: boolean }) {
+// Build ONE flag cap for the whole country. three-globe splits a MultiPolygon into
+// separate single-polygon meshes and UV-maps each to its OWN bbox — so every island
+// gets a full duplicated flag. Here we build the caps ourselves and remap each
+// polygon's UVs onto the country's GLOBAL bbox, so a single flag spans all islands
+// (Honshu→Hokkaido, mainland USA→Alaska→Hawaii) with no repetition. All caps share
+// one material (the flag texture), grouped so they read as a single draped flag.
+const FLAG_ALT = 1.013; // sit just under the highlight stroke (1.0141) so the rim shows
+function buildFlagGroup(feature: Feat, material: THREE.Material, globeR: number): THREE.Group {
+  const geom = feature?.geometry;
+  const polys: number[][][][] =
+    geom?.type === "MultiPolygon" ? geom.coordinates : geom?.type === "Polygon" ? [geom.coordinates] : [];
+  const group = new THREE.Group();
+  if (!polys.length) return group;
+  const g = ringsExtent(polys.flat());
+  const gW = maxAbs(g.maxLng - g.minLng);
+  const gH = maxAbs(g.maxLat - g.minLat);
+  const topH = globeR * FLAG_ALT;
+  for (const rings of polys) {
+    const loc = ringsExtent(rings);
+    const lW = loc.maxLng - loc.minLng;
+    const lH = loc.maxLat - loc.minLat;
+    let geo: THREE.BufferGeometry;
+    try {
+      geo = new ConicPolygonGeometry(rings, 0, topH, false, true, false, 3) as unknown as THREE.BufferGeometry;
+    } catch {
+      continue; // malformed ring — skip this island rather than break the whole flag
+    }
+    // local UVs are 0..1 over THIS polygon's bbox; affine-remap them onto the global bbox
+    const uv = geo.getAttribute("uv");
+    const aU = (loc.minLng - g.minLng) / gW, bU = lW / gW;
+    const aV = (loc.minLat - g.minLat) / gH, bV = lH / gH;
+    for (let i = 0; i < uv.count; i++) {
+      uv.setX(i, aU + uv.getX(i) * bU);
+      uv.setY(i, aV + uv.getY(i) * bV);
+    }
+    uv.needsUpdate = true;
+    const mesh = new THREE.Mesh(geo, material);
+    mesh.renderOrder = 3;
+    group.add(mesh);
+  }
+  return group;
+}
+const maxAbs = (n: number) => (Math.abs(n) < 1e-6 ? 1e-6 : n);
+
+
+export default function CountryGlobe({ iso, name, active, hero }: { iso?: string | null; name: string; active?: boolean; hero?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globeRef = useRef<any>(undefined);
   const wrapRef = useRef<HTMLDivElement>(null);
   const animatedFor = useRef<string | null>(null);
   const setupDone = useRef(false);
-  const [size, setSize] = useState(320);
+  // Separate width/height: a square in normal mode, a wide "hero" banner in hero mode,
+  // and the full viewport in fullscreen.
+  const [dims, setDims] = useState({ w: 320, h: 320 });
+  const [isFs, setIsFs] = useState(false);
   const [ready, setReady] = useState(false);
   const [mounted, setMounted] = useState(false); // defer WebGL init past the sheet-open animation
   const [showLabels, setShowLabels] = useState(false); // defer the 170+ text labels past the fly-in
@@ -88,11 +149,29 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const set = () => setSize(Math.max(240, Math.min(el.clientWidth, 460)));
+    const set = () => {
+      const fs = !!document.fullscreenElement && document.fullscreenElement === el;
+      const cw = el.clientWidth || 320;
+      if (fs) { setDims({ w: cw, h: el.clientHeight || window.innerHeight }); return; }
+      // Hero: full-width banner, height a fraction of the width (clamped) so the globe
+      // reads as a cinematic strip rather than a square card.
+      if (hero) { setDims({ w: cw, h: Math.min(440, Math.max(300, Math.round(cw * 0.78))) }); return; }
+      const s = Math.max(240, Math.min(cw, 460));
+      setDims({ w: s, h: s });
+    };
     set();
     const ro = new ResizeObserver(set);
     ro.observe(el);
-    return () => ro.disconnect();
+    const onFs = () => { setIsFs(document.fullscreenElement === el); set(); };
+    document.addEventListener("fullscreenchange", onFs);
+    return () => { ro.disconnect(); document.removeEventListener("fullscreenchange", onFs); };
+  }, [hero]);
+
+  const toggleFs = useCallback(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (document.fullscreenElement === el) document.exitFullscreen?.();
+    else el.requestFullscreen?.().catch(() => {});
   }, []);
 
   // Fetch all world polygons once (cached across opens), plus the bundled extras.
@@ -176,6 +255,28 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
 
   // Free the cap materials (and any loaded flag texture) when this globe unmounts.
   useEffect(() => () => { capMat.map?.dispose(); capMat.dispose(); emptyMat.dispose(); }, [capMat, emptyMat]);
+
+  // Custom flag layer: ONE draped flag for the whole country (no per-island
+  // duplication). three-globe adds the returned group to the globe's own coordinate
+  // space, so our radius-matched cap aligns with the borders. The no-op update keeps
+  // three-globe from wiping the layer every frame.
+  const flagGroups = useRef<THREE.Group[]>([]);
+  const buildFlag = useCallback(
+    (d: Feat, r = 100) => {
+      const grp = buildFlagGroup(d, capMat, r);
+      flagGroups.current.push(grp);
+      return grp;
+    },
+    [capMat]
+  );
+  const noop = useCallback(() => {}, []);
+  useEffect(
+    () => () => {
+      for (const grp of flagGroups.current) grp.traverse((o) => (o as THREE.Mesh).geometry?.dispose?.());
+      flagGroups.current = [];
+    },
+    []
+  );
 
   // The selected country's polygon (by ISO3 / name), found among all features.
   const selected = useMemo(() => {
@@ -305,7 +406,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
     }, 100);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, size]);
+  }, [ready, dims.w]);
 
   // Fly-in: snap to the country pulled back + a little west, then glide in to the
   // size-based altitude with a subtle spin. Once per country.
@@ -320,7 +421,7 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
     g.pointOfView({ lat: facts.lat, lng: facts.lng - spin, altitude: startAlt }, 0);
     const t = setTimeout(() => g.pointOfView({ lat: facts.lat, lng: facts.lng, altitude: targetAlt }, 1600), 300);
     return () => clearTimeout(t);
-  }, [iso2, facts, ready, size]);
+  }, [iso2, facts, ready, dims.w]);
 
   // Country code labels (ISO3 — initials, never the full name) on every country,
   // sized by area. Static (no per-zoom recompute → no jank); the size gives a
@@ -348,16 +449,25 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
       <div
         ref={wrapRef}
         className="globe-stage"
-        style={{ width: "100%", height: size, display: "grid", placeItems: "center", borderRadius: "var(--r-lg)", overflow: "hidden", touchAction: "none", background: "radial-gradient(circle at 50% 42%, #16306e, #05070f 72%)" }}
+        style={{ position: "relative", width: "100%", height: isFs ? "100%" : dims.h, display: "grid", placeItems: "center", borderRadius: hero ? 0 : "var(--r-lg)", overflow: "hidden", touchAction: "none", background: "radial-gradient(circle at 50% 42%, #16306e, #05070f 72%)" }}
       >
         {/* The canvas must opt out of browser touch handling, or the scrollable
             sheet eats the pinch before our zoom handler sees it. */}
-        <style>{`.globe-stage canvas{ touch-action:none !important; }`}</style>
-        {mounted && size > 0 && (
+        <style>{`
+          .globe-stage canvas{ touch-action:none !important; }
+          .globe-stage:fullscreen{ width:100vw; height:100vh; border-radius:0; }
+          .globe-fs{ position:absolute; right:10px; bottom:10px; z-index:5; width:34px; height:34px; display:grid; place-items:center;
+            border-radius:10px; color:#fff; background:rgba(8,12,24,.5); border:1px solid rgba(255,255,255,.16);
+            backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background .15s, transform .12s; }
+          .globe-fs:hover{ background:rgba(8,12,24,.8); } .globe-fs:active{ transform:scale(.92); }
+          .globe-hint{ position:absolute; left:12px; bottom:12px; z-index:5; font-size:10.5px; color:rgba(255,255,255,.55);
+            pointer-events:none; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+        `}</style>
+        {mounted && dims.w > 0 && (
           <Globe
             ref={globeRef}
-            width={size}
-            height={size}
+            width={dims.w}
+            height={dims.h}
             animateIn={false}
             onGlobeReady={configure}
             backgroundColor="rgba(0,0,0,0)"
@@ -367,12 +477,15 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             atmosphereAltitude={0.22}
             polygonsData={features}
             polygonAltitude={(f: Feat) => (f === selected ? 0.014 : 0.005)}
-            polygonCapColor={(f: Feat) => (f === selected ? "rgba(255,45,110,.32)" : "rgba(0,0,0,0)")}
-            polygonCapMaterial={(f: Feat) => (f === selected ? capMat : emptyMat)}
+            polygonCapColor={() => "rgba(0,0,0,0)"}
+            polygonCapMaterial={() => emptyMat}
             polygonSideColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.06)" : "rgba(0,0,0,0)")}
             polygonStrokeColor={(f: Feat) => (f === selected ? "rgba(255,255,255,.5)" : "rgba(255,255,255,.42)")}
             polygonsTransitionDuration={0}
             polygonLabel={(f: Feat) => `<b>${f?.properties?.ADMIN || f?.properties?.NAME || ""}</b>`}
+            customLayerData={selected ? [selected] : EMPTY}
+            customThreeObject={buildFlag}
+            customThreeObjectUpdate={noop}
             labelsData={showLabels ? labels : EMPTY}
             labelLat="lat"
             labelLng="lng"
@@ -385,17 +498,29 @@ export default function CountryGlobe({ iso, name, active }: { iso?: string | nul
             labelsTransitionDuration={0}
           />
         )}
+        {ready && (
+          <button className="globe-fs" onClick={toggleFs} aria-label={isFs ? "Stäng helskärm" : "Helskärm"}>
+            {isFs ? (
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M15 20v-3a2 2 0 0 1 2-2h3M4 15h3a2 2 0 0 1 2 2v3" /></svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4" /></svg>
+            )}
+          </button>
+        )}
+        {hero && ready && <div className="globe-hint">Dra för att snurra · nyp för att zooma</div>}
       </div>
-      <div className="card card-pad" style={{ marginTop: 10 }}>
-        <div className="kicker" style={{ marginBottom: 8 }}>Om {facts?.name || name}</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 14px" }}>
-          <Fact label="Befolkning" value={fmt(facts?.population)} />
-          <Fact label="Huvudstad" value={facts?.capital || "–"} />
-          <Fact label="Region" value={facts?.subregion || facts?.region || "–"} />
-          <Fact label="Yta" value={facts?.area != null ? `${fmt(facts.area)} km²` : "–"} />
+      {!hero && (
+        <div className="card card-pad" style={{ marginTop: 10 }}>
+          <div className="kicker" style={{ marginBottom: 8 }}>Om {facts?.name || name}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 14px" }}>
+            <Fact label="Befolkning" value={fmt(facts?.population)} />
+            <Fact label="Huvudstad" value={facts?.capital || "–"} />
+            <Fact label="Region" value={facts?.subregion || facts?.region || "–"} />
+            <Fact label="Yta" value={facts?.area != null ? `${fmt(facts.area)} km²` : "–"} />
+          </div>
+          <div className="dim" style={{ fontSize: 10, marginTop: 10 }}>Dra för att snurra · nyp eller scrolla för att zooma</div>
         </div>
-        <div className="dim" style={{ fontSize: 10, marginTop: 10 }}>Dra för att snurra · nyp eller scrolla för att zooma</div>
-      </div>
+      )}
     </div>
   );
 }
