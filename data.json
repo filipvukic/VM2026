@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T18:23:12+00:00",
+  "updated_at": "2026-06-25T20:27:04+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -2603,7 +2603,7 @@
       "home": "Germany",
       "homeTla": "GER",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         7,
@@ -4204,7 +4204,7 @@
       "home": "Saudi Arabia",
       "homeTla": "KSA",
       "away": "Uruguay",
-      "awayTla": "URU",
+      "awayTla": "URY",
       "status": "FINISHED",
       "score": [
         1,
@@ -9497,7 +9497,7 @@
       "home": "Ecuador",
       "homeTla": "ECU",
       "away": "Curaçao",
-      "awayTla": "CUW",
+      "awayTla": "CUR",
       "status": "FINISHED",
       "score": [
         0,
@@ -10506,7 +10506,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Cape Verde Islands",
       "awayTla": "CPV",
       "status": "FINISHED",
@@ -14698,21 +14698,41 @@
       "group": "E",
       "knockout": false,
       "home": "Curaçao",
-      "homeTla": "CUW",
+      "homeTla": "CUR",
       "away": "Ivory Coast",
       "awayTla": "CIV",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "25",
+      "goals": [
+        {
+          "minute": "7",
+          "team": "CIV",
+          "scorer": "Nicolas Pépé",
+          "assist": "Yan Diomande",
+          "type": "REGULAR",
+          "description": "Goal! Curaçao 0, Côte d'Ivoire 1. Nicolas Pépé (Côte d'Ivoire) left footed shot from very close range to the centre of the goal. Assisted by Yan Diomande.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -14723,8 +14743,7 @@
       "referees": [
         {
           "name": "Glenn Nyberg",
-          "role": "REFEREE",
-          "nationality": "Sweden"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -14830,18 +14849,51 @@
       "homeTla": "ECU",
       "away": "Germany",
       "awayTla": "GER",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        1,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "27",
+      "goals": [
+        {
+          "minute": "2",
+          "team": "GER",
+          "scorer": "Leroy Sané",
+          "assist": "Florian Wirtz",
+          "type": "REGULAR",
+          "description": "Goal! Ecuador 0, Germany 1. Leroy Sané (Germany) left footed shot from the centre of the box to the bottom left corner. Assisted by Florian Wirtz.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "9",
+          "team": "ECU",
+          "scorer": "Nilson Angulo",
+          "assist": "Pedro Vite",
+          "type": "REGULAR",
+          "description": "Goal! Ecuador 1, Germany 1. Nilson Angulo (Ecuador) right footed shot from outside the box to the bottom right corner. Assisted by Pedro Vite.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -14852,8 +14904,7 @@
       "referees": [
         {
           "name": "Tori Penso",
-          "role": "REFEREE",
-          "nationality": "USA"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -15817,7 +15868,7 @@
       "group": "H",
       "knockout": false,
       "home": "Uruguay",
-      "homeTla": "URU",
+      "homeTla": "URY",
       "away": "Spain",
       "awayTla": "ESP",
       "status": "TIMED",
@@ -17137,50 +17188,50 @@
         {
           "team": "Germany",
           "tla": "GER",
-          "played": 2,
+          "played": 3,
           "won": 2,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 9,
           "ga": 2,
           "gd": 7,
-          "points": 6
+          "points": 7
         },
         {
           "team": "Ivory Coast",
           "tla": "CIV",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 2,
           "ga": 2,
           "gd": 0,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Ecuador",
           "tla": "ECU",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 1,
+          "draw": 2,
           "lost": 1,
           "gf": 0,
           "ga": 1,
           "gd": -1,
-          "points": 1
+          "points": 2
         },
         {
           "team": "Curaçao",
           "tla": "CUW",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 1,
+          "draw": 2,
           "lost": 1,
           "gf": 1,
           "ga": 7,
           "gd": -6,
-          "points": 1
+          "points": 2
         }
       ]
     },
