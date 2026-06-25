@@ -108,12 +108,21 @@ function buildFlagGroup(feature: Feat, material: THREE.Material, globeR: number)
 }
 const maxAbs = (n: number) => (Math.abs(n) < 1e-6 ? 1e-6 : n);
 
-// Where to drop a country's code label. The geographic centroid (and the bundled
-// rounded representative point) often lands in an odd spot — outside concave shapes,
-// drifting toward a far-flung territory, or sitting on a border. Instead we use the
-// POLE OF INACCESSIBILITY (polylabel) of the country's biggest landmass: the point
-// deepest inside the visible polygon — the natural "reasonable" place for a label.
-// Computed once per country and cached (the world set never changes).
+// Signed-area magnitude of a ring (shoelace) — to rank a country's polygons by their
+// REAL size (bbox area mis-ranks thin slivers and antimeridian-spanning parts).
+function ringArea(ring: number[][]): number {
+  let a = 0;
+  for (let i = 0, n = ring.length, j = n - 1; i < n; j = i++) a += ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1];
+  return Math.abs(a / 2);
+}
+
+// Where to drop a country's code label. The centroid (and the bundled rounded point)
+// often lands in an odd spot — outside concave shapes, drifting toward a far-flung
+// territory, or sitting on a border. Instead we put it where there's the MOST ROOM:
+// among the country's significant landmasses we take each one's POLE OF INACCESSIBILITY
+// (polylabel — the centre of the largest circle that fits inside) and keep the one with
+// the biggest such circle (polylabel's `.distance`). That's literally "the spot with the
+// most space around the initials". Computed once per country and cached.
 const LABEL_PT: Record<string, { lat: number; lng: number }> = {};
 function labelPointFor(feature: Feat): { lat: number; lng: number } | null {
   const key: string = feature?.properties?.ADM0_A3 || feature?.properties?.ISO_A3 || feature?.properties?.NAME || "";
@@ -122,22 +131,28 @@ function labelPointFor(feature: Feat): { lat: number; lng: number } | null {
   const polys: number[][][][] =
     geom?.type === "MultiPolygon" ? geom.coordinates : geom?.type === "Polygon" ? [geom.coordinates] : [];
   if (!polys.length) return null;
-  // pick the largest landmass (by bbox area) so the label sits on the main body
-  let best = polys[0], bestA = -1;
-  for (const rings of polys) {
+  // only consider landmasses that matter (≥5% of the biggest, capped at 6) — skips the
+  // dozens of tiny islands while keeping the real candidates.
+  const ranked = polys.map((rings) => ({ rings, a: ringArea(rings[0]) })).sort((x, y) => y.a - x.a);
+  const maxA = ranked[0].a || 1;
+  const candidates = ranked.filter((x) => x.a >= maxA * 0.05).slice(0, 6);
+  let bestPt: { lat: number; lng: number } | null = null;
+  let bestDist = -1;
+  for (const { rings } of candidates) {
     const e = ringsExtent(rings);
-    const a = (e.maxLng - e.minLng) * (e.maxLat - e.minLat);
-    if (a > bestA) { bestA = a; best = rings; }
+    // precision scaled to the part's size: fine for small countries, coarse for giants
+    // (keeps polylabel fast without a visible loss in placement quality).
+    const prec = Math.max(0.25, Math.min(e.maxLng - e.minLng, e.maxLat - e.minLat) / 40);
+    try {
+      const pt = polylabel(rings, prec);
+      const d = pt.distance ?? 0;
+      if (d > bestDist) { bestDist = d; bestPt = { lng: pt[0], lat: pt[1] }; }
+    } catch {
+      /* malformed ring — skip */
+    }
   }
-  let res: { lat: number; lng: number } | null = null;
-  try {
-    const pt = polylabel(best, 0.8);
-    res = { lng: pt[0], lat: pt[1] };
-  } catch {
-    res = null;
-  }
-  if (key && res) LABEL_PT[key] = res;
-  return res;
+  if (key && bestPt) LABEL_PT[key] = bestPt;
+  return bestPt;
 }
 
 

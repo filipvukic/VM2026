@@ -58,6 +58,20 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const graded = p.exact + p.correct + p.other;
   const hitRate = graded ? Math.round(((p.exact + p.correct) / graded) * 100) : 0;
 
+  // Rank by hit rate among everyone who's had a tip graded — a different story than the
+  // points table (a steady tipster can out-rank a high scorer here). Ties broken by
+  // exacts, then by sample size.
+  const hitRank = (() => {
+    const rated = ds.players
+      .map((x) => { const g = x.exact + x.correct + x.other; return { id: x.id, g, hr: g ? (x.exact + x.correct) / g : -1, ex: x.exact }; })
+      .filter((x) => x.g > 0)
+      .sort((a, b) => b.hr - a.hr || b.ex - a.ex || b.g - a.g);
+    const i = rated.findIndex((x) => x.id === p.id);
+    return i >= 0 ? { rank: i + 1, of: rated.length } : null;
+  })();
+  const hrMedal = !hitRank ? "var(--surface-3)" : hitRank.rank === 1 ? "var(--gold)" : hitRank.rank === 2 ? "#cfd6e6" : hitRank.rank === 3 ? "#e8965a" : "var(--surface-3)";
+  const hrFg = hitRank && hitRank.rank <= 3 ? "#0a0712" : "var(--ink-2)";
+
   // Form: the most recent graded tips as a colour strip.
   const form = tipped
     .filter((m) => m.status === "played" && m.ga != null && m.gb != null)
@@ -99,7 +113,12 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         <div className="card card-pad" style={{ marginTop: 12 }}>
           <div className="pl-sec">
             <div className="kicker">Träffbild</div>
-            <span className="dim" style={{ fontSize: 11 }}>{graded} avgjorda tips</span>
+            {hitRank && (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <span className="pl-hrank" style={{ background: hrMedal, color: hrFg }}>#{hitRank.rank}</span>
+                <span className="dim" style={{ fontSize: 10.5, fontWeight: 800 }}>av {hitRank.of} i träffsäkerhet</span>
+              </span>
+            )}
           </div>
           <div className="pl-accbar">
             {p.exact > 0 && <div style={{ width: `${(p.exact / graded) * 100}%`, background: "var(--gold)" }} />}
@@ -200,39 +219,48 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
       {/* match tips */}
       {tipped.length > 0 && (
         <div style={{ marginTop: 14 }}>
-          <div className="kicker" style={{ marginBottom: 8 }}>Matchtips ({tipped.length})</div>
-          <div style={{ display: "grid", gap: 7, gridTemplateColumns: "minmax(0, 1fr)" }}>
+          <div className="pl-sec" style={{ marginBottom: 9 }}>
+            <div className="kicker">Matchtips</div>
+            <span className="dim" style={{ fontSize: 10.5, fontWeight: 800 }}>{tipped.length} tips</span>
+          </div>
+          <div className="mt-list">
             {tipped.map((m) => {
-              const tip = p.tips[m.id];
+              const tip = p.tips[m.id]!;
               const home = m.home ? ds.teams[m.home] : null;
               const away = m.away ? ds.teams[m.away] : null;
               const played = m.status === "played" && m.ga != null && m.gb != null;
+              const liveM = isLive(m);
               const pts = played ? classifyTip(tip, m.ga!, m.gb!).points : null;
-              const accent = pts === 5 ? "var(--gold)" : pts === 2 ? "var(--win)" : pts === 1 ? "var(--loss)" : null;
               const openThis = () => m._realId && openMatch(m.id);
               const isNext = m.id === nextId;
-              const bg = isNext
-                ? "color-mix(in srgb, var(--cool) 12%, var(--surface))"
-                : accent
-                  ? `color-mix(in srgb, ${accent} 10%, var(--surface))`
-                  : undefined;
+              const state = played ? (pts === 5 ? "exact" : pts === 2 ? "win" : "floor") : liveM ? "live" : "up";
               return (
-                <div key={m.id} ref={isNext ? nextRef : undefined} className="card" style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 10px", borderRadius: "var(--r-md)", minWidth: 0, background: bg, border: isNext ? "1.5px solid var(--cool)" : undefined, borderLeft: !isNext && accent ? `3px solid ${accent}` : undefined, position: "relative" }}>
-                  {isNext && <span className="chip" style={{ position: "absolute", top: -8, left: 10, fontSize: 8.5, padding: "1px 7px", background: "var(--cool)", color: "#0a0712", fontWeight: 800, letterSpacing: ".05em" }}>NÄSTA</span>}
-                  <button onClick={openThis} className="dim" style={{ flex: "0 0 auto", width: 42, fontSize: 10.5, fontWeight: 700, padding: 0, textAlign: "left" }}>{svDayMonth(m.kickoff)}</button>
-                  <button onClick={() => m.home && openTeam(m.home)} disabled={!m.home} style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", gap: 5, padding: 0 }}>
-                    <Flag iso={home?.iso} code={m.home} size={15} />
-                    <span style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: 700, textAlign: "right", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: m.home ? "var(--cool-2)" : undefined }}>{home?.name || "?"}</span>
+                <div key={m.id} ref={isNext ? nextRef : undefined} className={`mt-row mt-${state}${isNext ? " mt-next" : ""}`}>
+                  {isNext && <span className="mt-nextbadge">NÄSTA</span>}
+                  <button className="mt-date" onClick={openThis}>{svDayMonth(m.kickoff)}</button>
+                  <button className="mt-team mt-home" onClick={() => m.home && openTeam(m.home)} disabled={!m.home}>
+                    <span className="mt-name">{home?.name || m.fromA || "?"}</span>
+                    <Flag iso={home?.iso} code={m.home} size={16} />
                   </button>
-                  <button onClick={openThis} className="num" style={{ flex: "0 0 auto", textAlign: "center", padding: 0, whiteSpace: "nowrap" }}>
-                    <span style={{ color: "var(--cool-2)" }}>{tip[0]}–{tip[1]}</span>
-                    {played && <span className="dim" style={{ fontSize: 10.5 }}> ({m.ga}–{m.gb})</span>}
+                  <button className="mt-score" onClick={openThis}>
+                    <span className="mt-tip">{tip[0]}–{tip[1]}</span>
+                    {played ? (
+                      <span className="mt-facit">{m.ga}–{m.gb}</span>
+                    ) : liveM ? (
+                      <span className="mt-when mt-livew">live</span>
+                    ) : (
+                      <span className="mt-when">tips</span>
+                    )}
                   </button>
-                  <button onClick={() => m.away && openTeam(m.away)} disabled={!m.away} style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", gap: 5, padding: 0 }}>
-                    <span style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: m.away ? "var(--cool-2)" : undefined }}>{away?.name || "?"}</span>
-                    <Flag iso={away?.iso} code={m.away} size={15} />
+                  <button className="mt-team mt-away" onClick={() => m.away && openTeam(m.away)} disabled={!m.away}>
+                    <Flag iso={away?.iso} code={m.away} size={16} />
+                    <span className="mt-name">{away?.name || m.fromB || "?"}</span>
                   </button>
-                  {pts != null && <span className="num" style={{ flex: "0 0 auto", width: 20, textAlign: "right", fontSize: 13, color: accent || "var(--ink-2)" }}>{pts}</span>}
+                  {pts != null ? (
+                    <span className="mt-pts" style={{ background: ptsBg(pts), color: ptsFg(pts) }}>{pts}</span>
+                  ) : (
+                    <span className="mt-pts mt-pts-empty" />
+                  )}
                 </div>
               );
             })}
@@ -270,6 +298,33 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         .pl-brow{ display:flex; align-items:center; gap:7px; margin-top:4px; }
         .pl-bval{ flex:1; min-width:0; font-weight:800; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         @media(max-width:380px){ .pl-bonus{ grid-template-columns:1fr; } }
+        .pl-hrank{ font-weight:900; font-size:11.5px; padding:2px 8px; border-radius:var(--r-pill); letter-spacing:.02em; font-variant-numeric:tabular-nums; }
+
+        /* match tips */
+        .mt-list{ display:grid; gap:6px; }
+        .mt-row{ position:relative; display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:var(--r-md);
+          background:var(--surface); border:1px solid var(--line); border-left:3px solid transparent; transition:border-color .15s; }
+        .mt-row.mt-exact{ border-left-color:var(--gold); }
+        .mt-row.mt-win{ border-left-color:var(--win); }
+        .mt-row.mt-floor{ border-left-color:var(--loss); }
+        .mt-row.mt-live{ border-left-color:var(--hot); background:color-mix(in srgb, var(--hot) 6%, var(--surface)); }
+        .mt-row.mt-next{ border:1.5px solid var(--cool); border-left:3px solid var(--cool); background:color-mix(in srgb, var(--cool) 11%, var(--surface)); margin-top:5px; }
+        .mt-date{ flex:0 0 auto; width:38px; padding:0; text-align:left; font-size:10px; font-weight:800; line-height:1.15; color:var(--ink-3); }
+        .mt-team{ flex:1 1 0; min-width:0; display:flex; align-items:center; gap:6px; padding:0; }
+        .mt-home{ justify-content:flex-end; }
+        .mt-name{ min-width:0; font-size:12px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--cool-2); }
+        .mt-home .mt-name{ text-align:right; }
+        .mt-team:disabled .mt-name{ color:var(--ink-2); }
+        .mt-score{ flex:0 0 auto; width:48px; display:flex; flex-direction:column; align-items:center; gap:0; padding:0; }
+        .mt-tip{ font-size:14px; font-weight:900; line-height:1.1; font-variant-numeric:tabular-nums; color:var(--ink); }
+        .mt-facit{ font-size:9.5px; font-weight:800; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+        .mt-when{ font-size:8px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); }
+        .mt-livew{ color:var(--hot); }
+        .mt-pts{ flex:0 0 auto; width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+          font-size:11.5px; font-weight:900; font-variant-numeric:tabular-nums; }
+        .mt-pts-empty{ background:transparent; }
+        .mt-nextbadge{ position:absolute; top:-7px; left:9px; font-size:8px; font-weight:900; letter-spacing:.05em;
+          padding:1px 7px; border-radius:var(--r-pill); background:var(--cool); color:#0a0712; }
       `}</style>
     </Sheet>
   );
