@@ -11197,7 +11197,7 @@
     "home": "Saudi Arabia",
     "homeTla": "KSA",
     "away": "Uruguay",
-    "awayTla": "URY",
+    "awayTla": "URU",
     "status": "FINISHED",
     "score": [
       1,
@@ -30249,7 +30249,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
     "status": "FINISHED",
@@ -44527,23 +44527,26 @@
     "homeTla": "TUN",
     "away": "Netherlands",
     "awayTla": "NED",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      2
+      1,
+      3
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         2
+      ],
+      "fullTime": [
+        1,
+        3
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "25",
+    "minute": null,
     "goals": [
       {
         "minute": "3",
@@ -44570,10 +44573,107 @@
           2
         ],
         "period": 1
+      },
+      {
+        "minute": "54",
+        "team": "TUN",
+        "scorer": "Hazem Mastouri",
+        "assist": "Hannibal Mejbri",
+        "type": "HEADER",
+        "description": "Goal! Tunisia 1, Netherlands 2. Hazem Mastouri (Tunisia) header from the centre of the box to the bottom left corner. Assisted by Hannibal Mejbri with a cross following a corner.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "NED",
+        "scorer": "Jan Paul van Hecke",
+        "assist": "Tijjani Reijnders",
+        "type": "HEADER",
+        "description": "Goal! Tunisia 1, Netherlands 3. Jan Paul van Hecke (Netherlands) header from the left side of the six yard box to the top right corner. Assisted by Tijjani Reijnders with a cross following a corner.",
+        "score": [
+          1,
+          3
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "67",
+        "team": "TUN",
+        "playerIn": "Mohamed Hadj Mahmoud",
+        "playerOut": "Rani Khedira",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "TUN",
+        "playerIn": "Elias Achouri",
+        "playerOut": "Anis Slimane",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "TUN",
+        "playerIn": "Mortadha Ben Ouanes",
+        "playerOut": "Mohamed Amine Ben Hamida",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "NED",
+        "playerIn": "Teun Koopmeiners",
+        "playerOut": "Frenkie de Jong",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "NED",
+        "playerIn": "Justin Kluivert",
+        "playerOut": "Tijjani Reijnders",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "NED",
+        "playerIn": "Crysencio Summerville",
+        "playerOut": "Donyell Malen",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "TUN",
+        "playerIn": "Firas Chaouat",
+        "playerOut": "Ismaël Gharbi",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "NED",
+        "playerIn": "Memphis Depay",
+        "playerOut": "Brian Brobbey",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "NED",
+        "playerIn": "Noa Lang",
+        "playerOut": "Cody Gakpo",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "TUN",
+        "playerIn": "Sebastian Tounekti",
+        "playerOut": "Hazem Mastouri",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "GEHA Field at Arrowhead Stadium",
       "city": "Kansas City, Missouri",
@@ -44586,7 +44686,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 68391,
     "espnOdds": {
       "homeML": 1800,
       "awayML": -700,
@@ -44624,7 +44724,7 @@
           "jersey": "21",
           "espnId": "296982",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Montassar Talbi",
@@ -44660,7 +44760,7 @@
           "jersey": "13",
           "espnId": "159152",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ismaël Gharbi",
@@ -44669,7 +44769,7 @@
           "jersey": "11",
           "espnId": "317473",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Hannibal Mejbri",
@@ -44687,7 +44787,7 @@
           "jersey": "25",
           "espnId": "302944",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Hazem Mastouri",
@@ -44696,7 +44796,7 @@
           "jersey": "9",
           "espnId": "396085",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -44706,7 +44806,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "324510",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44751,7 +44851,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "303702",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44760,7 +44860,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "299861",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44796,7 +44896,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "265207",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44814,7 +44914,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "273170",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -44876,7 +44976,7 @@
           "jersey": "21",
           "espnId": "219022",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tijjani Reijnders",
@@ -44885,7 +44985,7 @@
           "jersey": "14",
           "espnId": "261328",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ryan Gravenberch",
@@ -44903,7 +45003,7 @@
           "jersey": "19",
           "espnId": "282229",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cody Gakpo",
@@ -44912,7 +45012,7 @@
           "jersey": "11",
           "espnId": "249524",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Donyell Malen",
@@ -44921,7 +45021,7 @@
           "jersey": "18",
           "espnId": "259481",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -44967,7 +45067,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "159255",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44985,7 +45085,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "245916",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -44994,7 +45094,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "284792",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45003,7 +45103,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "258968",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45012,7 +45112,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "255344",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45065,64 +45165,64 @@
       "_espnEventId": "760472"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 11.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 1.0,
-      "possessionPct": 30.0,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "offsides": 2.0,
+      "wonCorners": 4.0,
+      "saves": 4.0,
+      "possessionPct": 28.4,
+      "totalShots": 10.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 51.0,
-      "totalPasses": 65.0,
+      "accuratePasses": 200.0,
+      "totalPasses": 258.0,
       "passPct": 0.8,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 9.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.7,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 2.0,
-      "tacklePct": 0.5,
-      "interceptions": 1.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "accurateCrosses": 4.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 48.0,
+      "accurateLongBalls": 21.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 16.0,
+      "tacklePct": 0.6,
+      "interceptions": 8.0,
+      "effectiveClearance": 36.0,
+      "totalClearance": 36.0
     },
     "awayStats": {
-      "foulsCommitted": 1.0,
+      "foulsCommitted": 10.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 1.0,
-      "possessionPct": 70.0,
-      "totalShots": 4.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.5,
+      "offsides": 1.0,
+      "wonCorners": 6.0,
+      "saves": 3.0,
+      "possessionPct": 71.6,
+      "totalShots": 20.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 149.0,
-      "totalPasses": 159.0,
+      "accuratePasses": 601.0,
+      "totalPasses": 652.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 3.0,
-      "accurateLongBalls": 2.0,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 28.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 23.0,
+      "accurateLongBalls": 15.0,
       "longballPct": 0.7,
-      "blockedShots": 1.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 2.0,
+      "blockedShots": 5.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 8.0,
       "tacklePct": 0.5,
-      "interceptions": 0.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "interceptions": 10.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
     },
     "homeForm": [
       {
@@ -45208,26 +45308,149 @@
     "homeTla": "JPN",
     "away": "Sweden",
     "awayTla": "SWE",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      1,
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        1,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "24",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "56",
+        "team": "JPN",
+        "scorer": "Daizen Maeda",
+        "assist": "Ritsu Doan",
+        "type": "REGULAR",
+        "description": "Goal! Japan 1, Sweden 0. Daizen Maeda (Japan) right footed shot from the centre of the box to the bottom left corner. Assisted by Ritsu Doan with a through ball.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "SWE",
+        "scorer": "Anthony Elanga",
+        "assist": "Viktor Gyökeres",
+        "type": "REGULAR",
+        "description": "Goal! Japan 1, Sweden 1. Anthony Elanga (Sweden) left footed shot from outside the box to the bottom left corner. Assisted by Viktor Gyökeres.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "32",
+        "team": "SWE",
+        "player": "Isak Hien",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "77",
+        "team": "JPN",
+        "player": "Shogo Taniguchi",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "SWE",
+        "player": "Viktor Gyökeres",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "37",
+        "team": "SWE",
+        "playerIn": "Lucas Bergvall",
+        "playerOut": "Isak Hien",
+        "period": 1
+      },
+      {
+        "minute": "39",
+        "team": "JPN",
+        "playerIn": "Shogo Taniguchi",
+        "playerOut": "Kou Itakura",
+        "period": 1
+      },
+      {
+        "minute": "66",
+        "team": "JPN",
+        "playerIn": "Koki Ogawa",
+        "playerOut": "Ayase Ueda",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "JPN",
+        "playerIn": "Junya Ito",
+        "playerOut": "Ritsu Doan",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "SWE",
+        "playerIn": "Daniel Svensson",
+        "playerOut": "Alexander Bernhardsson",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "SWE",
+        "playerIn": "Ken Sema",
+        "playerOut": "Elliot Stroud",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "JPN",
+        "playerIn": "Yuto Nagatomo",
+        "playerOut": "Keito Nakamura",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "JPN",
+        "playerIn": "Tsuyoshi Watanabe",
+        "playerOut": "Ayumu Seko",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "SWE",
+        "playerIn": "Carl Starfelt",
+        "playerOut": "Victor Lindelöf",
+        "period": 2
+      },
+      {
+        "minute": "88",
+        "team": "SWE",
+        "playerIn": "Benjamin Nygren",
+        "playerOut": "Gabriel Gudmundsson",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "AT&T Stadium",
       "city": "Arlington, Texas",
@@ -45240,7 +45463,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 70137,
     "espnOdds": {
       "homeML": 140,
       "awayML": 205,
@@ -45269,7 +45492,7 @@
           "jersey": "4",
           "espnId": "238033",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Hiroki Ito",
@@ -45287,7 +45510,7 @@
           "jersey": "20",
           "espnId": "258270",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Daichi Kamada",
@@ -45314,7 +45537,7 @@
           "jersey": "13",
           "espnId": "265953",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Yukinari Sugawara",
@@ -45332,7 +45555,7 @@
           "jersey": "18",
           "espnId": "274277",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Daizen Maeda",
@@ -45350,7 +45573,7 @@
           "jersey": "10",
           "espnId": "219627",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -45360,7 +45583,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "219350",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45387,7 +45610,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "238016",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45414,7 +45637,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "119082",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45432,7 +45655,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "276279",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45459,7 +45682,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "202728",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45503,7 +45726,7 @@
           "jersey": "4",
           "espnId": "312862",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gabriel Gudmundsson",
@@ -45512,7 +45735,7 @@
           "jersey": "5",
           "espnId": "250166",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gustaf Lagerbielke",
@@ -45539,7 +45762,7 @@
           "jersey": "3",
           "espnId": "204679",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Elliot Stroud",
@@ -45548,7 +45771,7 @@
           "jersey": "24",
           "espnId": "357145",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Alexander Bernhardsson",
@@ -45557,7 +45780,7 @@
           "jersey": "21",
           "espnId": "301370",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Viktor Gyökeres",
@@ -45594,7 +45817,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "356379",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45612,7 +45835,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "310709",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45684,7 +45907,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "274522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45702,7 +45925,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "186004",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45711,7 +45934,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "195790",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -45728,64 +45951,64 @@
       "_espnEventId": "760471"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 20.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 52.4,
-      "totalShots": 2.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 2.0,
+      "saves": 4.0,
+      "possessionPct": 52.3,
+      "totalShots": 8.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 121.0,
-      "totalPasses": 134.0,
+      "accuratePasses": 379.0,
+      "totalPasses": 446.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 15.0,
-      "accurateLongBalls": 8.0,
-      "longballPct": 0.5,
-      "blockedShots": 1.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 0.0,
-      "tacklePct": 0.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 7.0,
-      "totalClearance": 7.0
+      "accurateCrosses": 4.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 51.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.4,
+      "blockedShots": 2.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 13.0,
+      "tacklePct": 0.5,
+      "interceptions": 4.0,
+      "effectiveClearance": 40.0,
+      "totalClearance": 40.0
     },
     "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 2.0,
-      "saves": 0.0,
-      "possessionPct": 47.6,
-      "totalShots": 1.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 1.0,
+      "offsides": 2.0,
+      "wonCorners": 8.0,
+      "saves": 2.0,
+      "possessionPct": 47.7,
+      "totalShots": 11.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 89.0,
-      "totalPasses": 119.0,
-      "passPct": 0.7,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 19.0,
-      "accurateLongBalls": 7.0,
+      "accuratePasses": 312.0,
+      "totalPasses": 395.0,
+      "passPct": 0.8,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 16.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 50.0,
+      "accurateLongBalls": 18.0,
       "longballPct": 0.4,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 2.0,
+      "blockedShots": 3.0,
+      "effectiveTackles": 3.0,
+      "totalTackles": 6.0,
       "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
+      "interceptions": 5.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
     },
     "homeForm": [
       {
@@ -45890,7 +46113,13 @@
       "city": "Inglewood, California",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Mustapha Ghorbal",
+        "role": "REFEREE",
+        "nationality": null
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -46019,7 +46248,13 @@
       "city": "Santa Clara, California",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Clément Turpin",
+        "role": "REFEREE",
+        "nationality": "France"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -46384,7 +46619,7 @@
     "stage": "GROUP_STAGE",
     "group": "H",
     "home": "Uruguay",
-    "homeTla": "URY",
+    "homeTla": "URU",
     "away": "Spain",
     "awayTla": "ESP",
     "status": "TIMED",
