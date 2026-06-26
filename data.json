@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T17:44:49+00:00",
+  "updated_at": "2026-06-26T19:23:06+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -16244,19 +16244,73 @@
       "homeTla": "NOR",
       "away": "France",
       "awayTla": "FRA",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "22",
+      "goals": [
+        {
+          "minute": "7",
+          "team": "FRA",
+          "scorer": "Ousmane Dembélé",
+          "assist": "Kylian Mbappé",
+          "type": "REGULAR",
+          "description": "Goal! Norway 0, France 1. Ousmane Dembélé (France) right footed shot from the right side of the box to the bottom left corner. Assisted by Kylian Mbappé.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "20",
+          "team": "FRA",
+          "scorer": "Ousmane Dembélé",
+          "assist": "Kylian Mbappé",
+          "type": "REGULAR",
+          "description": "Goal! Norway 0, France 2. Ousmane Dembélé (France) left footed shot from outside the box to the bottom left corner. Assisted by Kylian Mbappé following a fast break.",
+          "score": [
+            0,
+            2
+          ],
+          "period": 1
+        },
+        {
+          "minute": "21",
+          "team": "NOR",
+          "scorer": "Thelo Aasgaard",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Norway 1, France 2. Thelo Aasgaard (Norway) right footed shot from the centre of the box.",
+          "score": [
+            1,
+            2
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "10",
+          "team": "NOR",
+          "player": "Patrick Berg",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Gillette Stadium",
@@ -16266,8 +16320,7 @@
       "referees": [
         {
           "name": "Michael Oliver",
-          "role": "REFEREE",
-          "nationality": "England"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -16373,20 +16426,63 @@
       "homeTla": "SEN",
       "away": "Iraq",
       "awayTla": "IRQ",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "21",
+      "goals": [
+        {
+          "minute": "4",
+          "team": "SEN",
+          "scorer": "Habib Diarra",
+          "assist": "Abdoulaye Seck",
+          "type": "REGULAR",
+          "description": "Goal! Senegal 1, Iraq 0. Habib Diarra (Senegal) left footed shot from very close range to the top right corner. Assisted by Abdoulaye Seck following a corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "13",
+          "team": "IRQ",
+          "player": "Rebin Sulaka",
+          "card": "RED",
+          "period": 1
+        },
+        {
+          "minute": "18",
+          "team": "SEN",
+          "player": "Abdoulaye Seck",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "16",
+          "team": "IRQ",
+          "playerIn": "Munaf Younus",
+          "playerOut": "Ahmed Qasim",
+          "period": 1
+        }
+      ],
       "venue": {
         "stadium": "BMO Field",
         "city": "Toronto",
@@ -16395,8 +16491,7 @@
       "referees": [
         {
           "name": "Anthony Taylor",
-          "role": "REFEREE",
-          "nationality": "England"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -18154,50 +18249,50 @@
         {
           "team": "France",
           "tla": "FRA",
-          "played": 2,
+          "played": 3,
           "won": 2,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 6,
           "ga": 1,
           "gd": 5,
-          "points": 6
+          "points": 7
         },
         {
           "team": "Norway",
           "tla": "NOR",
-          "played": 2,
+          "played": 3,
           "won": 2,
-          "draw": 0,
+          "draw": 1,
           "lost": 0,
           "gf": 7,
           "ga": 3,
           "gd": 4,
-          "points": 6
+          "points": 7
         },
         {
           "team": "Senegal",
           "tla": "SEN",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 2,
           "gf": 3,
           "ga": 6,
           "gd": -3,
-          "points": 0
+          "points": 1
         },
         {
           "team": "Iraq",
           "tla": "IRQ",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 2,
           "gf": 1,
           "ga": 7,
           "gd": -6,
-          "points": 0
+          "points": 1
         }
       ]
     },
