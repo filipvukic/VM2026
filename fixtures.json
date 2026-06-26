@@ -47628,7 +47628,7 @@
     "status": "FINISHED",
     "score": [
       1,
-      3
+      4
     ],
     "scoreDetail": {
       "halfTime": [
@@ -47637,7 +47637,7 @@
       ],
       "fullTime": [
         1,
-        3
+        4
       ],
       "extraTime": null,
       "penalties": null,
@@ -48452,7 +48452,7 @@
     "homeTla": "SEN",
     "away": "Iraq",
     "awayTla": "IRQ",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       5,
       0
@@ -48471,7 +48471,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "90+3",
+    "minute": null,
     "goals": [
       {
         "minute": "4",
@@ -48660,7 +48660,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 43036,
     "espnOdds": {
       "homeML": -475,
       "awayML": 1100,
@@ -49154,26 +49154,26 @@
       "offsides": 1.0,
       "wonCorners": 12.0,
       "saves": 1.0,
-      "possessionPct": 68.4,
-      "totalShots": 27.0,
-      "shotsOnTarget": 11.0,
+      "possessionPct": 69.3,
+      "totalShots": 28.0,
+      "shotsOnTarget": 12.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 489.0,
-      "totalPasses": 556.0,
+      "accuratePasses": 518.0,
+      "totalPasses": 590.0,
       "passPct": 0.9,
       "accurateCrosses": 7.0,
       "totalCrosses": 25.0,
       "crossPct": 0.3,
-      "totalLongBalls": 39.0,
-      "accurateLongBalls": 21.0,
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 23.0,
       "longballPct": 0.5,
       "blockedShots": 5.0,
       "effectiveTackles": 9.0,
       "totalTackles": 12.0,
       "tacklePct": 0.8,
-      "interceptions": 1.0,
+      "interceptions": 2.0,
       "effectiveClearance": 10.0,
       "totalClearance": 10.0
     },
@@ -49183,29 +49183,29 @@
       "redCards": 1.0,
       "offsides": 0.0,
       "wonCorners": 3.0,
-      "saves": 6.0,
-      "possessionPct": 31.6,
+      "saves": 7.0,
+      "possessionPct": 30.7,
       "totalShots": 6.0,
       "shotsOnTarget": 1.0,
       "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 183.0,
-      "totalPasses": 261.0,
+      "accuratePasses": 184.0,
+      "totalPasses": 265.0,
       "passPct": 0.7,
       "accurateCrosses": 0.0,
       "totalCrosses": 6.0,
       "crossPct": 0.0,
-      "totalLongBalls": 67.0,
-      "accurateLongBalls": 15.0,
+      "totalLongBalls": 68.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.2,
       "blockedShots": 4.0,
       "effectiveTackles": 13.0,
-      "totalTackles": 19.0,
+      "totalTackles": 20.0,
       "tacklePct": 0.7,
       "interceptions": 7.0,
-      "effectiveClearance": 34.0,
-      "totalClearance": 34.0
+      "effectiveClearance": 35.0,
+      "totalClearance": 35.0
     },
     "homeForm": [
       {
@@ -49310,7 +49310,13 @@
       "city": "Guadalajara",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Ismail Elfath",
+        "role": "REFEREE",
+        "nationality": "United States"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -49439,7 +49445,13 @@
       "city": "Houston, Texas",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "François Letexier",
+        "role": "REFEREE",
+        "nationality": "France"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -50604,12 +50616,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 450,
+      "homeML": 425,
       "awayML": -140,
       "spread": "CAN -0.5",
       "overUnder": 2.5,
-      "overOdds": 120.0,
-      "underOdds": -150.0,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -50733,8 +50745,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -135,
-      "awayML": 390,
+      "homeML": -140,
+      "awayML": 400,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
@@ -50898,7 +50910,7 @@
     "attendance": null,
     "espnOdds": {
       "homeML": 115,
-      "awayML": 260,
+      "awayML": 270,
       "spread": "NED -0.5",
       "overUnder": 2.5,
       "overOdds": 125.0,

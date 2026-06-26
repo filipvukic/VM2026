@@ -47396,12 +47396,12 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": 450,
+      "homeML": 425,
       "awayML": -140,
       "spread": "CAN -0.5",
       "overUnder": 2.5,
-      "overOdds": 120.0,
-      "underOdds": -150.0,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -47483,7 +47483,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-26T15:56:35.586290+00:00"
+    "_fetched_at": "2026-06-26T22:20:51.885338+00:00"
   },
   "760487": {
     "goals": [],
@@ -47511,8 +47511,8 @@
     "attendance": null,
     "referees": [],
     "espnOdds": {
-      "homeML": -135,
-      "awayML": 390,
+      "homeML": -140,
+      "awayML": 400,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
       "overOdds": 105.0,
@@ -47598,7 +47598,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-26T15:56:35.586290+00:00"
+    "_fetched_at": "2026-06-26T22:20:51.885338+00:00"
   },
   "760488": {
     "goals": [],
@@ -47627,7 +47627,7 @@
     "referees": [],
     "espnOdds": {
       "homeML": 115,
-      "awayML": 260,
+      "awayML": 270,
       "spread": "NED -0.5",
       "overUnder": 2.5,
       "overOdds": 125.0,
@@ -47713,7 +47713,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-26T15:56:35.586290+00:00"
+    "_fetched_at": "2026-06-26T22:20:51.885338+00:00"
   },
   "760475": {
     "goals": [
@@ -48518,5 +48518,821 @@
     "espnClock": null,
     "espnDisplayClock": null,
     "_fetched_at": "2026-06-26T21:01:31.308071+00:00"
+  },
+  "760474": {
+    "goals": [
+      {
+        "minute": "4",
+        "team": "SEN",
+        "scorer": "Habib Diarra",
+        "assist": "Abdoulaye Seck",
+        "type": "REGULAR",
+        "description": "Goal! Senegal 1, Iraq 0. Habib Diarra (Senegal) right footed shot from very close range to the top right corner. Assisted by Abdoulaye Seck following a corner.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      },
+      {
+        "minute": "56",
+        "team": "SEN",
+        "scorer": "Ismaïla Sarr",
+        "assist": "Lamine Camara",
+        "type": "REGULAR",
+        "description": "Goal! Senegal 2, Iraq 0. Ismaïla Sarr (Senegal) right footed shot from very close range to the high centre of the goal. Assisted by Lamine Camara.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "59",
+        "team": "SEN",
+        "scorer": "Pape Gueye",
+        "assist": "Ismaïla Sarr",
+        "type": "REGULAR",
+        "description": "Goal! Senegal 3, Iraq 0. Pape Gueye (Senegal) left footed shot from outside the box to the top left corner. Assisted by Ismaïla Sarr.",
+        "score": [
+          3,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "SEN",
+        "scorer": "Pape Gueye",
+        "assist": "Iliman Ndiaye",
+        "type": "REGULAR",
+        "description": "Goal! Senegal 4, Iraq 0. Pape Gueye (Senegal) left footed shot from the centre of the box to the bottom left corner. Assisted by Iliman Ndiaye with a headed pass.",
+        "score": [
+          4,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "SEN",
+        "scorer": "Iliman Ndiaye",
+        "assist": "Pape Gueye",
+        "type": "REGULAR",
+        "description": "Goal! Senegal 5, Iraq 0. Iliman Ndiaye (Senegal) right footed shot from outside the box to the top right corner. Assisted by Pape Gueye.",
+        "score": [
+          5,
+          0
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "13",
+        "team": "IRQ",
+        "player": "Rebin Sulaka",
+        "card": "RED",
+        "period": 1
+      },
+      {
+        "minute": "18",
+        "team": "SEN",
+        "player": "Abdoulaye Seck",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "75",
+        "team": "IRQ",
+        "player": "Amir Al-Ammari",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "SEN",
+        "player": "Pape Gueye",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "IRQ",
+        "player": "Merchas Doski",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "16",
+        "team": "IRQ",
+        "playerIn": "Munaf Younus",
+        "playerOut": "Ahmed Qasim",
+        "period": 1
+      },
+      {
+        "minute": "45",
+        "team": "IRQ",
+        "playerIn": "Jalal Hassan",
+        "playerOut": "Ahmed Basil",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "SEN",
+        "playerIn": "Iliman Ndiaye",
+        "playerOut": "Ibrahim Mbaye",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "SEN",
+        "playerIn": "Nicolas Jackson",
+        "playerOut": "Lamine Camara",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "SEN",
+        "playerIn": "Pape Gueye",
+        "playerOut": "Habib Diarra",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "IRQ",
+        "playerIn": "Ahmed Maknazi",
+        "playerOut": "Ali Jasim",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "IRQ",
+        "playerIn": "Ali Yousif",
+        "playerOut": "Ali Al-Hamadi",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "SEN",
+        "playerIn": "Pathé Ciss",
+        "playerOut": "Abdoulaye Seck",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "IRQ",
+        "playerIn": "Kevin Yakob",
+        "playerOut": "Zidane Iqbal",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "SEN",
+        "playerIn": "Assane Diao",
+        "playerOut": "Ismaïla Sarr",
+        "period": 2
+      }
+    ],
+    "homeLineup": {
+      "formation": "4-3-3",
+      "lineup": [
+        {
+          "name": "Mory Diaw",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "23",
+          "espnId": "197631",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Moussa Niakhaté",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "19",
+          "espnId": "213181",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Abdoulaye Seck",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "4",
+          "espnId": "251614",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ismail Jakobs",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "14",
+          "espnId": "268796",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Krépin Diatta",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "15",
+          "espnId": "253992",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Idrissa Gueye",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "5",
+          "espnId": "144517",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Lamine Camara",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "8",
+          "espnId": "38721",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Habib Diarra",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "21",
+          "espnId": "324991",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "18",
+          "espnId": "241012",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Sadio Mané",
+          "position": "LF",
+          "positionName": "Left Forward",
+          "jersey": "10",
+          "espnId": "169797",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ibrahim Mbaye",
+          "position": "RF",
+          "positionName": "Right Forward",
+          "jersey": "20",
+          "espnId": "388522",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Bamba Dieng",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "313889",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nicolas Jackson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "308524",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Bara Sapoko Ndiaye",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "409016",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Assane Diao",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "364742",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Kalidou Koulibaly",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "150312",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pape Gueye",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "255889",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Yehvann Diouf",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "241029",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "El Hadji Malick Diouf",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "359796",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "297337",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "268641",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Cherif Ndiaye",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "251924",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pathé Ciss",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "294228",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Mamadou Sarr",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "355433",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Antoine Mendy",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "319161",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "SEN",
+      "_espnEventId": "760474"
+    },
+    "awayLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Ahmed Basil",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "22",
+          "espnId": "285998",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Akam Hashim",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "5",
+          "espnId": "378605",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rebin Sulaka",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "2",
+          "espnId": "244675",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Merchas Doski",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "23",
+          "espnId": "345320",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Frans Putros",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "26",
+          "espnId": "218597",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ali Jasim",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "17",
+          "espnId": "307750",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Amir Al-Ammari",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "16",
+          "espnId": "311149",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Zidane Iqbal",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "14",
+          "espnId": "325549",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ali Al-Hamadi",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "330579",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Ibrahim Bayesh",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "8",
+          "espnId": "266496",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ahmed Qasim",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "11",
+          "espnId": "313976",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Aimar Sher",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "287723",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Fahad Talib",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "235231",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Zaid Ismael",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "384274",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kevin Yakob",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "274173",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Mohanad Ali",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "269478",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Aymen Hussein",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "244677",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mustafa Saadoon",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "371649",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Youssef Amyn",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "321221",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jalal Hassan",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "257421",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Zaid Tahseen",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "378968",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Munaf Younus",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "331621",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Hussein Ali",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "244679",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ahmed Maknazi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "369408",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Marko Farji",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "326032",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ali Yousif",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "274166",
+          "subbedIn": true,
+          "subbedOut": false
+        }
+      ],
+      "tla": "IRQ",
+      "_espnEventId": "760474"
+    },
+    "homeStats": {
+      "foulsCommitted": 10.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 12.0,
+      "saves": 1.0,
+      "possessionPct": 69.3,
+      "totalShots": 28.0,
+      "shotsOnTarget": 12.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 518.0,
+      "totalPasses": 590.0,
+      "passPct": 0.9,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 25.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 23.0,
+      "longballPct": 0.5,
+      "blockedShots": 5.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.8,
+      "interceptions": 2.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
+    },
+    "awayStats": {
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
+      "redCards": 1.0,
+      "offsides": 0.0,
+      "wonCorners": 3.0,
+      "saves": 7.0,
+      "possessionPct": 30.7,
+      "totalShots": 6.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.2,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 184.0,
+      "totalPasses": 265.0,
+      "passPct": 0.7,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 68.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.2,
+      "blockedShots": 4.0,
+      "effectiveTackles": 13.0,
+      "totalTackles": 20.0,
+      "tacklePct": 0.7,
+      "interceptions": 7.0,
+      "effectiveClearance": 35.0,
+      "totalClearance": 35.0
+    },
+    "venue": {
+      "stadium": "BMO Field",
+      "city": "Toronto",
+      "country": "Canada"
+    },
+    "attendance": 43036,
+    "referees": [
+      {
+        "name": "Anthony Taylor",
+        "role": "Referee"
+      }
+    ],
+    "espnOdds": {
+      "homeML": -475,
+      "awayML": 1100,
+      "spread": "SEN -2.5",
+      "overUnder": 3.5,
+      "overOdds": 120.0,
+      "underOdds": -145.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-23",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-16",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-09",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      },
+      {
+        "date": "2026-05-31",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-03-31",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-22",
+        "result": "F",
+        "gf": 0,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-16",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-04",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-05-29",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_FULL_TIME",
+    "espnState": "post",
+    "espnCompleted": true,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-06-26T22:20:51.885338+00:00"
   }
 }
