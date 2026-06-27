@@ -52453,23 +52453,118 @@
     "status": "IN_PLAY",
     "score": [
       0,
-      0
+      2
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        0,
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "43",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": "84",
+    "goals": [
+      {
+        "minute": "62",
+        "team": "ENG",
+        "scorer": "Jude Bellingham",
+        "assist": "Bukayo Saka",
+        "type": "REGULAR",
+        "description": "Goal! Panama 0, England 1. Jude Bellingham (England) left footed shot from the centre of the box to the bottom left corner. Assisted by Bukayo Saka with a cross following a corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "ENG",
+        "scorer": "Harry Kane",
+        "assist": "Jude Bellingham",
+        "type": "HEADER",
+        "description": "Goal! Panama 0, England 2. Harry Kane (England) header from the centre of the box to the top left corner. Assisted by Jude Bellingham with a cross.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "53",
+        "team": "PAN",
+        "player": "José Fajardo",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "ENG",
+        "player": "Jarell Quansah",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "PAN",
+        "player": "Andrés Andrade",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "PAN",
+        "playerIn": "José Fajardo",
+        "playerOut": "Tomás Rodríguez",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "ENG",
+        "playerIn": "Djed Spence",
+        "playerOut": "Jarell Quansah",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "ENG",
+        "playerIn": "Noni Madueke",
+        "playerOut": "Bukayo Saka",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "PAN",
+        "playerIn": "Ismael Díaz",
+        "playerOut": "Édgar Yoel Bárcenas",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "ENG",
+        "playerIn": "Eberechi Eze",
+        "playerOut": "Jude Bellingham",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "PAN",
+        "playerIn": "Azarias Londoño",
+        "playerOut": "José Luis Rodríguez",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
@@ -52550,20 +52645,20 @@
           "subbedOut": false
         },
         {
-          "name": "Carlos Harvey",
+          "name": "Édgar Yoel Bárcenas",
           "position": "CM-L",
           "positionName": "Center Left Midfielder",
-          "jersey": "14",
-          "espnId": "285452",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Édgar Yoel Bárcenas",
-          "position": "CM-R",
-          "positionName": "Center Right Midfielder",
           "jersey": "11",
           "espnId": "201919",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Carlos Harvey",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "14",
+          "espnId": "285452",
           "subbedIn": false,
           "subbedOut": false
         },
@@ -52574,7 +52669,7 @@
           "jersey": "7",
           "espnId": "238763",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cristian Martínez",
@@ -52592,7 +52687,7 @@
           "jersey": "9",
           "espnId": "288563",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -52602,7 +52697,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "195326",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52692,7 +52787,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "340539",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52710,7 +52805,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "267996",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52736,7 +52831,7 @@
       "_espnEventId": "760485"
     },
     "awayLineup": {
-      "formation": "4-2-3-1",
+      "formation": "4-1-4-1",
       "lineup": [
         {
           "name": "Jordan Pickford",
@@ -52766,6 +52861,15 @@
           "subbedOut": false
         },
         {
+          "name": "Elliot Anderson",
+          "position": "DM",
+          "positionName": "Defensive Midfielder",
+          "jersey": "8",
+          "espnId": "238472",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
           "name": "Nico O'Reilly",
           "position": "LB",
           "positionName": "Left Back",
@@ -52781,48 +52885,30 @@
           "jersey": "26",
           "espnId": "298524",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
+        },
+        {
+          "name": "Jude Bellingham",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "10",
+          "espnId": "291281",
+          "subbedIn": false,
+          "subbedOut": true
         },
         {
           "name": "Morgan Rogers",
-          "position": "AM",
-          "positionName": "Attacking Midfielder",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
           "jersey": "17",
           "espnId": "265653",
           "subbedIn": false,
           "subbedOut": false
         },
         {
-          "name": "Jude Bellingham",
+          "name": "Marcus Rashford",
           "position": "LM",
           "positionName": "Left Midfielder",
-          "jersey": "10",
-          "espnId": "291281",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Elliot Anderson",
-          "position": "RM",
-          "positionName": "Right Midfielder",
-          "jersey": "8",
-          "espnId": "238472",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Harry Kane",
-          "position": "F",
-          "positionName": "Forward",
-          "jersey": "9",
-          "espnId": "142200",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Marcus Rashford",
-          "position": "AM-L",
-          "positionName": "Attacking Midfielder Left",
           "jersey": "11",
           "espnId": "230945",
           "subbedIn": false,
@@ -52830,10 +52916,19 @@
         },
         {
           "name": "Bukayo Saka",
-          "position": "AM-R",
-          "positionName": "Attacking Midfielder Right",
+          "position": "RM",
+          "positionName": "Right Midfielder",
           "jersey": "7",
           "espnId": "280555",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Harry Kane",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "142200",
           "subbedIn": false,
           "subbedOut": false
         }
@@ -52881,7 +52976,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "293236",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52908,7 +53003,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "267711",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52935,7 +53030,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "251400",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -52970,64 +53065,64 @@
       "_espnEventId": "760485"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 28.6,
-      "totalShots": 3.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.7,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 82.0,
-      "totalPasses": 112.0,
-      "passPct": 0.7,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 24.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.4,
-      "blockedShots": 0.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.6,
-      "interceptions": 2.0,
-      "effectiveClearance": 23.0,
-      "totalClearance": 23.0
-    },
-    "awayStats": {
-      "foulsCommitted": 3.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 2.0,
-      "wonCorners": 4.0,
-      "saves": 2.0,
-      "possessionPct": 71.4,
-      "totalShots": 8.0,
+      "wonCorners": 2.0,
+      "saves": 3.0,
+      "possessionPct": 34.4,
+      "totalShots": 11.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 265.0,
-      "totalPasses": 292.0,
+      "accuratePasses": 183.0,
+      "totalPasses": 244.0,
+      "passPct": 0.8,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 52.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.5,
+      "blockedShots": 2.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 13.0,
+      "tacklePct": 0.7,
+      "interceptions": 4.0,
+      "effectiveClearance": 30.0,
+      "totalClearance": 30.0
+    },
+    "awayStats": {
+      "foulsCommitted": 10.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 4.0,
+      "wonCorners": 6.0,
+      "saves": 2.0,
+      "possessionPct": 65.6,
+      "totalShots": 14.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 419.0,
+      "totalPasses": 475.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 12.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 16.0,
-      "accurateLongBalls": 10.0,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 21.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 30.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.6,
-      "blockedShots": 1.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 9.0,
+      "blockedShots": 2.0,
+      "effectiveTackles": 15.0,
+      "totalTackles": 16.0,
       "tacklePct": 0.9,
-      "interceptions": 3.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "interceptions": 5.0,
+      "effectiveClearance": 18.0,
+      "totalClearance": 18.0
     },
     "homeForm": [
       {
@@ -53113,23 +53208,26 @@
     "homeTla": "CRO",
     "away": "Ghana",
     "awayTla": "GHA",
-    "status": "LIVE",
+    "status": "IN_PLAY",
     "score": [
       1,
-      0
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         1,
         0
+      ],
+      "fullTime": [
+        1,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "HOME_TEAM"
+      "winnerSide": "DRAW"
     },
-    "minute": "42",
+    "minute": "81",
     "goals": [
       {
         "minute": "31",
@@ -53143,10 +53241,74 @@
           0
         ],
         "period": 1
+      },
+      {
+        "minute": "73",
+        "team": "GHA",
+        "scorer": "Derrick Luckassen",
+        "assist": "Ernest Nuamah",
+        "type": "REGULAR",
+        "description": "Goal! Croatia 1, Ghana 1. Derrick Luckassen (Ghana) left footed shot from very close range to the bottom right corner. Assisted by Ernest Nuamah with a cross following a set piece situation.Goal awarded following VAR Review.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "68",
+        "team": "CRO",
+        "player": "Ivan Perisic",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "GHA",
+        "playerIn": "Kojo Peprah Oppong",
+        "playerOut": "Jonas Adjetey",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "GHA",
+        "playerIn": "Fatawu Issahaku",
+        "playerOut": "Elisha Owusu",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "CRO",
+        "playerIn": "Igor Matanovic",
+        "playerOut": "Ante Budimir",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "GHA",
+        "playerIn": "Brandon Thomas-Asante",
+        "playerOut": "Jordan Ayew",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "GHA",
+        "playerIn": "Ernest Nuamah",
+        "playerOut": "Kamaldeen Sulemana",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "CRO",
+        "playerIn": "Mario Pasalic",
+        "playerOut": "Mateo Kovacic",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Lincoln Financial Field",
       "city": "Philadelphia, Pennsylvania",
@@ -53218,11 +53380,11 @@
           "subbedOut": false
         },
         {
-          "name": "Nikola Vlasic",
+          "name": "Petar Sucic",
           "position": "AM",
           "positionName": "Attacking Midfielder",
-          "jersey": "13",
-          "espnId": "206378",
+          "jersey": "17",
+          "espnId": "341494",
           "subbedIn": false,
           "subbedOut": false
         },
@@ -53233,7 +53395,7 @@
           "jersey": "8",
           "espnId": "154595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Luka Modric",
@@ -53251,7 +53413,7 @@
           "jersey": "11",
           "espnId": "207288",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Martin Baturina",
@@ -53263,11 +53425,11 @@
           "subbedOut": false
         },
         {
-          "name": "Petar Sucic",
+          "name": "Nikola Vlasic",
           "position": "AM-R",
           "positionName": "Attacking Midfielder Right",
-          "jersey": "17",
-          "espnId": "341494",
+          "jersey": "13",
+          "espnId": "206378",
           "subbedIn": false,
           "subbedOut": false
         }
@@ -53297,7 +53459,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "189668",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53315,7 +53477,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "310883",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53440,7 +53602,7 @@
           "jersey": "4",
           "espnId": "341627",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Thomas Partey",
@@ -53485,7 +53647,7 @@
           "jersey": "15",
           "espnId": "266057",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kamaldeen Sulemana",
@@ -53494,7 +53656,7 @@
           "jersey": "22",
           "espnId": "303115",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Antoine Semenyo",
@@ -53512,7 +53674,7 @@
           "jersey": "9",
           "espnId": "123518",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -53549,7 +53711,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "240495",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53576,7 +53738,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "318680",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53621,7 +53783,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "357205",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53630,7 +53792,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "333310",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -53656,64 +53818,64 @@
       "_espnEventId": "760480"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 8.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
       "wonCorners": 0.0,
       "saves": 0.0,
-      "possessionPct": 52.4,
+      "possessionPct": 52.9,
       "totalShots": 5.0,
       "shotsOnTarget": 2.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 239.0,
-      "totalPasses": 253.0,
+      "accuratePasses": 425.0,
+      "totalPasses": 461.0,
       "passPct": 0.9,
       "accurateCrosses": 2.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.5,
+      "totalCrosses": 10.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 26.0,
+      "accurateLongBalls": 10.0,
+      "longballPct": 0.4,
       "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 9.0,
       "tacklePct": 0.6,
-      "interceptions": 1.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
+      "interceptions": 2.0,
+      "effectiveClearance": 16.0,
+      "totalClearance": 16.0
     },
     "awayStats": {
-      "foulsCommitted": 6.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 2.0,
       "saves": 1.0,
-      "possessionPct": 47.6,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 47.1,
+      "totalShots": 4.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 211.0,
-      "totalPasses": 229.0,
+      "accuratePasses": 366.0,
+      "totalPasses": 405.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.4,
-      "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.5,
-      "interceptions": 7.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "accurateCrosses": 3.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 34.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.5,
+      "blockedShots": 1.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.6,
+      "interceptions": 10.0,
+      "effectiveClearance": 7.0,
+      "totalClearance": 7.0
     },
     "homeForm": [
       {
