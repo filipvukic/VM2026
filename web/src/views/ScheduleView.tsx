@@ -148,42 +148,53 @@ function ScheduleList({ ds }: { ds: Dataset }) {
 }
 
 // ---------------- bracket ----------------
+// A round selector + a vertical list of that round's matches. The old design was one
+// tall, horizontally-scrolling tree — on mobile that container is taller than the
+// viewport AND scrolls sideways, so a vertical drag got trapped (you couldn't scroll
+// the page). A per-round list scrolls normally and reads cleanly on a phone.
 function Bracket({ ds }: { ds: Dataset }) {
   const openMatch = useSheets((s) => s.openMatch);
   const ko = ds.knockout;
-  const cols: { label: string; ms: Match[] }[] = [
-    { label: "16-del", ms: ko.r32 },
-    { label: "8-del", ms: ko.r16 },
-    { label: "Kvart", ms: ko.qf },
-    { label: "Semi", ms: ko.sf },
-    { label: "Final", ms: ko.final },
-  ];
+  const rounds = [
+    { key: "r32", tab: "16-del", title: "Sextondelsfinal", ms: ko.r32 },
+    { key: "r16", tab: "8-del", title: "Åttondelsfinal", ms: ko.r16 },
+    { key: "qf", tab: "Kvart", title: "Kvartsfinal", ms: ko.qf },
+    { key: "sf", tab: "Semi", title: "Semifinal", ms: ko.sf },
+    { key: "final", tab: "Final", title: "Final", ms: ko.final },
+    { key: "third", tab: "Brons", title: "Match om tredjepris", ms: ko.third },
+  ].filter((r) => r.ms && r.ms.length);
+  const [round, setRound] = useState<string>("r32");
+  const active = rounds.find((r) => r.key === round) || rounds[0];
+
   return (
     <div>
-      <div className="bracket">
-        {cols.map((c) => (
-          <div key={c.label} className="bcol">
-            <div className="kicker" style={{ textAlign: "center", marginBottom: 8 }}>{c.label}</div>
-            <div className="bcol-inner">
-              {c.ms.map((m) => (
-                <BracketCell key={m.id} m={m} ds={ds} onOpen={() => m._realId && openMatch(m.id)} />
-              ))}
-            </div>
-          </div>
+      <div className="bk-rounds">
+        {rounds.map((r) => (
+          <button key={r.key} className={r.key === active.key ? "on" : ""} onClick={() => setRound(r.key)}>
+            {r.tab}
+          </button>
         ))}
       </div>
 
-      <div className="section-head"><div className="section-title" style={{ fontSize: 18 }}>Match om tredjepris</div></div>
-      <div style={{ maxWidth: 340 }}>
-        {ko.third.map((m) => (
+      <div className="section-head" style={{ margin: "4px 2px 10px" }}>
+        <div className="section-title" style={{ fontSize: 18 }}>{active.title}</div>
+        <div className="kicker">{active.ms.length} {active.ms.length === 1 ? "match" : "matcher"}</div>
+      </div>
+
+      <div className="bk-list">
+        {active.ms.map((m) => (
           <BracketCell key={m.id} m={m} ds={ds} onOpen={() => m._realId && openMatch(m.id)} />
         ))}
       </div>
 
       <style>{`
-        .bracket{ display:flex; gap:14px; overflow-x:auto; padding-bottom:14px; scrollbar-width:thin; }
-        .bcol{ flex:0 0 220px; }
-        .bcol-inner{ display:flex; flex-direction:column; gap:10px; height:100%; justify-content:space-around; }
+        .bk-rounds{ display:flex; gap:3px; background:var(--surface); border:1px solid var(--line-2);
+          border-radius:var(--r-pill); padding:3px; overflow-x:auto; scrollbar-width:none; }
+        .bk-rounds::-webkit-scrollbar{ display:none; }
+        .bk-rounds button{ flex:1 1 0; min-width:fit-content; padding:8px 10px; border-radius:var(--r-pill);
+          font-weight:800; font-size:12.5px; color:var(--ink-3); white-space:nowrap; transition:color .15s; }
+        .bk-rounds button.on{ background:var(--grad-soft); color:#fff; }
+        .bk-list{ display:grid; gap:9px; max-width:480px; }
       `}</style>
     </div>
   );

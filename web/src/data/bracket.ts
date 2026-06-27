@@ -27,7 +27,39 @@ export function bestThirdFromGroups(letters: string, groupTables: Record<string,
   return cands[0] ? cands[0].code : null;
 }
 
-function slotResolve(spec: SlotSpec, groupTables: Record<string, GroupTableRow[]>): Slot {
+// FIFA places the 8 best third-placed teams into specific R32 slots so each plays
+// exactly once. Each third-slot's `gs` lists the groups whose third MAY land there;
+// the correct fill is therefore a bipartite matching of the 8 qualifying thirds ↔ the
+// 8 slots, every third used once. (The old code called bestThirdFromGroups per slot,
+// which re-picked the strongest third for every overlapping set — so the same team got
+// assigned to several slots, the cause of the duplicate teams in the tree.)
+function assignThirds(gsList: string[], groupTables: Record<string, GroupTableRow[]>): Record<string, string> {
+  const thirds: { g: string; p: number; ms: number; gm: number }[] = [];
+  "ABCDEFGHIJKL".split("").forEach((L) => {
+    const r = groupTables[L] && groupTables[L][2];
+    if (r && r.code && r.code.indexOf("TBD") !== 0) thirds.push({ g: L, p: r.p, ms: r.ms, gm: r.gm });
+  });
+  thirds.sort((a, b) => b.p - a.p || b.ms - a.ms || b.gm - a.gm || a.g.localeCompare(b.g));
+  const qual = new Set(thirds.slice(0, 8).map((t) => t.g)); // the 8 best thirds' groups
+  const matchGroup: Record<string, string> = {}; // group -> the gs-slot it's matched to
+  const augment = (gs: string, seen: Set<string>): boolean => {
+    for (const g of gs.split("")) {
+      if (!qual.has(g) || seen.has(g)) continue;
+      seen.add(g);
+      if (matchGroup[g] === undefined || augment(matchGroup[g], seen)) {
+        matchGroup[g] = gs;
+        return true;
+      }
+    }
+    return false;
+  };
+  gsList.forEach((gs) => augment(gs, new Set()));
+  const assign: Record<string, string> = {}; // gs-slot -> assigned group
+  Object.keys(matchGroup).forEach((g) => (assign[matchGroup[g]] = g));
+  return assign;
+}
+
+function slotResolve(spec: SlotSpec, groupTables: Record<string, GroupTableRow[]>, thirdAssign: Record<string, string>): Slot {
   if (spec.winM) return { code: null, projCode: null, label: "Vinnare M" + spec.winM };
   if (spec.loseM) return { code: null, projCode: null, label: "Förlorare M" + spec.loseM };
   if (spec.p === 1 || spec.p === 2) {
@@ -36,11 +68,10 @@ function slotResolve(spec: SlotSpec, groupTables: Record<string, GroupTableRow[]
     return { code: null, projCode: proj, label: (spec.p === 1 ? "Vinnare " : "Tvåa ") + spec.g };
   }
   if (spec.p === 3 && spec.gs) {
-    return {
-      code: null,
-      projCode: bestThirdFromGroups(spec.gs, groupTables),
-      label: "Bästa 3:a (" + spec.gs.split("").join("/") + ")",
-    };
+    const g = thirdAssign[spec.gs];
+    const row = g ? groupTables[g] && groupTables[g][2] : null;
+    const proj = row && row.code && row.code.indexOf("TBD") !== 0 ? row.code : null;
+    return { code: null, projCode: proj, label: "Bästa 3:a (" + spec.gs.split("").join("/") + ")" };
   }
   return { code: null, projCode: null, label: "TBD" };
 }
@@ -115,7 +146,9 @@ export function buildKnockout(
   groupTables: Record<string, GroupTableRow[]>,
   allMatches: Match[]
 ): Knockout {
-  const sr = (spec: SlotSpec) => slotResolve(spec, groupTables);
+  const gsList = R32_SPECS.map((s) => s.a.gs || s.b.gs).filter((x): x is string => !!x);
+  const thirdAssign = assignThirds(gsList, groupTables);
+  const sr = (spec: SlotSpec) => slotResolve(spec, groupTables, thirdAssign);
 
   const r32 = R32_SPECS.map((spec, i) => makeKoMatch("r32_", i, sr(spec.a), sr(spec.b), spec.fifa));
   const r16: Match[] = [];
@@ -133,12 +166,18 @@ export function buildKnockout(
   const final = [makeKoMatch("final_", 0, sr({ winM: SF_FIFA[0] }), sr({ winM: SF_FIFA[1] }), 104)];
   const third = [makeKoMatch("third_", 0, sr({ loseM: SF_FIFA[0] }), sr({ loseM: SF_FIFA[1] }), 103)];
 
-  function overlayKO(structural: Match[], stagePrefix: string) {
+  // Real KO fixtures carry no team draw yet (only group winners placed), so they can't
+  // be matched to a tree slot by teams. They ARE scheduled in FIFA match-number order,
+  // so the i-th fixture by kickoff is match (baseFifa + i) — map it to the structural
+  // slot with that FIFA number. (Matching by array index was the bug: the structural
+  // array is in TREE order, not match-number order, so a placed winner like GER/M75
+  // landed in the M74 slot and showed up against the wrong projected opponent.)
+  function overlayKO(structural: Match[], stagePrefix: string, baseFifa: number) {
     const real = allMatches
       .filter((m) => m.id.indexOf(stagePrefix) === 0)
       .sort((a, b) => +a.kickoff - +b.kickoff);
     real.forEach((rm, i) => {
-      const s = structural[i];
+      const s = structural.find((x) => x.fifa === baseFifa + i);
       if (!s) return;
       s.id = rm.id;
       s.kickoff = rm.kickoff;
@@ -174,12 +213,12 @@ export function buildKnockout(
     });
   }
 
-  overlayKO(r32, "r32_");
-  overlayKO(r16, "r16_");
-  overlayKO(qf, "qf_");
-  overlayKO(sf, "sf_");
-  overlayKO(third, "third_");
-  overlayKO(final, "final_");
+  overlayKO(r32, "r32_", 73);
+  overlayKO(r16, "r16_", 89);
+  overlayKO(qf, "qf_", 97);
+  overlayKO(sf, "sf_", 101);
+  overlayKO(third, "third_", 103);
+  overlayKO(final, "final_", 104);
 
   return { r32, r16, qf, sf, third, final };
 }
