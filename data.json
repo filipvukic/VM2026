@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T23:38:13+00:00",
+  "updated_at": "2026-06-27T01:32:10+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -16843,20 +16843,94 @@
       "homeTla": "CPV",
       "away": "Saudi Arabia",
       "awayTla": "KSA",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "68",
       "goals": [],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "4",
+          "team": "KSA",
+          "player": "Saud Abdulhamid",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "9",
+          "team": "CPV",
+          "player": "Wagner Pina",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "67",
+          "team": "KSA",
+          "player": "Nasser Al-Dawsari",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "33",
+          "team": "KSA",
+          "playerIn": "Ali Lajami",
+          "playerOut": "Hassan Al-Tambakti",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "KSA",
+          "playerIn": "Musab Al-Juwayr",
+          "playerOut": "Abdullah Al-Khaibari",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CPV",
+          "playerIn": "Nuno da Costa",
+          "playerOut": "Dailon Livramento",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "CPV",
+          "playerIn": "Hélio Varela",
+          "playerOut": "Willy Semedo",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "KSA",
+          "playerIn": "Mohammed Abu Al-Shamat",
+          "playerOut": "Salem Al-Dawsari",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "KSA",
+          "playerIn": "Abdullah Al-Hamdan",
+          "playerOut": "Sultan Mandash",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "NRG Stadium",
         "city": "Houston, Texas",
@@ -16864,9 +16938,8 @@
       },
       "referees": [
         {
-          "name": "François Letexier",
-          "role": "REFEREE",
-          "nationality": "France"
+          "name": "Francois Letexier",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -16972,20 +17045,108 @@
       "homeTla": "URU",
       "away": "Spain",
       "awayTla": "ESP",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "68",
+      "goals": [
+        {
+          "minute": "42",
+          "team": "ESP",
+          "scorer": "Álex Baena",
+          "assist": "Marcos Llorente",
+          "type": "REGULAR",
+          "description": "Goal! Uruguay 0, Spain 1. Álex Baena (Spain) right footed shot from the centre of the box to the bottom left corner. Assisted by Marcos Llorente with a cross.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "46",
+          "team": "ESP",
+          "player": "Álex Baena",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "54",
+          "team": "URU",
+          "player": "Juan Manuel Sanabria",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "58",
+          "team": "URU",
+          "player": "Guillermo Varela",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "URU",
+          "playerIn": "Nicolás de la Cruz",
+          "playerOut": "Manuel Ugarte",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "URU",
+          "playerIn": "Sergio Rochet",
+          "playerOut": "Fernando Muslera",
+          "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "URU",
+          "playerIn": "Federico Viñas",
+          "playerOut": "Federico Valverde",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "ESP",
+          "playerIn": "Fabián Ruiz",
+          "playerOut": "Pedri ",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "ESP",
+          "playerIn": "Dani Olmo",
+          "playerOut": "Mikel Merino",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "ESP",
+          "playerIn": "Yéremy Pino",
+          "playerOut": "Álex Baena",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Estadio Akron",
         "city": "Guadalajara",
@@ -16994,8 +17155,7 @@
       "referees": [
         {
           "name": "Ismail Elfath",
-          "role": "REFEREE",
-          "nationality": "United States"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -17120,7 +17280,13 @@
         "city": "Vancouver",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Adham Makhadmeh",
+          "role": "REFEREE",
+          "nationality": "Jordan"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -17243,7 +17409,13 @@
         "city": "Seattle, Washington",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Szymon Marciniak",
+          "role": "REFEREE",
+          "nationality": "Poland"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -18454,50 +18626,50 @@
         {
           "team": "Spain",
           "tla": "ESP",
-          "played": 2,
-          "won": 1,
+          "played": 3,
+          "won": 2,
           "draw": 1,
           "lost": 0,
-          "gf": 4,
+          "gf": 5,
           "ga": 0,
-          "gd": 4,
-          "points": 4
-        },
-        {
-          "team": "Uruguay",
-          "tla": "URU",
-          "played": 2,
-          "won": 0,
-          "draw": 2,
-          "lost": 0,
-          "gf": 3,
-          "ga": 3,
-          "gd": 0,
-          "points": 2
+          "gd": 5,
+          "points": 7
         },
         {
           "team": "Cape Verde Islands",
           "tla": "CPV",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 2,
+          "draw": 3,
           "lost": 0,
           "gf": 2,
           "ga": 2,
           "gd": 0,
+          "points": 3
+        },
+        {
+          "team": "Uruguay",
+          "tla": "URU",
+          "played": 3,
+          "won": 0,
+          "draw": 2,
+          "lost": 1,
+          "gf": 3,
+          "ga": 4,
+          "gd": -1,
           "points": 2
         },
         {
           "team": "Saudi Arabia",
           "tla": "KSA",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 1,
+          "draw": 2,
           "lost": 1,
           "gf": 1,
           "ga": 5,
           "gd": -4,
-          "points": 1
+          "points": 2
         }
       ]
     },
