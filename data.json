@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-27T20:42:46+00:00",
+  "updated_at": "2026-06-27T21:44:05+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -17904,17 +17904,23 @@
       "homeTla": "PAN",
       "away": "England",
       "awayTla": "ENG",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "43",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -17925,9 +17931,8 @@
       },
       "referees": [
         {
-          "name": "Abdulrahman Al Jassim",
-          "role": "REFEREE",
-          "nationality": "Qatar"
+          "name": "Abdulrahman Al-Jassim",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -18033,18 +18038,38 @@
       "homeTla": "CRO",
       "away": "Ghana",
       "awayTla": "GHA",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        1,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          1,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "42",
+      "goals": [
+        {
+          "minute": "31",
+          "team": "CRO",
+          "scorer": "Petar Sucic",
+          "assist": "Mateo Kovacic",
+          "type": "REGULAR",
+          "description": "Goal! Croatia 1, Ghana 0. Petar Sucic (Croatia) right footed shot from outside the box to the bottom left corner. Assisted by Mateo Kovacic.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -18055,8 +18080,7 @@
       "referees": [
         {
           "name": "Drew Fischer",
-          "role": "REFEREE",
-          "nationality": "Canada"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -18181,7 +18205,13 @@
         "city": "Miami Gardens, Florida",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Alireza Faghani",
+          "role": "REFEREE",
+          "nationality": "Iran"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -18304,7 +18334,13 @@
         "city": "Atlanta, Georgia",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Felix Zwayer",
+          "role": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -19235,50 +19271,50 @@
         {
           "team": "England",
           "tla": "ENG",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 4,
           "ga": 2,
           "gd": 2,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Ghana",
           "tla": "GHA",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 1,
+          "draw": 2,
           "lost": 0,
           "gf": 1,
           "ga": 0,
           "gd": 1,
-          "points": 4
+          "points": 5
         },
         {
           "team": "Croatia",
           "tla": "CRO",
-          "played": 2,
+          "played": 3,
           "won": 1,
-          "draw": 0,
+          "draw": 1,
           "lost": 1,
           "gf": 3,
           "ga": 4,
           "gd": -1,
-          "points": 3
+          "points": 4
         },
         {
           "team": "Panama",
           "tla": "PAN",
-          "played": 2,
+          "played": 3,
           "won": 0,
-          "draw": 0,
+          "draw": 1,
           "lost": 2,
           "gf": 0,
           "ga": 2,
           "gd": -2,
-          "points": 0
+          "points": 1
         }
       ]
     }
