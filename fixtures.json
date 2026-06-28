@@ -58156,8 +58156,8 @@
       "awayML": 850,
       "spread": "GER -1.5",
       "overUnder": 2.5,
-      "overOdds": -145.0,
-      "underOdds": 120.0,
+      "overOdds": -140.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -58414,8 +58414,8 @@
       "awayML": 105,
       "spread": "NOR -0.5",
       "overUnder": 2.5,
-      "overOdds": -115.0,
-      "underOdds": -105.0,
+      "overOdds": -120.0,
+      "underOdds": 100.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -58539,12 +58539,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -360,
-      "awayML": 950,
+      "homeML": -370,
+      "awayML": 1000,
       "spread": "FRA -1.5",
       "overUnder": 3.5,
       "overOdds": 125.0,
-      "underOdds": -155.0,
+      "underOdds": -160.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -58668,12 +58668,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 130,
-      "awayML": 270,
+      "homeML": 125,
+      "awayML": 280,
       "spread": "MEX -0.5",
       "overUnder": 1.5,
       "overOdds": -170.0,
-      "underOdds": 135.0,
+      "underOdds": 140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -58797,11 +58797,11 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -360,
-      "awayML": 1100,
+      "homeML": -370,
+      "awayML": 1200,
       "spread": "ENG -1.5",
       "overUnder": 2.5,
-      "overOdds": -110.0,
+      "overOdds": -115.0,
       "underOdds": -110.0,
       "provider": "DraftKings"
     },
@@ -59185,7 +59185,7 @@
     "attendance": null,
     "espnOdds": {
       "homeML": -340,
-      "awayML": 1100,
+      "awayML": 1000,
       "spread": "ESP -1.5",
       "overUnder": 2.5,
       "overOdds": -115.0,
@@ -59317,8 +59317,8 @@
       "awayML": 370,
       "spread": "POR -0.5",
       "overUnder": 2.5,
-      "overOdds": 110.0,
-      "underOdds": -140.0,
+      "overOdds": 105.0,
+      "underOdds": -130.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -59442,12 +59442,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -110,
-      "awayML": 330,
+      "homeML": 105,
+      "awayML": 300,
       "spread": "SUI -0.5",
       "overUnder": 2.5,
-      "overOdds": 100.0,
-      "underOdds": -125.0,
+      "overOdds": 110.0,
+      "underOdds": -135.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -59691,17 +59691,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Hard Rock Stadium",
+      "city": "Miami Gardens, Florida",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -650,
+      "awayML": 1800,
+      "spread": "ARG -2.5",
+      "overUnder": 2.5,
+      "overOdds": -160.0,
+      "underOdds": 130.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 7.0,
+      "totalGoals": 8.0,
+      "goalAssists": 3.0,
+      "goalsConceded": 1.0
+    },
+    "awayStats": {
+      "goalDifference": 0.0,
+      "totalGoals": 2.0,
+      "goalAssists": 0.0,
+      "goalsConceded": 2.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-07",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-27",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 2,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      },
+      {
+        "date": "2026-05-31",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-03-30",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537430,
