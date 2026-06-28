@@ -57257,10 +57257,10 @@
     "homeTla": "RSA",
     "away": "Canada",
     "awayTla": "CAN",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       0,
-      0
+      1
     ],
     "scoreDetail": {
       "halfTime": [
@@ -57269,20 +57269,41 @@
       ],
       "fullTime": [
         0,
-        0
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "61",
-    "goals": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "90+2",
+        "team": "CAN",
+        "scorer": "Stephen Eustáquio",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! South Africa 0, Canada 1. Stephen Eustaquio (Canada) right footed shot from outside the box to the bottom left corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "54",
         "team": "CAN",
         "player": "Nathan Saliba",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "CAN",
+        "player": "Niko Sigur",
         "card": "YELLOW",
         "period": 2
       }
@@ -57308,6 +57329,41 @@
         "playerIn": "Luc de Fougerolles",
         "playerOut": "Moïse Bombito",
         "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "CAN",
+        "playerIn": "Promise David",
+        "playerOut": "Tani Oluwaseyi",
+        "period": 2
+      },
+      {
+        "minute": "70",
+        "team": "CAN",
+        "playerIn": "Jacob Shaffelburg",
+        "playerOut": "Liam Millar",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "CAN",
+        "playerIn": "Alphonso Davies",
+        "playerOut": "Tajon Buchanan",
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "RSA",
+        "playerIn": "Iqraam Rayners",
+        "playerOut": "Evidence Makgopa",
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "RSA",
+        "playerIn": "Tshepang Moremi",
+        "playerOut": "Thapelo Maseko",
+        "period": 2
       }
     ],
     "venue": {
@@ -57322,7 +57378,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 69237,
     "espnOdds": {
       "homeML": 380,
       "awayML": -115,
@@ -57414,7 +57470,7 @@
           "jersey": "17",
           "espnId": "303312",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Oswin Appollis",
@@ -57432,7 +57488,7 @@
           "jersey": "12",
           "espnId": "335450",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -57442,7 +57498,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "291141",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -57505,7 +57561,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "313399",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -57639,7 +57695,7 @@
           "jersey": "11",
           "espnId": "271879",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tajon Buchanan",
@@ -57648,7 +57704,7 @@
           "jersey": "17",
           "espnId": "284769",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Tani Oluwaseyi",
@@ -57657,7 +57713,7 @@
           "jersey": "12",
           "espnId": "294039",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan David",
@@ -57694,7 +57750,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "286214",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -57712,7 +57768,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "318522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -57784,7 +57840,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "236721",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -57801,64 +57857,64 @@
       "_espnEventId": "760486"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
+      "foulsCommitted": 10.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
+      "offsides": 1.0,
       "wonCorners": 1.0,
-      "saves": 3.0,
-      "possessionPct": 59.0,
-      "totalShots": 3.0,
+      "saves": 5.0,
+      "possessionPct": 58.2,
+      "totalShots": 6.0,
       "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 295.0,
-      "totalPasses": 350.0,
+      "accuratePasses": 466.0,
+      "totalPasses": 550.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 8.0,
       "crossPct": 0.3,
-      "totalLongBalls": 49.0,
-      "accurateLongBalls": 25.0,
-      "longballPct": 0.5,
+      "totalLongBalls": 70.0,
+      "accurateLongBalls": 31.0,
+      "longballPct": 0.4,
       "blockedShots": 1.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 15.0,
-      "tacklePct": 0.5,
-      "interceptions": 12.0,
-      "effectiveClearance": 20.0,
-      "totalClearance": 20.0
+      "effectiveTackles": 14.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.6,
+      "interceptions": 16.0,
+      "effectiveClearance": 34.0,
+      "totalClearance": 34.0
     },
     "awayStats": {
-      "foulsCommitted": 10.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 16.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 3.0,
+      "wonCorners": 4.0,
       "saves": 1.0,
-      "possessionPct": 41.0,
-      "totalShots": 7.0,
-      "shotsOnTarget": 4.0,
+      "possessionPct": 41.8,
+      "totalShots": 12.0,
+      "shotsOnTarget": 7.0,
       "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 179.0,
-      "totalPasses": 232.0,
+      "accuratePasses": 298.0,
+      "totalPasses": 381.0,
       "passPct": 0.8,
-      "accurateCrosses": 4.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.5,
-      "totalLongBalls": 19.0,
-      "accurateLongBalls": 10.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 31.0,
+      "accurateLongBalls": 15.0,
       "longballPct": 0.5,
       "blockedShots": 0.0,
-      "effectiveTackles": 6.0,
-      "totalTackles": 10.0,
-      "tacklePct": 0.6,
-      "interceptions": 7.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "effectiveTackles": 15.0,
+      "totalTackles": 20.0,
+      "tacklePct": 0.8,
+      "interceptions": 8.0,
+      "effectiveClearance": 14.0,
+      "totalClearance": 14.0
     },
     "homeForm": [
       {
