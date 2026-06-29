@@ -64,7 +64,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const vIso = venueIso(m.venue);
   // Where to watch on Swedish TV — only useful before/while it airs, not after.
-  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name) : null;
+  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
   const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too

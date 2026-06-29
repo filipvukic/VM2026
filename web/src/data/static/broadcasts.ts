@@ -95,6 +95,21 @@ const BY_TLA_PAIR: Record<string, Broadcaster> = {
   "TUR|USA": "tv4",
 };
 
+// Knockout matches are assigned to SVT/TV4 by their SLOT (FIFA match number), not by
+// the teams — so this is keyed by m.fifa. From SVT's own WC schedule (svt.se) cross-
+// checked against the FIFA "W"-notation (e.g. R16 89 = W73–W75, QF 97 = W89–W90), which
+// lines up exactly with the bracket. R32 = 73–88, R16 = 89–96, QF = 97–100, SF = 101–102,
+// bronze = 103, final = 104.
+const KO_BROADCAST: Record<number, Broadcaster> = {
+  // Round of 32
+  74: "tv4", 75: "svt", 76: "svt", 77: "tv4", 78: "tv4", 79: "tv4", 80: "svt", 81: "tv4",
+  82: "tv4", 83: "svt", 84: "tv4", 85: "tv4", 86: "tv4", 87: "svt", 88: "svt",
+  // Round of 16
+  89: "tv4", 90: "svt", 91: "tv4", 92: "svt", 93: "tv4", 94: "tv4", 95: "tv4", 96: "svt",
+  // Quarter-finals · Semi-finals · Bronze · Final
+  97: "tv4", 98: "svt", 99: "tv4", 100: "svt", 101: "svt", 102: "tv4", 103: "svt", 104: "tv4",
+};
+
 export interface BroadcastInfo {
   /** Known channel group, or null when we don't have a specific listing. */
   broadcaster: Broadcaster | null;
@@ -119,12 +134,19 @@ export function broadcastForPair(
   homeTla?: string | null,
   awayTla?: string | null,
   homeName?: string | null,
-  awayName?: string | null
+  awayName?: string | null,
+  fifa?: number | null
 ): BroadcastInfo {
+  const svt = homeName && awayName ? svtSearch(homeName, awayName) : SVT_HUB;
+  const svtInfo: BroadcastInfo = { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: svt, free: true };
+  const tv4Info: BroadcastInfo = { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
+  // Knockout: look up by match slot (FIFA number).
+  if (fifa != null && KO_BROADCAST[fifa]) return KO_BROADCAST[fifa] === "svt" ? svtInfo : tv4Info;
+  // Group stage: the hand-kept team-pair table.
   const key = homeTla && awayTla ? [homeTla.toUpperCase(), awayTla.toUpperCase()].sort().join("|") : "";
   const b = key ? BY_TLA_PAIR[key] : undefined;
-  const svt = homeName && awayName ? svtSearch(homeName, awayName) : SVT_HUB;
-  if (b === "svt") return { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: svt, free: true };
-  if (b === "tv4") return { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
+  if (b === "svt") return svtInfo;
+  if (b === "tv4") return tv4Info;
+  // Truly unknown (e.g. a knockout slot we don't have yet) → offer both.
   return { broadcaster: null, label: "SVT eller TV4", channels: ["SVT Play", "TV4 Play"], url: svt, free: true, tv4Url: TV4_HUB };
 }
