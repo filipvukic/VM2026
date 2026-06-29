@@ -58000,19 +58000,61 @@
     "homeTla": "BRA",
     "away": "Japan",
     "awayTla": "JPN",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      0,
+      1
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        0,
+        1
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": null,
-    "goals": [],
-    "bookings": [],
+    "minute": "45",
+    "goals": [
+      {
+        "minute": "29",
+        "team": "JPN",
+        "scorer": "Kaishu Sano",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Brazil 0, Japan 1. Kaishu Sano (Japan) right footed shot from outside the box to the bottom left corner following a fast break.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "12",
+        "team": "JPN",
+        "player": "Kaishu Sano",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "14",
+        "team": "BRA",
+        "player": "Casemiro",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "45",
+        "team": "JPN",
+        "player": "Daichi Kamada",
+        "card": "YELLOW",
+        "period": 1
+      }
+    ],
     "subs": [],
     "venue": {
       "stadium": "NRG Stadium",
@@ -58022,34 +58064,556 @@
     "referees": [
       {
         "name": "Maurizio Mariani",
-        "role": "REFEREE",
-        "nationality": "Italy"
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
       "homeML": -135,
-      "awayML": 400,
+      "awayML": 425,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
-      "overOdds": 105.0,
-      "underOdds": -130.0,
+      "overOdds": 120.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
-    "homeLineup": null,
-    "awayLineup": null,
+    "homeLineup": {
+      "formation": "4-3-3",
+      "lineup": [
+        {
+          "name": "Alisson Becker",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "196876",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gabriel Magalhães",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "3",
+          "espnId": "236322",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marquinhos",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "4",
+          "espnId": "159047",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Douglas Santos",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "16",
+          "espnId": "186575",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Danilo",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "13",
+          "espnId": "170369",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Casemiro",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "5",
+          "espnId": "173666",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Lucas Paquetá",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "20",
+          "espnId": "234715",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Bruno Guimarães",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "8",
+          "espnId": "218522",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Matheus Cunha",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "259902",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Vinícius Júnior",
+          "position": "LF",
+          "positionName": "Left Forward",
+          "jersey": "7",
+          "espnId": "252107",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rayan",
+          "position": "RF",
+          "positionName": "Right Forward",
+          "jersey": "26",
+          "espnId": "357719",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Neymar",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "132948",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gabriel Martinelli",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "269844",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Léo Pereira",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "145405",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Igor Thiago",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "301894",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Danilo Santos",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "306764",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Éderson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "278210",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Fabinho",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "176287",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Endrick",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "346612",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Roger Ibañez",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "259835",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Bremer",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "258307",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Luiz Henrique",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "304215",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alex Sandro",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "125514",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ederson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "176948",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Weverton",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "198983",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "BRA",
+      "_espnEventId": "760487"
+    },
+    "awayLineup": {
+      "formation": "3-4-2-1",
+      "lineup": [
+        {
+          "name": "Zion Suzuki",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "265958",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Shogo Taniguchi",
+          "position": "CD",
+          "positionName": "Center Defender",
+          "jersey": "3",
+          "espnId": "202728",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Hiroki Ito",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "21",
+          "espnId": "97111",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Takehiro Tomiyasu",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "22",
+          "espnId": "238004",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Daichi Kamada",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "15",
+          "espnId": "219362",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kaishu Sano",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "24",
+          "espnId": "357030",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Keito Nakamura",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "13",
+          "espnId": "265953",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ritsu Doan",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "10",
+          "espnId": "219627",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ayase Ueda",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "18",
+          "espnId": "274277",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Daizen Maeda",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "11",
+          "espnId": "286347",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Junya Ito",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "14",
+          "espnId": "219350",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Keisuke Osako",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "255723",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kou Itakura",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "238033",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Koki Ogawa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "238016",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yuto Nagatomo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "119082",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yuito Suzuki",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "303031",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Tsuyoshi Watanabe",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "276279",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kento Shiogai",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "362959",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Tomoki Hayakawa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "312924",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Shuto Machino",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "271352",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ayumu Seko",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "258270",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yukinari Sugawara",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "265965",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Junnosuke Suzuki",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "333663",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Keisuke Goto",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "346208",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Takefusa Kubo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "8",
+          "espnId": "256587",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ao Tanaka",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "253173",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "JPN",
+      "_espnEventId": "760487"
+    },
     "homeStats": {
-      "goalDifference": 6.0,
-      "totalGoals": 7.0,
-      "goalAssists": 6.0,
-      "goalsConceded": 1.0
+      "foulsCommitted": 1.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 2.0,
+      "saves": 0.0,
+      "possessionPct": 76.7,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 292.0,
+      "totalPasses": 313.0,
+      "passPct": 0.9,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 20.0,
+      "accurateLongBalls": 10.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 7.0,
+      "tacklePct": 0.6,
+      "interceptions": 2.0,
+      "effectiveClearance": 3.0,
+      "totalClearance": 3.0
     },
     "awayStats": {
-      "goalDifference": 4.0,
-      "totalGoals": 7.0,
-      "goalAssists": 7.0,
-      "goalsConceded": 3.0
+      "foulsCommitted": 5.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 2.0,
+      "saves": 2.0,
+      "possessionPct": 23.3,
+      "totalShots": 3.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 73.0,
+      "totalPasses": 90.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 5.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 16.0,
+      "accurateLongBalls": 7.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 5.0,
+      "tacklePct": 0.4,
+      "interceptions": 2.0,
+      "effectiveClearance": 11.0,
+      "totalClearance": 11.0
     },
     "homeForm": [
       {
@@ -59061,7 +59625,7 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -270,
+      "homeML": -260,
       "awayML": 800,
       "spread": "USA -1.5",
       "overUnder": 2.5,
@@ -59839,8 +60403,8 @@
       "awayML": 600,
       "spread": "COL -1.5",
       "overUnder": 2.5,
-      "overOdds": 120.0,
-      "underOdds": -150.0,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
