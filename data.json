@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-29T22:18:29+00:00",
+  "updated_at": "2026-06-29T23:29:11+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19503,8 +19503,8 @@
       "awayTla": "PAR",
       "status": "IN_PLAY",
       "score": [
-        1,
-        1
+        4,
+        4
       ],
       "scoreDetail": {
         "halfTime": [
@@ -19512,15 +19512,21 @@
           1
         ],
         "fullTime": [
-          1,
-          1
+          4,
+          4
         ],
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "extraTime": [
+          0,
+          0
+        ],
+        "penalties": [
+          3,
+          3
+        ],
+        "duration": "PENALTY_SHOOTOUT",
+        "winnerSide": null
       },
-      "minute": "85",
+      "minute": "120",
       "goals": [
         {
           "minute": "42",
@@ -19556,6 +19562,27 @@
           "player": "Andrés Cubas",
           "card": "YELLOW",
           "period": 2
+        },
+        {
+          "minute": "106",
+          "team": "GER",
+          "player": "Kai Havertz",
+          "card": "YELLOW",
+          "period": 4
+        },
+        {
+          "minute": "115",
+          "team": "GER",
+          "player": "Jamal Musiala",
+          "card": "YELLOW",
+          "period": 4
+        },
+        {
+          "minute": "117",
+          "team": "PAR",
+          "player": "Matías Galarza",
+          "card": "YELLOW",
+          "period": 4
         }
       ],
       "subs": [
@@ -19593,6 +19620,55 @@
           "playerIn": "Waldemar Anton",
           "playerOut": "Aleksandar Pavlovic",
           "period": 2
+        },
+        {
+          "minute": "88",
+          "team": "GER",
+          "playerIn": "Nick Woltemade",
+          "playerOut": "Leroy Sané",
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "PAR",
+          "playerIn": "Gustavo Velázquez",
+          "playerOut": "Miguel Almirón",
+          "period": 3
+        },
+        {
+          "minute": "99",
+          "team": "PAR",
+          "playerIn": "Braian Ojeda",
+          "playerOut": "Juan Jose Cáceres",
+          "period": 3
+        },
+        {
+          "minute": "99",
+          "team": "PAR",
+          "playerIn": "Antonio Sanabria",
+          "playerOut": "Damián Bobadilla",
+          "period": 3
+        },
+        {
+          "minute": "110",
+          "team": "GER",
+          "playerIn": "Nadiem Amiri",
+          "playerOut": "Florian Wirtz",
+          "period": 4
+        },
+        {
+          "minute": "110",
+          "team": "GER",
+          "playerIn": "Malick Thiaw",
+          "playerOut": "Antonio Rüdiger",
+          "period": 4
+        },
+        {
+          "minute": "120+2",
+          "team": "PAR",
+          "playerIn": "Fabián Balbuena",
+          "playerOut": "Júnior Alonso",
+          "period": 4
         }
       ],
       "venue": {
@@ -19648,7 +19724,13 @@
         "city": "Guadalupe",
         "country": "Mexico"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Wilton Sampaio",
+          "role": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [

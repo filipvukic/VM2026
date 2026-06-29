@@ -58808,8 +58808,8 @@
     "awayTla": "PAR",
     "status": "IN_PLAY",
     "score": [
-      1,
-      1
+      4,
+      4
     ],
     "scoreDetail": {
       "halfTime": [
@@ -58817,15 +58817,21 @@
         1
       ],
       "fullTime": [
-        1,
-        1
+        4,
+        4
       ],
-      "extraTime": null,
-      "penalties": null,
-      "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "extraTime": [
+        0,
+        0
+      ],
+      "penalties": [
+        3,
+        3
+      ],
+      "duration": "PENALTY_SHOOTOUT",
+      "winnerSide": null
     },
-    "minute": "85",
+    "minute": "120",
     "goals": [
       {
         "minute": "42",
@@ -58861,6 +58867,27 @@
         "player": "Andrés Cubas",
         "card": "YELLOW",
         "period": 2
+      },
+      {
+        "minute": "106",
+        "team": "GER",
+        "player": "Kai Havertz",
+        "card": "YELLOW",
+        "period": 4
+      },
+      {
+        "minute": "115",
+        "team": "GER",
+        "player": "Jamal Musiala",
+        "card": "YELLOW",
+        "period": 4
+      },
+      {
+        "minute": "117",
+        "team": "PAR",
+        "player": "Matías Galarza",
+        "card": "YELLOW",
+        "period": 4
       }
     ],
     "subs": [
@@ -58898,6 +58925,55 @@
         "playerIn": "Waldemar Anton",
         "playerOut": "Aleksandar Pavlovic",
         "period": 2
+      },
+      {
+        "minute": "88",
+        "team": "GER",
+        "playerIn": "Nick Woltemade",
+        "playerOut": "Leroy Sané",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "PAR",
+        "playerIn": "Gustavo Velázquez",
+        "playerOut": "Miguel Almirón",
+        "period": 3
+      },
+      {
+        "minute": "99",
+        "team": "PAR",
+        "playerIn": "Braian Ojeda",
+        "playerOut": "Juan Jose Cáceres",
+        "period": 3
+      },
+      {
+        "minute": "99",
+        "team": "PAR",
+        "playerIn": "Antonio Sanabria",
+        "playerOut": "Damián Bobadilla",
+        "period": 3
+      },
+      {
+        "minute": "110",
+        "team": "GER",
+        "playerIn": "Nadiem Amiri",
+        "playerOut": "Florian Wirtz",
+        "period": 4
+      },
+      {
+        "minute": "110",
+        "team": "GER",
+        "playerIn": "Malick Thiaw",
+        "playerOut": "Antonio Rüdiger",
+        "period": 4
+      },
+      {
+        "minute": "120+2",
+        "team": "PAR",
+        "playerIn": "Fabián Balbuena",
+        "playerOut": "Júnior Alonso",
+        "period": 4
       }
     ],
     "venue": {
@@ -58941,7 +59017,7 @@
           "jersey": "2",
           "espnId": "169438",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan Tah",
@@ -58995,7 +59071,7 @@
           "jersey": "17",
           "espnId": "303748",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Leroy Sané",
@@ -59004,7 +59080,7 @@
           "jersey": "19",
           "espnId": "202641",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Deniz Undav",
@@ -59059,7 +59135,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "210818",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59095,7 +59171,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "303444",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59104,7 +59180,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "298349",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59193,7 +59269,7 @@
           "jersey": "6",
           "espnId": "181657",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Juan Jose Cáceres",
@@ -59202,7 +59278,7 @@
           "jersey": "4",
           "espnId": "84295",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Andrés Cubas",
@@ -59220,7 +59296,7 @@
           "jersey": "16",
           "espnId": "301516",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Matías Galarza",
@@ -59238,7 +59314,7 @@
           "jersey": "10",
           "espnId": "48128",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Julio Enciso",
@@ -59302,7 +59378,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "192162",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59329,7 +59405,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "119413",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59347,7 +59423,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "265977",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59356,7 +59432,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "199101",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59391,64 +59467,64 @@
       "_espnEventId": "760489"
     },
     "homeStats": {
-      "foulsCommitted": 12.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 18.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 3.0,
-      "wonCorners": 8.0,
-      "saves": 3.0,
-      "possessionPct": 75.7,
-      "totalShots": 11.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.2,
+      "offsides": 4.0,
+      "wonCorners": 16.0,
+      "saves": 2.0,
+      "possessionPct": 75.3,
+      "totalShots": 21.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 519.0,
-      "totalPasses": 577.0,
+      "accuratePasses": 719.0,
+      "totalPasses": 799.0,
       "passPct": 0.9,
-      "accurateCrosses": 5.0,
-      "totalCrosses": 34.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 27.0,
-      "accurateLongBalls": 17.0,
-      "longballPct": 0.6,
-      "blockedShots": 5.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.6,
+      "accurateCrosses": 10.0,
+      "totalCrosses": 56.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 39.0,
+      "accurateLongBalls": 26.0,
+      "longballPct": 0.7,
+      "blockedShots": 8.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.7,
       "interceptions": 4.0,
-      "effectiveClearance": 11.0,
-      "totalClearance": 11.0
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
     },
     "awayStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 12.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 3.0,
-      "saves": 2.0,
-      "possessionPct": 24.3,
-      "totalShots": 6.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.7,
+      "wonCorners": 6.0,
+      "saves": 6.0,
+      "possessionPct": 24.7,
+      "totalShots": 7.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 114.0,
-      "totalPasses": 183.0,
+      "accuratePasses": 161.0,
+      "totalPasses": 257.0,
       "passPct": 0.6,
-      "accurateCrosses": 5.0,
-      "totalCrosses": 12.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 53.0,
-      "accurateLongBalls": 12.0,
-      "longballPct": 0.2,
-      "blockedShots": 1.0,
-      "effectiveTackles": 14.0,
-      "totalTackles": 20.0,
-      "tacklePct": 0.7,
-      "interceptions": 11.0,
-      "effectiveClearance": 33.0,
-      "totalClearance": 33.0
+      "accurateCrosses": 6.0,
+      "totalCrosses": 21.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 78.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.3,
+      "blockedShots": 2.0,
+      "effectiveTackles": 21.0,
+      "totalTackles": 33.0,
+      "tacklePct": 0.6,
+      "interceptions": 13.0,
+      "effectiveClearance": 54.0,
+      "totalClearance": 54.0
     },
     "homeForm": [
       {
@@ -59553,7 +59629,13 @@
       "city": "Guadalupe",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Wilton Sampaio",
+        "role": "REFEREE",
+        "nationality": "Brazil"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
