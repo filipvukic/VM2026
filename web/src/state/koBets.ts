@@ -9,13 +9,20 @@ export type Tip = [number, number];
 // A KO match's bet key = its real fixture id (stable, matches the worker's keys).
 export const koFid = (m: Match) => String(m._realId ?? "");
 
-// Matches you can tip right now: drawn (both teams) + has a real fixture + not kicked
-// off. Mirrors the worker's openFixtureIds so the home reminder works even before login.
+// Matches you can tip right now, PER ROUND: a whole round opens once ALL its matches
+// are drawn and it hasn't started (earliest kickoff in the future). Mirrors the
+// worker's openFixtureIds so the home reminder works even before login.
 export function koOpenMatches(ds: Dataset, now: number): Match[] {
   const k = ds.knockout;
-  return [...k.r32, ...k.r16, ...k.qf, ...k.sf, ...k.third, ...k.final].filter(
-    (m) => m.home && m.away && m._realId && m.kickoff && m.kickoff.getTime() > now
-  );
+  const out: Match[] = [];
+  for (const list of [k.r32, k.r16, k.qf, k.sf, k.third, k.final]) {
+    const real = list.filter((m) => m._realId);
+    if (!real.length || !real.every((m) => m.home && m.away)) continue; // not fully drawn
+    const kos = real.map((m) => m.kickoff?.getTime()).filter((t): t is number => !!t && Number.isFinite(t));
+    if (!kos.length || Math.min(...kos) <= now) continue; // started → locked
+    out.push(...real);
+  }
+  return out;
 }
 const LS_KEY = "vm_ko_code";
 const saved = (() => { try { return localStorage.getItem(LS_KEY); } catch { return null; } })();

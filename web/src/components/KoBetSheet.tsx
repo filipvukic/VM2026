@@ -56,7 +56,7 @@ export function KoBetSheet() {
           <div className="kob-login">
             <div className="kob-login-ic">🔑</div>
             <div className="kob-login-h">Logga in för att tippa</div>
-            <p className="kob-login-p">Ange din personliga kod. Du sätter resultat på varje lottad match och kan ändra ända tills matchen startar.</p>
+            <p className="kob-login-p">Ange din personliga kod. Du tippar en hel omgång i taget och kan ändra ända tills omgången startar (första matchen sparkar igång).</p>
             <form onSubmit={async (e) => { e.preventDefault(); if (await login(codeInput)) setCodeInput(""); }} className="kob-login-form">
               <input className="kob-code" value={codeInput} onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
                 placeholder="DIN KOD" autoCapitalize="characters" autoComplete="off" maxLength={6} aria-label="Inloggningskod" />
@@ -91,9 +91,11 @@ export function KoBetSheet() {
                     </div>
                   ) : null;
                 }
+                const openMs = r.matches.filter((m) => openIds.has(koFid(m)));
+                const deadline = openMs.length ? new Date(Math.min(...openMs.map((m) => m.kickoff?.getTime() ?? Infinity))) : null;
                 return (
                   <div key={r.key} className="kob-round">
-                    <div className="kob-round-h"><span>{r.label}</span>{anyOpen && <span className="kob-round-tag">öppen</span>}</div>
+                    <div className="kob-round-h"><span>{r.label}</span>{anyOpen && deadline && <span className="kob-round-tag">öppen · stänger {svDayMonth(deadline)}</span>}</div>
                     {drawn.map((m) => {
                       const id = koFid(m);
                       const editable = openIds.has(id);
@@ -124,7 +126,7 @@ export function KoBetSheet() {
                             <Flag iso={away?.iso} code={m.away} size={18} />
                             <span className="kob-nm">{away?.name || "?"}</span>
                           </div>
-                          <div className="kob-meta">{editable ? `Stänger vid avspark · ${svDayMonth(m.kickoff)}` : played ? "spelad" : "låst"}</div>
+                          <div className="kob-meta">{editable ? svDayMonth(m.kickoff) : played ? "spelad" : "låst"}</div>
                         </div>
                       );
                     })}

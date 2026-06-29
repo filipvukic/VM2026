@@ -12,6 +12,7 @@ import { SearchCommand } from "./features/search/SearchCommand";
 import { NotificationWatcher } from "./features/notifications/NotificationWatcher";
 import { Lightbox } from "./components/Lightbox";
 import { KoBetSheet } from "./components/KoBetSheet";
+import { useKoBets } from "./state/koBets";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
 import { useScheduleUI } from "./state/scheduleUi";
@@ -94,7 +95,11 @@ export default function App() {
     if (!handledParam.current) {
       handledParam.current = true;
       const params = new URLSearchParams(window.location.search);
-      if (params.has("mid") || params.has("m")) {
+      if (params.has("ko")) {
+        // KO-tip reminder push → open the slutspelstips sheet.
+        window.history.replaceState(null, "", window.location.pathname);
+        useKoBets.getState().setSheet(true);
+      } else if (params.has("mid") || params.has("m")) {
         const id = matchFromParams(ds, params);
         window.history.replaceState(null, "", window.location.pathname);
         if (id) openMatch(id);
@@ -112,7 +117,9 @@ export default function App() {
         if (!res) return;
         drainedCache.current = true;
         await cache.delete("/__pending_match");
-        const id = matchFromParams(ds, new URL(await res.text(), window.location.origin).searchParams);
+        const u = new URL(await res.text(), window.location.origin);
+        if (u.searchParams.has("ko")) { if (!stop) useKoBets.getState().setSheet(true); return; }
+        const id = matchFromParams(ds, u.searchParams);
         if (id && !stop) openMatch(id);
       } catch {
         /* cache unavailable — ignore */
@@ -140,6 +147,7 @@ export default function App() {
       if ("caches" in window) caches.open("vm-nav").then((c) => c.delete("/__pending_match")).catch(() => {});
       try {
         const url = new URL(e.data.url, window.location.origin);
+        if (url.searchParams.has("ko")) { useKoBets.getState().setSheet(true); return; }
         const id = matchFromParams(ds, url.searchParams);
         if (id) openMatch(id);
       } catch {

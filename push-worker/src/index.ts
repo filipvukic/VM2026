@@ -13,7 +13,7 @@
 // kickoff / full-time alert for every match. Sending uses @pushforge/builder
 // (Web Crypto, runs on the edge) so no Node crypto / external service is needed.
 import { buildPushHTTPRequest } from "@pushforge/builder";
-import { handleKo } from "./ko";
+import { handleKo, koDueReminders, markKoReminderSent, koReminderMessage } from "./ko";
 
 interface Env {
   SUBS: KVNamespace;
@@ -397,8 +397,49 @@ export default {
 
   async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
     ctx.waitUntil(poll(env));
+    ctx.waitUntil(koRemindTick(env));
   },
 };
+
+// Gather every stored push subscription (sub:*) that opted into notifications.
+async function gatherSubs(env: Env): Promise<{ name: string; rec: StoredSub }[]> {
+  const subs: { name: string; rec: StoredSub }[] = [];
+  let cursor: string | undefined;
+  do {
+    const page = await env.SUBS.list({ prefix: "sub:", cursor });
+    for (const k of page.keys) {
+      const v = await env.SUBS.get(k.name);
+      if (v) subs.push({ name: k.name, rec: JSON.parse(v) as StoredSub });
+    }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  return subs.filter((s) => s.rec.notifyAll);
+}
+
+// Push KO-tip reminders (round opens, then 24h / 3h / 1h before it locks) to everyone
+// who has notifications on, so nobody forgets to submit a round's slutspelstips.
+async function koRemindTick(env: Env): Promise<void> {
+  const due = await koDueReminders(env, Date.now());
+  if (!due.length) return;
+  const recipients = await gatherSubs(env);
+  const origin = (env.ALLOW_ORIGIN || "").replace(/\/$/, "");
+  for (const r of due) {
+    if (recipients.length) {
+      const { title, body } = koReminderMessage(r);
+      const tag = `koremind-${r.round}-${r.milestone}`;
+      const url = `${origin || ""}/?ko=1`;
+      await Promise.allSettled(
+        recipients.map((s) =>
+          sendPush(env, s.rec.subscription, { title, body, tag, url }).catch(async (err: any) => {
+            if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
+          })
+        )
+      );
+    }
+    // Mark sent even with zero recipients so we don't re-evaluate the same milestone forever.
+    await markKoReminderSent(env, r.round, r.milestone);
+  }
+}
 
 interface LiveEvent {
   id: string;

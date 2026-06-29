@@ -23,7 +23,11 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* clip (not hidden) so we still block horizontal scroll WITHOUT turning <body>
+     into a scroll container — `overflow:hidden` here breaks position:sticky on iOS
+     Safari, which made the Matcher mode toggle scroll away. clip has no such effect. */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 /* Ambient broadcast glow */
 body::before {
