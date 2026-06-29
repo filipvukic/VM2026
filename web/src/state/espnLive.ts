@@ -9,11 +9,34 @@ interface EspnLiveState {
   set: (e: EspnLite[], s: Record<string, EspnSummary>) => void;
 }
 
+// Persist the scoreboard (score/status/minute) so a reload's FIRST render already
+// reflects the latest known state instead of the (possibly stale) committed data.json
+// — e.g. a match that finished after the engine's last commit no longer flashes as
+// "live 0–1" before the async refresh lands. Events only (small); summaries refetch.
+const ESPN_LS = "vm_espn_events";
+const ESPN_TTL = 30 * 60_000;
+function loadCachedEvents(): EspnLite[] {
+  try {
+    const raw = localStorage.getItem(ESPN_LS);
+    if (!raw) return [];
+    const { ts, events } = JSON.parse(raw) as { ts: number; events: EspnLite[] };
+    return Date.now() - ts < ESPN_TTL ? events || [] : [];
+  } catch {
+    return [];
+  }
+}
+function saveCachedEvents(events: EspnLite[]) {
+  try { localStorage.setItem(ESPN_LS, JSON.stringify({ ts: Date.now(), events })); } catch { /* full / private mode */ }
+}
+
 export const useEspnLive = create<EspnLiveState>((set) => ({
-  events: [],
+  events: loadCachedEvents(),
   summaries: {},
   version: 0,
-  set: (events, summaries) => set((s) => ({ events, summaries, version: s.version + 1 })),
+  set: (events, summaries) => {
+    saveCachedEvents(events);
+    set((s) => ({ events, summaries, version: s.version + 1 }));
+  },
 }));
 
 function inLiveWindow(nowMs: number): boolean {
