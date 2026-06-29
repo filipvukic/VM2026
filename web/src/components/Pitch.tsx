@@ -115,14 +115,24 @@ export function Pitch({
   const cardPx = maxRow >= 5 ? 42 : maxRow === 4 ? 48 : 50;
   const wPx = cardPx + 24;
 
-  // count goals/assists per player so multiples show as ⚽×2 / A×2
-  const goalCount = new Map<string, number>();
-  const assistCount = new Map<string, number>();
-  match.scorers.forEach((g) => {
-    const n = (g.name || "").toLowerCase();
-    goalCount.set(n, (goalCount.get(n) || 0) + 1);
-    if (g.assist) { const a = g.assist.toLowerCase(); assistCount.set(a, (assistCount.get(a) || 0) + 1); }
-  });
+  // Count goals/assists per player so multiples show as ⚽×2 / A×2. Live scorer names
+  // (ESPN/football-data) don't always match the line-up name verbatim — accents, dots,
+  // "B. Saka" vs "Bukayo Saka" — so we index by BOTH a normalised full name and a
+  // normalised surname and look up full-first, surname-fallback. Without this a goal/
+  // assist scored mid-match often never lit up on the right player in the XI.
+  const evNorm = (s?: string | null) =>
+    (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+  const evLast = (s?: string | null) => evNorm((s || "").trim().split(/\s+/).slice(-1)[0]);
+  const goalFull = new Map<string, number>(), goalLast = new Map<string, number>();
+  const assistFull = new Map<string, number>(), assistLast = new Map<string, number>();
+  const bump = (full: Map<string, number>, last: Map<string, number>, name?: string | null) => {
+    const f = evNorm(name); if (!f) return;
+    full.set(f, (full.get(f) || 0) + 1);
+    const l = evLast(name); if (l) last.set(l, (last.get(l) || 0) + 1);
+  };
+  match.scorers.forEach((g) => { bump(goalFull, goalLast, g.name); if (g.assist) bump(assistFull, assistLast, g.assist); });
+  const goalsOf = (name: string) => goalFull.get(evNorm(name)) ?? goalLast.get(evLast(name)) ?? 0;
+  const assistsOf = (name: string) => assistFull.get(evNorm(name)) ?? assistLast.get(evLast(name)) ?? 0;
   const cardByName = new Map<string, "yellow" | "red">();
   match.cards.forEach((c) => {
     const n = (c.name || "").toLowerCase();
@@ -156,8 +166,8 @@ export function Pitch({
             color={color}
             x={xPct}
             y={yPct}
-            goals={goalCount.get(nm) || 0}
-            assists={assistCount.get(nm) || 0}
+            goals={goalsOf(p.name)}
+            assists={assistsOf(p.name)}
             card={cardByName.get(nm)}
             subOut={subOut.get(nm)}
             rating={getRating ? getRating(p.name) : null}
