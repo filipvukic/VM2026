@@ -58808,24 +58808,98 @@
     "awayTla": "PAR",
     "status": "IN_PLAY",
     "score": [
-      0,
-      0
+      1,
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
-        0
+        1
+      ],
+      "fullTime": [
+        1,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "37",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": "85",
+    "goals": [
+      {
+        "minute": "42",
+        "team": "PAR",
+        "scorer": "Julio Enciso",
+        "assist": "Matías Galarza",
+        "type": "HEADER",
+        "description": "Goal! Germany 0, Paraguay 1. Julio Enciso (Paraguay) header from the centre of the box to the bottom left corner. Assisted by Matías Galarza with a cross following a corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "54",
+        "team": "GER",
+        "scorer": "Kai Havertz",
+        "assist": "Florian Wirtz",
+        "type": "HEADER",
+        "description": "Goal! Germany 1, Paraguay 1. Kai Havertz (Germany) header from the centre of the box to the bottom right corner. Assisted by Florian Wirtz with a cross.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "65",
+        "team": "PAR",
+        "player": "Andrés Cubas",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "GER",
+        "playerIn": "Leon Goretzka",
+        "playerOut": "Felix Nmecha",
+        "period": 2
+      },
+      {
+        "minute": "55",
+        "team": "PAR",
+        "playerIn": "Gustavo Caballero",
+        "playerOut": "Gabriel Ávalos",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "PAR",
+        "playerIn": "Maurício",
+        "playerOut": "Julio Enciso",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "GER",
+        "playerIn": "Jamal Musiala",
+        "playerOut": "Deniz Undav",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "GER",
+        "playerIn": "Waldemar Anton",
+        "playerOut": "Aleksandar Pavlovic",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
@@ -58903,7 +58977,7 @@
           "jersey": "5",
           "espnId": "359370",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Felix Nmecha",
@@ -58912,7 +58986,7 @@
           "jersey": "23",
           "espnId": "281122",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Florian Wirtz",
@@ -58939,7 +59013,7 @@
           "jersey": "26",
           "espnId": "273300",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kai Havertz",
@@ -58976,7 +59050,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "220714",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59012,7 +59086,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "303821",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59075,7 +59149,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "174550",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -59173,7 +59247,7 @@
           "jersey": "19",
           "espnId": "20975",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gabriel Ávalos",
@@ -59182,7 +59256,7 @@
           "jersey": "21",
           "espnId": "208421",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -59300,7 +59374,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "154853",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -59309,7 +59383,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "289046",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -59317,64 +59391,64 @@
       "_espnEventId": "760489"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
+      "foulsCommitted": 12.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 2.0,
-      "saves": 1.0,
-      "possessionPct": 82.7,
-      "totalShots": 3.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 8.0,
+      "saves": 3.0,
+      "possessionPct": 75.7,
+      "totalShots": 11.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 249.0,
-      "totalPasses": 273.0,
+      "accuratePasses": 519.0,
+      "totalPasses": 577.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 8.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 34.0,
       "crossPct": 0.1,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 8.0,
-      "longballPct": 0.7,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.6,
+      "blockedShots": 5.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 7.0,
+      "tacklePct": 0.6,
+      "interceptions": 4.0,
+      "effectiveClearance": 11.0,
+      "totalClearance": 11.0
     },
     "awayStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 6.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 17.3,
-      "totalShots": 2.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.5,
+      "offsides": 1.0,
+      "wonCorners": 3.0,
+      "saves": 2.0,
+      "possessionPct": 24.3,
+      "totalShots": 6.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.7,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 32.0,
-      "totalPasses": 57.0,
+      "accuratePasses": 114.0,
+      "totalPasses": 183.0,
       "passPct": 0.6,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 1.0,
-      "crossPct": 1.0,
-      "totalLongBalls": 18.0,
-      "accurateLongBalls": 5.0,
-      "longballPct": 0.3,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 53.0,
+      "accurateLongBalls": 12.0,
+      "longballPct": 0.2,
       "blockedShots": 1.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.6,
-      "interceptions": 5.0,
-      "effectiveClearance": 10.0,
-      "totalClearance": 10.0
+      "effectiveTackles": 14.0,
+      "totalTackles": 20.0,
+      "tacklePct": 0.7,
+      "interceptions": 11.0,
+      "effectiveClearance": 33.0,
+      "totalClearance": 33.0
     },
     "homeForm": [
       {

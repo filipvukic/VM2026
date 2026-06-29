@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-29T21:07:12+00:00",
+  "updated_at": "2026-06-29T22:18:29+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19503,24 +19503,98 @@
       "awayTla": "PAR",
       "status": "IN_PLAY",
       "score": [
-        0,
-        0
+        1,
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           0,
-          0
+          1
+        ],
+        "fullTime": [
+          1,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "37",
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "85",
+      "goals": [
+        {
+          "minute": "42",
+          "team": "PAR",
+          "scorer": "Julio Enciso",
+          "assist": "Matías Galarza",
+          "type": "HEADER",
+          "description": "Goal! Germany 0, Paraguay 1. Julio Enciso (Paraguay) header from the centre of the box to the bottom left corner. Assisted by Matías Galarza with a cross following a corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "54",
+          "team": "GER",
+          "scorer": "Kai Havertz",
+          "assist": "Florian Wirtz",
+          "type": "HEADER",
+          "description": "Goal! Germany 1, Paraguay 1. Kai Havertz (Germany) header from the centre of the box to the bottom right corner. Assisted by Florian Wirtz with a cross.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "65",
+          "team": "PAR",
+          "player": "Andrés Cubas",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "GER",
+          "playerIn": "Leon Goretzka",
+          "playerOut": "Felix Nmecha",
+          "period": 2
+        },
+        {
+          "minute": "55",
+          "team": "PAR",
+          "playerIn": "Gustavo Caballero",
+          "playerOut": "Gabriel Ávalos",
+          "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "PAR",
+          "playerIn": "Maurício",
+          "playerOut": "Julio Enciso",
+          "period": 2
+        },
+        {
+          "minute": "63",
+          "team": "GER",
+          "playerIn": "Jamal Musiala",
+          "playerOut": "Deniz Undav",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "GER",
+          "playerIn": "Waldemar Anton",
+          "playerOut": "Aleksandar Pavlovic",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Gillette Stadium",
         "city": "Foxborough, Massachusetts",
@@ -19540,6 +19614,49 @@
           "tip": [
             3,
             1
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537418,
+      "utcDate": "2026-06-30T01:00:00Z",
+      "stage": "LAST_32",
+      "group": null,
+      "knockout": true,
+      "home": "Netherlands",
+      "homeTla": "NED",
+      "away": "Morocco",
+      "awayTla": "MAR",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "Estadio BBVA",
+        "city": "Guadalupe",
+        "country": "Mexico"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            0
           ],
           "points": null
         }
@@ -19583,6 +19700,92 @@
           "tip": [
             1,
             0
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537420,
+      "utcDate": "2026-07-02T19:00:00Z",
+      "stage": "LAST_32",
+      "group": null,
+      "knockout": true,
+      "home": "Spain",
+      "homeTla": "ESP",
+      "away": "Austria",
+      "awayTla": "AUT",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537419,
+      "utcDate": "2026-07-02T23:00:00Z",
+      "stage": "LAST_32",
+      "group": null,
+      "knockout": true,
+      "home": "Portugal",
+      "homeTla": "POR",
+      "away": "Croatia",
+      "awayTla": "CRO",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "BMO Field",
+        "city": "Toronto",
+        "country": "Canada"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            2
           ],
           "points": null
         }
@@ -20294,7 +20497,7 @@
     "best_keeper"
   ],
   "unmatched_tips": {},
-  "knockout_rule": "ET-score for exact; penalties decide outcome",
+  "knockout_rule": "scored on the 90-minute (regulation) result; draws valid",
   "team_forms": {
     "MEX": [
       {
