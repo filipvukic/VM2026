@@ -74,7 +74,7 @@ export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }:
       </div>
 
       <div style={{ marginTop: 14 }}>
-        <WikiLink query={`${p?.name || name} footballer`} />
+        <WikiLink query={p?.name || name} />
       </div>
 
       {p ? (

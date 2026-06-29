@@ -85,17 +85,15 @@ async function koFixtures(env: KoEnv): Promise<KoFixture[]> {
     }));
 }
 
-// Which fixture ids may be tipped right now: both teams known AND the fixture's whole
-// round hasn't started (no match in that round has kicked off). Matches the rule
-// "edit a round's tips until the round starts; the current round is locked".
+// Which fixture ids may be tipped right now: both teams drawn AND the match hasn't
+// kicked off yet. Per-match lock — you can set/edit a knockout match's tip until it
+// starts (so un-played matches in the current round are tippable too).
 async function openFixtureIds(env: KoEnv, now: number): Promise<Set<string>> {
   const fx = await koFixtures(env);
-  const roundStarted: Record<string, boolean> = {};
-  for (const f of fx) if (Number.isFinite(f.kickoff) && f.kickoff <= now) roundStarted[f.round] = true;
   const open = new Set<string>();
   for (const f of fx) {
-    if (roundStarted[f.round]) continue; // round in progress / past → locked
     if (!f.homeTla || !f.awayTla) continue; // not drawn yet → nothing to tip
+    if (!Number.isFinite(f.kickoff) || f.kickoff <= now) continue; // started / no time → locked
     open.add(f.id);
   }
   return open;

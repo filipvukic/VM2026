@@ -209,6 +209,7 @@ function Stepper({ value, onChange }: { value: number; onChange: (v: number) => 
 function koRounds(ds: Dataset) {
   const k = ds.knockout;
   return [
+    { key: "r32", label: "Sextondelsfinal", matches: k.r32, future: false },
     { key: "r16", label: "Åttondelsfinal", matches: k.r16, future: true },
     { key: "qf", label: "Kvartsfinal", matches: k.qf, future: true },
     { key: "sf", label: "Semifinal", matches: k.sf, future: true },

@@ -44,7 +44,7 @@ export function CoachSheet({ code, ...chrome }: { code: string } & SheetChrome) 
       </div>
 
       <div style={{ marginTop: 14 }}>
-        <WikiLink query={`${name} football manager`} />
+        <WikiLink query={name} />
       </div>
 
       {/* leads team */}
