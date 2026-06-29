@@ -933,6 +933,42 @@ def find_match(tip_entry, matches, resolve):
     return None
 
 
+def merge_ko_bets(tips, worker_url, admin_key):
+    """Hämtar slutspelstips från workern (KV) och lägger in dem som vanliga
+    tipsposter på rätt deltagare. Tipsen är keyade på FIFA-/football-data-match-id,
+    så vi lägger in {"id": <match-id>, "tip": [h, a]} — find_match matchar på id.
+    Tyst no-op om worker_url/admin_key saknas eller hämtningen failar (gruppspels-
+    tipsen påverkas aldrig)."""
+    if not worker_url or not admin_key:
+        return
+    try:
+        url = worker_url.rstrip("/") + "/ko/all?key=" + admin_key
+        req = Request(url, headers={"User-Agent": "vm2026-engine"})
+        with urlopen(req, timeout=15) as r:
+            all_bets = json.loads(r.read().decode("utf-8"))
+    except (HTTPError, URLError, ValueError, OSError) as e:
+        print(f"  Kunde inte hämta slutspelstips: {e}")
+        return
+    by_name = {norm(p["name"]): p for p in tips.get("participants", [])}
+    added = 0
+    for name, bets in (all_bets or {}).items():
+        p = by_name.get(norm(name))
+        if not p:
+            continue
+        seen = {e["id"] for e in p.get("matches", []) if "id" in e}
+        for fid, tip in (bets or {}).items():
+            try:
+                mid = int(fid)
+            except (ValueError, TypeError):
+                continue
+            if mid in seen or not isinstance(tip, list) or len(tip) != 2:
+                continue
+            p.setdefault("matches", []).append({"id": mid, "tip": [int(tip[0]), int(tip[1])]})
+            seen.add(mid)
+            added += 1
+    print(f"  Slutspelstips: {added} tips inlagda från workern")
+
+
 # --------------------------------------------------------------------------- #
 # Bonus: medaljer + skytteliga + manuella priser
 # --------------------------------------------------------------------------- #
@@ -1386,6 +1422,10 @@ def main():
 
     with open(args.tips, encoding="utf-8") as f:
         tips = json.load(f)
+
+    # Slutspelstips som deltagarna lagt in via sajten (lagras i workern, gated av
+    # personlig kod) → läggs in som id-baserade tipsposter innan poängräkningen.
+    merge_ko_bets(tips, os.environ.get("KO_WORKER_URL"), os.environ.get("KO_ADMIN_KEY"))
 
     team_forms = {}
     if args.mock:

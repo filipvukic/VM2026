@@ -26,3 +26,12 @@ ALLOW_ORIGIN = "https://vmtipp.se"
 # The private VAPID key is a SECRET, not a var. Set it once with:
 #   npx wrangler secret put VAPID_PRIVATE_KEY
 # and paste the private JWK JSON (the {"kty":"EC",...,"d":"..."} object).
+
+# --- Knockout betting (/ko/*) ---
+# Two SECRETS (not vars). Set each once with `npx wrangler secret put NAME`:
+#   KO_SECRET     — any long random string; the per-person login codes are an HMAC of
+#                   this + the player's name. Changing it changes everyone's code.
+#   KO_ADMIN_KEY  — any long random string; guards GET /ko/codes (list everyone's code
+#                   to hand out) and GET /ko/all (the engine reads tips from here).
+# After deploy:  GET https://<worker>/ko/codes?key=<KO_ADMIN_KEY>  → [{name, code}]
+# Tips for the engine:  GET https://<worker>/ko/all?key=<KO_ADMIN_KEY>

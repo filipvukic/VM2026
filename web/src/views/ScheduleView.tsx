@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useScheduleUI, type SchedFilter } from "../state/scheduleUi";
+import { useKoBets } from "../state/koBets";
+import { KoBetSheet } from "../components/KoBetSheet";
 import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
 import { svDayLabel, svDateKey } from "../lib/format";
@@ -167,9 +169,21 @@ function Bracket({ ds }: { ds: Dataset }) {
   ].filter((r) => r.ms && r.ms.length);
   const [round, setRound] = useState<string>("r32");
   const active = rounds.find((r) => r.key === round) || rounds[0];
+  const [betOpen, setBetOpen] = useState(false);
+  const koName = useKoBets((s) => s.name);
 
   return (
     <div>
+      <button className="bk-cta" onClick={() => setBetOpen(true)}>
+        <span className="bk-cta-ic">✏️</span>
+        <span className="bk-cta-txt">
+          <b>Slutspelstips</b>
+          <span className="dim">{koName ? `Inloggad som ${koName} · ändra dina tips` : "Logga in med din kod och tippa slutspelet"}</span>
+        </span>
+        <span className="bk-cta-go">›</span>
+      </button>
+      <KoBetSheet open={betOpen} onClose={() => setBetOpen(false)} />
+
       <div className="bk-rounds">
         {rounds.map((r) => (
           <button key={r.key} className={r.key === active.key ? "on" : ""} onClick={() => setRound(r.key)}>
@@ -190,6 +204,13 @@ function Bracket({ ds }: { ds: Dataset }) {
       </div>
 
       <style>{`
+        .bk-cta{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; margin-bottom:14px;
+          border-radius:var(--r-lg); border:1px solid color-mix(in srgb, var(--cool) 40%, var(--line-2));
+          background:linear-gradient(135deg, color-mix(in srgb, var(--cool) 16%, var(--surface)), var(--surface)); }
+        .bk-cta-ic{ font-size:20px; flex:0 0 auto; }
+        .bk-cta-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
+        .bk-cta-txt b{ font-size:14.5px; } .bk-cta-txt .dim{ font-size:11.5px; font-weight:700; }
+        .bk-cta-go{ color:var(--ink-3); font-size:20px; font-weight:700; flex:0 0 auto; }
         .bk-rounds{ display:flex; gap:3px; background:var(--surface); border:1px solid var(--line-2);
           border-radius:var(--r-pill); padding:3px; overflow-x:auto; scrollbar-width:none; }
         .bk-rounds::-webkit-scrollbar{ display:none; }

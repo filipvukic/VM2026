@@ -13,6 +13,7 @@
 // kickoff / full-time alert for every match. Sending uses @pushforge/builder
 // (Web Crypto, runs on the edge) so no Node crypto / external service is needed.
 import { buildPushHTTPRequest } from "@pushforge/builder";
+import { handleKo } from "./ko";
 
 interface Env {
   SUBS: KVNamespace;
@@ -20,6 +21,8 @@ interface Env {
   VAPID_PUBLIC_KEY: string; // base64url public key (var)
   ADMIN_CONTACT: string; // mailto:...
   ALLOW_ORIGIN: string; // site origin allowed to call /subscribe
+  KO_SECRET: string; // secret the per-person KO login codes are derived from
+  KO_ADMIN_KEY: string; // secret guarding /ko/codes and /ko/all
 }
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=";
@@ -305,6 +308,10 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     if (request.method === "OPTIONS") return new Response(null, { headers: cors(env) });
+
+    // Knockout betting (/ko/*): login codes + per-person tips in KV.
+    const ko = await handleKo(request, env);
+    if (ko) return ko;
 
     if (url.pathname === "/matchstats") return matchStats(url, env, ctx);
 
