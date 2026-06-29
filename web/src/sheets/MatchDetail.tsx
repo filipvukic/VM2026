@@ -22,6 +22,8 @@ import { svFullDate, svTime } from "../lib/format";
 import { winChance, winChanceFromEspn } from "../data/odds";
 import { useFixtureOdds } from "../state/fixtureOdds";
 import { classifyTip, type TipResult } from "../data/scoring";
+import { reg90Score } from "../lib/reg90";
+import { useKoBets, koFid } from "../state/koBets";
 import type { Dataset, Match, MatchStats } from "../data/types";
 
 // Points each team gets from THIS match (3 win / 1 draw / 0 loss) — shown in the
@@ -52,7 +54,10 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   // Open straight on everyone's tips — that's the first thing you want to see for a
   // match, whether it's about to be played or already finished. (Match overview /
   // events are one tap away.)
-  const wantTips = !!m && m.tippas && m.tips.length > 0;
+  // KO matches are tippable per-person (slutspelstips) even before the engine merges
+  // everyone's tips — so the Tips tab is the default for them too, showing your bet.
+  const isKoTippable = !!m && m.stage === "ko" && !!m._realId;
+  const wantTips = !!m && ((m.tippas && m.tips.length > 0) || isKoTippable);
   const [tab, setTab] = useState<Tab>(wantTips ? "tips" : "overview");
   const now = useNow(m && isLive(m) ? 30_000 : 0);
   if (!m) return null;
@@ -68,7 +73,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
   const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too
-  const hasTips = m.tippas && m.tips.length > 0;
+  const hasTips = (m.tippas && m.tips.length > 0) || isKoTippable;
   const hasTable = m.stage === "group" && !!m.group;
   // Tips first (it's the default + what you most want to see), then the rest. Short
   // labels so all visible tabs fit the sheet width with no horizontal scroll.
@@ -171,7 +176,16 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
             )}
           </div>
         )}
-        {tab === "tips" && <PoolResults m={m} ds={ds} />}
+        {tab === "tips" && (
+          <>
+            {isKoTippable && <KoTipBlock m={m} ds={ds} />}
+            {m.tippas && m.tips.length > 0 ? (
+              <PoolResults m={m} ds={ds} />
+            ) : !isKoTippable ? (
+              <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>
+            ) : null}
+          </>
+        )}
       </div>
 
       <style>{`
@@ -187,6 +201,17 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
         .md-tv-go{ color:var(--cool-2); font-weight:800; }
         .md-tab-content{ animation:tabIn .26s cubic-bezier(.2,.7,.2,1); }
         @keyframes tabIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+        .ko-tip{ background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:13px 14px; margin-bottom:14px; }
+        .ko-tip-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+        .ko-tip-edit{ color:var(--cool-2); font-weight:800; font-size:12px; }
+        .ko-tip-row{ display:flex; align-items:center; gap:9px; padding:9px 11px; border-radius:11px; background:var(--surface-2); border:1px solid var(--line); }
+        .ko-tip-nm{ flex:1; min-width:0; font-weight:700; font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ko-tip-nm.right{ text-align:right; }
+        .ko-tip-sc{ font-size:18px; font-weight:800; font-variant-numeric:tabular-nums; flex:0 0 auto; }
+        .ko-tip-cta{ width:100%; padding:12px; border-radius:11px; background:var(--grad-soft); color:#fff; font-weight:800; font-size:13.5px; }
+        .ko-tip-res{ font-weight:800; font-size:12.5px; margin-top:9px; }
+        .ko-tip-note{ font-size:11px; line-height:1.45; margin-top:10px; }
+        .ko-tip-note b{ color:var(--ink-2); }
       `}</style>
     </Sheet>
   );
@@ -640,17 +665,67 @@ function WinChanceBlock({ m }: { m: Match }) {
 const tipColor = (res: TipResult | null) =>
   res === "exact" ? "var(--gold)" : res === "outcome" ? "var(--win)" : res === "floor" ? "var(--ink-3)" : "var(--ink-2)";
 
+// Your own knockout tip on the match — read straight from the koBets store so it
+// shows the instant you save it (the engine merges everyone's KO tips into the pool
+// on its next run; this is your personal, immediate view + the 90-minute rule).
+function KoTipBlock({ m, ds }: { m: Match; ds: Dataset }) {
+  const code = useKoBets((s) => s.code);
+  const bets = useKoBets((s) => s.bets);
+  const open = useKoBets((s) => s.open);
+  const setSheet = useKoBets((s) => s.setSheet);
+  const fid = koFid(m);
+  const tip = bets[fid];
+  const editable = open.has(fid);
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
+  const live = isLive(m);
+  const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
+  const sc = played || live ? reg90Score(m) : null;
+  const res = tip && sc ? classifyTip([tip[0], tip[1]], sc[0], sc[1]) : null;
+  const col = res ? tipColor(res.result) : "var(--cool)";
+  return (
+    <div className="ko-tip">
+      <div className="ko-tip-head">
+        <span className="kicker">Ditt slutspelstips</span>
+        {tip && editable && <button className="ko-tip-edit" onClick={() => setSheet(true)}>Ändra ›</button>}
+      </div>
+      {tip ? (
+        <div className="ko-tip-row" style={res ? { borderColor: `color-mix(in srgb, ${col} 34%, transparent)`, background: `color-mix(in srgb, ${col} 9%, var(--surface-2))` } : undefined}>
+          <Flag iso={home?.iso} code={m.home} size={18} />
+          <span className="ko-tip-nm">{home?.name || m.fromA}</span>
+          <span className="num ko-tip-sc" style={{ color: res ? col : "var(--ink)" }}>{tip[0]}–{tip[1]}</span>
+          <span className="ko-tip-nm right">{away?.name || m.fromB}</span>
+          <Flag iso={away?.iso} code={m.away} size={18} />
+        </div>
+      ) : (
+        <button className="ko-tip-cta" onClick={() => setSheet(true)}>{code ? "Tippa matchen" : "Logga in & tippa slutspelet"}</button>
+      )}
+      {res && (
+        <div className="ko-tip-res" style={{ color: col }}>
+          {res.result === "exact" ? "Exakt rätt" : res.result === "outcome" ? "Rätt utgång" : "Fel"} · {res.points}p
+          <span className="dim" style={{ fontWeight: 700 }}> · resultat efter 90 min {sc![0]}–{sc![1]}</span>
+        </div>
+      )}
+      <div className="ko-tip-note dim">
+        Du gissar resultatet efter <b>90 min (ordinarie tid)</b> — det kan bli oavgjort. Matchen kan sen avgöras i förlängning eller på straffar, men ditt tips gäller 90-minutersresultatet.
+      </div>
+    </div>
+  );
+}
+
 function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
   const openPlayer = useSheets((s) => s.openPlayer);
   if (!m.tippas || !m.tips.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>;
   const live = isLive(m);
   const played = m.status === "played";
   // Score every tip — final when played, PROVISIONAL against the running score when
-  // live, so you see who'd cash in if it ended right now. null = not kicked off yet.
-  const scored = (played || live) && m.ga != null && m.gb != null;
+  // live, so you see who'd cash in if it ended right now. KO matches score on the
+  // 90-minute result (reg90Score); group on the final score. null = not started yet.
+  const sc = played || live ? reg90Score(m) : null;
+  const scored = sc != null;
   const rows = m.tips
     .map((t) => {
-      const c = scored ? classifyTip([t.tip[0], t.tip[1]], m.ga!, m.gb!) : null;
+      const c = scored ? classifyTip([t.tip[0], t.tip[1]], sc[0], sc[1]) : null;
       return { name: t.name, tip: t.tip, result: c?.result ?? null, pts: c?.points ?? null };
     })
     .sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1) || a.name.localeCompare(b.name, "sv"));

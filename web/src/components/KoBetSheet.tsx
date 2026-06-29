@@ -3,6 +3,7 @@ import { useData } from "../state/dataset";
 import { useKoBets, koFid, type Tip } from "../state/koBets";
 import { Flag } from "../lib/flags";
 import { svDayMonth } from "../lib/format";
+import { reg90Score } from "../lib/reg90";
 import type { Dataset, Match } from "../data/types";
 
 // Knockout tipping modal. Log in with a personal code, then set a score for every drawn
@@ -68,6 +69,9 @@ export function KoBetSheet() {
         ) : (
           <>
             <div className="kob-body">
+              <div className="kob-rule">
+                ⏱️ Tippa resultatet efter <b>90 min (ordinarie tid)</b>. Det kan bli <b>oavgjort</b> även i slutspelet — matchen avgörs sen i förlängning eller på straffar, men ditt tips gäller 90-minutersresultatet.
+              </div>
               {total === 0 && (
                 <div className="kob-empty">
                   <div style={{ fontSize: 26, marginBottom: 6 }}>⏳</div>
@@ -97,6 +101,7 @@ export function KoBetSheet() {
                       const away = m.away ? ds.teams[m.away] : null;
                       const t = draft[id] || bets[id] || null;
                       const played = m.status === "played" && m.ga != null && m.gb != null;
+                      const reg = played ? reg90Score(m) : null; // 90-min result = what's scored
                       return (
                         <div key={id} className={`kob-row${editable ? " edit" : ""}`}>
                           <div className="kob-team h">
@@ -112,7 +117,7 @@ export function KoBetSheet() {
                           ) : (
                             <div className="kob-locked">
                               <span className="kob-locked-tip">{t ? `${t[0]}–${t[1]}` : "–"}</span>
-                              {played && <span className="kob-locked-res">facit {m.ga}–{m.gb}</span>}
+                              {reg && <span className="kob-locked-res">90 min {reg[0]}–{reg[1]}</span>}
                             </div>
                           )}
                           <div className="kob-team a">
@@ -170,6 +175,9 @@ export function KoBetSheet() {
         .kob-err{ color:var(--loss); font-size:12.5px; font-weight:700; margin-top:12px; }
 
         .kob-body{ overflow-y:auto; padding:14px 16px 16px; display:grid; gap:18px; }
+        .kob-rule{ font-size:12px; line-height:1.5; color:var(--ink-3); background:color-mix(in srgb, var(--cool) 8%, var(--surface));
+          border:1px solid color-mix(in srgb, var(--cool) 26%, var(--line)); border-radius:var(--r-md); padding:10px 12px; }
+        .kob-rule b{ color:var(--ink-2); }
         .kob-empty{ text-align:center; color:var(--ink-3); font-size:13.5px; line-height:1.5; padding:26px 10px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); }
         .kob-round-h{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
         .kob-round-h span:first-child{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.06em; font-weight:800; font-size:11px; color:var(--ink-3); }

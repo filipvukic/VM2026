@@ -876,37 +876,65 @@ def advancing_side(m):
     return None  # kunde inte avgöra automatiskt
 
 
+def _leading_min(minute):
+    """'90+5' -> 90, '105' -> 105, 45 -> 45, None -> 0."""
+    if minute is None:
+        return 0
+    if isinstance(minute, (int, float)):
+        return int(minute)
+    mm = re.match(r"\s*(\d+)", str(minute))
+    return int(mm.group(1)) if mm else 0
+
+
+def _is_regulation_goal(g):
+    """Ordinarie tid (1:a/2:a halvlek). period 1/2 = ordinarie, 3/4 = förlängning,
+    >=5 = straffar. Saknas period -> falla tillbaka på minut (<=90)."""
+    p = g.get("period")
+    if isinstance(p, int) and p >= 1:
+        return p <= 2
+    return _leading_min(g.get("minute")) <= 90
+
+
+def reg90_score(m):
+    """Ställning efter 90 min (ordinarie tid) — det som slutspelstips poängsätts mot.
+    En slutspelsmatch kan vara oavgjord efter 90 och avgöras i förlängning/straffar,
+    så tipset gäller 90-minutersresultatet (oavgjort giltigt). ET-mål räknas inte;
+    löpande ställningen för sista ordinarie målet är facit."""
+    goals = m.get("goals") or []
+    reg = [g for g in goals if _is_regulation_goal(g)]
+    if reg:
+        h = max((g["score"][0] for g in reg if g.get("score")), default=0)
+        a = max((g["score"][1] for g in reg if g.get("score")), default=0)
+        return (h, a)
+    if not goals:
+        return final_score(m)  # inga events att resonera kring -> bästa gissning
+    return (0, 0)  # events finns men inga i ordinarie tid -> äkta 0-0 vid 90'
+
+
 # --------------------------------------------------------------------------- #
 # Poängsättning av en enskild match
 # --------------------------------------------------------------------------- #
 def score_one_match(m, tip, cfg):
     """tip = [home, away]. Returnerar (poäng, exakt_bool) eller None om matchen
-    inte är klar."""
+    inte är klar. Slutspel poängsätts mot 90-minutersresultatet (oavgjort giltigt) —
+    förlängning/straffar avgör vem som går vidare men inte tipset."""
     if not is_finished(m):
         return None
-    actual = final_score(m)
+    actual = reg90_score(m) if is_knockout(m) else final_score(m)
     if actual is None:
         return None
     th, ta = tip
     ah, aa = actual
 
-    # 1) Exakt resultat
+    # 1) Exakt resultat (90 min för slutspel)
     if (th, ta) == (ah, aa):
         return cfg["exact"], True
 
-    # 2) Rätt utgång
-    if is_knockout(m):
-        # Slutspel: utgång = vem som går vidare (straffar räknas).
-        adv = advancing_side(m)
-        tipped = "HOME" if th > ta else "AWAY" if ta > th else "DRAW"
-        if adv is not None and tipped == adv:
-            return cfg["outcome"], False
-    else:
-        # Gruppspel: utgång = matchresultatets utgång (oavgjort giltigt).
-        actual_out = "HOME" if ah > aa else "AWAY" if aa > ah else "DRAW"
-        tipped_out = "HOME" if th > ta else "AWAY" if ta > th else "DRAW"
-        if tipped_out == actual_out:
-            return cfg["outcome"], False
+    # 2) Rätt utgång — H/B/X på det poängsatta resultatet (oavgjort giltigt även i slutspel)
+    actual_out = "HOME" if ah > aa else "AWAY" if aa > ah else "DRAW"
+    tipped_out = "HOME" if th > ta else "AWAY" if ta > th else "DRAW"
+    if tipped_out == actual_out:
+        return cfg["outcome"], False
 
     # 3) Golv
     return cfg["floor"], False
@@ -1125,7 +1153,7 @@ def compute(tips, matches, scorers, standings=None, team_forms=None):
         "bonus_points": bonus_pts,
         "awards_pending": awards_pending,
         "unmatched_tips": dict(sorted(unmatched.items(), key=lambda x: -x[1])),
-        "knockout_rule": "ET-score for exact; penalties decide outcome",
+        "knockout_rule": "scored on the 90-minute (regulation) result; draws valid",
         "team_forms": team_forms or {},
     }
 

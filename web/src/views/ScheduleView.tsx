@@ -20,10 +20,10 @@ export function ScheduleView() {
   return (
     <div className="view container">
       <div className="md-modes-bar">
-        <div className="section-title" style={{ marginBottom: 8 }}>Matcher</div>
-        <div className="md-modes">
-          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>📅 Spelschema</button>
-          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>🏆 Slutspelsträd</button>
+        <div className="md-seg" data-active={mode}>
+          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
+          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
+          <span className="md-seg-thumb" aria-hidden />
         </div>
       </div>
 
@@ -31,10 +31,15 @@ export function ScheduleView() {
 
       <style>{`
         /* Sticky so the schedule's auto-scroll-to-live can never hide the toggle. */
-        .md-modes-bar{ position:sticky; top:var(--header-h); z-index:20; background:var(--bg); padding:8px 0 12px; margin-top:2px; }
-        .md-modes{ display:flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:4px; }
-        .md-modes button{ flex:1 1 0; min-width:0; padding:11px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13.5px; color:var(--ink-3); transition:color .15s; white-space:nowrap; }
-        .md-modes button.on{ background:var(--grad-soft); color:#fff; }
+        .md-modes-bar{ position:sticky; top:var(--header-h); z-index:20; background:var(--bg); padding:10px 0 13px; }
+        /* iOS-style segmented control with a sliding thumb — cleaner than filled pills. */
+        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; background:var(--surface-2); border:1px solid var(--line); border-radius:13px; padding:4px; }
+        .md-seg button{ position:relative; z-index:1; padding:11px 8px; border-radius:10px; font-weight:800; font-size:14px; color:var(--ink-3); transition:color .22s ease; }
+        .md-seg button.on{ color:var(--ink); }
+        .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;
+          background:linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 82%, #000)); border:1px solid var(--line-2);
+          box-shadow:0 2px 8px rgba(0,0,0,.24); transition:transform .26s cubic-bezier(.3,.85,.3,1); }
+        .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
       `}</style>
     </div>
   );
@@ -202,7 +207,7 @@ function Bracket({ ds }: { ds: Dataset }) {
               </button>
             ))}
           </div>
-          <div className="section-head" style={{ margin: "4px 2px 10px" }}>
+          <div className="section-head" style={{ margin: "20px 2px 14px" }}>
             <div className="section-title" style={{ fontSize: 18 }}>{active.title}</div>
             <div className="kicker">{active.ms.length} {active.ms.length === 1 ? "match" : "matcher"}</div>
           </div>
@@ -242,6 +247,7 @@ function Bracket({ ds }: { ds: Dataset }) {
         .btc-side{ display:flex; align-items:center; gap:6px; padding:5px 7px; }
         .btc-side.win{ background:color-mix(in srgb, var(--win) 13%, transparent); }
         .btc-side.dim{ opacity:.4; }
+        .btc-dot{ width:15px; height:11px; border-radius:3px; background:var(--surface-3); flex:0 0 auto; }
         .btc-nm{ flex:1; min-width:0; font-size:11px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .btc-side.win .btc-nm{ font-weight:800; }
         .btc-sc{ font-family:var(--font-display); font-weight:800; font-size:12.5px; font-variant-numeric:tabular-nums; }
@@ -399,12 +405,14 @@ function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: strin
   const played = m.status === "played" && m.ga != null && m.gb != null;
   const live = isLive(m);
   const Side = ({ code, proj, score, win }: { code: string | null; proj?: string | null; score: number | null; win: boolean }) => {
-    const t = code ? ds.teams[code] : null;
-    const nm = t ? t.name : proj ? ds.teams[proj]?.name : null;
+    // Use the projected (already-decided) winner's flag too, not just confirmed slots,
+    // so propagated teams show their real flag instead of a "?" box.
+    const realCode = code || proj || null;
+    const t = realCode ? ds.teams[realCode] : null;
     return (
       <div className={`btc-side${win ? " win" : ""}${played && m.winner && !win ? " dim" : ""}`}>
-        <Flag iso={t?.iso} code={code} size={15} />
-        <span className="btc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{nm || "—"}</span>
+        {t ? <Flag iso={t.iso} code={realCode} size={15} /> : <span className="btc-dot" aria-hidden />}
+        <span className="btc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{t ? t.name : "—"}</span>
         {(played || live) && code && <span className="btc-sc">{score ?? 0}</span>}
       </div>
     );

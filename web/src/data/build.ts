@@ -35,7 +35,8 @@ import { GROUP_HOST, STADIUM_COUNTRY } from "./static/venues";
 import { PLAYER_COLORS, playerPhoto } from "./static/players";
 import { buildKnockout, KO_ROUNDS } from "./bracket";
 import { maxLiveMin } from "../lib/liveState";
-import { classifyTip, outcomeOf } from "./scoring";
+import { classifyTip } from "./scoring";
+import { reg90Score } from "../lib/reg90";
 
 // Correct garbled feed names (e.g. "Bruno Fernanch") on a line-up so the pitch,
 // photo lookup and profile all use the same right name.
@@ -596,15 +597,12 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
 
   // Provisional points for a LIVE (or overlay-finished-but-engine-not-yet) match,
   // mirroring score_one_match in engine.py so the number doesn't jump when the
-  // engine later finalises it. Group: outcome = result. Knockout: outcome =
-  // advancing side (m.winner) once known, else current result while live.
+  // engine later finalises it. Knockout is scored on the 90-minute result
+  // (reg90Score — draws valid); group on the final score.
   function provisionalPoints(m: Match, tip: [number, number]): number {
-    if (m.ga == null || m.gb == null) return 0;
-    if (m.stage === "group") return classifyTip(tip, m.ga, m.gb).points;
-    if (tip[0] === m.ga && tip[1] === m.gb) return 5; // exact (after ET)
-    const tipSide = tip[0] > tip[1] ? m.home : tip[0] < tip[1] ? m.away : null;
-    const advanced = m.winner ? tipSide != null && tipSide === m.winner : outcomeOf(tip[0], tip[1]) === outcomeOf(m.ga, m.gb);
-    return advanced ? 2 : 1;
+    const sc = reg90Score(m);
+    if (!sc) return 0;
+    return classifyTip(tip, sc[0], sc[1]).points;
   }
 
   const leaderboard = D.leaderboard || [];
