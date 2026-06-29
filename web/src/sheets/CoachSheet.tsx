@@ -5,6 +5,7 @@ import { PlayerImg } from "../components/PlayerImg";
 import { Flag, groupColor } from "../lib/flags";
 import { FormDots } from "../components/FormDots";
 import { isoFor } from "../data/static/names";
+import { WikiLink } from "../components/WikiLink";
 import { TEAM_DETAILS } from "../data/static/history";
 
 export function CoachSheet({ code, ...chrome }: { code: string } & SheetChrome) {
@@ -40,6 +41,10 @@ export function CoachSheet({ code, ...chrome }: { code: string } & SheetChrome) 
             {c?.age != null && <span className="chip" style={{ fontSize: 10.5 }}>{c.age} år</span>}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginTop: 14 }}>
+        <WikiLink query={`${name} football manager`} />
       </div>
 
       {/* leads team */}

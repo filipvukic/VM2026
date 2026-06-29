@@ -9,6 +9,7 @@ import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
 import { useStatsIndex, useMatchStats } from "../state/matchStats";
 import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
+import { WikiLink } from "../components/WikiLink";
 import { ratingColor } from "../lib/rating";
 
 function age(born?: string | null): number | null {
@@ -70,6 +71,10 @@ export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }:
             {p?.position && <span className="chip" style={{ fontSize: 10.5 }}>{p.position}</span>}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginTop: 14 }}>
+        <WikiLink query={`${p?.name || name} footballer`} />
       </div>
 
       {p ? (

@@ -11,6 +11,7 @@ import { FormDots } from "../components/FormDots";
 import { lineupPhotoSources } from "../lib/playerPhoto";
 import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../data/static/history";
 import { COUNTRY_FACTS } from "../data/static/countryFacts";
+import { WikiLink } from "../components/WikiLink";
 import { svDayMonth } from "../lib/format";
 
 // Heavy (Three.js) — only loaded when a team sheet's globe actually renders.
@@ -53,6 +54,10 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
             {t.group ? `Grupp ${t.group}` : ""}{rank ? ` · FIFA #${rank} (${FIFA_RANKING_DATE})` : ""}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginBottom: 4 }}>
+        <WikiLink query={`${(t.iso && COUNTRY_FACTS[t.iso.toUpperCase()]?.name) || t.name} national football team`} />
       </div>
 
       {/* tabs */}
