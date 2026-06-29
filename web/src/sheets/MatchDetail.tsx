@@ -113,7 +113,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
             {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{m.attendance ? ` · ${m.attendance.toLocaleString("sv-SE")} i publiken` : ""}
           </div>
         )}
-        {bc && (
+        {bc && !bc.tv4Url && (
           <div style={{ marginTop: 14 }}>
             <a className="md-tv" href={bc.url} target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
@@ -123,6 +123,26 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
               {bc.free && <span className="md-tv-free">GRATIS</span>}
               <span className="md-tv-go">Öppna ›</span>
             </a>
+          </div>
+        )}
+        {bc && bc.tv4Url && (
+          // Knockout: rights are split SVT/TV4 with no per-match listing, so offer both
+          // (SVT link = a search on the two teams; TV4 = its WC hub).
+          <div style={{ marginTop: 14 }}>
+            <div className="kicker" style={{ marginBottom: 7 }}>Visas på SVT eller TV4 · slutspel</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <a className="md-tv" href={bc.url} target="_blank" rel="noopener noreferrer" style={{ flex: 1 }}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2.5" y="7" width="19" height="12.5" rx="2" /><path d="M8 3.2l4 3.8 4-3.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <span><b>SVT Play</b></span>
+                <span className="md-tv-free">GRATIS</span>
+                <span className="md-tv-go">›</span>
+              </a>
+              <a className="md-tv" href={bc.tv4Url} target="_blank" rel="noopener noreferrer" style={{ flex: 1 }}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2.5" y="7" width="19" height="12.5" rx="2" /><path d="M8 3.2l4 3.8 4-3.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <span><b>TV4 Play</b></span>
+                <span className="md-tv-go">›</span>
+              </a>
+            </div>
           </div>
         )}
       </div>

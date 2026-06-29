@@ -7,6 +7,9 @@ import type { Match } from "../data/types";
 export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: number): string {
   // certainly over but the feed still says live (engine/CI lag) → show "Slut"
   if (m.likelyEnded) return "Slut";
+  // Knockout matches can run to extra time (≈120') and beyond, so the ceiling we
+  // clamp an estimated/ticked clock to must be higher than a 90-minute group game.
+  const cap = m.stage === "ko" ? 120 + 9 : 90 + 9;
   if (m.minute == null) {
     // No clock from the feed (e.g. a match served only by football-data without
     // an ESPN clock): estimate from kickoff so we still show a minute rather
@@ -17,7 +20,7 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
     const mins = Math.floor((nowMs - ko) / 60000);
     if (mins <= 45) return Math.max(1, mins) + "'";
     if (mins <= 60) return "Paus";
-    return Math.min(mins - 15, 90 + 9) + "'";
+    return Math.min(mins - 15, cap) + "'";
   }
   const s = String(m.minute);
   if (/^(HT|HALFTIME|PAUS|HALF[\s-]?TIME)$/i.test(s)) return "Paus";
@@ -27,6 +30,6 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
   if (!/^\d+$/.test(s)) return s + "'"; // e.g. "90+2"
   const base = parseInt(s, 10);
   const elapsed = updatedAtMs ? Math.max(0, Math.floor((nowMs - updatedAtMs) / 60000)) : 0;
-  const shown = Math.min(base + elapsed, 90 + 9);
+  const shown = Math.min(base + elapsed, cap);
   return shown + "'";
 }

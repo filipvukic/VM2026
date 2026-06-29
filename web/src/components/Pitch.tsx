@@ -200,9 +200,12 @@ export function Pitch({
         .ppl-rt .star{ font-size:8px; }
         .ppl-mark{ position:absolute; display:grid; place-items:center; font-family:var(--font-display); font-weight:800; line-height:1;
           border:1.5px solid rgba(7,26,16,.92); box-shadow:0 1px 3px rgba(0,0,0,.5); }
-        .ppl-mark.goal{ right:-4px; bottom:-3px; min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:#fff; color:#0a0712; font-size:8.5px; }
-        .ppl-mark.assist{ right:-4px; bottom:-3px; min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:var(--cool); color:#fff; font-size:8.5px; }
-        .ppl-mark.card{ left:-3px; bottom:-3px; width:10px; height:13px; border-radius:2px; }
+        /* goal + assist sit together at bottom-right (both show when a player did both) */
+        .ppl-marks{ position:absolute; right:-5px; bottom:-3px; display:flex; align-items:center; gap:2px; }
+        .ppl-marks .ppl-mark{ position:static; }
+        .ppl-mark.goal{ min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:#fff; color:#0a0712; font-size:8.5px; }
+        .ppl-mark.assist{ min-width:15px; height:15px; padding:0 2px; border-radius:8px; background:var(--cool); color:#fff; font-size:8.5px; }
+        .ppl-mark.card{ position:absolute; left:-3px; bottom:-3px; width:10px; height:13px; border-radius:2px; }
         .ppl-mark.card.y{ background:var(--gold); } .ppl-mark.card.r{ background:var(--loss); }
         .ppl:active .ppl-card{ transform:scale(.93); }
         .ppl{ background:none; }
@@ -262,11 +265,12 @@ function PitchPlayer({
             {motm && <span className="star" title="Matchens spelare">★</span>}{rating.toFixed(1)}
           </span>
         )}
-        {goals > 0 ? (
-          <span className="ppl-mark goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>
-        ) : assists > 0 ? (
-          <span className="ppl-mark assist" title="Assist">A{assists > 1 ? assists : ""}</span>
-        ) : null}
+        {(goals > 0 || assists > 0) && (
+          <span className="ppl-marks">
+            {goals > 0 && <span className="ppl-mark goal" title="Mål">⚽{goals > 1 ? goals : ""}</span>}
+            {assists > 0 && <span className="ppl-mark assist" title={assists > 1 ? `${assists} assist` : "Assist"}>A{assists > 1 ? assists : ""}</span>}
+          </span>
+        )}
         {card && <span className={`ppl-mark card ${card === "red" ? "r" : "y"}`} title={card === "red" ? "Rött kort" : "Gult kort"} />}
       </div>
       <span className="ppl-name">{num ? <span className="ppl-name-num">{num}</span> : null}{last}</span>

@@ -106,6 +106,9 @@ export interface BroadcastInfo {
   url: string;
   /** SVT broadcasts are free. */
   free: boolean;
+  /** For matches not in the hand-kept table (knockouts): the TV4 link, so the view can
+   *  offer BOTH platforms (rights are split and we have no per-match KO listing). */
+  tv4Url?: string;
 }
 
 // Look up where a match airs from its two team codes (the frontend's m.home /
@@ -123,5 +126,5 @@ export function broadcastForPair(
   const svt = homeName && awayName ? svtSearch(homeName, awayName) : SVT_HUB;
   if (b === "svt") return { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: svt, free: true };
   if (b === "tv4") return { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
-  return { broadcaster: null, label: "SVT / TV4", channels: ["SVT Play", "TV4 Play"], url: svt, free: false };
+  return { broadcaster: null, label: "SVT eller TV4", channels: ["SVT Play", "TV4 Play"], url: svt, free: true, tv4Url: TV4_HUB };
 }

@@ -1,18 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
+import { useScheduleUI, type SchedFilter } from "../state/scheduleUi";
 import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
 import { svDayLabel, svDateKey } from "../lib/format";
 import { isLive, isEnded } from "../lib/liveState";
 import type { Dataset, Match } from "../data/types";
 
-type Mode = "list" | "bracket";
-type Filter = "all" | "live" | "upcoming" | "played";
+type Filter = SchedFilter;
 
 export function ScheduleView() {
   const ds = useData();
-  const [mode, setMode] = useState<Mode>("list");
+  const mode = useScheduleUI((s) => s.mode);
+  const setMode = useScheduleUI((s) => s.setMode);
 
   return (
     <div className="view container">
@@ -37,7 +38,8 @@ export function ScheduleView() {
 
 function ScheduleList({ ds }: { ds: Dataset }) {
   const openMatch = useSheets((s) => s.openMatch);
-  const [filter, setFilter] = useState<Filter>("all");
+  const filter = useScheduleUI((s) => s.filter);
+  const setFilter = useScheduleUI((s) => s.setFilter);
   const nextRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {

@@ -13,6 +13,7 @@ import { NotificationWatcher } from "./features/notifications/NotificationWatche
 import { Lightbox } from "./components/Lightbox";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
+import { useScheduleUI } from "./state/scheduleUi";
 import { isLive } from "./lib/liveState";
 import { asset } from "./lib/assets";
 import { matchPairKey } from "./lib/espnLive";
@@ -62,6 +63,9 @@ export default function App() {
   const goTab = (t: TabId) => {
     setTab(t);
     window.scrollTo(0, 0);
+    // Opening Matcher from the nav shows everything (today-centred); the LIVE pill is
+    // the only entry point that pre-selects the live filter.
+    if (t === "schedule") useScheduleUI.getState().setFilter("all");
   };
 
   useEffect(() => {
@@ -158,7 +162,7 @@ export default function App() {
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto", flexShrink: 0 }}>
             {live.length > 0 && (
-              <button className="live-pill" onClick={() => (live.length === 1 ? openMatch(live[0].id) : goTab("schedule"))} style={{ cursor: "pointer" }}>
+              <button className="live-pill" onClick={() => { useScheduleUI.getState().goLive(); setTab("schedule"); window.scrollTo(0, 0); }} style={{ cursor: "pointer" }}>
                 <span className="live-dot" />{live.length} LIVE
               </button>
             )}
