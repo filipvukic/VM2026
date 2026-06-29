@@ -30,6 +30,8 @@ jobs:
       - name: Kör tippningsmotorn
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          KO_WORKER_URL: ${{ secrets.KO_WORKER_URL }}
+          KO_ADMIN_KEY: ${{ secrets.KO_ADMIN_KEY }}
         run: python engine.py
 
       # FotMob (betyg/heatmap/skott) kan inte hämtas i webbläsaren (ingen CORS),
