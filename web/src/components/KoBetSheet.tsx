@@ -75,7 +75,9 @@ export function KoBetSheet() {
                 </div>
               )}
               {rounds.map((r) => {
-                const drawn = r.matches.filter((m) => m.home && m.away);
+                // only matches you can still act on — drawn + not already played (played
+                // ones live in the bracket; here they'd just be clutter you can't tip)
+                const drawn = r.matches.filter((m) => m.home && m.away && m.status !== "played");
                 const anyOpen = r.matches.some((m) => openIds.has(koFid(m)));
                 if (!drawn.length) {
                   return r.future ? (
