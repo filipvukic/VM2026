@@ -19,18 +19,20 @@ export function ScheduleView() {
 
   return (
     <div className="view container">
-      <div className="section-head" style={{ marginTop: 6, marginBottom: 0 }}>
-        <div className="section-title">Matcher</div>
-      </div>
-      <div className="md-modes">
-        <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>📅 Spelschema</button>
-        <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>🏆 Slutspelsträd</button>
+      <div className="md-modes-bar">
+        <div className="section-title" style={{ marginBottom: 8 }}>Matcher</div>
+        <div className="md-modes">
+          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>📅 Spelschema</button>
+          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>🏆 Slutspelsträd</button>
+        </div>
       </div>
 
       {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
 
       <style>{`
-        .md-modes{ display:flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:4px; margin:10px 0 16px; }
+        /* Sticky so the schedule's auto-scroll-to-live can never hide the toggle. */
+        .md-modes-bar{ position:sticky; top:var(--header-h); z-index:20; background:var(--bg); padding:8px 0 12px; margin-top:2px; }
+        .md-modes{ display:flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:4px; }
         .md-modes button{ flex:1 1 0; min-width:0; padding:11px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13.5px; color:var(--ink-3); transition:color .15s; white-space:nowrap; }
         .md-modes button.on{ background:var(--grad-soft); color:#fff; }
       `}</style>
@@ -216,25 +218,36 @@ function Bracket({ ds }: { ds: Dataset }) {
         .bk-view{ display:inline-flex; gap:3px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; margin-bottom:14px; }
         .bk-view button{ padding:7px 18px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
         .bk-view button.on{ background:var(--grad-soft); color:#fff; }
-        .bt-scroll{ overflow-x:auto; overflow-y:hidden; padding-bottom:8px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
-        .bt{ display:flex; gap:8px; height:470px; min-width:max-content; padding:0 2px; }
-        .bt-col{ display:flex; flex-direction:column; width:132px; flex:0 0 132px; }
-        .bt-col-h{ text-align:center; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3); margin-bottom:6px; }
-        .bt-col-body{ flex:1; display:flex; flex-direction:column; justify-content:space-around; }
-        .bt-empty{ height:42px; }
+        .bt-scroll{ overflow-x:auto; overflow-y:hidden; padding:2px 2px 10px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
+        .bt{ display:flex; gap:0; height:486px; min-width:max-content; }
+        .bt-col{ display:flex; flex-direction:column; width:124px; flex:0 0 124px; }
+        .bt-col-h{ text-align:center; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); height:13px; line-height:13px; margin-bottom:11px; }
+        .bt-col-body{ flex:1; display:flex; flex-direction:column; }
+        .bt-slot{ flex:1 1 0; display:flex; align-items:center; min-height:0; }
+        .bt-empty{ width:100%; height:40px; border:1px dashed var(--line); border-radius:9px; opacity:.5; }
+        /* connector columns — spine ties each pair of feeders, stub runs to the parent.
+           Geometry is in %, so it stays aligned at any height (feeders land at 25%/75%). */
+        .bt-conn{ display:flex; flex-direction:column; flex:0 0 16px; }
+        .bt-conn-h{ height:13px; margin-bottom:11px; }
+        .bt-conn-body{ flex:1; display:flex; flex-direction:column; }
+        .bt-conn-item{ flex:1 1 0; position:relative; }
+        .bt-conn.pair .bt-conn-item::before{ content:''; position:absolute; top:25%; height:50%; width:2px; background:var(--line-2); }
+        .bt-conn.pair:not(.mir) .bt-conn-item::before{ left:0; }
+        .bt-conn.pair.mir .bt-conn-item::before{ right:0; }
+        .bt-conn-item::after{ content:''; position:absolute; left:0; right:0; top:calc(50% - 1px); height:2px; background:var(--line-2); }
         .btc{ background:var(--surface); border:1px solid var(--line); border-radius:9px; overflow:hidden; width:100%; text-align:left; transition:border-color .15s; }
-        .btc:not(.nolink):active{ transform:scale(.98); }
+        .btc:not(.nolink):active{ transform:scale(.97); }
         .btc.nolink{ cursor:default; }
-        .btc.live{ border-color:color-mix(in srgb, var(--hot) 50%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 16%, transparent); }
-        .btc-side{ display:flex; align-items:center; gap:5px; padding:5px 7px; }
-        .btc-side.win{ background:color-mix(in srgb, var(--win) 11%, transparent); }
+        .btc.live{ border-color:color-mix(in srgb, var(--hot) 55%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 18%, transparent); }
+        .btc-side{ display:flex; align-items:center; gap:6px; padding:5px 7px; }
+        .btc-side.win{ background:color-mix(in srgb, var(--win) 13%, transparent); }
         .btc-side.dim{ opacity:.4; }
-        .btc-nm{ flex:1; min-width:0; font-size:10.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .btc-nm{ flex:1; min-width:0; font-size:11px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .btc-side.win .btc-nm{ font-weight:800; }
         .btc-sc{ font-family:var(--font-display); font-weight:800; font-size:12.5px; font-variant-numeric:tabular-nums; }
         .btc-div{ height:1px; background:var(--line); }
         .bt-bronze{ margin-top:18px; }
-        .bt-hint{ font-size:10.5px; color:var(--ink-3); text-align:center; margin-top:8px; }
+        .bt-hint{ font-size:10.5px; color:var(--ink-3); text-align:center; margin-top:10px; }
         .bk-cta{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; margin-bottom:14px;
           border-radius:var(--r-lg); border:1px solid color-mix(in srgb, var(--cool) 40%, var(--line-2));
           background:linear-gradient(135deg, color-mix(in srgb, var(--cool) 16%, var(--surface)), var(--surface)); }
@@ -304,8 +317,9 @@ function BracketCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: () => v
 }
 
 // --- proper two-sided bracket tree ---
-// Columns by FIFA match number, left half → final → right half, so each later-round
-// match sits (via space-around) between the two it's fed by — a real bracket.
+// Columns by FIFA match number, left half → final → right half; each later-round match
+// sits (via equal-height slots) between the two it's fed by, and a connector column
+// between every pair of rounds draws the bracket spine + a stub to the parent match.
 const TREE_COLS: { label: string; fifas: number[] }[] = [
   { label: "16-del", fifas: [73, 75, 74, 77, 83, 84, 81, 82] },
   { label: "8-del", fifas: [89, 90, 93, 94] },
@@ -317,6 +331,30 @@ const TREE_COLS: { label: string; fifas: number[] }[] = [
   { label: "8-del", fifas: [91, 92, 95, 96] },
   { label: "16-del", fifas: [76, 78, 79, 80, 86, 88, 85, 87] },
 ];
+// One connector between each adjacent pair of columns; count = number of parent
+// (centre-side) matches. "pair" = two feeders into one parent (draw the spine);
+// "single" = the semi→final links (just a straight line). side = which way it points.
+const TREE_CONNS: { type: "pair" | "single"; side: "L" | "R"; count: number }[] = [
+  { type: "pair", side: "L", count: 4 },
+  { type: "pair", side: "L", count: 2 },
+  { type: "pair", side: "L", count: 1 },
+  { type: "single", side: "L", count: 1 },
+  { type: "single", side: "R", count: 1 },
+  { type: "pair", side: "R", count: 1 },
+  { type: "pair", side: "R", count: 2 },
+  { type: "pair", side: "R", count: 4 },
+];
+
+function Conn({ type, side, count }: { type: "pair" | "single"; side: "L" | "R"; count: number }) {
+  return (
+    <div className={`bt-conn ${type}${side === "R" ? " mir" : ""}`} aria-hidden>
+      <div className="bt-conn-h" />
+      <div className="bt-conn-body">
+        {Array.from({ length: count }).map((_, i) => <div key={i} className="bt-conn-item" />)}
+      </div>
+    </div>
+  );
+}
 
 function BracketTree({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void }) {
   const byFifa: Record<number, Match> = {};
@@ -324,22 +362,25 @@ function BracketTree({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void
     if (m.fifa != null) byFifa[m.fifa] = m;
   });
   const bronze = ds.knockout.third[0];
-  return (
-    <div>
-      <div className="bt-scroll">
-        <div className="bt">
-          {TREE_COLS.map((c, ci) => (
-            <div key={ci} className="bt-col">
-              <div className="bt-col-h">{c.label}</div>
-              <div className="bt-col-body">
-                {c.fifas.map((f) => {
-                  const m = byFifa[f];
-                  return m ? <TreeCell key={f} m={m} ds={ds} onOpen={onOpen} /> : <div key={f} className="bt-empty" />;
-                })}
-              </div>
+  const cols = TREE_COLS.flatMap((c, ci) => {
+    const col = (
+      <div key={`c${ci}`} className="bt-col">
+        <div className="bt-col-h">{c.label}</div>
+        <div className="bt-col-body">
+          {c.fifas.map((f) => (
+            <div key={f} className="bt-slot">
+              {byFifa[f] ? <TreeCell m={byFifa[f]} ds={ds} onOpen={onOpen} /> : <div className="bt-empty" />}
             </div>
           ))}
         </div>
+      </div>
+    );
+    return ci < TREE_CONNS.length ? [col, <Conn key={`x${ci}`} {...TREE_CONNS[ci]} />] : [col];
+  });
+  return (
+    <div>
+      <div className="bt-scroll">
+        <div className="bt">{cols}</div>
       </div>
       {bronze && (
         <div className="bt-bronze">
@@ -362,7 +403,7 @@ function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: strin
     const nm = t ? t.name : proj ? ds.teams[proj]?.name : null;
     return (
       <div className={`btc-side${win ? " win" : ""}${played && m.winner && !win ? " dim" : ""}`}>
-        <Flag iso={t?.iso} code={code} size={14} />
+        <Flag iso={t?.iso} code={code} size={15} />
         <span className="btc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{nm || "—"}</span>
         {(played || live) && code && <span className="btc-sc">{score ?? 0}</span>}
       </div>
