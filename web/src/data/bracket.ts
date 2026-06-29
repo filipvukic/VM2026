@@ -220,6 +220,25 @@ export function buildKnockout(
   overlayKO(third, "third_", 103);
   overlayKO(final, "final_", 104);
 
+  // Fill the next round in as the current one finishes: a slot reading "Vinnare M73"
+  // shows match 73's actual winner once it's played (and "Förlorare MX" its loser),
+  // without waiting for football-data to redraw the next-round fixtures.
+  const all = [...r32, ...r16, ...qf, ...sf, ...third, ...final];
+  const byFifa: Record<number, Match> = {};
+  for (const m of all) if (m.fifa != null) byFifa[m.fifa] = m;
+  const fromResult = (label: string | null | undefined): string | null => {
+    if (!label) return null;
+    const win = /^Vinnare M(\d+)$/.exec(label);
+    if (win) { const f = byFifa[+win[1]]; return f && f.status === "played" && f.winner ? f.winner : null; }
+    const lose = /^Förlorare M(\d+)$/.exec(label);
+    if (lose) { const f = byFifa[+lose[1]]; if (f && f.status === "played" && f.winner) return f.home === f.winner ? f.away : f.home; }
+    return null;
+  };
+  for (const m of all) {
+    if (!m.home && !m.projHome) { const w = fromResult(m.fromA); if (w) m.projHome = w; }
+    if (!m.away && !m.projAway) { const w = fromResult(m.fromB); if (w) m.projAway = w; }
+  }
+
   return { r32, r16, qf, sf, third, final };
 }
 

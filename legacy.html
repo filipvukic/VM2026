@@ -717,6 +717,23 @@
     overlayKO(third_built, "third_", 103);
     overlayKO(final_built, "final_", 104);
 
+    // Fyll i nästa omgång när den nuvarande avgörs (Vinnare/Förlorare MX -> faktiskt lag).
+    const _allKo = [].concat(r32_built, r16_built, qf_built, sf_built, third_built, final_built);
+    const _byFifa = {};
+    _allKo.forEach(function(m){ if(m.fifa != null) _byFifa[m.fifa] = m; });
+    function _fromResult(label){
+      if(!label) return null;
+      var win = /^Vinnare M(\d+)$/.exec(label);
+      if(win){ var f = _byFifa[+win[1]]; return (f && f.status === "played" && f.winner) ? f.winner : null; }
+      var lose = /^Förlorare M(\d+)$/.exec(label);
+      if(lose){ var g = _byFifa[+lose[1]]; if(g && g.status === "played" && g.winner) return g.home === g.winner ? g.away : g.home; }
+      return null;
+    }
+    _allKo.forEach(function(m){
+      if(!m.home && !m.projHome){ var w = _fromResult(m.fromA); if(w) m.projHome = w; }
+      if(!m.away && !m.projAway){ var x = _fromResult(m.fromB); if(x) m.projAway = x; }
+    });
+
     const knockout = {
       r32: r32_built, r16: r16_built, qf: qf_built, sf: sf_built,
       third: third_built, final: final_built

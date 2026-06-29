@@ -19,20 +19,20 @@ export function ScheduleView() {
 
   return (
     <div className="view container">
-      <div className="section-head" style={{ marginTop: 6 }}>
+      <div className="section-head" style={{ marginTop: 6, marginBottom: 0 }}>
         <div className="section-title">Matcher</div>
-        <div className="seg">
-          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Schema</button>
-          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
-        </div>
+      </div>
+      <div className="md-modes">
+        <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>📅 Spelschema</button>
+        <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>🏆 Slutspelsträd</button>
       </div>
 
       {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
 
       <style>{`
-        .seg{ display:inline-flex; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; gap:2px; }
-        .seg button{ padding:6px 14px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
-        .seg button.on{ background:var(--grad-soft); color:#fff; }
+        .md-modes{ display:flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:4px; margin:10px 0 16px; }
+        .md-modes button{ flex:1 1 0; min-width:0; padding:11px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13.5px; color:var(--ink-3); transition:color .15s; white-space:nowrap; }
+        .md-modes button.on{ background:var(--grad-soft); color:#fff; }
       `}</style>
     </div>
   );
@@ -169,6 +169,7 @@ function Bracket({ ds }: { ds: Dataset }) {
   ].filter((r) => r.ms && r.ms.length);
   const [round, setRound] = useState<string>("r32");
   const active = rounds.find((r) => r.key === round) || rounds[0];
+  const [view, setView] = useState<"tree" | "list">("tree");
   const koName = useKoBets((s) => s.name);
   const openBet = useKoBets((s) => s.setSheet);
 
@@ -183,26 +184,57 @@ function Bracket({ ds }: { ds: Dataset }) {
         <span className="bk-cta-go">›</span>
       </button>
 
-      <div className="bk-rounds">
-        {rounds.map((r) => (
-          <button key={r.key} className={r.key === active.key ? "on" : ""} onClick={() => setRound(r.key)}>
-            {r.tab}
-          </button>
-        ))}
+      <div className="bk-view">
+        <button className={view === "tree" ? "on" : ""} onClick={() => setView("tree")}>Träd</button>
+        <button className={view === "list" ? "on" : ""} onClick={() => setView("list")}>Lista</button>
       </div>
 
-      <div className="section-head" style={{ margin: "4px 2px 10px" }}>
-        <div className="section-title" style={{ fontSize: 18 }}>{active.title}</div>
-        <div className="kicker">{active.ms.length} {active.ms.length === 1 ? "match" : "matcher"}</div>
-      </div>
-
-      <div className="bk-list">
-        {active.ms.map((m) => (
-          <BracketCell key={m.id} m={m} ds={ds} onOpen={() => m._realId && openMatch(m.id)} />
-        ))}
-      </div>
+      {view === "tree" ? (
+        <BracketTree ds={ds} onOpen={(id) => openMatch(id)} />
+      ) : (
+        <>
+          <div className="bk-rounds">
+            {rounds.map((r) => (
+              <button key={r.key} className={r.key === active.key ? "on" : ""} onClick={() => setRound(r.key)}>
+                {r.tab}
+              </button>
+            ))}
+          </div>
+          <div className="section-head" style={{ margin: "4px 2px 10px" }}>
+            <div className="section-title" style={{ fontSize: 18 }}>{active.title}</div>
+            <div className="kicker">{active.ms.length} {active.ms.length === 1 ? "match" : "matcher"}</div>
+          </div>
+          <div className="bk-list">
+            {active.ms.map((m) => (
+              <BracketCell key={m.id} m={m} ds={ds} onOpen={() => m._realId && openMatch(m.id)} />
+            ))}
+          </div>
+        </>
+      )}
 
       <style>{`
+        .bk-view{ display:inline-flex; gap:3px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; margin-bottom:14px; }
+        .bk-view button{ padding:7px 18px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
+        .bk-view button.on{ background:var(--grad-soft); color:#fff; }
+        .bt-scroll{ overflow-x:auto; overflow-y:hidden; padding-bottom:8px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
+        .bt{ display:flex; gap:8px; height:470px; min-width:max-content; padding:0 2px; }
+        .bt-col{ display:flex; flex-direction:column; width:132px; flex:0 0 132px; }
+        .bt-col-h{ text-align:center; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3); margin-bottom:6px; }
+        .bt-col-body{ flex:1; display:flex; flex-direction:column; justify-content:space-around; }
+        .bt-empty{ height:42px; }
+        .btc{ background:var(--surface); border:1px solid var(--line); border-radius:9px; overflow:hidden; width:100%; text-align:left; transition:border-color .15s; }
+        .btc:not(.nolink):active{ transform:scale(.98); }
+        .btc.nolink{ cursor:default; }
+        .btc.live{ border-color:color-mix(in srgb, var(--hot) 50%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 16%, transparent); }
+        .btc-side{ display:flex; align-items:center; gap:5px; padding:5px 7px; }
+        .btc-side.win{ background:color-mix(in srgb, var(--win) 11%, transparent); }
+        .btc-side.dim{ opacity:.4; }
+        .btc-nm{ flex:1; min-width:0; font-size:10.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .btc-side.win .btc-nm{ font-weight:800; }
+        .btc-sc{ font-family:var(--font-display); font-weight:800; font-size:12.5px; font-variant-numeric:tabular-nums; }
+        .btc-div{ height:1px; background:var(--line); }
+        .bt-bronze{ margin-top:18px; }
+        .bt-hint{ font-size:10.5px; color:var(--ink-3); text-align:center; margin-top:8px; }
         .bk-cta{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; margin-bottom:14px;
           border-radius:var(--r-lg); border:1px solid color-mix(in srgb, var(--cool) 40%, var(--line-2));
           background:linear-gradient(135deg, color-mix(in srgb, var(--cool) 16%, var(--surface)), var(--surface)); }
@@ -267,6 +299,80 @@ function BracketCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: () => v
           <>{m.kickoff ? svDayMonth(m.kickoff) : "TBD"}{bc?.broadcaster ? ` · ${bc.label}` : ""}</>
         )}
       </div>
+    </button>
+  );
+}
+
+// --- proper two-sided bracket tree ---
+// Columns by FIFA match number, left half → final → right half, so each later-round
+// match sits (via space-around) between the two it's fed by — a real bracket.
+const TREE_COLS: { label: string; fifas: number[] }[] = [
+  { label: "16-del", fifas: [73, 75, 74, 77, 83, 84, 81, 82] },
+  { label: "8-del", fifas: [89, 90, 93, 94] },
+  { label: "Kvart", fifas: [97, 98] },
+  { label: "Semi", fifas: [101] },
+  { label: "Final", fifas: [104] },
+  { label: "Semi", fifas: [102] },
+  { label: "Kvart", fifas: [99, 100] },
+  { label: "8-del", fifas: [91, 92, 95, 96] },
+  { label: "16-del", fifas: [76, 78, 79, 80, 86, 88, 85, 87] },
+];
+
+function BracketTree({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void }) {
+  const byFifa: Record<number, Match> = {};
+  [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
+    if (m.fifa != null) byFifa[m.fifa] = m;
+  });
+  const bronze = ds.knockout.third[0];
+  return (
+    <div>
+      <div className="bt-scroll">
+        <div className="bt">
+          {TREE_COLS.map((c, ci) => (
+            <div key={ci} className="bt-col">
+              <div className="bt-col-h">{c.label}</div>
+              <div className="bt-col-body">
+                {c.fifas.map((f) => {
+                  const m = byFifa[f];
+                  return m ? <TreeCell key={f} m={m} ds={ds} onOpen={onOpen} /> : <div key={f} className="bt-empty" />;
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {bronze && (
+        <div className="bt-bronze">
+          <div className="kicker" style={{ marginBottom: 6 }}>Bronsmatch</div>
+          <div style={{ maxWidth: 200 }}>
+            <TreeCell m={bronze} ds={ds} onOpen={onOpen} />
+          </div>
+        </div>
+      )}
+      <div className="bt-hint">↔ dra i sidled för att se hela trädet</div>
+    </div>
+  );
+}
+
+function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: string) => void }) {
+  const played = m.status === "played" && m.ga != null && m.gb != null;
+  const live = isLive(m);
+  const Side = ({ code, proj, score, win }: { code: string | null; proj?: string | null; score: number | null; win: boolean }) => {
+    const t = code ? ds.teams[code] : null;
+    const nm = t ? t.name : proj ? ds.teams[proj]?.name : null;
+    return (
+      <div className={`btc-side${win ? " win" : ""}${played && m.winner && !win ? " dim" : ""}`}>
+        <Flag iso={t?.iso} code={code} size={14} />
+        <span className="btc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{nm || "—"}</span>
+        {(played || live) && code && <span className="btc-sc">{score ?? 0}</span>}
+      </div>
+    );
+  };
+  return (
+    <button className={`btc${live ? " live" : ""}${m._realId ? "" : " nolink"}`} onClick={() => m._realId && onOpen(m.id)} disabled={!m._realId}>
+      <Side code={m.home} proj={m.projHome} score={m.ga} win={played && m.winner === m.home} />
+      <div className="btc-div" />
+      <Side code={m.away} proj={m.projAway} score={m.gb} win={played && m.winner === m.away} />
     </button>
   );
 }
