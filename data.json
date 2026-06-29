@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-29T19:26:24+00:00",
+  "updated_at": "2026-06-29T21:07:12+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19501,17 +19501,23 @@
       "homeTla": "GER",
       "away": "Paraguay",
       "awayTla": "PAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "37",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -19523,8 +19529,7 @@
       "referees": [
         {
           "name": "Jalal Jayed",
-          "role": "REFEREE",
-          "nationality": "Morocco"
+          "role": "Referee"
         }
       ],
       "odds": null,
