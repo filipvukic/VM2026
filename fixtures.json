@@ -58000,23 +58000,26 @@
     "homeTla": "BRA",
     "away": "Japan",
     "awayTla": "JPN",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
+      2,
       1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
+        1
+      ],
+      "fullTime": [
+        2,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "45",
+    "minute": null,
     "goals": [
       {
         "minute": "29",
@@ -58030,6 +58033,32 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "56",
+        "team": "BRA",
+        "scorer": "Casemiro",
+        "assist": "Gabriel Magalhães",
+        "type": "HEADER",
+        "description": "Goal! Brazil 1, Japan 1. Casemiro (Brazil) header from the right side of the six yard box to the high centre of the goal. Assisted by Gabriel Magalhães with a cross.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "BRA",
+        "scorer": "Gabriel Martinelli",
+        "assist": "Bruno Guimarães",
+        "type": "REGULAR",
+        "description": "Goal! Brazil 2, Japan 1. Gabriel Martinelli (Brazil) right footed shot from the centre of the box to the bottom right corner. Assisted by Bruno Guimarães.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [
@@ -58053,9 +58082,87 @@
         "player": "Daichi Kamada",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "48",
+        "team": "BRA",
+        "player": "Danilo",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "JPN",
+        "player": "Junnosuke Suzuki",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "BRA",
+        "playerIn": "Endrick",
+        "playerOut": "Lucas Paquetá",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "BRA",
+        "playerIn": "Gabriel Martinelli",
+        "playerOut": "Matheus Cunha",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "JPN",
+        "playerIn": "Junnosuke Suzuki",
+        "playerOut": "Keito Nakamura",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "JPN",
+        "playerIn": "Yukinari Sugawara",
+        "playerOut": "Ritsu Doan",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "JPN",
+        "playerIn": "Shuto Machino",
+        "playerOut": "Junya Ito",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "JPN",
+        "playerIn": "Ao Tanaka",
+        "playerOut": "Daichi Kamada",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "BRA",
+        "playerIn": "Fabinho",
+        "playerOut": "Casemiro",
+        "period": 2
+      },
+      {
+        "minute": "90+7",
+        "team": "JPN",
+        "playerIn": "Koki Ogawa",
+        "playerOut": "Daizen Maeda",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "BRA",
+        "playerIn": "Danilo Santos",
+        "playerOut": "Bruno Guimarães",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "NRG Stadium",
       "city": "Houston, Texas",
@@ -58068,7 +58175,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 68777,
     "espnOdds": {
       "homeML": -135,
       "awayML": 425,
@@ -58133,7 +58240,7 @@
           "jersey": "5",
           "espnId": "173666",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lucas Paquetá",
@@ -58142,7 +58249,7 @@
           "jersey": "20",
           "espnId": "234715",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bruno Guimarães",
@@ -58151,7 +58258,7 @@
           "jersey": "8",
           "espnId": "218522",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Matheus Cunha",
@@ -58160,7 +58267,7 @@
           "jersey": "9",
           "espnId": "259902",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Vinícius Júnior",
@@ -58197,7 +58304,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "269844",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58224,7 +58331,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "306764",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58242,7 +58349,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "176287",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58251,7 +58358,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "346612",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58358,7 +58465,7 @@
           "jersey": "15",
           "espnId": "219362",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kaishu Sano",
@@ -58376,7 +58483,7 @@
           "jersey": "13",
           "espnId": "265953",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ritsu Doan",
@@ -58385,7 +58492,7 @@
           "jersey": "10",
           "espnId": "219627",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ayase Ueda",
@@ -58403,7 +58510,7 @@
           "jersey": "11",
           "espnId": "286347",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Junya Ito",
@@ -58412,7 +58519,7 @@
           "jersey": "14",
           "espnId": "219350",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -58440,7 +58547,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "238016",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58494,7 +58601,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "271352",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58512,7 +58619,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "265965",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58521,7 +58628,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "333663",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -58548,7 +58655,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "253173",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -58556,64 +58663,64 @@
       "_espnEventId": "760487"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 4.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 2.0,
-      "saves": 0.0,
-      "possessionPct": 76.7,
-      "totalShots": 7.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "wonCorners": 6.0,
+      "saves": 1.0,
+      "possessionPct": 68.6,
+      "totalShots": 19.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 292.0,
-      "totalPasses": 313.0,
+      "accuratePasses": 625.0,
+      "totalPasses": 682.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 9.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 20.0,
-      "accurateLongBalls": 10.0,
+      "accurateCrosses": 9.0,
+      "totalCrosses": 40.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 45.0,
+      "accurateLongBalls": 21.0,
       "longballPct": 0.5,
-      "blockedShots": 3.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.6,
-      "interceptions": 2.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "blockedShots": 6.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.7,
+      "interceptions": 9.0,
+      "effectiveClearance": 18.0,
+      "totalClearance": 18.0
     },
     "awayStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 3.0,
       "redCards": 0.0,
       "offsides": 0.0,
       "wonCorners": 2.0,
-      "saves": 2.0,
-      "possessionPct": 23.3,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "saves": 4.0,
+      "possessionPct": 31.4,
+      "totalShots": 5.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 73.0,
-      "totalPasses": 90.0,
+      "accuratePasses": 261.0,
+      "totalPasses": 315.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 5.0,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 10.0,
       "crossPct": 0.2,
-      "totalLongBalls": 16.0,
-      "accurateLongBalls": 7.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
+      "totalLongBalls": 45.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.5,
+      "blockedShots": 2.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 10.0,
       "tacklePct": 0.4,
-      "interceptions": 2.0,
-      "effectiveClearance": 11.0,
-      "totalClearance": 11.0
+      "interceptions": 4.0,
+      "effectiveClearance": 45.0,
+      "totalClearance": 45.0
     },
     "homeForm": [
       {
@@ -58718,7 +58825,13 @@
       "city": "Foxborough, Massachusetts",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Jalal Jayed",
+        "role": "REFEREE",
+        "nationality": "Morocco"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
