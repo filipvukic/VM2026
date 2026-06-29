@@ -11,6 +11,7 @@ import { InsightsView } from "./features/insights/InsightsView";
 import { SearchCommand } from "./features/search/SearchCommand";
 import { NotificationWatcher } from "./features/notifications/NotificationWatcher";
 import { Lightbox } from "./components/Lightbox";
+import { KoBetSheet } from "./components/KoBetSheet";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
 import { useScheduleUI } from "./state/scheduleUi";
@@ -198,6 +199,7 @@ export default function App() {
       <NotificationWatcher />
       <SheetHost />
       <Lightbox />
+      <KoBetSheet />
     </div>
   );
 }

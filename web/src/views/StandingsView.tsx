@@ -10,6 +10,7 @@ import { PRIZES } from "../data/static/names";
 import { kr, svTime, svDateKey, svDayLabel } from "../lib/format";
 import { asset } from "../lib/assets";
 import { NotifyPrompt } from "../features/notifications/NotifyPrompt";
+import { KoReminder } from "../components/KoReminder";
 
 const MEDAL = ["var(--gold)", "#cfd6e6", "#e8965a"];
 
@@ -53,6 +54,7 @@ export function StandingsView() {
 
   return (
     <div className="view container">
+      <KoReminder />
       {/* HERO */}
       <div className="hero">
         <div className="hero-shine" />

@@ -3,11 +3,11 @@ import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useScheduleUI, type SchedFilter } from "../state/scheduleUi";
 import { useKoBets } from "../state/koBets";
-import { KoBetSheet } from "../components/KoBetSheet";
 import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
-import { svDayLabel, svDateKey } from "../lib/format";
+import { svDayLabel, svDateKey, svDayMonth } from "../lib/format";
 import { isLive, isEnded } from "../lib/liveState";
+import { broadcastForPair } from "../data/static/broadcasts";
 import type { Dataset, Match } from "../data/types";
 
 type Filter = SchedFilter;
@@ -169,12 +169,12 @@ function Bracket({ ds }: { ds: Dataset }) {
   ].filter((r) => r.ms && r.ms.length);
   const [round, setRound] = useState<string>("r32");
   const active = rounds.find((r) => r.key === round) || rounds[0];
-  const [betOpen, setBetOpen] = useState(false);
   const koName = useKoBets((s) => s.name);
+  const openBet = useKoBets((s) => s.setSheet);
 
   return (
     <div>
-      <button className="bk-cta" onClick={() => setBetOpen(true)}>
+      <button className="bk-cta" onClick={() => openBet(true)}>
         <span className="bk-cta-ic">✏️</span>
         <span className="bk-cta-txt">
           <b>Slutspelstips</b>
@@ -182,7 +182,6 @@ function Bracket({ ds }: { ds: Dataset }) {
         </span>
         <span className="bk-cta-go">›</span>
       </button>
-      <KoBetSheet open={betOpen} onClose={() => setBetOpen(false)} />
 
       <div className="bk-rounds">
         {rounds.map((r) => (
@@ -217,39 +216,57 @@ function Bracket({ ds }: { ds: Dataset }) {
         .bk-rounds button{ flex:1 1 0; min-width:fit-content; padding:8px 10px; border-radius:var(--r-pill);
           font-weight:800; font-size:12.5px; color:var(--ink-3); white-space:nowrap; transition:color .15s; }
         .bk-rounds button.on{ background:var(--grad-soft); color:#fff; }
-        .bk-list{ display:grid; gap:9px; max-width:480px; }
+        .bk-list{ display:grid; gap:10px; max-width:480px; }
+        .bc{ width:100%; padding:0; border-radius:var(--r-md); overflow:hidden; background:var(--surface); border:1px solid var(--line); text-align:left; transition:border-color .15s, background .15s, transform .12s; }
+        .bc:not(.nolink):hover{ background:var(--surface-2); }
+        .bc:not(.nolink):active{ transform:scale(.99); }
+        .bc.nolink{ cursor:default; }
+        .bc.live{ border-color:color-mix(in srgb, var(--hot) 45%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 18%, transparent); }
+        .bc-side{ display:flex; align-items:center; gap:9px; padding:9px 12px; }
+        .bc-side.win{ background:color-mix(in srgb, var(--win) 9%, transparent); }
+        .bc-side.dim{ opacity:.45; }
+        .bc-nm{ flex:1; min-width:0; font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .bc-side.win .bc-nm{ font-weight:800; }
+        .bc-chk{ color:var(--win); font-size:11px; font-weight:900; flex:0 0 auto; }
+        .bc-sc{ font-family:var(--font-display); font-weight:800; font-size:16px; font-variant-numeric:tabular-nums; min-width:14px; text-align:right; flex:0 0 auto; }
+        .bc-div{ height:1px; background:var(--line); }
+        .bc-meta{ padding:5px 12px; font-size:9px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3);
+          background:color-mix(in srgb, var(--surface-3) 45%, transparent); border-top:1px solid var(--line); display:flex; align-items:center; gap:6px; }
+        .bc.live .bc-meta{ color:var(--hot); }
+        .bc-meta .live-dot{ width:5px; height:5px; }
       `}</style>
     </div>
   );
 }
 
 function BracketCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: () => void }) {
-  const Side = ({ code, proj, label }: { code: string | null; proj?: string | null; label?: string | null }) => {
+  const played = m.status === "played" && m.ga != null && m.gb != null;
+  const live = isLive(m);
+  const clickable = !!m._realId;
+  const Side = ({ code, proj, label, score, win }: { code: string | null; proj?: string | null; label?: string | null; score: number | null; win: boolean }) => {
     const t = code ? ds.teams[code] : null;
-    const projName = proj ? ds.teams[proj]?.name : null;
-    const isWin = m.status === "played" && m.winner === code;
+    const nm = t ? t.name : proj ? ds.teams[proj]?.name : null;
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "6px 8px", opacity: m.status === "played" && m.winner && !isWin ? 0.5 : 1 }}>
-        <Flag iso={t?.iso} code={code} size={16} />
-        <span style={{ flex: 1, minWidth: 0, fontWeight: isWin ? 800 : 700, fontSize: 12.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: t ? "var(--ink)" : "var(--ink-3)" }}>
-          {t ? t.name : projName ? projName : label || "TBD"}
-        </span>
-        {(m.status === "played" || m.status === "live") && code && (
-          <span className="num" style={{ fontSize: 14 }}>{(m.winner === code || m.ga != null ? (code === m.home ? m.ga : m.gb) : "") ?? ""}</span>
-        )}
+      <div className={`bc-side${win ? " win" : ""}${played && m.winner && !win ? " dim" : ""}`}>
+        <Flag iso={t?.iso} code={code} size={17} />
+        <span className="bc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{nm || label || "Lottas"}</span>
+        {win && <span className="bc-chk">✓</span>}
+        {(played || live) && code && <span className="bc-sc">{score ?? 0}</span>}
       </div>
     );
   };
-  const clickable = !!m._realId;
+  const home = m.home ? ds.teams[m.home] : null, away = m.away ? ds.teams[m.away] : null;
+  const bc = !played && !live ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
   return (
-    <button
-      className="card"
-      onClick={clickable ? onOpen : undefined}
-      style={{ width: "100%", padding: 0, borderRadius: "var(--r-md)", cursor: clickable ? "pointer" : "default", overflow: "hidden" }}
-    >
-      <Side code={m.home} proj={m.projHome} label={m.fromA} />
-      <div style={{ height: 1, background: "var(--line)" }} />
-      <Side code={m.away} proj={m.projAway} label={m.fromB} />
+    <button className={`bc${live ? " live" : ""}${clickable ? "" : " nolink"}`} onClick={clickable ? onOpen : undefined} disabled={!clickable}>
+      <Side code={m.home} proj={m.projHome} label={m.fromA} score={m.ga} win={played && m.winner === m.home} />
+      <div className="bc-div" />
+      <Side code={m.away} proj={m.projAway} label={m.fromB} score={m.gb} win={played && m.winner === m.away} />
+      <div className="bc-meta">
+        {live ? (<><span className="live-dot" />Pågår</>) : played ? (m.pen ? "Slut · straffar" : "Slut") : (
+          <>{m.kickoff ? svDayMonth(m.kickoff) : "TBD"}{bc?.broadcaster ? ` · ${bc.label}` : ""}</>
+        )}
+      </div>
     </button>
   );
 }

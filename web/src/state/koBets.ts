@@ -1,9 +1,22 @@
 import { create } from "zustand";
 import { PUSH_WORKER_URL } from "../lib/pushConfig";
+import type { Dataset, Match } from "../data/types";
 
 // Per-person knockout tips, stored on the worker (KV) and gated by a login code.
 // The code is kept in localStorage so a returning visitor stays "logged in".
 export type Tip = [number, number];
+
+// A KO match's bet key = its real fixture id (stable, matches the worker's keys).
+export const koFid = (m: Match) => String(m._realId ?? "");
+
+// Matches you can tip right now: drawn (both teams) + has a real fixture + not kicked
+// off. Mirrors the worker's openFixtureIds so the home reminder works even before login.
+export function koOpenMatches(ds: Dataset, now: number): Match[] {
+  const k = ds.knockout;
+  return [...k.r32, ...k.r16, ...k.qf, ...k.sf, ...k.third, ...k.final].filter(
+    (m) => m.home && m.away && m._realId && m.kickoff && m.kickoff.getTime() > now
+  );
+}
 const LS_KEY = "vm_ko_code";
 const saved = (() => { try { return localStorage.getItem(LS_KEY); } catch { return null; } })();
 
@@ -14,6 +27,8 @@ interface KoState {
   open: Set<string>; // fixture ids currently editable (round not started + drawn)
   status: "idle" | "loading" | "saving";
   error: string | null;
+  sheetOpen: boolean; // the betting modal — openable from anywhere (home reminder, bracket)
+  setSheet: (open: boolean) => void;
   login: (code: string) => Promise<boolean>;
   refresh: () => Promise<void>;
   save: (bets: Record<string, Tip>) => Promise<boolean>;
@@ -29,6 +44,8 @@ export const useKoBets = create<KoState>((set, get) => ({
   open: new Set(),
   status: "idle",
   error: null,
+  sheetOpen: false,
+  setSheet: (sheetOpen) => set({ sheetOpen }),
 
   login: async (code) => {
     const c = code.trim().toUpperCase();
