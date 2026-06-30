@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useScheduleUI, type SchedFilter, type BracketView } from "../state/scheduleUi";
@@ -27,6 +27,21 @@ export function ScheduleView() {
   // Keep the active sub-filter in view in its horizontally-scrollable row on a narrow screen.
   const activeChip = useRef<HTMLButtonElement>(null);
   useEffect(() => { activeChip.current?.scrollIntoView({ inline: "nearest", block: "nearest" }); }, [mode, filter, view]);
+  // Sliding underline under the active primary tab.
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [ind, setInd] = useState({ left: 0, width: 0 });
+  const measureTab = () => {
+    const el = tabsRef.current?.querySelector<HTMLButtonElement>("button.on");
+    if (el && el.offsetWidth) setInd({ left: el.offsetLeft, width: el.offsetWidth });
+  };
+  useLayoutEffect(measureTab, [mode]);
+  useEffect(() => {
+    // re-measure once the display font loads (it changes the tab width) and on resize
+    (document as Document & { fonts?: FontFaceSet }).fonts?.ready.then(measureTab);
+    window.addEventListener("resize", measureTab);
+    return () => window.removeEventListener("resize", measureTab);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const counts = useMemo(
     () => ({
@@ -37,27 +52,26 @@ export function ScheduleView() {
     }),
     [ds]
   );
-  const F: { k: Filter; label: string }[] = [
-    { k: "all", label: `Alla ${counts.all}` },
-    { k: "live", label: `Live ${counts.live}` },
-    { k: "upcoming", label: `Kommande ${counts.upcoming}` },
-    { k: "played", label: `Spelade ${counts.played}` },
+  const F: { k: Filter; name: string; ct: number }[] = [
+    { k: "all", name: "Alla", ct: counts.all },
+    { k: "live", name: "Live", ct: counts.live },
+    { k: "upcoming", name: "Kommande", ct: counts.upcoming },
+    { k: "played", name: "Spelade", ct: counts.played },
   ];
-  const V: { k: BracketView; label: string }[] = [
-    { k: "tree", label: "Cirkel" },
-    { k: "list", label: "Lista" },
+  const V: { k: BracketView; name: string }[] = [
+    { k: "tree", name: "Cirkel" },
+    { k: "list", name: "Lista" },
   ];
 
   return (
     <div className="view container md-view">
-      {/* Two levels: Spelschema / Slutspel are the main categories; the sub-row under them
-          shows only that category's own filters (Alla/Live/… for Spelschema, Cirkel/Lista
-          for Slutspel). */}
+      {/* One flat, typographic header: underline tabs are the main categories; the ghost
+          chips under them are that category's own filters (only the active one's show). */}
       <div className="md-head">
-        <div className="md-cat" data-active={mode}>
-          <span className="md-cat-thumb" aria-hidden />
+        <div className="md-tabs" ref={tabsRef}>
           <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
           <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
+          <span className="md-tabs-ind" style={{ left: ind.left, width: ind.width }} aria-hidden />
         </div>
 
         <div className="md-sub" key={mode}>
@@ -73,20 +87,18 @@ export function ScheduleView() {
                     disabled={f.k === "live" && !counts.live}
                   >
                     {f.k === "live" && counts.live > 0 && <span className="live-dot" style={{ background: "var(--hot)" }} />}
-                    {f.label}
+                    {f.name}<span className="ct">{f.ct}</span>
                   </button>
                 );
               })
-            : V.map((v) => (
-                <button
-                  key={v.k}
-                  ref={view === v.k ? activeChip : undefined}
-                  className={`subchip ${view === v.k ? "on" : ""}`}
-                  onClick={() => setView(v.k)}
-                >
-                  {v.label}
-                </button>
-              ))}
+            : V.map((v) => {
+                const on = view === v.k;
+                return (
+                  <button key={v.k} ref={on ? activeChip : undefined} className={`subchip ${on ? "on" : ""}`} onClick={() => setView(v.k)}>
+                    {v.name}
+                  </button>
+                );
+              })}
         </div>
       </div>
 
@@ -97,27 +109,28 @@ export function ScheduleView() {
       <style>{`
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        .md-head{ position:sticky; top:calc(var(--header-h) + 2px); z-index:6; background:var(--bg); padding:6px 0 12px; margin-bottom:6px; }
+        .md-head{ position:sticky; top:calc(var(--header-h) + 2px); z-index:6; background:var(--bg); padding-top:4px; margin-bottom:15px; }
         @media(max-width:919px){ .md-head{ top:0; position:relative; background:transparent; } }
-        /* primary categories — a clear segmented control */
-        .md-cat{ position:relative; display:inline-grid; grid-template-columns:1fr 1fr; padding:3px;
-          background:var(--surface-2); border:1px solid var(--surface-hi); border-radius:12px; }
-        .md-cat button{ position:relative; z-index:1; padding:9px 22px; border-radius:9px; font-weight:800; font-size:14px;
-          color:var(--ink-2); white-space:nowrap; transition:color .2s ease; }
-        .md-cat button.on{ color:#fff; }
-        .md-cat-thumb{ position:absolute; z-index:0; top:3px; bottom:3px; left:3px; width:calc(50% - 3px); border-radius:9px;
-          background:var(--cool); box-shadow:0 2px 10px color-mix(in srgb, var(--cool) 55%, transparent);
-          transition:transform .26s cubic-bezier(.3,.85,.3,1); }
-        .md-cat[data-active="bracket"] .md-cat-thumb{ transform:translateX(100%); }
-        /* sub-filters — lighter chips, only for the active category */
-        .md-sub{ display:flex; align-items:center; gap:7px; overflow-x:auto; scrollbar-width:none; margin-top:11px; animation:subFade .26s ease; }
+        /* primary categories — flat underline tabs with a sliding gradient indicator */
+        .md-tabs{ position:relative; display:flex; gap:26px; border-bottom:1px solid var(--line-2); }
+        .md-tabs button{ padding:7px 1px 12px; font-family:var(--font-display); font-size:16.5px; font-weight:800; letter-spacing:-.01em;
+          color:var(--ink-3); transition:color .2s ease; }
+        .md-tabs button.on{ color:var(--ink); }
+        .md-tabs-ind{ position:absolute; bottom:-1px; height:2.5px; border-radius:2px;
+          background:linear-gradient(90deg, var(--cool), var(--hot)); pointer-events:none;
+          transition:left .3s cubic-bezier(.4,0,.15,1), width .3s cubic-bezier(.4,0,.15,1); }
+        /* sub-filters — light ghost chips, clearly subordinate; only the active category's show */
+        .md-sub{ display:flex; align-items:center; gap:4px; overflow-x:auto; scrollbar-width:none; margin-top:11px; animation:subFade .26s ease; }
         .md-sub::-webkit-scrollbar{ display:none; }
-        @keyframes subFade{ from{ opacity:0; transform:translateY(-3px); } to{ opacity:1; transform:none; } }
-        .subchip{ flex:0 0 auto; display:inline-flex; align-items:center; gap:5px; padding:6px 12px; border-radius:var(--r-pill);
-          border:1px solid var(--line-2); background:var(--surface); color:var(--ink-3); font-weight:800; font-size:12px; white-space:nowrap; }
-        .subchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
-        .subchip.live.on{ background:var(--hot); color:#fff; }
-        .subchip:disabled{ opacity:.4; }
+        @keyframes subFade{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
+        .subchip{ flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:9px;
+          background:transparent; color:var(--ink-3); font-weight:700; font-size:12.5px; white-space:nowrap; transition:background .15s, color .15s; }
+        .subchip .ct{ font-weight:700; font-variant-numeric:tabular-nums; opacity:.5; }
+        .subchip.on{ background:var(--surface-2); color:var(--ink); font-weight:800; }
+        .subchip.on .ct{ opacity:.7; }
+        .subchip.live.on{ background:color-mix(in srgb, var(--hot) 16%, transparent); color:var(--hot); }
+        .subchip.live.on .ct{ opacity:.85; }
+        .subchip:disabled{ opacity:.34; }
       `}</style>
     </div>
   );
