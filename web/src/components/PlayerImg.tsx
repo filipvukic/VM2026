@@ -52,7 +52,7 @@ export function PlayerImg({
         <img
           src={cur!}
           alt={name}
-          loading="lazy"
+          decoding="async"
           onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
           onError={() => setIdx((i) => i + 1)}

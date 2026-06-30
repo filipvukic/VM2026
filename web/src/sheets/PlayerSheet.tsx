@@ -223,6 +223,11 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
             <div className="kicker">Matchtips</div>
             <span className="dim" style={{ fontSize: 10.5, fontWeight: 800 }}>{tipped.length} tips</span>
           </div>
+          <div className="mt-legend">
+            <span><b style={{ color: "var(--gold)" }}>✓ Exakt</b> 5p</span>
+            <span><b style={{ color: "var(--win)" }}>✓ Rätt utgång</b> 2p</span>
+            <span><b style={{ color: "var(--loss)" }}>✗ Fel</b> 1p</span>
+          </div>
           <div className="mt-list">
             {tipped.map((m) => {
               const tip = p.tips[m.id]!;
@@ -256,6 +261,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                     <Flag iso={away?.iso} code={m.away} size={14} />
                     <span className="mt-name">{away?.name || m.fromB || "?"}</span>
                   </button>
+                  {played && <span className="mt-res">{pts! >= 2 ? "✓" : "✗"}</span>}
                   {pts != null ? (
                     <span className="mt-pts" style={{ background: ptsBg(pts), color: ptsFg(pts) }}>{pts}</span>
                   ) : (
@@ -302,13 +308,18 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
 
         /* match tips — every track is tight + min-width:0 so the row can never exceed
            the sheet width on a narrow phone (names ellipsis instead of pushing wide). */
+        .mt-legend{ display:flex; gap:14px; flex-wrap:wrap; font-size:10.5px; font-weight:700; color:var(--ink-3); margin-bottom:10px; }
+        .mt-legend b{ font-weight:900; }
         .mt-list{ display:grid; gap:6px; }
         .mt-row{ box-sizing:border-box; max-width:100%; overflow:hidden; position:relative; display:flex; align-items:center; gap:6px;
           padding:7px 8px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line);
           border-left:3px solid transparent; transition:border-color .15s; }
-        .mt-row.mt-exact{ border-left-color:var(--gold); }
-        .mt-row.mt-win{ border-left-color:var(--win); }
-        .mt-row.mt-floor{ border-left-color:var(--loss); }
+        .mt-row.mt-exact{ border-left-color:var(--gold); background:color-mix(in srgb, var(--gold) 11%, var(--surface)); }
+        .mt-row.mt-win{ border-left-color:var(--win); background:color-mix(in srgb, var(--win) 9%, var(--surface)); }
+        .mt-row.mt-floor{ border-left-color:var(--loss); background:color-mix(in srgb, var(--loss) 8%, var(--surface)); }
+        .mt-exact .mt-facit{ color:var(--gold); } .mt-win .mt-facit{ color:var(--win); } .mt-floor .mt-facit{ color:var(--loss); }
+        .mt-res{ flex:0 0 auto; font-size:11px; font-weight:900; }
+        .mt-exact .mt-res{ color:var(--gold); } .mt-win .mt-res{ color:var(--win); } .mt-floor .mt-res{ color:var(--loss); }
         .mt-row.mt-live{ border-left-color:var(--hot); background:color-mix(in srgb, var(--hot) 6%, var(--surface)); }
         .mt-row.mt-next{ border:1.5px solid var(--cool); border-left:3px solid var(--cool); background:color-mix(in srgb, var(--cool) 11%, var(--surface)); margin-top:5px; }
         .mt-date{ flex:0 0 auto; width:30px; padding:0; text-align:left; font-size:9.5px; font-weight:800; line-height:1.15; color:var(--ink-3); }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Flag } from "../lib/flags";
 import { isLive } from "../lib/liveState";
 import { TEAM_COLORS } from "../data/static/teamColors";
+import { flagColorSync, useFlagColors } from "../lib/flagColor";
 import type { Dataset, Match } from "../data/types";
 
 // Radial knockout bracket: 32 teams on the outer ring, converging inward through each
@@ -59,6 +60,8 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
     if (m.fifa != null) byFifa[m.fifa] = m;
   });
+  // derive each team's real flag colour for the winning paths (cached; re-renders when ready)
+  useFlagColors(ds.knockout.r32.flatMap((m) => [m.home, m.away]).map((c) => (c ? ds.teams[c]?.iso ?? null : null)));
 
   // --- round-step zoom (no free pan) + fullscreen -----------------------------
   const started = (list: Match[]) => list.some((m) => m.status === "played" || isLive(m));
@@ -102,13 +105,23 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   // in iOS Safari, so this is reliable everywhere.
   const [fs, setFs] = useState(false);
   const toggleFs = () => setFs((f) => !f);
+  useEffect(() => {
+    if (!fs) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [fs]);
 
   // --- geometry ---------------------------------------------------------------
   const C = S / 2;
   const R = RAD.map((x) => x * S);
   const D = DIA.map((x) => x * S);
   const isoOf = (code: string | null) => (code ? ds.teams[code]?.iso ?? null : null);
-  const colorOf = (code: string | null) => (code ? (TEAM_COLORS[code] ?? ds.teams[code]?.c1 ?? null) : null);
+  const colorOf = (code: string | null) => {
+    if (!code) return null;
+    const t = ds.teams[code];
+    return TEAM_COLORS[code] ?? flagColorSync(t?.iso) ?? t?.c1 ?? null;
+  };
   const winOf = (fifa: number) => { const m = byFifa[fifa]; return m && m.status === "played" && m.winner ? m.winner : null; };
 
   const angR32 = (j: number) => ang(16, j);
@@ -273,10 +286,10 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
           text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); letter-spacing:-.02em; white-space:nowrap; }
-        .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:300; background:var(--bg); display:flex;
+        .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:2000; background:var(--bg); display:flex;
           flex-direction:column; align-items:center; justify-content:center; gap:10px;
           padding:max(10px, env(safe-area-inset-top)) 6px max(10px, env(safe-area-inset-bottom)); }
-        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(96vw, 86dvh); width:100%; }
+        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(98vw, 92dvh); width:100%; }
       `}</style>
     </div>
   );
