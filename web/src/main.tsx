@@ -37,7 +37,7 @@ function Root() {
       {phase !== "loading" && (
         <ErrorBoundary>
           <DatasetProvider>
-            <div className="app-reveal"><App /></div>
+            <div className={phase === "done" ? "app-mounted" : "app-reveal"}><App /></div>
           </DatasetProvider>
         </ErrorBoundary>
       )}

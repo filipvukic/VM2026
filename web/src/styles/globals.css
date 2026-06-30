@@ -704,6 +704,9 @@ input {
 .splash-err { color: var(--ink-2); margin-top: 14px; font-weight: 700; }
 .splash-retry { margin-top: 12px; background: var(--grad-soft); color: #fff; font-weight: 800; padding: 10px 18px; border-radius: var(--r-md); }
 .app-reveal { animation: appIn .7s cubic-bezier(.2,.8,.25,1) both; }
+/* Once revealed, generate no box at all so `position:fixed` children (the bottom nav)
+   anchor to the viewport — a lingering transform on a wrapper breaks fixed on iOS. */
+.app-mounted { display: contents; }
 @keyframes appIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .splash-glow, .splash-rings span, .splash-trophy, .splash-bar span, .splash-inner, .app-reveal { animation: none; }
