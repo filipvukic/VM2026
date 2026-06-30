@@ -248,13 +248,13 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                     <Flag iso={home?.iso} code={m.home} size={14} />
                   </button>
                   <button className="mt-score" onClick={openThis}>
-                    <span className="mt-tip">{tip[0]}–{tip[1]}</span>
+                    <span className="mt-sline"><span className="mt-slab">DU</span><span className="mt-tip">{tip[0]}–{tip[1]}</span></span>
                     {played ? (
-                      <span className="mt-facit">{m.ga}–{m.gb}</span>
+                      <span className="mt-sline"><span className="mt-slab">FACIT</span><span className="mt-facit">{m.ga}–{m.gb}</span></span>
                     ) : liveM ? (
-                      <span className="mt-when mt-livew">live</span>
+                      <span className="mt-sline"><span className="mt-slab mt-livew">NU</span><span className="mt-facit mt-livew">{m.ga ?? 0}–{m.gb ?? 0}</span></span>
                     ) : (
-                      <span className="mt-when">tips</span>
+                      <span className="mt-sline"><span className="mt-slab">·</span><span className="mt-when">kommande</span></span>
                     )}
                   </button>
                   <button className="mt-team mt-away" onClick={() => m.away && openTeam(m.away)} disabled={!m.away}>
@@ -328,10 +328,12 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         .mt-name{ min-width:0; font-size:11.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--cool-2); }
         .mt-home .mt-name{ text-align:right; }
         .mt-team:disabled .mt-name{ color:var(--ink-2); }
-        .mt-score{ flex:0 0 auto; width:42px; display:flex; flex-direction:column; align-items:center; gap:0; padding:0; }
-        .mt-tip{ font-size:13px; font-weight:900; line-height:1.1; font-variant-numeric:tabular-nums; color:var(--ink); }
-        .mt-facit{ font-size:9.5px; font-weight:800; color:var(--ink-3); font-variant-numeric:tabular-nums; }
-        .mt-when{ font-size:8px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); }
+        .mt-score{ flex:0 0 auto; width:62px; display:flex; flex-direction:column; align-items:stretch; gap:1px; padding:0; }
+        .mt-sline{ display:flex; align-items:baseline; justify-content:flex-end; gap:4px; min-width:0; }
+        .mt-slab{ flex:0 0 auto; font-size:6.5px; font-weight:900; letter-spacing:.04em; color:var(--ink-3); }
+        .mt-tip{ font-size:13px; font-weight:900; line-height:1.15; font-variant-numeric:tabular-nums; color:var(--ink); }
+        .mt-facit{ font-size:11px; font-weight:900; color:var(--ink-2); font-variant-numeric:tabular-nums; line-height:1.1; }
+        .mt-when{ font-size:8px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); }
         .mt-livew{ color:var(--hot); }
         .mt-pts{ flex:0 0 auto; width:20px; height:20px; border-radius:6px; display:grid; place-items:center;
           font-size:11px; font-weight:900; font-variant-numeric:tabular-nums; }

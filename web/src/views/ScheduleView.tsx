@@ -17,6 +17,9 @@ export function ScheduleView() {
   const ds = useData();
   const mode = useScheduleUI((s) => s.mode);
   const setMode = useScheduleUI((s) => s.setMode);
+  // Slutspel (bracket) should open at the top — the schedule's auto-scroll-to-live can
+  // leave the page scrolled down, which otherwise carries over when you switch.
+  useEffect(() => { if (mode === "bracket") window.scrollTo({ top: 0 }); }, [mode]);
 
   return (
     <div className="view container md-view">
@@ -39,7 +42,9 @@ export function ScheduleView() {
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
         .md-seg-float{ position:fixed; left:50%; transform:translateX(-50%); z-index:61;
-          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px)); }
+          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px));
+          animation:segFade .3s ease both; }
+        @keyframes segFade{ from{ opacity:0; } to{ opacity:1; } }
         @media(min-width:920px){ .md-seg-float{ bottom:24px; width:340px; } }
         /* segmented control — clearly visible: defined elevated pill + a solid accent thumb */
         .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:14px;
@@ -82,7 +87,7 @@ function ScheduleList({ ds }: { ds: Dataset }) {
   // is shown (the default), so it doesn't fight an explicit filter choice.
   useEffect(() => {
     if (filter === "all" && nextRef.current) {
-      nextRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      nextRef.current.scrollIntoView({ behavior: "auto", block: "start" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

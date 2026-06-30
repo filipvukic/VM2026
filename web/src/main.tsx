@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/globals.css";
 import App from "./App";
@@ -12,48 +12,56 @@ import { startEspnLive } from "./state/espnLive";
 function Root() {
   const status = useStore((s) => s.status);
   const raw = useStore((s) => s.raw);
+  // loading → reveal (splash fades out + app fades in) → done (splash unmounts)
+  const [phase, setPhase] = useState<"loading" | "reveal" | "done">("loading");
+  const [minDone, setMinDone] = useState(false);
 
   useEffect(() => {
     let alive = true;
     loadRealData()
-      .then((d) => {
-        if (alive) useStore.getState().setLoaded(d);
-      })
-      .catch(() => {
-        if (alive) useStore.getState().setError();
-      })
-      .finally(() => {
-        if (alive) {
-          startPolling();
-          startEspnLive(); // real-time live overlay straight from ESPN (cron-independent)
-        }
-      });
-    return () => {
-      alive = false;
-    };
+      .then((d) => { if (alive) useStore.getState().setLoaded(d); })
+      .catch(() => { if (alive) useStore.getState().setError(); })
+      .finally(() => { if (alive) { startPolling(); startEspnLive(); } });
+    return () => { alive = false; };
   }, []);
 
-  if (!raw && status === "loading") return <Splash text="Hämtar data…" />;
-  if (!raw && status === "error") return <Splash text="Kunde inte ladda data. Försök igen." retry />;
+  // show the splash long enough for its intro to actually be seen, even on a cache hit
+  useEffect(() => { const t = setTimeout(() => setMinDone(true), 480); return () => clearTimeout(t); }, []);
+  useEffect(() => { if (raw && minDone && phase === "loading") setPhase("reveal"); }, [raw, minDone, phase]);
+  useEffect(() => { if (phase === "reveal") { const t = setTimeout(() => setPhase("done"), 760); return () => clearTimeout(t); } }, [phase]);
+
+  if (status === "error" && !raw) return <Splash error />;
 
   return (
-    <ErrorBoundary>
-      <DatasetProvider>
-        <App />
-      </DatasetProvider>
-    </ErrorBoundary>
+    <>
+      {phase !== "loading" && (
+        <ErrorBoundary>
+          <DatasetProvider>
+            <div className="app-reveal"><App /></div>
+          </DatasetProvider>
+        </ErrorBoundary>
+      )}
+      {phase !== "done" && <Splash out={phase === "reveal"} />}
+    </>
   );
 }
 
-function Splash({ text, retry }: { text: string; retry?: boolean }) {
+function Splash({ out, error }: { out?: boolean; error?: boolean }) {
   return (
-    <div style={{ display: "grid", placeItems: "center", minHeight: "100dvh", textAlign: "center", padding: 24 }}>
-      <div>
-        <div className="display" style={{ fontSize: 30, marginBottom: 10 }}>
-          VM26 <span style={{ background: "var(--grad)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Tippning</span>
-        </div>
-        <p className="muted" style={{ marginBottom: 16 }}>{text}</p>
-        {retry && <button className="btn btn-primary" onClick={() => location.reload()}>Försök igen</button>}
+    <div className={`splash${out ? " splash-out" : ""}`}>
+      <div className="splash-glow" />
+      <div className="splash-rings"><span /><span /><span /></div>
+      <div className="splash-inner">
+        <div className="splash-trophy">🏆</div>
+        <div className="splash-logo">VM<b>26</b> <span>Tippning</span></div>
+        {error ? (
+          <>
+            <p className="splash-err">Kunde inte ladda data.</p>
+            <button className="splash-retry" onClick={() => location.reload()}>Försök igen</button>
+          </>
+        ) : (
+          <div className="splash-bar"><span /></div>
+        )}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const DIA = [0.05, 0.048, 0.046, 0.045, 0.045];
 const GAP = 28;
 const DELTA = 4.2;
 const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
-const LEVEL_SCALE = [1, 1.5, 2.1, 2.9, 3.8];
+const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round without over-zooming past it
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean }
@@ -270,7 +270,8 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-stepper button:disabled{ opacity:.32; }
         .bc-stepper span{ font-size:12px; font-weight:800; color:var(--ink-2); min-width:112px; text-align:center; letter-spacing:.01em; }
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
-        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .55s cubic-bezier(.25,.85,.3,1); will-change:transform; }
+        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
+        @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
         .bc-svg{ position:absolute; inset:0; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
@@ -286,10 +287,12 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
           text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); letter-spacing:-.02em; white-space:nowrap; }
-        .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:2000; background:var(--bg); display:flex;
-          flex-direction:column; align-items:center; justify-content:center; gap:10px;
-          padding:max(10px, env(safe-area-inset-top)) 6px max(10px, env(safe-area-inset-bottom)); }
-        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(98vw, 92dvh); width:100%; }
+        /* true fullscreen: overlay covers everything (z 2000), circle fills the smaller
+           screen dimension, toolbar floats over the top so it doesn't shrink the circle. */
+        .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:2000; background:var(--bg); display:grid; place-items:center; padding:0; }
+        .bc-outer.bc-fullscreen .bc-wrap{ max-width:min(100vw, 100dvh); width:min(100vw, 100dvh); border-radius:0; }
+        .bc-outer.bc-fullscreen .bc-toolbar{ position:absolute; top:max(12px, env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
+          z-index:10; width:min(94vw, 560px); max-width:none; margin:0; }
       `}</style>
     </div>
   );
