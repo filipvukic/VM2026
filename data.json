@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T01:31:29+00:00",
+  "updated_at": "2026-06-30T05:49:57+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -380,6 +380,52 @@
       "prize": 0
     },
     {
+      "name": "Filip",
+      "match_points": 130,
+      "bonus_points": 0,
+      "total": 130,
+      "exact_count": 3,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "David Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappé",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 9,
+      "prize": 0
+    },
+    {
       "name": "Björn",
       "match_points": 129,
       "bonus_points": 0,
@@ -413,52 +459,6 @@
         },
         "silver": {
           "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 9,
-      "prize": 0
-    },
-    {
-      "name": "Filip",
-      "match_points": 129,
-      "bonus_points": 0,
-      "total": 129,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "David Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappé",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "England",
           "correct": false,
           "points": 0
         },
@@ -19705,26 +19705,148 @@
       "homeTla": "NED",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        0,
-        0
+        3,
+        4
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           0,
           0
         ],
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "fullTime": [
+          3,
+          4
+        ],
+        "extraTime": [
+          0,
+          0
+        ],
+        "penalties": [
+          3,
+          3
+        ],
+        "duration": "PENALTY_SHOOTOUT",
+        "winnerSide": null
       },
-      "minute": "31",
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": null,
+      "goals": [
+        {
+          "minute": "72",
+          "team": "NED",
+          "scorer": "Cody Gakpo",
+          "assist": "Crysencio Summerville",
+          "type": "REGULAR",
+          "description": "Goal! Netherlands 1, Morocco 0. Cody Gakpo (Netherlands) right footed shot from the centre of the box to the centre of the goal. Assisted by Crysencio Summerville.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+1",
+          "team": "MAR",
+          "scorer": "Issa Diop",
+          "assist": "Chemsdine Talbi",
+          "type": "HEADER",
+          "description": "Goal! Netherlands 1, Morocco 1. Issa Diop (Morocco) header from the centre of the box to the top right corner. Assisted by Chemsdine Talbi with a cross.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "47",
+          "team": "MAR",
+          "player": "Issa Diop",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "71",
+          "team": "NED",
+          "playerIn": "Teun Koopmeiners",
+          "playerOut": "Nathan Aké",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "NED",
+          "playerIn": "Wout Weghorst",
+          "playerOut": "Brian Brobbey",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "MAR",
+          "playerIn": "Anass Salah-Eddine",
+          "playerOut": "Chadi Riad",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "MAR",
+          "playerIn": "Gessime Yassine",
+          "playerOut": "Brahim Díaz",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "MAR",
+          "playerIn": "Samir El Mourabet",
+          "playerOut": "Ayyoub Bouaddi",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "MAR",
+          "playerIn": "Soufiane Rahimi",
+          "playerOut": "Azzedine Ounahi",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "NED",
+          "playerIn": "Jorrel Hato",
+          "playerOut": "Micky van de Ven",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "NED",
+          "playerIn": "Quinten Timber",
+          "playerOut": "Ryan Gravenberch",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "MAR",
+          "playerIn": "Chemsdine Talbi",
+          "playerOut": "Bilal El Khannouss",
+          "period": 2
+        },
+        {
+          "minute": "110",
+          "team": "NED",
+          "playerIn": "Marten de Roon",
+          "playerOut": "Frenkie de Jong",
+          "period": 4
+        },
+        {
+          "minute": "113",
+          "team": "NED",
+          "playerIn": "Justin Kluivert",
+          "playerOut": "Cody Gakpo",
+          "period": 4
+        }
+      ],
       "venue": {
         "stadium": "Estadio BBVA",
         "city": "Guadalupe",
@@ -19737,7 +19859,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 51243,
       "tips": [
         {
           "name": "Filip",
@@ -19745,7 +19867,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
