@@ -17,59 +17,88 @@ export function ScheduleView() {
   const ds = useData();
   const mode = useScheduleUI((s) => s.mode);
   const setMode = useScheduleUI((s) => s.setMode);
+  const filter = useScheduleUI((s) => s.filter);
+  const setFilter = useScheduleUI((s) => s.setFilter);
   // Slutspel (bracket) should open at the top — the schedule's auto-scroll-to-live can
   // leave the page scrolled down, which otherwise carries over when you switch.
   useEffect(() => { if (mode === "bracket") window.scrollTo({ top: 0 }); }, [mode]);
+  // Keep the active label in view in the horizontally-scrollable row (so "Slutspel",
+  // which sits at the end, is visible when it's selected on a narrow screen).
+  const activeChip = useRef<HTMLButtonElement>(null);
+  useEffect(() => { activeChip.current?.scrollIntoView({ inline: "center", block: "nearest" }); }, [mode, filter]);
+
+  const counts = useMemo(
+    () => ({
+      all: ds.allMatches.length,
+      live: ds.allMatches.filter(isLive).length,
+      upcoming: ds.allMatches.filter((m) => m.status === "upcoming").length,
+      played: ds.allMatches.filter(isEnded).length,
+    }),
+    [ds]
+  );
+  const F: { k: Filter; label: string }[] = [
+    { k: "all", label: `Alla ${counts.all}` },
+    { k: "live", label: `Live ${counts.live}` },
+    { k: "upcoming", label: `Kommande ${counts.upcoming}` },
+    { k: "played", label: `Spelade ${counts.played}` },
+  ];
 
   return (
-    <>
-      <div className="view container md-view">
-        <div className="md-fade" key={mode}>
-          {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
-        </div>
+    <div className="view container md-view">
+      {/* One compact row of labels: the schedule filters AND Slutspel (the bracket) live
+          together here, so the old full-width Spelschema/Slutspel pill is gone. */}
+      <div className="md-chips">
+        {F.map((f) => {
+          const on = mode === "list" && filter === f.k;
+          return (
+            <button
+              key={f.k}
+              ref={on ? activeChip : undefined}
+              className={`fchip ${on ? "on" : ""} ${f.k === "live" && counts.live ? "live" : ""}`}
+              onClick={() => { setMode("list"); setFilter(f.k); }}
+              disabled={f.k === "live" && !counts.live}
+            >
+              {f.k === "live" && counts.live > 0 && <span className="live-dot" style={{ background: "var(--hot)" }} />}
+              {f.label}
+            </button>
+          );
+        })}
+        <span className="md-chips-sep" aria-hidden />
+        <button
+          ref={mode === "bracket" ? activeChip : undefined}
+          className={`fchip fchip-ko ${mode === "bracket" ? "on" : ""}`}
+          onClick={() => setMode("bracket")}
+        >
+          🏆 Slutspel
+        </button>
       </div>
 
-      {/* Mode toggle floats at the bottom (above the nav). It lives OUTSIDE `.view` on
-          purpose: `.view` runs a translateY entrance animation, and a transformed ancestor
-          re-anchors a position:fixed child — so when that transform cleared, the pill
-          snapped into place ("popped"). As a sibling it stays viewport-fixed and just
-          slides up smoothly on its own. */}
-      <div className="md-seg-float">
-        <div className="md-seg" data-active={mode}>
-          <span className="md-seg-thumb" aria-hidden />
-          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
-          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
-        </div>
+      <div className="md-fade" key={mode}>
+        {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
       </div>
 
       <style>{`
-        .md-view{ padding-bottom:74px; }
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        .md-seg-float{ position:fixed; left:50%; z-index:61;
-          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px));
-          transform:translateX(-50%); animation:segUp .46s cubic-bezier(.16,1,.3,1) both; }
-        @keyframes segUp{ from{ opacity:0; transform:translateX(-50%) translateY(18px); } to{ opacity:1; transform:translateX(-50%) translateY(0); } }
-        @media(min-width:920px){ .md-seg-float{ bottom:24px; width:340px; } }
-        /* segmented control — clearly visible: defined elevated pill + a solid accent thumb */
-        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:14px;
-          background:var(--surface-2); border:1px solid var(--surface-hi); box-shadow:0 10px 32px rgba(0,0,0,.62); }
-        .md-seg button{ position:relative; z-index:1; padding:12px 8px; border-radius:10px; font-weight:800; font-size:14.5px;
-          letter-spacing:.01em; color:var(--ink-2); transition:color .22s ease; }
-        .md-seg button.on{ color:#fff; }
-        .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;
-          background:var(--cool); box-shadow:0 2px 12px color-mix(in srgb, var(--cool) 60%, transparent);
-          transition:transform .26s cubic-bezier(.3,.85,.3,1); }
-        .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
+        .md-chips{ display:flex; align-items:center; gap:7px; overflow-x:auto; scrollbar-width:none;
+          margin:2px 0 16px; padding:6px 0; position:sticky; top:calc(var(--header-h) + 4px); z-index:6; background:var(--bg); }
+        .md-chips::-webkit-scrollbar{ display:none; }
+        @media(max-width:919px){ .md-chips{ top:0; position:relative; background:transparent; } }
+        .md-chips .fchip{ flex:0 0 auto; }
+        .md-chips-sep{ flex:0 0 auto; width:1px; height:20px; background:var(--line-2); margin:0 2px; }
+        .fchip{ display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:var(--r-pill); border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-weight:800; font-size:12.5px; white-space:nowrap; }
+        .fchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
+        .fchip.live.on{ background:var(--hot); color:#fff; }
+        .fchip:disabled{ opacity:.4; }
+        .fchip-ko.on{ background:var(--grad-soft); color:#fff; border-color:transparent; }
       `}</style>
-    </>
+    </div>
   );
 }
 
 function ScheduleList({ ds }: { ds: Dataset }) {
   const openMatch = useSheets((s) => s.openMatch);
   const filter = useScheduleUI((s) => s.filter);
-  const setFilter = useScheduleUI((s) => s.setFilter);
   const nextRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
@@ -108,39 +137,8 @@ function ScheduleList({ ds }: { ds: Dataset }) {
     return [...map.entries()];
   }, [filtered]);
 
-  const counts = useMemo(
-    () => ({
-      all: ds.allMatches.length,
-      live: ds.allMatches.filter(isLive).length,
-      upcoming: ds.allMatches.filter((m) => m.status === "upcoming").length,
-      played: ds.allMatches.filter(isEnded).length,
-    }),
-    [ds]
-  );
-
-  const F: { k: Filter; label: string }[] = [
-    { k: "all", label: `Alla ${counts.all}` },
-    { k: "live", label: `Live ${counts.live}` },
-    { k: "upcoming", label: `Kommande ${counts.upcoming}` },
-    { k: "played", label: `Spelade ${counts.played}` },
-  ];
-
   return (
     <>
-      <div className="filter-row">
-        {F.map((f) => (
-          <button
-            key={f.k}
-            className={`fchip ${filter === f.k ? "on" : ""} ${f.k === "live" && counts.live ? "live" : ""}`}
-            onClick={() => setFilter(f.k)}
-            disabled={f.k === "live" && !counts.live}
-          >
-            {f.k === "live" && counts.live > 0 && <span className="live-dot" style={{ background: "var(--hot)" }} />}
-            {f.label}
-          </button>
-        ))}
-      </div>
-
       {byDay.length === 0 && <div className="dim" style={{ textAlign: "center", padding: 40 }}>Inga matcher.</div>}
 
       {byDay.map(([key, ms]) => (
@@ -162,12 +160,6 @@ function ScheduleList({ ds }: { ds: Dataset }) {
       ))}
 
       <style>{`
-        .filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 18px; position:sticky; top:calc(var(--header-h) + 6px); z-index:5; padding:6px 0; background:var(--bg); }
-        @media(max-width:919px){ .filter-row{ top:0; position:relative; background:transparent; } }
-        .fchip{ display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:var(--r-pill); border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-weight:800; font-size:12.5px; }
-        .fchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
-        .fchip.live.on{ background:var(--hot); color:#fff; }
-        .fchip:disabled{ opacity:.4; }
         .day-head{ display:flex; align-items:baseline; justify-content:space-between; margin:0 2px 9px; font-family:var(--font-display); text-transform:uppercase; letter-spacing:.04em; font-weight:800; font-size:15px; }
         /* minmax(0,1fr) (not bare 1fr) so a long team name can't widen the column
            past the screen — names clip via ellipsis instead. */
