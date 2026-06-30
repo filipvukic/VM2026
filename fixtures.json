@@ -60404,19 +60404,50 @@
     "homeTla": "CIV",
     "away": "Norway",
     "awayTla": "NOR",
-    "status": "TIMED",
-    "score": null,
+    "status": "PAUSED",
+    "score": [
+      0,
+      1
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
+      "fullTime": [
+        0,
+        1
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": null,
-    "goals": [],
-    "bookings": [],
+    "minute": "47",
+    "goals": [
+      {
+        "minute": "39",
+        "team": "NOR",
+        "scorer": "Antonio Nusa",
+        "assist": "Martin Ødegaard",
+        "type": "REGULAR",
+        "description": "Goal! Côte d'Ivoire 0, Norway 1. Antonio Nusa (Norway) right footed shot from the left side of the box to the top right corner. Assisted by Martin Ødegaard.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "45+1",
+        "team": "NOR",
+        "player": "Antonio Nusa",
+        "card": "YELLOW",
+        "period": 1
+      }
+    ],
     "subs": [],
     "venue": {
       "stadium": "AT&T Stadium",
@@ -60426,34 +60457,565 @@
     "referees": [
       {
         "name": "Jesús Valenzuela",
-        "role": "REFEREE",
-        "nationality": "Venezuela"
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 255,
+      "homeML": 260,
       "awayML": 115,
       "spread": "NOR -0.5",
       "overUnder": 2.5,
-      "overOdds": -110.0,
-      "underOdds": -110.0,
+      "overOdds": -120.0,
+      "underOdds": -105.0,
       "provider": "DraftKings"
     },
-    "homeLineup": null,
-    "awayLineup": null,
+    "homeLineup": {
+      "formation": "4-1-4-1",
+      "lineup": [
+        {
+          "name": "Yahia Fofana",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "261595",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Emmanuel Agbadou",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "20",
+          "espnId": "308449",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Odilon Kossounou",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "7",
+          "espnId": "284822",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ibrahim Sangaré",
+          "position": "DM",
+          "positionName": "Defensive Midfielder",
+          "jersey": "18",
+          "espnId": "213718",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ghislain Konan",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "3",
+          "espnId": "250888",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Guela Doué",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "17",
+          "espnId": "346636",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Christ Inao Oulaï",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "26",
+          "espnId": "386989",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Franck Kessié",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "8",
+          "espnId": "194711",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yan Diomande",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "11",
+          "espnId": "402479",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nicolas Pépé",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "19",
+          "espnId": "210397",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ange-Yoan Bonny",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "309185",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Jean Michaël Seri",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "193539",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alban Lafont",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "231282",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Seko Fofana",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "184118",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mohamed Koné",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "323997",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Evann Guessand",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "288924",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Christopher Operi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "249072",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Evan Ndicka",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "242593",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Bazoumana Touré",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "359108",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ousmane Diomande",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "343964",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Elye Wahi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "311118",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Oumar Diakité",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "329483",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Wilfried Singo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "286569",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Parfait Guiagon",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "257055",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Simon Adingra",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "317404",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Amad Diallo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "291630",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "CIV",
+      "_espnEventId": "760490"
+    },
+    "awayLineup": {
+      "formation": "4-3-3",
+      "lineup": [
+        {
+          "name": "Ørjan Nyland",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "193610",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Torbjørn Heggem",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "17",
+          "espnId": "272867",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "espnId": "206173",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "David Møller Wolfe",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "5",
+          "espnId": "313361",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marcus Holmgren Pedersen",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "16",
+          "espnId": "129285",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sander Berge",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "8",
+          "espnId": "218998",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Patrick Berg",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "6",
+          "espnId": "205924",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Martin Ødegaard",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "10",
+          "espnId": "203669",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Erling Haaland",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "9",
+          "espnId": "253989",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Antonio Nusa",
+          "position": "LF",
+          "positionName": "Left Forward",
+          "jersey": "20",
+          "espnId": "319368",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alexander Sørloth",
+          "position": "RF",
+          "positionName": "Right Forward",
+          "jersey": "7",
+          "espnId": "188230",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Sondre Langas",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "366455",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sander Tangvik",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "304258",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jens Petter Hauge",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "235789",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Oscar Bobb",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "307111",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Fredrik Aursnes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "212900",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Leo Østigard",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "281736",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Egil Selvik",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "286433",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Fredrik André Bjørkan",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "238088",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Morten Thorsby",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "202686",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Andreas Schjelderup",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "313415",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "252747",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Julian Ryerson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "222991",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Thelo Aasgaard",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "307477",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Henrik Falchener",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "303281",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kristian Thorstvedt",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "284212",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "NOR",
+      "_espnEventId": "760490"
+    },
     "homeStats": {
-      "goalDifference": 2.0,
-      "totalGoals": 4.0,
-      "goalAssists": 3.0,
-      "goalsConceded": 2.0
+      "foulsCommitted": 1.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 9.0,
+      "saves": 1.0,
+      "possessionPct": 43.0,
+      "totalShots": 5.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.2,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 153.0,
+      "totalPasses": 188.0,
+      "passPct": 0.8,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 16.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 18.0,
+      "accurateLongBalls": 6.0,
+      "longballPct": 0.3,
+      "blockedShots": 0.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.8,
+      "interceptions": 3.0,
+      "effectiveClearance": 2.0,
+      "totalClearance": 2.0
     },
     "awayStats": {
-      "goalDifference": 1.0,
-      "totalGoals": 8.0,
-      "goalAssists": 5.0,
-      "goalsConceded": 7.0
+      "foulsCommitted": 4.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 2.0,
+      "saves": 1.0,
+      "possessionPct": 57.0,
+      "totalShots": 6.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 230.0,
+      "totalPasses": 265.0,
+      "passPct": 0.9,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 5.0,
+      "crossPct": 0.8,
+      "totalLongBalls": 19.0,
+      "accurateLongBalls": 11.0,
+      "longballPct": 0.6,
+      "blockedShots": 3.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.5,
+      "interceptions": 3.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
     },
     "homeForm": [
       {
