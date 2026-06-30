@@ -52612,7 +52612,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-30T01:31:23.056361+00:00"
+    "_fetched_at": "2026-06-30T08:48:05.871633+00:00"
   },
   "760485": {
     "goals": [
@@ -56724,7 +56724,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-30T01:31:23.056361+00:00"
+    "_fetched_at": "2026-06-30T08:48:05.871633+00:00"
   },
   "760486": {
     "goals": [
@@ -57674,7 +57674,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-06-30T01:31:23.056361+00:00"
+    "_fetched_at": "2026-06-30T08:48:05.871633+00:00"
   },
   "760487": {
     "goals": [
@@ -59998,5 +59998,120 @@
     "espnClock": null,
     "espnDisplayClock": null,
     "_fetched_at": "2026-06-30T05:49:45.002356+00:00"
+  },
+  "760502": {
+    "goals": [],
+    "bookings": [],
+    "subs": [],
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 9.0,
+      "goalAssists": 3.0,
+      "goalsConceded": 3.0
+    },
+    "awayStats": {
+      "goalDifference": 3.0,
+      "totalGoals": 7.0,
+      "goalAssists": 6.0,
+      "goalsConceded": 4.0
+    },
+    "venue": {
+      "stadium": "NRG Stadium",
+      "city": "Houston, Texas",
+      "country": "USA"
+    },
+    "attendance": null,
+    "referees": [],
+    "espnOdds": {
+      "homeML": 370,
+      "awayML": -125,
+      "spread": "MAR -0.5",
+      "overUnder": 2.5,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-24",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 6,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-12",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-05",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-30",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-24",
+        "result": "V",
+        "gf": 4,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-19",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-13",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-07",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_SCHEDULED",
+    "espnState": "pre",
+    "espnCompleted": false,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-06-30T08:48:05.871633+00:00"
   }
 }
