@@ -871,13 +871,19 @@ def is_knockout(m):
 
 
 def final_score(m):
-    """Resultat som poängsätts. För slutspel = ställning efter ev. förlängning
-    (straffmål räknas INTE som mål). football-data lägger ET-mål i fullTime;
-    straffar ligger separat. VERIFIERA fältnamnen mot riktig matchdata."""
-    ft = (m.get("score") or {}).get("fullTime") or {}
+    """Visat matchresultat (efter ev. förlängning). football-data VIKER IN
+    straffläggningen i fullTime (1–1 + straffar 3–4 → fullTime 4–5), så vi drar
+    bort straffarna igen för att visa det riktiga fotbollsresultatet (1–1).
+    Straffarna visas separat. (Slutspelstips poängsätts mot reg90_score, inte denna.)"""
+    sc = m.get("score") or {}
+    ft = sc.get("fullTime") or {}
     h, a = ft.get("home"), ft.get("away")
     if h is None or a is None:
         return None
+    pens = sc.get("penalties") or {}
+    ph, pa = pens.get("home"), pens.get("away")
+    if ph is not None and pa is not None:
+        h, a = h - ph, a - pa
     return (h, a)
 
 
