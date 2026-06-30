@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-29T23:29:11+00:00",
+  "updated_at": "2026-06-30T01:31:29+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -427,9 +427,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 128,
+      "match_points": 129,
       "bonus_points": 0,
-      "total": 128,
+      "total": 129,
       "exact_count": 3,
       "bonus_detail": {
         "best_young": {
@@ -19501,10 +19501,10 @@
       "homeTla": "GER",
       "away": "Paraguay",
       "awayTla": "PAR",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         4,
-        4
+        5
       ],
       "scoreDetail": {
         "halfTime": [
@@ -19513,20 +19513,20 @@
         ],
         "fullTime": [
           4,
-          4
+          5
         ],
         "extraTime": [
           0,
           0
         ],
         "penalties": [
-          3,
-          3
+          4,
+          4
         ],
         "duration": "PENALTY_SHOOTOUT",
         "winnerSide": null
       },
-      "minute": "120",
+      "minute": null,
       "goals": [
         {
           "minute": "42",
@@ -19683,7 +19683,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 63945,
       "tips": [
         {
           "name": "Filip",
@@ -19691,7 +19691,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -19705,17 +19705,23 @@
       "homeTla": "NED",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "31",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -19726,9 +19732,8 @@
       },
       "referees": [
         {
-          "name": "Wilton Sampaio",
-          "role": "REFEREE",
-          "nationality": "Brazil"
+          "name": "Wilton Pereira Sampaio",
+          "role": "Referee"
         }
       ],
       "odds": null,
