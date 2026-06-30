@@ -17,6 +17,8 @@ interface FlagProps {
   size?: number;
   rounded?: boolean;
   className?: string;
+  /** load a high-res source (for badges that get scaled up, e.g. the zoomable circle) */
+  hi?: boolean;
 }
 
 /** Country flag via flagcdn. Loads eagerly (lazy-loading sometimes left flags
@@ -24,7 +26,7 @@ interface FlagProps {
  *  before falling back to the team code so a flag is never silently invisible. */
 const FLAG_MAX_TRIES = 4;
 
-export function Flag({ iso, code, size = 22, rounded = true, className }: FlagProps) {
+export function Flag({ iso, code, size = 22, rounded = true, className, hi = false }: FlagProps) {
   const ratio = 4 / 3;
   const w = Math.round(size * ratio);
   const radius = rounded ? Math.max(2, Math.round(size * 0.18)) : 0;
@@ -96,7 +98,7 @@ export function Flag({ iso, code, size = 22, rounded = true, className }: FlagPr
       </span>
     );
   }
-  const px = size <= 22 ? 40 : size <= 40 ? 80 : 160;
+  const px = hi ? 320 : size <= 22 ? 40 : size <= 40 ? 80 : 160;
   const bust = tries ? `?r=${tries}` : "";
   return (
     <img

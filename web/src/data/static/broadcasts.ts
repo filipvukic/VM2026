@@ -10,15 +10,13 @@
 
 export type Broadcaster = "svt" | "tv4";
 
-// WC pages on each platform (every match is listed here as a video).
+// Each platform's WC page (every match is listed here as a video). These are the
+// canonical pages each app registers as universal/app links — so on mobile the "Öppna"
+// button opens the SVT Play / TV4 Play APP straight to the WC section (rather than the
+// browser, which a /sok search page tends to open). We can't deep-link the exact match
+// stream — neither feed exposes a per-match video id in our data.
 const SVT_HUB = "https://www.svtplay.se/fifa-fotbolls-vm-2026";
 const TV4_HUB = "https://www.tv4play.se/kategorier/fifa-fotbolls-vm-2026";
-// SVT Play's search reliably surfaces THIS match by the two teams' Swedish names
-// (e.g. ?q=Sverige+Tunisien) → lands right on the match. TV4 Play's search does NOT
-// index the matches (returns 0 hits), so for TV4 we link to the WC page that lists
-// them rather than a dead search.
-const svtSearch = (home: string, away: string) =>
-  `https://www.svtplay.se/sok?q=${encodeURIComponent(home)}+${encodeURIComponent(away)}`;
 
 const BY_TLA_PAIR: Record<string, Broadcaster> = {
   "ALG|ARG": "tv4",
@@ -137,8 +135,8 @@ export function broadcastForPair(
   awayName?: string | null,
   fifa?: number | null
 ): BroadcastInfo {
-  const svt = homeName && awayName ? svtSearch(homeName, awayName) : SVT_HUB;
-  const svtInfo: BroadcastInfo = { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: svt, free: true };
+  void homeName; void awayName; // names no longer needed (we link to the WC hub, not a search)
+  const svtInfo: BroadcastInfo = { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: SVT_HUB, free: true };
   const tv4Info: BroadcastInfo = { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
   // Knockout: look up by match slot (FIFA number).
   if (fifa != null && KO_BROADCAST[fifa]) return KO_BROADCAST[fifa] === "svt" ? svtInfo : tv4Info;
@@ -148,5 +146,5 @@ export function broadcastForPair(
   if (b === "svt") return svtInfo;
   if (b === "tv4") return tv4Info;
   // Truly unknown (e.g. a knockout slot we don't have yet) → offer both.
-  return { broadcaster: null, label: "SVT eller TV4", channels: ["SVT Play", "TV4 Play"], url: svt, free: true, tv4Url: TV4_HUB };
+  return { broadcaster: null, label: "SVT eller TV4", channels: ["SVT Play", "TV4 Play"], url: SVT_HUB, free: true, tv4Url: TV4_HUB };
 }

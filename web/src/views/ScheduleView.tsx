@@ -41,14 +41,15 @@ export function ScheduleView() {
         .md-seg-float{ position:fixed; left:50%; transform:translateX(-50%); z-index:61;
           bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px)); }
         @media(min-width:920px){ .md-seg-float{ bottom:24px; width:340px; } }
-        /* clean segmented control — neutral track, a single sliding thumb, no gradient */
-        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:13px;
-          background:var(--surface); border:1px solid var(--line); box-shadow:0 6px 22px rgba(0,0,0,.4); }
-        .md-seg button{ position:relative; z-index:1; padding:11px 8px; border-radius:10px; font-weight:700; font-size:14px;
-          letter-spacing:.01em; color:var(--ink-3); transition:color .22s ease; }
-        .md-seg button.on{ color:var(--ink); font-weight:800; }
+        /* segmented control — clearly visible: defined elevated pill + a solid accent thumb */
+        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:14px;
+          background:var(--surface-2); border:1px solid var(--surface-hi); box-shadow:0 10px 32px rgba(0,0,0,.62); }
+        .md-seg button{ position:relative; z-index:1; padding:12px 8px; border-radius:10px; font-weight:800; font-size:14.5px;
+          letter-spacing:.01em; color:var(--ink-2); transition:color .22s ease; }
+        .md-seg button.on{ color:#fff; }
         .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;
-          background:var(--surface-3); box-shadow:0 1px 4px rgba(0,0,0,.35); transition:transform .26s cubic-bezier(.3,.85,.3,1); }
+          background:var(--cool); box-shadow:0 2px 12px color-mix(in srgb, var(--cool) 60%, transparent);
+          transition:transform .26s cubic-bezier(.3,.85,.3,1); }
         .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
       `}</style>
     </div>

@@ -40,15 +40,20 @@ function ang(M: number, j: number): number {
 export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const outerRef = useRef<HTMLDivElement>(null);
-  const [S, setS] = useState(360);
+  // Render at a fixed high resolution and display it scaled to fit — so zooming in
+  // (CSS scale) stays sharp instead of upscaling a small low-res render.
+  const BASE = 1100;
+  const [dispW, setDispW] = useState(360);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    setS(el.clientWidth);
-    const ro = new ResizeObserver((es) => { for (const e of es) setS(e.contentRect.width); });
+    setDispW(el.clientWidth);
+    const ro = new ResizeObserver((es) => { for (const e of es) setDispW(e.contentRect.width); });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+  const S = BASE;
+  const fit = dispW / BASE;
 
   const byFifa: Record<number, Match> = {};
   [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
@@ -197,7 +202,7 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
       </div>
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
-        <div className="bc-stage" style={{ transform: `scale(${LEVEL_SCALE[level]})` }}>
+        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})` }}>
           <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
             <defs>
               <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
@@ -231,7 +236,7 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
                 disabled={!n.id}
                 aria-label={n.code}
               >
-                <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} />
+                <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
               </button>
             );
           })}
@@ -252,7 +257,7 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-stepper button:disabled{ opacity:.32; }
         .bc-stepper span{ font-size:12px; font-weight:800; color:var(--ink-2); min-width:112px; text-align:center; letter-spacing:.01em; }
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
-        .bc-stage{ position:absolute; inset:0; transform-origin:center; transition:transform .55s cubic-bezier(.25,.85,.3,1); will-change:transform; }
+        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .55s cubic-bezier(.25,.85,.3,1); will-change:transform; }
         .bc-svg{ position:absolute; inset:0; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
@@ -268,9 +273,10 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
           text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); letter-spacing:-.02em; white-space:nowrap; }
-        .bc-outer.bc-fullscreen{ position:fixed; inset:0; z-index:300; background:var(--bg); display:flex; flex-direction:column;
-          align-items:center; justify-content:center; gap:6px; padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)); }
-        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(86vh, 96vw); }
+        .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:300; background:var(--bg); display:flex;
+          flex-direction:column; align-items:center; justify-content:center; gap:10px;
+          padding:max(10px, env(safe-area-inset-top)) 6px max(10px, env(safe-area-inset-bottom)); }
+        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(96vw, 86dvh); width:100%; }
       `}</style>
     </div>
   );
