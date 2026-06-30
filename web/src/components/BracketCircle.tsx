@@ -44,17 +44,19 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   // Render at a fixed high resolution and display it scaled to fit — so zooming in
   // (CSS scale) stays sharp instead of upscaling a small low-res render.
   const BASE = 1100;
-  const [dispW, setDispW] = useState(360);
+  const [disp, setDisp] = useState({ w: 360, h: 360 });
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    setDispW(el.clientWidth);
-    const ro = new ResizeObserver((es) => { for (const e of es) setDispW(e.contentRect.width); });
+    setDisp({ w: el.clientWidth, h: el.clientHeight });
+    const ro = new ResizeObserver((es) => { for (const e of es) setDisp({ w: e.contentRect.width, h: e.contentRect.height }); });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
   const S = BASE;
-  const fit = dispW / BASE;
+  // fit to the box's SMALLER dimension so the whole circle is always visible at its normal
+  // size — in fullscreen the box becomes the full screen but the circle stays this same size.
+  const fit = Math.min(disp.w, disp.h) / BASE;
 
   const byFifa: Record<number, Match> = {};
   [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
@@ -73,19 +75,6 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   // in iOS Safari, so this is reliable everywhere.
   const [fs, setFs] = useState(false);
   const toggleFs = () => setFs((f) => !f);
-  // Free pan applies in FULLSCREEN ONLY: there the circle fills the screen height and so
-  // spills past the sides, and dragging brings the edges into view. Inline keeps round-step
-  // zoom only (no free pan), as designed. Pan is clamped so the circle can't leave view.
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [panning, setPanning] = useState(false);
-  const clampPan = (x: number, y: number) => {
-    const scaled = dispW * LEVEL_SCALE[level];
-    const visW = outerRef.current?.clientWidth ?? dispW;
-    const visH = outerRef.current?.clientHeight ?? dispW;
-    const mx = Math.max(0, (scaled - visW) / 2);
-    const my = Math.max(0, (scaled - visH) / 2);
-    return { x: Math.max(-mx, Math.min(mx, x)), y: Math.max(-my, Math.min(my, y)) };
-  };
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -94,28 +83,19 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
     if (pts.current.size === 1) moved.current = false;
     if (pts.current.size === 2) { const [a, b] = [...pts.current.values()]; pinchBase.current = Math.hypot(a.x - b.x, a.y - b.y); moved.current = true; }
   };
+  // pinch zooms by whole rounds only — no free pan or free zoom.
   const onPointerMove = (e: PointerEvent) => {
-    const prev = pts.current.get(e.pointerId);
-    if (!prev) return;
+    if (!pts.current.has(e.pointerId)) return;
+    pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pts.current.size === 2 && pinchBase.current) {
-      // pinch steps whole rounds only — no free zoom
-      pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
       const [a, b] = [...pts.current.values()];
       const r = Math.hypot(a.x - b.x, a.y - b.y) / pinchBase.current;
       moved.current = true;
       if (r > 1.3) { step(1); pinchBase.current *= 1.3; }
       else if (r < 0.77) { step(-1); pinchBase.current *= 0.77; }
-      return;
     }
-    if (fs && pts.current.size === 1) {
-      const dx = e.clientX - prev.x, dy = e.clientY - prev.y;
-      if (Math.abs(dx) + Math.abs(dy) > 2) { moved.current = true; setPanning(true); }
-      setPan((p) => clampPan(p.x + dx, p.y + dy));
-    }
-    pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
   };
-  const onPointerUp = (e: PointerEvent) => { pts.current.delete(e.pointerId); if (pts.current.size < 2) pinchBase.current = 0; if (pts.current.size === 0) setPanning(false); };
-  useEffect(() => { setPan({ x: 0, y: 0 }); }, [level]); // re-centre on every round change
+  const onPointerUp = (e: PointerEvent) => { pts.current.delete(e.pointerId); if (pts.current.size < 2) pinchBase.current = 0; };
   const wheelLock = useRef(0);
   useEffect(() => {
     const el = ref.current; if (!el) return;
@@ -129,7 +109,6 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
   useEffect(() => {
-    setPan({ x: 0, y: 0 }); // re-centre when entering/leaving fullscreen
     if (!fs) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -239,7 +218,7 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
       </div>
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
-        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(calc(-50% + ${pan.x}px), calc(-50% + ${pan.y}px)) scale(${fit * LEVEL_SCALE[level]})`, transition: panning ? "none" : undefined }}>
+        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})` }}>
           <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
             <defs>
               <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
@@ -311,14 +290,12 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
           text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); letter-spacing:-.02em; white-space:nowrap; }
-        /* true fullscreen: the overlay covers the whole screen (z 2000); the circle is sized
-           to the viewport HEIGHT so it genuinely fills the screen (on a tall phone it grows
-           past the width — drag to bring the side teams into view; on a wide screen it's
-           fully visible, centred). Toolbar floats over the top. */
+        /* true fullscreen: the BOX (overlay + wrap) becomes the whole screen (z 2000); the
+           circle keeps its normal fully-visible size (fit to the screen's smaller dimension)
+           centred on that full-screen canvas — we just drop the surrounding app chrome.
+           Toolbar floats over the top. */
         .bc-outer.bc-fullscreen{ position:fixed; inset:0; width:100vw; height:100dvh; z-index:2000; background:var(--bg); padding:0; overflow:hidden; }
-        .bc-outer.bc-fullscreen .bc-wrap{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-          width:100dvh; height:100dvh; max-width:none; border-radius:0; cursor:grab; }
-        .bc-outer.bc-fullscreen .bc-wrap:active{ cursor:grabbing; }
+        .bc-outer.bc-fullscreen .bc-wrap{ position:absolute; inset:0; width:100vw; height:100dvh; max-width:none; border-radius:0; }
         .bc-outer.bc-fullscreen .bc-toolbar{ position:absolute; top:max(12px, env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
           z-index:10; width:min(94vw, 560px); max-width:none; margin:0; }
       `}</style>
