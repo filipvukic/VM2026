@@ -20,33 +20,35 @@ export function ScheduleView() {
 
   return (
     <div className="view container md-view">
-      {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+      <div className="md-fade" key={mode}>
+        {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+      </div>
 
       {/* Mode toggle floats at the bottom (above the nav) so it never sits on top of
           the schedule and pushes the day/Kommande labels around. */}
       <div className="md-seg-float">
         <div className="md-seg" data-active={mode}>
+          <span className="md-seg-thumb" aria-hidden />
           <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
           <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
-          <span className="md-seg-thumb" aria-hidden />
         </div>
       </div>
 
       <style>{`
-        .md-view{ padding-bottom:72px; }
+        .md-view{ padding-bottom:74px; }
+        .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
+        @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
         .md-seg-float{ position:fixed; left:50%; transform:translateX(-50%); z-index:61;
-          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(420px, calc(100vw - 28px)); }
-        @media(min-width:920px){ .md-seg-float{ bottom:22px; width:380px; } }
-        /* frosted-glass floating segmented control with a sliding gradient thumb */
-        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:5px; border-radius:16px;
-          background:color-mix(in srgb, var(--surface-2) 78%, transparent); backdrop-filter:blur(18px) saturate(1.5);
-          -webkit-backdrop-filter:blur(18px) saturate(1.5); border:1px solid var(--line-2);
-          box-shadow:0 10px 34px rgba(0,0,0,.45); }
-        .md-seg button{ position:relative; z-index:1; padding:12px 8px; border-radius:12px; font-weight:800; font-size:14.5px; color:var(--ink-3); transition:color .22s ease; }
-        .md-seg button.on{ color:#fff; }
-        .md-seg-thumb{ position:absolute; z-index:0; top:5px; left:5px; bottom:5px; width:calc(50% - 5px); border-radius:12px;
-          background:var(--grad-soft); box-shadow:0 3px 12px color-mix(in srgb, var(--cool) 40%, transparent);
-          transition:transform .28s cubic-bezier(.3,.85,.3,1); }
+          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px)); }
+        @media(min-width:920px){ .md-seg-float{ bottom:24px; width:340px; } }
+        /* clean segmented control — neutral track, a single sliding thumb, no gradient */
+        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:13px;
+          background:var(--surface); border:1px solid var(--line); box-shadow:0 6px 22px rgba(0,0,0,.4); }
+        .md-seg button{ position:relative; z-index:1; padding:11px 8px; border-radius:10px; font-weight:700; font-size:14px;
+          letter-spacing:.01em; color:var(--ink-3); transition:color .22s ease; }
+        .md-seg button.on{ color:var(--ink); font-weight:800; }
+        .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;
+          background:var(--surface-3); box-shadow:0 1px 4px rgba(0,0,0,.35); transition:transform .26s cubic-bezier(.3,.85,.3,1); }
         .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
       `}</style>
     </div>
