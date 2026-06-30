@@ -58825,11 +58825,11 @@
         0
       ],
       "penalties": [
-        4,
+        3,
         4
       ],
       "duration": "PENALTY_SHOOTOUT",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
     "minute": null,
     "goals": [
@@ -59629,11 +59629,11 @@
         0
       ],
       "penalties": [
-        3,
+        2,
         3
       ],
       "duration": "PENALTY_SHOOTOUT",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
     "minute": null,
     "goals": [
@@ -61950,8 +61950,8 @@
     "group": null,
     "home": "Canada",
     "homeTla": "CAN",
-    "away": null,
-    "awayTla": null,
+    "away": "Morocco",
+    "awayTla": "MAR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -61966,25 +61966,119 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "NRG Stadium",
+      "city": "Houston, Texas",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 370,
+      "awayML": -125,
+      "spread": "MAR -0.5",
+      "overUnder": 2.5,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 9.0,
+      "goalAssists": 3.0,
+      "goalsConceded": 3.0
+    },
+    "awayStats": {
+      "goalDifference": 3.0,
+      "totalGoals": 7.0,
+      "goalAssists": 6.0,
+      "goalsConceded": 4.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-24",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 6,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-12",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-05",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-30",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-24",
+        "result": "V",
+        "gf": 4,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-19",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-13",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-07",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537375,
     "utcDate": "2026-07-04T21:00:00Z",
     "stage": "LAST_16",
     "group": null,
-    "home": null,
-    "homeTla": null,
+    "home": "Paraguay",
+    "homeTla": "PAR",
     "away": null,
     "awayTla": null,
     "status": "TIMED",
@@ -62018,8 +62112,8 @@
     "utcDate": "2026-07-05T20:00:00Z",
     "stage": "LAST_16",
     "group": null,
-    "home": null,
-    "homeTla": null,
+    "home": "Brazil",
+    "homeTla": "BRA",
     "away": null,
     "awayTla": null,
     "status": "TIMED",
