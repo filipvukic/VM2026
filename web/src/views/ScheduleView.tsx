@@ -225,14 +225,14 @@ function Bracket({ ds }: { ds: Dataset }) {
         .bk-view button.on{ background:var(--grad-soft); color:#fff; }
         .bt-scroll{ overflow-x:auto; overflow-y:hidden; padding:2px 2px 10px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
         .bt{ display:flex; gap:0; height:560px; min-width:max-content; }
-        .bt-col{ display:flex; flex-direction:column; width:124px; flex:0 0 124px; }
+        .bt-col{ display:flex; flex-direction:column; width:90px; flex:0 0 90px; }
         .bt-col-h{ text-align:center; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); height:13px; line-height:13px; margin-bottom:11px; }
         .bt-col-body{ flex:1; display:flex; flex-direction:column; }
         .bt-slot{ flex:1 1 0; display:flex; align-items:center; min-height:0; }
         .bt-empty{ width:100%; height:40px; border:1px dashed var(--line); border-radius:9px; opacity:.5; }
         /* connector columns — spine ties each pair of feeders, stub runs to the parent.
            Geometry is in %, so it stays aligned at any height (feeders land at 25%/75%). */
-        .bt-conn{ display:flex; flex-direction:column; flex:0 0 24px; }
+        .bt-conn{ display:flex; flex-direction:column; flex:0 0 14px; }
         .bt-conn-h{ height:13px; margin-bottom:11px; }
         .bt-conn-body{ flex:1; display:flex; flex-direction:column; }
         .bt-conn-item{ flex:1 1 0; position:relative; }
@@ -244,13 +244,13 @@ function Bracket({ ds }: { ds: Dataset }) {
         .btc:not(.nolink):active{ transform:scale(.97); }
         .btc.nolink{ cursor:default; }
         .btc.live{ border-color:color-mix(in srgb, var(--hot) 55%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 18%, transparent); }
-        .btc-side{ display:flex; align-items:center; gap:6px; padding:6px 8px; }
+        .btc-side{ display:flex; align-items:center; gap:5px; padding:5px 7px; }
         .btc-side.win{ background:color-mix(in srgb, var(--win) 26%, var(--surface)); }
         .btc-side.dim{ opacity:.42; }
-        .btc-dot{ width:15px; height:11px; border-radius:3px; background:var(--surface-3); flex:0 0 auto; }
-        .btc-nm{ flex:1; min-width:0; font-size:11px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .btc-side.win .btc-nm{ font-weight:800; color:color-mix(in srgb, var(--win) 52%, var(--ink)); }
-        .btc-sc{ font-family:var(--font-display); font-weight:800; font-size:12.5px; font-variant-numeric:tabular-nums; }
+        .btc-dot{ width:14px; height:10px; border-radius:3px; background:var(--surface-3); flex:0 0 auto; }
+        .btc-code{ flex:1; min-width:0; font-size:11px; font-weight:800; letter-spacing:.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .btc-side.win .btc-code{ color:color-mix(in srgb, var(--win) 52%, var(--ink)); }
+        .btc-sc{ font-family:var(--font-display); font-weight:800; font-size:12px; font-variant-numeric:tabular-nums; flex:0 0 auto; }
         .btc-side.win .btc-sc{ color:color-mix(in srgb, var(--win) 52%, var(--ink)); }
         .btc-div{ height:1px; background:var(--line); }
         .bt-bronze{ margin-top:18px; }
@@ -412,8 +412,8 @@ function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: strin
     const t = realCode ? ds.teams[realCode] : null;
     return (
       <div className={`btc-side${win ? " win" : ""}${played && m.winner && !win ? " dim" : ""}`}>
-        {t ? <Flag iso={t.iso} code={realCode} size={15} /> : <span className="btc-dot" aria-hidden />}
-        <span className="btc-nm" style={{ color: t ? undefined : "var(--ink-3)" }}>{t ? t.name : "—"}</span>
+        {t ? <Flag iso={t.iso} code={realCode} size={14} /> : <span className="btc-dot" aria-hidden />}
+        <span className="btc-code">{realCode || ""}</span>
         {(played || live) && code && <span className="btc-sc">{score ?? 0}</span>}
       </div>
     );
