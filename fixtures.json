@@ -61184,18 +61184,38 @@
     "homeTla": "FRA",
     "away": "Sweden",
     "awayTla": "SWE",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      0,
+      0
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        0,
+        0
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "DRAW"
     },
-    "minute": null,
-    "goals": [],
+    "minute": "45+3",
+    "goals": [
+      {
+        "minute": "45",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": "Ousmane Dembélé",
+        "type": "REGULAR",
+        "description": "Goal! France 1, Sweden 0. Kylian Mbappé (France) right footed shot from the centre of the box to the top right corner. Assisted by Ousmane Dembélé following a corner.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      }
+    ],
     "bookings": [],
     "subs": [],
     "venue": {
@@ -61206,15 +61226,14 @@
     "referees": [
       {
         "name": "Danny Makkelie",
-        "role": "REFEREE",
-        "nationality": "Netherlands"
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -350,
-      "awayML": 950,
+      "homeML": -340,
+      "awayML": 900,
       "spread": "FRA -1.5",
       "overUnder": 3.5,
       "overOdds": 105.0,
@@ -61230,89 +61249,71 @@
           "positionName": "Goalkeeper",
           "jersey": "16",
           "espnId": "189026",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Lucas Digne",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "3",
-          "espnId": "160115",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "William Saliba",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
           "jersey": "17",
           "espnId": "277385",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Dayot Upamecano",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
           "jersey": "4",
           "espnId": "222793",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Lucas Digne",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "3",
+          "espnId": "160115",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jules Koundé",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "RB",
+          "positionName": "Right Back",
           "jersey": "5",
           "espnId": "231692",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Bradley Barcola",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "12",
-          "espnId": "328238",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Aurélien Tchouaméni",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "8",
-          "espnId": "265919",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ousmane Dembélé",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "7",
-          "espnId": "229744",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Michael Olise",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
           "jersey": "11",
           "espnId": "286831",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Adrien Rabiot",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "14",
           "espnId": "176203",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Aurélien Tchouaméni",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "8",
+          "espnId": "265919",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kylian Mbappé",
@@ -61320,8 +61321,26 @@
           "positionName": "Forward",
           "jersey": "10",
           "espnId": "231388",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Bradley Barcola",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "12",
+          "espnId": "328238",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ousmane Dembélé",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "7",
+          "espnId": "229744",
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -61331,8 +61350,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "345581",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Robin Risser",
@@ -61340,8 +61359,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "344517",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jean-Philippe Mateta",
@@ -61349,8 +61368,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "241187",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Malo Gusto",
@@ -61358,8 +61377,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "308947",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Rayan Cherki",
@@ -61367,8 +61386,8 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "298008",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ibrahima Konaté",
@@ -61376,8 +61395,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "251634",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Désiré Doué",
@@ -61385,8 +61404,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "336388",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Maghnes Akliouche",
@@ -61394,8 +61413,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "329690",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Maxence Lacroix",
@@ -61403,8 +61422,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "265918",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Theo Hernández",
@@ -61412,8 +61431,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "233621",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Manu Koné",
@@ -61421,8 +61440,8 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "285226",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Marcus Thuram",
@@ -61430,8 +61449,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "217331",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Brice Samba",
@@ -61439,8 +61458,8 @@
           "positionName": "Substitute",
           "jersey": "1",
           "espnId": "164126",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lucas Hernández",
@@ -61448,8 +61467,8 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "196200",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "N'Golo Kanté",
@@ -61457,15 +61476,15 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "173556",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "FRA",
       "_espnEventId": "760492"
     },
     "awayLineup": {
-      "formation": "3-4-2-1",
+      "formation": "4-4-2",
       "lineup": [
         {
           "name": "Jacob Widell Zetterström",
@@ -61473,98 +61492,98 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "286810",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Gustaf Lagerbielke",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "2",
-          "espnId": "324930",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Victor Lindelöf",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
           "jersey": "3",
           "espnId": "204679",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gustaf Lagerbielke",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "2",
+          "espnId": "324930",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Gabriel Gudmundsson",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "LB",
+          "positionName": "Left Back",
           "jersey": "5",
           "espnId": "250166",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Daniel Svensson",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "RB",
+          "positionName": "Right Back",
           "jersey": "8",
           "espnId": "310709",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Elliot Stroud",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "24",
-          "espnId": "357145",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Lucas Bergvall",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "7",
-          "espnId": "356379",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Anthony Elanga",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "11",
-          "espnId": "296622",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Alexander Isak",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "9",
-          "espnId": "235662",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yasin Ayari",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
           "jersey": "18",
           "espnId": "304242",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Lucas Bergvall",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "7",
+          "espnId": "356379",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Elliot Stroud",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "24",
+          "espnId": "357145",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Anthony Elanga",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "11",
+          "espnId": "296622",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alexander Isak",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "9",
+          "espnId": "235662",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Viktor Gyökeres",
-          "position": "F",
-          "positionName": "Forward",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
           "jersey": "17",
           "espnId": "258906",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -61574,8 +61593,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "133993",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Besfort Zeneli",
@@ -61583,8 +61602,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "334024",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Taha Ali",
@@ -61592,8 +61611,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "314164",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Eric Smith",
@@ -61601,8 +61620,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "204115",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Carl Starfelt",
@@ -61610,8 +61629,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "195790",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jesper Karlström",
@@ -61619,8 +61638,8 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "237055",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Alexander Bernhardsson",
@@ -61628,8 +61647,8 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "301370",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Viktor Johansson",
@@ -61637,8 +61656,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "258902",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ken Sema",
@@ -61646,8 +61665,8 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "186004",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hjalmar Ekdal",
@@ -61655,8 +61674,8 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "290413",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Benjamin Nygren",
@@ -61664,8 +61683,8 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "274522",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Herman Johansson",
@@ -61673,8 +61692,8 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "312876",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Gustaf Nilsson",
@@ -61682,8 +61701,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "238183",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mattias Svanberg",
@@ -61691,24 +61710,72 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "220120",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "SWE",
       "_espnEventId": "760492"
     },
     "homeStats": {
-      "goalDifference": 8.0,
-      "totalGoals": 10.0,
-      "goalAssists": 9.0,
-      "goalsConceded": 2.0
+      "foulsCommitted": 8.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 6.0,
+      "saves": 1.0,
+      "possessionPct": 71.5,
+      "totalShots": 15.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 249.0,
+      "totalPasses": 283.0,
+      "passPct": 0.9,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 11.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 13.0,
+      "accurateLongBalls": 6.0,
+      "longballPct": 0.5,
+      "blockedShots": 2.0,
+      "effectiveTackles": 3.0,
+      "totalTackles": 4.0,
+      "tacklePct": 0.8,
+      "interceptions": 2.0,
+      "effectiveClearance": 9.0,
+      "totalClearance": 9.0
     },
     "awayStats": {
-      "goalDifference": 0.0,
-      "totalGoals": 7.0,
-      "goalAssists": 6.0,
-      "goalsConceded": 7.0
+      "foulsCommitted": 6.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 0.0,
+      "saves": 5.0,
+      "possessionPct": 28.5,
+      "totalShots": 3.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 76.0,
+      "totalPasses": 112.0,
+      "passPct": 0.7,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 29.0,
+      "accurateLongBalls": 8.0,
+      "longballPct": 0.3,
+      "blockedShots": 0.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.6,
+      "interceptions": 5.0,
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
     },
     "homeForm": [
       {
