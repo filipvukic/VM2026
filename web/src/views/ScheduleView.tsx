@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
-import { useScheduleUI, type SchedFilter } from "../state/scheduleUi";
+import { useScheduleUI, type SchedFilter, type BracketView } from "../state/scheduleUi";
 import { useKoBets } from "../state/koBets";
 import { MatchCard } from "../components/MatchCard";
 import { BracketCircle } from "../components/BracketCircle";
@@ -19,13 +19,14 @@ export function ScheduleView() {
   const setMode = useScheduleUI((s) => s.setMode);
   const filter = useScheduleUI((s) => s.filter);
   const setFilter = useScheduleUI((s) => s.setFilter);
+  const view = useScheduleUI((s) => s.view);
+  const setView = useScheduleUI((s) => s.setView);
   // Slutspel (bracket) should open at the top — the schedule's auto-scroll-to-live can
   // leave the page scrolled down, which otherwise carries over when you switch.
   useEffect(() => { if (mode === "bracket") window.scrollTo({ top: 0 }); }, [mode]);
-  // Keep the active label in view in the horizontally-scrollable row (so "Slutspel",
-  // which sits at the end, is visible when it's selected on a narrow screen).
+  // Keep the active sub-filter in view in its horizontally-scrollable row on a narrow screen.
   const activeChip = useRef<HTMLButtonElement>(null);
-  useEffect(() => { activeChip.current?.scrollIntoView({ inline: "center", block: "nearest" }); }, [mode, filter]);
+  useEffect(() => { activeChip.current?.scrollIntoView({ inline: "nearest", block: "nearest" }); }, [mode, filter, view]);
 
   const counts = useMemo(
     () => ({
@@ -42,55 +43,81 @@ export function ScheduleView() {
     { k: "upcoming", label: `Kommande ${counts.upcoming}` },
     { k: "played", label: `Spelade ${counts.played}` },
   ];
+  const V: { k: BracketView; label: string }[] = [
+    { k: "tree", label: "Cirkel" },
+    { k: "list", label: "Lista" },
+  ];
 
   return (
     <div className="view container md-view">
-      {/* One compact row of labels: the schedule filters AND Slutspel (the bracket) live
-          together here, so the old full-width Spelschema/Slutspel pill is gone. */}
-      <div className="md-chips">
-        {F.map((f) => {
-          const on = mode === "list" && filter === f.k;
-          return (
-            <button
-              key={f.k}
-              ref={on ? activeChip : undefined}
-              className={`fchip ${on ? "on" : ""} ${f.k === "live" && counts.live ? "live" : ""}`}
-              onClick={() => { setMode("list"); setFilter(f.k); }}
-              disabled={f.k === "live" && !counts.live}
-            >
-              {f.k === "live" && counts.live > 0 && <span className="live-dot" style={{ background: "var(--hot)" }} />}
-              {f.label}
-            </button>
-          );
-        })}
-        <span className="md-chips-sep" aria-hidden />
-        <button
-          ref={mode === "bracket" ? activeChip : undefined}
-          className={`fchip fchip-ko ${mode === "bracket" ? "on" : ""}`}
-          onClick={() => setMode("bracket")}
-        >
-          🏆 Slutspel
-        </button>
+      {/* Two levels: Spelschema / Slutspel are the main categories; the sub-row under them
+          shows only that category's own filters (Alla/Live/… for Spelschema, Cirkel/Lista
+          for Slutspel). */}
+      <div className="md-head">
+        <div className="md-cat" data-active={mode}>
+          <span className="md-cat-thumb" aria-hidden />
+          <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
+          <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
+        </div>
+
+        <div className="md-sub" key={mode}>
+          {mode === "list"
+            ? F.map((f) => {
+                const on = filter === f.k;
+                return (
+                  <button
+                    key={f.k}
+                    ref={on ? activeChip : undefined}
+                    className={`subchip ${on ? "on" : ""} ${f.k === "live" && counts.live ? "live" : ""}`}
+                    onClick={() => setFilter(f.k)}
+                    disabled={f.k === "live" && !counts.live}
+                  >
+                    {f.k === "live" && counts.live > 0 && <span className="live-dot" style={{ background: "var(--hot)" }} />}
+                    {f.label}
+                  </button>
+                );
+              })
+            : V.map((v) => (
+                <button
+                  key={v.k}
+                  ref={view === v.k ? activeChip : undefined}
+                  className={`subchip ${view === v.k ? "on" : ""}`}
+                  onClick={() => setView(v.k)}
+                >
+                  {v.label}
+                </button>
+              ))}
+        </div>
       </div>
 
       <div className="md-fade" key={mode}>
-        {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+        {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} view={view} />}
       </div>
 
       <style>{`
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        .md-chips{ display:flex; align-items:center; gap:7px; overflow-x:auto; scrollbar-width:none;
-          margin:2px 0 16px; padding:6px 0; position:sticky; top:calc(var(--header-h) + 4px); z-index:6; background:var(--bg); }
-        .md-chips::-webkit-scrollbar{ display:none; }
-        @media(max-width:919px){ .md-chips{ top:0; position:relative; background:transparent; } }
-        .md-chips .fchip{ flex:0 0 auto; }
-        .md-chips-sep{ flex:0 0 auto; width:1px; height:20px; background:var(--line-2); margin:0 2px; }
-        .fchip{ display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:var(--r-pill); border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-weight:800; font-size:12.5px; white-space:nowrap; }
-        .fchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
-        .fchip.live.on{ background:var(--hot); color:#fff; }
-        .fchip:disabled{ opacity:.4; }
-        .fchip-ko.on{ background:var(--grad-soft); color:#fff; border-color:transparent; }
+        .md-head{ position:sticky; top:calc(var(--header-h) + 2px); z-index:6; background:var(--bg); padding:6px 0 12px; margin-bottom:6px; }
+        @media(max-width:919px){ .md-head{ top:0; position:relative; background:transparent; } }
+        /* primary categories — a clear segmented control */
+        .md-cat{ position:relative; display:inline-grid; grid-template-columns:1fr 1fr; padding:3px;
+          background:var(--surface-2); border:1px solid var(--surface-hi); border-radius:12px; }
+        .md-cat button{ position:relative; z-index:1; padding:9px 22px; border-radius:9px; font-weight:800; font-size:14px;
+          color:var(--ink-2); white-space:nowrap; transition:color .2s ease; }
+        .md-cat button.on{ color:#fff; }
+        .md-cat-thumb{ position:absolute; z-index:0; top:3px; bottom:3px; left:3px; width:calc(50% - 3px); border-radius:9px;
+          background:var(--cool); box-shadow:0 2px 10px color-mix(in srgb, var(--cool) 55%, transparent);
+          transition:transform .26s cubic-bezier(.3,.85,.3,1); }
+        .md-cat[data-active="bracket"] .md-cat-thumb{ transform:translateX(100%); }
+        /* sub-filters — lighter chips, only for the active category */
+        .md-sub{ display:flex; align-items:center; gap:7px; overflow-x:auto; scrollbar-width:none; margin-top:11px; animation:subFade .26s ease; }
+        .md-sub::-webkit-scrollbar{ display:none; }
+        @keyframes subFade{ from{ opacity:0; transform:translateY(-3px); } to{ opacity:1; transform:none; } }
+        .subchip{ flex:0 0 auto; display:inline-flex; align-items:center; gap:5px; padding:6px 12px; border-radius:var(--r-pill);
+          border:1px solid var(--line-2); background:var(--surface); color:var(--ink-3); font-weight:800; font-size:12px; white-space:nowrap; }
+        .subchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
+        .subchip.live.on{ background:var(--hot); color:#fff; }
+        .subchip:disabled{ opacity:.4; }
       `}</style>
     </div>
   );
@@ -176,7 +203,7 @@ function ScheduleList({ ds }: { ds: Dataset }) {
 // tall, horizontally-scrolling tree — on mobile that container is taller than the
 // viewport AND scrolls sideways, so a vertical drag got trapped (you couldn't scroll
 // the page). A per-round list scrolls normally and reads cleanly on a phone.
-function Bracket({ ds }: { ds: Dataset }) {
+function Bracket({ ds, view }: { ds: Dataset; view: BracketView }) {
   const openMatch = useSheets((s) => s.openMatch);
   const ko = ds.knockout;
   const rounds = [
@@ -189,7 +216,6 @@ function Bracket({ ds }: { ds: Dataset }) {
   ].filter((r) => r.ms && r.ms.length);
   const [round, setRound] = useState<string>("r32");
   const active = rounds.find((r) => r.key === round) || rounds[0];
-  const [view, setView] = useState<"tree" | "list">("tree");
   const koName = useKoBets((s) => s.name);
   const openBet = useKoBets((s) => s.setSheet);
 
@@ -203,11 +229,6 @@ function Bracket({ ds }: { ds: Dataset }) {
         </span>
         <span className="bk-cta-go">›</span>
       </button>
-
-      <div className="bk-view">
-        <button className={view === "tree" ? "on" : ""} onClick={() => setView("tree")}>Cirkel</button>
-        <button className={view === "list" ? "on" : ""} onClick={() => setView("list")}>Lista</button>
-      </div>
 
       {view === "tree" ? (
         <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
@@ -233,9 +254,6 @@ function Bracket({ ds }: { ds: Dataset }) {
       )}
 
       <style>{`
-        .bk-view{ display:inline-flex; gap:3px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; margin-bottom:14px; }
-        .bk-view button{ padding:7px 18px; border-radius:var(--r-pill); font-weight:800; font-size:12.5px; color:var(--ink-3); }
-        .bk-view button.on{ background:var(--grad-soft); color:#fff; }
         .bt-scroll{ overflow-x:auto; overflow-y:hidden; padding:2px 2px 10px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
         .bt{ display:flex; gap:0; height:560px; min-width:max-content; }
         .bt-col{ display:flex; flex-direction:column; width:90px; flex:0 0 90px; }
