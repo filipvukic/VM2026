@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useData } from "../state/dataset";
 import { useKoBets, koFid, type Tip } from "../state/koBets";
 import { Flag } from "../lib/flags";
@@ -12,7 +12,6 @@ import type { Dataset, Match } from "../data/types";
 export function KoBetSheet() {
   const ds = useData();
   const { name, bets, open: openIds, status, error, login, save, sheetOpen, setSheet } = useKoBets();
-  const [codeInput, setCodeInput] = useState("");
   const [draft, setDraft] = useState<Record<string, Tip>>({});
   const [flash, setFlash] = useState(false);
 
@@ -57,15 +56,11 @@ export function KoBetSheet() {
           <div className="kob-login">
             <div className="kob-login-ic">🔑</div>
             <div className="kob-login-h">Logga in för att tippa</div>
-            <p className="kob-login-p">Ange din personliga kod. Du tippar en hel omgång i taget och kan ändra ända tills omgången startar (första matchen sparkar igång).</p>
-            <form onSubmit={async (e) => { e.preventDefault(); if (await login(codeInput)) setCodeInput(""); }} className="kob-login-form">
-              <input className="kob-code" value={codeInput} onChange={(e) => setCodeInput(e.target.value.toUpperCase())}
-                placeholder="DIN KOD" autoCapitalize="characters" autoComplete="off" maxLength={6} aria-label="Inloggningskod" />
-              <button className="kob-btn" type="submit" disabled={status === "loading" || codeInput.trim().length < 4}>
-                {status === "loading" ? "…" : "Logga in"}
-              </button>
-            </form>
-            {error && <div className="kob-err">{error}</div>}
+            <p className="kob-login-p">Skriv in din personliga 6-teckens kod — du loggas in automatiskt. Du tippar en hel omgång i taget och kan ändra ända tills omgången startar.</p>
+            <CodeBoxes onComplete={(code) => login(code)} disabled={status === "loading"} error={!!error} />
+            <div className="kob-login-status">
+              {status === "loading" ? "Loggar in…" : error ? <span className="kob-err">{error}</span> : "6 tecken"}
+            </div>
           </div>
         ) : (
           <>
@@ -171,10 +166,14 @@ export function KoBetSheet() {
         .kob-login-ic{ font-size:34px; }
         .kob-login-h{ font-family:var(--font-display); font-weight:800; font-size:19px; margin-top:6px; }
         .kob-login-p{ color:var(--ink-3); font-size:13px; line-height:1.55; margin:8px auto 16px; max-width:330px; }
-        .kob-login-form{ display:flex; gap:8px; max-width:340px; margin:0 auto; }
-        .kob-code{ flex:1; min-width:0; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-md);
-          padding:12px 14px; font-family:var(--font-display); font-weight:800; font-size:19px; letter-spacing:.2em; text-align:center; color:var(--ink); text-transform:uppercase; }
-        .kob-code:focus{ border-color:var(--cool); outline:none; }
+        .kob-boxes{ display:flex; gap:8px; justify-content:center; margin:4px auto 0; }
+        .kob-box{ width:44px; height:54px; text-align:center; background:var(--surface); border:1.5px solid var(--line-2);
+          border-radius:13px; font-family:var(--font-display); font-weight:800; font-size:25px; color:var(--ink); text-transform:uppercase;
+          caret-color:var(--cool); transition:border-color .15s, background .15s, transform .1s; }
+        .kob-box:focus{ outline:none; border-color:var(--cool); background:color-mix(in srgb, var(--cool) 9%, var(--surface)); transform:translateY(-1px); }
+        .kob-boxes.err .kob-box{ border-color:color-mix(in srgb, var(--loss) 55%, var(--line-2)); }
+        @media(max-width:380px){ .kob-box{ width:40px; height:50px; font-size:22px; } .kob-boxes{ gap:6px; } }
+        .kob-login-status{ margin-top:14px; font-size:12.5px; font-weight:700; color:var(--ink-3); min-height:18px; }
         .kob-btn{ background:var(--grad-soft); color:#fff; font-weight:800; font-size:14px; padding:12px 18px; border-radius:var(--r-md); white-space:nowrap; transition:transform .12s, opacity .15s; }
         .kob-btn:active{ transform:scale(.96); } .kob-btn:disabled{ opacity:.45; }
         .kob-err{ color:var(--loss); font-size:12.5px; font-weight:700; margin-top:12px; }
@@ -220,6 +219,62 @@ function Stepper({ value, onChange }: { value: number; onChange: (v: number) => 
       <button type="button" aria-label="minska" onClick={() => onChange(Math.max(0, value - 1))}>−</button>
       <span className="v">{value}</span>
       <button type="button" aria-label="öka" onClick={() => onChange(Math.min(20, value + 1))}>+</button>
+    </div>
+  );
+}
+
+// Six single-character boxes for the login code: auto-advances as you type, accepts a
+// paste, and logs in automatically the moment all six are filled (no submit button).
+function CodeBoxes({ onComplete, disabled, error }: { onComplete: (code: string) => void; disabled: boolean; error: boolean }) {
+  const [vals, setVals] = useState<string[]>(["", "", "", "", "", ""]);
+  const refs = useRef<(HTMLInputElement | null)[]>([]);
+  const code = vals.join("");
+  const fired = useRef("");
+
+  useEffect(() => { refs.current[0]?.focus(); }, []);
+  useEffect(() => {
+    if (code.length === 6 && fired.current !== code) { fired.current = code; onComplete(code); }
+    if (code.length < 6) fired.current = "";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
+
+  const setAt = (i: number, raw: string) => {
+    const clean = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    setVals((p) => {
+      const n = [...p];
+      if (clean === "") { n[i] = ""; return n; }
+      for (let k = 0; k < clean.length && i + k < 6; k++) n[i + k] = clean[k];
+      return n;
+    });
+    if (clean) setTimeout(() => refs.current[Math.min(i + clean.length, 5)]?.focus(), 0);
+  };
+  const onKey = (i: number, e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !vals[i] && i > 0) {
+      refs.current[i - 1]?.focus();
+      setVals((p) => { const n = [...p]; n[i - 1] = ""; return n; });
+    } else if (e.key === "ArrowLeft" && i > 0) refs.current[i - 1]?.focus();
+    else if (e.key === "ArrowRight" && i < 5) refs.current[i + 1]?.focus();
+  };
+
+  return (
+    <div className={`kob-boxes${error ? " err" : ""}`}>
+      {vals.map((v, i) => (
+        <input
+          key={i}
+          ref={(el) => { refs.current[i] = el; }}
+          className="kob-box"
+          value={v}
+          onChange={(e) => setAt(i, e.target.value)}
+          onKeyDown={(e) => onKey(i, e)}
+          onFocus={(e) => e.target.select()}
+          inputMode="text"
+          autoCapitalize="characters"
+          autoComplete="off"
+          spellCheck={false}
+          disabled={disabled}
+          aria-label={`Tecken ${i + 1} av 6`}
+        />
+      ))}
     </div>
   );
 }

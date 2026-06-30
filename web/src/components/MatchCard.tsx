@@ -14,9 +14,9 @@ interface Props {
   compact?: boolean;
 }
 
-// Refreshed match card: the two teams stacked vertically (flag · name · score),
-// then a status footer (live minute / SLUT / kickoff + channel). Status-coloured
-// left edge so live/played/upcoming read at a glance.
+// Match card: the two teams stacked (flag · name · score), a hairline, then a clean
+// status line (live minute / Slut / Avspark) with a status-coloured dot and the TV
+// channel. No loud accent border — the dot + score colour carry the state.
 export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const ds = useData();
   const now = useNow(isLive(m) ? 30_000 : 0);
@@ -27,6 +27,7 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const showScore = played || live;
   const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
+  const state = live ? "live" : played ? "done" : "soon";
 
   const TeamRow = ({ side }: { side: "h" | "a" }) => {
     const code = side === "h" ? m.home : m.away;
@@ -39,7 +40,7 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
     const isLoss = played && m.winner != null && code != null && m.winner !== code;
     return (
       <div className={`mc-row${isWin ? " win" : ""}${isLoss ? " loss" : ""}`}>
-        <Flag iso={t?.iso} code={code} size={compact ? 21 : 24} />
+        <Flag iso={t?.iso} code={code} size={compact ? 22 : 26} />
         <span className="mc-name" style={t ? undefined : { color: "var(--ink-3)" }}>{projName || name}</span>
         {isWin && <span className="mc-win">✓</span>}
         {showScore && code && <span className="mc-sc">{score ?? 0}</span>}
@@ -49,7 +50,7 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
 
   return (
     <button
-      className={`mc${live ? " live" : ""}${played ? " played" : ""}${compact ? " compact" : ""}`}
+      className={`mc mc-${state}${compact ? " compact" : ""}`}
       onClick={onOpen ? () => onOpen(m) : undefined}
       style={{ cursor: onOpen ? "pointer" : "default" }}
     >
@@ -60,11 +61,11 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
       <div className="mc-foot">
         <span className="mc-status">
           {live ? (
-            <span className="live-pill"><span className="live-dot" />{liveMinuteText(m, updatedAt, now)}</span>
+            <><span className="mc-dot" /><span className="mc-live-min">{liveMinuteText(m, updatedAt, now)}</span></>
           ) : played ? (
-            <span className="mc-slut">✓ SLUT{m.pen ? ` · str ${m.pen[0]}–${m.pen[1]}` : ""}</span>
+            <><span className="mc-dot" />Slut{m.pen ? ` · str ${m.pen[0]}–${m.pen[1]}` : ""}</>
           ) : (
-            <><b className="mc-time">{svTime(m.kickoff)}</b> · Kommande</>
+            <><span className="mc-dot" />Avspark <b>{svTime(m.kickoff)}</b></>
           )}
         </span>
         <span className="mc-foot-r">

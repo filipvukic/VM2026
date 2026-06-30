@@ -18,8 +18,12 @@ export function ScheduleView() {
   const setMode = useScheduleUI((s) => s.setMode);
 
   return (
-    <div className="view container">
-      <div className="md-modes-bar">
+    <div className="view container md-view">
+      {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+
+      {/* Mode toggle floats at the bottom (above the nav) so it never sits on top of
+          the schedule and pushes the day/Kommande labels around. */}
+      <div className="md-seg-float">
         <div className="md-seg" data-active={mode}>
           <button className={mode === "list" ? "on" : ""} onClick={() => setMode("list")}>Spelschema</button>
           <button className={mode === "bracket" ? "on" : ""} onClick={() => setMode("bracket")}>Slutspel</button>
@@ -27,18 +31,21 @@ export function ScheduleView() {
         </div>
       </div>
 
-      {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
-
       <style>{`
-        /* Sticky so the schedule's auto-scroll-to-live can never hide the toggle. */
-        .md-modes-bar{ position:sticky; top:var(--header-h); z-index:20; background:var(--bg); padding:10px 0 13px; }
-        /* iOS-style segmented control with a sliding thumb — cleaner than filled pills. */
-        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; max-width:440px; margin:0 auto; background:var(--surface-2); border:1px solid var(--line); border-radius:13px; padding:4px; }
-        .md-seg button{ position:relative; z-index:1; padding:11px 8px; border-radius:10px; font-weight:800; font-size:14px; color:var(--ink-3); transition:color .22s ease; }
-        .md-seg button.on{ color:var(--ink); }
-        .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;
-          background:linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 82%, #000)); border:1px solid var(--line-2);
-          box-shadow:0 2px 8px rgba(0,0,0,.24); transition:transform .26s cubic-bezier(.3,.85,.3,1); }
+        .md-view{ padding-bottom:72px; }
+        .md-seg-float{ position:fixed; left:50%; transform:translateX(-50%); z-index:61;
+          bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(420px, calc(100vw - 28px)); }
+        @media(min-width:920px){ .md-seg-float{ bottom:22px; width:380px; } }
+        /* frosted-glass floating segmented control with a sliding gradient thumb */
+        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:5px; border-radius:16px;
+          background:color-mix(in srgb, var(--surface-2) 78%, transparent); backdrop-filter:blur(18px) saturate(1.5);
+          -webkit-backdrop-filter:blur(18px) saturate(1.5); border:1px solid var(--line-2);
+          box-shadow:0 10px 34px rgba(0,0,0,.45); }
+        .md-seg button{ position:relative; z-index:1; padding:12px 8px; border-radius:12px; font-weight:800; font-size:14.5px; color:var(--ink-3); transition:color .22s ease; }
+        .md-seg button.on{ color:#fff; }
+        .md-seg-thumb{ position:absolute; z-index:0; top:5px; left:5px; bottom:5px; width:calc(50% - 5px); border-radius:12px;
+          background:var(--grad-soft); box-shadow:0 3px 12px color-mix(in srgb, var(--cool) 40%, transparent);
+          transition:transform .28s cubic-bezier(.3,.85,.3,1); }
         .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
       `}</style>
     </div>
@@ -141,8 +148,8 @@ function ScheduleList({ ds }: { ds: Dataset }) {
       ))}
 
       <style>{`
-        .filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; position:sticky; top:calc(var(--header-h) + 52px); z-index:5; padding:4px 0; }
-        @media(max-width:919px){ .filter-row{ top:0; position:relative; } }
+        .filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 18px; position:sticky; top:calc(var(--header-h) + 6px); z-index:5; padding:6px 0; background:var(--bg); }
+        @media(max-width:919px){ .filter-row{ top:0; position:relative; background:transparent; } }
         .fchip{ display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:var(--r-pill); border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-weight:800; font-size:12.5px; }
         .fchip.on{ background:var(--ink); color:var(--bg); border-color:transparent; }
         .fchip.live.on{ background:var(--hot); color:#fff; }
@@ -227,6 +234,7 @@ function Bracket({ ds }: { ds: Dataset }) {
         .bt{ display:flex; gap:0; height:560px; min-width:max-content; }
         .bt-col{ display:flex; flex-direction:column; width:90px; flex:0 0 90px; }
         .bt-col-h{ text-align:center; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); height:13px; line-height:13px; margin-bottom:11px; }
+        .bt-col-h.final{ color:var(--gold); font-size:10px; }
         .bt-col-body{ flex:1; display:flex; flex-direction:column; }
         .bt-slot{ flex:1 1 0; display:flex; align-items:center; min-height:0; }
         .bt-empty{ width:100%; height:40px; border:1px dashed var(--line); border-radius:9px; opacity:.5; }
@@ -240,10 +248,14 @@ function Bracket({ ds }: { ds: Dataset }) {
         .bt-conn.pair:not(.mir) .bt-conn-item::before{ left:0; }
         .bt-conn.pair.mir .bt-conn-item::before{ right:0; }
         .bt-conn-item::after{ content:''; position:absolute; left:0; right:0; top:calc(50% - 1px); height:2px; background:color-mix(in srgb, var(--ink-3) 38%, var(--line-2)); border-radius:1px; }
-        .btc{ background:var(--surface); border:1px solid var(--line); border-radius:9px; overflow:hidden; width:100%; text-align:left; transition:border-color .15s; }
+        /* ring is OUTSET (box-shadow, not border) so the winner's green fills the row
+           edge-to-edge with no 1px frame showing on the sides. */
+        .btc{ background:var(--surface); border-radius:9px; overflow:hidden; width:100%; text-align:left; box-shadow:0 0 0 1px var(--line); transition:box-shadow .15s; position:relative; }
         .btc:not(.nolink):active{ transform:scale(.97); }
         .btc.nolink{ cursor:default; }
-        .btc.live{ border-color:color-mix(in srgb, var(--hot) 55%, var(--line)); box-shadow:0 0 0 1px color-mix(in srgb, var(--hot) 18%, transparent); }
+        .btc.live{ box-shadow:0 0 0 1.5px color-mix(in srgb, var(--hot) 60%, var(--line)); }
+        .btc.final{ box-shadow:0 0 0 1.5px var(--gold); background:color-mix(in srgb, var(--gold) 9%, var(--surface)); }
+        .btc.final.live{ box-shadow:0 0 0 2px color-mix(in srgb, var(--hot) 60%, var(--gold)); }
         .btc-side{ display:flex; align-items:center; gap:5px; padding:5px 7px; }
         .btc-side.win{ background:color-mix(in srgb, var(--win) 26%, var(--surface)); }
         .btc-side.dim{ opacity:.42; }
@@ -372,11 +384,11 @@ function BracketTree({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void
   const cols = TREE_COLS.flatMap((c, ci) => {
     const col = (
       <div key={`c${ci}`} className="bt-col">
-        <div className="bt-col-h">{c.label}</div>
+        <div className={`bt-col-h${c.label === "Final" ? " final" : ""}`}>{c.label === "Final" ? "🏆 Final" : c.label}</div>
         <div className="bt-col-body">
           {c.fifas.map((f) => (
             <div key={f} className="bt-slot">
-              {byFifa[f] ? <TreeCell m={byFifa[f]} ds={ds} onOpen={onOpen} /> : <div className="bt-empty" />}
+              {byFifa[f] ? <TreeCell m={byFifa[f]} ds={ds} onOpen={onOpen} final={f === 104} /> : <div className="bt-empty" />}
             </div>
           ))}
         </div>
@@ -402,7 +414,7 @@ function BracketTree({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void
   );
 }
 
-function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: string) => void }) {
+function TreeCell({ m, ds, onOpen, final }: { m: Match; ds: Dataset; onOpen: (id: string) => void; final?: boolean }) {
   const played = m.status === "played" && m.ga != null && m.gb != null;
   const live = isLive(m);
   const Side = ({ code, proj, score, win }: { code: string | null; proj?: string | null; score: number | null; win: boolean }) => {
@@ -419,7 +431,7 @@ function TreeCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: (id: strin
     );
   };
   return (
-    <button className={`btc${live ? " live" : ""}${m._realId ? "" : " nolink"}`} onClick={() => m._realId && onOpen(m.id)} disabled={!m._realId}>
+    <button className={`btc${live ? " live" : ""}${final ? " final" : ""}${m._realId ? "" : " nolink"}`} onClick={() => m._realId && onOpen(m.id)} disabled={!m._realId}>
       <Side code={m.home} proj={m.projHome} score={m.ga} win={played && m.winner === m.home} />
       <div className="btc-div" />
       <Side code={m.away} proj={m.projAway} score={m.gb} win={played && m.winner === m.away} />
