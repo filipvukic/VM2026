@@ -207,10 +207,7 @@ function Bracket({ ds }: { ds: Dataset }) {
       </div>
 
       {view === "tree" ? (
-        <>
-          <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
-          <div className="bc-hint">Tryck på ett lag för att öppna matchen · mitten = mästaren 🏆</div>
-        </>
+        <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
       ) : (
         <>
           <div className="bk-rounds">
