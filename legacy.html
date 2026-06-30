@@ -414,6 +414,13 @@
       if(finished && ga != null && gb != null){
         if(ga > gb) winner = homeCode;
         else if(gb > ga) winner = awayCode;
+        else {
+          const sd = f.scoreDetail;
+          const pens = sd && sd.penalties && sd.penalties[0] != null ? sd.penalties : null;
+          if (pens && pens[0] !== pens[1]) winner = pens[0] > pens[1] ? homeCode : awayCode;
+          else if (sd && sd.winnerSide === "HOME_TEAM") winner = homeCode;
+          else if (sd && sd.winnerSide === "AWAY_TEAM") winner = awayCode;
+        }
       }
       const tipped = tipsByMatchId[f.id];
       const tippas = !!(tipped && tipped.tips && tipped.tips.length > 0);

@@ -265,6 +265,7 @@ def parse_espn_summary(data, home_tla, away_tla):
     # --- Händelser (mål, kort, byten) ---
     goals, bookings, subs = [], [], []
     h_score = a_score = 0
+    h_pen = a_pen = 0  # penalty SHOOTOUT tally (period >= 5), decides who advances
 
     for e in data.get("keyEvents", []):
         etype = e.get("type", {}).get("type", "")
@@ -285,6 +286,17 @@ def parse_espn_summary(data, home_tla, away_tla):
         # SHOOTOUT pens (period ≥ 5) must NOT count toward the match score line.
         et = etype.lower()
         tlow = text.lower()
+        # Penalty shootout (period >= 5): tally successful pens per team. These are
+        # NOT match goals (handled below) — they only decide who advances.
+        if period >= 5:
+            missed = ("miss" in et) or ("saved" in et) or ("missed" in tlow) or ("saves" in tlow)
+            made = ("scored" in et) or et.startswith("goal") or ("scores" in tlow)
+            if made and not missed:
+                if tla == home_tla:
+                    h_pen += 1
+                else:
+                    a_pen += 1
+            continue
         is_goal = (
             et.startswith("goal")
             or ("penalty" in et and "scored" in et)
@@ -455,6 +467,7 @@ def parse_espn_summary(data, home_tla, away_tla):
         "goals": goals,
         "bookings": bookings,
         "subs": subs,
+        "penalties": ({"home": h_pen, "away": a_pen} if (h_pen or a_pen) else None),
         "homeLineup": lineups.get(home_tla),
         "awayLineup": lineups.get(away_tla),
         "homeStats": home_stats,
@@ -642,6 +655,15 @@ def _apply_espn(m, parsed):
         dc = _espn_minute(parsed["espnDisplayClock"])
         if dc:
             m["minute"] = dc
+    # Penalty shootout result from ESPN — football-data often lags here, so set the
+    # pen score + winner so the bracket advances and the match shows "straffar X–Y".
+    pens = parsed.get("penalties")
+    if pens and (pens.get("home") or pens.get("away")):
+        if not m.get("score"):
+            m["score"] = {}
+        m["score"]["penalties"] = pens
+        if pens["home"] != pens["away"]:
+            m["score"]["winner"] = "HOME_TEAM" if pens["home"] > pens["away"] else "AWAY_TEAM"
 
 
 # --------------------------------------------------------------------------- #

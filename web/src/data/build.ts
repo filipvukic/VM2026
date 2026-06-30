@@ -200,6 +200,16 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     if (finished && ga != null && gb != null) {
       if (ga > gb) winner = homeCode;
       else if (gb > ga) winner = awayCode;
+      else {
+        // Knockout level after 90/ET → decided on penalties; the shootout winner
+        // advances (group draws stay winner-less). Prefer the pen score, fall back
+        // to the winnerSide the feed reports.
+        const sd = f.scoreDetail;
+        const pens = sd && sd.penalties && sd.penalties[0] != null ? (sd.penalties as [number, number]) : null;
+        if (pens && pens[0] !== pens[1]) winner = pens[0] > pens[1] ? homeCode : awayCode;
+        else if (sd && sd.winnerSide === "HOME_TEAM") winner = homeCode;
+        else if (sd && sd.winnerSide === "AWAY_TEAM") winner = awayCode;
+      }
     }
     const tipped = tipsByMatchId[f.id];
     const tippas = !!(tipped && tipped.tips && tipped.tips.length > 0);
