@@ -22,13 +22,18 @@ export function ScheduleView() {
   useEffect(() => { if (mode === "bracket") window.scrollTo({ top: 0 }); }, [mode]);
 
   return (
-    <div className="view container md-view">
-      <div className="md-fade" key={mode}>
-        {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+    <>
+      <div className="view container md-view">
+        <div className="md-fade" key={mode}>
+          {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} />}
+        </div>
       </div>
 
-      {/* Mode toggle floats at the bottom (above the nav) so it never sits on top of
-          the schedule and pushes the day/Kommande labels around. */}
+      {/* Mode toggle floats at the bottom (above the nav). It lives OUTSIDE `.view` on
+          purpose: `.view` runs a translateY entrance animation, and a transformed ancestor
+          re-anchors a position:fixed child — so when that transform cleared, the pill
+          snapped into place ("popped"). As a sibling it stays viewport-fixed and just
+          slides up smoothly on its own. */}
       <div className="md-seg-float">
         <div className="md-seg" data-active={mode}>
           <span className="md-seg-thumb" aria-hidden />
@@ -41,10 +46,10 @@ export function ScheduleView() {
         .md-view{ padding-bottom:74px; }
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        .md-seg-float{ position:fixed; left:50%; transform:translateX(-50%); z-index:61;
+        .md-seg-float{ position:fixed; left:50%; z-index:61;
           bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); width:min(360px, calc(100vw - 32px));
-          animation:segFade .3s ease both; }
-        @keyframes segFade{ from{ opacity:0; } to{ opacity:1; } }
+          transform:translateX(-50%); animation:segUp .46s cubic-bezier(.16,1,.3,1) both; }
+        @keyframes segUp{ from{ opacity:0; transform:translateX(-50%) translateY(18px); } to{ opacity:1; transform:translateX(-50%) translateY(0); } }
         @media(min-width:920px){ .md-seg-float{ bottom:24px; width:340px; } }
         /* segmented control — clearly visible: defined elevated pill + a solid accent thumb */
         .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:14px;
@@ -57,7 +62,7 @@ export function ScheduleView() {
           transition:transform .26s cubic-bezier(.3,.85,.3,1); }
         .md-seg[data-active="bracket"] .md-seg-thumb{ transform:translateX(100%); }
       `}</style>
-    </div>
+    </>
   );
 }
 
