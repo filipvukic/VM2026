@@ -6,9 +6,10 @@ import type { Dataset, Match } from "../data/types";
 
 // Radial knockout bracket: 32 teams on the outer ring, converging inward through each
 // round to the trophy at the centre. Radial dendrogram connectors (spokes + arcs); the
-// two halves sit on the two sides with a gap top & bottom; winners' spokes light in the
-// team colour, losers fade, small scores at decided matches. Pinch/scroll to zoom & pan;
-// auto-zooms in a little once each later round starts. Circular orders = in-order tree.
+// two halves sit on the two sides with a gap top & bottom; the winner's spoke + half-arc
+// light up in the team's flag colour up to the next-match point, losers fade, small
+// scores at decided matches. Zoom steps through the rounds (no free pan) with a smooth
+// animation; a fullscreen toggle. Circular orders = in-order traversal of the FIFA tree.
 const R32_ORDER = [73, 75, 74, 77, 83, 84, 81, 82, 76, 78, 79, 80, 86, 88, 85, 87];
 const R16_ORDER = [89, 90, 93, 94, 91, 92, 95, 96];
 const QF_ORDER = [97, 98, 99, 100];
@@ -18,7 +19,9 @@ const RAD = [0.452, 0.358, 0.268, 0.18, 0.1];
 const DIA = [0.05, 0.048, 0.046, 0.045, 0.045];
 const GAP = 28;
 const DELTA = 4.2;
-const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"]; // outer ring → inner
+const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
+const LEVEL_SCALE = [1, 1.5, 2.1, 2.9, 3.8];
+const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean }
 interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null }
@@ -36,6 +39,7 @@ function ang(M: number, j: number): number {
 
 export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
   const [S, setS] = useState(360);
   useEffect(() => {
     const el = ref.current;
@@ -51,65 +55,48 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
     if (m.fifa != null) byFifa[m.fifa] = m;
   });
 
-  // --- zoom & pan (incremental gesture; robust to fingers added/removed) -------
+  // --- round-step zoom (no free pan) + fullscreen -----------------------------
   const started = (list: Match[]) => list.some((m) => m.status === "played" || isLive(m));
   const progressed = [ds.knockout.r16, ds.knockout.qf, ds.knockout.sf, ds.knockout.final].filter(started).length;
-  const autoZoom = Math.min(1 + progressed * 0.18, 1.9);
-  const [view, setView] = useState({ z: 1, x: 0, y: 0 });
-  useEffect(() => { setView((v) => ({ ...v, z: autoZoom })); }, [autoZoom]);
-  const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
-  const prev = useRef({ cx: 0, cy: 0, dist: 0, n: 0 });
+  const [level, setLevel] = useState(0);
+  useEffect(() => { setLevel(progressed); }, [progressed]);
+  const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
   const moved = useRef(false);
-
-  const clampZ = (z: number) => Math.max(1, Math.min(2.8, z));
-  const clampXY = (z: number, x: number, y: number) => {
-    const m = ((z - 1) * S) / 2;
-    return { z, x: Math.max(-m, Math.min(m, x)), y: Math.max(-m, Math.min(m, y)) };
-  };
-  const gstate = () => {
-    const arr = [...pts.current.values()];
-    const n = arr.length || 1;
-    let cx = 0, cy = 0; for (const p of arr) { cx += p.x; cy += p.y; }
-    return { cx: cx / n, cy: cy / n, dist: arr.length === 2 ? Math.hypot(arr[0].x - arr[1].x, arr[0].y - arr[1].y) : 0, n: arr.length };
-  };
+  const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchBase = useRef(0);
   const onPointerDown = (e: PointerEvent) => {
     pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    prev.current = gstate(); moved.current = false;
+    if (pts.current.size === 1) moved.current = false;
+    if (pts.current.size === 2) { const [a, b] = [...pts.current.values()]; pinchBase.current = Math.hypot(a.x - b.x, a.y - b.y); moved.current = true; }
   };
   const onPointerMove = (e: PointerEvent) => {
     if (!pts.current.has(e.pointerId)) return;
     pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    const s = gstate(), p = prev.current;
-    if (s.n !== p.n) { prev.current = s; return; } // count changed → rebaseline, no jump
-    const dx = s.cx - p.cx, dy = s.cy - p.cy;
-    const ratio = s.n === 2 && p.dist ? s.dist / p.dist : 1;
-    if (Math.abs(dx) > 2 || Math.abs(dy) > 2 || ratio !== 1) {
-      // start capturing only once it's clearly a drag, so a plain tap still clicks a badge
-      if (!moved.current) { try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch { /* ignore */ } }
+    if (pts.current.size === 2 && pinchBase.current) {
+      const [a, b] = [...pts.current.values()];
+      const r = Math.hypot(a.x - b.x, a.y - b.y) / pinchBase.current;
       moved.current = true;
+      if (r > 1.3) { step(1); pinchBase.current *= 1.3; }
+      else if (r < 0.77) { step(-1); pinchBase.current *= 0.77; }
     }
-    if (moved.current) setView((v) => clampXY(clampZ(v.z * ratio), v.x + dx, v.y + dy));
-    prev.current = s;
   };
-  const onPointerUp = (e: PointerEvent) => {
-    try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* ignore */ }
-    pts.current.delete(e.pointerId);
-    prev.current = gstate();
-  };
-  const zoomBtn = (f: number) => setView((v) => clampXY(clampZ(v.z * f), v.x, v.y));
-  const reset = () => setView({ z: 1, x: 0, y: 0 });
-  // wheel needs a non-passive native listener so preventDefault stops page scroll
+  const onPointerUp = (e: PointerEvent) => { pts.current.delete(e.pointerId); if (pts.current.size < 2) pinchBase.current = 0; };
+  const wheelLock = useRef(0);
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const onWheelNative = (e: globalThis.WheelEvent) => {
+    const el = ref.current; if (!el) return;
+    const onWheel = (e: globalThis.WheelEvent) => {
       e.preventDefault();
-      setView((v) => clampXY(clampZ(v.z * (e.deltaY < 0 ? 1.12 : 0.9)), v.x, v.y));
+      if (e.timeStamp - wheelLock.current < 340) return;
+      wheelLock.current = e.timeStamp;
+      step(e.deltaY < 0 ? 1 : -1);
     };
-    el.addEventListener("wheel", onWheelNative, { passive: false });
-    return () => el.removeEventListener("wheel", onWheelNative);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [S]);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+  // CSS-based fullscreen (a fixed overlay) — the Fullscreen API doesn't work on a div
+  // in iOS Safari, so this is reliable everywhere.
+  const [fs, setFs] = useState(false);
+  const toggleFs = () => setFs((f) => !f);
 
   // --- geometry ---------------------------------------------------------------
   const C = S / 2;
@@ -147,8 +134,6 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
       arcSeg(a1, a2, rp, "var(--hot)");
       radial(a1, rp, rc, "var(--hot)"); radial(a2, rp, rc, "var(--hot)");
     } else if (win && wc && (win === t1 || win === t2)) {
-      // only the WINNER's segment lights up — its spoke + the half-arc to the junction
-      // point (where the next match sits), in the winner's flag colour. Loser stays grey.
       const winA = win === t1 ? a1 : a2;
       const loseA = win === t1 ? a2 : a1;
       radial(winA, rp, rc, wc); arcSeg(winA, mid, rp, wc);
@@ -201,67 +186,75 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   const [hovId, setHovId] = useState<string | null>(null);
 
   return (
-    <div
-      className="bc-wrap" ref={ref}
-      onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
-    >
-      <div className="bc-stage" style={{ transform: `translate(${view.x}px,${view.y}px) scale(${view.z})` }}>
-        <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
-          <defs>
-            <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(255,196,84,.5)" />
-              <stop offset="40%" stopColor="rgba(214,158,60,.18)" />
-              <stop offset="100%" stopColor="rgba(214,158,60,0)" />
-            </radialGradient>
-          </defs>
-          <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" />)}
-          {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" />)}
-        </svg>
-
-        {/* round labels in the bottom gap, one per ring */}
-        {ROUND_NAMES.map((t, i) => {
-          const [lx, ly] = polar(C, R[i], 180);
-          return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145) }}>{t}</span>;
-        })}
-
-        <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
-
-        {nodes.map((n, i) => {
-          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot }} />;
-          return (
-            <button
-              key={i}
-              className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
-              style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d }}
-              onMouseEnter={() => setHovId(n.id)}
-              onMouseLeave={() => setHovId(null)}
-              onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
-              disabled={!n.id}
-              aria-label={n.code}
-            >
-              <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} />
-            </button>
-          );
-        })}
-
-        {scores.map((s, i) => (
-          <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018) }}>{s.t}</span>
-        ))}
+    <div className={`bc-outer${fs ? " bc-fullscreen" : ""}`} ref={outerRef}>
+      <div className="bc-toolbar">
+        <button className="bc-fs" onClick={toggleFs} aria-label={fs ? "Stäng helskärm" : "Helskärm"}>{fs ? "✕" : "⛶"}</button>
+        <div className="bc-stepper">
+          <button onClick={() => step(-1)} disabled={level === 0} aria-label="Zooma ut en omgång">−</button>
+          <span>{LEVEL_LABEL[level]}</span>
+          <button onClick={() => step(1)} disabled={level === 4} aria-label="Zooma in en omgång">+</button>
+        </div>
       </div>
 
-      <div className="bc-zoom">
-        <button onClick={() => zoomBtn(1.25)} aria-label="Zooma in">+</button>
-        <button onClick={() => zoomBtn(0.8)} aria-label="Zooma ut">−</button>
-        <button onClick={reset} aria-label="Återställ" className="bc-zoom-reset">⤢</button>
+      <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
+        <div className="bc-stage" style={{ transform: `scale(${LEVEL_SCALE[level]})` }}>
+          <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
+            <defs>
+              <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(255,196,84,.5)" />
+                <stop offset="40%" stopColor="rgba(214,158,60,.18)" />
+                <stop offset="100%" stopColor="rgba(214,158,60,0)" />
+              </radialGradient>
+            </defs>
+            <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
+            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" />)}
+            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" />)}
+          </svg>
+
+          {ROUND_NAMES.map((t, i) => {
+            const [lx, ly] = polar(C, R[i], 180);
+            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145) }}>{t}</span>;
+          })}
+
+          <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
+
+          {nodes.map((n, i) => {
+            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot }} />;
+            return (
+              <button
+                key={i}
+                className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
+                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d }}
+                onMouseEnter={() => setHovId(n.id)}
+                onMouseLeave={() => setHovId(null)}
+                onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
+                disabled={!n.id}
+                aria-label={n.code}
+              >
+                <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} />
+              </button>
+            );
+          })}
+
+          {scores.map((s, i) => (
+            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018) }}>{s.t}</span>
+          ))}
+        </div>
       </div>
 
       <style>{`
-        .bc-wrap{ position:relative; width:100%; max-width:640px; margin:6px auto 0; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
-        .bc-stage{ position:absolute; inset:0; transform-origin:center; will-change:transform; }
+        .bc-outer{ position:relative; }
+        .bc-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:620px; margin:0 auto 8px; padding:0 2px; }
+        .bc-fs{ width:36px; height:36px; flex:0 0 auto; border-radius:10px; background:var(--surface); border:1px solid var(--line-2); color:var(--ink-2); font-size:16px; display:grid; place-items:center; }
+        .bc-fs:active{ transform:scale(.94); }
+        .bc-stepper{ display:inline-flex; align-items:center; gap:2px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
+        .bc-stepper button{ width:30px; height:30px; border-radius:50%; color:var(--ink-2); font-size:19px; font-weight:800; line-height:1; }
+        .bc-stepper button:disabled{ opacity:.32; }
+        .bc-stepper span{ font-size:12px; font-weight:800; color:var(--ink-2); min-width:112px; text-align:center; letter-spacing:.01em; }
+        .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
+        .bc-stage{ position:absolute; inset:0; transform-origin:center; transition:transform .55s cubic-bezier(.25,.85,.3,1); will-change:transform; }
         .bc-svg{ position:absolute; inset:0; }
-        .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800;
-          letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 60%, transparent); }
+        .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
@@ -275,12 +268,9 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
           text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.9); letter-spacing:-.02em; white-space:nowrap; }
-        .bc-zoom{ position:absolute; right:10px; bottom:10px; z-index:8; display:flex; flex-direction:column; gap:6px; }
-        .bc-zoom button{ width:34px; height:34px; border-radius:10px; background:color-mix(in srgb, var(--surface) 80%, transparent);
-          backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border:1px solid var(--line-2); color:var(--ink-2);
-          font-size:19px; font-weight:800; line-height:1; display:grid; place-items:center; box-shadow:0 2px 8px rgba(0,0,0,.3); }
-        .bc-zoom button:active{ transform:scale(.93); }
-        .bc-zoom-reset{ font-size:15px !important; }
+        .bc-outer.bc-fullscreen{ position:fixed; inset:0; z-index:300; background:var(--bg); display:flex; flex-direction:column;
+          align-items:center; justify-content:center; gap:6px; padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)); }
+        .bc-outer.bc-fullscreen .bc-wrap, .bc-outer.bc-fullscreen .bc-toolbar{ max-width:min(86vh, 96vw); }
       `}</style>
     </div>
   );

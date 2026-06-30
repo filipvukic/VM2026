@@ -54,6 +54,25 @@ export function Flag({ iso, code, size = 22, rounded = true, className }: FlagPr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iso, tries]);
 
+  // Coming back to the app (visibility / online / bfcache restore) often leaves flags
+  // that failed or were backgrounded mid-load blank. Re-fetch the unloaded ones, with a
+  // small random stagger so 30+ flags don't all burst flagcdn again at once.
+  useEffect(() => {
+    if (!iso) return;
+    const retry = () => {
+      if (document.visibilityState !== "visible" || loaded.current) return;
+      window.setTimeout(() => { if (!loaded.current) setTries((t) => (t > FLAG_MAX_TRIES ? 1 : t + 1)); }, Math.floor(Math.random() * 700));
+    };
+    document.addEventListener("visibilitychange", retry);
+    window.addEventListener("online", retry);
+    window.addEventListener("pageshow", retry);
+    return () => {
+      document.removeEventListener("visibilitychange", retry);
+      window.removeEventListener("online", retry);
+      window.removeEventListener("pageshow", retry);
+    };
+  }, [iso]);
+
   if (!iso || tries > FLAG_MAX_TRIES) {
     return (
       <span
