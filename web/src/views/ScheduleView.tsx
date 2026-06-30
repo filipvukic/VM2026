@@ -4,6 +4,7 @@ import { useSheets } from "../state/sheets";
 import { useScheduleUI, type SchedFilter } from "../state/scheduleUi";
 import { useKoBets } from "../state/koBets";
 import { MatchCard } from "../components/MatchCard";
+import { BracketCircle } from "../components/BracketCircle";
 import { Flag } from "../lib/flags";
 import { svDayLabel, svDateKey, svDayMonth } from "../lib/format";
 import { isLive, isEnded } from "../lib/liveState";
@@ -199,12 +200,15 @@ function Bracket({ ds }: { ds: Dataset }) {
       </button>
 
       <div className="bk-view">
-        <button className={view === "tree" ? "on" : ""} onClick={() => setView("tree")}>Träd</button>
+        <button className={view === "tree" ? "on" : ""} onClick={() => setView("tree")}>Cirkel</button>
         <button className={view === "list" ? "on" : ""} onClick={() => setView("list")}>Lista</button>
       </div>
 
       {view === "tree" ? (
-        <BracketTree ds={ds} onOpen={(id) => openMatch(id)} />
+        <>
+          <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
+          <div className="bc-hint">Tryck på ett lag för att öppna matchen · mitten = mästaren 🏆</div>
+        </>
       ) : (
         <>
           <div className="bk-rounds">
