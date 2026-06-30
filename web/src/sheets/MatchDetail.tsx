@@ -23,6 +23,7 @@ import { winChance, winChanceFromEspn } from "../data/odds";
 import { useFixtureOdds } from "../state/fixtureOdds";
 import { classifyTip, type TipResult } from "../data/scoring";
 import { reg90Score } from "../lib/reg90";
+import { useMatchWeather } from "../lib/weather";
 import { useKoBets, koFid } from "../state/koBets";
 import type { Dataset, Match, MatchStats } from "../data/types";
 
@@ -61,6 +62,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const wantTips = !!m && ((m.tippas && m.tips.length > 0) || isKoTippable);
   const [tab, setTab] = useState<Tab>(wantTips ? "tips" : "overview");
   const now = useNow(m && isLive(m) ? 30_000 : 0);
+  const wxMax = useMatchWeather(m?.venue?.stadium, m?.kickoff);
   if (!m) return null;
 
   const home = m.home ? ds.teams[m.home] : null;
@@ -117,6 +119,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
           <div className="dim" style={{ fontSize: 12, marginTop: 12, display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
             {vIso && <Flag iso={vIso} size={12} />}
             {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{m.attendance ? ` · ${m.attendance.toLocaleString("sv-SE")} i publiken` : ""}
+            {wxMax != null && <span title="Dagens topptemperatur på orten">{" · "}☀️ {wxMax}°</span>}
           </div>
         )}
         {bc && !bc.tv4Url && (
