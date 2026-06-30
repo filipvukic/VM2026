@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T08:48:10+00:00",
+  "updated_at": "2026-06-30T10:44:32+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -380,52 +380,6 @@
       "prize": 0
     },
     {
-      "name": "Filip",
-      "match_points": 130,
-      "bonus_points": 0,
-      "total": 130,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "David Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappé",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 9,
-      "prize": 0
-    },
-    {
       "name": "Björn",
       "match_points": 129,
       "bonus_points": 0,
@@ -459,6 +413,52 @@
         },
         "silver": {
           "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 9,
+      "prize": 0
+    },
+    {
+      "name": "Filip",
+      "match_points": 128,
+      "bonus_points": 0,
+      "total": 128,
+      "exact_count": 3,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "David Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappé",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "England",
           "correct": false,
           "points": 0
         },
@@ -19488,558 +19488,6 @@
             2
           ],
           "points": 2
-        }
-      ]
-    },
-    {
-      "id": 537415,
-      "utcDate": "2026-06-29T20:30:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Germany",
-      "homeTla": "GER",
-      "away": "Paraguay",
-      "awayTla": "PAR",
-      "status": "FINISHED",
-      "score": [
-        4,
-        5
-      ],
-      "scoreDetail": {
-        "halfTime": [
-          0,
-          1
-        ],
-        "fullTime": [
-          4,
-          5
-        ],
-        "extraTime": [
-          0,
-          0
-        ],
-        "penalties": [
-          3,
-          4
-        ],
-        "duration": "PENALTY_SHOOTOUT",
-        "winnerSide": "AWAY_TEAM"
-      },
-      "minute": null,
-      "goals": [
-        {
-          "minute": "42",
-          "team": "PAR",
-          "scorer": "Julio Enciso",
-          "assist": "Matías Galarza",
-          "type": "HEADER",
-          "description": "Goal! Germany 0, Paraguay 1. Julio Enciso (Paraguay) header from the centre of the box to the bottom left corner. Assisted by Matías Galarza with a cross following a corner.",
-          "score": [
-            0,
-            1
-          ],
-          "period": 1
-        },
-        {
-          "minute": "54",
-          "team": "GER",
-          "scorer": "Kai Havertz",
-          "assist": "Florian Wirtz",
-          "type": "HEADER",
-          "description": "Goal! Germany 1, Paraguay 1. Kai Havertz (Germany) header from the centre of the box to the bottom right corner. Assisted by Florian Wirtz with a cross.",
-          "score": [
-            1,
-            1
-          ],
-          "period": 2
-        }
-      ],
-      "bookings": [
-        {
-          "minute": "65",
-          "team": "PAR",
-          "player": "Andrés Cubas",
-          "card": "YELLOW",
-          "period": 2
-        },
-        {
-          "minute": "106",
-          "team": "GER",
-          "player": "Kai Havertz",
-          "card": "YELLOW",
-          "period": 4
-        },
-        {
-          "minute": "115",
-          "team": "GER",
-          "player": "Jamal Musiala",
-          "card": "YELLOW",
-          "period": 4
-        },
-        {
-          "minute": "117",
-          "team": "PAR",
-          "player": "Matías Galarza",
-          "card": "YELLOW",
-          "period": 4
-        }
-      ],
-      "subs": [
-        {
-          "minute": "45",
-          "team": "GER",
-          "playerIn": "Leon Goretzka",
-          "playerOut": "Felix Nmecha",
-          "period": 2
-        },
-        {
-          "minute": "55",
-          "team": "PAR",
-          "playerIn": "Gustavo Caballero",
-          "playerOut": "Gabriel Ávalos",
-          "period": 2
-        },
-        {
-          "minute": "57",
-          "team": "PAR",
-          "playerIn": "Maurício",
-          "playerOut": "Julio Enciso",
-          "period": 2
-        },
-        {
-          "minute": "63",
-          "team": "GER",
-          "playerIn": "Jamal Musiala",
-          "playerOut": "Deniz Undav",
-          "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "GER",
-          "playerIn": "Waldemar Anton",
-          "playerOut": "Aleksandar Pavlovic",
-          "period": 2
-        },
-        {
-          "minute": "88",
-          "team": "GER",
-          "playerIn": "Nick Woltemade",
-          "playerOut": "Leroy Sané",
-          "period": 2
-        },
-        {
-          "minute": "90",
-          "team": "PAR",
-          "playerIn": "Gustavo Velázquez",
-          "playerOut": "Miguel Almirón",
-          "period": 3
-        },
-        {
-          "minute": "99",
-          "team": "PAR",
-          "playerIn": "Braian Ojeda",
-          "playerOut": "Juan Jose Cáceres",
-          "period": 3
-        },
-        {
-          "minute": "99",
-          "team": "PAR",
-          "playerIn": "Antonio Sanabria",
-          "playerOut": "Damián Bobadilla",
-          "period": 3
-        },
-        {
-          "minute": "110",
-          "team": "GER",
-          "playerIn": "Nadiem Amiri",
-          "playerOut": "Florian Wirtz",
-          "period": 4
-        },
-        {
-          "minute": "110",
-          "team": "GER",
-          "playerIn": "Malick Thiaw",
-          "playerOut": "Antonio Rüdiger",
-          "period": 4
-        },
-        {
-          "minute": "120+2",
-          "team": "PAR",
-          "playerIn": "Fabián Balbuena",
-          "playerOut": "Júnior Alonso",
-          "period": 4
-        }
-      ],
-      "venue": {
-        "stadium": "Gillette Stadium",
-        "city": "Foxborough, Massachusetts",
-        "country": "USA"
-      },
-      "referees": [
-        {
-          "name": "Jalal Jayed",
-          "role": "Referee"
-        }
-      ],
-      "odds": null,
-      "attendance": 63945,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            3,
-            1
-          ],
-          "points": 1
-        }
-      ]
-    },
-    {
-      "id": 537418,
-      "utcDate": "2026-06-30T01:00:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Netherlands",
-      "homeTla": "NED",
-      "away": "Morocco",
-      "awayTla": "MAR",
-      "status": "FINISHED",
-      "score": [
-        3,
-        4
-      ],
-      "scoreDetail": {
-        "halfTime": [
-          0,
-          0
-        ],
-        "fullTime": [
-          3,
-          4
-        ],
-        "extraTime": [
-          0,
-          0
-        ],
-        "penalties": [
-          2,
-          3
-        ],
-        "duration": "PENALTY_SHOOTOUT",
-        "winnerSide": "AWAY_TEAM"
-      },
-      "minute": null,
-      "goals": [
-        {
-          "minute": "72",
-          "team": "NED",
-          "scorer": "Cody Gakpo",
-          "assist": "Crysencio Summerville",
-          "type": "REGULAR",
-          "description": "Goal! Netherlands 1, Morocco 0. Cody Gakpo (Netherlands) right footed shot from the centre of the box to the centre of the goal. Assisted by Crysencio Summerville.",
-          "score": [
-            1,
-            0
-          ],
-          "period": 2
-        },
-        {
-          "minute": "90+1",
-          "team": "MAR",
-          "scorer": "Issa Diop",
-          "assist": "Chemsdine Talbi",
-          "type": "HEADER",
-          "description": "Goal! Netherlands 1, Morocco 1. Issa Diop (Morocco) header from the centre of the box to the top right corner. Assisted by Chemsdine Talbi with a cross.",
-          "score": [
-            1,
-            1
-          ],
-          "period": 2
-        }
-      ],
-      "bookings": [
-        {
-          "minute": "47",
-          "team": "MAR",
-          "player": "Issa Diop",
-          "card": "YELLOW",
-          "period": 2
-        }
-      ],
-      "subs": [
-        {
-          "minute": "71",
-          "team": "NED",
-          "playerIn": "Teun Koopmeiners",
-          "playerOut": "Nathan Aké",
-          "period": 2
-        },
-        {
-          "minute": "71",
-          "team": "NED",
-          "playerIn": "Wout Weghorst",
-          "playerOut": "Brian Brobbey",
-          "period": 2
-        },
-        {
-          "minute": "75",
-          "team": "MAR",
-          "playerIn": "Anass Salah-Eddine",
-          "playerOut": "Chadi Riad",
-          "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "MAR",
-          "playerIn": "Gessime Yassine",
-          "playerOut": "Brahim Díaz",
-          "period": 2
-        },
-        {
-          "minute": "79",
-          "team": "MAR",
-          "playerIn": "Samir El Mourabet",
-          "playerOut": "Ayyoub Bouaddi",
-          "period": 2
-        },
-        {
-          "minute": "86",
-          "team": "MAR",
-          "playerIn": "Soufiane Rahimi",
-          "playerOut": "Azzedine Ounahi",
-          "period": 2
-        },
-        {
-          "minute": "86",
-          "team": "NED",
-          "playerIn": "Jorrel Hato",
-          "playerOut": "Micky van de Ven",
-          "period": 2
-        },
-        {
-          "minute": "86",
-          "team": "NED",
-          "playerIn": "Quinten Timber",
-          "playerOut": "Ryan Gravenberch",
-          "period": 2
-        },
-        {
-          "minute": "87",
-          "team": "MAR",
-          "playerIn": "Chemsdine Talbi",
-          "playerOut": "Bilal El Khannouss",
-          "period": 2
-        },
-        {
-          "minute": "110",
-          "team": "NED",
-          "playerIn": "Marten de Roon",
-          "playerOut": "Frenkie de Jong",
-          "period": 4
-        },
-        {
-          "minute": "113",
-          "team": "NED",
-          "playerIn": "Justin Kluivert",
-          "playerOut": "Cody Gakpo",
-          "period": 4
-        }
-      ],
-      "venue": {
-        "stadium": "Estadio BBVA",
-        "city": "Guadalupe",
-        "country": "Mexico"
-      },
-      "referees": [
-        {
-          "name": "Wilton Pereira Sampaio",
-          "role": "Referee"
-        }
-      ],
-      "odds": null,
-      "attendance": 51243,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            1,
-            0
-          ],
-          "points": 1
-        }
-      ]
-    },
-    {
-      "id": 537424,
-      "utcDate": "2026-06-30T17:00:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Ivory Coast",
-      "homeTla": "CIV",
-      "away": "Norway",
-      "awayTla": "NOR",
-      "status": "TIMED",
-      "score": null,
-      "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": null
-      },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": {
-        "stadium": "AT&T Stadium",
-        "city": "Arlington, Texas",
-        "country": "USA"
-      },
-      "referees": [],
-      "odds": null,
-      "attendance": null,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            1,
-            0
-          ],
-          "points": null
-        }
-      ]
-    },
-    {
-      "id": 537420,
-      "utcDate": "2026-07-02T19:00:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Spain",
-      "homeTla": "ESP",
-      "away": "Austria",
-      "awayTla": "AUT",
-      "status": "TIMED",
-      "score": null,
-      "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": null
-      },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": {
-        "stadium": "SoFi Stadium",
-        "city": "Inglewood, California",
-        "country": "USA"
-      },
-      "referees": [],
-      "odds": null,
-      "attendance": null,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            1,
-            0
-          ],
-          "points": null
-        }
-      ]
-    },
-    {
-      "id": 537419,
-      "utcDate": "2026-07-02T23:00:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Portugal",
-      "homeTla": "POR",
-      "away": "Croatia",
-      "awayTla": "CRO",
-      "status": "TIMED",
-      "score": null,
-      "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": null
-      },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": {
-        "stadium": "BMO Field",
-        "city": "Toronto",
-        "country": "Canada"
-      },
-      "referees": [],
-      "odds": null,
-      "attendance": null,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            1,
-            2
-          ],
-          "points": null
-        }
-      ]
-    },
-    {
-      "id": 537427,
-      "utcDate": "2026-07-03T22:00:00Z",
-      "stage": "LAST_32",
-      "group": null,
-      "knockout": true,
-      "home": "Argentina",
-      "homeTla": "ARG",
-      "away": "Cape Verde Islands",
-      "awayTla": "CPV",
-      "status": "TIMED",
-      "score": null,
-      "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
-        "extraTime": null,
-        "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": null
-      },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
-      "venue": {
-        "stadium": "Hard Rock Stadium",
-        "city": "Miami Gardens, Florida",
-        "country": "USA"
-      },
-      "referees": [],
-      "odds": null,
-      "attendance": null,
-      "tips": [
-        {
-          "name": "Filip",
-          "tip": [
-            1,
-            0
-          ],
-          "points": null
         }
       ]
     }
