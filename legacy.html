@@ -635,22 +635,22 @@
     }
     // R32: officiell FIFA 2026-lottning (tree-ordning för designens recursive feed)
     const R32_SPECS = [
-      { fifa:73, a:{p:2,g:"A"}, b:{p:2,g:"B"} },
-      { fifa:75, a:{p:1,g:"E"}, b:{p:3,gs:"ABCDF"} },
-      { fifa:74, a:{p:1,g:"C"}, b:{p:2,g:"F"} },
-      { fifa:77, a:{p:2,g:"E"}, b:{p:2,g:"I"} },
-      { fifa:83, a:{p:1,g:"H"}, b:{p:2,g:"J"} },
-      { fifa:84, a:{p:2,g:"K"}, b:{p:2,g:"L"} },
-      { fifa:81, a:{p:1,g:"G"}, b:{p:3,gs:"AEHIJ"} },
-      { fifa:82, a:{p:1,g:"D"}, b:{p:3,gs:"BEFIJ"} },
-      { fifa:76, a:{p:1,g:"F"}, b:{p:2,g:"C"} },
-      { fifa:78, a:{p:1,g:"I"}, b:{p:3,gs:"CDFGH"} },
-      { fifa:79, a:{p:1,g:"A"}, b:{p:3,gs:"CEFHI"} },
-      { fifa:80, a:{p:1,g:"L"}, b:{p:3,gs:"EHIJK"} },
-      { fifa:86, a:{p:2,g:"D"}, b:{p:2,g:"G"} },
-      { fifa:88, a:{p:1,g:"K"}, b:{p:3,gs:"DEIJL"} },
-      { fifa:85, a:{p:1,g:"B"}, b:{p:3,gs:"EFGIJ"} },
-      { fifa:87, a:{p:1,g:"J"}, b:{p:2,g:"H"} }
+      { fifa:73, a:{p:2,g:"A"}, b:{p:2,g:"B"} },           // 2A v 2B
+      { fifa:75, a:{p:1,g:"F"}, b:{p:2,g:"C"} },           // 1F v 2C
+      { fifa:74, a:{p:1,g:"E"}, b:{p:3,gs:"ABCDF"} },      // 1E v 3(A/B/C/D/F)
+      { fifa:77, a:{p:1,g:"I"}, b:{p:3,gs:"CDFGH"} },      // 1I v 3(C/D/F/G/H)
+      { fifa:83, a:{p:2,g:"K"}, b:{p:2,g:"L"} },           // 2K v 2L
+      { fifa:84, a:{p:1,g:"H"}, b:{p:2,g:"J"} },           // 1H v 2J
+      { fifa:81, a:{p:1,g:"D"}, b:{p:3,gs:"BEFIJ"} },      // 1D v 3(B/E/F/I/J)
+      { fifa:82, a:{p:1,g:"G"}, b:{p:3,gs:"AEHIJ"} },      // 1G v 3(A/E/H/I/J)
+      { fifa:76, a:{p:1,g:"C"}, b:{p:2,g:"F"} },           // 1C v 2F
+      { fifa:78, a:{p:2,g:"E"}, b:{p:2,g:"I"} },           // 2E v 2I
+      { fifa:79, a:{p:1,g:"A"}, b:{p:3,gs:"CEFHI"} },      // 1A v 3(C/E/F/H/I)
+      { fifa:80, a:{p:1,g:"L"}, b:{p:3,gs:"EHIJK"} },      // 1L v 3(E/H/I/J/K)
+      { fifa:86, a:{p:1,g:"J"}, b:{p:2,g:"H"} },           // 1J v 2H
+      { fifa:88, a:{p:2,g:"D"}, b:{p:2,g:"G"} },           // 2D v 2G
+      { fifa:85, a:{p:1,g:"B"}, b:{p:3,gs:"EFGIJ"} },      // 1B v 3(E/F/G/I/J)
+      { fifa:87, a:{p:1,g:"K"}, b:{p:3,gs:"DEIJL"} }       // 1K v 3(D/E/I/J/L)
     ];
     const R16_FIFA = [89, 90, 93, 94, 91, 92, 95, 96];
     const QF_FIFA  = [97, 98, 99, 100];
@@ -697,33 +697,6 @@
     const third_built = [ makeKoMatch("third_", 0,
       slotResolve({loseM:SF_FIFA[0]}), slotResolve({loseM:SF_FIFA[1]}), 103) ];
 
-    // Overlay verkliga KO-fixtures: behåll FIFA-num/labels men ta kickoff/team/score
-    function overlayKO(structural, stagePrefix, baseFifa){
-      const real = allMatches.filter(m => m.id.indexOf(stagePrefix) === 0)
-        .sort((a,b) => a.kickoff - b.kickoff);
-      real.forEach((rm, i) => {
-        const s = structural.find(x => x.fifa === baseFifa + i);
-        if(!s) return;
-        s.id = rm.id;
-        s.kickoff = rm.kickoff;
-        s.status = rm.status;
-        if(rm.home){ s.home = rm.home; s.fromA = null; }
-        if(rm.away){ s.away = rm.away; s.fromB = null; }
-        s.ga = rm.ga; s.gb = rm.gb;
-        s.winner = rm.winner;
-        s.scorers = rm.scorers || [];
-        s.cards = rm.cards || [];
-        s._realId = rm._realId;
-        if(rm.venue && rm.venue.stadium) s.venue = rm.venue;
-      });
-    }
-    overlayKO(r32_built, "r32_", 73);
-    overlayKO(r16_built, "r16_", 89);
-    overlayKO(qf_built, "qf_", 97);
-    overlayKO(sf_built, "sf_", 101);
-    overlayKO(third_built, "third_", 103);
-    overlayKO(final_built, "final_", 104);
-
     // Fyll i nästa omgång när den nuvarande avgörs (Vinnare/Förlorare MX -> faktiskt lag).
     const _allKo = [].concat(r32_built, r16_built, qf_built, sf_built, third_built, final_built);
     const _byFifa = {};
@@ -736,10 +709,52 @@
       if(lose){ var g = _byFifa[+lose[1]]; if(g && g.status === "played" && g.winner) return g.home === g.winner ? g.away : g.home; }
       return null;
     }
-    _allKo.forEach(function(m){
-      if(!m.home && !m.projHome){ var w = _fromResult(m.fromA); if(w) m.projHome = w; }
-      if(!m.away && !m.projAway){ var x = _fromResult(m.fromB); if(x) m.projAway = x; }
-    });
+    function _fillProj(arr){
+      arr.forEach(function(m){
+        if(!m.home && !m.projHome){ var w = _fromResult(m.fromA); if(w) m.projHome = w; }
+        if(!m.away && !m.projAway){ var x = _fromResult(m.fromB); if(x) m.projAway = x; }
+      });
+    }
+    function _teamsOf(m){ return [m.home, m.projHome, m.away, m.projAway].filter(Boolean); }
+    // Overlay verkliga KO-fixtures via LAGIDENTITET (inte kickoff/matchordning — football-data
+    // ordnar inte KO-fixtures i FIFA-matchnummerordning, vilket la lag i fel slot). En fixture
+    // med minst ett avgjort lag matchas mot den slot som redan håller laget (varje lag finns i
+    // exakt en slot per omgång). Oavgjorda fixtures fyller resten i matchnummerordning (datum/arena).
+    function overlayKO(structural, stagePrefix){
+      const reals = allMatches.filter(m => m.id.indexOf(stagePrefix) === 0);
+      const usedReal = {}, usedSlot = [];
+      reals.forEach(function(rm){
+        const known = [rm.home, rm.away].filter(Boolean);
+        if(!known.length) return;
+        const s = structural.find(function(x){
+          return usedSlot.indexOf(x) < 0 && known.every(function(k){ return _teamsOf(x).indexOf(k) >= 0; });
+        });
+        if(s){ _copyFixture(s, rm); usedReal[rm.id] = 1; usedSlot.push(s); }
+      });
+      const restReal = reals.filter(function(rm){ return !usedReal[rm.id]; }).sort(function(a,b){ return a.kickoff - b.kickoff; });
+      const restSlot = structural.filter(function(s){ return usedSlot.indexOf(s) < 0; }).sort(function(a,b){ return (a.fifa||0) - (b.fifa||0); });
+      restReal.forEach(function(rm, i){ if(restSlot[i]) _copyFixture(restSlot[i], rm); });
+    }
+    function _copyFixture(s, rm){
+      s.id = rm.id;
+      s.kickoff = rm.kickoff;
+      s.status = rm.status;
+      if(rm.home){ s.home = rm.home; s.fromA = null; }
+      if(rm.away){ s.away = rm.away; s.fromB = null; }
+      s.ga = rm.ga; s.gb = rm.gb;
+      s.winner = rm.winner;
+      s.scorers = rm.scorers || [];
+      s.cards = rm.cards || [];
+      s._realId = rm._realId;
+      if(rm.venue && rm.venue.stadium) s.venue = rm.venue;
+    }
+    overlayKO(r32_built, "r32_");
+    _fillProj(r16_built); overlayKO(r16_built, "r16_");
+    _fillProj(qf_built); overlayKO(qf_built, "qf_");
+    _fillProj(sf_built); overlayKO(sf_built, "sf_");
+    _fillProj(third_built); _fillProj(final_built);
+    overlayKO(third_built, "third_"); overlayKO(final_built, "final_");
+    _fillProj(_allKo);
 
     const knockout = {
       r32: r32_built, r16: r16_built, qf: qf_built, sf: sf_built,

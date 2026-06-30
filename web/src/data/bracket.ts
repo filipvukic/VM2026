@@ -76,23 +76,28 @@ function slotResolve(spec: SlotSpec, groupTables: Record<string, GroupTableRow[]
   return { code: null, projCode: null, label: "TBD" };
 }
 
+// Official FIFA 2026 Round-of-32 draw. The order of this array IS the bracket tree
+// (entries 2i and 2i+1 feed Round-of-16 match i), and each entry's `fifa` is the real
+// FIFA match number — kept in the same sequence BracketCircle's R32_ORDER expects, so the
+// data tree and the radial view stay in lock-step. Slots verified against the live draw:
+// every group-slot pairing here matches the real Round-of-32 fixtures one-to-one.
 const R32_SPECS: { fifa: number; a: SlotSpec; b: SlotSpec }[] = [
-  { fifa: 73, a: { p: 2, g: "A" }, b: { p: 2, g: "B" } },
-  { fifa: 75, a: { p: 1, g: "E" }, b: { p: 3, gs: "ABCDF" } },
-  { fifa: 74, a: { p: 1, g: "C" }, b: { p: 2, g: "F" } },
-  { fifa: 77, a: { p: 2, g: "E" }, b: { p: 2, g: "I" } },
-  { fifa: 83, a: { p: 1, g: "H" }, b: { p: 2, g: "J" } },
-  { fifa: 84, a: { p: 2, g: "K" }, b: { p: 2, g: "L" } },
-  { fifa: 81, a: { p: 1, g: "G" }, b: { p: 3, gs: "AEHIJ" } },
-  { fifa: 82, a: { p: 1, g: "D" }, b: { p: 3, gs: "BEFIJ" } },
-  { fifa: 76, a: { p: 1, g: "F" }, b: { p: 2, g: "C" } },
-  { fifa: 78, a: { p: 1, g: "I" }, b: { p: 3, gs: "CDFGH" } },
-  { fifa: 79, a: { p: 1, g: "A" }, b: { p: 3, gs: "CEFHI" } },
-  { fifa: 80, a: { p: 1, g: "L" }, b: { p: 3, gs: "EHIJK" } },
-  { fifa: 86, a: { p: 2, g: "D" }, b: { p: 2, g: "G" } },
-  { fifa: 88, a: { p: 1, g: "K" }, b: { p: 3, gs: "DEIJL" } },
-  { fifa: 85, a: { p: 1, g: "B" }, b: { p: 3, gs: "EFGIJ" } },
-  { fifa: 87, a: { p: 1, g: "J" }, b: { p: 2, g: "H" } },
+  { fifa: 73, a: { p: 2, g: "A" }, b: { p: 2, g: "B" } },           // 2A v 2B
+  { fifa: 75, a: { p: 1, g: "F" }, b: { p: 2, g: "C" } },           // 1F v 2C
+  { fifa: 74, a: { p: 1, g: "E" }, b: { p: 3, gs: "ABCDF" } },      // 1E v 3(A/B/C/D/F)
+  { fifa: 77, a: { p: 1, g: "I" }, b: { p: 3, gs: "CDFGH" } },      // 1I v 3(C/D/F/G/H)
+  { fifa: 83, a: { p: 2, g: "K" }, b: { p: 2, g: "L" } },           // 2K v 2L
+  { fifa: 84, a: { p: 1, g: "H" }, b: { p: 2, g: "J" } },           // 1H v 2J
+  { fifa: 81, a: { p: 1, g: "D" }, b: { p: 3, gs: "BEFIJ" } },      // 1D v 3(B/E/F/I/J)
+  { fifa: 82, a: { p: 1, g: "G" }, b: { p: 3, gs: "AEHIJ" } },      // 1G v 3(A/E/H/I/J)
+  { fifa: 76, a: { p: 1, g: "C" }, b: { p: 2, g: "F" } },           // 1C v 2F
+  { fifa: 78, a: { p: 2, g: "E" }, b: { p: 2, g: "I" } },           // 2E v 2I
+  { fifa: 79, a: { p: 1, g: "A" }, b: { p: 3, gs: "CEFHI" } },      // 1A v 3(C/E/F/H/I)
+  { fifa: 80, a: { p: 1, g: "L" }, b: { p: 3, gs: "EHIJK" } },      // 1L v 3(E/H/I/J/K)
+  { fifa: 86, a: { p: 1, g: "J" }, b: { p: 2, g: "H" } },           // 1J v 2H
+  { fifa: 88, a: { p: 2, g: "D" }, b: { p: 2, g: "G" } },           // 2D v 2G
+  { fifa: 85, a: { p: 1, g: "B" }, b: { p: 3, gs: "EFGIJ" } },      // 1B v 3(E/F/G/I/J)
+  { fifa: 87, a: { p: 1, g: "K" }, b: { p: 3, gs: "DEIJL" } },      // 1K v 3(D/E/I/J/L)
 ];
 const R16_FIFA = [89, 90, 93, 94, 91, 92, 95, 96];
 const QF_FIFA = [97, 98, 99, 100];
@@ -166,66 +171,13 @@ export function buildKnockout(
   const final = [makeKoMatch("final_", 0, sr({ winM: SF_FIFA[0] }), sr({ winM: SF_FIFA[1] }), 104)];
   const third = [makeKoMatch("third_", 0, sr({ loseM: SF_FIFA[0] }), sr({ loseM: SF_FIFA[1] }), 103)];
 
-  // Real KO fixtures carry no team draw yet (only group winners placed), so they can't
-  // be matched to a tree slot by teams. They ARE scheduled in FIFA match-number order,
-  // so the i-th fixture by kickoff is match (baseFifa + i) — map it to the structural
-  // slot with that FIFA number. (Matching by array index was the bug: the structural
-  // array is in TREE order, not match-number order, so a placed winner like GER/M75
-  // landed in the M74 slot and showed up against the wrong projected opponent.)
-  function overlayKO(structural: Match[], stagePrefix: string, baseFifa: number) {
-    const real = allMatches
-      .filter((m) => m.id.indexOf(stagePrefix) === 0)
-      .sort((a, b) => +a.kickoff - +b.kickoff);
-    real.forEach((rm, i) => {
-      const s = structural.find((x) => x.fifa === baseFifa + i);
-      if (!s) return;
-      s.id = rm.id;
-      s.kickoff = rm.kickoff;
-      s.status = rm.status;
-      if (rm.home) {
-        s.home = rm.home;
-        s.fromA = null;
-      }
-      if (rm.away) {
-        s.away = rm.away;
-        s.fromB = null;
-      }
-      s.ga = rm.ga;
-      s.gb = rm.gb;
-      s.winner = rm.winner;
-      s.scorers = rm.scorers || [];
-      s.cards = rm.cards || [];
-      s.subs = rm.subs || [];
-      s.tips = rm.tips || [];
-      s.stats = rm.stats ?? null;
-      s.xg = rm.xg ?? null;
-      s.homeLineup = rm.homeLineup ?? null;
-      s.awayLineup = rm.awayLineup ?? null;
-      s.espnOdds = rm.espnOdds ?? null;
-      s.officialOdds = rm.officialOdds ?? null;
-      s.cardOdds = rm.cardOdds ?? null;
-      s.referees = rm.referees ?? [];
-      s.attendance = rm.attendance ?? null;
-      s.scoreDetail = rm.scoreDetail ?? null;
-      s.pen = rm.pen ?? null;
-      s._realId = rm._realId;
-      if (rm.venue && rm.venue.stadium) s.venue = rm.venue;
-    });
-  }
-
-  overlayKO(r32, "r32_", 73);
-  overlayKO(r16, "r16_", 89);
-  overlayKO(qf, "qf_", 97);
-  overlayKO(sf, "sf_", 101);
-  overlayKO(third, "third_", 103);
-  overlayKO(final, "final_", 104);
-
-  // Fill the next round in as the current one finishes: a slot reading "Vinnare M73"
-  // shows match 73's actual winner once it's played (and "Förlorare MX" its loser),
-  // without waiting for football-data to redraw the next-round fixtures.
   const all = [...r32, ...r16, ...qf, ...sf, ...third, ...final];
   const byFifa: Record<number, Match> = {};
   for (const m of all) if (m.fifa != null) byFifa[m.fifa] = m;
+
+  // Project the next round's teams from the current one: a slot reading "Vinnare M73"
+  // resolves to match 73's actual winner once it's played (and "Förlorare MX" its loser),
+  // so the tree fills in without waiting for football-data to redraw the next round.
   const fromResult = (label: string | null | undefined): string | null => {
     if (!label) return null;
     const win = /^Vinnare M(\d+)$/.exec(label);
@@ -234,10 +186,71 @@ export function buildKnockout(
     if (lose) { const f = byFifa[+lose[1]]; if (f && f.status === "played" && f.winner) return f.home === f.winner ? f.away : f.home; }
     return null;
   };
-  for (const m of all) {
-    if (!m.home && !m.projHome) { const w = fromResult(m.fromA); if (w) m.projHome = w; }
-    if (!m.away && !m.projAway) { const w = fromResult(m.fromB); if (w) m.projAway = w; }
-  }
+  const fillProj = (matches: Match[]) => {
+    for (const m of matches) {
+      if (!m.home && !m.projHome) { const w = fromResult(m.fromA); if (w) m.projHome = w; }
+      if (!m.away && !m.projAway) { const w = fromResult(m.fromB); if (w) m.projAway = w; }
+    }
+  };
+
+  const copyFixture = (s: Match, rm: Match) => {
+    s.id = rm.id;
+    s.kickoff = rm.kickoff;
+    s.status = rm.status;
+    if (rm.home) { s.home = rm.home; s.fromA = null; }
+    if (rm.away) { s.away = rm.away; s.fromB = null; }
+    s.ga = rm.ga;
+    s.gb = rm.gb;
+    s.winner = rm.winner;
+    s.scorers = rm.scorers || [];
+    s.cards = rm.cards || [];
+    s.subs = rm.subs || [];
+    s.tips = rm.tips || [];
+    s.stats = rm.stats ?? null;
+    s.xg = rm.xg ?? null;
+    s.homeLineup = rm.homeLineup ?? null;
+    s.awayLineup = rm.awayLineup ?? null;
+    s.espnOdds = rm.espnOdds ?? null;
+    s.officialOdds = rm.officialOdds ?? null;
+    s.cardOdds = rm.cardOdds ?? null;
+    s.referees = rm.referees ?? [];
+    s.attendance = rm.attendance ?? null;
+    s.scoreDetail = rm.scoreDetail ?? null;
+    s.pen = rm.pen ?? null;
+    s._realId = rm._realId;
+    if (rm.venue && rm.venue.stadium) s.venue = rm.venue;
+  };
+
+  // Overlay real fixtures onto the structural tree by TEAM IDENTITY, not by kickoff/match
+  // order — football-data's KO fixture order does NOT follow the FIFA match numbering, so
+  // ordering put placed teams in the wrong slots (the wrong-opponent bug). A fixture with
+  // at least one decided team is matched to the unique slot already holding that team
+  // (each team appears in exactly one slot per round). Fixtures with no team drawn yet
+  // fall back to the remaining slots in match-number order, just for their date/venue.
+  const teamsOf = (m: Match) =>
+    [m.home, m.projHome, m.away, m.projAway].filter((x): x is string => !!x);
+  const overlayRound = (structural: Match[], stagePrefix: string) => {
+    const reals = allMatches.filter((m) => m.id.indexOf(stagePrefix) === 0);
+    const usedReal = new Set<string>();
+    const usedSlot = new Set<Match>();
+    for (const rm of reals) {
+      const known = [rm.home, rm.away].filter((x): x is string => !!x);
+      if (!known.length) continue;
+      const s = structural.find((x) => !usedSlot.has(x) && known.every((k) => teamsOf(x).includes(k)));
+      if (s) { copyFixture(s, rm); usedReal.add(rm.id); usedSlot.add(s); }
+    }
+    const restReal = reals.filter((rm) => !usedReal.has(rm.id)).sort((a, b) => +a.kickoff - +b.kickoff);
+    const restSlot = structural.filter((s) => !usedSlot.has(s)).sort((a, b) => (a.fifa ?? 0) - (b.fifa ?? 0));
+    restReal.forEach((rm, i) => { if (restSlot[i]) copyFixture(restSlot[i], rm); });
+  };
+
+  overlayRound(r32, "r32_");
+  fillProj(r16); overlayRound(r16, "r16_");
+  fillProj(qf); overlayRound(qf, "qf_");
+  fillProj(sf); overlayRound(sf, "sf_");
+  fillProj(third); fillProj(final);
+  overlayRound(third, "third_"); overlayRound(final, "final_");
+  fillProj(all); // any still-undecided slots keep their projected/"Vinnare MX" labels
 
   return { r32, r16, qf, sf, third, final };
 }
