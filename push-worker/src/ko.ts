@@ -66,8 +66,11 @@ async function nameForCode(env: KoEnv, code: string): Promise<string | null> {
 }
 
 interface KoFixture { id: string; round: string; homeTla: string | null; awayTla: string | null; kickoff: number }
+// Slutspelstips covers the round of 16 onwards. The round of 32 (LAST_32) is
+// deliberately EXCLUDED — it was only used to test the flow, so it is never tippable,
+// merged into the pool, or reminded about, and any leftover r32 bets are filtered out.
 const STAGE_ROUND: Record<string, string> = {
-  LAST_32: "r32", LAST_16: "r16", QUARTER_FINALS: "qf", SEMI_FINALS: "sf", THIRD_PLACE: "third", FINAL: "final",
+  LAST_16: "r16", QUARTER_FINALS: "qf", SEMI_FINALS: "sf", THIRD_PLACE: "third", FINAL: "final",
 };
 
 async function koFixtures(env: KoEnv): Promise<KoFixture[]> {
@@ -189,13 +192,18 @@ export async function handleKo(request: Request, env: KoEnv): Promise<Response |
     return jsonRes(list, env);
   }
 
-  // Admin/engine: every participant's KO tips, keyed by name.
+  // Admin/engine: every participant's KO tips, keyed by name. Only bets for VALID
+  // (round-of-16-onwards) fixtures are returned — any leftover r32 test bets are
+  // dropped so the engine never merges or scores them.
   if (p === "/ko/all" && request.method === "GET") {
     if (url.searchParams.get("key") !== env.KO_ADMIN_KEY) return jsonRes({ error: "forbidden" }, env, 403);
+    const valid = new Set((await koFixtures(env)).map((f) => f.id));
     const out: Record<string, Bets> = {};
     for (const name of await participants(env)) {
       const b = await getBets(env, name);
-      if (Object.keys(b).length) out[name] = b;
+      const filtered: Bets = {};
+      for (const [fid, tip] of Object.entries(b)) if (valid.has(fid)) filtered[fid] = tip;
+      if (Object.keys(filtered).length) out[name] = filtered;
     }
     return jsonRes(out, env);
   }

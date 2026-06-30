@@ -56,7 +56,8 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   // events are one tap away.)
   // KO matches are tippable per-person (slutspelstips) even before the engine merges
   // everyone's tips — so the Tips tab is the default for them too, showing your bet.
-  const isKoTippable = !!m && m.stage === "ko" && !!m._realId;
+  // r32 (fifa 73–88) is excluded — slutspelstips starts at the round of 16 (fifa ≥ 89).
+  const isKoTippable = !!m && m.stage === "ko" && !!m._realId && m.fifa != null && m.fifa >= 89;
   const wantTips = !!m && ((m.tippas && m.tips.length > 0) || isKoTippable);
   const [tab, setTab] = useState<Tab>(wantTips ? "tips" : "overview");
   const now = useNow(m && isLive(m) ? 30_000 : 0);

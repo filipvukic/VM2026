@@ -33,7 +33,7 @@ export function ScheduleView() {
         /* Sticky so the schedule's auto-scroll-to-live can never hide the toggle. */
         .md-modes-bar{ position:sticky; top:var(--header-h); z-index:20; background:var(--bg); padding:10px 0 13px; }
         /* iOS-style segmented control with a sliding thumb — cleaner than filled pills. */
-        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; background:var(--surface-2); border:1px solid var(--line); border-radius:13px; padding:4px; }
+        .md-seg{ position:relative; display:grid; grid-template-columns:1fr 1fr; max-width:440px; margin:0 auto; background:var(--surface-2); border:1px solid var(--line); border-radius:13px; padding:4px; }
         .md-seg button{ position:relative; z-index:1; padding:11px 8px; border-radius:10px; font-weight:800; font-size:14px; color:var(--ink-3); transition:color .22s ease; }
         .md-seg button.on{ color:var(--ink); }
         .md-seg-thumb{ position:absolute; z-index:0; top:4px; left:4px; bottom:4px; width:calc(50% - 4px); border-radius:10px;

@@ -47,6 +47,7 @@ export function KoBetSheet() {
             <div className="kob-title">🏆 Slutspelstips</div>
             {loggedIn && <div className="kob-sub">{name} · <b style={{ color: tipped === total && total ? "var(--win)" : "var(--ink-2)" }}>{tipped}/{total}</b> tippade</div>}
           </div>
+          {loggedIn && <button className="kob-logout-top" onClick={() => useKoBets.getState().logout()}>Logga ut</button>}
           <button className="kob-x" onClick={close} aria-label="Stäng">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" /></svg>
           </button>
@@ -163,6 +164,8 @@ export function KoBetSheet() {
         .kob-title{ font-family:var(--font-display); font-weight:800; font-size:19px; white-space:nowrap; }
         .kob-sub{ font-size:12px; font-weight:700; color:var(--ink-3); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .kob-x{ width:34px; height:34px; flex:0 0 auto; display:grid; place-items:center; border-radius:50%; color:var(--ink-2); background:var(--surface-3); }
+        .kob-logout-top{ flex:0 0 auto; font-size:11.5px; font-weight:800; color:var(--ink-2); padding:7px 12px; border-radius:var(--r-pill); background:var(--surface-3); border:1px solid var(--line-2); white-space:nowrap; }
+        .kob-logout-top:active{ transform:scale(.96); }
 
         .kob-login{ padding:26px 22px 28px; text-align:center; }
         .kob-login-ic{ font-size:34px; }
@@ -223,8 +226,8 @@ function Stepper({ value, onChange }: { value: number; onChange: (v: number) => 
 
 function koRounds(ds: Dataset): { key: string; label: string; matches: Match[]; future: boolean }[] {
   const k = ds.knockout;
+  // Slutspelstips börjar i åttondelsfinalen — sextondelsfinalen var bara för test.
   return [
-    { key: "r32", label: "Sextondelsfinal", matches: k.r32, future: false },
     { key: "r16", label: "Åttondelsfinal", matches: k.r16, future: true },
     { key: "qf", label: "Kvartsfinal", matches: k.qf, future: true },
     { key: "sf", label: "Semifinal", matches: k.sf, future: true },

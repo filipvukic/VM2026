@@ -15,7 +15,8 @@ export const koFid = (m: Match) => String(m._realId ?? "");
 export function koOpenMatches(ds: Dataset, now: number): Match[] {
   const k = ds.knockout;
   const out: Match[] = [];
-  for (const list of [k.r32, k.r16, k.qf, k.sf, k.third, k.final]) {
+  // r32 is excluded — slutspelstips starts at the round of 16.
+  for (const list of [k.r16, k.qf, k.sf, k.third, k.final]) {
     const real = list.filter((m) => m._realId);
     if (!real.length || !real.every((m) => m.home && m.away)) continue; // not fully drawn
     const kos = real.map((m) => m.kickoff?.getTime()).filter((t): t is number => !!t && Number.isFinite(t));
