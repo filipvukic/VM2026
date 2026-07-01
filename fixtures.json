@@ -63560,23 +63560,151 @@
     "status": "IN_PLAY",
     "score": [
       0,
-      0
+      2
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
       "fullTime": [
         0,
-        0
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "18",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": "90",
+    "goals": [
+      {
+        "minute": "25",
+        "team": "SEN",
+        "scorer": "Habib Diarra",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Belgium 0, Senegal 1. Habib Diarra (Senegal) right footed shot from very close range to the centre of the goal.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "51",
+        "team": "SEN",
+        "scorer": "Ismaïla Sarr",
+        "assist": "Moussa Niakhaté",
+        "type": "REGULAR",
+        "description": "Goal! Belgium 0, Senegal 2. Ismaïla Sarr (Senegal) right footed shot from the centre of the box to the bottom right corner. Assisted by Moussa Niakhaté with a through ball.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "BEL",
+        "scorer": "Romelu Lukaku",
+        "assist": "Thomas Meunier",
+        "type": "REGULAR",
+        "description": "Goal! Belgium 1, Senegal 2. Romelu Lukaku (Belgium) right footed shot from the right side of the six yard box to the high centre of the goal. Assisted by Thomas Meunier with a cross.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "BEL",
+        "scorer": "Youri Tielemans",
+        "assist": null,
+        "type": "HEADER",
+        "description": "Goal! Belgium 2, Senegal 2. Youri Tielemans (Belgium) header from the centre of the box.",
+        "score": [
+          2,
+          2
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "64",
+        "team": "BEL",
+        "player": "Brandon Mechele",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "SEN",
+        "player": "Lamine Camara",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "BEL",
+        "playerIn": "Romelu Lukaku",
+        "playerOut": "Charles De Ketelaere",
+        "period": 2
+      },
+      {
+        "minute": "56",
+        "team": "BEL",
+        "playerIn": "Dodi Lukébakio",
+        "playerOut": "Jérémy Doku",
+        "period": 2
+      },
+      {
+        "minute": "56",
+        "team": "BEL",
+        "playerIn": "Nicolas Raskin",
+        "playerOut": "Kevin De Bruyne",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "BEL",
+        "playerIn": "Diego Moreira",
+        "playerOut": "Hans Vanaken",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "SEN",
+        "playerIn": "Lamine Camara",
+        "playerOut": "Pape Gueye",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "SEN",
+        "playerIn": "Ibrahim Mbaye",
+        "playerOut": "Iliman Ndiaye",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "SEN",
+        "playerIn": "Pape Matar Sarr",
+        "playerOut": "Habib Diarra",
+        "period": 2
+      },
+      {
+        "minute": "78",
+        "team": "BEL",
+        "playerIn": "Thomas Meunier",
+        "playerOut": "Maxim De Cuyper",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Lumen Field",
       "city": "Seattle, Washington",
@@ -63636,7 +63764,7 @@
           "jersey": "5",
           "espnId": "301327",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Timothy Castagne",
@@ -63654,23 +63782,23 @@
           "jersey": "7",
           "espnId": "134947",
           "subbedIn": false,
-          "subbedOut": false
-        },
-        {
-          "name": "Youri Tielemans",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "8",
-          "espnId": "193297",
-          "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Hans Vanaken",
-          "position": "RM",
-          "positionName": "Right Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "20",
           "espnId": "193849",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Youri Tielemans",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "8",
+          "espnId": "193297",
           "subbedIn": false,
           "subbedOut": false
         },
@@ -63681,7 +63809,7 @@
           "jersey": "17",
           "espnId": "296319",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jérémy Doku",
@@ -63690,7 +63818,7 @@
           "jersey": "11",
           "espnId": "283672",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Leandro Trossard",
@@ -63736,7 +63864,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "229443",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63745,7 +63873,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "166473",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63754,7 +63882,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139437",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63781,7 +63909,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "340678",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63808,7 +63936,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "260027",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63897,7 +64025,7 @@
           "jersey": "26",
           "espnId": "255889",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Habib Diarra",
@@ -63906,7 +64034,7 @@
           "jersey": "21",
           "espnId": "324991",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ismaïla Sarr",
@@ -63933,7 +64061,7 @@
           "jersey": "13",
           "espnId": "268641",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -63970,7 +64098,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "297337",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64006,7 +64134,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "388522",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64015,7 +64143,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "38721",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64068,64 +64196,64 @@
       "_espnEventId": "760493"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 38.8,
-      "totalShots": 1.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 1.0,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 72.0,
-      "totalPasses": 85.0,
-      "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 8.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.3,
-      "interceptions": 1.0,
-      "effectiveClearance": 7.0,
-      "totalClearance": 7.0
-    },
-    "awayStats": {
-      "foulsCommitted": 0.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 61.2,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
+      "offsides": 1.0,
+      "wonCorners": 3.0,
+      "saves": 2.0,
+      "possessionPct": 54.6,
+      "totalShots": 15.0,
+      "shotsOnTarget": 4.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 112.0,
-      "totalPasses": 129.0,
+      "accuratePasses": 444.0,
+      "totalPasses": 506.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 5.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 18.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 30.0,
+      "accurateLongBalls": 16.0,
       "longballPct": 0.5,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 4.0,
-      "tacklePct": 0.3,
-      "interceptions": 1.0,
-      "effectiveClearance": 6.0,
-      "totalClearance": 6.0
+      "blockedShots": 4.0,
+      "effectiveTackles": 3.0,
+      "totalTackles": 7.0,
+      "tacklePct": 0.4,
+      "interceptions": 5.0,
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
+    },
+    "awayStats": {
+      "foulsCommitted": 10.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 1.0,
+      "saves": 3.0,
+      "possessionPct": 45.4,
+      "totalShots": 12.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 358.0,
+      "totalPasses": 417.0,
+      "passPct": 0.9,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 15.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 51.0,
+      "accurateLongBalls": 22.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 3.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.4,
+      "interceptions": 9.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
     },
     "homeForm": [
       {
