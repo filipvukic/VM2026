@@ -102,17 +102,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
-  // Blur can't render during the scale on mobile (the filter re-rasterises every frame). So the
-  // zoom itself is pure transform + opacity (smooth), and the blurred overlay is CROSS-FADED in
-  // by animating its layer OPACITY once the scale has landed — compositing an already-rasterised
-  // blur is cheap (no re-raster), so it never stutters. The dim recedes with the zoom; the blur
-  // settles in right as it lands.
-  const [blurOn, setBlurOn] = useState(true);
-  useEffect(() => {
-    setBlurOn(false);
-    const t = window.setTimeout(() => setBlurOn(true), 480); // ≈ the stage scale duration
-    return () => window.clearTimeout(t);
-  }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -248,17 +237,16 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const sw = (c: string | null) => (c ? S * 0.0042 : S * 0.0026);
   const [hovId, setHovId] = useState<string | null>(null);
 
-  // Depth of field in two layers. FOCUS is the whole circle, sharp, with earlier rounds dimmed
-  // (opacity) — this is the interactive layer and the only thing on screen DURING the zoom, so the
-  // zoom is pure transform + opacity → always smooth. CTX duplicates just the receded rounds with
-  // ONE blur baked in; it's invisible during the scale and fades in by animating its LAYER opacity
-  // once the zoom lands (compositing a ready-made blur is cheap, so no stutter).
+  // Depth of field in two layers, cross-fading DURING the zoom (both simultaneous + smooth).
+  // FOCUS holds the sharp, interactive rounds; its receded rounds fade to 0 as the zoom runs.
+  // CTX holds the receded rounds pre-blurred and lives inside a promoted wrapper (see render):
+  // the blur rasterises into that wrapper's CACHED texture, so the stage scale just GPU-transforms
+  // it — the blur can be on-screen the whole zoom without ever re-rasterising (that was the jank).
+  // The Chrome-recommended fix: promote the PARENT, put the filter on a CHILD.
   const ctxBlur = level > 0 ? S * 0.0085 : 0;
   const opFor = (ring: number, natural: number, layer: "focus" | "ctx") => {
-    const dim = zoomDim(ring) * natural;
-    if (layer === "ctx") return ring < level ? dim : 0; // blurred layer carries only the receded rounds
-    if (ring >= level) return natural; // focused rounds: always sharp + full
-    return blurOn ? 0 : dim; // receded rounds: dimmed while zooming, then handed off to the blur layer
+    if (layer === "ctx") return ring < level ? zoomDim(ring) * natural : 0; // receded rounds, dimmed
+    return ring >= level ? natural : 0; // focused rounds sharp+full; receded fade out (handed to ctx)
   };
 
   const content = (layer: "focus" | "ctx") => (
@@ -290,7 +278,13 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       {nodes.map((n, i) => {
         const op = opFor(n.ring, n.lost ? 0.42 : 1, layer);
         if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: op }} />;
-        const clickable = layer === "focus" && op > 0; // only the sharp, in-focus flags are interactive
+        if (layer === "ctx") {
+          // Blurred backdrop = a solid team-coloured disc, NOT the flag image: the blur hides flag
+          // detail anyway, and it means flags load only once (no doubled flagcdn burst → no "?").
+          if (op <= 0) return null;
+          return <span key={i} className="bc-cdot" style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, background: colorOf(n.code) ?? "var(--surface-3)", opacity: op }} />;
+        }
+        const clickable = op > 0; // only the sharp, in-focus flags are interactive
         return (
           <button
             key={i}
@@ -331,10 +325,14 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
+          {/* Promoted WRAPPER (own cached texture) with the blur on its CHILD — so the blur
+              rasterises into the cached texture once and the stage scale only GPU-transforms it,
+              never re-rasterising. That lets the blurred receded rounds stay on screen the whole
+              zoom while the focus layer cross-fades them out → blur + zoom, simultaneous + smooth. */}
+          <div className="bc-layer bc-ctx-wrap">
+            <div className="bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)` }}>{content("ctx")}</div>
+          </div>
           <div className="bc-layer bc-focus">{content("focus")}</div>
-          {/* Hidden INSTANTLY when a zoom starts (so the blur is never painted while scaling), then
-              fades its opacity in on the settled circle — directional transition, fade-in only. */}
-          <div className="bc-layer bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)`, opacity: blurOn ? 1 : 0, transition: blurOn ? "opacity .42s ease" : "none" }}>{content("ctx")}</div>
         </div>
       </div>
 
@@ -350,12 +348,15 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .46s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
-        /* FOCUS layer fills the stage and is the only thing painted during the zoom (transform +
-           opacity → smooth). The CTX layer sits ON TOP with the blurred receded rounds; it's
-           painted at opacity 0 during the scale (skipped) and cross-fades its LAYER opacity in
-           once the zoom lands — compositing a ready-made blur is cheap, so it never stutters. */
+        /* CTX-WRAP is promoted to its own texture (will-change:transform) and the blur sits on its
+           CHILD .bc-ctx — so the blur rasterises into the cached texture ONCE and the stage scale
+           only GPU-transforms it (never re-rasterises the filter = the fix for the jank). The blur
+           can therefore stay on screen through the whole zoom while FOCUS cross-fades the same
+           rounds out on top → depth of field appears WITH the zoom, both smooth. */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-ctx{ pointer-events:none; }
+        .bc-ctx-wrap{ pointer-events:none; will-change:transform; }
+        .bc-ctx{ position:absolute; inset:0; }
+        .bc-cdot{ position:absolute; border-radius:50%; }
         .bc-svg{ position:absolute; inset:0; }
         .bc-focus .bc-svg path, .bc-focus .bc-svg line,
         .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .46s cubic-bezier(.16,1,.3,1); }
