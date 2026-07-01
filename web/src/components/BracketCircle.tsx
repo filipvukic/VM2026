@@ -102,6 +102,15 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
+  // Blur is expensive to re-rasterise while the stage is scaling — so we SKIP it during the
+  // zoom animation (the circle just dims, which composites cheaply) and re-apply it once the
+  // zoom settles, keeping the zoom itself perfectly smooth.
+  const [zooming, setZooming] = useState(false);
+  useEffect(() => {
+    setZooming(true);
+    const t = window.setTimeout(() => setZooming(false), 850); // ≥ the .8s stage transition
+    return () => window.clearTimeout(t);
+  }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -242,6 +251,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // Depth-of-field: the more a round is dimmed by the zoom, the more it blurs (in stage
   // units, so it scales with the circle). `extra` lets a lost badge keep its greyscale.
   const blurFilter = (dim: number, extra = ""): string | undefined => {
+    if (zooming || dim >= 1) return extra || undefined; // no blur mid-zoom (perf) / when focused
     const b = (1 - dim) * (S * 0.009);
     const parts = [b > S * 0.0006 ? `blur(${b.toFixed(1)}px)` : "", extra].filter(Boolean);
     return parts.length ? parts.join(" ") : undefined;
@@ -321,15 +331,17 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
         .bc-svg{ position:absolute; inset:0; }
-        /* smooth focus fade + blur when stepping rounds (set per element by the zoom level) */
-        .bc-svg path, .bc-svg line{ transition:opacity .3s ease, filter .3s ease; }
-        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease, filter .3s ease; }
+        /* fade the focus with opacity (cheap, animates during the zoom); the blur is applied
+           only once the zoom settles, so we don't transition filter (it snaps in — no
+           re-rasterising a filter mid-scale, which is what made zooming stutter). */
+        .bc-svg path, .bc-svg line{ transition:opacity .3s ease; }
+        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
-          transition:transform .12s, box-shadow .15s, opacity .15s, filter .15s; }
+          transition:transform .12s, box-shadow .15s, opacity .15s; }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
