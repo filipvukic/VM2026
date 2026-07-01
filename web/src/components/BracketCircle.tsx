@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
 import { Flag } from "../lib/flags";
 import { isLive } from "../lib/liveState";
 import { TEAM_COLORS } from "../data/static/teamColors";
@@ -38,7 +38,7 @@ function ang(M: number, j: number): number {
   return start + (local + 0.5) * (180 - GAP) / (M / 2);
 }
 
-export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string) => void }) {
+export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: string) => void; fill?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const outerRef = useRef<HTMLDivElement>(null);
   // Render at a fixed high resolution and display it scaled to fit — so zooming in
@@ -57,6 +57,25 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   // fit to the box's SMALLER dimension so the whole circle is always visible at its normal
   // size — in fullscreen the box becomes the full screen but the circle stays this same size.
   const fit = Math.min(disp.w, disp.h) / BASE;
+
+  // "fill" (inline) mode: the box grows to fill the space between the header and the bottom
+  // nav, with the toolbar overlaid on top — like fullscreen but with the menus still visible.
+  const [fillH, setFillH] = useState<number | null>(null);
+  useLayoutEffect(() => {
+    if (!fill) { setFillH(null); return; }
+    const measure = () => {
+      const el = outerRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top; // viewport-relative (bracket opens at scroll 0)
+      const navEl = document.querySelector<HTMLElement>(".nav");
+      const navH = navEl && getComputedStyle(navEl).display !== "none" ? navEl.getBoundingClientRect().height : 0;
+      setFillH(Math.max(300, Math.round(window.innerHeight - top - navH - 10)));
+    };
+    measure();
+    const t = window.setTimeout(measure, 90); // after the sticky header / reveal settle
+    window.addEventListener("resize", measure);
+    return () => { window.clearTimeout(t); window.removeEventListener("resize", measure); };
+  }, [fill]);
 
   const byFifa: Record<number, Match> = {};
   [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
@@ -207,7 +226,11 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
   const [hovId, setHovId] = useState<string | null>(null);
 
   return (
-    <div className={`bc-outer${fs ? " bc-fullscreen" : ""}`} ref={outerRef}>
+    <div
+      className={`bc-outer${fs ? " bc-fullscreen" : ""}${fill && !fs ? " bc-fill" : ""}`}
+      ref={outerRef}
+      style={fill && !fs && fillH ? { height: fillH } : undefined}
+    >
       <div className="bc-toolbar">
         <button className="bc-fs" onClick={toggleFs} aria-label={fs ? "Stäng helskärm" : "Helskärm"}>{fs ? "✕" : "⛶"}</button>
         <div className="bc-stepper">
@@ -298,6 +321,14 @@ export function BracketCircle({ ds, onOpen }: { ds: Dataset; onOpen: (id: string
         .bc-outer.bc-fullscreen .bc-wrap{ position:absolute; inset:0; width:100vw; height:100dvh; max-width:none; border-radius:0; }
         .bc-outer.bc-fullscreen .bc-toolbar{ position:absolute; top:max(12px, env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
           z-index:10; width:min(94vw, 560px); max-width:none; margin:0; }
+        /* inline "fill" mode: the box fills the space between the sub-filters and the nav,
+           the circle stays fully visible & centred, and the toolbar overlays the top —
+           like fullscreen but the app menus stay visible. */
+        .bc-outer.bc-fill{ position:relative; overflow:hidden; border-radius:18px;
+          border:1px solid var(--line); background:color-mix(in srgb, var(--surface) 20%, transparent); }
+        .bc-outer.bc-fill .bc-wrap{ position:absolute; inset:0; width:100%; height:100%; max-width:none; margin:0; aspect-ratio:auto; border-radius:18px; }
+        .bc-outer.bc-fill .bc-toolbar{ position:absolute; top:9px; left:50%; transform:translateX(-50%);
+          z-index:10; width:min(94%, 560px); max-width:none; margin:0; }
       `}</style>
     </div>
   );

@@ -242,7 +242,7 @@ function Bracket({ ds, view }: { ds: Dataset; view: BracketView }) {
   return (
     <div>
       {view === "tree" ? (
-        <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
+        <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} fill />
       ) : (
         <>
           <div className="bk-rounds">
