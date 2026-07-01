@@ -707,7 +707,10 @@ input {
 /* Once revealed, generate no box at all so `position:fixed` children (the bottom nav)
    anchor to the viewport — a lingering transform on a wrapper breaks fixed on iOS. */
 .app-mounted { display: contents; }
-@keyframes appIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+/* Opacity ONLY — no transform: a scale() here makes the wrapper a containing block for the
+   fixed bottom nav, so the nav would snap/"load in" when the transform clears. Fading only
+   keeps the nav viewport-fixed the whole time and it appears together with the page. */
+@keyframes appIn { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
   .splash-glow, .splash-rings span, .splash-trophy, .splash-bar span, .splash-inner, .app-reveal { animation: none; }
   .splash-out { animation: none; opacity: 0; visibility: hidden; }
