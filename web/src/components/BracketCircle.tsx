@@ -102,6 +102,17 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
+  // Blur can't render during the scale on mobile (the filter re-rasterises every frame). So the
+  // zoom itself is pure transform + opacity (smooth), and the blurred overlay is CROSS-FADED in
+  // by animating its layer OPACITY once the scale has landed — compositing an already-rasterised
+  // blur is cheap (no re-raster), so it never stutters. The dim recedes with the zoom; the blur
+  // settles in right as it lands.
+  const [blurOn, setBlurOn] = useState(true);
+  useEffect(() => {
+    setBlurOn(false);
+    const t = window.setTimeout(() => setBlurOn(true), 480); // ≈ the stage scale duration
+    return () => window.clearTimeout(t);
+  }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -237,13 +248,18 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const sw = (c: string | null) => (c ? S * 0.0042 : S * 0.0026);
   const [hovId, setHovId] = useState<string | null>(null);
 
-  // Two-layer depth of field: a SHARP focus layer (rings >= level) and a BLURRED context layer
-  // (rings < level) carrying ONE blur filter. Each layer's own content is static (only the parent
-  // stage transform scales it), so the browser caches the blur and GPU-composites the zoom → the
-  // zoom stays smooth even with blur on, and the blur transitions in AT THE SAME TIME as the zoom.
+  // Depth of field in two layers. FOCUS is the whole circle, sharp, with earlier rounds dimmed
+  // (opacity) — this is the interactive layer and the only thing on screen DURING the zoom, so the
+  // zoom is pure transform + opacity → always smooth. CTX duplicates just the receded rounds with
+  // ONE blur baked in; it's invisible during the scale and fades in by animating its LAYER opacity
+  // once the zoom lands (compositing a ready-made blur is cheap, so no stutter).
   const ctxBlur = level > 0 ? S * 0.0085 : 0;
-  const opFor = (ring: number, natural: number, layer: "focus" | "ctx") =>
-    layer === "focus" ? (ring >= level ? natural : 0) : ring < level ? zoomDim(ring) * natural : 0;
+  const opFor = (ring: number, natural: number, layer: "focus" | "ctx") => {
+    const dim = zoomDim(ring) * natural;
+    if (layer === "ctx") return ring < level ? dim : 0; // blurred layer carries only the receded rounds
+    if (ring >= level) return natural; // focused rounds: always sharp + full
+    return blurOn ? 0 : dim; // receded rounds: dimmed while zooming, then handed off to the blur layer
+  };
 
   const content = (layer: "focus" | "ctx") => (
     <>
@@ -315,8 +331,10 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
-          <div className="bc-layer bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)` }}>{content("ctx")}</div>
           <div className="bc-layer bc-focus">{content("focus")}</div>
+          {/* Hidden INSTANTLY when a zoom starts (so the blur is never painted while scaling), then
+              fades its opacity in on the settled circle — directional transition, fade-in only. */}
+          <div className="bc-layer bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)`, opacity: blurOn ? 1 : 0, transition: blurOn ? "opacity .42s ease" : "none" }}>{content("ctx")}</div>
         </div>
       </div>
 
@@ -330,28 +348,24 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-stepper button:disabled{ opacity:.32; }
         .bc-stepper span{ font-size:12px; font-weight:800; color:var(--ink-2); min-width:112px; text-align:center; letter-spacing:.01em; }
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
-        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
+        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .46s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
-        /* Two overlaid layers filling the stage. The blurred CONTEXT layer carries a single
-           blur that fades in with the zoom (its content is static so the scale is cheap); the
-           elements cross-fade (opacity) between the two layers as rounds enter/leave focus. */
+        /* FOCUS layer fills the stage and is the only thing painted during the zoom (transform +
+           opacity → smooth). The CTX layer sits ON TOP with the blurred receded rounds; it's
+           painted at opacity 0 during the scale (skipped) and cross-fades its LAYER opacity in
+           once the zoom lands — compositing a ready-made blur is cheap, so it never stutters. */
         .bc-layer{ position:absolute; inset:0; }
-        /* The blurred context layer is promoted to its OWN cached texture (will-change:transform):
-           the blur is baked once and the parent stage's scale just GPU-transforms that texture —
-           so zooming never re-rasterises the blur (that was the stutter). Its own elements have
-           NO opacity transition (that would re-bake the texture every frame); the "blur-in" is
-           read off the SHARP focus layer cross-fading out on top of it. */
-        .bc-ctx{ pointer-events:none; will-change:transform; }
+        .bc-ctx{ pointer-events:none; }
         .bc-svg{ position:absolute; inset:0; }
         .bc-focus .bc-svg path, .bc-focus .bc-svg line,
-        .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .5s cubic-bezier(.16,1,.3,1); }
+        .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .46s cubic-bezier(.16,1,.3,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
           transition:transform .12s, box-shadow .15s; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .5s cubic-bezier(.16,1,.3,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .46s cubic-bezier(.16,1,.3,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
