@@ -54,28 +54,40 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     return () => ro.disconnect();
   }, []);
   const S = BASE;
-  // fit to the box's SMALLER dimension so the whole circle is always visible at its normal
-  // size — in fullscreen the box becomes the full screen but the circle stays this same size.
-  const fit = Math.min(disp.w, disp.h) / BASE;
+  // CSS-based fullscreen (a fixed overlay) — the Fullscreen API doesn't work on a div in iOS
+  // Safari, so this is reliable everywhere. Declared here so sizing below can depend on it.
+  const [fs, setFs] = useState(false);
+  const toggleFs = () => setFs((f) => !f);
 
-  // "fill" (inline) mode: the box grows to fill the space between the header and the bottom
-  // nav, with the toolbar overlaid on top — like fullscreen but with the menus still visible.
-  const [fillH, setFillH] = useState<number | null>(null);
+  // "fill" (inline) mode: the box grows to the FULL width and to the full height between the
+  // header and the bottom nav, with the toolbar overlaid — like fullscreen but with the menus
+  // still visible. We measure the box (full-bleed width + available height) in a layout effect
+  // so `fit` is right from the first paint (no grow-in), instead of waiting on the observer.
+  const [fillBox, setFillBox] = useState<{ w: number; h: number } | null>(null);
   useLayoutEffect(() => {
-    if (!fill) { setFillH(null); return; }
+    if (!fill) { setFillBox(null); return; }
     const measure = () => {
       const el = outerRef.current;
       if (!el) return;
       const top = el.getBoundingClientRect().top; // viewport-relative (bracket opens at scroll 0)
       const navEl = document.querySelector<HTMLElement>(".nav");
       const navH = navEl && getComputedStyle(navEl).display !== "none" ? navEl.getBoundingClientRect().height : 0;
-      setFillH(Math.max(300, Math.round(window.innerHeight - top - navH - 10)));
+      setFillBox({ w: el.clientWidth, h: Math.max(300, Math.round(window.innerHeight - top - navH - 5)) });
     };
     measure();
     const t = window.setTimeout(measure, 90); // after the sticky header / reveal settle
     window.addEventListener("resize", measure);
     return () => { window.clearTimeout(t); window.removeEventListener("resize", measure); };
   }, [fill]);
+
+  // fit to the box's SMALLER dimension so the whole circle is always visible at its normal
+  // size. In (inline) fill mode use the measured full-bleed rectangle; in fullscreen or plain
+  // inline use the wrap's own size.
+  const fit = (fill && !fs && fillBox ? Math.min(fillBox.w, fillBox.h) : Math.min(disp.w, disp.h)) / BASE;
+  // Suppress the stage's zoom transition on the very first frame so the initial size (which
+  // settles once measured) snaps in instead of growing; transitions kick in for zoom after.
+  const [ready, setReady] = useState(false);
+  useEffect(() => { const r = requestAnimationFrame(() => setReady(true)); return () => cancelAnimationFrame(r); }, []);
 
   const byFifa: Record<number, Match> = {};
   [...ds.knockout.r32, ...ds.knockout.r16, ...ds.knockout.qf, ...ds.knockout.sf, ...ds.knockout.final, ...ds.knockout.third].forEach((m) => {
@@ -90,10 +102,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
-  // CSS-based fullscreen (a fixed overlay) — the Fullscreen API doesn't work on a div
-  // in iOS Safari, so this is reliable everywhere.
-  const [fs, setFs] = useState(false);
-  const toggleFs = () => setFs((f) => !f);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -229,7 +237,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     <div
       className={`bc-outer${fs ? " bc-fullscreen" : ""}${fill && !fs ? " bc-fill" : ""}`}
       ref={outerRef}
-      style={fill && !fs && fillH ? { height: fillH } : undefined}
+      style={fill && !fs && fillBox ? { height: fillBox.h } : undefined}
     >
       <div className="bc-toolbar">
         <button className="bc-fs" onClick={toggleFs} aria-label={fs ? "Stäng helskärm" : "Helskärm"}>{fs ? "✕" : "⛶"}</button>
@@ -241,7 +249,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       </div>
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
-        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})` }}>
+        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
           <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
             <defs>
               <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
@@ -321,14 +329,16 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-outer.bc-fullscreen .bc-wrap{ position:absolute; inset:0; width:100vw; height:100dvh; max-width:none; border-radius:0; }
         .bc-outer.bc-fullscreen .bc-toolbar{ position:absolute; top:max(12px, env(safe-area-inset-top)); left:50%; transform:translateX(-50%);
           z-index:10; width:min(94vw, 560px); max-width:none; margin:0; }
-        /* inline "fill" mode: the box fills the space between the sub-filters and the nav,
-           the circle stays fully visible & centred, and the toolbar overlays the top —
-           like fullscreen but the app menus stay visible. */
-        .bc-outer.bc-fill{ position:relative; overflow:hidden; border-radius:18px;
-          border:1px solid var(--line); background:color-mix(in srgb, var(--surface) 20%, transparent); }
-        .bc-outer.bc-fill .bc-wrap{ position:absolute; inset:0; width:100%; height:100%; max-width:none; margin:0; aspect-ratio:auto; border-radius:18px; }
+        /* inline "fill" mode: the box uses the FULL width (bleeds past the page gutter) and
+           the full height between the sub-filters and the nav; the circle stays fully
+           visible & centred, and the toolbar overlays the top — like fullscreen but with
+           the app menus still visible. */
+        .bc-outer.bc-fill{ position:relative; overflow:hidden;
+          margin-inline:calc(-1 * var(--gutter)); margin-top:-4px;
+          background:color-mix(in srgb, var(--surface) 16%, transparent); }
+        .bc-outer.bc-fill .bc-wrap{ position:absolute; inset:0; width:100%; height:100%; max-width:none; margin:0; aspect-ratio:auto; border-radius:0; }
         .bc-outer.bc-fill .bc-toolbar{ position:absolute; top:9px; left:50%; transform:translateX(-50%);
-          z-index:10; width:min(94%, 560px); max-width:none; margin:0; }
+          z-index:10; width:min(92%, 560px); max-width:none; margin:0; }
       `}</style>
     </div>
   );
