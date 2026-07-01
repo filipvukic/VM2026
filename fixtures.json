@@ -63557,9 +63557,9 @@
     "homeTla": "BEL",
     "away": "Senegal",
     "awayTla": "SEN",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
+      3,
       2
     ],
     "scoreDetail": {
@@ -63568,15 +63568,18 @@
         1
       ],
       "fullTime": [
-        0,
+        3,
         2
       ],
-      "extraTime": null,
+      "extraTime": [
+        1,
+        0
+      ],
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "90",
+    "minute": null,
     "goals": [
       {
         "minute": "25",
@@ -63621,14 +63624,27 @@
         "minute": "89",
         "team": "BEL",
         "scorer": "Youri Tielemans",
-        "assist": null,
+        "assist": "Leandro Trossard",
         "type": "HEADER",
-        "description": "Goal! Belgium 2, Senegal 2. Youri Tielemans (Belgium) header from the centre of the box.",
+        "description": "Goal! Belgium 2, Senegal 2. Youri Tielemans (Belgium) header from the centre of the box to the bottom left corner. Assisted by Leandro Trossard.",
         "score": [
           2,
           2
         ],
         "period": 2
+      },
+      {
+        "minute": "120+5",
+        "team": "BEL",
+        "scorer": "Youri Tielemans",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Belgium 3, Senegal 2. Youri Tielemans (Belgium) converts the penalty with a right footed shot to the top right corner.",
+        "score": [
+          3,
+          2
+        ],
+        "period": 4
       }
     ],
     "bookings": [
@@ -63703,6 +63719,34 @@
         "playerIn": "Thomas Meunier",
         "playerOut": "Maxim De Cuyper",
         "period": 2
+      },
+      {
+        "minute": "93",
+        "team": "SEN",
+        "playerIn": "Nicolas Jackson",
+        "playerOut": "Sadio Mané",
+        "period": 3
+      },
+      {
+        "minute": "93",
+        "team": "SEN",
+        "playerIn": "El Hadji Malick Diouf",
+        "playerOut": "Ismail Jakobs",
+        "period": 3
+      },
+      {
+        "minute": "96",
+        "team": "SEN",
+        "playerIn": "Bara Sapoko Ndiaye",
+        "playerOut": "Idrissa Gueye",
+        "period": 3
+      },
+      {
+        "minute": "109",
+        "team": "BEL",
+        "playerIn": "Amadou Onana",
+        "playerOut": "Leandro Trossard",
+        "period": 4
       }
     ],
     "venue": {
@@ -63717,7 +63761,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 66925,
     "espnOdds": {
       "homeML": -105,
       "awayML": 310,
@@ -63827,7 +63871,7 @@
           "jersey": "10",
           "espnId": "174980",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -63900,7 +63944,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "304799",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -63998,7 +64042,7 @@
           "jersey": "14",
           "espnId": "268796",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Krépin Diatta",
@@ -64016,7 +64060,7 @@
           "jersey": "5",
           "espnId": "144517",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pape Gueye",
@@ -64052,7 +64096,7 @@
           "jersey": "10",
           "espnId": "169797",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Iliman Ndiaye",
@@ -64116,7 +64160,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "359796",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64125,7 +64169,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "308524",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64170,7 +64214,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "409016",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -64196,64 +64240,64 @@
       "_espnEventId": "760493"
     },
     "homeStats": {
-      "foulsCommitted": 13.0,
-      "yellowCards": 1.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 3.0,
-      "saves": 2.0,
-      "possessionPct": 54.6,
-      "totalShots": 15.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 444.0,
-      "totalPasses": 506.0,
-      "passPct": 0.9,
-      "accurateCrosses": 5.0,
-      "totalCrosses": 18.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 30.0,
-      "accurateLongBalls": 16.0,
-      "longballPct": 0.5,
-      "blockedShots": 4.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.4,
-      "interceptions": 5.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
-    },
-    "awayStats": {
-      "foulsCommitted": 10.0,
+      "foulsCommitted": 22.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 2.0,
-      "wonCorners": 1.0,
+      "wonCorners": 4.0,
       "saves": 3.0,
-      "possessionPct": 45.4,
-      "totalShots": 12.0,
-      "shotsOnTarget": 4.0,
+      "possessionPct": 52.2,
+      "totalShots": 19.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 602.0,
+      "totalPasses": 699.0,
+      "passPct": 0.9,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 26.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.5,
+      "blockedShots": 5.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.3,
+      "interceptions": 8.0,
+      "effectiveClearance": 28.0,
+      "totalClearance": 28.0
+    },
+    "awayStats": {
+      "foulsCommitted": 12.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 2.0,
+      "saves": 3.0,
+      "possessionPct": 47.8,
+      "totalShots": 19.0,
+      "shotsOnTarget": 5.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 358.0,
-      "totalPasses": 417.0,
-      "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 15.0,
+      "accuratePasses": 536.0,
+      "totalPasses": 639.0,
+      "passPct": 0.8,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 22.0,
       "crossPct": 0.2,
-      "totalLongBalls": 51.0,
-      "accurateLongBalls": 22.0,
+      "totalLongBalls": 83.0,
+      "accurateLongBalls": 33.0,
       "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.4,
-      "interceptions": 9.0,
-      "effectiveClearance": 22.0,
-      "totalClearance": 22.0
+      "blockedShots": 3.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.3,
+      "interceptions": 11.0,
+      "effectiveClearance": 31.0,
+      "totalClearance": 31.0
     },
     "homeForm": [
       {
@@ -64358,11 +64402,17 @@
       "city": "Santa Clara, California",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Raphael Claus",
+        "role": "REFEREE",
+        "nationality": "Brazil"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -275,
+      "homeML": -280,
       "awayML": 800,
       "spread": "USA -1.5",
       "overUnder": 2.5,
@@ -65265,12 +65315,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 380,
+      "homeML": 390,
       "awayML": -120,
       "spread": "MAR -0.5",
       "overUnder": 2.5,
-      "overOdds": 125.0,
-      "underOdds": -155.0,
+      "overOdds": 130.0,
+      "underOdds": -160.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -65398,8 +65448,8 @@
       "awayML": -550,
       "spread": "FRA -1.5",
       "overUnder": 2.5,
-      "overOdds": -170.0,
-      "underOdds": 135.0,
+      "overOdds": -160.0,
+      "underOdds": 130.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -65523,12 +65573,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -105,
+      "homeML": -110,
       "awayML": 300,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
-      "overOdds": -110.0,
-      "underOdds": -115.0,
+      "overOdds": -120.0,
+      "underOdds": -105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
