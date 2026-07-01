@@ -102,7 +102,7 @@ export function ScheduleView() {
         </div>
       </div>
 
-      <div className="md-fade" key={mode}>
+      <div className={`md-fade${mode === "bracket" && view === "tree" ? " md-fill" : ""}`} key={mode}>
         {mode === "list" ? <ScheduleList ds={ds} /> : <Bracket ds={ds} view={view} />}
       </div>
 
@@ -110,6 +110,9 @@ export function ScheduleView() {
         /* gap below the pinned header to the matches — it sits in the scroll flow, so it
            only shows at the very top and slides away under the header once you scroll. */
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); margin-top:14px; }
+        /* circle fills the space: tiny top gap, and no slide-in (its translateY would throw
+           off the fill-height measurement, leaving a gap at the bottom). */
+        .md-fade.md-fill{ margin-top:2px; animation:none; }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
         /* No view slide-in here (switcher must be there instantly), and no top padding so the
            header sits flush under the app header at the top instead of floating with a gap. */

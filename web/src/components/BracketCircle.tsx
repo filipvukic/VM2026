@@ -72,7 +72,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       const top = el.getBoundingClientRect().top; // viewport-relative (bracket opens at scroll 0)
       const navEl = document.querySelector<HTMLElement>(".nav");
       const navH = navEl && getComputedStyle(navEl).display !== "none" ? navEl.getBoundingClientRect().height : 0;
-      setFillBox({ w: el.clientWidth, h: Math.max(300, Math.round(window.innerHeight - top - navH - 5)) });
+      setFillBox({ w: el.clientWidth, h: Math.max(300, Math.round(window.innerHeight - top - navH - 2)) });
     };
     measure();
     const t = window.setTimeout(measure, 90); // after the sticky header / reveal settle
@@ -334,7 +334,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            visible & centred, and the toolbar overlays the top — like fullscreen but with
            the app menus still visible. */
         .bc-outer.bc-fill{ position:relative; overflow:hidden;
-          margin-inline:calc(-1 * var(--gutter)); margin-top:-4px;
+          margin-inline:calc(-1 * var(--gutter));
           background:color-mix(in srgb, var(--surface) 16%, transparent); }
         .bc-outer.bc-fill .bc-wrap{ position:absolute; inset:0; width:100%; height:100%; max-width:none; margin:0; aspect-ratio:auto; border-radius:0; }
         .bc-outer.bc-fill .bc-toolbar{ position:absolute; top:9px; left:50%; transform:translateX(-50%);
