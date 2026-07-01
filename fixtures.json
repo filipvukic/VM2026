@@ -63048,8 +63048,8 @@
       "awayML": 750,
       "spread": "USA -1.5",
       "overUnder": 2.5,
-      "overOdds": -130.0,
-      "underOdds": 105.0,
+      "overOdds": -140.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -64051,8 +64051,8 @@
     "group": null,
     "home": "Paraguay",
     "homeTla": "PAR",
-    "away": null,
-    "awayTla": null,
+    "away": "France",
+    "awayTla": "FRA",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -64067,17 +64067,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Lincoln Financial Field",
+      "city": "Philadelphia, Pennsylvania",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 1700,
+      "awayML": -550,
+      "spread": "FRA -1.5",
+      "overUnder": 2.5,
+      "overOdds": -170.0,
+      "underOdds": 135.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": -2.0,
+      "totalGoals": 3.0,
+      "goalAssists": 3.0,
+      "goalsConceded": 5.0
+    },
+    "awayStats": {
+      "goalDifference": 11.0,
+      "totalGoals": 13.0,
+      "goalAssists": 12.0,
+      "goalsConceded": 2.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-29",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-26",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-20",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-13",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-05",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-30",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-26",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-16",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-08",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537377,
@@ -64086,8 +64180,8 @@
     "group": null,
     "home": "Brazil",
     "homeTla": "BRA",
-    "away": null,
-    "awayTla": null,
+    "away": "Norway",
+    "awayTla": "NOR",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -64102,17 +64196,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "MetLife Stadium",
+      "city": "East Rutherford, New Jersey",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -110,
+      "awayML": 310,
+      "spread": "BRA -0.5",
+      "overUnder": 2.5,
+      "overOdds": -105.0,
+      "underOdds": -115.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 7.0,
+      "totalGoals": 9.0,
+      "goalAssists": 8.0,
+      "goalsConceded": 2.0
+    },
+    "awayStats": {
+      "goalDifference": 2.0,
+      "totalGoals": 10.0,
+      "goalAssists": 7.0,
+      "goalsConceded": 8.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-29",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-24",
+        "result": "F",
+        "gf": 0,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-20",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-13",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-30",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-26",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-23",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-16",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-07",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      }
+    ]
   },
   {
     "id": 537378,
