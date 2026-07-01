@@ -159,9 +159,12 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const angQF = (j: number) => ang(4, j);
   const angSF = (j: number) => ang(2, j);
 
-  // When zoomed into a round, earlier (outer) rounds recede so focus lands on the current one:
-  // each element carries its `ring`, and the two-layer render below fades + blurs rings < level.
-  const zoomDim = (ring: number) => (ring >= level ? 1 : Math.max(0.12, 1 - (level - ring) * 0.44));
+  // Dim for a receded round in the blurred layer. FIXED per ring (NOT level-dependent) on purpose:
+  // the blurred layer is a cached texture, so if an already-blurred round changed opacity when you
+  // zoomed another step it would pop (no transition on the texture). Fixed → every round keeps the
+  // same look once it recedes, so all zoom steps behave like the clean first one. Gentle gradient:
+  // rounds nearer the centre (higher ring) stay a touch brighter than the far outer rounds.
+  const ctxDim = (ring: number) => 0.56 + ring * 0.03;
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
@@ -245,7 +248,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // The Chrome-recommended fix: promote the PARENT, put the filter on a CHILD.
   const ctxBlur = level > 0 ? S * 0.0085 : 0;
   const opFor = (ring: number, natural: number, layer: "focus" | "ctx") => {
-    if (layer === "ctx") return ring < level ? zoomDim(ring) * natural : 0; // receded rounds, dimmed
+    if (layer === "ctx") return ring < level ? ctxDim(ring) * natural : 0; // receded rounds, dimmed
     return ring >= level ? natural : 0; // focused rounds sharp+full; receded fade out (handed to ctx)
   };
 
