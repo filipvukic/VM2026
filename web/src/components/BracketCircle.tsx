@@ -336,16 +336,22 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            blur that fades in with the zoom (its content is static so the scale is cheap); the
            elements cross-fade (opacity) between the two layers as rounds enter/leave focus. */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-ctx{ pointer-events:none; transition:filter .55s cubic-bezier(.16,1,.3,1); will-change:filter; }
+        /* The blurred context layer is promoted to its OWN cached texture (will-change:transform):
+           the blur is baked once and the parent stage's scale just GPU-transforms that texture —
+           so zooming never re-rasterises the blur (that was the stutter). Its own elements have
+           NO opacity transition (that would re-bake the texture every frame); the "blur-in" is
+           read off the SHARP focus layer cross-fading out on top of it. */
+        .bc-ctx{ pointer-events:none; will-change:transform; }
         .bc-svg{ position:absolute; inset:0; }
-        .bc-layer .bc-svg path, .bc-layer .bc-svg line,
-        .bc-layer .bc-round, .bc-layer .bc-score, .bc-layer .bc-jdot{ transition:opacity .5s cubic-bezier(.16,1,.3,1); }
+        .bc-focus .bc-svg path, .bc-focus .bc-svg line,
+        .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .5s cubic-bezier(.16,1,.3,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
-          transition:transform .12s, box-shadow .15s, opacity .5s cubic-bezier(.16,1,.3,1); }
+          transition:transform .12s, box-shadow .15s; }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .5s cubic-bezier(.16,1,.3,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
