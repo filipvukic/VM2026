@@ -102,6 +102,13 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
+  // Zoom direction: on the way OUT a receded (blurred) round becomes sharp again. Its blurred copy
+  // is a cached texture and can't fade, so it's removed instantly — if the sharp copy fades in over
+  // time you get an ugly low-opacity gap. So on zoom-out the sharp copy snaps in instantly (covers
+  // the disc → no gap); zoom-in keeps the smooth sharp→blur cross-fade.
+  const prevLevel = useRef(level);
+  const zoomingOut = level < prevLevel.current;
+  useEffect(() => { prevLevel.current = level; }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -246,7 +253,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // the blur rasterises into that wrapper's CACHED texture, so the stage scale just GPU-transforms
   // it — the blur can be on-screen the whole zoom without ever re-rasterising (that was the jank).
   // The Chrome-recommended fix: promote the PARENT, put the filter on a CHILD.
-  const ctxBlur = level > 0 ? S * 0.0085 : 0;
+  const ctxBlur = level > 0 ? S * 0.006 : 0;
   const opFor = (ring: number, natural: number, layer: "focus" | "ctx") => {
     if (layer === "ctx") return ring < level ? ctxDim(ring) * natural : 0; // receded rounds, dimmed
     return ring >= level ? natural : 0; // focused rounds sharp+full; receded fade out (handed to ctx)
@@ -335,7 +342,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           <div className="bc-layer bc-ctx-wrap">
             <div className="bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)` }}>{content("ctx")}</div>
           </div>
-          <div className="bc-layer bc-focus">{content("focus")}</div>
+          <div className={`bc-layer bc-focus${zoomingOut ? " zout" : ""}`}>{content("focus")}</div>
         </div>
       </div>
 
@@ -363,6 +370,11 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-svg{ position:absolute; inset:0; }
         .bc-focus .bc-svg path, .bc-focus .bc-svg line,
         .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
+        /* Zooming out: sharp copies snap in instantly so they cover the vanishing blurred discs
+           (no low-opacity gap). Zoom-in keeps the smooth fade above. */
+        .bc-focus.zout .bc-svg path, .bc-focus.zout .bc-svg line,
+        .bc-focus.zout .bc-round, .bc-focus.zout .bc-score, .bc-focus.zout .bc-jdot{ transition:opacity 0s; }
+        .bc-focus.zout .bc-badge{ transition:transform .12s, box-shadow .15s, opacity 0s; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
