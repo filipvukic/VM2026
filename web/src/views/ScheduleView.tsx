@@ -151,7 +151,7 @@ export function ScheduleView() {
 function ScheduleList({ ds }: { ds: Dataset }) {
   const openMatch = useSheets((s) => s.openMatch);
   const filter = useScheduleUI((s) => s.filter);
-  const nextRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     let list = ds.allMatches.slice().sort((a, b) => +a.kickoff - +b.kickoff);
@@ -169,15 +169,6 @@ function ScheduleList({ ds }: { ds: Dataset }) {
     return target ? svDateKey(target.kickoff) : null;
   }, [ds]);
 
-  // Scroll to it once when the tab opens (smooth). Only when the unfiltered list
-  // is shown (the default), so it doesn't fight an explicit filter choice.
-  useEffect(() => {
-    if (filter === "all" && nextRef.current) {
-      nextRef.current.scrollIntoView({ behavior: "auto", block: "start" });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // group by day
   const byDay = useMemo(() => {
     const map = new Map<string, Match[]>();
@@ -189,6 +180,15 @@ function ScheduleList({ ds }: { ds: Dataset }) {
     return [...map.entries()];
   }, [filtered]);
 
+  // Which day to bring to the top: "Alla" jumps to the next match (past the long played
+  // list); a specific filter (Kommande/Live/Spelade) starts at the FIRST day of that list.
+  const topKey = filter === "all" ? nextKey : byDay[0]?.[0] ?? null;
+  // Do it on open AND whenever the filter changes, so e.g. "Kommande" lands on today/next.
+  useEffect(() => {
+    if (topRef.current) topRef.current.scrollIntoView({ behavior: "auto", block: "start" });
+    else window.scrollTo({ top: 0 });
+  }, [filter]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
       {byDay.length === 0 && <div className="dim" style={{ textAlign: "center", padding: 40 }}>Inga matcher.</div>}
@@ -196,8 +196,8 @@ function ScheduleList({ ds }: { ds: Dataset }) {
       {byDay.map(([key, ms]) => (
         <div
           key={key}
-          ref={key === nextKey ? nextRef : undefined}
-          style={{ marginBottom: 22, scrollMarginTop: "calc(var(--header-h) + env(safe-area-inset-top) + 104px)" }}
+          ref={key === topKey ? topRef : undefined}
+          style={{ marginBottom: 22, scrollMarginTop: "calc(var(--header-h) + env(safe-area-inset-top) + 122px)" }}
         >
           <div className="day-head">
             <span>{svDayLabel(ms[0].kickoff, ds.now)}</span>

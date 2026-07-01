@@ -711,7 +711,12 @@ input {
    fixed bottom nav, so the nav would snap/"load in" when the transform clears. Fading only
    keeps the nav viewport-fixed the whole time and it appears together with the page. */
 @keyframes appIn { from { opacity: 0; } to { opacity: 1; } }
+/* Skeleton shimmer shown under images (flags, photos) until they paint — a soft loading
+   placeholder instead of an empty box / pop-in. The opaque image covers it once loaded. */
+.img-skel { background: linear-gradient(100deg, var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%); background-size: 220% 100%; animation: imgSkel 1.15s ease-in-out infinite; }
+@keyframes imgSkel { from { background-position: 220% 0; } to { background-position: -120% 0; } }
 @media (prefers-reduced-motion: reduce) {
   .splash-glow, .splash-rings span, .splash-trophy, .splash-bar span, .splash-inner, .app-reveal { animation: none; }
   .splash-out { animation: none; opacity: 0; visibility: hidden; }
+  .img-skel { animation: none; }
 }

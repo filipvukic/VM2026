@@ -27,20 +27,24 @@ export function PlayerImg({
   const list = (srcs && srcs.length ? srcs : src ? [src] : []).filter(Boolean);
   const key = list.join("|");
   const [idx, setIdx] = useState(0);
-  useEffect(() => setIdx(0), [key]); // reset when the player (its url list) changes
+  const [imgLoaded, setImgLoaded] = useState(false);
+  useEffect(() => { setIdx(0); }, [key]); // reset when the player (its url list) changes
   const openLightbox = useLightbox((s) => s.open);
   const cur = idx < list.length ? list[idx] : null;
+  useEffect(() => { setImgLoaded(false); }, [cur]); // skeleton until the (new) photo paints
   const show = !!cur;
   const canZoom = zoomable && show;
+  const skel = show && !imgLoaded;
   return (
     <span
       onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
+      className={skel ? "img-skel" : undefined}
       style={{
         width: size,
         height: size,
         borderRadius: radius,
         overflow: "hidden",
-        background: "var(--surface-3)",
+        background: skel ? undefined : "var(--surface-3)",
         display: "grid",
         placeItems: "center",
         flexShrink: 0,
@@ -53,8 +57,9 @@ export function PlayerImg({
           src={cur!}
           alt={name}
           decoding="async"
+          onLoad={() => setImgLoaded(true)}
           onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover", opacity: imgLoaded ? 1 : 0, transition: "opacity .3s ease" }}
           onError={() => setIdx((i) => i + 1)}
         />
       ) : (

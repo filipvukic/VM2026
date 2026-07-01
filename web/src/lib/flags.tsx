@@ -31,6 +31,7 @@ export function Flag({ iso, code, size = 22, rounded = true, className, hi = fal
   const w = Math.round(size * ratio);
   const radius = rounded ? Math.max(2, Math.round(size * 0.18)) : 0;
   const [tries, setTries] = useState(0);
+  const [ready, setReady] = useState(false); // drives the skeleton shimmer until the flag paints
   const loaded = useRef(false);
   const timer = useRef<number | undefined>(undefined);
   // (re)arm a single retry timer → after `delay` bump `tries`, which cache-busts the
@@ -42,6 +43,7 @@ export function Flag({ iso, code, size = 22, rounded = true, className, hi = fal
   };
   useEffect(() => {
     loaded.current = false;
+    setReady(false);
     setTries(0);
     return () => { if (timer.current) clearTimeout(timer.current); };
   }, [iso]);
@@ -102,14 +104,14 @@ export function Flag({ iso, code, size = 22, rounded = true, className, hi = fal
   const bust = tries ? `?r=${tries}` : "";
   return (
     <img
-      className={className}
+      className={`${className || ""}${ready ? "" : " img-skel"}`.trim() || undefined}
       src={`https://flagcdn.com/w${px}/${iso}.png${bust}`}
       srcSet={`https://flagcdn.com/w${px * 2}/${iso}.png${bust} 2x`}
       alt=""
       decoding="async"
       width={w}
       height={size}
-      onLoad={() => { loaded.current = true; if (timer.current) clearTimeout(timer.current); }}
+      onLoad={() => { loaded.current = true; setReady(true); if (timer.current) clearTimeout(timer.current); }}
       // Definite failure → retry after a short backoff (cache-busted), so a transient
       // flagcdn hiccup / cold-open burst recovers instead of burning all tries at once.
       onError={() => arm(500 + tries * 500)}
