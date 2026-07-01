@@ -107,10 +107,13 @@ export function ScheduleView() {
       </div>
 
       <style>{`
-        .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
+        /* gap below the pinned header to the matches — it sits in the scroll flow, so it
+           only shows at the very top and slides away under the header once you scroll. */
+        .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); margin-top:14px; }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        /* No view slide-in here: the switcher must be there instantly, not pop/slide in. */
-        .md-view{ animation:none; }
+        /* No view slide-in here (switcher must be there instantly), and no top padding so the
+           header sits flush under the app header at the top instead of floating with a gap. */
+        .md-view{ animation:none; padding-top:0; }
         /* Pinned right under the app header on EVERY screen size so you can always switch
            while scrolling. Frosted full-bleed backdrop (matches the app header) via a
            ::before that spans the whole viewport width — no ugly opaque black box. */
