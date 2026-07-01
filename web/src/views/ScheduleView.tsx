@@ -2,10 +2,10 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { useScheduleUI, type SchedFilter, type BracketView } from "../state/scheduleUi";
-import { useKoBets } from "../state/koBets";
 import { MatchCard } from "../components/MatchCard";
 import { BracketCircle } from "../components/BracketCircle";
 import { Flag } from "../lib/flags";
+// (KO tips entry lives only on the start page now — StandingsView's <KoReminder/>.)
 import { svDayLabel, svDateKey, svDayMonth } from "../lib/format";
 import { isLive, isEnded } from "../lib/liveState";
 import { broadcastForPair } from "../data/static/broadcasts";
@@ -74,7 +74,7 @@ export function ScheduleView() {
           <span className="md-tabs-ind" style={{ left: ind.left, width: ind.width }} aria-hidden />
         </div>
 
-        <div className="md-sub" key={mode}>
+        <div className="md-sub">
           {mode === "list"
             ? F.map((f) => {
                 const on = filter === f.k;
@@ -109,8 +109,11 @@ export function ScheduleView() {
       <style>{`
         .md-fade{ animation:mdFade .34s cubic-bezier(.2,.7,.2,1); }
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
-        .md-head{ position:sticky; top:calc(var(--header-h) + 2px); z-index:6; background:var(--bg); padding-top:4px; margin-bottom:15px; }
-        @media(max-width:919px){ .md-head{ top:0; position:relative; background:transparent; } }
+        /* No view slide-in here: the switcher must be there instantly, not pop/slide in. */
+        .md-view{ animation:none; }
+        /* Pinned right under the app header on EVERY screen size, so you can always switch
+           Spelschema/Slutspel and filters while scrolling. Opaque so content scrolls under it. */
+        .md-head{ position:sticky; top:calc(var(--header-h) + env(safe-area-inset-top)); z-index:6; background:var(--bg); padding:6px 0 12px; }
         /* primary categories — flat underline tabs with a sliding gradient indicator */
         .md-tabs{ position:relative; display:flex; gap:26px; border-bottom:1px solid var(--line-2); }
         .md-tabs button{ padding:7px 1px 12px; font-family:var(--font-display); font-size:16.5px; font-weight:800; letter-spacing:-.01em;
@@ -120,9 +123,8 @@ export function ScheduleView() {
           background:linear-gradient(90deg, var(--cool), var(--hot)); pointer-events:none;
           transition:left .3s cubic-bezier(.4,0,.15,1), width .3s cubic-bezier(.4,0,.15,1); }
         /* sub-filters — light ghost chips, clearly subordinate; only the active category's show */
-        .md-sub{ display:flex; align-items:center; gap:4px; overflow-x:auto; scrollbar-width:none; margin-top:11px; animation:subFade .26s ease; }
+        .md-sub{ display:flex; align-items:center; gap:4px; overflow-x:auto; scrollbar-width:none; margin-top:11px; }
         .md-sub::-webkit-scrollbar{ display:none; }
-        @keyframes subFade{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
         .subchip{ flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:9px;
           background:transparent; color:var(--ink-3); font-weight:700; font-size:12.5px; white-space:nowrap; transition:background .15s, color .15s; }
         .subchip .ct{ font-weight:700; font-variant-numeric:tabular-nums; opacity:.5; }
@@ -185,7 +187,7 @@ function ScheduleList({ ds }: { ds: Dataset }) {
         <div
           key={key}
           ref={key === nextKey ? nextRef : undefined}
-          style={{ marginBottom: 22, scrollMarginTop: "calc(var(--header-h) + 64px)" }}
+          style={{ marginBottom: 22, scrollMarginTop: "calc(var(--header-h) + env(safe-area-inset-top) + 104px)" }}
         >
           <div className="day-head">
             <span>{svDayLabel(ms[0].kickoff, ds.now)}</span>
@@ -229,20 +231,9 @@ function Bracket({ ds, view }: { ds: Dataset; view: BracketView }) {
   ].filter((r) => r.ms && r.ms.length);
   const [round, setRound] = useState<string>("r32");
   const active = rounds.find((r) => r.key === round) || rounds[0];
-  const koName = useKoBets((s) => s.name);
-  const openBet = useKoBets((s) => s.setSheet);
 
   return (
     <div>
-      <button className="bk-cta" onClick={() => openBet(true)}>
-        <span className="bk-cta-ic">✏️</span>
-        <span className="bk-cta-txt">
-          <b>Slutspelstips</b>
-          <span className="dim">{koName ? `Inloggad som ${koName} · ändra dina tips` : "Logga in med din kod och tippa slutspelet"}</span>
-        </span>
-        <span className="bk-cta-go">›</span>
-      </button>
-
       {view === "tree" ? (
         <BracketCircle ds={ds} onOpen={(id) => openMatch(id)} />
       ) : (
@@ -304,13 +295,6 @@ function Bracket({ ds, view }: { ds: Dataset; view: BracketView }) {
         .btc-div{ height:1px; background:var(--line); }
         .bt-bronze{ margin-top:18px; }
         .bt-hint{ font-size:10.5px; color:var(--ink-3); text-align:center; margin-top:10px; }
-        .bk-cta{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; margin-bottom:14px;
-          border-radius:var(--r-lg); border:1px solid color-mix(in srgb, var(--cool) 40%, var(--line-2));
-          background:linear-gradient(135deg, color-mix(in srgb, var(--cool) 16%, var(--surface)), var(--surface)); }
-        .bk-cta-ic{ font-size:20px; flex:0 0 auto; }
-        .bk-cta-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
-        .bk-cta-txt b{ font-size:14.5px; } .bk-cta-txt .dim{ font-size:11.5px; font-weight:700; }
-        .bk-cta-go{ color:var(--ink-3); font-size:20px; font-weight:700; flex:0 0 auto; }
         .bk-rounds{ display:flex; gap:3px; background:var(--surface); border:1px solid var(--line-2);
           border-radius:var(--r-pill); padding:3px; overflow-x:auto; scrollbar-width:none; }
         .bk-rounds::-webkit-scrollbar{ display:none; }
