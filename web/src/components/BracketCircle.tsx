@@ -256,8 +256,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           <>
             <defs>
               <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(255,196,84,.5)" />
-                <stop offset="40%" stopColor="rgba(214,158,60,.18)" />
+                <stop offset="0%" stopColor="rgba(255,198,88,.62)" />
+                <stop offset="34%" stopColor="rgba(224,166,66,.26)" />
                 <stop offset="100%" stopColor="rgba(214,158,60,0)" />
               </radialGradient>
             </defs>
@@ -346,7 +346,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-stepper button:disabled{ opacity:.32; }
         .bc-stepper span{ font-size:12px; font-weight:800; color:var(--ink-2); min-width:112px; text-align:center; letter-spacing:.01em; }
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
-        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .74s cubic-bezier(.16,1,.3,1); will-change:transform; }
+        .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .95s cubic-bezier(.62,0,.2,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
         /* CTX-WRAP is promoted to its own texture (will-change:transform) and the blur sits on its
            CHILD .bc-ctx — so the blur rasterises into the cached texture ONCE and the stage scale
@@ -359,14 +359,17 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-cdot{ position:absolute; border-radius:50%; }
         .bc-svg{ position:absolute; inset:0; }
         .bc-focus .bc-svg path, .bc-focus .bc-svg line,
-        .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .74s cubic-bezier(.16,1,.3,1); }
+        .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
-        .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
+        /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
+           which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
+           (a paint, not a filter) gives the glow and scales cleanly. */
+        .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
           transition:transform .12s, box-shadow .15s; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .74s cubic-bezier(.16,1,.3,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
