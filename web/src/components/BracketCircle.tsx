@@ -25,7 +25,7 @@ const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round 
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean; ring: number }
-interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null; dim: number }
+interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null; ring: number }
 
 function polar(c: number, r: number, deg: number): [number, number] {
   const a = (deg - 90) * (Math.PI / 180);
@@ -102,18 +102,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
-  // Blur is expensive to re-rasterise while the stage is scaling, so we SKIP it during the zoom
-  // (the circle just dims — cheap to composite) and fade it in once the zoom has SETTLED:
-  // "off"  = mid-zoom: no blur at all (nothing to re-rasterise while the stage scales → smooth)
-  // "zero" = scale done: blur(0) applied + the filter transition armed (.bc-blurfade)
-  // "on"   = a tick later: blur(target) → animates blur(0)→target, fading in on the static circle
-  const [blurPhase, setBlurPhase] = useState<"off" | "zero" | "on">("on");
-  useEffect(() => {
-    setBlurPhase("off");
-    const t1 = window.setTimeout(() => setBlurPhase("zero"), 820); // ≥ the .8s stage transition
-    const t2 = window.setTimeout(() => setBlurPhase("on"), 895);
-    return () => { window.clearTimeout(t1); window.clearTimeout(t2); };
-  }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -171,43 +159,41 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const angQF = (j: number) => ang(4, j);
   const angSF = (j: number) => ang(2, j);
 
-  // When zoomed into a round, earlier (outer) rounds recede so focus lands on the current
-  // one — ring >= level stays full, each ring further out fades more. Applied to EVERYTHING
-  // in that round (flags, lines, scores, labels), not just the badges.
+  // When zoomed into a round, earlier (outer) rounds recede so focus lands on the current one:
+  // each element carries its `ring`, and the two-layer render below fades + blurs rings < level.
   const zoomDim = (ring: number) => (ring >= level ? 1 : Math.max(0.12, 1 - (level - ring) * 0.44));
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
-  const arcs: { d: string; color: string | null; dim: number }[] = [];
-  const scores: { x: number; y: number; t: string; dim: number }[] = [];
+  const arcs: { d: string; color: string | null; ring: number }[] = [];
+  const scores: { x: number; y: number; t: string; ring: number }[] = [];
 
-  const radial = (a: number, ra: number, rb: number, color: string | null, dim: number) => {
+  const radial = (a: number, ra: number, rb: number, color: string | null, ring: number) => {
     const [x1, y1] = polar(C, ra, a); const [x2, y2] = polar(C, rb, a);
-    radials.push({ x1, y1, x2, y2, color, dim });
+    radials.push({ x1, y1, x2, y2, color, ring });
   };
-  const arcSeg = (aFrom: number, aTo: number, r: number, color: string | null, dim: number) => {
+  const arcSeg = (aFrom: number, aTo: number, r: number, color: string | null, ring: number) => {
     const [x1, y1] = polar(C, r, aFrom); const [x2, y2] = polar(C, r, aTo);
-    arcs.push({ d: `M${x1} ${y1}A${r} ${r} 0 ${Math.abs(aTo - aFrom) > 180 ? 1 : 0} ${aTo > aFrom ? 1 : 0} ${x2} ${y2}`, color, dim });
+    arcs.push({ d: `M${x1} ${y1}A${r} ${r} 0 ${Math.abs(aTo - aFrom) > 180 ? 1 : 0} ${aTo > aFrom ? 1 : 0} ${x2} ${y2}`, color, ring });
   };
   const addMatch = (m: Match | undefined, a1: number, a2: number, t1: string | null, t2: string | null, rp: number, rc: number, ring: number) => {
-    const dim = zoomDim(ring);
     const played = !!(m && m.status === "played" && m.ga != null && m.gb != null);
     const live = m ? isLive(m) : false;
     const win = m && m.winner ? m.winner : null;
     const wc = win ? colorOf(win) : null;
     const mid = (a1 + a2) / 2;
     if (live) {
-      arcSeg(a1, a2, rp, "var(--hot)", dim);
-      radial(a1, rp, rc, "var(--hot)", dim); radial(a2, rp, rc, "var(--hot)", dim);
+      arcSeg(a1, a2, rp, "var(--hot)", ring);
+      radial(a1, rp, rc, "var(--hot)", ring); radial(a2, rp, rc, "var(--hot)", ring);
     } else if (win && wc && (win === t1 || win === t2)) {
       const winA = win === t1 ? a1 : a2;
       const loseA = win === t1 ? a2 : a1;
-      radial(winA, rp, rc, wc, dim); arcSeg(winA, mid, rp, wc, dim);
-      radial(loseA, rp, rc, null, dim); arcSeg(loseA, mid, rp, null, dim);
+      radial(winA, rp, rc, wc, ring); arcSeg(winA, mid, rp, wc, ring);
+      radial(loseA, rp, rc, null, ring); arcSeg(loseA, mid, rp, null, ring);
     } else {
-      arcSeg(a1, a2, rp, null, dim); radial(a1, rp, rc, null, dim); radial(a2, rp, rc, null, dim);
+      arcSeg(a1, a2, rp, null, ring); radial(a1, rp, rc, null, ring); radial(a2, rp, rc, null, ring);
     }
-    if (played) { const [sx, sy] = polar(C, (rp + rc) / 2, mid); scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}`, dim }); }
+    if (played) { const [sx, sy] = polar(C, (rp + rc) / 2, mid); scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}`, ring }); }
   };
 
   R32_ORDER.forEach((fifa, mi) => {
@@ -241,28 +227,76 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     const live = fm ? isLive(fm) : false;
     const win = fm && fm.winner ? fm.winner : null;
     const wc = win ? colorOf(win) : null;
-    const fdim = zoomDim(4);
-    radial(angSF(0), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[0]) ? wc : null), fdim);
-    radial(angSF(1), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[1]) ? wc : null), fdim);
-    if (fm && fm.status === "played" && fm.ga != null) scores.push({ x: C, y: C + S * 0.115, t: `${fm.ga}–${fm.gb}`, dim: fdim });
+    radial(angSF(0), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[0]) ? wc : null), 4);
+    radial(angSF(1), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[1]) ? wc : null), 4);
+    if (fm && fm.status === "played" && fm.ga != null) scores.push({ x: C, y: C + S * 0.115, t: `${fm.ga}–${fm.gb}`, ring: 4 });
   }
 
   const lineCol = "color-mix(in srgb, var(--ink-3) 28%, transparent)";
   const dot = S * 0.012;
   const sw = (c: string | null) => (c ? S * 0.0042 : S * 0.0026);
   const [hovId, setHovId] = useState<string | null>(null);
-  // Depth-of-field: the more a round is dimmed by the zoom, the more it blurs (in stage
-  // units, so it scales with the circle). `extra` lets a lost badge keep its greyscale.
-  const blurFilter = (dim: number, extra = ""): string | undefined => {
-    if (blurPhase === "off") return extra || undefined; // no blur while scaling (perf)
-    const target = dim >= 1 ? 0 : (1 - dim) * (S * 0.009);
-    if (target <= S * 0.0006 && !extra) return undefined; // focused, not lost → no filter
-    // From-state is a real blur(0) (same function order as the target) so it INTERPOLATES to
-    // the target when phase flips to "on" — instead of snapping (a bare grayscale→blur, or a
-    // none→blur, doesn't interpolate reliably).
-    const b = blurPhase === "zero" ? 0 : target;
-    return extra ? `blur(${b.toFixed(1)}px) ${extra}` : `blur(${b.toFixed(1)}px)`;
-  };
+
+  // Two-layer depth of field: a SHARP focus layer (rings >= level) and a BLURRED context layer
+  // (rings < level) carrying ONE blur filter. Each layer's own content is static (only the parent
+  // stage transform scales it), so the browser caches the blur and GPU-composites the zoom → the
+  // zoom stays smooth even with blur on, and the blur transitions in AT THE SAME TIME as the zoom.
+  const ctxBlur = level > 0 ? S * 0.0085 : 0;
+  const opFor = (ring: number, natural: number, layer: "focus" | "ctx") =>
+    layer === "focus" ? (ring >= level ? natural : 0) : ring < level ? zoomDim(ring) * natural : 0;
+
+  const content = (layer: "focus" | "ctx") => (
+    <>
+      <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
+        {layer === "focus" && (
+          <>
+            <defs>
+              <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(255,196,84,.5)" />
+                <stop offset="40%" stopColor="rgba(214,158,60,.18)" />
+                <stop offset="100%" stopColor="rgba(214,158,60,0)" />
+              </radialGradient>
+            </defs>
+            <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
+          </>
+        )}
+        {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={opFor(a.ring, 1, layer)} />)}
+        {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={opFor(l.ring, 1, layer)} />)}
+      </svg>
+
+      {ROUND_NAMES.map((t, i) => {
+        const [lx, ly] = polar(C, R[i], 180);
+        return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: opFor(i, 1, layer) }}>{t}</span>;
+      })}
+
+      {layer === "focus" && <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>}
+
+      {nodes.map((n, i) => {
+        const op = opFor(n.ring, n.lost ? 0.42 : 1, layer);
+        if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: op }} />;
+        const clickable = layer === "focus" && op > 0; // only the sharp, in-focus flags are interactive
+        return (
+          <button
+            key={i}
+            className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
+            style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: op, pointerEvents: clickable ? undefined : "none" }}
+            onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
+            onMouseLeave={clickable ? () => setHovId(null) : undefined}
+            onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
+            disabled={!clickable || !n.id}
+            tabIndex={clickable ? undefined : -1}
+            aria-label={n.code}
+          >
+            <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
+          </button>
+        );
+      })}
+
+      {scores.map((s, i) => (
+        <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: opFor(s.ring, 1, layer) }}>{s.t}</span>
+      ))}
+    </>
+  );
 
   return (
     <div
@@ -280,48 +314,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       </div>
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
-        <div className={`bc-stage${blurPhase === "off" ? "" : " bc-blurfade"}`} style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
-          <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
-            <defs>
-              <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(255,196,84,.5)" />
-                <stop offset="40%" stopColor="rgba(214,158,60,.18)" />
-                <stop offset="100%" stopColor="rgba(214,158,60,0)" />
-              </radialGradient>
-            </defs>
-            <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={a.dim} style={{ filter: blurFilter(a.dim) }} />)}
-            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={l.dim} style={{ filter: blurFilter(l.dim) }} />)}
-          </svg>
-
-          {ROUND_NAMES.map((t, i) => {
-            const [lx, ly] = polar(C, R[i], 180);
-            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: zoomDim(i), filter: blurFilter(zoomDim(i)) }}>{t}</span>;
-          })}
-
-          <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
-
-          {nodes.map((n, i) => {
-            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim(n.ring), filter: blurFilter(zoomDim(n.ring)) }} />;
-            return (
-              <button
-                key={i}
-                className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
-                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim(n.ring), filter: blurFilter(zoomDim(n.ring), n.lost ? "grayscale(.65)" : "") }}
-                onMouseEnter={() => setHovId(n.id)}
-                onMouseLeave={() => setHovId(null)}
-                onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
-                disabled={!n.id}
-                aria-label={n.code}
-              >
-                <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
-              </button>
-            );
-          })}
-
-          {scores.map((s, i) => (
-            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: s.dim, filter: blurFilter(s.dim) }}>{s.t}</span>
-          ))}
+        <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
+          <div className="bc-layer bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)` }}>{content("ctx")}</div>
+          <div className="bc-layer bc-focus">{content("focus")}</div>
         </div>
       </div>
 
@@ -337,22 +332,20 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
+        /* Two overlaid layers filling the stage. The blurred CONTEXT layer carries a single
+           blur that fades in with the zoom (its content is static so the scale is cheap); the
+           elements cross-fade (opacity) between the two layers as rounds enter/leave focus. */
+        .bc-layer{ position:absolute; inset:0; }
+        .bc-ctx{ pointer-events:none; transition:filter .55s cubic-bezier(.16,1,.3,1); will-change:filter; }
         .bc-svg{ position:absolute; inset:0; }
-        /* Opacity fades during the zoom (cheap). The blur (filter) is only transitioned once
-           the zoom SETTLES — the .bc-blurfade class (added when the scale stops) turns the
-           filter transition on, so the blur fades in smoothly on the STATIC circle instead of
-           popping, and never re-rasterises a filter mid-scale (what made zooming stutter). */
-        .bc-svg path, .bc-svg line{ transition:opacity .3s ease; }
-        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease; }
-        .bc-blurfade .bc-svg path, .bc-blurfade .bc-svg line,
-        .bc-blurfade .bc-round, .bc-blurfade .bc-score, .bc-blurfade .bc-jdot{ transition:opacity .3s ease, filter .42s ease; }
+        .bc-layer .bc-svg path, .bc-layer .bc-svg line,
+        .bc-layer .bc-round, .bc-layer .bc-score, .bc-layer .bc-jdot{ transition:opacity .5s cubic-bezier(.16,1,.3,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
-          transition:transform .12s, box-shadow .15s, opacity .15s; }
-        .bc-blurfade .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .15s, filter .42s ease; }
+          transition:transform .12s, box-shadow .15s, opacity .5s cubic-bezier(.16,1,.3,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
