@@ -239,6 +239,13 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const dot = S * 0.012;
   const sw = (c: string | null) => (c ? S * 0.0042 : S * 0.0026);
   const [hovId, setHovId] = useState<string | null>(null);
+  // Depth-of-field: the more a round is dimmed by the zoom, the more it blurs (in stage
+  // units, so it scales with the circle). `extra` lets a lost badge keep its greyscale.
+  const blurFilter = (dim: number, extra = ""): string | undefined => {
+    const b = (1 - dim) * (S * 0.009);
+    const parts = [b > S * 0.0006 ? `blur(${b.toFixed(1)}px)` : "", extra].filter(Boolean);
+    return parts.length ? parts.join(" ") : undefined;
+  };
 
   return (
     <div
@@ -266,24 +273,24 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
               </radialGradient>
             </defs>
             <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={a.dim} />)}
-            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={l.dim} />)}
+            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={a.dim} style={{ filter: blurFilter(a.dim) }} />)}
+            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={l.dim} style={{ filter: blurFilter(l.dim) }} />)}
           </svg>
 
           {ROUND_NAMES.map((t, i) => {
             const [lx, ly] = polar(C, R[i], 180);
-            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: zoomDim(i) }}>{t}</span>;
+            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: zoomDim(i), filter: blurFilter(zoomDim(i)) }}>{t}</span>;
           })}
 
           <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
 
           {nodes.map((n, i) => {
-            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim(n.ring) }} />;
+            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim(n.ring), filter: blurFilter(zoomDim(n.ring)) }} />;
             return (
               <button
                 key={i}
                 className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
-                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim(n.ring) }}
+                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim(n.ring), filter: blurFilter(zoomDim(n.ring), n.lost ? "grayscale(.65)" : "") }}
                 onMouseEnter={() => setHovId(n.id)}
                 onMouseLeave={() => setHovId(null)}
                 onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
@@ -296,7 +303,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           })}
 
           {scores.map((s, i) => (
-            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: s.dim }}>{s.t}</span>
+            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: s.dim, filter: blurFilter(s.dim) }}>{s.t}</span>
           ))}
         </div>
       </div>
@@ -314,9 +321,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
         .bc-svg{ position:absolute; inset:0; }
-        /* smooth focus fade when stepping rounds (opacity is set per element by the zoom level) */
-        .bc-svg path, .bc-svg line{ transition:opacity .3s ease; }
-        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease; }
+        /* smooth focus fade + blur when stepping rounds (set per element by the zoom level) */
+        .bc-svg path, .bc-svg line{ transition:opacity .3s ease, filter .3s ease; }
+        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease, filter .3s ease; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
