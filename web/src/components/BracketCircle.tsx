@@ -102,13 +102,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
-  // Zoom direction: on the way OUT a receded (blurred) round becomes sharp again. Its blurred copy
-  // is a cached texture and can't fade, so it's removed instantly — if the sharp copy fades in over
-  // time you get an ugly low-opacity gap. So on zoom-out the sharp copy snaps in instantly (covers
-  // the disc → no gap); zoom-in keeps the smooth sharp→blur cross-fade.
-  const prevLevel = useRef(level);
-  const zoomingOut = level < prevLevel.current;
-  useEffect(() => { prevLevel.current = level; }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -247,76 +240,76 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const sw = (c: string | null) => (c ? S * 0.0042 : S * 0.0026);
   const [hovId, setHovId] = useState<string | null>(null);
 
-  // Depth of field in two layers, cross-fading DURING the zoom (both simultaneous + smooth).
-  // FOCUS holds the sharp, interactive rounds; its receded rounds fade to 0 as the zoom runs.
-  // CTX holds the receded rounds pre-blurred and lives inside a promoted wrapper (see render):
-  // the blur rasterises into that wrapper's CACHED texture, so the stage scale just GPU-transforms
-  // it — the blur can be on-screen the whole zoom without ever re-rasterising (that was the jank).
-  // The Chrome-recommended fix: promote the PARENT, put the filter on a CHILD.
-  const ctxBlur = level > 0 ? S * 0.006 : 0;
-  const opFor = (ring: number, natural: number, layer: "focus" | "ctx") => {
-    if (layer === "ctx") return ring < level ? ctxDim(ring) * natural : 0; // receded rounds, dimmed
-    return ring >= level ? natural : 0; // focused rounds sharp+full; receded fade out (handed to ctx)
+  // Depth of field WITHOUT a CSS blur filter (filters re-rasterise / go blocky when scaled, which
+  // caused the jank, the "squares", and the trophy artefacts). Instead the receded rounds' flags
+  // become soft radial-gradient BLOBS — a paint, not a filter, so it scales crisply, needs no
+  // cached texture, and can cross-fade both ways (no zoom-out gap). FOCUS holds everything sharp
+  // with receded rounds dimmed; its receded flags fade to 0 and hand off to the blob on CTX.
+  const focusDim = (ring: number, natural: number) => (ring >= level ? natural : ctxDim(ring) * natural);
+
+  const content = (layer: "focus" | "ctx") => {
+    // CTX layer = only the soft blobs standing in for the receded (blurred) flags.
+    if (layer === "ctx")
+      return (
+        <>
+          {nodes.map((n, i) => {
+            if (!n.code) return null;
+            const op = n.ring < level ? ctxDim(n.ring) * (n.lost ? 0.42 : 1) : 0; // fades both ways with the zoom
+            const bd = n.d * 1.5;
+            const col = colorOf(n.code) ?? "var(--ink-3)";
+            return <span key={i} className="bc-blob" style={{ left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, background: `radial-gradient(circle, ${col} 0%, ${col} 30%, transparent 70%)`, opacity: op }} />;
+          })}
+        </>
+      );
+    return (
+      <>
+        <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
+          <defs>
+            <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(255,198,88,.62)" />
+              <stop offset="34%" stopColor="rgba(224,166,66,.26)" />
+              <stop offset="100%" stopColor="rgba(214,158,60,0)" />
+            </radialGradient>
+          </defs>
+          <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
+          {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={focusDim(a.ring, 1) * (a.ring >= level ? 1 : 0.7)} />)}
+          {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={focusDim(l.ring, 1) * (l.ring >= level ? 1 : 0.7)} />)}
+        </svg>
+
+        {ROUND_NAMES.map((t, i) => {
+          const [lx, ly] = polar(C, R[i], 180);
+          return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: focusDim(i, 1) }}>{t}</span>;
+        })}
+
+        <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
+
+        {nodes.map((n, i) => {
+          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1) }} />;
+          const op = n.ring >= level ? (n.lost ? 0.42 : 1) : 0; // focused flags sharp; receded fade to 0 (→ blob)
+          const clickable = op > 0; // only the sharp, in-focus flags are interactive
+          return (
+            <button
+              key={i}
+              className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
+              style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: op, pointerEvents: clickable ? undefined : "none" }}
+              onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
+              onMouseLeave={clickable ? () => setHovId(null) : undefined}
+              onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
+              disabled={!clickable || !n.id}
+              tabIndex={clickable ? undefined : -1}
+              aria-label={n.code}
+            >
+              <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
+            </button>
+          );
+        })}
+
+        {scores.map((s, i) => (
+          <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: focusDim(s.ring, 1) }}>{s.t}</span>
+        ))}
+      </>
+    );
   };
-
-  const content = (layer: "focus" | "ctx") => (
-    <>
-      <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
-        {layer === "focus" && (
-          <>
-            <defs>
-              <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(255,198,88,.62)" />
-                <stop offset="34%" stopColor="rgba(224,166,66,.26)" />
-                <stop offset="100%" stopColor="rgba(214,158,60,0)" />
-              </radialGradient>
-            </defs>
-            <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          </>
-        )}
-        {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={opFor(a.ring, 1, layer)} />)}
-        {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={opFor(l.ring, 1, layer)} />)}
-      </svg>
-
-      {ROUND_NAMES.map((t, i) => {
-        const [lx, ly] = polar(C, R[i], 180);
-        return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: opFor(i, 1, layer) }}>{t}</span>;
-      })}
-
-      {layer === "focus" && <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>}
-
-      {nodes.map((n, i) => {
-        const op = opFor(n.ring, n.lost ? 0.42 : 1, layer);
-        if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: op }} />;
-        if (layer === "ctx") {
-          // Blurred backdrop = a solid team-coloured disc, NOT the flag image: the blur hides flag
-          // detail anyway, and it means flags load only once (no doubled flagcdn burst → no "?").
-          if (op <= 0) return null;
-          return <span key={i} className="bc-cdot" style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, background: colorOf(n.code) ?? "var(--surface-3)", opacity: op }} />;
-        }
-        const clickable = op > 0; // only the sharp, in-focus flags are interactive
-        return (
-          <button
-            key={i}
-            className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
-            style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: op, pointerEvents: clickable ? undefined : "none" }}
-            onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
-            onMouseLeave={clickable ? () => setHovId(null) : undefined}
-            onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
-            disabled={!clickable || !n.id}
-            tabIndex={clickable ? undefined : -1}
-            aria-label={n.code}
-          >
-            <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
-          </button>
-        );
-      })}
-
-      {scores.map((s, i) => (
-        <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: opFor(s.ring, 1, layer) }}>{s.t}</span>
-      ))}
-    </>
-  );
 
   return (
     <div
@@ -335,14 +328,11 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
-          {/* Promoted WRAPPER (own cached texture) with the blur on its CHILD — so the blur
-              rasterises into the cached texture once and the stage scale only GPU-transforms it,
-              never re-rasterising. That lets the blurred receded rounds stay on screen the whole
-              zoom while the focus layer cross-fades them out → blur + zoom, simultaneous + smooth. */}
-          <div className="bc-layer bc-ctx-wrap">
-            <div className="bc-ctx" style={{ filter: `blur(${ctxBlur.toFixed(1)}px)` }}>{content("ctx")}</div>
-          </div>
-          <div className={`bc-layer bc-focus${zoomingOut ? " zout" : ""}`}>{content("focus")}</div>
+          {/* Soft blobs (behind) stand in for the receded flags; the sharp interactive layer sits
+              on top. Both cross-fade by opacity as rounds enter/leave focus — no filter anywhere,
+              so the zoom is pure transform + opacity: smooth, crisp, no scaling artefacts. */}
+          <div className="bc-layer bc-ctx">{content("ctx")}</div>
+          <div className="bc-layer bc-focus">{content("focus")}</div>
         </div>
       </div>
 
@@ -358,23 +348,15 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .95s cubic-bezier(.62,0,.2,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
-        /* CTX-WRAP is promoted to its own texture (will-change:transform) and the blur sits on its
-           CHILD .bc-ctx — so the blur rasterises into the cached texture ONCE and the stage scale
-           only GPU-transforms it (never re-rasterises the filter = the fix for the jank). The blur
-           can therefore stay on screen through the whole zoom while FOCUS cross-fades the same
-           rounds out on top → depth of field appears WITH the zoom, both smooth. */
+        /* No filter anywhere. The receded flags are soft radial-gradient blobs (.bc-blob) that
+           cross-fade by opacity with the sharp flags — a paint, not a filter, so the zoom is pure
+           transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-ctx-wrap{ pointer-events:none; will-change:transform; }
-        .bc-ctx{ position:absolute; inset:0; }
-        .bc-cdot{ position:absolute; border-radius:50%; }
+        .bc-ctx{ pointer-events:none; }
+        .bc-blob{ position:absolute; border-radius:50%; transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-svg{ position:absolute; inset:0; }
         .bc-focus .bc-svg path, .bc-focus .bc-svg line,
         .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
-        /* Zooming out: sharp copies snap in instantly so they cover the vanishing blurred discs
-           (no low-opacity gap). Zoom-in keeps the smooth fade above. */
-        .bc-focus.zout .bc-svg path, .bc-focus.zout .bc-svg line,
-        .bc-focus.zout .bc-round, .bc-focus.zout .bc-score, .bc-focus.zout .bc-jdot{ transition:opacity 0s; }
-        .bc-focus.zout .bc-badge{ transition:transform .12s, box-shadow .15s, opacity 0s; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
