@@ -81,6 +81,31 @@ const BONUS_KEY_MAP: Record<string, BonusSlot> = {
 };
 const TEAM_BONUS = new Set<BonusSlot>(["winner", "silver", "bronze"]);
 
+// Canonical DISPLAY names for the loosely-typed player bonus picks (e.g. "mbappe",
+// "Mbappe", "Kylian Mbappe" all show as "Kylian Mbappé"). Keyed by a normalised surname
+// token. (The engine already SCORES these by token-subset, so this is display-only.)
+const PLAYER_CANON: Record<string, string> = {
+  mbappe: "Kylian Mbappé",
+  yamal: "Lamine Yamal",
+  raya: "David Raya",
+  pedri: "Pedri",
+  kane: "Harry Kane",
+  courtois: "Thibaut Courtois",
+  neves: "João Neves",
+  maignan: "Mike Maignan",
+  simon: "Unai Simón",
+  fernandes: "Bruno Fernandes",
+  vitinha: "Vitinha",
+  verbruggen: "Bart Verbruggen",
+};
+function canonPlayer(pick?: string | null): string {
+  if (!pick) return "-";
+  const stripped = pick.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const toks = stripped.match(/[a-z0-9]+/g) || [];
+  for (const t of toks) if (PLAYER_CANON[t]) return PLAYER_CANON[t];
+  return pick; // unknown player → show exactly as typed
+}
+
 export function build(data: RawData, fixtures: RawFixture[]): Dataset {
   const D = data || {};
   const F = fixtures || [];
@@ -509,6 +534,12 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
   // ============= knockout =============
   const knockout = buildKnockout(groupTables, allMatches);
 
+  // Bonus (winner / top scorer / best player …) only counts once the tournament is OVER.
+  // The engine can resolve some early (e.g. the CURRENT top scorer), but those must NOT be
+  // added to totals or shown as decided until the very end. The champion is only set once
+  // the final is played, so that's our "it's over" signal.
+  const tournamentOver = !!(D.bonus_actual && D.bonus_actual.winner);
+
   // Replace KO entries in allMatches with the structural versions.
   const groupMatches = allMatches.filter((m) => m.stage === "group");
   const allMatchesNew = groupMatches.concat(
@@ -599,7 +630,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       if (TEAM_BONUS.has(dstKey)) {
         out[dstKey] = teamCodeFromPick(v.pick, TEAMS);
       } else {
-        out[dstKey] = [v.pick || "-", null];
+        out[dstKey] = [canonPlayer(v.pick), null];
       }
     });
     return out;
@@ -660,9 +691,9 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       correct,
       other,
       bonus: buildBonus(p.bonus_detail),
-      bonusPts: p.bonus_points || 0,
+      bonusPts: tournamentOver ? p.bonus_points || 0 : 0,
       rank: p.rank || 0,
-      total: matchPoints + (p.bonus_points || 0),
+      total: matchPoints + (tournamentOver ? p.bonus_points || 0 : 0),
     };
   });
 
@@ -708,7 +739,13 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     },
     stars: [],
     updatedAt: D.updated_at,
-    bonusActual: D.bonus_actual,
+    // Hide the "facit" for bonus until the tournament is over, so nothing shows as decided
+    // (e.g. the provisional top scorer) while it can still change.
+    bonusActual: tournamentOver
+      ? D.bonus_actual
+      : D.bonus_actual
+        ? (Object.fromEntries(Object.keys(D.bonus_actual).map((k) => [k, null])) as typeof D.bonus_actual)
+        : D.bonus_actual,
     bonusPoints: D.bonus_points,
     awardsPending: D.awards_pending,
     unmatchedTips: D.unmatched_tips,

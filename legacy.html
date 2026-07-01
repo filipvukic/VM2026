@@ -816,6 +816,13 @@
       best_young:"youngplayer", best_keeper:"keeper"
     };
     const TEAM_BONUS = new Set(["winner","silver","bronze"]);
+    const PLAYER_CANON = { mbappe:"Kylian Mbappé", yamal:"Lamine Yamal", raya:"David Raya", pedri:"Pedri", kane:"Harry Kane", courtois:"Thibaut Courtois", neves:"João Neves", maignan:"Mike Maignan", simon:"Unai Simón", fernandes:"Bruno Fernandes", vitinha:"Vitinha", verbruggen:"Bart Verbruggen" };
+    function canonPlayer(pick){
+      if(!pick) return "-";
+      const toks = pick.normalize("NFKD").replace(/[̀-ͯ]/g,"").toLowerCase().match(/[a-z0-9]+/g) || [];
+      for(const t of toks){ if(PLAYER_CANON[t]) return PLAYER_CANON[t]; }
+      return pick;
+    }
 
     const realIdToMatchId = {};
     allMatches.forEach(m => { if(m._realId != null) realIdToMatchId[m._realId] = m.id; });
@@ -840,13 +847,15 @@
         if(TEAM_BONUS.has(dstKey)){
           out[dstKey] = teamCodeFromPick(v.pick, TEAMS);
         } else {
-          out[dstKey] = [v.pick || "-", null];
+          out[dstKey] = [canonPlayer(v.pick), null];
         }
       });
       return out;
     }
 
     const leaderboard = D.leaderboard || [];
+    // Bonus only counts once the tournament is over (champion set = final played).
+    const tournamentOver = !!(D.bonus_actual && D.bonus_actual.winner);
     const players = leaderboard.map(p => {
       const tips = buildPlayerTips(p.name);
       let exact = p.exact_count || 0;
@@ -873,9 +882,9 @@
         points: p.match_points || 0,
         exact, correct, other,
         bonus: buildBonus(p.bonus_detail),
-        bonusPts: p.bonus_points || 0,
+        bonusPts: tournamentOver ? (p.bonus_points || 0) : 0,
         rank: p.rank || 0,
-        total: (p.match_points || 0) + (p.bonus_points || 0)
+        total: (p.match_points || 0) + (tournamentOver ? (p.bonus_points || 0) : 0)
       };
     });
 

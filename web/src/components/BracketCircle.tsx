@@ -24,7 +24,7 @@ const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
 const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round without over-zooming past it
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 
-interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean }
+interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean; ring: number }
 interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null }
 
 function polar(c: number, r: number, deg: number): [number, number] {
@@ -200,7 +200,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       const code = m ? (side === "home" ? m.home : m.away) : null;
       const lost = !!(m && m.status === "played" && m.winner && code && m.winner !== code);
       const [x, y] = polar(C, R[0], base + off);
-      nodes.push({ x, y, d: D[0], code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost });
+      nodes.push({ x, y, d: D[0], code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
     });
     addMatch(m, base - DELTA, base + DELTA, m?.home ?? null, m?.away ?? null, R[1], R[0]);
   });
@@ -208,7 +208,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     const nm = byFifa[nextFifa];
     const lost = !!(code && nm && nm.status === "played" && nm.winner && nm.winner !== code);
     const [x, y] = polar(C, R[lvl], angle);
-    nodes.push({ x, y, d: D[lvl], code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost });
+    nodes.push({ x, y, d: D[lvl], code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost, ring: lvl });
   };
   R32_ORDER.forEach((fifa, mi) => winnerBadge(winOf(fifa), 1, angR32(mi), R16_ORDER[Math.floor(mi / 2)]));
   R16_ORDER.forEach((fifa, j) => winnerBadge(winOf(fifa), 2, angR16(j), QF_ORDER[Math.floor(j / 2)]));
@@ -271,12 +271,15 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
 
           {nodes.map((n, i) => {
-            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot }} />;
+            // When zoomed into a round, fade the rounds further out (the periphery) so the
+            // focused round stands out. ring >= level stays full; each ring further out dims.
+            const zoomDim = n.ring >= level ? 1 : Math.max(0.14, 1 - (level - n.ring) * 0.42);
+            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim }} />;
             return (
               <button
                 key={i}
                 className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
-                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d }}
+                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim }}
                 onMouseEnter={() => setHovId(n.id)}
                 onMouseLeave={() => setHovId(null)}
                 onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
