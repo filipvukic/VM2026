@@ -60405,23 +60405,14 @@
     "away": "Norway",
     "awayTla": "NOR",
     "status": "FINISHED",
-    "score": [
-      1,
-      2
-    ],
+    "score": null,
     "scoreDetail": {
-      "halfTime": [
-        0,
-        1
-      ],
-      "fullTime": [
-        1,
-        2
-      ],
+      "halfTime": null,
+      "fullTime": null,
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "AWAY_TEAM"
+      "winnerSide": null
     },
     "minute": null,
     "goals": [
@@ -61089,8 +61080,8 @@
       "accurateCrosses": 5.0,
       "totalCrosses": 10.0,
       "crossPct": 0.5,
-      "totalLongBalls": 34.0,
-      "accurateLongBalls": 18.0,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 16.0,
       "longballPct": 0.5,
       "blockedShots": 3.0,
       "effectiveTackles": 11.0,
@@ -61980,7 +61971,13 @@
       "city": "Mexico City",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Slavko Vinčič",
+        "role": "REFEREE",
+        "nationality": "Slovenia"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
