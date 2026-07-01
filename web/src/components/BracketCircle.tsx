@@ -25,7 +25,7 @@ const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round 
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean; ring: number }
-interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null }
+interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null; dim: number }
 
 function polar(c: number, r: number, deg: number): [number, number] {
   const a = (deg - 90) * (Math.PI / 180);
@@ -159,37 +159,43 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const angQF = (j: number) => ang(4, j);
   const angSF = (j: number) => ang(2, j);
 
+  // When zoomed into a round, earlier (outer) rounds recede so focus lands on the current
+  // one — ring >= level stays full, each ring further out fades more. Applied to EVERYTHING
+  // in that round (flags, lines, scores, labels), not just the badges.
+  const zoomDim = (ring: number) => (ring >= level ? 1 : Math.max(0.12, 1 - (level - ring) * 0.44));
+
   const nodes: Node[] = [];
   const radials: Seg[] = [];
-  const arcs: { d: string; color: string | null }[] = [];
-  const scores: { x: number; y: number; t: string }[] = [];
+  const arcs: { d: string; color: string | null; dim: number }[] = [];
+  const scores: { x: number; y: number; t: string; dim: number }[] = [];
 
-  const radial = (a: number, ra: number, rb: number, color: string | null) => {
+  const radial = (a: number, ra: number, rb: number, color: string | null, dim: number) => {
     const [x1, y1] = polar(C, ra, a); const [x2, y2] = polar(C, rb, a);
-    radials.push({ x1, y1, x2, y2, color });
+    radials.push({ x1, y1, x2, y2, color, dim });
   };
-  const arcSeg = (aFrom: number, aTo: number, r: number, color: string | null) => {
+  const arcSeg = (aFrom: number, aTo: number, r: number, color: string | null, dim: number) => {
     const [x1, y1] = polar(C, r, aFrom); const [x2, y2] = polar(C, r, aTo);
-    arcs.push({ d: `M${x1} ${y1}A${r} ${r} 0 ${Math.abs(aTo - aFrom) > 180 ? 1 : 0} ${aTo > aFrom ? 1 : 0} ${x2} ${y2}`, color });
+    arcs.push({ d: `M${x1} ${y1}A${r} ${r} 0 ${Math.abs(aTo - aFrom) > 180 ? 1 : 0} ${aTo > aFrom ? 1 : 0} ${x2} ${y2}`, color, dim });
   };
-  const addMatch = (m: Match | undefined, a1: number, a2: number, t1: string | null, t2: string | null, rp: number, rc: number) => {
+  const addMatch = (m: Match | undefined, a1: number, a2: number, t1: string | null, t2: string | null, rp: number, rc: number, ring: number) => {
+    const dim = zoomDim(ring);
     const played = !!(m && m.status === "played" && m.ga != null && m.gb != null);
     const live = m ? isLive(m) : false;
     const win = m && m.winner ? m.winner : null;
     const wc = win ? colorOf(win) : null;
     const mid = (a1 + a2) / 2;
     if (live) {
-      arcSeg(a1, a2, rp, "var(--hot)");
-      radial(a1, rp, rc, "var(--hot)"); radial(a2, rp, rc, "var(--hot)");
+      arcSeg(a1, a2, rp, "var(--hot)", dim);
+      radial(a1, rp, rc, "var(--hot)", dim); radial(a2, rp, rc, "var(--hot)", dim);
     } else if (win && wc && (win === t1 || win === t2)) {
       const winA = win === t1 ? a1 : a2;
       const loseA = win === t1 ? a2 : a1;
-      radial(winA, rp, rc, wc); arcSeg(winA, mid, rp, wc);
-      radial(loseA, rp, rc, null); arcSeg(loseA, mid, rp, null);
+      radial(winA, rp, rc, wc, dim); arcSeg(winA, mid, rp, wc, dim);
+      radial(loseA, rp, rc, null, dim); arcSeg(loseA, mid, rp, null, dim);
     } else {
-      arcSeg(a1, a2, rp, null); radial(a1, rp, rc, null); radial(a2, rp, rc, null);
+      arcSeg(a1, a2, rp, null, dim); radial(a1, rp, rc, null, dim); radial(a2, rp, rc, null, dim);
     }
-    if (played) { const [sx, sy] = polar(C, (rp + rc) / 2, mid); scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}` }); }
+    if (played) { const [sx, sy] = polar(C, (rp + rc) / 2, mid); scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}`, dim }); }
   };
 
   R32_ORDER.forEach((fifa, mi) => {
@@ -202,7 +208,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       const [x, y] = polar(C, R[0], base + off);
       nodes.push({ x, y, d: D[0], code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
     });
-    addMatch(m, base - DELTA, base + DELTA, m?.home ?? null, m?.away ?? null, R[1], R[0]);
+    addMatch(m, base - DELTA, base + DELTA, m?.home ?? null, m?.away ?? null, R[1], R[0], 0);
   });
   const winnerBadge = (code: string | null, lvl: number, angle: number, nextFifa: number) => {
     const nm = byFifa[nextFifa];
@@ -215,17 +221,18 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   QF_ORDER.forEach((fifa, k) => winnerBadge(winOf(fifa), 3, angQF(k), SF_ORDER[Math.floor(k / 2)]));
   SF_ORDER.forEach((fifa, l) => winnerBadge(winOf(fifa), 4, angSF(l), 104));
 
-  R16_ORDER.forEach((fifa, j) => addMatch(byFifa[fifa], angR32(2 * j), angR32(2 * j + 1), winOf(R32_ORDER[2 * j]), winOf(R32_ORDER[2 * j + 1]), R[2], R[1]));
-  QF_ORDER.forEach((fifa, k) => addMatch(byFifa[fifa], angR16(2 * k), angR16(2 * k + 1), winOf(R16_ORDER[2 * k]), winOf(R16_ORDER[2 * k + 1]), R[3], R[2]));
-  SF_ORDER.forEach((fifa, l) => addMatch(byFifa[fifa], angQF(2 * l), angQF(2 * l + 1), winOf(QF_ORDER[2 * l]), winOf(QF_ORDER[2 * l + 1]), R[4], R[3]));
+  R16_ORDER.forEach((fifa, j) => addMatch(byFifa[fifa], angR32(2 * j), angR32(2 * j + 1), winOf(R32_ORDER[2 * j]), winOf(R32_ORDER[2 * j + 1]), R[2], R[1], 1));
+  QF_ORDER.forEach((fifa, k) => addMatch(byFifa[fifa], angR16(2 * k), angR16(2 * k + 1), winOf(R16_ORDER[2 * k]), winOf(R16_ORDER[2 * k + 1]), R[3], R[2], 2));
+  SF_ORDER.forEach((fifa, l) => addMatch(byFifa[fifa], angQF(2 * l), angQF(2 * l + 1), winOf(QF_ORDER[2 * l]), winOf(QF_ORDER[2 * l + 1]), R[4], R[3], 3));
   {
     const fm = byFifa[104];
     const live = fm ? isLive(fm) : false;
     const win = fm && fm.winner ? fm.winner : null;
     const wc = win ? colorOf(win) : null;
-    radial(angSF(0), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[0]) ? wc : null));
-    radial(angSF(1), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[1]) ? wc : null));
-    if (fm && fm.status === "played" && fm.ga != null) scores.push({ x: C, y: C + S * 0.115, t: `${fm.ga}–${fm.gb}` });
+    const fdim = zoomDim(4);
+    radial(angSF(0), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[0]) ? wc : null), fdim);
+    radial(angSF(1), R[4], S * 0.05, live ? "var(--hot)" : (win && win === winOf(SF_ORDER[1]) ? wc : null), fdim);
+    if (fm && fm.status === "played" && fm.ga != null) scores.push({ x: C, y: C + S * 0.115, t: `${fm.ga}–${fm.gb}`, dim: fdim });
   }
 
   const lineCol = "color-mix(in srgb, var(--ink-3) 28%, transparent)";
@@ -259,27 +266,24 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
               </radialGradient>
             </defs>
             <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" />)}
-            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" />)}
+            {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={a.dim} />)}
+            {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={l.dim} />)}
           </svg>
 
           {ROUND_NAMES.map((t, i) => {
             const [lx, ly] = polar(C, R[i], 180);
-            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145) }}>{t}</span>;
+            return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: zoomDim(i) }}>{t}</span>;
           })}
 
           <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
 
           {nodes.map((n, i) => {
-            // When zoomed into a round, fade the rounds further out (the periphery) so the
-            // focused round stands out. ring >= level stays full; each ring further out dims.
-            const zoomDim = n.ring >= level ? 1 : Math.max(0.14, 1 - (level - n.ring) * 0.42);
-            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim }} />;
+            if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: zoomDim(n.ring) }} />;
             return (
               <button
                 key={i}
                 className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${n.id && n.id === hovId ? " hov" : ""}`}
-                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim }}
+                style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: (n.lost ? 0.42 : 1) * zoomDim(n.ring) }}
                 onMouseEnter={() => setHovId(n.id)}
                 onMouseLeave={() => setHovId(null)}
                 onClick={() => { if (!moved.current && n.id) onOpen(n.id); }}
@@ -292,7 +296,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           })}
 
           {scores.map((s, i) => (
-            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018) }}>{s.t}</span>
+            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: s.dim }}>{s.t}</span>
           ))}
         </div>
       </div>
@@ -310,6 +314,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .8s cubic-bezier(.16,1,.3,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
         .bc-svg{ position:absolute; inset:0; }
+        /* smooth focus fade when stepping rounds (opacity is set per element by the zoom level) */
+        .bc-svg path, .bc-svg line{ transition:opacity .3s ease; }
+        .bc-round, .bc-score, .bc-jdot{ transition:opacity .3s ease; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         .bc-trophy{ position:absolute; transform:translate(-50%,-52%); line-height:1; filter:drop-shadow(0 0 14px rgba(255,190,80,.6)); pointer-events:none; z-index:2; }
         .bc-jdot{ position:absolute; border-radius:50%; background:color-mix(in srgb, var(--ink-3) 40%, transparent); z-index:3; }
