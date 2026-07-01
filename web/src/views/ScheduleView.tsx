@@ -111,9 +111,13 @@ export function ScheduleView() {
         @keyframes mdFade{ from{ opacity:0; transform:translateY(7px); } to{ opacity:1; transform:none; } }
         /* No view slide-in here: the switcher must be there instantly, not pop/slide in. */
         .md-view{ animation:none; }
-        /* Pinned right under the app header on EVERY screen size, so you can always switch
-           Spelschema/Slutspel and filters while scrolling. Opaque so content scrolls under it. */
-        .md-head{ position:sticky; top:calc(var(--header-h) + env(safe-area-inset-top)); z-index:6; background:var(--bg); padding:6px 0 12px; }
+        /* Pinned right under the app header on EVERY screen size so you can always switch
+           while scrolling. Frosted full-bleed backdrop (matches the app header) via a
+           ::before that spans the whole viewport width — no ugly opaque black box. */
+        .md-head{ position:sticky; top:calc(var(--header-h) + env(safe-area-inset-top)); z-index:6; padding:6px 0 12px; }
+        .md-head::before{ content:''; position:absolute; z-index:-1; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
+          background:color-mix(in srgb, var(--bg) 68%, transparent); -webkit-backdrop-filter:blur(20px) saturate(1.35);
+          backdrop-filter:blur(20px) saturate(1.35); border-bottom:1px solid var(--line); }
         /* primary categories — flat underline tabs with a sliding gradient indicator */
         .md-tabs{ position:relative; display:flex; gap:26px; border-bottom:1px solid var(--line-2); }
         .md-tabs button{ padding:7px 1px 12px; font-family:var(--font-display); font-size:16.5px; font-weight:800; letter-spacing:-.01em;
