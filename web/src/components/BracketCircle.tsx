@@ -261,19 +261,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           {radials.map((l, i) => { const r = l.ring < level; return <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(l.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(l.ring) * 0.34 : 1 }} />; })}
         </svg>
 
-        {/* Receded flags stay VISIBLE but soft: a tiny low-res flag upscaled by the browser
-            (bilinear upscaling = a free blur, no filter → no artefacts) with a masked soft edge.
-            Above the lines, below the sharp badges; cross-fades by opacity as rounds enter/leave
-            focus. Falls back to a colour blob when a team has no flag iso. */}
-        {nodes.map((n, i) => {
-          if (!n.code) return null;
-          const op = n.ring < level ? ctxDim(n.ring) * (n.lost ? 0.42 : 1) : 0;
-          const bd = n.d * 1.4;
-          const st = { left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, opacity: op } as const;
-          return n.iso
-            ? <img key={`b${i}`} className="bc-blob" src={`https://flagcdn.com/w20/${n.iso}.png`} alt="" style={st} />
-            : <span key={`b${i}`} className="bc-blob" style={{ ...st, background: `radial-gradient(circle, ${colorOf(n.code) ?? "var(--ink-3)"} 0%, transparent 72%)` }} />;
-        })}
 
         {ROUND_NAMES.map((t, i) => {
           const [lx, ly] = polar(C, R[i], 180);
@@ -284,13 +271,22 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
         {nodes.map((n, i) => {
           if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1) }} />;
-          const op = n.ring >= level ? (n.lost ? 0.42 : 1) : 0; // focused flags sharp; receded fade to 0 (→ blob)
-          const clickable = op > 0; // only the sharp, in-focus flags are interactive
+          const receded = n.ring < level;
+          const clickable = !receded; // only the sharp, in-focus flags are interactive
+          // Receded flags stay visible but get a REAL blur (same element → no double-load / same
+          // size) plus a light dim. Focused flags are crisp. The blur/opacity transition with the
+          // zoom. No cached texture, so the blur is clean (no blocky "squares").
+          const filt = [receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : "", n.lost ? "grayscale(.6)" : ""].filter(Boolean).join(" ") || undefined;
           return (
             <button
               key={i}
               className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
-              style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, opacity: op, pointerEvents: clickable ? undefined : "none" }}
+              style={{
+                left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d,
+                opacity: (n.lost ? 0.42 : 1) * (receded ? ctxDim(n.ring) : 1),
+                filter: filt,
+                pointerEvents: clickable ? undefined : "none",
+              }}
               onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
               onMouseLeave={clickable ? () => setHovId(null) : undefined}
               onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
@@ -348,9 +344,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            cross-fade by opacity with the sharp flags — a paint, not a filter, so the zoom is pure
            transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-blob{ position:absolute; border-radius:50%; object-fit:cover; pointer-events:none; z-index:2;
-          -webkit-mask-image:radial-gradient(circle, #000 55%, transparent 100%); mask-image:radial-gradient(circle, #000 55%, transparent 100%);
-          transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-svg{ position:absolute; inset:0; }
         /* Lines "blur" without a filter: as a round recedes it widens + fades (a wide faint line
            reads as soft), transitioning together with the zoom. */
@@ -365,7 +358,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
           transition:transform .12s, box-shadow .15s; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
