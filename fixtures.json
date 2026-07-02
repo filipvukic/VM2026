@@ -65140,17 +65140,37 @@
     "away": "Austria",
     "awayTla": "AUT",
     "status": "TIMED",
-    "score": null,
+    "score": [
+      1,
+      0
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        1,
+        0
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": null,
-    "goals": [],
+    "minute": "45+2",
+    "goals": [
+      {
+        "minute": "36",
+        "team": "ESP",
+        "scorer": "Mikel Oyarzabal",
+        "assist": "Marc Cucurella",
+        "type": "REGULAR",
+        "description": "Goal! Spain 1, Austria 0. Mikel Oyarzabal (Spain) left footed shot from the centre of the box to the centre of the goal. Assisted by Marc Cucurella with a cross.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      }
+    ],
     "bookings": [],
     "subs": [],
     "venue": {
@@ -65161,34 +65181,565 @@
     "referees": [
       {
         "name": "Glenn Nyberg",
-        "role": "REFEREE",
-        "nationality": "Sweden"
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -340,
-      "awayML": 1100,
+      "homeML": -285,
+      "awayML": 850,
       "spread": "ESP -1.5",
       "overUnder": 2.5,
-      "overOdds": -155.0,
-      "underOdds": 125.0,
+      "overOdds": -140.0,
+      "underOdds": 115.0,
       "provider": "DraftKings"
     },
-    "homeLineup": null,
-    "awayLineup": null,
+    "homeLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Unai Simón",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "23",
+          "espnId": "222375",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Aymeric Laporte",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "14",
+          "espnId": "159317",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pau Cubarsí",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "22",
+          "espnId": "368992",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marc Cucurella",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "24",
+          "espnId": "259910",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pedro Porro",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "12",
+          "espnId": "268533",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Dani Olmo",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "10",
+          "espnId": "227765",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pedri",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "20",
+          "espnId": "250465",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rodri",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "16",
+          "espnId": "231828",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mikel Oyarzabal",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "21",
+          "espnId": "229018",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Álex Baena",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "15",
+          "espnId": "297373",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Lamine Yamal",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "19",
+          "espnId": "362150",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Mikel Merino",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "209581",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marc Pubill",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "332613",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nico Williams",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "312146",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Martín Zubimendi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "287266",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ferran Torres",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "265869",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Borja Iglesias",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "214995",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Yéremy Pino",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "297370",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Fabián Ruiz",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "8",
+          "espnId": "214596",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alejandro Grimaldo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "166396",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gavi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "323702",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Joan García",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "297362",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marcos Llorente",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "206474",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Eric García",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "128714",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "David Raya",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "196176",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Víctor Muñoz",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "397545",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "ESP",
+      "_espnEventId": "760497"
+    },
+    "awayLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Alexander Schlager",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "195082",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "David Alaba",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "8",
+          "espnId": "118444",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kevin Danso",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "espnId": "250543",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Konrad Laimer",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "20",
+          "espnId": "169189",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Stefan Posch",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "5",
+          "espnId": "238906",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Paul Wanner",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "24",
+          "espnId": "333399",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Xaver Schlager",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "4",
+          "espnId": "238886",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nicolas Seiwald",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "6",
+          "espnId": "305956",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Michael Gregoritsch",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "11",
+          "espnId": "146804",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marcel Sabitzer",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "9",
+          "espnId": "173907",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Romano Schmid",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "18",
+          "espnId": "238296",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "bench": [
+        {
+          "name": "Florian Grillitsch",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "219304",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Florian Wiegele",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "387869",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "David Affengruber",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "313230",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Phillipp Mwene",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "239574",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Patrick Pentz",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "237966",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Patrick Wimmer",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "300095",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alessandro Schöpf",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "203868",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marko Arnautovic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "98193",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Michael Svoboda",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "289942",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Dejan Ljubicic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "262862",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alexander Prass",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "320939",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Carney Chukwuemeka",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "17",
+          "espnId": "294317",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marco Friedl",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "232477",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sasa Kalajdzic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "259131",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Philipp Lienhart",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "219316",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "AUT",
+      "_espnEventId": "760497"
+    },
     "homeStats": {
-      "goalDifference": 5.0,
-      "totalGoals": 5.0,
-      "goalAssists": 4.0,
-      "goalsConceded": 0.0
+      "foulsCommitted": 4.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 6.0,
+      "saves": 0.0,
+      "possessionPct": 64.3,
+      "totalShots": 9.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 266.0,
+      "totalPasses": 296.0,
+      "passPct": 0.9,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 15.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 14.0,
+      "accurateLongBalls": 10.0,
+      "longballPct": 0.7,
+      "blockedShots": 2.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.6,
+      "interceptions": 3.0,
+      "effectiveClearance": 5.0,
+      "totalClearance": 5.0
     },
     "awayStats": {
-      "goalDifference": 0.0,
-      "totalGoals": 6.0,
-      "goalAssists": 4.0,
-      "goalsConceded": 6.0
+      "foulsCommitted": 5.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 0.0,
+      "saves": 3.0,
+      "possessionPct": 35.7,
+      "totalShots": 2.0,
+      "shotsOnTarget": 0.0,
+      "shotPct": 0.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 134.0,
+      "totalPasses": 169.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 4.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 15.0,
+      "accurateLongBalls": 7.0,
+      "longballPct": 0.5,
+      "blockedShots": 1.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 6.0,
+      "tacklePct": 0.7,
+      "interceptions": 4.0,
+      "effectiveClearance": 14.0,
+      "totalClearance": 14.0
     },
     "homeForm": [
       {
