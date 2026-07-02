@@ -275,8 +275,12 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           const clickable = !receded; // only the sharp, in-focus flags are interactive
           // Receded flags stay visible but get a REAL blur (same element → no double-load / same
           // size) plus a light dim. Focused flags are crisp. The blur/opacity transition with the
-          // zoom. No cached texture, so the blur is clean (no blocky "squares").
-          const filt = [receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : "", n.lost ? "grayscale(.6)" : ""].filter(Boolean).join(" ") || undefined;
+          // zoom. No cached texture, so the blur is clean (no blocky "squares"). A lost flag keeps a
+          // grayscale filter even when focused, so it must carry blur(0) in that state too —
+          // otherwise the filter FUNCTION LIST changes (grayscale → blur+grayscale) and CSS snaps
+          // the blur in instead of interpolating it.
+          const bl = receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : n.lost ? "blur(0px)" : "";
+          const filt = [bl, n.lost ? "grayscale(.6)" : ""].filter(Boolean).join(" ") || undefined;
           return (
             <button
               key={i}
