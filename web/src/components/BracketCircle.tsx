@@ -257,8 +257,20 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
             </radialGradient>
           </defs>
           <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          {arcs.map((a, i) => { const r = a.ring < level; return <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" style={{ opacity: r ? ctxDim(a.ring) * 0.7 : 1, filter: r ? `blur(${(S * 0.009).toFixed(1)}px)` : undefined }} />; })}
-          {radials.map((l, i) => { const r = l.ring < level; return <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" style={{ opacity: r ? ctxDim(l.ring) * 0.7 : 1, filter: r ? `blur(${(S * 0.009).toFixed(1)}px)` : undefined }} />; })}
+          {/* Safari doesn't apply CSS blur() to SVG geometry, so receded lines are "blurred" with
+              STACKED STROKES: a bright thin core + wider, fainter halos = a soft gaussian-like
+              falloff, using opacity only (works everywhere, no filter → no jank). Focused lines are
+              just the sharp core (halos at opacity 0). Widest drawn first so the core sits on top. */}
+          {arcs.flatMap((a, i) => { const r = a.ring < level, b = ctxDim(a.ring), w = sw(a.color), s = a.color || lineCol; return [
+            <path key={`a${i}h2`} d={a.d} fill="none" stroke={s} strokeWidth={w * 6.5} strokeLinecap="round" style={{ opacity: r ? b * 0.12 : 0 }} />,
+            <path key={`a${i}h1`} d={a.d} fill="none" stroke={s} strokeWidth={w * 3.2} strokeLinecap="round" style={{ opacity: r ? b * 0.26 : 0 }} />,
+            <path key={`a${i}`} d={a.d} fill="none" stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? b * 0.55 : 1 }} />,
+          ]; })}
+          {radials.flatMap((l, i) => { const r = l.ring < level, b = ctxDim(l.ring), w = sw(l.color), s = l.color || lineCol; return [
+            <line key={`r${i}h2`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * 6.5} strokeLinecap="round" style={{ opacity: r ? b * 0.12 : 0 }} />,
+            <line key={`r${i}h1`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * 3.2} strokeLinecap="round" style={{ opacity: r ? b * 0.26 : 0 }} />,
+            <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? b * 0.55 : 1 }} />,
+          ]; })}
         </svg>
 
 
@@ -349,8 +361,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
         .bc-svg{ position:absolute; inset:0; }
-        /* Receded lines get a REAL blur (like the flags) + a dim, easing in with the zoom. */
-        .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        /* Receded lines soften via stacked-stroke halos fading in (opacity only — reliable on
+           Safari, which ignores CSS blur() on SVG geometry). */
+        .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-round, .bc-focus .bc-score{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
