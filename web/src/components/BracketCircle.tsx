@@ -272,8 +272,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
             </radialGradient>
           </defs>
           <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          {arcs.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" opacity={focusDim(a.ring, 1) * (a.ring >= level ? 1 : 0.7)} />)}
-          {radials.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" opacity={focusDim(l.ring, 1) * (l.ring >= level ? 1 : 0.7)} />)}
+          {arcs.map((a, i) => { const r = a.ring < level; return <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(a.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(a.ring) * 0.34 : 1 }} />; })}
+          {radials.map((l, i) => { const r = l.ring < level; return <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(l.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(l.ring) * 0.34 : 1 }} />; })}
         </svg>
 
         {ROUND_NAMES.map((t, i) => {
@@ -355,7 +355,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-ctx{ pointer-events:none; }
         .bc-blob{ position:absolute; border-radius:50%; transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-svg{ position:absolute; inset:0; }
-        .bc-focus .bc-svg path, .bc-focus .bc-svg line,
+        /* Lines "blur" without a filter: as a round recedes it widens + fades (a wide faint line
+           reads as soft), transitioning together with the zoom. */
+        .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1), stroke-width .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-round, .bc-focus .bc-score, .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
