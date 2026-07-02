@@ -163,7 +163,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // dependent) so an already-receded round keeps the same look when you zoom another step — every
   // zoom step then behaves like the clean first one. Gentle gradient: rounds nearer the centre
   // (higher ring) stay a touch brighter than the far outer rounds.
-  const ctxDim = (ring: number) => 0.56 + ring * 0.03;
+  const ctxDim = (ring: number) => 0.72 + ring * 0.03;
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
@@ -261,14 +261,18 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           {radials.map((l, i) => { const r = l.ring < level; return <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(l.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(l.ring) * 0.34 : 1 }} />; })}
         </svg>
 
-        {/* Soft blobs for the receded flags — ABOVE the lines, BELOW the sharp badges (correct
-            stacking), cross-fading by opacity as rounds enter/leave focus. */}
+        {/* Receded flags stay VISIBLE but soft: a tiny low-res flag upscaled by the browser
+            (bilinear upscaling = a free blur, no filter → no artefacts) with a masked soft edge.
+            Above the lines, below the sharp badges; cross-fades by opacity as rounds enter/leave
+            focus. Falls back to a colour blob when a team has no flag iso. */}
         {nodes.map((n, i) => {
           if (!n.code) return null;
           const op = n.ring < level ? ctxDim(n.ring) * (n.lost ? 0.42 : 1) : 0;
-          const bd = n.d * 1.5;
-          const col = colorOf(n.code) ?? "var(--ink-3)";
-          return <span key={`b${i}`} className="bc-blob" style={{ left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, background: `radial-gradient(circle, ${col} 0%, ${col} 30%, transparent 70%)`, opacity: op }} />;
+          const bd = n.d * 1.4;
+          const st = { left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, opacity: op } as const;
+          return n.iso
+            ? <img key={`b${i}`} className="bc-blob" src={`https://flagcdn.com/w20/${n.iso}.png`} alt="" style={st} />
+            : <span key={`b${i}`} className="bc-blob" style={{ ...st, background: `radial-gradient(circle, ${colorOf(n.code) ?? "var(--ink-3)"} 0%, transparent 72%)` }} />;
         })}
 
         {ROUND_NAMES.map((t, i) => {
@@ -344,7 +348,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            cross-fade by opacity with the sharp flags — a paint, not a filter, so the zoom is pure
            transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-blob{ position:absolute; border-radius:50%; pointer-events:none; z-index:2; transition:opacity .95s cubic-bezier(.62,0,.2,1); }
+        .bc-blob{ position:absolute; border-radius:50%; object-fit:cover; pointer-events:none; z-index:2;
+          -webkit-mask-image:radial-gradient(circle, #000 55%, transparent 100%); mask-image:radial-gradient(circle, #000 55%, transparent 100%);
+          transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-svg{ position:absolute; inset:0; }
         /* Lines "blur" without a filter: as a round recedes it widens + fades (a wide faint line
            reads as soft), transitioning together with the zoom. */
