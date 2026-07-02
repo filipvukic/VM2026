@@ -23,6 +23,10 @@ const DELTA = 4.2;
 const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
 const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round without over-zooming past it
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
+// Fake a gaussian blur on receded SVG lines (Safari ignores CSS blur() on SVG geometry) by stacking
+// strokes: [widthMultiple, receded opacity]. Wide→narrow; opacities picked to approximate a smooth
+// gaussian falloff (small steps, no bright sharp core). The sharp focused line is drawn separately.
+const LINE_BLUR = [[9, 0.05], [6.6, 0.07], [4.8, 0.09], [3.4, 0.12], [2.3, 0.15], [1.4, 0.19]] as const;
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean; ring: number }
 interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null; ring: number }
@@ -257,19 +261,17 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
             </radialGradient>
           </defs>
           <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          {/* Safari doesn't apply CSS blur() to SVG geometry, so receded lines are "blurred" with
-              STACKED STROKES: a bright thin core + wider, fainter halos = a soft gaussian-like
-              falloff, using opacity only (works everywhere, no filter → no jank). Focused lines are
-              just the sharp core (halos at opacity 0). Widest drawn first so the core sits on top. */}
+          {/* Safari ignores CSS blur() on SVG geometry, so receded lines are "blurred" with a stack
+              of strokes (LINE_BLUR) approximating a gaussian falloff — many fine layers, no sharp
+              core when receded. Opacity only → reliable everywhere, no filter, no jank. The sharp
+              focused line is a single stroke drawn on top; the two cross-fade with the zoom. */}
           {arcs.flatMap((a, i) => { const r = a.ring < level, b = ctxDim(a.ring), w = sw(a.color), s = a.color || lineCol; return [
-            <path key={`a${i}h2`} d={a.d} fill="none" stroke={s} strokeWidth={w * 6.5} strokeLinecap="round" style={{ opacity: r ? b * 0.12 : 0 }} />,
-            <path key={`a${i}h1`} d={a.d} fill="none" stroke={s} strokeWidth={w * 3.2} strokeLinecap="round" style={{ opacity: r ? b * 0.26 : 0 }} />,
-            <path key={`a${i}`} d={a.d} fill="none" stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? b * 0.55 : 1 }} />,
+            ...LINE_BLUR.map(([wm, of], k) => <path key={`a${i}b${k}`} d={a.d} fill="none" stroke={s} strokeWidth={w * wm} strokeLinecap="round" style={{ opacity: r ? b * of : 0 }} />),
+            <path key={`a${i}`} d={a.d} fill="none" stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? 0 : 1 }} />,
           ]; })}
           {radials.flatMap((l, i) => { const r = l.ring < level, b = ctxDim(l.ring), w = sw(l.color), s = l.color || lineCol; return [
-            <line key={`r${i}h2`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * 6.5} strokeLinecap="round" style={{ opacity: r ? b * 0.12 : 0 }} />,
-            <line key={`r${i}h1`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * 3.2} strokeLinecap="round" style={{ opacity: r ? b * 0.26 : 0 }} />,
-            <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? b * 0.55 : 1 }} />,
+            ...LINE_BLUR.map(([wm, of], k) => <line key={`r${i}b${k}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * wm} strokeLinecap="round" style={{ opacity: r ? b * of : 0 }} />),
+            <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? 0 : 1 }} />,
           ]; })}
         </svg>
 
