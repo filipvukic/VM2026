@@ -65139,9 +65139,9 @@
     "homeTla": "ESP",
     "away": "Austria",
     "awayTla": "AUT",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      2,
+      3,
       0
     ],
     "scoreDetail": {
@@ -65150,7 +65150,7 @@
         0
       ],
       "fullTime": [
-        2,
+        3,
         0
       ],
       "extraTime": null,
@@ -65158,7 +65158,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "84",
+    "minute": null,
     "goals": [
       {
         "minute": "36",
@@ -65182,6 +65182,19 @@
         "description": "Goal! Spain 2, Austria 0. Pedro Porro (Spain) header from the centre of the box to the centre of the goal. Assisted by Álex Baena.",
         "score": [
           2,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "ESP",
+        "scorer": "Mikel Oyarzabal",
+        "assist": "Marc Cucurella",
+        "type": "REGULAR",
+        "description": "Goal! Spain 3, Austria 0. Mikel Oyarzabal (Spain) right footed shot from the centre of the box to the bottom right corner. Assisted by Marc Cucurella.",
+        "score": [
+          3,
           0
         ],
         "period": 2
@@ -65238,6 +65251,34 @@
         "playerIn": "Mikel Merino",
         "playerOut": "Dani Olmo",
         "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "ESP",
+        "playerIn": "Gavi",
+        "playerOut": "Lamine Yamal",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "AUT",
+        "playerIn": "Alexander Prass",
+        "playerOut": "Stefan Posch",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "ESP",
+        "playerIn": "Fabián Ruiz",
+        "playerOut": "Pedri",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "ESP",
+        "playerIn": "Marc Pubill",
+        "playerOut": "Aymeric Laporte",
+        "period": 2
       }
     ],
     "venue": {
@@ -65252,7 +65293,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 70492,
     "espnOdds": {
       "homeML": -285,
       "awayML": 850,
@@ -65281,7 +65322,7 @@
           "jersey": "14",
           "espnId": "159317",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pau Cubarsí",
@@ -65326,7 +65367,7 @@
           "jersey": "20",
           "espnId": "250465",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rodri",
@@ -65362,7 +65403,7 @@
           "jersey": "19",
           "espnId": "362150",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -65381,7 +65422,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "332613",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65435,7 +65476,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "214596",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65453,7 +65494,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "323702",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65551,7 +65592,7 @@
           "jersey": "5",
           "espnId": "238906",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Paul Wanner",
@@ -65705,7 +65746,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "320939",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65749,61 +65790,61 @@
       "_espnEventId": "760497"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
+      "foulsCommitted": 8.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 2.0,
       "wonCorners": 9.0,
       "saves": 0.0,
-      "possessionPct": 65.4,
-      "totalShots": 20.0,
-      "shotsOnTarget": 8.0,
+      "possessionPct": 64.5,
+      "totalShots": 23.0,
+      "shotsOnTarget": 10.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 492.0,
-      "totalPasses": 544.0,
+      "accuratePasses": 570.0,
+      "totalPasses": 629.0,
       "passPct": 0.9,
-      "accurateCrosses": 7.0,
-      "totalCrosses": 21.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 27.0,
-      "accurateLongBalls": 19.0,
+      "accurateCrosses": 8.0,
+      "totalCrosses": 22.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 23.0,
       "longballPct": 0.7,
       "blockedShots": 7.0,
-      "effectiveTackles": 12.0,
-      "totalTackles": 18.0,
+      "effectiveTackles": 13.0,
+      "totalTackles": 19.0,
       "tacklePct": 0.7,
       "interceptions": 6.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
     },
     "awayStats": {
-      "foulsCommitted": 13.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 15.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 3.0,
+      "offsides": 5.0,
       "wonCorners": 0.0,
       "saves": 6.0,
-      "possessionPct": 34.6,
+      "possessionPct": 35.5,
       "totalShots": 5.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 234.0,
-      "totalPasses": 292.0,
+      "accuratePasses": 284.0,
+      "totalPasses": 346.0,
       "passPct": 0.8,
       "accurateCrosses": 3.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 34.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 37.0,
       "accurateLongBalls": 14.0,
       "longballPct": 0.4,
       "blockedShots": 1.0,
       "effectiveTackles": 8.0,
-      "totalTackles": 13.0,
-      "tacklePct": 0.6,
+      "totalTackles": 16.0,
+      "tacklePct": 0.5,
       "interceptions": 7.0,
       "effectiveClearance": 21.0,
       "totalClearance": 21.0
@@ -65911,7 +65952,13 @@
       "city": "Toronto",
       "country": "Canada"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Espen Eskås",
+        "role": "REFEREE",
+        "nationality": "Norway"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
