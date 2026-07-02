@@ -65553,8 +65553,8 @@
       "awayML": 150,
       "spread": "EGY -0.5",
       "overUnder": 1.5,
-      "overOdds": -170.0,
-      "underOdds": 135.0,
+      "overOdds": -175.0,
+      "underOdds": 140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -65812,7 +65812,7 @@
       "spread": "COL -1.5",
       "overUnder": 2.5,
       "overOdds": 125.0,
-      "underOdds": -155.0,
+      "underOdds": -150.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -65936,8 +65936,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 390,
-      "awayML": -120,
+      "homeML": 400,
+      "awayML": -125,
       "spread": "MAR -0.5",
       "overUnder": 2.5,
       "overOdds": 130.0,
@@ -66065,8 +66065,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 1700,
-      "awayML": -550,
+      "homeML": 1800,
+      "awayML": -575,
       "spread": "FRA -1.5",
       "overUnder": 2.5,
       "overOdds": -160.0,
@@ -66198,8 +66198,8 @@
       "awayML": 300,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
-      "overOdds": -120.0,
-      "underOdds": -105.0,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -66296,10 +66296,10 @@
     "utcDate": "2026-07-06T00:00:00Z",
     "stage": "LAST_16",
     "group": null,
-    "home": null,
-    "homeTla": null,
-    "away": null,
-    "awayTla": null,
+    "home": "Mexico",
+    "homeTla": "MEX",
+    "away": "England",
+    "awayTla": "ENG",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -66314,17 +66314,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Estadio Banorte",
+      "city": "Mexico City",
+      "country": "Mexico"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 205,
+      "awayML": 155,
+      "spread": "ENG -0.5",
+      "overUnder": 2.5,
+      "overOdds": 150.0,
+      "underOdds": -185.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 8.0,
+      "totalGoals": 8.0,
+      "goalAssists": 7.0,
+      "goalsConceded": 0.0
+    },
+    "awayStats": {
+      "goalDifference": 4.0,
+      "totalGoals": 6.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 2.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-25",
+        "result": "F",
+        "gf": 0,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-19",
+        "result": "V",
+        "gf": 1,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-11",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-05",
+        "result": "V",
+        "gf": 5,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-23",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "V",
+        "gf": 4,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537379,
@@ -66366,10 +66460,10 @@
     "utcDate": "2026-07-07T00:00:00Z",
     "stage": "LAST_16",
     "group": null,
-    "home": null,
-    "homeTla": null,
-    "away": null,
-    "awayTla": null,
+    "home": "United States",
+    "homeTla": "USA",
+    "away": "Belgium",
+    "awayTla": "BEL",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -66384,17 +66478,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Lumen Field",
+      "city": "Seattle, Washington",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 150,
+      "awayML": 180,
+      "spread": "USA -0.5",
+      "overUnder": 2.5,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 4.0,
+      "totalGoals": 8.0,
+      "goalAssists": 4.0,
+      "goalsConceded": 4.0
+    },
+    "awayStats": {
+      "goalDifference": 4.0,
+      "totalGoals": 6.0,
+      "goalAssists": 3.0,
+      "goalsConceded": 2.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-02",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-26",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-19",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-13",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 1,
+        "ga": 5,
+        "home": false
+      },
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537381,
