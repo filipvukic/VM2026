@@ -106,6 +106,14 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [level, setLevel] = useState(0);
   useEffect(() => { setLevel(progressed); }, [progressed]);
   const step = (d: number) => setLevel((l) => Math.max(0, Math.min(4, l + d)));
+  // Blur cross-fade easing is direction-aware. The default (zoom-out) easing lets the OUTGOING
+  // state linger — on zoom-out that's the blur (stays blurry, sharpens at the end = looks great).
+  // On zoom-IN the outgoing state is the sharp line, so with that easing it stays sharp and only
+  // blurs at the very end. So zoom-in uses a fast-start easing → the blur arrives early, mirroring
+  // the zoom-out feel.
+  const prevLevel = useRef(level);
+  const zoomingIn = level > prevLevel.current;
+  useEffect(() => { prevLevel.current = level; }, [level]);
   const moved = useRef(false);
   const pts = useRef<Map<number, { x: number; y: number }>>(new Map());
   const pinchBase = useRef(0);
@@ -342,7 +350,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
           {/* One layer, correct stacking: lines → soft blobs → sharp badges. No filter anywhere,
               so the zoom is pure transform + opacity — smooth, crisp, no scaling artefacts. */}
-          <div className="bc-layer bc-focus">{content}</div>
+          <div className={`bc-layer bc-focus${zoomingIn ? " zin" : ""}`}>{content}</div>
         </div>
       </div>
 
@@ -368,6 +376,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-round, .bc-focus .bc-score{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        /* Zoom-in: fast-start easing so the blur arrives early (mirrors the zoom-out look). */
+        .bc-focus.zin .bc-svg path, .bc-focus.zin .bc-svg line,
+        .bc-focus.zin .bc-jdot{ transition-timing-function:cubic-bezier(.1,.9,.3,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
