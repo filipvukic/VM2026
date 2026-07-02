@@ -40,7 +40,7 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
           the country name as a caption underneath (tap ⤢ for fullscreen). */}
       {t.iso ? (
         <div className="ts-hero">
-          <Suspense fallback={<div className="ts-hero-fallback dim">Laddar klot…</div>}>
+          <Suspense fallback={<div className="ts-hero-fallback"><span className="skel ts-hero-skel" /><span className="dim ts-hero-cap">Laddar klot…</span></div>}>
             <CountryGlobe iso={t.iso} name={t.name} active={chrome.interactive !== false} hero />
           </Suspense>
         </div>
@@ -156,7 +156,9 @@ export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
       <style>{`
         /* Full-bleed hero: cancel the sheet-body padding so the globe runs edge-to-edge. */
         .ts-hero{ margin:-20px -16px 0; }
-        .ts-hero-fallback{ height:300px; display:grid; place-items:center; background:radial-gradient(circle at 50% 42%, #16306e, #05070f 72%); }
+        .ts-hero-fallback{ position:relative; height:300px; display:grid; place-items:center; }
+        .ts-hero-skel{ position:absolute; inset:0; border-radius:0; }
+        .ts-hero-cap{ position:relative; font-size:12.5px; font-weight:700; }
         @media(min-width:560px){ .ts-hero{ margin:-24px -22px 0; } }
         .ts-tabs{ display:flex; gap:4px; margin-top:16px; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-pill); padding:3px; }
         .ts-tabs button{ flex:1 1 0; min-width:0; padding:9px 8px; border-radius:var(--r-pill); font-weight:800; font-size:13px; color:var(--ink-3); }

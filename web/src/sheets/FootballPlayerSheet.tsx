@@ -7,8 +7,9 @@ import { PlayerImg } from "../components/PlayerImg";
 import { findPlayer, playerPhotoSources, idxNorm } from "../lib/playerPhoto";
 import { isoFor } from "../data/static/names";
 import { starTeam } from "../data/stars";
-import { useStatsIndex, useMatchStats } from "../state/matchStats";
+import { useStatsIndex, useMatchStats, useStatsIndexPending, useMatchStatsPending } from "../state/matchStats";
 import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
+import { Skel, PlayerPanelSkeleton, SkelImg } from "../components/Skeleton";
 import { WikiLink } from "../components/WikiLink";
 import { ratingColor } from "../lib/rating";
 
@@ -81,7 +82,7 @@ export function FootballPlayerSheet({ name, espnId, fmId: fmIdProp, ...chrome }:
         <>
           {p.team && (
             <div className="card card-pad" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12 }}>
-              {p.teamBadge && <img src={p.teamBadge} alt="" style={{ width: 38, height: 38, objectFit: "contain" }} onError={(e) => ((e.currentTarget.style.display = "none"))} />}
+              {p.teamBadge && <SkelImg src={p.teamBadge} w={38} h={38} radius={9} />}
               <div>
                 <div style={{ fontWeight: 800 }}>{p.team}</div>
                 <div className="dim" style={{ fontSize: 11.5 }}>{[p.teamLeague, p.teamCountry].filter(Boolean).join(" · ")}</div>
@@ -137,11 +138,15 @@ const shortDate = (d?: string) => (d && d.length >= 10 ? `${parseInt(d.slice(8, 
 function PlayerMatchHistory({ name }: { name: string }) {
   const ds = useData();
   const index = useStatsIndex();
+  const indexPending = useStatsIndexPending();
   const entry = index?.players[idxNorm(name)];
   const [sel, setSel] = useState<string | null>(null);
   const selId = sel ?? entry?.fx[0]?.id ?? null;
   const stats = useMatchStats(selId); // hook always called (null id is a no-op)
-  if (!entry || !entry.fx.length) return null;
+  const panelPending = useMatchStatsPending(selId);
+  // Index still loading → ghost the whole section instead of popping it in later.
+  if (!entry) return indexPending ? <MatchHistorySkeleton /> : null;
+  if (!entry.fx.length) return null;
   const myTla = stats?.players.find((p) => p.optaId === entry.opta)?.tla ?? null;
   const oppName = (fid: string) => {
     const fx = index!.fixtures[fid];
@@ -167,7 +172,29 @@ function PlayerMatchHistory({ name }: { name: string }) {
           );
         })}
       </div>
-      {stats && <PlayerMatchPanel stats={stats} optaId={entry.opta} subtitle={selPl?.gk ? "Målvakt" : selPl?.pos || undefined} />}
+      {stats ? (
+        <PlayerMatchPanel stats={stats} optaId={entry.opta} subtitle={selPl?.gk ? "Målvakt" : selPl?.pos || undefined} />
+      ) : panelPending ? (
+        <PlayerPanelSkeleton />
+      ) : null}
+    </div>
+  );
+}
+
+// Ghost of the per-match performance section while the stats index loads.
+function MatchHistorySkeleton() {
+  return (
+    <div style={{ marginTop: 18 }}>
+      <Skel w={170} h={11} style={{ marginBottom: 10 }} />
+      <div style={{ display: "grid", gap: 5 }}>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px" }}>
+            <Skel w={38} h={22} r={7} />
+            <Skel w={`${40 + ((i * 17) % 30)}%`} h={12} />
+            <Skel w={28} h={10} style={{ marginLeft: "auto" }} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

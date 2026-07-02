@@ -10,8 +10,9 @@ import { lineupPhotoSources } from "../lib/playerPhoto";
 import { liveMinuteText } from "../lib/liveMinute";
 import { isLive } from "../lib/liveState";
 import { useNow } from "../state/useNow";
-import { useMatchStats, liveStatsUrl } from "../state/matchStats";
+import { useMatchStats, liveStatsUrl, useMatchStatsPending } from "../state/matchStats";
 import { PlayerMatchPanel } from "../components/PlayerMatchPanel";
+import { PitchSkeleton, StatsSkeleton } from "../components/Skeleton";
 import { Shotmap } from "../components/Shotmap";
 import { ratingColor } from "../lib/rating";
 import { Flag, groupColor } from "../lib/flags";
@@ -325,6 +326,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const coaches = useCoaches();
   const db = usePlayersDb();
   const detail = useMatchStats(m._realId ?? null, isLive(m), liveStatsUrl(m, ds.teams));
+  const pending = useMatchStatsPending(m._realId ?? null);
   const [side, setSide] = useState<"h" | "a">("h");
   const rawLu = side === "h" ? m.homeLineup : m.awayLineup;
   const code = side === "h" ? m.home : m.away;
@@ -356,7 +358,9 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
   const coords = detail?.lineup?.[side === "h" ? "home" : "away"];
   const lu: typeof rawLu = rawLu && fmFormation ? { ...rawLu, formation: fmFormation } : rawLu;
   const t = code ? ds.teams[code] : null;
-  if (!lu?.lineup?.length && !coords?.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
+  // No line-up for this side yet: show a ghost pitch while it's still loading,
+  // else say it's genuinely unavailable.
+  if (!lu?.lineup?.length && !coords?.length) return pending ? <PitchSkeleton /> : <div className="dim" style={{ padding: 16, textAlign: "center" }}>Laguppställning saknas.</div>;
   const coachRec = code ? coaches?.[code] : null;
   const coach = coachRec?.name || lu?.coach || (code ? TEAM_DETAILS[code]?.coach : null);
   const coachPhoto = coachRec?.photo || null;
@@ -427,6 +431,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
 // ---------- Stats tab ----------
 function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
   const detail = useMatchStats(m._realId ?? null, isLive(m), liveStatsUrl(m, ds.teams));
+  const pending = useMatchStatsPending(m._realId ?? null);
   const [sel, setSel] = useState<string | null>(null);
   const live = isLive(m);
   const home = m.home ? ds.teams[m.home] : null;
@@ -503,6 +508,9 @@ function StatsTab({ m, ds }: { m: Match; ds: Dataset }) {
     );
   }
 
+  // FotMob detail still loading: a live match shows its real-time ESPN bars
+  // immediately; anything else gets a ghost skeleton until the detail arrives.
+  if (pending) return live ? <MatchStatsBars m={m} ds={ds} /> : <StatsSkeleton />;
   return <MatchStatsBars m={m} ds={ds} />;
 }
 

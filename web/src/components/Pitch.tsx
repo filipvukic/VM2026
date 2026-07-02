@@ -159,8 +159,11 @@ export function Pitch({
         const nm = (p.name || "").toLowerCase();
         const fmId = fotmobIdByShirt?.get(String(p.jersey ?? p.shirtNumber ?? "").trim());
         return (
+          // Key by the STABLE shirt number (falls back to name), NOT the layout index —
+          // so when FotMob coords arrive and the layout switches, each player UPDATES in
+          // place (photo shimmer→fade) instead of remounting and re-flashing.
           <PitchPlayer
-            key={p.name + "-" + i}
+            key={String(p.jersey ?? p.shirtNumber ?? p.name)}
             p={p}
             photos={lineupPhotoSources(p.name, p.espnId, db, fmId)}
             color={color}
@@ -193,6 +196,9 @@ export function Pitch({
         .ppl-img{ width:100%; height:100%; border-radius:inherit; overflow:hidden; background:var(--surface-3);
           display:grid; place-items:center; box-shadow:0 6px 14px -6px rgba(0,0,0,.8); }
         .ppl-img img{ width:100%; height:100%; object-fit:cover; }
+        /* Clearly-visible ghost shimmer while a player's photo loads (the default
+           .img-skel is too subtle on the dark pitch) — a brighter sweep, still round. */
+        .ppl-img.img-skel{ background:linear-gradient(100deg, var(--surface-3) 18%, var(--surface-hi) 50%, var(--surface-3) 82%); background-size:220% 100%; }
         .ppl-fallnum{ font-family:var(--font-display); font-weight:800; font-size:calc(var(--ppl-card,54px) * .44); color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
         .ppl-name{ font-size:clamp(9px, calc(var(--ppl-card,54px) * .2), 11px); font-weight:800; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.95);
           white-space:nowrap; max-width:var(--ppl-w,72px); overflow:hidden; text-overflow:ellipsis; }
@@ -253,19 +259,21 @@ function PitchPlayer({
 }) {
   const key = photos.join("|");
   const [idx, setIdx] = useState(0);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => setIdx(0), [key]); // reset the fallback chain when the player changes
   const last = (p.name || "").split(" ").slice(-1)[0];
   const num = p.jersey || p.shirtNumber;
   const cur = idx < photos.length ? photos[idx] : null;
+  useEffect(() => setLoaded(false), [cur]); // ghost-shimmer until the (new) photo paints
   return (
     <button className="ppl" style={{ left: `${x}%`, top: `${y}%` }} onClick={onClick}>
       <div className={`ppl-card${motm ? " motm" : ""}`}>
         {subOut !== undefined && (
           <span className="ppl-min" title={`Utbytt ${subOut}'`}><span className="arr">↓</span>{subOut}'</span>
         )}
-        <div className="ppl-img" style={!cur ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
+        <div className={`ppl-img${cur && !loaded ? " img-skel" : ""}`} style={!cur ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
           {cur ? (
-            <img src={cur} alt="" loading="lazy" onError={() => setIdx((i) => i + 1)} />
+            <img src={cur} alt="" decoding="async" onLoad={() => setLoaded(true)} onError={() => setIdx((i) => i + 1)} style={{ opacity: loaded ? 1 : 0, transition: "opacity .3s ease" }} />
           ) : (
             <span className="ppl-fallnum">{num || initials(p.name)}</span>
           )}

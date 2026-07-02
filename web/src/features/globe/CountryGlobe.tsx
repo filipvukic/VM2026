@@ -534,7 +534,12 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
           .globe-fs:hover{ background:rgba(8,12,24,.85); } .globe-fs:active{ transform:scale(.92); }
           .globe-hint{ position:absolute; left:12px; bottom:14px; z-index:4; font-size:10.5px; color:rgba(255,255,255,.55);
             pointer-events:none; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); }
+          /* Ghost/skeleton over the whole WebGL warm-up (mount → earth texture →
+             fly-in), fading out once the globe is actually rendered (ready). */
+          .globe-skel{ position:absolute; inset:0; z-index:5; border-radius:0; }
+          .globe-skel.gone{ opacity:0; visibility:hidden; pointer-events:none; transition:opacity .55s ease, visibility 0s .55s; }
         `}</style>
+        <div className={`skel globe-skel${ready ? " gone" : ""}`} aria-hidden />
         {mounted && dims.w > 0 && (
           <Globe
             ref={globeRef}

@@ -105,3 +105,20 @@ export function useStatsIndex(): MatchStatsIndex | null {
   }, [loadIndex]);
   return index && index !== "loading" && index !== "missing" ? index : null;
 }
+
+/**
+ * True while a match's detailed stats are still being fetched and there's nothing
+ * to show yet — so a view can render a skeleton instead of a blank/placeholder.
+ * (A missing fixtureId returns false: those matches will never have stats.)
+ */
+export function useMatchStatsPending(fixtureId: string | number | null): boolean {
+  const id = fixtureId == null ? "" : String(fixtureId);
+  const entry = useMatchStatsStore((s) => (id ? s.byId[id] : undefined));
+  return !!id && (entry === undefined || entry === "loading");
+}
+
+/** True while the player-stats index is still loading (nothing resolved yet). */
+export function useStatsIndexPending(): boolean {
+  const index = useMatchStatsStore((s) => s.index);
+  return index == null || index === "loading";
+}
