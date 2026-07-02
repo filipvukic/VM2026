@@ -38,6 +38,7 @@ export function Pitch({
   coords,
   motmRating,
   fotmobIdByShirt,
+  statsPending,
 }: {
   lineup: RawLineup;
   color: string;
@@ -52,6 +53,11 @@ export function Pitch({
   motmRating?: number | null;
   // shirt number → FotMob player id, for the (correct, official) FotMob photo.
   fotmobIdByShirt?: Map<string, string>;
+  // True while the FotMob match-stats (which carry the good, right-player photo id)
+  // are still loading. When set, a player without a FotMob id yet shows the ghost
+  // shimmer instead of the weaker db photo — so the GOOD photo loads first and the
+  // db one only ever appears as a fallback (never a bad→good swap).
+  statsPending?: boolean;
 }) {
   const db = usePlayersDb();
   // Each placed player → its position on the pitch (%). Prefer FotMob's exact
@@ -166,6 +172,7 @@ export function Pitch({
             key={String(p.jersey ?? p.shirtNumber ?? p.name)}
             p={p}
             photos={lineupPhotoSources(p.name, p.espnId, db, fmId)}
+            hold={!!statsPending && !fmId}
             color={color}
             x={xPct}
             y={yPct}
@@ -233,6 +240,7 @@ export function Pitch({
 function PitchPlayer({
   p,
   photos,
+  hold,
   color,
   x,
   y,
@@ -246,6 +254,9 @@ function PitchPlayer({
 }: {
   p: RawLineupPlayer;
   photos: string[];
+  // Keep shimmering (don't load the db photo yet) while the better FotMob photo id
+  // is still on its way — so the good photo shows first, db only as a fallback.
+  hold?: boolean;
   color: string;
   x: number;
   y: number;
@@ -263,18 +274,19 @@ function PitchPlayer({
   useEffect(() => setIdx(0), [key]); // reset the fallback chain when the player changes
   const last = (p.name || "").split(" ").slice(-1)[0];
   const num = p.jersey || p.shirtNumber;
-  const cur = idx < photos.length ? photos[idx] : null;
+  const cur = hold ? null : idx < photos.length ? photos[idx] : null;
   useEffect(() => setLoaded(false), [cur]); // ghost-shimmer until the (new) photo paints
+  const shimmer = hold || (cur && !loaded);
   return (
     <button className="ppl" style={{ left: `${x}%`, top: `${y}%` }} onClick={onClick}>
       <div className={`ppl-card${motm ? " motm" : ""}`}>
         {subOut !== undefined && (
           <span className="ppl-min" title={`Utbytt ${subOut}'`}><span className="arr">↓</span>{subOut}'</span>
         )}
-        <div className={`ppl-img${cur && !loaded ? " img-skel" : ""}`} style={!cur ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
+        <div className={`ppl-img${shimmer ? " img-skel" : ""}`} style={!cur && !hold ? { background: `linear-gradient(160deg, ${color}, color-mix(in srgb, ${color} 45%, #000))` } : undefined}>
           {cur ? (
             <img src={cur} alt="" decoding="async" onLoad={() => setLoaded(true)} onError={() => setIdx((i) => i + 1)} style={{ opacity: loaded ? 1 : 0, transition: "opacity .3s ease" }} />
-          ) : (
+          ) : hold ? null : (
             <span className="ppl-fallnum">{num || initials(p.name)}</span>
           )}
         </div>
@@ -301,6 +313,7 @@ function PitchPlayer({
 export function BenchPlayer({
   p,
   photos,
+  hold,
   rating,
   goals = 0,
   assists = 0,
@@ -312,6 +325,7 @@ export function BenchPlayer({
 }: {
   p: RawLineupPlayer;
   photos: string[];
+  hold?: boolean;
   rating?: number | null;
   goals?: number;
   assists?: number;
@@ -327,7 +341,7 @@ export function BenchPlayer({
   return (
     <button className="bp" onClick={onClick}>
       <span className={`bp-ph${motm ? " motm" : ""}`}>
-        <PlayerImg srcs={photos} name={p.name} size={48} radius={24} fontSize={17} />
+        <PlayerImg srcs={photos} name={p.name} size={48} radius={24} fontSize={17} hold={hold} />
         {rating != null && (
           <span className="bp-rt num" style={{ background: motm ? MOTM_BLUE : ratingColor(rating) }}>
             {motm && <span className="bp-rt-star">★</span>}{rating.toFixed(1)}

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import { useData, useCoaches, usePlayersDb } from "../state/dataset";
 import { useSheets } from "../state/sheets";
-import { useMatchStats } from "../state/matchStats";
+import { useMatchStats, useMatchStatsPending } from "../state/matchStats";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { GroupTable } from "../components/GroupTable";
 import { PlayerImg } from "../components/PlayerImg";
@@ -188,6 +188,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
       return !!lu?.lineup?.length;
     });
   const detail = useMatchStats(m?._realId ?? null);
+  const pending = useMatchStatsPending(m?._realId ?? null);
   if (!m) return null;
   const isHome = m.home === code;
   const rawLu = isHome ? m.homeLineup : m.awayLineup;
@@ -233,7 +234,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
       <div className="dim" style={{ fontSize: 12, marginBottom: 10 }}>
         mot {oppT?.name || "?"} · {svDayMonth(m.kickoff)}{formation ? ` · ${formation}` : ""}
       </div>
-      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} />
+      <Pitch lineup={lu} color={color} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} statsPending={pending} />
       {lu.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 16 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
@@ -247,6 +248,7 @@ function LatestLineup({ code, color }: { code: string; color: string }) {
                   key={i}
                   p={p}
                   photos={lineupPhotoSources(p.name, p.espnId, db, benchFmId)}
+                  hold={pending && !benchFmId}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

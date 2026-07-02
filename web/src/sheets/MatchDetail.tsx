@@ -397,7 +397,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
       ) : (
         (fmFormation || lu?.formation) && <div style={{ textAlign: "center", marginBottom: 12 }}><span className="chip">Formation {fmFormation || lu?.formation}</span></div>
       )}
-      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} />
+      <Pitch lineup={lu || { lineup: [] }} color={t?.c1 || "var(--cool)"} match={m} teamCode={code} onPlayer={openFb} getRating={getRating} coords={coords} motmRating={matchMaxRating} fotmobIdByShirt={fotmobIdByShirt} statsPending={pending} />
       {lu?.bench && lu.bench.length > 0 && (
         <div style={{ marginTop: 18 }}>
           <div className="kicker" style={{ marginBottom: 10 }}>Avbytarbänk</div>
@@ -411,6 +411,7 @@ function PitchTab({ m, ds }: { m: Match; ds: Dataset }) {
                   key={i}
                   p={p}
                   photos={lineupPhotoSources(p.name, p.espnId, db, benchFmId)}
+                  hold={pending && !benchFmId}
                   rating={getRating(p.name)}
                   goals={goalNames.has(nm) ? 1 : 0}
                   assists={assistNames.has(nm) ? 1 : 0}

@@ -15,6 +15,7 @@ export function PlayerImg({
   radius = 18,
   fontSize,
   zoomable = false,
+  hold = false,
 }: {
   src?: string | null;
   srcs?: string[];
@@ -23,6 +24,10 @@ export function PlayerImg({
   radius?: number;
   fontSize?: number;
   zoomable?: boolean;
+  // Keep shimmering (don't show the current photo yet) while a better source is
+  // still being resolved — the good photo then loads first, weaker ones only fall
+  // back on error. Used by line-up/bench photos waiting for the FotMob id.
+  hold?: boolean;
 }) {
   const list = (srcs && srcs.length ? srcs : src ? [src] : []).filter(Boolean);
   const key = list.join("|");
@@ -30,11 +35,11 @@ export function PlayerImg({
   const [imgLoaded, setImgLoaded] = useState(false);
   useEffect(() => { setIdx(0); }, [key]); // reset when the player (its url list) changes
   const openLightbox = useLightbox((s) => s.open);
-  const cur = idx < list.length ? list[idx] : null;
+  const cur = hold ? null : idx < list.length ? list[idx] : null;
   useEffect(() => { setImgLoaded(false); }, [cur]); // skeleton until the (new) photo paints
   const show = !!cur;
   const canZoom = zoomable && show;
-  const skel = show && !imgLoaded;
+  const skel = hold || (show && !imgLoaded);
   return (
     <span
       onClick={canZoom ? () => openLightbox(cur!, name) : undefined}
@@ -62,7 +67,7 @@ export function PlayerImg({
           style={{ width: "100%", height: "100%", objectFit: "cover", opacity: imgLoaded ? 1 : 0, transition: "opacity .3s ease" }}
           onError={() => setIdx((i) => i + 1)}
         />
-      ) : (
+      ) : hold ? null : (
         <span className="num" style={{ fontSize: fontSize ?? size * 0.34, color: "var(--ink-2)" }}>
           {initials(name)}
         </span>
