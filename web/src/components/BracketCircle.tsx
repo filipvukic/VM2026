@@ -159,11 +159,10 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const angQF = (j: number) => ang(4, j);
   const angSF = (j: number) => ang(2, j);
 
-  // Dim for a receded round in the blurred layer. FIXED per ring (NOT level-dependent) on purpose:
-  // the blurred layer is a cached texture, so if an already-blurred round changed opacity when you
-  // zoomed another step it would pop (no transition on the texture). Fixed → every round keeps the
-  // same look once it recedes, so all zoom steps behave like the clean first one. Gentle gradient:
-  // rounds nearer the centre (higher ring) stay a touch brighter than the far outer rounds.
+  // Brightness of a receded round (its soft blob + faded lines). FIXED per ring (NOT level-
+  // dependent) so an already-receded round keeps the same look when you zoom another step — every
+  // zoom step then behaves like the clean first one. Gentle gradient: rounds nearer the centre
+  // (higher ring) stay a touch brighter than the far outer rounds.
   const ctxDim = (ring: number) => 0.56 + ring * 0.03;
 
   const nodes: Node[] = [];
@@ -247,21 +246,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // with receded rounds dimmed; its receded flags fade to 0 and hand off to the blob on CTX.
   const focusDim = (ring: number, natural: number) => (ring >= level ? natural : ctxDim(ring) * natural);
 
-  const content = (layer: "focus" | "ctx") => {
-    // CTX layer = only the soft blobs standing in for the receded (blurred) flags.
-    if (layer === "ctx")
-      return (
-        <>
-          {nodes.map((n, i) => {
-            if (!n.code) return null;
-            const op = n.ring < level ? ctxDim(n.ring) * (n.lost ? 0.42 : 1) : 0; // fades both ways with the zoom
-            const bd = n.d * 1.5;
-            const col = colorOf(n.code) ?? "var(--ink-3)";
-            return <span key={i} className="bc-blob" style={{ left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, background: `radial-gradient(circle, ${col} 0%, ${col} 30%, transparent 70%)`, opacity: op }} />;
-          })}
-        </>
-      );
-    return (
+  const content = (
       <>
         <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
           <defs>
@@ -275,6 +260,16 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           {arcs.map((a, i) => { const r = a.ring < level; return <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(a.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(a.ring) * 0.34 : 1 }} />; })}
           {radials.map((l, i) => { const r = l.ring < level; return <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeLinecap="round" style={{ strokeWidth: sw(l.color) * (r ? 3.2 : 1), opacity: r ? ctxDim(l.ring) * 0.34 : 1 }} />; })}
         </svg>
+
+        {/* Soft blobs for the receded flags — ABOVE the lines, BELOW the sharp badges (correct
+            stacking), cross-fading by opacity as rounds enter/leave focus. */}
+        {nodes.map((n, i) => {
+          if (!n.code) return null;
+          const op = n.ring < level ? ctxDim(n.ring) * (n.lost ? 0.42 : 1) : 0;
+          const bd = n.d * 1.5;
+          const col = colorOf(n.code) ?? "var(--ink-3)";
+          return <span key={`b${i}`} className="bc-blob" style={{ left: n.x - bd / 2, top: n.y - bd / 2, width: bd, height: bd, background: `radial-gradient(circle, ${col} 0%, ${col} 30%, transparent 70%)`, opacity: op }} />;
+        })}
 
         {ROUND_NAMES.map((t, i) => {
           const [lx, ly] = polar(C, R[i], 180);
@@ -308,8 +303,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: Math.max(8, S * 0.018), opacity: focusDim(s.ring, 1) }}>{s.t}</span>
         ))}
       </>
-    );
-  };
+  );
 
   return (
     <div
@@ -328,11 +322,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
-          {/* Soft blobs (behind) stand in for the receded flags; the sharp interactive layer sits
-              on top. Both cross-fade by opacity as rounds enter/leave focus — no filter anywhere,
-              so the zoom is pure transform + opacity: smooth, crisp, no scaling artefacts. */}
-          <div className="bc-layer bc-ctx">{content("ctx")}</div>
-          <div className="bc-layer bc-focus">{content("focus")}</div>
+          {/* One layer, correct stacking: lines → soft blobs → sharp badges. No filter anywhere,
+              so the zoom is pure transform + opacity — smooth, crisp, no scaling artefacts. */}
+          <div className="bc-layer bc-focus">{content}</div>
         </div>
       </div>
 
@@ -352,8 +344,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            cross-fade by opacity with the sharp flags — a paint, not a filter, so the zoom is pure
            transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
-        .bc-ctx{ pointer-events:none; }
-        .bc-blob{ position:absolute; border-radius:50%; transition:opacity .95s cubic-bezier(.62,0,.2,1); }
+        .bc-blob{ position:absolute; border-radius:50%; pointer-events:none; z-index:2; transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-svg{ position:absolute; inset:0; }
         /* Lines "blur" without a filter: as a round recedes it widens + fades (a wide faint line
            reads as soft), transitioning together with the zoom. */
