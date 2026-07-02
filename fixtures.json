@@ -65139,15 +65139,18 @@
     "homeTla": "ESP",
     "away": "Austria",
     "awayTla": "AUT",
-    "status": "TIMED",
+    "status": "IN_PLAY",
     "score": [
-      1,
+      2,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         1,
+        0
+      ],
+      "fullTime": [
+        2,
         0
       ],
       "extraTime": null,
@@ -65155,7 +65158,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "45+2",
+    "minute": "84",
     "goals": [
       {
         "minute": "36",
@@ -65169,10 +65172,74 @@
           0
         ],
         "period": 1
+      },
+      {
+        "minute": "66",
+        "team": "ESP",
+        "scorer": "Pedro Porro",
+        "assist": "Álex Baena",
+        "type": "HEADER",
+        "description": "Goal! Spain 2, Austria 0. Pedro Porro (Spain) header from the centre of the box to the centre of the goal. Assisted by Álex Baena.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "83",
+        "team": "AUT",
+        "player": "Stefan Posch",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "AUT",
+        "playerIn": "Florian Grillitsch",
+        "playerOut": "Xaver Schlager",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "AUT",
+        "playerIn": "Carney Chukwuemeka",
+        "playerOut": "Nicolas Seiwald",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "AUT",
+        "playerIn": "Sasa Kalajdzic",
+        "playerOut": "Romano Schmid",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "AUT",
+        "playerIn": "Marko Arnautovic",
+        "playerOut": "Michael Gregoritsch",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "ESP",
+        "playerIn": "Ferran Torres",
+        "playerOut": "Álex Baena",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "ESP",
+        "playerIn": "Mikel Merino",
+        "playerOut": "Dani Olmo",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "SoFi Stadium",
       "city": "Inglewood, California",
@@ -65250,7 +65317,7 @@
           "jersey": "10",
           "espnId": "227765",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pedri",
@@ -65286,7 +65353,7 @@
           "jersey": "15",
           "espnId": "297373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lamine Yamal",
@@ -65305,7 +65372,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "209581",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65341,7 +65408,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "265869",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65502,7 +65569,7 @@
           "jersey": "4",
           "espnId": "238886",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nicolas Seiwald",
@@ -65511,7 +65578,7 @@
           "jersey": "6",
           "espnId": "305956",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Michael Gregoritsch",
@@ -65520,7 +65587,7 @@
           "jersey": "11",
           "espnId": "146804",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Marcel Sabitzer",
@@ -65538,7 +65605,7 @@
           "jersey": "18",
           "espnId": "238296",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -65548,7 +65615,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "219304",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65611,7 +65678,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "98193",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65647,7 +65714,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "294317",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65665,7 +65732,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "259131",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -65682,64 +65749,64 @@
       "_espnEventId": "760497"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 6.0,
-      "saves": 0.0,
-      "possessionPct": 64.3,
-      "totalShots": 9.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.4,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 266.0,
-      "totalPasses": 296.0,
-      "passPct": 0.9,
-      "accurateCrosses": 4.0,
-      "totalCrosses": 15.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 14.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.7,
-      "blockedShots": 2.0,
-      "effectiveTackles": 6.0,
-      "totalTackles": 10.0,
-      "tacklePct": 0.6,
-      "interceptions": 3.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
-    },
-    "awayStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 2.0,
+      "wonCorners": 9.0,
+      "saves": 0.0,
+      "possessionPct": 65.4,
+      "totalShots": 20.0,
+      "shotsOnTarget": 8.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 492.0,
+      "totalPasses": 544.0,
+      "passPct": 0.9,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 21.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.7,
+      "blockedShots": 7.0,
+      "effectiveTackles": 12.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.7,
+      "interceptions": 6.0,
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
+    },
+    "awayStats": {
+      "foulsCommitted": 13.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
       "wonCorners": 0.0,
-      "saves": 3.0,
-      "possessionPct": 35.7,
-      "totalShots": 2.0,
+      "saves": 6.0,
+      "possessionPct": 34.6,
+      "totalShots": 5.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 134.0,
-      "totalPasses": 169.0,
+      "accuratePasses": 234.0,
+      "totalPasses": 292.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 4.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 15.0,
-      "accurateLongBalls": 7.0,
-      "longballPct": 0.5,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 34.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.4,
       "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.7,
-      "interceptions": 4.0,
-      "effectiveClearance": 14.0,
-      "totalClearance": 14.0
+      "effectiveTackles": 8.0,
+      "totalTackles": 13.0,
+      "tacklePct": 0.6,
+      "interceptions": 7.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
     },
     "homeForm": [
       {
@@ -66110,7 +66177,7 @@
       "awayML": 150,
       "spread": "EGY -0.5",
       "overUnder": 1.5,
-      "overOdds": -170.0,
+      "overOdds": -165.0,
       "underOdds": 135.0,
       "provider": "DraftKings"
     },
@@ -66364,12 +66431,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -190,
-      "awayML": 600,
+      "homeML": -225,
+      "awayML": 750,
       "spread": "COL -1.5",
       "overUnder": 2.5,
-      "overOdds": 125.0,
-      "underOdds": -150.0,
+      "overOdds": 115.0,
+      "underOdds": -140.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -66751,8 +66818,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -110,
-      "awayML": 300,
+      "homeML": -115,
+      "awayML": 310,
       "spread": "BRA -0.5",
       "overUnder": 2.5,
       "overOdds": -130.0,
@@ -67044,8 +67111,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 150,
-      "awayML": 180,
+      "homeML": 160,
+      "awayML": 175,
       "spread": "USA -0.5",
       "overUnder": 2.5,
       "overOdds": -130.0,
