@@ -68251,18 +68251,38 @@
     "homeTla": "ARG",
     "away": "Cape Verde Islands",
     "awayTla": "CPV",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      1,
+      0
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        1,
+        0
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": null,
-    "goals": [],
+    "minute": "44",
+    "goals": [
+      {
+        "minute": "29",
+        "team": "ARG",
+        "scorer": "Lionel Messi",
+        "assist": "Lisandro Martínez",
+        "type": "REGULAR",
+        "description": "Goal! Argentina 1, Cabo Verde 0. Lionel Messi (Argentina) left footed shot from the right side of the six yard box to the top right corner. Assisted by Lisandro Martínez with a through ball.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 1
+      }
+    ],
     "bookings": [],
     "subs": [],
     "venue": {
@@ -68273,8 +68293,7 @@
     "referees": [
       {
         "name": "Drew Fischer",
-        "role": "REFEREE",
-        "nationality": "Canada"
+        "role": "Referee"
       }
     ],
     "odds": null,
@@ -68284,7 +68303,7 @@
       "awayML": 1800,
       "spread": "ARG -2.5",
       "overUnder": 2.5,
-      "overOdds": -165.0,
+      "overOdds": -160.0,
       "underOdds": 130.0,
       "provider": "DraftKings"
     },
@@ -68297,98 +68316,98 @@
           "positionName": "Goalkeeper",
           "jersey": "23",
           "espnId": "158626",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Cristian Romero",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "13",
-          "espnId": "96970",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lisandro Martínez",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
           "jersey": "6",
           "espnId": "233937",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
-          "name": "Nahuel Molina",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "26",
-          "espnId": "164826",
-          "subbedIn": true,
-          "subbedOut": true
+          "name": "Cristian Romero",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "13",
+          "espnId": "96970",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Facundo Medina",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "LB",
+          "positionName": "Left Back",
           "jersey": "25",
           "espnId": "249663",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
-          "name": "Alexis Mac Allister",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "20",
-          "espnId": "249299",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Thiago Almada",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "16",
-          "espnId": "277208",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Rodrigo De Paul",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "7",
-          "espnId": "174466",
-          "subbedIn": true,
-          "subbedOut": true
+          "name": "Nahuel Molina",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "26",
+          "espnId": "164826",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Enzo Fernández",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
           "jersey": "24",
           "espnId": "285450",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "20",
+          "espnId": "249299",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Thiago Almada",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "16",
+          "espnId": "277208",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rodrigo De Paul",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "7",
+          "espnId": "174466",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lautaro Martínez",
-          "position": "F",
-          "positionName": "Forward",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
           "jersey": "22",
           "espnId": "219713",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lionel Messi",
-          "position": "F",
-          "positionName": "Forward",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
           "jersey": "10",
           "espnId": "45843",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -68398,8 +68417,8 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "145190",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Valentín Barco",
@@ -68407,8 +68426,8 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "320760",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Exequiel Palacios",
@@ -68416,8 +68435,8 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "228393",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Gonzalo Montiel",
@@ -68425,8 +68444,8 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "228262",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nico Paz",
@@ -68434,8 +68453,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "337970",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "José Manuel López",
@@ -68443,8 +68462,8 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "311743",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Giovani Lo Celso",
@@ -68452,8 +68471,8 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "207343",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Giuliano Simeone",
@@ -68461,8 +68480,8 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "323838",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Julián Álvarez",
@@ -68470,8 +68489,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "277206",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nico González",
@@ -68479,8 +68498,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "76017",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Juan Musso",
@@ -68488,8 +68507,8 @@
           "positionName": "Substitute",
           "jersey": "1",
           "espnId": "177927",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Gerónimo Rulli",
@@ -68497,8 +68516,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "167192",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Leandro Paredes",
@@ -68506,8 +68525,8 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "153115",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nicolás Otamendi",
@@ -68515,8 +68534,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "119289",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Marcos Senesi",
@@ -68524,8 +68543,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "233945",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "ARG",
@@ -68540,89 +68559,89 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "181330",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Diney Borges",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
           "jersey": "3",
           "espnId": "214683",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Steven Moreira",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "22",
-          "espnId": "180113",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Sidny Lopes Cabral",
-          "position": "D",
-          "positionName": "Defender",
-          "jersey": "13",
-          "espnId": "332394",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Pico Lopes",
-          "position": "D",
-          "positionName": "Defender",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
           "jersey": "4",
           "espnId": "257716",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Deroy Duarte",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "14",
-          "espnId": "246442",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Laros Duarte",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "15",
-          "espnId": "222236",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Ryan Mendes",
-          "position": "M",
-          "positionName": "Midfielder",
-          "jersey": "20",
-          "espnId": "135216",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kevin Pina",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "DM",
+          "positionName": "Defensive Midfielder",
           "jersey": "6",
           "espnId": "327173",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Sidny Lopes Cabral",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "13",
+          "espnId": "332394",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Steven Moreira",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "22",
+          "espnId": "180113",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Deroy Duarte",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "14",
+          "espnId": "246442",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Laros Duarte",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "15",
+          "espnId": "222236",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jovane Cabral",
-          "position": "M",
-          "positionName": "Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "7",
           "espnId": "250059",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ryan Mendes",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "20",
+          "espnId": "135216",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nuno da Costa",
@@ -68630,8 +68649,8 @@
           "positionName": "Forward",
           "jersey": "21",
           "espnId": "224798",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -68641,8 +68660,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "304076",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Márcio Rosa",
@@ -68650,8 +68669,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "260758",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yannick Semedo",
@@ -68659,8 +68678,8 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "101251",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Stopira",
@@ -68668,8 +68687,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "148146",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Logan Costa",
@@ -68677,8 +68696,8 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "271129",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Garry Rodrigues",
@@ -68686,8 +68705,8 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "175012",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kelvin Pires",
@@ -68695,8 +68714,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "378479",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hélio Varela",
@@ -68704,8 +68723,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "366092",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Dailon Livramento",
@@ -68713,8 +68732,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "330211",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jamiro Monteiro",
@@ -68722,8 +68741,8 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "227441",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "João Paulo",
@@ -68731,8 +68750,8 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "318631",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Willy Semedo",
@@ -68740,8 +68759,8 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "271675",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Wagner Pina",
@@ -68749,8 +68768,8 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "365810",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Gilson Benchimol",
@@ -68758,8 +68777,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "310261",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "CJ dos Santos",
@@ -68767,24 +68786,72 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "265874",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "CPV",
       "_espnEventId": "760500"
     },
     "homeStats": {
-      "goalDifference": 7.0,
-      "totalGoals": 8.0,
-      "goalAssists": 3.0,
-      "goalsConceded": 1.0
+      "foulsCommitted": 4.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 2.0,
+      "wonCorners": 0.0,
+      "saves": 0.0,
+      "possessionPct": 62.6,
+      "totalShots": 3.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.7,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 292.0,
+      "totalPasses": 312.0,
+      "passPct": 0.9,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 2.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 12.0,
+      "accurateLongBalls": 8.0,
+      "longballPct": 0.7,
+      "blockedShots": 0.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.6,
+      "interceptions": 3.0,
+      "effectiveClearance": 6.0,
+      "totalClearance": 6.0
     },
     "awayStats": {
-      "goalDifference": 0.0,
-      "totalGoals": 2.0,
-      "goalAssists": 0.0,
-      "goalsConceded": 2.0
+      "foulsCommitted": 4.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 0.0,
+      "saves": 1.0,
+      "possessionPct": 37.4,
+      "totalShots": 1.0,
+      "shotsOnTarget": 0.0,
+      "shotPct": 0.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 156.0,
+      "totalPasses": 184.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 5.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 22.0,
+      "accurateLongBalls": 8.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.5,
+      "interceptions": 2.0,
+      "effectiveClearance": 2.0,
+      "totalClearance": 2.0
     },
     "homeForm": [
       {
