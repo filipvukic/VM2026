@@ -67495,20 +67495,99 @@
     "homeTla": "AUS",
     "away": "Egypt",
     "awayTla": "EGY",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      1,
+      1
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
+      "fullTime": [
+        1,
+        1
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "DRAW"
     },
-    "minute": "4",
-    "goals": [],
+    "minute": "81",
+    "goals": [
+      {
+        "minute": "13",
+        "team": "EGY",
+        "scorer": "Emam Ashour",
+        "assist": "Karim Hafez",
+        "type": "HEADER",
+        "description": "Goal! Australia 0, Egypt 1. Emam Ashour (Egypt) header from the centre of the box to the bottom left corner. Assisted by Karim Hafez with a cross following a set piece situation.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "55",
+        "team": "AUS",
+        "scorer": "Mohamed Hany",
+        "assist": null,
+        "type": "OWN",
+        "description": "Own Goal by Mohamed Hany, Egypt. Australia 1, Egypt 1.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "AUS",
+        "playerIn": "Kai Trewin",
+        "playerOut": "Jordan Bos",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "EGY",
+        "playerIn": "Haissem Hassan",
+        "playerOut": "Mostafa Zico",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "EGY",
+        "playerIn": "Hossam Abdelmaguid",
+        "playerOut": "Hamdy Fathy",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "AUS",
+        "playerIn": "Ajdin Hrustic",
+        "playerOut": "Cristian Volpato",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "AUS",
+        "playerIn": "Mohamed Toure",
+        "playerOut": "Nestory Irankunda",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "EGY",
+        "playerIn": "Trézéguet",
+        "playerOut": "Karim Hafez",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "AT&T Stadium",
       "city": "Arlington, Texas",
@@ -67523,8 +67602,8 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 250,
-      "awayML": 145,
+      "homeML": 255,
+      "awayML": 150,
       "spread": "EGY -0.5",
       "overUnder": 1.5,
       "overOdds": -170.0,
@@ -67604,7 +67683,7 @@
           "jersey": "5",
           "espnId": "328541",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nestory Irankunda",
@@ -67613,7 +67692,7 @@
           "jersey": "17",
           "espnId": "328535",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Connor Metcalfe",
@@ -67631,7 +67710,7 @@
           "jersey": "20",
           "espnId": "330259",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -67650,7 +67729,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "227289",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -67677,7 +67756,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "291697",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -67704,7 +67783,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "302688",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -67757,7 +67836,7 @@
       "_espnEventId": "760499"
     },
     "awayLineup": {
-      "formation": "4-2-3-1",
+      "formation": "4-4-2",
       "lineup": [
         {
           "name": "Mostafa Shoubir",
@@ -67793,7 +67872,7 @@
           "jersey": "15",
           "espnId": "216119",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Mohamed Hany",
@@ -67805,18 +67884,9 @@
           "subbedOut": false
         },
         {
-          "name": "Mohamed Salah",
-          "position": "AM",
-          "positionName": "Attacking Midfielder",
-          "jersey": "10",
-          "espnId": "173896",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
           "name": "Marawan Attia",
-          "position": "LM",
-          "positionName": "Left Midfielder",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
           "jersey": "19",
           "espnId": "357112",
           "subbedIn": false,
@@ -67824,37 +67894,46 @@
         },
         {
           "name": "Hamdy Fathy",
-          "position": "RM",
-          "positionName": "Right Midfielder",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
           "jersey": "14",
           "espnId": "285057",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Omar Marmoush",
-          "position": "F",
-          "positionName": "Forward",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "22",
           "espnId": "303745",
           "subbedIn": false,
           "subbedOut": false
         },
         {
-          "name": "Mostafa Zico",
-          "position": "AM-L",
-          "positionName": "Attacking Midfielder Left",
-          "jersey": "11",
-          "espnId": "378495",
+          "name": "Emam Ashour",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "8",
+          "espnId": "299365",
           "subbedIn": false,
           "subbedOut": false
         },
         {
-          "name": "Emam Ashour",
-          "position": "AM-R",
-          "positionName": "Attacking Midfielder Right",
-          "jersey": "8",
-          "espnId": "299365",
+          "name": "Mostafa Zico",
+          "position": "CF-L",
+          "positionName": "Center Left Forward",
+          "jersey": "11",
+          "espnId": "378495",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Mohamed Salah",
+          "position": "CF-R",
+          "positionName": "Center Right Forward",
+          "jersey": "10",
+          "espnId": "173896",
           "subbedIn": false,
           "subbedOut": false
         }
@@ -67911,7 +67990,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "308926",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -67920,7 +67999,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "276440",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -67965,7 +68044,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "157825",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -67973,64 +68052,64 @@
       "_espnEventId": "760499"
     },
     "homeStats": {
-      "foulsCommitted": 0.0,
+      "foulsCommitted": 5.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
+      "wonCorners": 3.0,
       "saves": 0.0,
-      "possessionPct": 45.5,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 48.6,
+      "totalShots": 8.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.1,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 6.0,
-      "totalPasses": 10.0,
-      "passPct": 0.6,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 1.0,
-      "accurateLongBalls": 0.0,
-      "longballPct": 0.0,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 1.0,
-      "tacklePct": 1.0,
-      "interceptions": 0.0,
-      "effectiveClearance": 0.0,
-      "totalClearance": 0.0
+      "accuratePasses": 324.0,
+      "totalPasses": 388.0,
+      "passPct": 0.8,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 16.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 12.0,
+      "longballPct": 0.3,
+      "blockedShots": 3.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.8,
+      "interceptions": 5.0,
+      "effectiveClearance": 8.0,
+      "totalClearance": 8.0
     },
     "awayStats": {
-      "foulsCommitted": 0.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
+      "offsides": 3.0,
       "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 54.5,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "saves": 1.0,
+      "possessionPct": 51.4,
+      "totalShots": 5.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 10.0,
-      "totalPasses": 12.0,
-      "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 3.0,
-      "accurateLongBalls": 1.0,
-      "longballPct": 0.3,
-      "blockedShots": 0.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 0.0,
-      "tacklePct": 0.0,
-      "interceptions": 0.0,
-      "effectiveClearance": 0.0,
-      "totalClearance": 0.0
+      "accuratePasses": 363.0,
+      "totalPasses": 426.0,
+      "passPct": 0.9,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 4.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 50.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.4,
+      "blockedShots": 2.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.4,
+      "interceptions": 6.0,
+      "effectiveClearance": 29.0,
+      "totalClearance": 29.0
     },
     "homeForm": [
       {
