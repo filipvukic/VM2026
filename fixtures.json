@@ -65933,24 +65933,67 @@
     "homeTla": "POR",
     "away": "Croatia",
     "awayTla": "CRO",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      2,
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        2,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
-    "goals": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "53",
+        "team": "CRO",
+        "scorer": "Ivan Perisic",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Portugal 0, Croatia 1. Ivan Perisic (Croatia) left footed shot from the left side of the box to the centre of the goal.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "POR",
+        "scorer": "Cristiano Ronaldo",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Portugal 1, Croatia 1. Cristiano Ronaldo (Portugal) converts the penalty with a right footed shot to the centre of the goal.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "POR",
+        "scorer": "Gonçalo Ramos",
+        "assist": "Rafael Leão",
+        "type": "HEADER",
+        "description": "Goal! Portugal 2, Croatia 1. Gonçalo Ramos (Portugal) header from the centre of the box to the bottom right corner. Assisted by Rafael Leão with a cross.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "17",
@@ -65958,9 +66001,87 @@
         "player": "Rúben Dias",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "59",
+        "team": "CRO",
+        "player": "Luka Modric",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "CRO",
+        "player": "Ivan Perisic",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "CRO",
+        "playerIn": "Igor Matanovic",
+        "playerOut": "Ante Budimir",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "POR",
+        "playerIn": "Bernardo Silva",
+        "playerOut": "Vitinha",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Francisco Conceição",
+        "playerOut": "Pedro Neto",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Nélson Semedo",
+        "playerOut": "Bruno Fernandes",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Gonçalo Ramos",
+        "playerOut": "João Cancelo",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "CRO",
+        "playerIn": "Mario Pasalic",
+        "playerOut": "Martin Baturina",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "POR",
+        "playerIn": "Rúben Neves",
+        "playerOut": "Cristiano Ronaldo",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "CRO",
+        "playerIn": "Josko Gvardiol",
+        "playerOut": "Nikola Vlasic",
+        "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "CRO",
+        "playerIn": "Andrej Kramaric",
+        "playerOut": "Mateo Kovacic",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BMO Field",
       "city": "Toronto",
@@ -65973,7 +66094,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 43036,
     "espnOdds": {
       "homeML": -145,
       "awayML": 450,
@@ -66029,7 +66150,7 @@
           "jersey": "20",
           "espnId": "176399",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bruno Fernandes",
@@ -66038,7 +66159,7 @@
           "jersey": "8",
           "espnId": "124091",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Vitinha",
@@ -66047,7 +66168,7 @@
           "jersey": "23",
           "espnId": "288897",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "João Neves",
@@ -66065,7 +66186,7 @@
           "jersey": "7",
           "espnId": "22774",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rafael Leão",
@@ -66083,7 +66204,7 @@
           "jersey": "18",
           "espnId": "256115",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -66102,7 +66223,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "208128",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66147,7 +66268,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "222670",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66156,7 +66277,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "312659",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66165,7 +66286,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "288896",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66210,7 +66331,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "199833",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66290,7 +66411,7 @@
           "jersey": "8",
           "espnId": "154595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Luka Modric",
@@ -66308,7 +66429,7 @@
           "jersey": "11",
           "espnId": "207288",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Martin Baturina",
@@ -66317,7 +66438,7 @@
           "jersey": "16",
           "espnId": "311475",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nikola Vlasic",
@@ -66326,7 +66447,7 @@
           "jersey": "13",
           "espnId": "206378",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -66336,7 +66457,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139520",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66345,7 +66466,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "310883",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66372,7 +66493,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "189668",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66390,7 +66511,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "299910",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -66470,64 +66591,64 @@
       "_espnEventId": "760496"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 6.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 6.0,
-      "saves": 1.0,
-      "possessionPct": 68.6,
-      "totalShots": 9.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.1,
+      "offsides": 1.0,
+      "wonCorners": 9.0,
+      "saves": 5.0,
+      "possessionPct": 60.5,
+      "totalShots": 15.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 313.0,
-      "totalPasses": 335.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 532.0,
+      "totalPasses": 584.0,
       "passPct": 0.9,
-      "accurateCrosses": 2.0,
-      "totalCrosses": 14.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.6,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 20.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 40.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.5,
       "blockedShots": 4.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.4,
-      "interceptions": 3.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
+      "effectiveTackles": 9.0,
+      "totalTackles": 19.0,
+      "tacklePct": 0.5,
+      "interceptions": 5.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
     },
     "awayStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 12.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 0.0,
+      "offsides": 4.0,
+      "wonCorners": 5.0,
       "saves": 2.0,
-      "possessionPct": 31.4,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.0,
+      "possessionPct": 39.5,
+      "totalShots": 13.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 127.0,
-      "totalPasses": 153.0,
+      "accuratePasses": 311.0,
+      "totalPasses": 368.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 4.0,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 22.0,
       "crossPct": 0.3,
-      "totalLongBalls": 22.0,
-      "accurateLongBalls": 6.0,
-      "longballPct": 0.3,
-      "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 9.0,
-      "tacklePct": 0.4,
-      "interceptions": 6.0,
-      "effectiveClearance": 14.0,
-      "totalClearance": 14.0
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 18.0,
+      "longballPct": 0.4,
+      "blockedShots": 2.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
     },
     "homeForm": [
       {
@@ -66632,7 +66753,13 @@
       "city": "Vancouver",
       "country": "Canada"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Yael Falcón",
+        "role": "REFEREE",
+        "nationality": "Argentina"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {

@@ -65034,5 +65034,784 @@
     "espnClock": null,
     "espnDisplayClock": null,
     "_fetched_at": "2026-07-02T21:51:42.940528+00:00"
+  },
+  "760496": {
+    "goals": [
+      {
+        "minute": "53",
+        "team": "CRO",
+        "scorer": "Ivan Perisic",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Portugal 0, Croatia 1. Ivan Perisic (Croatia) left footed shot from the left side of the box to the centre of the goal.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "POR",
+        "scorer": "Cristiano Ronaldo",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Portugal 1, Croatia 1. Cristiano Ronaldo (Portugal) converts the penalty with a right footed shot to the centre of the goal.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "POR",
+        "scorer": "Gonçalo Ramos",
+        "assist": "Rafael Leão",
+        "type": "HEADER",
+        "description": "Goal! Portugal 2, Croatia 1. Gonçalo Ramos (Portugal) header from the centre of the box to the bottom right corner. Assisted by Rafael Leão with a cross.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "17",
+        "team": "POR",
+        "player": "Rúben Dias",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "59",
+        "team": "CRO",
+        "player": "Luka Modric",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "CRO",
+        "player": "Ivan Perisic",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "CRO",
+        "playerIn": "Igor Matanovic",
+        "playerOut": "Ante Budimir",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "POR",
+        "playerIn": "Bernardo Silva",
+        "playerOut": "Vitinha",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Francisco Conceição",
+        "playerOut": "Pedro Neto",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Nélson Semedo",
+        "playerOut": "Bruno Fernandes",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "POR",
+        "playerIn": "Gonçalo Ramos",
+        "playerOut": "João Cancelo",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "CRO",
+        "playerIn": "Mario Pasalic",
+        "playerOut": "Martin Baturina",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "POR",
+        "playerIn": "Rúben Neves",
+        "playerOut": "Cristiano Ronaldo",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "CRO",
+        "playerIn": "Josko Gvardiol",
+        "playerOut": "Nikola Vlasic",
+        "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "CRO",
+        "playerIn": "Andrej Kramaric",
+        "playerOut": "Mateo Kovacic",
+        "period": 2
+      }
+    ],
+    "penalties": null,
+    "homeLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Diogo Costa",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "238903",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Renato Veiga",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "13",
+          "espnId": "337011",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rúben Dias",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "espnId": "234878",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nuno Mendes",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "25",
+          "espnId": "290591",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "João Cancelo",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "20",
+          "espnId": "176399",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Bruno Fernandes",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "8",
+          "espnId": "124091",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Vitinha",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "23",
+          "espnId": "288897",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "João Neves",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "15",
+          "espnId": "355061",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Cristiano Ronaldo",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "7",
+          "espnId": "22774",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Rafael Leão",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "17",
+          "espnId": "258917",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Pedro Neto",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "18",
+          "espnId": "256115",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Samú Costa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "183466",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rúben Neves",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "208128",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Tomás Araújo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "329691",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Inácio",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "304106",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Matheus Nunes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "303785",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "João Félix",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "276350",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nélson Semedo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "222670",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Francisco Conceição",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "312659",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Ramos",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "288896",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Gonçalo Guedes",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "213141",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Rui Silva",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "177898",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Diogo Dalot",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "238902",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Francisco Trincão",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "274159",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Bernardo Silva",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "10",
+          "espnId": "199833",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "José Sá",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "181278",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "POR",
+      "_espnEventId": "760496"
+    },
+    "awayLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Dominik Livakovic",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "187946",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marin Pongracic",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "3",
+          "espnId": "255650",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Josip Sutalo",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "6",
+          "espnId": "305552",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ivan Perisic",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "14",
+          "espnId": "103485",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Josip Stanisic",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "2",
+          "espnId": "276329",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Petar Sucic",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "17",
+          "espnId": "341494",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mateo Kovacic",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "8",
+          "espnId": "154595",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Luka Modric",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "10",
+          "espnId": "76762",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ante Budimir",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "11",
+          "espnId": "207288",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Martin Baturina",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "16",
+          "espnId": "311475",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Nikola Vlasic",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "13",
+          "espnId": "206378",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Andrej Kramaric",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "139520",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Igor Matanovic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "310883",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Luka Sucic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "306263",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Dominik Kotarski",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "239411",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mario Pasalic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "189668",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Luka Vuskovic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "364962",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Josko Gvardiol",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "4",
+          "espnId": "299910",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Nikola Moro",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "228333",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Duje Caleta-Car",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "5",
+          "espnId": "194766",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Petar Musa",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "277128",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Marco Pasalic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "24",
+          "espnId": "324270",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Toni Fruk",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "338232",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Kristijan Jakic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "238929",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Martin Erlic",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "216579",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ivor Pandur",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "277234",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "CRO",
+      "_espnEventId": "760496"
+    },
+    "homeStats": {
+      "foulsCommitted": 6.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 9.0,
+      "saves": 5.0,
+      "possessionPct": 60.5,
+      "totalShots": 15.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.2,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 532.0,
+      "totalPasses": 584.0,
+      "passPct": 0.9,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 20.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 40.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.5,
+      "blockedShots": 4.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 19.0,
+      "tacklePct": 0.5,
+      "interceptions": 5.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
+    },
+    "awayStats": {
+      "foulsCommitted": 12.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 4.0,
+      "wonCorners": 5.0,
+      "saves": 2.0,
+      "possessionPct": 39.5,
+      "totalShots": 13.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.5,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 311.0,
+      "totalPasses": 368.0,
+      "passPct": 0.8,
+      "accurateCrosses": 7.0,
+      "totalCrosses": 22.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 43.0,
+      "accurateLongBalls": 18.0,
+      "longballPct": 0.4,
+      "blockedShots": 2.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 19.0,
+      "totalClearance": 19.0
+    },
+    "venue": {
+      "stadium": "BMO Field",
+      "city": "Toronto",
+      "country": "Canada"
+    },
+    "attendance": 43036,
+    "referees": [
+      {
+        "name": "Espen Eskas",
+        "role": "Referee"
+      }
+    ],
+    "espnOdds": {
+      "homeML": -145,
+      "awayML": 450,
+      "spread": "POR -0.5",
+      "overUnder": 2.5,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-06-27",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": false
+      },
+      {
+        "date": "2026-06-23",
+        "result": "V",
+        "gf": 5,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-10",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-06",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-06-27",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-23",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-17",
+        "result": "F",
+        "gf": 2,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-07",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-02",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_FULL_TIME",
+    "espnState": "post",
+    "espnCompleted": true,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-07-03T01:22:36.478634+00:00"
   }
 }
