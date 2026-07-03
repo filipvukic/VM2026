@@ -68254,20 +68254,23 @@
     "status": "IN_PLAY",
     "score": [
       1,
-      0
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         1,
         0
+      ],
+      "fullTime": [
+        1,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "HOME_TEAM"
+      "winnerSide": "DRAW"
     },
-    "minute": "44",
+    "minute": "83",
     "goals": [
       {
         "minute": "29",
@@ -68281,10 +68284,74 @@
           0
         ],
         "period": 1
+      },
+      {
+        "minute": "59",
+        "team": "CPV",
+        "scorer": "Deroy Duarte",
+        "assist": "Ryan Mendes",
+        "type": "REGULAR",
+        "description": "Goal! Argentina 1, Cabo Verde 1. Deroy Duarte (Cabo Verde) right footed shot from a difficult angle on the right to the bottom left corner. Assisted by Ryan Mendes.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "68",
+        "team": "CPV",
+        "player": "Kevin Pina",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "63",
+        "team": "ARG",
+        "playerIn": "Julián Álvarez",
+        "playerOut": "Lautaro Martínez",
+        "period": 2
+      },
+      {
+        "minute": "64",
+        "team": "ARG",
+        "playerIn": "Nico González",
+        "playerOut": "Thiago Almada",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "CPV",
+        "playerIn": "Jamiro Monteiro",
+        "playerOut": "Laros Duarte",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "CPV",
+        "playerIn": "Dailon Livramento",
+        "playerOut": "Nuno da Costa",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "CPV",
+        "playerIn": "Willy Semedo",
+        "playerOut": "Ryan Mendes",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "CPV",
+        "playerIn": "Hélio Varela",
+        "playerOut": "Jovane Cabral",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -68380,7 +68447,7 @@
           "jersey": "16",
           "espnId": "277208",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rodrigo De Paul",
@@ -68398,7 +68465,7 @@
           "jersey": "22",
           "espnId": "219713",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lionel Messi",
@@ -68489,7 +68556,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "277206",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68498,7 +68565,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "76017",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68623,7 +68690,7 @@
           "jersey": "15",
           "espnId": "222236",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jovane Cabral",
@@ -68632,7 +68699,7 @@
           "jersey": "7",
           "espnId": "250059",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ryan Mendes",
@@ -68641,7 +68708,7 @@
           "jersey": "20",
           "espnId": "135216",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nuno da Costa",
@@ -68650,7 +68717,7 @@
           "jersey": "21",
           "espnId": "224798",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -68723,7 +68790,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "366092",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68732,7 +68799,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "330211",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68741,7 +68808,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "227441",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68759,7 +68826,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "271675",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -68794,64 +68861,64 @@
       "_espnEventId": "760500"
     },
     "homeStats": {
-      "foulsCommitted": 4.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 2.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 62.6,
-      "totalShots": 3.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.7,
+      "wonCorners": 3.0,
+      "saves": 1.0,
+      "possessionPct": 66.2,
+      "totalShots": 9.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 292.0,
-      "totalPasses": 312.0,
+      "accuratePasses": 558.0,
+      "totalPasses": 605.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 12.0,
-      "accurateLongBalls": 8.0,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 5.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 18.0,
       "longballPct": 0.7,
-      "blockedShots": 0.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 9.0,
+      "blockedShots": 1.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 13.0,
       "tacklePct": 0.6,
-      "interceptions": 3.0,
-      "effectiveClearance": 6.0,
-      "totalClearance": 6.0
+      "interceptions": 6.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 8.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 37.4,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "wonCorners": 2.0,
+      "saves": 4.0,
+      "possessionPct": 33.8,
+      "totalShots": 6.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 156.0,
-      "totalPasses": 184.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 5.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 22.0,
-      "accurateLongBalls": 8.0,
+      "accuratePasses": 258.0,
+      "totalPasses": 302.0,
+      "passPct": 0.9,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 12.0,
       "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "blockedShots": 2.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.4,
+      "interceptions": 7.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
     },
     "homeForm": [
       {
@@ -68956,7 +69023,13 @@
       "city": "Kansas City, Missouri",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Clément Turpin",
+        "role": "REFEREE",
+        "nationality": "France"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
