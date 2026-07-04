@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T17:30:22+00:00",
+  "updated_at": "2026-07-04T18:34:11+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19504,21 +19504,38 @@
       "status": "IN_PLAY",
       "score": [
         0,
-        0
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           0,
           0
+        ],
+        "fullTime": [
+          0,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": "28",
-      "goals": [],
+      "minute": "70",
+      "goals": [
+        {
+          "minute": "50",
+          "team": "MAR",
+          "scorer": "Azzedine Ounahi",
+          "assist": "Achraf Hakimi",
+          "type": "REGULAR",
+          "description": "Goal! Canada 0, Morocco 1. Azzedine Ounahi (Morocco) right footed shot from outside the box to the bottom right corner. Assisted by Achraf Hakimi following a set piece situation.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [
         {
           "minute": "20",
@@ -19526,6 +19543,55 @@
           "player": "Redouane Halhal",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "40",
+          "team": "MAR",
+          "player": "Achraf Hakimi",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "40",
+          "team": "CAN",
+          "player": "Richie Laryea",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "43",
+          "team": "CAN",
+          "player": "Jonathan David",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "MAR",
+          "player": "Azzedine Ounahi",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "45+6",
+          "team": "MAR",
+          "player": "Bilal El Khannouss",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "49",
+          "team": "CAN",
+          "player": "Luc de Fougerolles",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "CAN",
+          "player": "Cyle Larin",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
       "subs": [
@@ -19535,6 +19601,27 @@
           "playerIn": "Soufiane Rahimi",
           "playerOut": "Ismael Saibari",
           "period": 1
+        },
+        {
+          "minute": "63",
+          "team": "MAR",
+          "playerIn": "Chemsdine Talbi",
+          "playerOut": "Bilal El Khannouss",
+          "period": 2
+        },
+        {
+          "minute": "63",
+          "team": "MAR",
+          "playerIn": "Sofyan Amrabat",
+          "playerOut": "Ayyoub Bouaddi",
+          "period": 2
+        },
+        {
+          "minute": "63",
+          "team": "CAN",
+          "playerIn": "Cyle Larin",
+          "playerOut": "Tani Oluwaseyi",
+          "period": 2
         }
       ],
       "venue": {
@@ -19734,6 +19821,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Hampus",
           "tip": [
             0,
@@ -19836,6 +19931,14 @@
           "name": "Johan",
           "tip": [
             1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            2,
             2
           ],
           "points": null
@@ -19948,6 +20051,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Hampus",
           "tip": [
             0,
@@ -20048,6 +20159,14 @@
         },
         {
           "name": "Johan",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
           "tip": [
             1,
             1
@@ -20162,6 +20281,14 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
           "name": "Hampus",
           "tip": [
             2,
@@ -20262,6 +20389,14 @@
         },
         {
           "name": "Johan",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
           "tip": [
             2,
             0
@@ -20372,6 +20507,14 @@
           "tip": [
             2,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         },

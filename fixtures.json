@@ -69880,21 +69880,38 @@
     "status": "IN_PLAY",
     "score": [
       0,
-      0
+      1
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
         0
+      ],
+      "fullTime": [
+        0,
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "28",
-    "goals": [],
+    "minute": "70",
+    "goals": [
+      {
+        "minute": "50",
+        "team": "MAR",
+        "scorer": "Azzedine Ounahi",
+        "assist": "Achraf Hakimi",
+        "type": "REGULAR",
+        "description": "Goal! Canada 0, Morocco 1. Azzedine Ounahi (Morocco) right footed shot from outside the box to the bottom right corner. Assisted by Achraf Hakimi following a set piece situation.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "20",
@@ -69902,6 +69919,55 @@
         "player": "Redouane Halhal",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "40",
+        "team": "MAR",
+        "player": "Achraf Hakimi",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "40",
+        "team": "CAN",
+        "player": "Richie Laryea",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "43",
+        "team": "CAN",
+        "player": "Jonathan David",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "45",
+        "team": "MAR",
+        "player": "Azzedine Ounahi",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "45+6",
+        "team": "MAR",
+        "player": "Bilal El Khannouss",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "49",
+        "team": "CAN",
+        "player": "Luc de Fougerolles",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "CAN",
+        "player": "Cyle Larin",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
     "subs": [
@@ -69911,6 +69977,27 @@
         "playerIn": "Soufiane Rahimi",
         "playerOut": "Ismael Saibari",
         "period": 1
+      },
+      {
+        "minute": "63",
+        "team": "MAR",
+        "playerIn": "Chemsdine Talbi",
+        "playerOut": "Bilal El Khannouss",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "MAR",
+        "playerIn": "Sofyan Amrabat",
+        "playerOut": "Ayyoub Bouaddi",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "CAN",
+        "playerIn": "Cyle Larin",
+        "playerOut": "Tani Oluwaseyi",
+        "period": 2
       }
     ],
     "venue": {
@@ -70026,7 +70113,7 @@
           "jersey": "12",
           "espnId": "294039",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jonathan David",
@@ -70144,7 +70231,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "205024",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -70242,7 +70329,7 @@
           "jersey": "6",
           "espnId": "373927",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ismael Saibari",
@@ -70260,7 +70347,7 @@
           "jersey": "23",
           "espnId": "336595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Brahim Díaz",
@@ -70360,7 +70447,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "360062",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -70396,7 +70483,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "195226",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -70413,64 +70500,64 @@
       "_espnEventId": "760502"
     },
     "homeStats": {
-      "foulsCommitted": 8.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 19.0,
+      "yellowCards": 4.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 4.0,
-      "saves": 0.0,
-      "possessionPct": 37.8,
-      "totalShots": 4.0,
+      "offsides": 2.0,
+      "wonCorners": 7.0,
+      "saves": 1.0,
+      "possessionPct": 37.6,
+      "totalShots": 5.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.5,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 65.0,
-      "totalPasses": 85.0,
+      "accuratePasses": 181.0,
+      "totalPasses": 241.0,
       "passPct": 0.8,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 9.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 7.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.3,
+      "accurateCrosses": 6.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.5,
+      "totalLongBalls": 20.0,
+      "accurateLongBalls": 8.0,
+      "longballPct": 0.4,
       "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 4.0,
-      "totalClearance": 4.0
+      "effectiveTackles": 10.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.6,
+      "interceptions": 3.0,
+      "effectiveClearance": 8.0,
+      "totalClearance": 8.0
     },
     "awayStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 7.0,
+      "yellowCards": 4.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 1.0,
       "saves": 2.0,
-      "possessionPct": 62.2,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 62.4,
+      "totalShots": 2.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 1.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 136.0,
-      "totalPasses": 154.0,
+      "accuratePasses": 360.0,
+      "totalPasses": 414.0,
       "passPct": 0.9,
       "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
+      "totalCrosses": 4.0,
       "crossPct": 0.0,
-      "totalLongBalls": 9.0,
-      "accurateLongBalls": 4.0,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.4,
       "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 1.0,
-      "tacklePct": 1.0,
-      "interceptions": 2.0,
-      "effectiveClearance": 13.0,
-      "totalClearance": 13.0
+      "effectiveTackles": 6.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.7,
+      "interceptions": 5.0,
+      "effectiveClearance": 28.0,
+      "totalClearance": 28.0
     },
     "homeForm": [
       {
