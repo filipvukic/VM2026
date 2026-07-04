@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T20:38:17+00:00",
+  "updated_at": "2026-07-04T21:36:59+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19809,19 +19809,33 @@
       "homeTla": "PAR",
       "away": "France",
       "awayTla": "FRA",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "32",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "19",
+          "team": "FRA",
+          "player": "Bradley Barcola",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Lincoln Financial Field",
@@ -19830,9 +19844,8 @@
       },
       "referees": [
         {
-          "name": "Il'giz Tantashev",
-          "role": "REFEREE",
-          "nationality": "Uzbekistan"
+          "name": "Ilgiz Tantashev",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -19901,6 +19914,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
