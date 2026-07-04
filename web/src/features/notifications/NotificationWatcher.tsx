@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useData } from "../../state/dataset";
 import { useNotif, fireNotification, clearKickoffTriggers, loadSeen, saveSeen } from "../../state/notifications";
 import { syncPush, pushConfigured } from "../../state/push";
+import { useKoBets } from "../../state/koBets";
 
 // One global switch (notifyAll): alerts for goals / kickoff / full-time across ALL
 // matches. Real-time while the app is OPEN (foreground), persisted so a goal scored
@@ -13,6 +14,7 @@ export function NotificationWatcher() {
   const notifyAll = useNotif((s) => s.notifyAll);
   const pushActive = useNotif((s) => s.pushActive);
   const setPushActive = useNotif((s) => s.setPushActive);
+  const koName = useKoBets((s) => s.name); // re-sync so the worker links this browser → player
   const prev = useRef<Map<string, { g: number; status: string }>>(new Map(Object.entries(loadSeen())));
   // Whether we've resolved if the push worker covers THIS browser yet. The foreground
   // watcher must wait for this — otherwise, on opening the app from a goal push, it
@@ -25,7 +27,7 @@ export function NotificationWatcher() {
   useEffect(() => {
     if (!pushConfigured()) { setPushChecked(true); return; }
     syncPush(notifyAll).then((v) => { setPushActive(v); setPushChecked(true); });
-  }, [notifyAll, setPushActive]);
+  }, [notifyAll, koName, setPushActive]);
 
   // Foreground watcher (+ persisted catch-up on reopen). Held until we know whether
   // push covers us, so we never re-alert a goal the push worker already delivered.

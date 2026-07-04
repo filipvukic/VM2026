@@ -13,7 +13,7 @@
 // kickoff / full-time alert for every match. Sending uses @pushforge/builder
 // (Web Crypto, runs on the edge) so no Node crypto / external service is needed.
 import { buildPushHTTPRequest } from "@pushforge/builder";
-import { handleKo, koDueReminders, markKoReminderSent, koReminderMessage } from "./ko";
+import { handleKo, koDueReminders, markKoReminderSent, koReminderMessage, openFixtureIds, koUntippedForName } from "./ko";
 import { handlePresence } from "./presence";
 
 interface Env {
@@ -83,6 +83,7 @@ async function hashEndpoint(endpoint: string): Promise<string> {
 interface StoredSub {
   subscription: { endpoint: string; keys: { p256dh: string; auth: string } };
   notifyAll: boolean;
+  player?: string; // the logged-in KO participant on this browser, for per-person KO reminders
 }
 
 // ===================== Live FotMob match-stats proxy =====================
@@ -338,6 +339,7 @@ export default {
       const record = {
         subscription: body.subscription,
         notifyAll: !!body.notifyAll,
+        player: (body.player || "").trim() || undefined,
         ts: Date.now(),
       };
       // The client re-syncs on every page load. Writing every time would burn
@@ -351,6 +353,7 @@ export default {
           const ex = JSON.parse(existing);
           skip =
             ex.notifyAll === record.notifyAll &&
+            ex.player === record.player &&
             ex.subscription?.endpoint === record.subscription.endpoint &&
             ex.subscription?.keys?.p256dh === record.subscription.keys?.p256dh &&
             typeof ex.ts === "number" &&
@@ -430,20 +433,26 @@ async function koRemindTick(env: Env): Promise<void> {
   if (!due.length) return;
   const recipients = await gatherSubs(env);
   const origin = (env.ALLOW_ORIGIN || "").replace(/\/$/, "");
-  if (recipients.length) {
-    const { title, body } = koReminderMessage(urgency, openCount);
-    // Tag varies by urgency + soonest deadline so a genuinely new reminder shows
-    // instead of silently replacing the previous one.
-    const tag = `koremind-${urgency}-${Number.isFinite(soonestKickoff) ? soonestKickoff : "x"}`;
-    const url = `${origin || ""}/?ko=1`;
-    await Promise.allSettled(
-      recipients.map((s) =>
-        sendPush(env, s.rec.subscription, { title, body, tag, url }).catch(async (err: any) => {
-          if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
-        })
-      )
-    );
-  }
+  // Tag varies by urgency + soonest deadline so a genuinely new reminder shows instead
+  // of silently replacing the previous one.
+  const tag = `koremind-${urgency}-${Number.isFinite(soonestKickoff) ? soonestKickoff : "x"}`;
+  const url = `${origin || ""}/?ko=1`;
+  // Per-person: a recipient linked to a KO player only gets reminded about the matches
+  // THEY haven't tipped — and is skipped entirely once they've tipped every open match.
+  const openIds = recipients.length ? await openFixtureIds(env, Date.now()) : new Set<string>();
+  await Promise.allSettled(
+    recipients.map(async (s) => {
+      let count = openCount;
+      if (s.rec.player) {
+        count = await koUntippedForName(env, s.rec.player, openIds);
+        if (count === 0) return; // already tipped everything open → don't nag
+      }
+      const { title, body } = koReminderMessage(urgency, count);
+      return sendPush(env, s.rec.subscription, { title, body, tag, url }).catch(async (err: any) => {
+        if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
+      });
+    })
+  );
   // Mark sent even with zero recipients so we don't re-evaluate the same milestones forever.
   for (const r of due) await markKoReminderSent(env, r.fixtureId, r.milestone);
 }

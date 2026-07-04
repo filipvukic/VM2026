@@ -92,7 +92,7 @@ async function koFixtures(env: KoEnv): Promise<KoFixture[]> {
 // it locks individually when ITS OWN kickoff passes. You no longer have to wait for
 // the whole round to be drawn — a match you can tip today is tippable today, even if
 // its round-siblings haven't been decided yet. Returns every currently-open fixture id.
-async function openFixtureIds(env: KoEnv, now: number): Promise<Set<string>> {
+export async function openFixtureIds(env: KoEnv, now: number): Promise<Set<string>> {
   const open = new Set<string>();
   for (const f of await koFixtures(env)) {
     if (!f.homeTla || !f.awayTla) continue; // not drawn yet
@@ -100,6 +100,15 @@ async function openFixtureIds(env: KoEnv, now: number): Promise<Set<string>> {
     open.add(f.id);
   }
   return open;
+}
+
+// How many currently-open matches this participant has NOT tipped yet — so reminders can
+// skip anyone who's already done, and tell everyone else exactly how many they have left.
+export async function koUntippedForName(env: KoEnv, name: string, openIds: Set<string>): Promise<number> {
+  const bets = await getBets(env, name);
+  let n = 0;
+  for (const fid of openIds) if (!bets[fid]) n++;
+  return n;
 }
 
 // --- reminder notifications: nag everyone to submit their tips before matches lock ---

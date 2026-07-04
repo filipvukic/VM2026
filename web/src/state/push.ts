@@ -3,6 +3,7 @@
 // kickoff / full-time alerts for ALL matches arrive even with the app closed (the
 // worker polls ESPN and sends them) — so the in-app foreground watcher stands down.
 import { PUSH_WORKER_URL } from "../lib/pushConfig";
+import { useKoBets } from "./koBets";
 
 export function pushConfigured(): boolean {
   return (
@@ -54,7 +55,10 @@ export async function syncPush(notifyAll: boolean): Promise<boolean> {
         applicationServerKey: urlBase64ToUint8Array(key) as BufferSource,
       });
     }
-    const payload = JSON.stringify({ subscription: sub.toJSON(), notifyAll });
+    // Link this browser to the logged-in KO player so reminders only nag about matches
+    // this person hasn't tipped (and skip them once they're done).
+    const player = useKoBets.getState().name || undefined;
+    const payload = JSON.stringify({ subscription: sub.toJSON(), notifyAll, player });
     if (payload !== lastPayload) {
       const r = await fetch(PUSH_WORKER_URL + "/subscribe", {
         method: "POST",
