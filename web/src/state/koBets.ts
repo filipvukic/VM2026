@@ -9,19 +9,21 @@ export type Tip = [number, number];
 // A KO match's bet key = its real fixture id (stable, matches the worker's keys).
 export const koFid = (m: Match) => String(m._realId ?? "");
 
-// Matches you can tip right now, PER ROUND: a whole round opens once ALL its matches
-// are drawn and it hasn't started (earliest kickoff in the future). Mirrors the
-// worker's openFixtureIds so the home reminder works even before login.
+// Matches you can tip right now, PER MATCH: a match opens the moment both teams are
+// drawn and its own kickoff is in the future, and locks individually when it kicks off
+// (you no longer wait for the whole round to be drawn). Mirrors the worker's
+// openFixtureIds so the home reminder works even before login.
 export function koOpenMatches(ds: Dataset, now: number): Match[] {
   const k = ds.knockout;
   const out: Match[] = [];
   // r32 is excluded — slutspelstips starts at the round of 16.
   for (const list of [k.r16, k.qf, k.sf, k.third, k.final]) {
-    const real = list.filter((m) => m._realId);
-    if (!real.length || !real.every((m) => m.home && m.away)) continue; // not fully drawn
-    const kos = real.map((m) => m.kickoff?.getTime()).filter((t): t is number => !!t && Number.isFinite(t));
-    if (!kos.length || Math.min(...kos) <= now) continue; // started → locked
-    out.push(...real);
+    for (const m of list) {
+      if (!m._realId || !m.home || !m.away) continue; // not a real drawn match
+      const ko = m.kickoff?.getTime();
+      if (!ko || !Number.isFinite(ko) || ko <= now) continue; // no time / started → locked
+      out.push(m);
+    }
   }
   return out;
 }

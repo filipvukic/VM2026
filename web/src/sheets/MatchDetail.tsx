@@ -739,7 +739,7 @@ function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
   const rows = m.tips
     .map((t) => {
       const c = scored ? classifyTip([t.tip[0], t.tip[1]], sc[0], sc[1]) : null;
-      return { name: t.name, tip: t.tip, result: c?.result ?? null, pts: c?.points ?? null };
+      return { name: t.name, tip: t.tip, result: c?.result ?? null, pts: c?.points ?? null, auto: !!t.default };
     })
     .sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1) || a.name.localeCompare(b.name, "sv"));
   const exactCount = rows.filter((r) => r.result === "exact").length;
@@ -769,7 +769,8 @@ function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
             >
               <span style={{ width: 9, height: 9, borderRadius: "50%", background: p?.color || "var(--cool)", flexShrink: 0 }} />
               <span style={{ flex: 1, fontWeight: 700, fontSize: 13.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.name}</span>
-              <span className="num" style={{ fontSize: 14, fontWeight: 800, color: r.result ? color : "var(--ink)" }}>{r.tip[0]}–{r.tip[1]}</span>
+              {r.auto && <span title="Inget tips lades in — räknas som 0–0" style={{ fontSize: 9, fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "var(--ink-3)", background: "var(--surface-3)", padding: "2px 5px", borderRadius: 5, flexShrink: 0 }}>auto</span>}
+              <span className="num" style={{ fontSize: 14, fontWeight: 800, color: r.result ? color : "var(--ink)", opacity: r.auto ? 0.7 : 1 }}>{r.tip[0]}–{r.tip[1]}</span>
               {r.pts != null && <span className="num" style={{ width: 30, textAlign: "right", fontWeight: 800, color }}>{r.pts}p</span>}
             </button>
           );

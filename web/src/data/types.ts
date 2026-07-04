@@ -127,6 +127,7 @@ export interface RawTip {
   name: string;
   tip: [number, number];
   points?: number;
+  default?: boolean; // auto-filled 0–0 (KO match the participant never tipped)
 }
 
 export interface RawDataMatch {

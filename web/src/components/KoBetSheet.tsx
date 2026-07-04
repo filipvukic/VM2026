@@ -56,7 +56,7 @@ export function KoBetSheet() {
           <div className="kob-login">
             <div className="kob-login-ic">🔑</div>
             <div className="kob-login-h">Logga in för att tippa</div>
-            <p className="kob-login-p">Skriv in din personliga 6-teckens kod — du loggas in automatiskt. Du tippar en hel omgång i taget och kan ändra ända tills omgången startar.</p>
+            <p className="kob-login-p">Skriv in din personliga 6-teckens kod — du loggas in automatiskt. Varje match går att tippa så fort båda lagen är klara, och du kan ändra ända tills just den matchen startar.</p>
             <CodeBoxes onComplete={(code) => login(code)} disabled={status === "loading"} error={!!error} />
             <div className="kob-login-status">
               {status === "loading" ? "Loggar in…" : error ? <span className="kob-err">{error}</span> : "6 tecken"}
@@ -79,6 +79,8 @@ export function KoBetSheet() {
                 // ones live in the bracket; here they'd just be clutter you can't tip)
                 const drawn = r.matches.filter((m) => m.home && m.away && m.status !== "played");
                 const anyOpen = r.matches.some((m) => openIds.has(koFid(m)));
+                // matches in this round not yet drawn — they'll open as earlier rounds finish
+                const pending = r.matches.filter((m) => !m.home || !m.away).length;
                 if (!drawn.length) {
                   return r.future ? (
                     <div key={r.key} className="kob-round">
@@ -87,11 +89,9 @@ export function KoBetSheet() {
                     </div>
                   ) : null;
                 }
-                const openMs = r.matches.filter((m) => openIds.has(koFid(m)));
-                const deadline = openMs.length ? new Date(Math.min(...openMs.map((m) => m.kickoff?.getTime() ?? Infinity))) : null;
                 return (
                   <div key={r.key} className="kob-round">
-                    <div className="kob-round-h"><span>{r.label}</span>{anyOpen && deadline && <span className="kob-round-tag">öppen · stänger {svDayMonth(deadline)}</span>}</div>
+                    <div className="kob-round-h"><span>{r.label}</span>{anyOpen && <span className="kob-round-tag">öppen</span>}</div>
                     {drawn.map((m) => {
                       const id = koFid(m);
                       const editable = openIds.has(id);
@@ -101,31 +101,36 @@ export function KoBetSheet() {
                       const played = m.status === "played" && m.ga != null && m.gb != null;
                       const reg = played ? reg90Score(m) : null; // 90-min result = what's scored
                       return (
-                        <div key={id} className={`kob-row${editable ? " edit" : ""}`}>
-                          <div className="kob-team h">
+                        <div key={id} className={`kob-match${editable ? " edit" : ""}`}>
+                          <div className="kob-tm">
+                            <Flag iso={home?.iso} code={m.home} size={20} />
                             <span className="kob-nm">{home?.name || "?"}</span>
-                            <Flag iso={home?.iso} code={m.home} size={18} />
+                            {editable
+                              ? <Stepper value={t ? t[0] : 0} onChange={(v) => setTip(id, 0, v)} />
+                              : <span className="kob-sc">{t ? t[0] : "–"}</span>}
                           </div>
-                          {editable ? (
-                            <div className="kob-edit">
-                              <Stepper value={t ? t[0] : 0} onChange={(v) => setTip(id, 0, v)} />
-                              <span className="kob-dash">–</span>
-                              <Stepper value={t ? t[1] : 0} onChange={(v) => setTip(id, 1, v)} />
-                            </div>
-                          ) : (
-                            <div className="kob-locked">
-                              <span className="kob-locked-tip">{t ? `${t[0]}–${t[1]}` : "–"}</span>
-                              {reg && <span className="kob-locked-res">90 min {reg[0]}–{reg[1]}</span>}
-                            </div>
-                          )}
-                          <div className="kob-team a">
-                            <Flag iso={away?.iso} code={m.away} size={18} />
+                          <div className="kob-tm">
+                            <Flag iso={away?.iso} code={m.away} size={20} />
                             <span className="kob-nm">{away?.name || "?"}</span>
+                            {editable
+                              ? <Stepper value={t ? t[1] : 0} onChange={(v) => setTip(id, 1, v)} />
+                              : <span className="kob-sc">{t ? t[1] : "–"}</span>}
                           </div>
-                          <div className="kob-meta">{editable ? svDayMonth(m.kickoff) : played ? "spelad" : "låst"}</div>
+                          <div className="kob-mfoot">
+                            {editable
+                              ? <span>Stänger vid avspark · {svDayMonth(m.kickoff)}</span>
+                              : played
+                                ? <span>Spelad{reg ? ` · 90 min ${reg[0]}–${reg[1]}` : ""}</span>
+                                : <span>Låst</span>}
+                          </div>
                         </div>
                       );
                     })}
+                    {pending > 0 && (
+                      <div className="kob-pending">
+                        {pending === 1 ? "1 match till lottas" : `${pending} matcher till lottas`} när föregående omgång är klar
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -186,19 +191,15 @@ export function KoBetSheet() {
         .kob-round-h{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
         .kob-round-h span:first-child{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.06em; font-weight:800; font-size:11px; color:var(--ink-3); }
         .kob-round-tag{ font-size:8.5px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; color:var(--win); background:color-mix(in srgb, var(--win) 16%, transparent); padding:1px 6px; border-radius:var(--r-pill); }
-        .kob-pending{ font-size:12px; color:var(--ink-3); padding:6px 2px; }
-        .kob-row{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:8px;
-          padding:9px 8px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line); margin-bottom:7px; }
-        .kob-row.edit{ border-color:color-mix(in srgb, var(--cool) 32%, var(--line)); background:color-mix(in srgb, var(--cool) 6%, var(--surface)); }
-        .kob-team{ display:flex; align-items:center; gap:7px; min-width:0; }
-        .kob-team.h{ justify-content:flex-end; }
-        .kob-nm{ font-size:13px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .kob-edit{ display:flex; align-items:center; gap:7px; }
-        .kob-dash{ color:var(--ink-3); font-weight:800; font-size:15px; }
-        .kob-locked{ display:flex; flex-direction:column; align-items:center; min-width:54px; }
-        .kob-locked-tip{ font-family:var(--font-display); font-weight:800; font-size:16px; font-variant-numeric:tabular-nums; }
-        .kob-locked-res{ font-size:9px; font-weight:700; color:var(--ink-3); }
-        .kob-meta{ grid-column:1 / -1; text-align:center; font-size:9px; font-weight:700; letter-spacing:.02em; color:var(--ink-3); margin-top:2px; text-transform:uppercase; }
+        .kob-pending{ font-size:11.5px; color:var(--ink-3); padding:6px 2px; }
+        /* Vertical match card: each team gets a full row so the whole country name shows. */
+        .kob-match{ padding:10px 12px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line); margin-bottom:8px; }
+        .kob-match.edit{ border-color:color-mix(in srgb, var(--cool) 32%, var(--line)); background:color-mix(in srgb, var(--cool) 6%, var(--surface)); }
+        .kob-tm{ display:flex; align-items:center; gap:10px; min-width:0; padding:3px 0; }
+        .kob-tm + .kob-tm{ margin-top:2px; }
+        .kob-nm{ flex:1; min-width:0; font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .kob-sc{ flex:0 0 auto; min-width:34px; text-align:center; font-family:var(--font-display); font-weight:800; font-size:18px; font-variant-numeric:tabular-nums; }
+        .kob-mfoot{ margin-top:8px; padding-top:7px; border-top:1px dashed var(--line); font-size:9.5px; font-weight:700; letter-spacing:.03em; color:var(--ink-3); text-transform:uppercase; }
         .kob-step{ display:flex; align-items:center; background:var(--surface-3); border:1px solid var(--line-2); border-radius:9px; overflow:hidden; }
         .kob-step button{ width:26px; height:34px; display:grid; place-items:center; color:var(--ink-2); font-size:17px; font-weight:800; line-height:1; transition:background .12s; }
         .kob-step button:active{ background:var(--cool); color:#fff; }

@@ -416,29 +416,31 @@ async function gatherSubs(env: Env): Promise<{ name: string; rec: StoredSub }[]>
   return subs.filter((s) => s.rec.notifyAll);
 }
 
-// Push KO-tip reminders (round opens, then 24h / 3h / 1h before it locks) to everyone
-// who has notifications on, so nobody forgets to submit a round's slutspelstips.
+// Push KO-tip reminders to everyone who has notifications on, so nobody forgets to
+// submit their slutspelstips. Reminders are PER MATCH now (open / 24h / 3h / 1h before
+// each match kicks off), but a single tick collapses every due milestone into ONE push
+// that spells out how many matches are open to tip — no spam when a draw opens several.
 async function koRemindTick(env: Env): Promise<void> {
-  const due = await koDueReminders(env, Date.now());
+  const { due, openCount, soonestKickoff, urgency } = await koDueReminders(env, Date.now());
   if (!due.length) return;
   const recipients = await gatherSubs(env);
   const origin = (env.ALLOW_ORIGIN || "").replace(/\/$/, "");
-  for (const r of due) {
-    if (recipients.length) {
-      const { title, body } = koReminderMessage(r);
-      const tag = `koremind-${r.round}-${r.milestone}`;
-      const url = `${origin || ""}/?ko=1`;
-      await Promise.allSettled(
-        recipients.map((s) =>
-          sendPush(env, s.rec.subscription, { title, body, tag, url }).catch(async (err: any) => {
-            if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
-          })
-        )
-      );
-    }
-    // Mark sent even with zero recipients so we don't re-evaluate the same milestone forever.
-    await markKoReminderSent(env, r.round, r.milestone);
+  if (recipients.length) {
+    const { title, body } = koReminderMessage(urgency, openCount);
+    // Tag varies by urgency + soonest deadline so a genuinely new reminder shows
+    // instead of silently replacing the previous one.
+    const tag = `koremind-${urgency}-${Number.isFinite(soonestKickoff) ? soonestKickoff : "x"}`;
+    const url = `${origin || ""}/?ko=1`;
+    await Promise.allSettled(
+      recipients.map((s) =>
+        sendPush(env, s.rec.subscription, { title, body, tag, url }).catch(async (err: any) => {
+          if (err && (err.status === 404 || err.status === 410)) await env.SUBS.delete(s.name);
+        })
+      )
+    );
   }
+  // Mark sent even with zero recipients so we don't re-evaluate the same milestones forever.
+  for (const r of due) await markKoReminderSent(env, r.fixtureId, r.milestone);
 }
 
 interface LiveEvent {

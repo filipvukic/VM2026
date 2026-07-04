@@ -1025,6 +1025,53 @@ def merge_ko_bets(tips, worker_url, admin_key):
     print(f"  Slutspelstips: {added} tips inlagda från workern")
 
 
+# Slutspelstips gäller åttondelsfinal och framåt (sextondelen/LAST_32 var bara test).
+KO_TIPPABLE_STAGES = {"LAST_16", "QUARTER_FINALS", "SEMI_FINALS", "THIRD_PLACE", "FINAL"}
+_STARTED_STATUSES = {"IN_PLAY", "PAUSED", "SUSPENDED", "FINISHED", "AWARDED"}
+
+
+def _has_kicked_off(m, now=None):
+    """True när matchen har startat (dvs är låst för slutspelstips)."""
+    if m.get("status") in _STARTED_STATUSES:
+        return True
+    d = m.get("utcDate")
+    if d:
+        try:
+            ko = datetime.fromisoformat(d.replace("Z", "+00:00"))
+        except ValueError:
+            return False
+        return ko <= (now or datetime.now(timezone.utc))
+    return False
+
+
+def default_ko_bets(tips, matches):
+    """Ingen gissning på en slutspelsmatch = tippat 0–0. För varje deltagare fylls varje
+    LÅST (avsparkad) slutspelsmatch (åttondelsfinal och framåt) som saknar ett eget tips
+    på med [0, 0]. Bara redan startade matcher defaultas — öppna matcher går fortfarande
+    att tippa. Körs efter merge_ko_bets så att riktiga tips alltid vinner."""
+    ko = [
+        m for m in matches
+        if m.get("stage") in KO_TIPPABLE_STAGES
+        and (m.get("homeTeam") or {}).get("tla")
+        and (m.get("awayTeam") or {}).get("tla")
+        and _has_kicked_off(m)
+    ]
+    if not ko:
+        return
+    filled = 0
+    for p in tips.get("participants", []):
+        seen = {e["id"] for e in p.get("matches", []) if "id" in e}
+        for m in ko:
+            mid = m.get("id")
+            if mid in seen:
+                continue
+            p.setdefault("matches", []).append({"id": mid, "tip": [0, 0], "default": True})
+            seen.add(mid)
+            filled += 1
+    if filled:
+        print(f"  Slutspelstips: {filled} 0–0-default inlagda (otippade låsta matcher)")
+
+
 # --------------------------------------------------------------------------- #
 # Bonus: medaljer + skytteliga + manuella priser
 # --------------------------------------------------------------------------- #
@@ -1066,6 +1113,9 @@ def compute(tips, matches, scorers, standings=None, team_forms=None):
     anorm = make_alias_norm(tips.get("team_aliases", {}))
     bmatch = make_bonus_match(tips.get("team_aliases", {}))
     manual = tips.get("manual_results", {})
+
+    # Otippade låsta slutspelsmatcher räknas som 0–0 (görs efter merge_ko_bets).
+    default_ko_bets(tips, matches)
 
     medals = derive_medals(matches, resolve)
     actual_bonus = {
@@ -1129,7 +1179,10 @@ def compute(tips, matches, scorers, standings=None, team_forms=None):
                 "attendance": m.get("attendance"),
                 "tips": [],
             })
-            row["tips"].append({"name": name, "tip": tip, "points": pts})
+            tip_row = {"name": name, "tip": tip, "points": pts}
+            if entry.get("default"):
+                tip_row["default"] = True  # auto-0–0 (deltagaren tippade aldrig matchen)
+            row["tips"].append(tip_row)
 
         # Bonuspoäng (räknas bara när resultatet är känt)
         bonus_points = 0
