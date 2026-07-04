@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T21:36:59+00:00",
+  "updated_at": "2026-07-04T22:35:36+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -11,6 +11,52 @@
     }
   },
   "leaderboard": [
+    {
+      "name": "Isac",
+      "match_points": 144,
+      "bonus_points": 3,
+      "total": 147,
+      "exact_count": 8,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 1,
+      "prize": 1650
+    },
     {
       "name": "Oskar",
       "match_points": 145,
@@ -50,52 +96,6 @@
         },
         "bronze": {
           "pick": "Brasilien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 1,
-      "prize": 1650
-    },
-    {
-      "name": "Isac",
-      "match_points": 144,
-      "bonus_points": 0,
-      "total": 144,
-      "exact_count": 8,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
           "correct": false,
           "points": 0
         }
@@ -152,8 +152,8 @@
     {
       "name": "Vilgot",
       "match_points": 140,
-      "bonus_points": 0,
-      "total": 140,
+      "bonus_points": 3,
+      "total": 143,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -178,8 +178,8 @@
         },
         "top_scorer": {
           "pick": "mbappe",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         },
         "silver": {
           "pick": "frankrike",
@@ -198,8 +198,8 @@
     {
       "name": "Albin",
       "match_points": 138,
-      "bonus_points": 0,
-      "total": 138,
+      "bonus_points": 3,
+      "total": 141,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -224,8 +224,8 @@
         },
         "top_scorer": {
           "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         },
         "silver": {
           "pick": "Spanien",
@@ -244,8 +244,8 @@
     {
       "name": "Casper",
       "match_points": 136,
-      "bonus_points": 0,
-      "total": 136,
+      "bonus_points": 3,
+      "total": 139,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -270,8 +270,8 @@
         },
         "top_scorer": {
           "pick": "Mbappe",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         },
         "silver": {
           "pick": "Frankrike",
@@ -334,6 +334,52 @@
       "prize": 0
     },
     {
+      "name": "Björn",
+      "match_points": 130,
+      "bonus_points": 3,
+      "total": 133,
+      "exact_count": 5,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 8,
+      "prize": 0
+    },
+    {
       "name": "Hampus",
       "match_points": 132,
       "bonus_points": 0,
@@ -372,52 +418,6 @@
         },
         "bronze": {
           "pick": "Nederländerna",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 8,
-      "prize": 0
-    },
-    {
-      "name": "Björn",
-      "match_points": 130,
-      "bonus_points": 0,
-      "total": 130,
-      "exact_count": 5,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
           "correct": false,
           "points": 0
         }
@@ -19809,13 +19809,16 @@
       "homeTla": "PAR",
       "away": "France",
       "awayTla": "FRA",
-      "status": "LIVE",
+      "status": "IN_PLAY",
       "score": [
         0,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
         "fullTime": [
           0,
           0
@@ -19825,8 +19828,22 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "32",
-      "goals": [],
+      "minute": "71",
+      "goals": [
+        {
+          "minute": "70",
+          "team": "FRA",
+          "scorer": "Kylian Mbappé",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! Paraguay 0, France 1. Kylian Mbappé (France) converts the penalty with a right footed shot to the bottom right corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [
         {
           "minute": "19",
@@ -19836,7 +19853,29 @@
           "period": 1
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "58",
+          "team": "PAR",
+          "playerIn": "José Canale",
+          "playerOut": "Omar Alderete",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "PAR",
+          "playerIn": "Gustavo Caballero",
+          "playerOut": "Julio Enciso",
+          "period": 2
+        },
+        {
+          "minute": "61",
+          "team": "FRA",
+          "playerIn": "Désiré Doué",
+          "playerOut": "Bradley Barcola",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Lincoln Financial Field",
         "city": "Philadelphia, Pennsylvania",
@@ -21275,7 +21314,7 @@
     "winner": null,
     "silver": null,
     "bronze": null,
-    "top_scorer": "Lionel Messi",
+    "top_scorer": "Kylian Mbappé",
     "best_player": null,
     "best_young": null,
     "best_keeper": null

@@ -70711,13 +70711,16 @@
     "homeTla": "PAR",
     "away": "France",
     "awayTla": "FRA",
-    "status": "LIVE",
+    "status": "IN_PLAY",
     "score": [
       0,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
       "fullTime": [
         0,
         0
@@ -70727,8 +70730,22 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "32",
-    "goals": [],
+    "minute": "71",
+    "goals": [
+      {
+        "minute": "70",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Paraguay 0, France 1. Kylian Mbappé (France) converts the penalty with a right footed shot to the bottom right corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "19",
@@ -70738,7 +70755,29 @@
         "period": 1
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "58",
+        "team": "PAR",
+        "playerIn": "José Canale",
+        "playerOut": "Omar Alderete",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "PAR",
+        "playerIn": "Gustavo Caballero",
+        "playerOut": "Julio Enciso",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "FRA",
+        "playerIn": "Désiré Doué",
+        "playerOut": "Bradley Barcola",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Lincoln Financial Field",
       "city": "Philadelphia, Pennsylvania",
@@ -70789,7 +70828,7 @@
           "jersey": "3",
           "espnId": "215401",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gustavo Velázquez",
@@ -70861,7 +70900,7 @@
           "jersey": "19",
           "espnId": "20975",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -70907,7 +70946,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "154853",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -70970,7 +71009,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "227682",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71095,7 +71134,7 @@
           "jersey": "12",
           "espnId": "328238",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ousmane Dembélé",
@@ -71123,7 +71162,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "336388",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71248,64 +71287,64 @@
       "_espnEventId": "760503"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
+      "foulsCommitted": 6.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 20.2,
-      "totalShots": 2.0,
+      "wonCorners": 1.0,
+      "saves": 1.0,
+      "possessionPct": 21.6,
+      "totalShots": 3.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 33.0,
-      "totalPasses": 54.0,
-      "passPct": 0.6,
+      "accuratePasses": 65.0,
+      "totalPasses": 121.0,
+      "passPct": 0.5,
       "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
+      "totalCrosses": 1.0,
       "crossPct": 0.0,
-      "totalLongBalls": 16.0,
-      "accurateLongBalls": 5.0,
+      "totalLongBalls": 39.0,
+      "accurateLongBalls": 10.0,
       "longballPct": 0.3,
       "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.6,
-      "interceptions": 7.0,
-      "effectiveClearance": 12.0,
-      "totalClearance": 12.0
+      "effectiveTackles": 12.0,
+      "totalTackles": 17.0,
+      "tacklePct": 0.7,
+      "interceptions": 12.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
     },
     "awayStats": {
-      "foulsCommitted": 4.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 4.0,
+      "wonCorners": 10.0,
       "saves": 0.0,
-      "possessionPct": 79.8,
-      "totalShots": 1.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 78.4,
+      "totalShots": 11.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 187.0,
-      "totalPasses": 204.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 384.0,
+      "totalPasses": 425.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 12.0,
+      "totalCrosses": 22.0,
       "crossPct": 0.0,
-      "totalLongBalls": 12.0,
-      "accurateLongBalls": 9.0,
+      "totalLongBalls": 25.0,
+      "accurateLongBalls": 19.0,
       "longballPct": 0.8,
-      "blockedShots": 1.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.7,
-      "interceptions": 3.0,
-      "effectiveClearance": 8.0,
-      "totalClearance": 8.0
+      "blockedShots": 3.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 9.0,
+      "tacklePct": 0.6,
+      "interceptions": 6.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
     },
     "homeForm": [
       {
