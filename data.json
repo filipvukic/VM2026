@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-04T16:17:24+00:00",
+  "updated_at": "2026-07-04T17:30:22+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -19501,20 +19501,42 @@
       "homeTla": "CAN",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "28",
       "goals": [],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "20",
+          "team": "MAR",
+          "player": "Redouane Halhal",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "22",
+          "team": "MAR",
+          "playerIn": "Soufiane Rahimi",
+          "playerOut": "Ismael Saibari",
+          "period": 1
+        }
+      ],
       "venue": {
         "stadium": "NRG Stadium",
         "city": "Houston, Texas",
@@ -19523,8 +19545,7 @@
       "referees": [
         {
           "name": "Michael Oliver",
-          "role": "REFEREE",
-          "nationality": "England"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -19587,12 +19608,39 @@
           "points": null
         },
         {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
           "name": "Hampus",
           "tip": [
             1,
             2
           ],
           "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         }
       ]
     },
@@ -19690,6 +19738,14 @@
           "tip": [
             0,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
+            4
           ],
           "points": null
         }
@@ -19791,6 +19847,14 @@
             2
           ],
           "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
         }
       ]
     },
@@ -19888,6 +19952,14 @@
           "tip": [
             0,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            1
           ],
           "points": null
         }
@@ -19989,6 +20061,14 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
+            3
+          ],
+          "points": null
         }
       ]
     },
@@ -20086,6 +20166,14 @@
           "tip": [
             2,
             2
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         }
@@ -20187,6 +20275,14 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
         }
       ]
     },
@@ -20284,6 +20380,14 @@
           "tip": [
             1,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            2
           ],
           "points": null
         }
