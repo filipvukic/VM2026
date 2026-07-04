@@ -7,24 +7,24 @@ import { useKoBets } from "./koBets";
 // ONLY when logged in and the tab is visible, ~4 min apart, to stay tiny on KV writes.
 interface PokeIn { from: string; ts: number }
 
+// You can poke the same person again once per minute (matches the worker cooldown).
+export const POKE_COOLDOWN_MS = 60_000;
+
 interface PresenceState {
-  online: string[]; // names online now (self filtered out)
+  online: string[]; // names online now (INCLUDING yourself)
   incoming: PokeIn[]; // pokes received → toast + clear
-  poked: string[]; // names I've poked this session (max 1 each)
+  pokedAt: Record<string, number>; // name → last-poked ms (1-min cooldown, then resets)
   dismissPoke: (i: number) => void;
   poke: (to: string) => Promise<boolean>;
   beat: () => Promise<void>;
 }
 
-const norm = (s: string) =>
-  (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
-
-// Persist the "already poked" set for the session so a reload doesn't reset the 1-each cap.
-const SS = "vm_poked";
-const initialPoked: string[] = (() => {
-  try { return JSON.parse(sessionStorage.getItem(SS) || "[]"); } catch { return []; }
+// Persist the last-poked timestamps for the session so a reload keeps the cooldown honest.
+const SS = "vm_pokedAt";
+const initialPokedAt: Record<string, number> = (() => {
+  try { return JSON.parse(sessionStorage.getItem(SS) || "{}"); } catch { return {}; }
 })();
-const savePoked = (p: string[]) => { try { sessionStorage.setItem(SS, JSON.stringify(p)); } catch { /* private mode */ } };
+const savePokedAt = (p: Record<string, number>) => { try { sessionStorage.setItem(SS, JSON.stringify(p)); } catch { /* private mode */ } };
 
 const api = (path: string, body: unknown) =>
   fetch(PUSH_WORKER_URL + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -32,16 +32,18 @@ const api = (path: string, body: unknown) =>
 export const usePresence = create<PresenceState>((set, get) => ({
   online: [],
   incoming: [],
-  poked: initialPoked,
+  pokedAt: initialPokedAt,
   dismissPoke: (i) => set((s) => ({ incoming: s.incoming.filter((_, k) => k !== i) })),
 
   poke: async (to) => {
     const me = useKoBets.getState().name;
-    if (!me || get().poked.includes(to)) return false;
-    // Optimistically mark as poked (so the button disables and can't be spammed).
-    const poked = [...new Set([...get().poked, to])];
-    set({ poked });
-    savePoked(poked);
+    if (!me) return false;
+    const last = get().pokedAt[to] || 0;
+    if (Date.now() - last < POKE_COOLDOWN_MS) return false; // still on cooldown
+    // Optimistically stamp now (so the button disables for a minute, then resets).
+    const pokedAt = { ...get().pokedAt, [to]: Date.now() };
+    set({ pokedAt });
+    savePokedAt(pokedAt);
     try {
       const r = await api("/poke", { from: me, to });
       const d = (await r.json()) as { ok?: boolean };
@@ -58,9 +60,8 @@ export const usePresence = create<PresenceState>((set, get) => ({
       const r = await api("/presence", { name: me });
       if (!r.ok) return;
       const d = (await r.json()) as { online: string[]; pokes: PokeIn[] };
-      const meNorm = norm(me);
-      const online = (d.online || []).filter((n) => norm(n) !== meNorm);
-      set((s) => ({ online, incoming: [...s.incoming, ...(d.pokes || [])] }));
+      // Keep the full list INCLUDING yourself — the UI always shows who's live (you too).
+      set((s) => ({ online: d.online || [], incoming: [...s.incoming, ...(d.pokes || [])] }));
     } catch {
       /* offline / CORS on localhost — presence just stays empty */
     }

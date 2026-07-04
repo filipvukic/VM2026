@@ -22,7 +22,7 @@ const normName = (s: string) =>
 
 const PRES_TTL = 360; // seconds a heartbeat keeps you "online" (~6 min)
 const POKE_TTL = 600; // a pending poke lives ~10 min then expires
-const POKE_COOLDOWN = 3600; // server guard: at most one poke per from→to per hour
+const POKE_COOLDOWN = 60; // server guard: at most one poke per from→to per MINUTE (resets)
 const presKey = (n: string) => "pres:" + n;
 const pokeKey = (n: string) => "poke:" + n;
 const pokeMark = (a: string, b: string) => "pokemark:" + a + ":" + b;

@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { usePresence } from "../state/presence";
+import { usePresence, POKE_COOLDOWN_MS } from "../state/presence";
 import { useKoBets } from "../state/koBets";
 import { useData } from "../state/dataset";
+import { useNow } from "../state/useNow";
 
-// In-app presence: a small bottom-left pill showing which pool players are online right
-// now, tap to expand + "poke" (puffa) them (once each per session). Plus a toast when
-// someone pokes you. Only shows for logged-in players (presence needs your KO name).
+// In-app presence: a small bottom-left pill showing which pool players are live right now
+// (INCLUDING you), tap to expand + "poke" (puffa) them (once per minute each). Plus a
+// toast when someone pokes you. Always shown once you're logged in (presence needs your
+// KO name).
 export function Presence() {
   const me = useKoBets((s) => s.name);
   const online = usePresence((s) => s.online);
   const incoming = usePresence((s) => s.incoming);
   return (
     <>
-      {me && online.length > 0 && <OnlineBar online={online} />}
+      {me && <OnlineBar me={me} online={online} />}
       <PokeToasts incoming={incoming} />
       <style>{`
         .pres-bar{ position:fixed; left:12px; z-index:90; bottom:calc(74px + env(safe-area-inset-bottom)); }
@@ -34,6 +36,7 @@ export function Presence() {
         .pres-nm{ flex:1; min-width:0; font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .pres-poke{ flex:0 0 auto; font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:var(--r-pill); background:var(--grad-soft); color:#fff; white-space:nowrap; transition:transform .1s, opacity .15s; }
         .pres-poke:active{ transform:scale(.94); } .pres-poke:disabled{ opacity:.5; background:var(--surface-3); color:var(--ink-3); }
+        .pres-you{ flex:0 0 auto; font-size:10.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); background:var(--surface-3); padding:5px 9px; border-radius:var(--r-pill); }
         .poke-toasts{ position:fixed; top:calc(12px + env(safe-area-inset-top)); left:0; right:0; z-index:500; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; }
         .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:10px; padding:11px 16px; border-radius:var(--r-pill); font-size:13.5px; font-weight:700; color:var(--ink);
           background:linear-gradient(135deg, color-mix(in srgb,var(--cool) 22%, var(--surface-2)), var(--surface-2)); border:1px solid var(--line-2); box-shadow:var(--shadow-lift); animation:pokeIn .3s cubic-bezier(.2,.7,.2,1); }
@@ -43,34 +46,46 @@ export function Presence() {
   );
 }
 
-function OnlineBar({ online }: { online: string[] }) {
+const norm = (s: string) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+
+function OnlineBar({ me, online }: { me: string; online: string[] }) {
   const [open, setOpen] = useState(false);
   const ds = useData();
   const poke = usePresence((s) => s.poke);
-  const poked = usePresence((s) => s.poked);
+  const pokedAt = usePresence((s) => s.pokedAt);
   const [busy, setBusy] = useState<string | null>(null);
+  const now = useNow(open ? 2000 : 0); // tick while open so a cooldown re-enables the button
   const color = (n: string) => ds.players.find((p) => p.name === n)?.color || "var(--cool)";
+  const same = (a: string, b: string) => norm(a) === norm(b);
+  // Always include yourself, first — even before the first heartbeat lands.
+  const names = [me, ...online.filter((n) => !same(n, me))];
+  const onCooldown = (n: string) => (pokedAt[n] || 0) + POKE_COOLDOWN_MS > now;
   const onPoke = async (n: string) => { setBusy(n); await poke(n); setBusy(null); };
   return (
     <div className="pres-bar">
       {!open ? (
         <button className="pres-pill" onClick={() => setOpen(true)}>
-          <span className="pres-dots">{online.slice(0, 3).map((n) => <span key={n} className="pres-dot" style={{ background: color(n) }} />)}</span>
-          <span className="pres-live" /> {online.length} inne nu
+          <span className="pres-dots">{names.slice(0, 3).map((n) => <span key={n} className="pres-dot" style={{ background: color(n) }} />)}</span>
+          <span className="pres-live" /> {names.length} inne nu
         </button>
       ) : (
         <div className="pres-panel">
-          <div className="pres-head"><span className="pres-live" /> {online.length} inne nu<button className="pres-close" onClick={() => setOpen(false)} aria-label="Stäng">✕</button></div>
+          <div className="pres-head"><span className="pres-live" /> {names.length} inne nu<button className="pres-close" onClick={() => setOpen(false)} aria-label="Stäng">✕</button></div>
           <div className="pres-list">
-            {online.map((n) => {
-              const done = poked.includes(n);
+            {names.map((n) => {
+              const self = same(n, me);
+              const cooling = onCooldown(n);
               return (
                 <div key={n} className="pres-row">
                   <span className="pres-ava" style={{ background: color(n) }}>{n.slice(0, 1).toUpperCase()}</span>
-                  <span className="pres-nm">{n}</span>
-                  <button className="pres-poke" disabled={done || busy === n} onClick={() => onPoke(n)}>
-                    {done ? "Puffad ✓" : busy === n ? "…" : "👉 Puffa"}
-                  </button>
+                  <span className="pres-nm">{n}{self ? " · du" : ""}</span>
+                  {self ? (
+                    <span className="pres-you">Du</span>
+                  ) : (
+                    <button className="pres-poke" disabled={cooling || busy === n} onClick={() => onPoke(n)}>
+                      {busy === n ? "…" : cooling ? "Puffad ✓" : "👉 Puffa"}
+                    </button>
+                  )}
                 </div>
               );
             })}
