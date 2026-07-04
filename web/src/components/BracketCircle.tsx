@@ -289,17 +289,18 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
 
         {nodes.map((n, i) => {
-          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1), filter: n.ring < level ? `blur(${(S * 0.009).toFixed(1)}px)` : undefined }} />;
+          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1), filter: `blur(${(n.ring < level ? S * 0.009 : 0).toFixed(1)}px)` }} />;
           const receded = n.ring < level;
           const clickable = !receded; // only the sharp, in-focus flags are interactive
           // Receded flags stay visible but get a REAL blur (same element → no double-load / same
           // size) plus a light dim. Focused flags are crisp. The blur/opacity transition with the
-          // zoom. No cached texture, so the blur is clean (no blocky "squares"). A lost flag keeps a
-          // grayscale filter even when focused, so it must carry blur(0) in that state too —
-          // otherwise the filter FUNCTION LIST changes (grayscale → blur+grayscale) and CSS snaps
-          // the blur in instead of interpolating it.
-          const bl = receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : n.lost ? "blur(0px)" : "";
-          const filt = [bl, n.lost ? "grayscale(.6)" : ""].filter(Boolean).join(" ") || undefined;
+          // zoom. No cached texture, so the blur is clean (no blocky "squares").
+          // EVERY flag must carry a blur() function in BOTH states (0px when focused) so the filter
+          // FUNCTION LIST is identical and CSS interpolates it. Otherwise a focused non-lost flag is
+          // `none` while its receded state is `blur()`, and Safari SNAPS `none → blur` instead of
+          // easing — which made the outermost round's many winner flags pop instead of blurring.
+          const bl = receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : "blur(0px)";
+          const filt = [bl, n.lost ? "grayscale(.6)" : ""].join(" ");
           return (
             <button
               key={i}
