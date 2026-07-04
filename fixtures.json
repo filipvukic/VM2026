@@ -70711,10 +70711,10 @@
     "homeTla": "PAR",
     "away": "France",
     "awayTla": "FRA",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       0,
-      0
+      1
     ],
     "scoreDetail": {
       "halfTime": [
@@ -70723,14 +70723,14 @@
       ],
       "fullTime": [
         0,
-        0
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "71",
+    "minute": null,
     "goals": [
       {
         "minute": "70",
@@ -70753,6 +70753,20 @@
         "player": "Bradley Barcola",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "81",
+        "team": "FRA",
+        "player": "Manu Koné",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+7",
+        "team": "FRA",
+        "player": "Michael Olise",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
     "subs": [
@@ -70776,6 +70790,27 @@
         "playerIn": "Désiré Doué",
         "playerOut": "Bradley Barcola",
         "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "PAR",
+        "playerIn": "Maurício",
+        "playerOut": "Diego Gómez",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "PAR",
+        "playerIn": "Gabriel Ávalos",
+        "playerOut": "Miguel Almirón",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "FRA",
+        "playerIn": "Rayan Cherki",
+        "playerOut": "Ousmane Dembélé",
+        "period": 2
       }
     ],
     "venue": {
@@ -70790,7 +70825,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 68324,
     "espnOdds": {
       "homeML": 1600,
       "awayML": -500,
@@ -70873,7 +70908,7 @@
           "jersey": "8",
           "espnId": "192278",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Matías Galarza",
@@ -70891,7 +70926,7 @@
           "jersey": "10",
           "espnId": "48128",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Julio Enciso",
@@ -70937,7 +70972,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "289046",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71036,7 +71071,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "208421",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -71143,7 +71178,7 @@
           "jersey": "7",
           "espnId": "229744",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -71261,7 +71296,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "298008",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71287,64 +71322,64 @@
       "_espnEventId": "760503"
     },
     "homeStats": {
-      "foulsCommitted": 6.0,
+      "foulsCommitted": 13.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 1.0,
-      "possessionPct": 21.6,
-      "totalShots": 3.0,
-      "shotsOnTarget": 0.0,
+      "wonCorners": 2.0,
+      "saves": 4.0,
+      "possessionPct": 24.0,
+      "totalShots": 5.0,
+      "shotsOnTarget": 1.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 65.0,
-      "totalPasses": 121.0,
+      "accuratePasses": 99.0,
+      "totalPasses": 183.0,
       "passPct": 0.5,
       "accurateCrosses": 0.0,
-      "totalCrosses": 1.0,
+      "totalCrosses": 4.0,
       "crossPct": 0.0,
-      "totalLongBalls": 39.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.3,
+      "totalLongBalls": 55.0,
+      "accurateLongBalls": 12.0,
+      "longballPct": 0.2,
       "blockedShots": 1.0,
-      "effectiveTackles": 12.0,
-      "totalTackles": 17.0,
+      "effectiveTackles": 20.0,
+      "totalTackles": 29.0,
       "tacklePct": 0.7,
-      "interceptions": 12.0,
-      "effectiveClearance": 20.0,
-      "totalClearance": 20.0
+      "interceptions": 14.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
     },
     "awayStats": {
-      "foulsCommitted": 7.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 11.0,
+      "yellowCards": 3.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 10.0,
-      "saves": 0.0,
-      "possessionPct": 78.4,
-      "totalShots": 11.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.2,
+      "wonCorners": 12.0,
+      "saves": 1.0,
+      "possessionPct": 76.0,
+      "totalShots": 15.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
-      "accuratePasses": 384.0,
-      "totalPasses": 425.0,
+      "accuratePasses": 510.0,
+      "totalPasses": 568.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 22.0,
+      "totalCrosses": 23.0,
       "crossPct": 0.0,
-      "totalLongBalls": 25.0,
-      "accurateLongBalls": 19.0,
-      "longballPct": 0.8,
-      "blockedShots": 3.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 9.0,
+      "totalLongBalls": 42.0,
+      "accurateLongBalls": 26.0,
+      "longballPct": 0.6,
+      "blockedShots": 4.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 14.0,
       "tacklePct": 0.6,
-      "interceptions": 6.0,
-      "effectiveClearance": 15.0,
-      "totalClearance": 15.0
+      "interceptions": 10.0,
+      "effectiveClearance": 27.0,
+      "totalClearance": 27.0
     },
     "homeForm": [
       {
