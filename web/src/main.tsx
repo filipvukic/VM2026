@@ -8,6 +8,8 @@ import { useStore } from "./state/store";
 import { loadRealData } from "./data/load";
 import { startPolling } from "./state/polling";
 import { startEspnLive } from "./state/espnLive";
+import { startKoTips } from "./state/koTips";
+import { startPresence } from "./state/presence";
 
 function Root() {
   const status = useStore((s) => s.status);
@@ -22,7 +24,7 @@ function Root() {
     loadRealData()
       .then((d) => { if (alive) useStore.getState().setLoaded(d); })
       .catch(() => { if (alive) useStore.getState().setError(); })
-      .finally(() => { if (alive) { startPolling(); startEspnLive(); } });
+      .finally(() => { if (alive) { startPolling(); startEspnLive(); startKoTips(); startPresence(); } });
     return () => { alive = false; };
   }, []);
 

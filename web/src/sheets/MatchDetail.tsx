@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, type CSSProperties } from "react";
 import { useData, usePlayersDb, useCoaches } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
@@ -25,8 +25,9 @@ import { useFixtureOdds } from "../state/fixtureOdds";
 import { classifyTip, type TipResult } from "../data/scoring";
 import { reg90Score } from "../lib/reg90";
 import { useMatchWeather } from "../lib/weather";
-import { useKoBets, koFid } from "../state/koBets";
-import type { Dataset, Match, MatchStats } from "../data/types";
+import { useKoBets, koFid, type Tip } from "../state/koBets";
+import { useKoPublicTips, type KoTipsByFixture } from "../state/koTips";
+import type { Dataset, Match, MatchStats, RawTip } from "../data/types";
 
 // Points each team gets from THIS match (3 win / 1 draw / 0 loss) — shown in the
 // group table tab so you see how the match shifts the standings.
@@ -73,7 +74,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const vIso = venueIso(m.venue);
   // Where to watch on Swedish TV — only useful before/while it airs, not after.
-  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
+  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.kickoff) : null;
 
   const hasPitch = !!(m.homeLineup?.lineup?.length || m.awayLineup?.lineup?.length);
   const hasStats = !!m.stats || played || live; // detailed FotMob stats load async too
@@ -184,11 +185,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
         {tab === "tips" && (
           <>
             {isKoTippable && <KoTipBlock m={m} ds={ds} />}
-            {m.tippas && m.tips.length > 0 ? (
-              <PoolResults m={m} ds={ds} />
-            ) : !isKoTippable ? (
-              <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>
-            ) : null}
+            <PoolResults m={m} ds={ds} emptyHint={!isKoTippable} />
           </>
         )}
       </div>
@@ -678,40 +675,90 @@ function WinChanceBlock({ m }: { m: Match }) {
 const tipColor = (res: TipResult | null) =>
   res === "exact" ? "var(--gold)" : res === "outcome" ? "var(--win)" : res === "floor" ? "var(--ink-3)" : "var(--ink-2)";
 
-// Your own knockout tip on the match — read straight from the koBets store so it
-// shows the instant you save it (the engine merges everyone's KO tips into the pool
-// on its next run; this is your personal, immediate view + the 90-minute rule).
+// Compact +/- stepper for entering a scoreline right on the match page.
+function KoStepper({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  const btn: CSSProperties = { width: 32, height: 36, display: "grid", placeItems: "center", color: "var(--ink-2)", fontSize: 19, fontWeight: 800, lineHeight: 1, background: "none", border: "none" };
+  return (
+    <div style={{ display: "flex", alignItems: "center", background: "var(--surface-3)", border: "1px solid var(--line-2)", borderRadius: 9, overflow: "hidden", flexShrink: 0 }}>
+      <button type="button" aria-label="minska" onClick={() => onChange(Math.max(0, value - 1))} style={btn}>−</button>
+      <span className="num" style={{ width: 24, textAlign: "center", fontWeight: 800, fontSize: 18 }}>{value}</span>
+      <button type="button" aria-label="öka" onClick={() => onChange(Math.min(20, value + 1))} style={btn}>+</button>
+    </div>
+  );
+}
+
+// Your own knockout tip on the match — editable RIGHT HERE until this match's own
+// kickoff (airtight: gated by the worker's open set AND a live kickoff check that ticks
+// so it locks the instant the match starts). Saves straight to the worker; the engine
+// merges everyone's KO tips into the pool on its next run, but your tip shows instantly.
 function KoTipBlock({ m, ds }: { m: Match; ds: Dataset }) {
   const code = useKoBets((s) => s.code);
   const bets = useKoBets((s) => s.bets);
   const open = useKoBets((s) => s.open);
+  const save = useKoBets((s) => s.save);
+  const status = useKoBets((s) => s.status);
   const setSheet = useKoBets((s) => s.setSheet);
   const fid = koFid(m);
-  const tip = bets[fid];
-  const editable = open.has(fid);
+  const saved = bets[fid];
+  // Tick every 20s so a match locks the MOMENT its kickoff passes, even with the sheet open.
+  const now = useNow(20_000);
+  const ko = m.kickoff?.getTime() ?? Infinity;
+  // AIRTIGHT edit gate: logged in + worker says open + this match hasn't kicked off yet.
+  const editable = !!code && open.has(fid) && ko > now;
   const home = m.home ? ds.teams[m.home] : null;
   const away = m.away ? ds.teams[m.away] : null;
   const live = isLive(m);
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const sc = played || live ? reg90Score(m) : null;
-  const res = tip && sc ? classifyTip([tip[0], tip[1]], sc[0], sc[1]) : null;
+  const res = saved && sc ? classifyTip([saved[0], saved[1]], sc[0], sc[1]) : null;
   const col = res ? tipColor(res.result) : "var(--cool)";
+
+  const [draft, setDraft] = useState<Tip>(saved ? [saved[0], saved[1]] : [0, 0]);
+  useEffect(() => { if (saved) setDraft([saved[0], saved[1]]); }, [saved]);
+  const [flash, setFlash] = useState(false);
+  const dirty = !saved || draft[0] !== saved[0] || draft[1] !== saved[1];
+  const onSave = async () => { if (await save({ [fid]: draft })) { setFlash(true); setTimeout(() => setFlash(false), 1800); } };
+  const nm: CSSProperties = { flex: 1, minWidth: 0, fontWeight: 700, fontSize: 14, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
+
   return (
     <div className="ko-tip">
       <div className="ko-tip-head">
         <span className="kicker">Ditt slutspelstips</span>
-        {tip && editable && <button className="ko-tip-edit" onClick={() => setSheet(true)}>Ändra ›</button>}
+        {!code && <button className="ko-tip-edit" onClick={() => setSheet(true)}>Logga in ›</button>}
       </div>
-      {tip ? (
+      {editable ? (
+        <>
+          <div style={{ display: "grid", gap: 6, marginTop: 2 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Flag iso={home?.iso} code={m.home} size={20} />
+              <span style={nm}>{home?.name || m.fromA}</span>
+              <KoStepper value={draft[0]} onChange={(v) => setDraft([v, draft[1]])} />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Flag iso={away?.iso} code={m.away} size={20} />
+              <span style={nm}>{away?.name || m.fromB}</span>
+              <KoStepper value={draft[1]} onChange={(v) => setDraft([draft[0], v])} />
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 12, marginTop: 10 }}>
+            {flash && <span style={{ color: "var(--win)", fontSize: 13, fontWeight: 800 }}>Sparat ✓</span>}
+            <button className="ko-tip-cta" style={{ width: "auto", padding: "10px 16px", opacity: dirty ? 1 : 0.5 }} onClick={onSave} disabled={status === "saving" || !dirty}>
+              {status === "saving" ? "Sparar…" : saved ? "Uppdatera tips" : "Spara tips"}
+            </button>
+          </div>
+        </>
+      ) : saved ? (
         <div className="ko-tip-row" style={res ? { borderColor: `color-mix(in srgb, ${col} 34%, transparent)`, background: `color-mix(in srgb, ${col} 9%, var(--surface-2))` } : undefined}>
           <Flag iso={home?.iso} code={m.home} size={18} />
           <span className="ko-tip-nm">{home?.name || m.fromA}</span>
-          <span className="num ko-tip-sc" style={{ color: res ? col : "var(--ink)" }}>{tip[0]}–{tip[1]}</span>
+          <span className="num ko-tip-sc" style={{ color: res ? col : "var(--ink)" }}>{saved[0]}–{saved[1]}</span>
           <span className="ko-tip-nm right">{away?.name || m.fromB}</span>
           <Flag iso={away?.iso} code={m.away} size={18} />
         </div>
       ) : (
-        <button className="ko-tip-cta" onClick={() => setSheet(true)}>{code ? "Tippa matchen" : "Logga in & tippa slutspelet"}</button>
+        <button className="ko-tip-cta" onClick={() => code && ko > now ? setSheet(true) : undefined} disabled={!!code && ko <= now}>
+          {!code ? "Logga in & tippa slutspelet" : ko <= now ? "Tippning stängd — matchen har startat" : "Tippa matchen"}
+        </button>
       )}
       {res && (
         <div className="ko-tip-res" style={{ color: col }}>
@@ -720,15 +767,70 @@ function KoTipBlock({ m, ds }: { m: Match; ds: Dataset }) {
         </div>
       )}
       <div className="ko-tip-note dim">
-        Du gissar resultatet efter <b>90 min (ordinarie tid)</b> — det kan bli oavgjort. Matchen kan sen avgöras i förlängning eller på straffar, men ditt tips gäller 90-minutersresultatet.
+        Du gissar resultatet efter <b>90 min (ordinarie tid)</b> — det kan bli oavgjort. Matchen kan sen avgöras i förlängning eller på straffar, men ditt tips gäller 90-minutersresultatet. Du kan ändra tills matchen startar.
       </div>
     </div>
   );
 }
 
-function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
+// Merge the engine-committed tips (data.json) with LIVE KO tips from the worker so the
+// pool reflects new/changed tips without waiting for the ~hourly engine merge. Live
+// tips win by name (fresher; they also drop any auto-0–0 default the engine filled in).
+function effectiveTips(m: Match, byFixture: KoTipsByFixture): RawTip[] {
+  const base = m.tips || [];
+  if (m.stage !== "ko" || m._realId == null) return base;
+  const live = byFixture[String(m._realId)];
+  if (!live || !live.length) return base;
+  const byName = new Map<string, RawTip>();
+  for (const t of base) byName.set(t.name, { ...t });
+  for (const lt of live) byName.set(lt.name, { name: lt.name, tip: [lt.tip[0], lt.tip[1]] });
+  return [...byName.values()];
+}
+
+// What the pool generally tipped: outcome split (hemma / oavgjort / borta) + the
+// most-tipped scoreline. Shown above the individual list so you see the consensus.
+function PoolConsensus({ tips, m, ds }: { tips: RawTip[]; m: Match; ds: Dataset }) {
+  if (tips.length < 2) return null;
+  const home = m.home ? ds.teams[m.home] : null;
+  const away = m.away ? ds.teams[m.away] : null;
+  let h = 0, d = 0, a = 0;
+  const lineCount = new Map<string, number>();
+  for (const t of tips) {
+    const [th, ta] = t.tip;
+    if (th > ta) h++; else if (ta > th) a++; else d++;
+    const k = `${th}–${ta}`;
+    lineCount.set(k, (lineCount.get(k) || 0) + 1);
+  }
+  const n = tips.length;
+  const pct = (x: number) => Math.round((x / n) * 100);
+  let topLine = "", topN = 0;
+  for (const [k, c] of lineCount) if (c > topN) { topN = c; topLine = k; }
+  const dot = (bg: string) => <span style={{ width: 8, height: 8, borderRadius: "50%", background: bg, flexShrink: 0 }} />;
+  return (
+    <div style={{ marginBottom: 12, background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 11, padding: "11px 12px" }}>
+      <div className="kicker" style={{ marginBottom: 8 }}>Så tror poolen</div>
+      <div style={{ display: "flex", height: 8, borderRadius: 5, overflow: "hidden", gap: 2 }}>
+        {h > 0 && <div style={{ flex: h, background: "var(--cool)" }} />}
+        {d > 0 && <div style={{ flex: d, background: "var(--ink-3)" }} />}
+        {a > 0 && <div style={{ flex: a, background: "var(--hot)" }} />}
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginTop: 8, fontSize: 11.5, fontWeight: 700, flexWrap: "wrap" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, minWidth: 0 }}>{dot("var(--cool)")}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{home?.name || "Hemma"}</span> {pct(h)}%</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>{dot("var(--ink-3)")}Oavgjort {pct(d)}%</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, minWidth: 0 }}>{dot("var(--hot)")}<span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{away?.name || "Borta"}</span> {pct(a)}%</span>
+      </div>
+      <div className="dim" style={{ fontSize: 11.5, marginTop: 9, fontWeight: 700 }}>
+        Vanligaste tipset: <b style={{ color: "var(--ink)" }}>{topLine}</b> · {topN} av {n}
+      </div>
+    </div>
+  );
+}
+
+function PoolResults({ m, ds, emptyHint }: { m: Match; ds: Dataset; emptyHint?: boolean }) {
   const openPlayer = useSheets((s) => s.openPlayer);
-  if (!m.tippas || !m.tips.length) return <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div>;
+  const byFixture = useKoPublicTips((s) => s.byFixture);
+  const tips = effectiveTips(m, byFixture);
+  if (!tips.length) return emptyHint ? <div className="dim" style={{ padding: 16, textAlign: "center" }}>Inga tips för den här matchen.</div> : null;
   const live = isLive(m);
   const played = m.status === "played";
   // Score every tip — final when played, PROVISIONAL against the running score when
@@ -736,7 +838,7 @@ function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
   // 90-minute result (reg90Score); group on the final score. null = not started yet.
   const sc = played || live ? reg90Score(m) : null;
   const scored = sc != null;
-  const rows = m.tips
+  const rows = tips
     .map((t) => {
       const c = scored ? classifyTip([t.tip[0], t.tip[1]], sc[0], sc[1]) : null;
       return { name: t.name, tip: t.tip, result: c?.result ?? null, pts: c?.points ?? null, auto: !!t.default };
@@ -746,6 +848,7 @@ function PoolResults({ m, ds }: { m: Match; ds: Dataset }) {
   const outcomeCount = rows.filter((r) => r.result === "outcome").length;
   return (
     <Block title={live ? "Poolens tips · just nu" : "Poolens tips"}>
+      <PoolConsensus tips={tips} m={m} ds={ds} />
       {scored && (
         <div className="dim" style={{ fontSize: 11.5, marginBottom: 11, display: "flex", gap: 14, flexWrap: "wrap" }}>
           <span><b style={{ color: "var(--gold)" }}>{exactCount}</b> exakt rätt{live ? " just nu" : ""}</span>

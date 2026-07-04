@@ -12,6 +12,7 @@ import { SearchCommand } from "./features/search/SearchCommand";
 import { NotificationWatcher } from "./features/notifications/NotificationWatcher";
 import { Lightbox } from "./components/Lightbox";
 import { KoBetSheet } from "./components/KoBetSheet";
+import { Presence } from "./components/Presence";
 import { useKoBets } from "./state/koBets";
 import { useData } from "./state/dataset";
 import { useSheets } from "./state/sheets";
@@ -208,6 +209,7 @@ export default function App() {
       <SheetHost />
       <Lightbox />
       <KoBetSheet />
+      <Presence />
     </div>
   );
 }

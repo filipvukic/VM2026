@@ -93,20 +93,41 @@ const BY_TLA_PAIR: Record<string, Broadcaster> = {
   "TUR|USA": "tv4",
 };
 
-// Knockout matches are assigned to SVT/TV4 by their SLOT (FIFA match number), not by
-// the teams — so this is keyed by m.fifa. From SVT's own WC schedule (svt.se) cross-
-// checked against the FIFA "W"-notation (e.g. R16 89 = W73–W75, QF 97 = W89–W90), which
-// lines up exactly with the bracket. R32 = 73–88, R16 = 89–96, QF = 97–100, SF = 101–102,
-// bronze = 103, final = 104.
-const KO_BROADCAST: Record<number, Broadcaster> = {
-  // Round of 32
-  74: "tv4", 75: "svt", 76: "svt", 77: "tv4", 78: "tv4", 79: "tv4", 80: "svt", 81: "tv4",
-  82: "tv4", 83: "svt", 84: "tv4", 85: "tv4", 86: "tv4", 87: "svt", 88: "svt",
+// Knockout broadcasters are assigned by SLOT (kickoff date+time), NOT by the teams —
+// so this is keyed by the match's UTC kickoff as "YYYY-MM-DDTHH:MM". This is more
+// robust than the derived FIFA match number (which reaches a match through a fragile
+// team→bracket-slot lookup). Verified 2026-07-04 against SVT's own WC schedule
+// (svt.se), cross-confirmed by vm-fotboll.se for the later rounds. SVT is free.
+// NOTE: SVT/TV4 have said the split can shift if SWEDEN reaches the knockouts (a
+// potential Sweden match is pre-allocated to a specific channel); update then.
+const KO_BROADCAST_BY_SLOT: Record<string, Broadcaster> = {
   // Round of 16
-  89: "tv4", 90: "svt", 91: "tv4", 92: "svt", 93: "tv4", 94: "tv4", 95: "tv4", 96: "svt",
-  // Quarter-finals · Semi-finals · Bronze · Final
-  97: "tv4", 98: "svt", 99: "tv4", 100: "svt", 101: "svt", 102: "tv4", 103: "svt", 104: "tv4",
+  "2026-07-04T17:00": "tv4", // Canada–Marocko
+  "2026-07-04T21:00": "svt", // Paraguay–Frankrike
+  "2026-07-05T20:00": "tv4", // Brasilien–Norge
+  "2026-07-06T00:00": "svt", // Mexiko–England
+  "2026-07-06T19:00": "tv4", // Portugal–Spanien
+  "2026-07-07T00:00": "tv4", // USA–Belgien
+  "2026-07-07T16:00": "tv4", // Argentina–Egypten
+  "2026-07-07T20:00": "svt", // Schweiz–Colombia
+  // Quarter-finals
+  "2026-07-09T20:00": "tv4",
+  "2026-07-10T19:00": "svt",
+  "2026-07-11T21:00": "tv4",
+  "2026-07-12T01:00": "svt",
+  // Semi-finals
+  "2026-07-14T19:00": "svt",
+  "2026-07-15T19:00": "tv4",
+  // Bronze + Final
+  "2026-07-18T21:00": "svt", // bronsmatch
+  "2026-07-19T19:00": "tv4", // final
 };
+
+// "YYYY-MM-DDTHH:MM" in UTC — the KO_BROADCAST_BY_SLOT key for a kickoff.
+function koSlotKey(kickoff?: Date | null): string {
+  if (!kickoff || isNaN(kickoff.getTime())) return "";
+  return kickoff.toISOString().slice(0, 16);
+}
 
 export interface BroadcastInfo {
   /** Known channel group, or null when we don't have a specific listing. */
@@ -133,13 +154,14 @@ export function broadcastForPair(
   awayTla?: string | null,
   homeName?: string | null,
   awayName?: string | null,
-  fifa?: number | null
+  kickoff?: Date | null
 ): BroadcastInfo {
   void homeName; void awayName; // names no longer needed (we link to the WC hub, not a search)
   const svtInfo: BroadcastInfo = { broadcaster: "svt", label: "SVT", channels: ["SVT1/SVT2", "SVT Play"], url: SVT_HUB, free: true };
   const tv4Info: BroadcastInfo = { broadcaster: "tv4", label: "TV4", channels: ["TV4", "TV4 Play"], url: TV4_HUB, free: false };
-  // Knockout: look up by match slot (FIFA number).
-  if (fifa != null && KO_BROADCAST[fifa]) return KO_BROADCAST[fifa] === "svt" ? svtInfo : tv4Info;
+  // Knockout: look up by match slot (kickoff date+time).
+  const slot = KO_BROADCAST_BY_SLOT[koSlotKey(kickoff)];
+  if (slot) return slot === "svt" ? svtInfo : tv4Info;
   // Group stage: the hand-kept team-pair table.
   const key = homeTla && awayTla ? [homeTla.toUpperCase(), awayTla.toUpperCase()].sort().join("|") : "";
   const b = key ? BY_TLA_PAIR[key] : undefined;

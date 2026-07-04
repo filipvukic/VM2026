@@ -26,7 +26,7 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const live = isLive(m);
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const showScore = played || live;
-  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
+  const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.kickoff) : null;
   const state = live ? "live" : played ? "done" : "soon";
 
   const TeamRow = ({ side }: { side: "h" | "a" }) => {

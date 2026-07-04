@@ -207,6 +207,31 @@ export async function handleKo(request: Request, env: KoEnv): Promise<Response |
     return jsonRes(out, env);
   }
 
+  // PUBLIC (no key): everyone's KO tips for LIVE display in the app — the same data the
+  // engine merges into the public pool, but without the ~hourly engine lag. Keyed by
+  // fixture id → [{name, tip}], only VALID (r16+) fixtures. Per the pool's rule, tips are
+  // revealed for open matches too. Edge-cached ~20s so a burst of viewers costs ~0 KV reads.
+  if (p === "/ko/public" && request.method === "GET") {
+    const cache = caches.default;
+    const cacheKey = new Request(new URL("/ko/public", url.origin).toString());
+    const hit = await cache.match(cacheKey);
+    if (hit) return hit;
+    const valid = new Set((await koFixtures(env)).map((f) => f.id));
+    const byFixture: Record<string, { name: string; tip: [number, number] }[]> = {};
+    for (const name of await participants(env)) {
+      const b = await getBets(env, name);
+      for (const [fid, tip] of Object.entries(b)) {
+        if (!valid.has(fid)) continue;
+        (byFixture[fid] ??= []).push({ name, tip });
+      }
+    }
+    const res = new Response(JSON.stringify(byFixture), {
+      headers: { "Content-Type": "application/json", "Cache-Control": "max-age=20", ...cors(env) },
+    });
+    await cache.put(cacheKey, res.clone());
+    return res;
+  }
+
   // Validate a code → who it belongs to.
   if (p === "/ko/login" && request.method === "POST") {
     const body = (await request.json().catch(() => ({}))) as { code?: string };

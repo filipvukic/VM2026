@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useData } from "../state/dataset";
+import { useSheets } from "../state/sheets";
+import { useNow } from "../state/useNow";
 import { useKoBets, koFid, type Tip } from "../state/koBets";
 import { Flag } from "../lib/flags";
 import { svDayMonth } from "../lib/format";
@@ -11,9 +13,12 @@ import type { Dataset, Match } from "../data/types";
 // the store's sheetOpen flag (home reminder + bracket CTA).
 export function KoBetSheet() {
   const ds = useData();
+  const openMatch = useSheets((s) => s.openMatch);
   const { name, bets, open: openIds, status, error, login, save, sheetOpen, setSheet } = useKoBets();
   const [draft, setDraft] = useState<Record<string, Tip>>({});
   const [flash, setFlash] = useState(false);
+  // Tick while the sheet is open so a match locks the instant its kickoff passes.
+  const now = useNow(sheetOpen ? 20_000 : 0);
 
   useEffect(() => { setDraft({ ...bets }); }, [bets]);
   const rounds = useMemo(() => koRounds(ds), [ds]);
@@ -22,9 +27,15 @@ export function KoBetSheet() {
   const close = () => setSheet(false);
   const loggedIn = !!name;
 
-  const openList = rounds.flatMap((r) => r.matches).filter((m) => openIds.has(koFid(m)));
+  // AIRTIGHT: a match is editable only if the worker says it's open AND its own kickoff
+  // is still in the future — so an open sheet locks each match exactly at its kickoff.
+  const isEditable = (m: Match) => openIds.has(koFid(m)) && (m.kickoff?.getTime() ?? Infinity) > now;
+  const openList = rounds.flatMap((r) => r.matches).filter(isEditable);
+  const editableIds = new Set(openList.map(koFid));
   const tipped = openList.filter((m) => (draft[koFid(m)] || bets[koFid(m)])).length;
   const total = openList.length;
+  // Open the full match view (closes this modal — a match sheet renders below it).
+  const showMatch = (m: Match) => { setSheet(false); openMatch(m.id); };
 
   const setTip = (id: string, side: 0 | 1, val: number) =>
     setDraft((d) => {
@@ -33,7 +44,7 @@ export function KoBetSheet() {
     });
   const onSave = async () => {
     const payload: Record<string, Tip> = {};
-    for (const id of openIds) if (draft[id]) payload[id] = draft[id];
+    for (const id of editableIds) if (draft[id]) payload[id] = draft[id];
     if (await save(payload)) { setFlash(true); setTimeout(() => setFlash(false), 2200); }
   };
 
@@ -94,14 +105,15 @@ export function KoBetSheet() {
                     <div className="kob-round-h"><span>{r.label}</span>{anyOpen && <span className="kob-round-tag">öppen</span>}</div>
                     {drawn.map((m) => {
                       const id = koFid(m);
-                      const editable = openIds.has(id);
+                      const editable = isEditable(m);
                       const home = m.home ? ds.teams[m.home] : null;
                       const away = m.away ? ds.teams[m.away] : null;
                       const t = draft[id] || bets[id] || null;
                       const played = m.status === "played" && m.ga != null && m.gb != null;
                       const reg = played ? reg90Score(m) : null; // 90-min result = what's scored
                       return (
-                        <div key={id} className={`kob-match${editable ? " edit" : ""}`}>
+                        // Tap anywhere except the steppers to open the full match view.
+                        <div key={id} className={`kob-match${editable ? " edit" : ""}`} onClick={() => showMatch(m)} role="button">
                           <div className="kob-tm">
                             <Flag iso={home?.iso} code={m.home} size={20} />
                             <span className="kob-nm">{home?.name || "?"}</span>
@@ -122,6 +134,7 @@ export function KoBetSheet() {
                               : played
                                 ? <span>Spelad{reg ? ` · 90 min ${reg[0]}–${reg[1]}` : ""}</span>
                                 : <span>Låst</span>}
+                            <span className="kob-open">Visa match ›</span>
                           </div>
                         </div>
                       );
@@ -193,13 +206,15 @@ export function KoBetSheet() {
         .kob-round-tag{ font-size:8.5px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; color:var(--win); background:color-mix(in srgb, var(--win) 16%, transparent); padding:1px 6px; border-radius:var(--r-pill); }
         .kob-pending{ font-size:11.5px; color:var(--ink-3); padding:6px 2px; }
         /* Vertical match card: each team gets a full row so the whole country name shows. */
-        .kob-match{ padding:10px 12px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line); margin-bottom:8px; }
+        .kob-match{ padding:10px 12px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--line); margin-bottom:8px; cursor:pointer; transition:border-color .12s; }
+        .kob-match:active{ border-color:var(--line-2); }
         .kob-match.edit{ border-color:color-mix(in srgb, var(--cool) 32%, var(--line)); background:color-mix(in srgb, var(--cool) 6%, var(--surface)); }
         .kob-tm{ display:flex; align-items:center; gap:10px; min-width:0; padding:3px 0; }
         .kob-tm + .kob-tm{ margin-top:2px; }
         .kob-nm{ flex:1; min-width:0; font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .kob-sc{ flex:0 0 auto; min-width:34px; text-align:center; font-family:var(--font-display); font-weight:800; font-size:18px; font-variant-numeric:tabular-nums; }
-        .kob-mfoot{ margin-top:8px; padding-top:7px; border-top:1px dashed var(--line); font-size:9.5px; font-weight:700; letter-spacing:.03em; color:var(--ink-3); text-transform:uppercase; }
+        .kob-mfoot{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:8px; padding-top:7px; border-top:1px dashed var(--line); font-size:9.5px; font-weight:700; letter-spacing:.03em; color:var(--ink-3); text-transform:uppercase; }
+        .kob-open{ flex:0 0 auto; color:var(--cool); font-weight:800; }
         .kob-step{ display:flex; align-items:center; background:var(--surface-3); border:1px solid var(--line-2); border-radius:9px; overflow:hidden; }
         .kob-step button{ width:26px; height:34px; display:grid; place-items:center; color:var(--ink-2); font-size:17px; font-weight:800; line-height:1; transition:background .12s; }
         .kob-step button:active{ background:var(--cool); color:#fff; }
@@ -215,8 +230,9 @@ export function KoBetSheet() {
 }
 
 function Stepper({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  // stopPropagation so tapping +/- edits the score without opening the match view.
   return (
-    <div className="kob-step">
+    <div className="kob-step" onClick={(e) => e.stopPropagation()}>
       <button type="button" aria-label="minska" onClick={() => onChange(Math.max(0, value - 1))}>−</button>
       <span className="v">{value}</span>
       <button type="button" aria-label="öka" onClick={() => onChange(Math.min(20, value + 1))}>+</button>

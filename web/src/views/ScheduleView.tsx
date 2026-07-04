@@ -351,7 +351,7 @@ function BracketCell({ m, ds, onOpen }: { m: Match; ds: Dataset; onOpen: () => v
     );
   };
   const home = m.home ? ds.teams[m.home] : null, away = m.away ? ds.teams[m.away] : null;
-  const bc = !played && !live ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.fifa) : null;
+  const bc = !played && !live ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.kickoff) : null;
   return (
     <button className={`bc${live ? " live" : ""}${clickable ? "" : " nolink"}`} onClick={clickable ? onOpen : undefined} disabled={!clickable}>
       <Side code={m.home} proj={m.projHome} label={m.fromA} score={m.ga} win={played && m.winner === m.home} />

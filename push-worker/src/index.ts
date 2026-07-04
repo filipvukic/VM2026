@@ -14,6 +14,7 @@
 // (Web Crypto, runs on the edge) so no Node crypto / external service is needed.
 import { buildPushHTTPRequest } from "@pushforge/builder";
 import { handleKo, koDueReminders, markKoReminderSent, koReminderMessage } from "./ko";
+import { handlePresence } from "./presence";
 
 interface Env {
   SUBS: KVNamespace;
@@ -312,6 +313,10 @@ export default {
     // Knockout betting (/ko/*): login codes + per-person tips in KV.
     const ko = await handleKo(request, env);
     if (ko) return ko;
+
+    // In-app presence + poke (/presence, /poke) for logged-in pool players.
+    const pres = await handlePresence(request, env);
+    if (pres) return pres;
 
     if (url.pathname === "/matchstats") return matchStats(url, env, ctx);
 
