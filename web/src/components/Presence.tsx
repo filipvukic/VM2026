@@ -44,9 +44,10 @@ export function Presence() {
         .poke-toasts{ position:fixed; top:calc(14px + env(safe-area-inset-top)); left:0; right:0; z-index:10000; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; padding:0 12px; }
         .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:11px; padding:12px 18px 12px 12px; border-radius:var(--r-pill); font-size:15px; font-weight:700; color:var(--ink); max-width:92vw;
           background:var(--surface-2); border:1px solid var(--line-2); box-shadow:0 12px 32px rgba(0,0,0,.4), 0 0 0 3px color-mix(in srgb,var(--cool) 32%, transparent);
-          animation:pokeIn .45s cubic-bezier(.2,1.3,.3,1), pokeWob 2.4s ease-in-out .45s infinite; }
-        @keyframes pokeIn{ 0%{ transform:translateY(-26px) scale(.9); opacity:0;} 60%{ transform:translateY(3px) scale(1.03); opacity:1;} 100%{ transform:none; opacity:1;} }
-        @keyframes pokeWob{ 0%,100%{ transform:rotate(0);} 25%{ transform:rotate(-1.3deg);} 75%{ transform:rotate(1.3deg);} }
+          animation:pokeIn .5s cubic-bezier(.2,1.25,.3,1) both; }
+        @keyframes pokeIn{ 0%{ transform:translateY(-34px) scale(.9); opacity:0;} 62%{ transform:translateY(3px) scale(1.02); opacity:1;} 100%{ transform:none; opacity:1;} }
+        .poke-toast.leaving{ animation:pokeOut .42s cubic-bezier(.4,0,.55,1) both; }
+        @keyframes pokeOut{ from{ transform:none; opacity:1;} to{ transform:translateY(-40px) scale(.9); opacity:0;} }
         .poke-ava{ width:30px; height:30px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; flex:0 0 auto; box-shadow:0 0 0 2px var(--surface-2); }
         .poke-txt{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .poke-txt b{ font-weight:900; }
@@ -123,12 +124,17 @@ function PokeToasts({ incoming }: { incoming: Poke[] }) {
 // that was why the banner never went away. A self-test looks identical to a real poke.
 function PokeToast({ p, color }: { p: Poke; color: string }) {
   const dismiss = usePresence((s) => s.dismissPoke);
+  const [leaving, setLeaving] = useState(false);
+  // Slide in, rest ~6s, then play the slide-out and only THEN unmount (so the exit is smooth, not
+  // an abrupt disappear).
   useEffect(() => {
-    const t = window.setTimeout(() => dismiss(p), 6500);
-    return () => window.clearTimeout(t);
+    const t1 = window.setTimeout(() => setLeaving(true), 6000);
+    const t2 = window.setTimeout(() => dismiss(p), 6000 + 430);
+    return () => { window.clearTimeout(t1); window.clearTimeout(t2); };
   }, [p, dismiss]);
+  const close = () => { setLeaving(true); window.setTimeout(() => dismiss(p), 430); };
   return (
-    <div className="poke-toast" onClick={() => dismiss(p)}>
+    <div className={`poke-toast${leaving ? " leaving" : ""}`} onClick={close}>
       <span className="poke-ava" style={{ background: color }}>{p.from.slice(0, 1).toUpperCase()}</span>
       <span className="poke-txt"><b>{p.from}</b> puffade dig! 👉</span>
     </div>
