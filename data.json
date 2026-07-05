@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-05T20:52:56+00:00",
+  "updated_at": "2026-07-05T21:46:17+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -20026,13 +20026,16 @@
       "homeTla": "BRA",
       "away": "Norway",
       "awayTla": "NOR",
-      "status": "IN_PLAY",
+      "status": "LIVE",
       "score": [
         0,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
         "fullTime": [
           0,
           0
@@ -20042,10 +20045,74 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "HT",
-      "goals": [],
+      "minute": "83",
+      "goals": [
+        {
+          "minute": "79",
+          "team": "NOR",
+          "scorer": "Erling Haaland",
+          "assist": "Andreas Schjelderup",
+          "type": "HEADER",
+          "description": "Goal! Brazil 0, Norway 1. Erling Haaland (Norway) header from the centre of the box to the bottom right corner. Assisted by Andreas Schjelderup with a cross.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "NOR",
+          "playerIn": "Oscar Bobb",
+          "playerOut": "Alexander Sørloth",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "NOR",
+          "playerIn": "Andreas Schjelderup",
+          "playerOut": "Antonio Nusa",
+          "period": 2
+        },
+        {
+          "minute": "58",
+          "team": "BRA",
+          "playerIn": "Endrick",
+          "playerOut": "Matheus Cunha",
+          "period": 2
+        },
+        {
+          "minute": "63",
+          "team": "NOR",
+          "playerIn": "Fredrik Aursnes",
+          "playerOut": "Julian Ryerson",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "BRA",
+          "playerIn": "Neymar",
+          "playerOut": "Gabriel Martinelli",
+          "period": 2
+        },
+        {
+          "minute": "67",
+          "team": "BRA",
+          "playerIn": "Danilo Santos",
+          "playerOut": "Rayan",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "BRA",
+          "playerIn": "Éderson",
+          "playerOut": "Bruno Guimarães",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "MetLife Stadium",
         "city": "East Rutherford, New Jersey",

@@ -71465,13 +71465,16 @@
     "homeTla": "BRA",
     "away": "Norway",
     "awayTla": "NOR",
-    "status": "IN_PLAY",
+    "status": "LIVE",
     "score": [
       0,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
       "fullTime": [
         0,
         0
@@ -71481,10 +71484,74 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "HT",
-    "goals": [],
+    "minute": "83",
+    "goals": [
+      {
+        "minute": "79",
+        "team": "NOR",
+        "scorer": "Erling Haaland",
+        "assist": "Andreas Schjelderup",
+        "type": "HEADER",
+        "description": "Goal! Brazil 0, Norway 1. Erling Haaland (Norway) header from the centre of the box to the bottom right corner. Assisted by Andreas Schjelderup with a cross.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "NOR",
+        "playerIn": "Oscar Bobb",
+        "playerOut": "Alexander Sørloth",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "NOR",
+        "playerIn": "Andreas Schjelderup",
+        "playerOut": "Antonio Nusa",
+        "period": 2
+      },
+      {
+        "minute": "58",
+        "team": "BRA",
+        "playerIn": "Endrick",
+        "playerOut": "Matheus Cunha",
+        "period": 2
+      },
+      {
+        "minute": "63",
+        "team": "NOR",
+        "playerIn": "Fredrik Aursnes",
+        "playerOut": "Julian Ryerson",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BRA",
+        "playerIn": "Neymar",
+        "playerOut": "Gabriel Martinelli",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BRA",
+        "playerIn": "Danilo Santos",
+        "playerOut": "Rayan",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "BRA",
+        "playerIn": "Éderson",
+        "playerOut": "Bruno Guimarães",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
@@ -71571,7 +71638,7 @@
           "jersey": "8",
           "espnId": "218522",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gabriel Martinelli",
@@ -71580,7 +71647,7 @@
           "jersey": "22",
           "espnId": "269844",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rayan",
@@ -71589,7 +71656,7 @@
           "jersey": "26",
           "espnId": "357719",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Vinícius Júnior",
@@ -71607,7 +71674,7 @@
           "jersey": "9",
           "espnId": "259902",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -71617,7 +71684,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "306764",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71671,7 +71738,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "278210",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71680,7 +71747,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "132948",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71707,7 +71774,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "346612",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71787,7 +71854,7 @@
           "jersey": "26",
           "espnId": "222991",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sander Berge",
@@ -71832,7 +71899,7 @@
           "jersey": "20",
           "espnId": "319368",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Alexander Sørloth",
@@ -71841,7 +71908,7 @@
           "jersey": "7",
           "espnId": "188230",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -71851,7 +71918,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "307111",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71905,7 +71972,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "313415",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71932,7 +71999,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "212900",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -71976,64 +72043,64 @@
       "_espnEventId": "760504"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 35.2,
-      "totalShots": 7.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 1.0,
-      "accuratePasses": 156.0,
-      "totalPasses": 179.0,
-      "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 4.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 19.0,
-      "accurateLongBalls": 11.0,
-      "longballPct": 0.6,
-      "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.5,
-      "interceptions": 5.0,
-      "effectiveClearance": 10.0,
-      "totalClearance": 10.0
-    },
-    "awayStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 6.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 3.0,
-      "saves": 2.0,
-      "possessionPct": 64.8,
-      "totalShots": 4.0,
-      "shotsOnTarget": 2.0,
+      "wonCorners": 4.0,
+      "saves": 3.0,
+      "possessionPct": 31.4,
+      "totalShots": 11.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 230.0,
+      "totalPasses": 271.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 9.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 33.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.4,
+      "interceptions": 11.0,
+      "effectiveClearance": 18.0,
+      "totalClearance": 18.0
+    },
+    "awayStats": {
+      "foulsCommitted": 4.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 4.0,
+      "saves": 3.0,
+      "possessionPct": 68.6,
+      "totalShots": 8.0,
+      "shotsOnTarget": 4.0,
       "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 306.0,
-      "totalPasses": 334.0,
+      "accuratePasses": 556.0,
+      "totalPasses": 606.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 26.0,
-      "accurateLongBalls": 15.0,
-      "longballPct": 0.6,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 12.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 37.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.5,
       "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 5.0,
-      "tacklePct": 0.6,
-      "interceptions": 3.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "effectiveTackles": 8.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.8,
+      "interceptions": 6.0,
+      "effectiveClearance": 7.0,
+      "totalClearance": 7.0
     },
     "homeForm": [
       {
@@ -72787,11 +72854,11 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -175,
+      "homeML": -170,
       "awayML": 500,
       "spread": "FRA -0.5",
       "overUnder": 2.5,
-      "overOdds": -105.0,
+      "overOdds": 100.0,
       "underOdds": -120.0,
       "provider": "DraftKings"
     },
