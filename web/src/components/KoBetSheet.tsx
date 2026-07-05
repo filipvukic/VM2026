@@ -87,8 +87,11 @@ export function KoBetSheet() {
               )}
               {rounds.map((r) => {
                 // only matches you can still act on — drawn + not already played (played
-                // ones live in the bracket; here they'd just be clutter you can't tip)
-                const drawn = r.matches.filter((m) => m.home && m.away && m.status !== "played");
+                // ones live in the bracket; here they'd just be clutter you can't tip),
+                // sorted by kickoff so they appear in the order they're actually played
+                const drawn = r.matches
+                  .filter((m) => m.home && m.away && m.status !== "played")
+                  .sort((a, b) => (a.kickoff?.getTime() ?? Infinity) - (b.kickoff?.getTime() ?? Infinity));
                 const anyOpen = r.matches.some((m) => openIds.has(koFid(m)));
                 // matches in this round not yet drawn — they'll open as earlier rounds finish
                 const pending = r.matches.filter((m) => !m.home || !m.away).length;

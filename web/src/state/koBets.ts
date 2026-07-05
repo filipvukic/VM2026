@@ -25,6 +25,8 @@ export function koOpenMatches(ds: Dataset, now: number): Match[] {
       out.push(m);
     }
   }
+  // chronological — soonest kickoff first
+  out.sort((a, b) => (a.kickoff?.getTime() ?? Infinity) - (b.kickoff?.getTime() ?? Infinity));
   return out;
 }
 const LS_KEY = "vm_ko_code";

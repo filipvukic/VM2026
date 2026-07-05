@@ -40,6 +40,8 @@ export function Presence() {
         .pres-poke:active{ transform:scale(.94); } .pres-poke:disabled{ opacity:.5; background:var(--surface-3); color:var(--ink-3); }
         .pres-you{ flex:0 0 auto; font-size:10.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); background:var(--surface-3); padding:5px 9px; border-radius:var(--r-pill); }
         .pres-test{ background:var(--surface-3); color:var(--ink-2); }
+        .pres-hint{ padding:9px 13px 11px; font-size:11px; line-height:1.45; color:var(--ink-3); border-top:1px solid var(--line); }
+        .pres-hint b{ color:var(--ink-2); font-weight:800; }
         /* z above the prank overlay (.pfx is 9998) so the "who" is visible ON TOP of the chaos. */
         .poke-toasts{ position:fixed; top:calc(14px + env(safe-area-inset-top)); left:0; right:0; z-index:10000; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; padding:0 12px; }
         .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:11px; padding:12px 18px 12px 12px; border-radius:var(--r-pill); font-size:15px; font-weight:700; color:var(--ink); max-width:92vw;
@@ -100,6 +102,7 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
               );
             })}
           </div>
+          <div className="pres-hint">👉 Puffa en spelare som är inne — eller tryck <b>🎲 Testa</b> på din egen rad för att se precis vad som händer.</div>
         </div>
       )}
     </div>
