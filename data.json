@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-05T19:55:43+00:00",
+  "updated_at": "2026-07-05T20:52:56+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -20026,17 +20026,23 @@
       "homeTla": "BRA",
       "away": "Norway",
       "awayTla": "NOR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "HT",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -20048,8 +20054,7 @@
       "referees": [
         {
           "name": "Ismail Elfath",
-          "role": "REFEREE",
-          "nationality": "United States"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -20118,6 +20123,15 @@
             2
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
