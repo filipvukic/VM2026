@@ -38,6 +38,7 @@ export function Presence() {
         .pres-nm{ flex:1; min-width:0; font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .pres-poke{ flex:0 0 auto; font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:var(--r-pill); background:var(--grad-soft); color:#fff; white-space:nowrap; transition:transform .1s, opacity .15s; }
         .pres-poke:active{ transform:scale(.94); } .pres-poke:disabled{ opacity:.5; background:var(--surface-3); color:var(--ink-3); }
+        .pres-poke.cooling{ opacity:.7; font-variant-numeric:tabular-nums; letter-spacing:.01em; }
         .pres-you{ flex:0 0 auto; font-size:10.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); background:var(--surface-3); padding:5px 9px; border-radius:var(--r-pill); }
         .pres-test{ background:var(--surface-3); color:var(--ink-2); }
         .pres-hint{ padding:9px 13px 11px; font-size:11px; line-height:1.45; color:var(--ink-3); border-top:1px solid var(--line); }
@@ -66,12 +67,14 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
   const poke = usePresence((s) => s.poke);
   const pokedAt = usePresence((s) => s.pokedAt);
   const [busy, setBusy] = useState<string | null>(null);
-  const now = useNow(open ? 2000 : 0); // tick while open so a cooldown re-enables the button
+  const now = useNow(open ? 1000 : 0); // tick every 1s while open so the cooldown counts down live
   const color = (n: string) => ds.players.find((p) => p.name === n)?.color || "var(--cool)";
   const same = (a: string, b: string) => norm(a) === norm(b);
   // Always include yourself, first — even before the first heartbeat lands.
   const names = [me, ...online.filter((n) => !same(n, me))];
-  const onCooldown = (n: string) => (pokedAt[n] || 0) + POKE_COOLDOWN_MS > now;
+  const cdLeft = (n: string) => Math.max(0, (pokedAt[n] || 0) + POKE_COOLDOWN_MS - now); // ms until you can poke n again
+  const onCooldown = (n: string) => cdLeft(n) > 0;
+  const fmtCd = (ms: number) => { const s = Math.ceil(ms / 1000); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
   const onPoke = async (n: string) => { setBusy(n); await poke(n); setBusy(null); };
   return (
     <div className="pres-bar">
@@ -94,8 +97,8 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
                   {self ? (
                     <button className="pres-poke pres-test" onClick={() => previewPokeFx()} title="Testa en slumpad puff på dig själv">🎲 Testa</button>
                   ) : (
-                    <button className="pres-poke" disabled={cooling || busy === n} onClick={() => onPoke(n)}>
-                      {busy === n ? "…" : cooling ? "Puffad ✓" : "👉 Puffa"}
+                    <button className={`pres-poke${cooling ? " cooling" : ""}`} disabled={cooling || busy === n} onClick={() => onPoke(n)}>
+                      {busy === n ? "…" : cooling ? `✓ ${fmtCd(cdLeft(n))}` : "👉 Puffa"}
                     </button>
                   )}
                 </div>
