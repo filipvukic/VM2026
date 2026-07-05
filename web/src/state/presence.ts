@@ -15,7 +15,7 @@ interface PresenceState {
   online: string[]; // names online now (INCLUDING yourself)
   incoming: PokeIn[]; // pokes received → toast + clear
   pokedAt: Record<string, number>; // name → last-poked ms (1-min cooldown, then resets)
-  dismissPoke: (i: number) => void;
+  dismissPoke: (p: PokeIn) => void; // remove a specific poke (by object identity — index shifts)
   selfPokeBanner: (from: string) => void; // 🎲 self-test: show the banner without a server poke
   poke: (to: string) => Promise<boolean>;
   announce: () => Promise<void>; // WRITE: arrive / keepalive
@@ -38,13 +38,18 @@ type PresResp = { online: string[]; pokes: PokeIn[] };
 const applyResp = (
   set: (fn: (s: PresenceState) => Partial<PresenceState>) => void,
   d: PresResp,
-) => set((s) => ({ online: d.online || [], incoming: [...s.incoming, ...(d.pokes || [])] }));
+) => set((s) => ({
+  online: d.online || [],
+  // Keep the SAME incoming reference when there's nothing new — otherwise every 7s poll rebuilds
+  // the array and resets each toast's dismiss timer, so banners never disappear.
+  incoming: d.pokes && d.pokes.length ? [...s.incoming, ...d.pokes] : s.incoming,
+}));
 
 export const usePresence = create<PresenceState>((set, get) => ({
   online: [],
   incoming: [],
   pokedAt: initialPokedAt,
-  dismissPoke: (i) => set((s) => ({ incoming: s.incoming.filter((_, k) => k !== i) })),
+  dismissPoke: (p) => set((s) => ({ incoming: s.incoming.filter((x) => x !== p) })),
   selfPokeBanner: (from) => set((s) => ({ incoming: [...s.incoming, { from, ts: Date.now(), self: true }] })),
 
   poke: async (to) => {

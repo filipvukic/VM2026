@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { usePresence } from "../state/presence";
+import { useKoBets } from "../state/koBets";
 import { armPokeSound, playPokeSound } from "../lib/pokeSound";
 import { buzz } from "../lib/haptics";
 
@@ -30,12 +31,14 @@ interface Fx { id: number; kind: Kind; from: string; emoji: string }
 
 const randomFx = (from: string, id: number): Fx => ({ id, kind: pick(KINDS), from, emoji: pick(TAKEOVER) });
 
-// Imperative trigger so the "🎲 Testa" button can preview a random prank on your own screen.
-// Fires the prank in-gesture (reliable audio on iOS) AND raises the "who" banner via the store.
+// Imperative trigger so the "🎲 Testa" button can preview a random prank on your own screen —
+// EXACTLY as a real incoming poke looks (same prank + same "who" banner, auto-dismissing). Fires
+// the prank in-gesture (reliable audio on iOS) and raises the banner via the store.
 let fire: ((from: string) => void) | null = null;
 export function previewPokeFx() {
-  fire?.("Du");
-  usePresence.getState().selfPokeBanner("Du");
+  const me = useKoBets.getState().name || "Du";
+  fire?.(me);
+  usePresence.getState().selfPokeBanner(me);
 }
 
 export function PokeFx() {

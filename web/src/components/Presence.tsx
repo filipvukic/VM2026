@@ -105,25 +105,32 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
   );
 }
 
-function PokeToasts({ incoming }: { incoming: { from: string; ts: number; self?: boolean }[] }) {
-  const dismiss = usePresence((s) => s.dismissPoke);
+type Poke = { from: string; ts: number; self?: boolean };
+
+function PokeToasts({ incoming }: { incoming: Poke[] }) {
   const ds = useData();
   const color = (n: string) => ds.players.find((p) => p.name === n)?.color || "var(--cool)";
-  // Outlast even the longest prank (disco ~6.8s) so the "who" is readable once the chaos clears.
-  useEffect(() => {
-    if (!incoming.length) return;
-    const t = setTimeout(() => dismiss(0), 7500);
-    return () => clearTimeout(t);
-  }, [incoming, dismiss]);
   if (!incoming.length) return null;
   return (
     <div className="poke-toasts">
-      {incoming.map((p, i) => (
-        <div key={`${p.from}-${p.ts}-${i}`} className="poke-toast" onClick={() => dismiss(i)}>
-          <span className="poke-ava" style={{ background: color(p.from) }}>{p.self ? "🎲" : p.from.slice(0, 1).toUpperCase()}</span>
-          <span className="poke-txt">{p.self ? "Testpuff!" : <><b>{p.from}</b> puffade dig! 👉</>}</span>
-        </div>
-      ))}
+      {/* keyed by identity so poll re-renders don't remount → each toast's own timer keeps running */}
+      {incoming.map((p) => <PokeToast key={`${p.from}-${p.ts}`} p={p} color={color(p.from)} />)}
+    </div>
+  );
+}
+
+// Each toast owns its dismiss timer (set once on mount) so the 7s presence poll can't reset it —
+// that was why the banner never went away. A self-test looks identical to a real poke.
+function PokeToast({ p, color }: { p: Poke; color: string }) {
+  const dismiss = usePresence((s) => s.dismissPoke);
+  useEffect(() => {
+    const t = window.setTimeout(() => dismiss(p), 6500);
+    return () => window.clearTimeout(t);
+  }, [p, dismiss]);
+  return (
+    <div className="poke-toast" onClick={() => dismiss(p)}>
+      <span className="poke-ava" style={{ background: color }}>{p.from.slice(0, 1).toUpperCase()}</span>
+      <span className="poke-txt"><b>{p.from}</b> puffade dig! 👉</span>
     </div>
   );
 }
