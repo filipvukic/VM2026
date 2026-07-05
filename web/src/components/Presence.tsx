@@ -3,6 +3,7 @@ import { usePresence, POKE_COOLDOWN_MS } from "../state/presence";
 import { useKoBets } from "../state/koBets";
 import { useData } from "../state/dataset";
 import { useNow } from "../state/useNow";
+import { PokeFx } from "./PokeFx";
 
 // In-app presence: a small bottom-left pill showing which pool players are live right now
 // (INCLUDING you), tap to expand + "poke" (puffa) them (once per minute each). Plus a
@@ -16,6 +17,7 @@ export function Presence() {
     <>
       {me && <OnlineBar me={me} online={online} />}
       <PokeToasts incoming={incoming} />
+      <PokeFx />
       <style>{`
         .pres-bar{ position:fixed; left:12px; z-index:90; bottom:calc(74px + env(safe-area-inset-bottom)); }
         @media(min-width:920px){ .pres-bar{ bottom:16px; } }
