@@ -27,9 +27,13 @@ const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 const pick = <T,>(a: readonly T[]): T => a[Math.floor(Math.random() * a.length)];
 const cssVars = (o: Record<string, string | number>) => o as CSSProperties;
 
+// Weighted so disco (the crowd-pleaser with music) comes up noticeably more often than the rest.
+const KIND_WEIGHT: Record<Kind, number> = { disco: 6, police: 1, flip: 1, glitch: 1, invert: 1, crack: 1, takeover: 1, swarm: 1, quake: 1, spinout: 1 };
+const KIND_POOL: Kind[] = KINDS.flatMap((k) => Array<Kind>(KIND_WEIGHT[k]).fill(k));
+
 interface Fx { id: number; kind: Kind; from: string; emoji: string }
 
-const randomFx = (from: string, id: number): Fx => ({ id, kind: pick(KINDS), from, emoji: pick(TAKEOVER) });
+const randomFx = (from: string, id: number): Fx => ({ id, kind: pick(KIND_POOL), from, emoji: pick(TAKEOVER) });
 
 // Imperative trigger so the "🎲 Testa" button can preview a random prank on your own screen —
 // EXACTLY as a real incoming poke looks (same prank + same "who" banner, auto-dismissing). Fires
