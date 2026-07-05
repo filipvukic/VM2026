@@ -71465,10 +71465,10 @@
     "homeTla": "BRA",
     "away": "Norway",
     "awayTla": "NOR",
-    "status": "LIVE",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      1,
+      2
     ],
     "scoreDetail": {
       "halfTime": [
@@ -71476,15 +71476,15 @@
         0
       ],
       "fullTime": [
-        0,
-        0
+        1,
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "83",
+    "minute": null,
     "goals": [
       {
         "minute": "79",
@@ -71498,9 +71498,43 @@
           1
         ],
         "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "NOR",
+        "scorer": "Erling Haaland",
+        "assist": "Andreas Schjelderup",
+        "type": "REGULAR",
+        "description": "Goal! Brazil 0, Norway 2. Erling Haaland (Norway) left footed shot from outside the box to the bottom right corner. Assisted by Andreas Schjelderup.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+10",
+        "team": "BRA",
+        "scorer": "Neymar",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Brazil 1, Norway 2. Neymar (Brazil) converts the penalty with a right footed shot to the bottom right corner.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
+    "bookings": [
+      {
+        "minute": "90+6",
+        "team": "BRA",
+        "player": "Neymar",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
     "subs": [
       {
         "minute": "45",
@@ -71550,6 +71584,13 @@
         "playerIn": "Éderson",
         "playerOut": "Bruno Guimarães",
         "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "NOR",
+        "playerIn": "Leo Østigard",
+        "playerOut": "David Møller Wolfe",
+        "period": 2
       }
     ],
     "venue": {
@@ -71564,7 +71605,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 80663,
     "espnOdds": {
       "homeML": -135,
       "awayML": 370,
@@ -71845,7 +71886,7 @@
           "jersey": "5",
           "espnId": "313361",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Julian Ryerson",
@@ -72026,7 +72067,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "281736",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72043,64 +72084,64 @@
       "_espnEventId": "760504"
     },
     "homeStats": {
+      "foulsCommitted": 7.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 3.0,
+      "possessionPct": 33.5,
+      "totalShots": 14.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 2.0,
+      "accuratePasses": 279.0,
+      "totalPasses": 329.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 16.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 41.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.5,
+      "blockedShots": 4.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.4,
+      "interceptions": 11.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
+    },
+    "awayStats": {
       "foulsCommitted": 6.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 4.0,
-      "saves": 3.0,
-      "possessionPct": 31.4,
-      "totalShots": 11.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 1.0,
-      "accuratePasses": 230.0,
-      "totalPasses": 271.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 9.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 33.0,
-      "accurateLongBalls": 16.0,
-      "longballPct": 0.5,
-      "blockedShots": 3.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 18.0,
-      "tacklePct": 0.4,
-      "interceptions": 11.0,
-      "effectiveClearance": 18.0,
-      "totalClearance": 18.0
-    },
-    "awayStats": {
-      "foulsCommitted": 4.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 4.0,
-      "saves": 3.0,
-      "possessionPct": 68.6,
-      "totalShots": 8.0,
-      "shotsOnTarget": 4.0,
-      "shotPct": 0.5,
+      "wonCorners": 5.0,
+      "saves": 4.0,
+      "possessionPct": 66.5,
+      "totalShots": 9.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 556.0,
-      "totalPasses": 606.0,
+      "accuratePasses": 617.0,
+      "totalPasses": 680.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
       "totalCrosses": 12.0,
       "crossPct": 0.1,
-      "totalLongBalls": 37.0,
-      "accurateLongBalls": 19.0,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 24.0,
       "longballPct": 0.5,
       "blockedShots": 1.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 10.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 14.0,
       "tacklePct": 0.8,
       "interceptions": 6.0,
-      "effectiveClearance": 7.0,
-      "totalClearance": 7.0
+      "effectiveClearance": 17.0,
+      "totalClearance": 17.0
     },
     "homeForm": [
       {
@@ -72205,7 +72246,13 @@
       "city": "Mexico City",
       "country": "Mexico"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Alireza Faghani",
+        "role": "REFEREE",
+        "nationality": "Iran"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
