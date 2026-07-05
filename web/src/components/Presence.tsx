@@ -40,10 +40,16 @@ export function Presence() {
         .pres-poke:active{ transform:scale(.94); } .pres-poke:disabled{ opacity:.5; background:var(--surface-3); color:var(--ink-3); }
         .pres-you{ flex:0 0 auto; font-size:10.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); background:var(--surface-3); padding:5px 9px; border-radius:var(--r-pill); }
         .pres-test{ background:var(--surface-3); color:var(--ink-2); }
-        .poke-toasts{ position:fixed; top:calc(12px + env(safe-area-inset-top)); left:0; right:0; z-index:500; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; }
-        .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:10px; padding:11px 16px; border-radius:var(--r-pill); font-size:13.5px; font-weight:700; color:var(--ink);
-          background:linear-gradient(135deg, color-mix(in srgb,var(--cool) 22%, var(--surface-2)), var(--surface-2)); border:1px solid var(--line-2); box-shadow:var(--shadow-lift); animation:pokeIn .3s cubic-bezier(.2,.7,.2,1); }
-        @keyframes pokeIn{ from{ transform:translateY(-14px); opacity:0;} to{ transform:none; opacity:1;} }
+        /* z above the prank overlay (.pfx is 9998) so the "who" is visible ON TOP of the chaos. */
+        .poke-toasts{ position:fixed; top:calc(14px + env(safe-area-inset-top)); left:0; right:0; z-index:10000; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; padding:0 12px; }
+        .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:11px; padding:12px 18px 12px 12px; border-radius:var(--r-pill); font-size:15px; font-weight:700; color:var(--ink); max-width:92vw;
+          background:var(--surface-2); border:1px solid var(--line-2); box-shadow:0 12px 32px rgba(0,0,0,.4), 0 0 0 3px color-mix(in srgb,var(--cool) 32%, transparent);
+          animation:pokeIn .45s cubic-bezier(.2,1.3,.3,1), pokeWob 2.4s ease-in-out .45s infinite; }
+        @keyframes pokeIn{ 0%{ transform:translateY(-26px) scale(.9); opacity:0;} 60%{ transform:translateY(3px) scale(1.03); opacity:1;} 100%{ transform:none; opacity:1;} }
+        @keyframes pokeWob{ 0%,100%{ transform:rotate(0);} 25%{ transform:rotate(-1.3deg);} 75%{ transform:rotate(1.3deg);} }
+        .poke-ava{ width:30px; height:30px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size:14px; flex:0 0 auto; box-shadow:0 0 0 2px var(--surface-2); }
+        .poke-txt{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .poke-txt b{ font-weight:900; }
       `}</style>
     </>
   );
@@ -99,11 +105,14 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
   );
 }
 
-function PokeToasts({ incoming }: { incoming: { from: string; ts: number }[] }) {
+function PokeToasts({ incoming }: { incoming: { from: string; ts: number; self?: boolean }[] }) {
   const dismiss = usePresence((s) => s.dismissPoke);
+  const ds = useData();
+  const color = (n: string) => ds.players.find((p) => p.name === n)?.color || "var(--cool)";
+  // Outlast even the longest prank (disco ~6.8s) so the "who" is readable once the chaos clears.
   useEffect(() => {
     if (!incoming.length) return;
-    const t = setTimeout(() => dismiss(0), 5000);
+    const t = setTimeout(() => dismiss(0), 7500);
     return () => clearTimeout(t);
   }, [incoming, dismiss]);
   if (!incoming.length) return null;
@@ -111,8 +120,8 @@ function PokeToasts({ incoming }: { incoming: { from: string; ts: number }[] }) 
     <div className="poke-toasts">
       {incoming.map((p, i) => (
         <div key={`${p.from}-${p.ts}-${i}`} className="poke-toast" onClick={() => dismiss(i)}>
-          <span style={{ fontSize: 20 }}>👉</span>
-          <span><b>{p.from}</b> puffade dig!</span>
+          <span className="poke-ava" style={{ background: color(p.from) }}>{p.self ? "🎲" : p.from.slice(0, 1).toUpperCase()}</span>
+          <span className="poke-txt">{p.self ? "Testpuff!" : <><b>{p.from}</b> puffade dig! 👉</>}</span>
         </div>
       ))}
     </div>

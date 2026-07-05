@@ -6,7 +6,7 @@ import { useKoBets } from "./koBets";
 // a cheap GET poll (~7s) reads who's online, and we only WRITE on arrive / keepalive /
 // leave. An explicit leave (tab hidden >2s, or page close via sendBeacon) removes you so
 // others see you gone within a poll. Only active for logged-in players.
-interface PokeIn { from: string; ts: number }
+interface PokeIn { from: string; ts: number; self?: boolean } // self = local 🎲-test banner
 
 // You can poke the same person again once per minute (matches the worker cooldown).
 export const POKE_COOLDOWN_MS = 60_000;
@@ -16,6 +16,7 @@ interface PresenceState {
   incoming: PokeIn[]; // pokes received → toast + clear
   pokedAt: Record<string, number>; // name → last-poked ms (1-min cooldown, then resets)
   dismissPoke: (i: number) => void;
+  selfPokeBanner: (from: string) => void; // 🎲 self-test: show the banner without a server poke
   poke: (to: string) => Promise<boolean>;
   announce: () => Promise<void>; // WRITE: arrive / keepalive
   poll: () => Promise<void>; // READ: frequent, cheap
@@ -44,6 +45,7 @@ export const usePresence = create<PresenceState>((set, get) => ({
   incoming: [],
   pokedAt: initialPokedAt,
   dismissPoke: (i) => set((s) => ({ incoming: s.incoming.filter((_, k) => k !== i) })),
+  selfPokeBanner: (from) => set((s) => ({ incoming: [...s.incoming, { from, ts: Date.now(), self: true }] })),
 
   poke: async (to) => {
     const me = useKoBets.getState().name;

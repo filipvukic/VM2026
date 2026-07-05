@@ -30,10 +30,13 @@ interface Fx { id: number; kind: Kind; from: string; emoji: string }
 
 const randomFx = (from: string, id: number): Fx => ({ id, kind: pick(KINDS), from, emoji: pick(TAKEOVER) });
 
-// Imperative trigger so the "🎲 Testa" button can preview a random prank on your own screen
-// (no toast, no server). Wired while PokeFx is mounted.
+// Imperative trigger so the "🎲 Testa" button can preview a random prank on your own screen.
+// Fires the prank in-gesture (reliable audio on iOS) AND raises the "who" banner via the store.
 let fire: ((from: string) => void) | null = null;
-export function previewPokeFx() { fire?.("Du"); }
+export function previewPokeFx() {
+  fire?.("Du");
+  usePresence.getState().selfPokeBanner("Du");
+}
 
 export function PokeFx() {
   const incoming = usePresence((s) => s.incoming);
@@ -47,12 +50,14 @@ export function PokeFx() {
     playPokeSound(next.kind);
   }, []);
 
-  // Fire for each NEW poke (highest unseen ts).
+  // Fire for each NEW poke (highest unseen ts). `self` entries are 🎲-preview banners whose prank
+  // already played in-gesture, so we just advance `seen` and let the banner show (no double prank).
   useEffect(() => {
     if (!incoming.length) return;
     const latest = incoming.reduce((m, p) => (p.ts > m.ts ? p : m), incoming[0]);
     if (latest.ts <= seen.current) return;
     seen.current = latest.ts;
+    if (latest.self) return;
     play(latest.from, latest.ts);
   }, [incoming, play]);
 
