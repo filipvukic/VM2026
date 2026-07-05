@@ -19,6 +19,13 @@ const cssVars = (o: Record<string, string | number>) => o as CSSProperties;
 
 interface Fx { id: number; kind: Kind; from: string; emoji: string; color: string }
 
+const randomFx = (from: string, id: number): Fx => ({ id, kind: pick(KINDS), from, emoji: pick(EMOJI), color: pick(COLORS) });
+
+// Imperative trigger so you can preview a random effect on your OWN screen (self-test / for
+// fun) without a real incoming poke — and without a toast. Wired up while PokeFx is mounted.
+let fire: ((from: string) => void) | null = null;
+export function previewPokeFx() { fire?.("Du"); }
+
 export function PokeFx() {
   const incoming = usePresence((s) => s.incoming);
   const seen = useRef(0);
@@ -30,8 +37,14 @@ export function PokeFx() {
     const latest = incoming.reduce((m, p) => (p.ts > m.ts ? p : m), incoming[0]);
     if (latest.ts <= seen.current) return;
     seen.current = latest.ts;
-    setFx({ id: latest.ts, kind: pick(KINDS), from: latest.from, emoji: pick(EMOJI), color: pick(COLORS) });
+    setFx(randomFx(latest.from, latest.ts));
   }, [incoming]);
+
+  // Register the self-preview trigger for the "🎲 Testa" button on your own presence row.
+  useEffect(() => {
+    fire = (from) => setFx(randomFx(from, Date.now() + Math.random()));
+    return () => { fire = null; };
+  }, []);
 
   // Whole-page shakes ride on a body class; everything auto-clears.
   useEffect(() => {

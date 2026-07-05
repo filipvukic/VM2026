@@ -3,7 +3,7 @@ import { usePresence, POKE_COOLDOWN_MS } from "../state/presence";
 import { useKoBets } from "../state/koBets";
 import { useData } from "../state/dataset";
 import { useNow } from "../state/useNow";
-import { PokeFx } from "./PokeFx";
+import { PokeFx, previewPokeFx } from "./PokeFx";
 
 // In-app presence: a small bottom-left pill showing which pool players are live right now
 // (INCLUDING you), tap to expand + "poke" (puffa) them (once per minute each). Plus a
@@ -39,6 +39,7 @@ export function Presence() {
         .pres-poke{ flex:0 0 auto; font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:var(--r-pill); background:var(--grad-soft); color:#fff; white-space:nowrap; transition:transform .1s, opacity .15s; }
         .pres-poke:active{ transform:scale(.94); } .pres-poke:disabled{ opacity:.5; background:var(--surface-3); color:var(--ink-3); }
         .pres-you{ flex:0 0 auto; font-size:10.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); background:var(--surface-3); padding:5px 9px; border-radius:var(--r-pill); }
+        .pres-test{ background:var(--surface-3); color:var(--ink-2); }
         .poke-toasts{ position:fixed; top:calc(12px + env(safe-area-inset-top)); left:0; right:0; z-index:500; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; }
         .poke-toast{ pointer-events:auto; display:inline-flex; align-items:center; gap:10px; padding:11px 16px; border-radius:var(--r-pill); font-size:13.5px; font-weight:700; color:var(--ink);
           background:linear-gradient(135deg, color-mix(in srgb,var(--cool) 22%, var(--surface-2)), var(--surface-2)); border:1px solid var(--line-2); box-shadow:var(--shadow-lift); animation:pokeIn .3s cubic-bezier(.2,.7,.2,1); }
@@ -82,7 +83,7 @@ function OnlineBar({ me, online }: { me: string; online: string[] }) {
                   <span className="pres-ava" style={{ background: color(n) }}>{n.slice(0, 1).toUpperCase()}</span>
                   <span className="pres-nm">{n}{self ? " · du" : ""}</span>
                   {self ? (
-                    <span className="pres-you">Du</span>
+                    <button className="pres-poke pres-test" onClick={() => previewPokeFx()} title="Testa en slumpad puff på dig själv">🎲 Testa</button>
                   ) : (
                     <button className="pres-poke" disabled={cooling || busy === n} onClick={() => onPoke(n)}>
                       {busy === n ? "…" : cooling ? "Puffad ✓" : "👉 Puffa"}
