@@ -17,7 +17,7 @@ type Kind = (typeof KINDS)[number];
 // Whole-page effects → a body class (the rest are overlay-only).
 const BODY: Partial<Record<Kind, string>> = { flip: "pfx-flip", glitch: "pfx-glitch", invert: "pfx-invert", quake: "pfx-quake", spinout: "pfx-spinout" };
 // How long each prank runs (ms). Disco/police linger — that's the annoying part.
-const DUR: Record<Kind, number> = { disco: 6800, police: 4200, flip: 2500, glitch: 1600, invert: 2300, crack: 2600, takeover: 2300, swarm: 3400, quake: 1500, spinout: 1900 };
+const DUR: Record<Kind, number> = { disco: 6800, police: 4200, flip: 4000, glitch: 1600, invert: 2300, crack: 2600, takeover: 2300, swarm: 3400, quake: 1500, spinout: 1900 };
 
 const TAKEOVER = ["🤡", "👁️", "👀", "😈", "🤪", "👽", "🙃", "🥴", "👺", "🐸"];
 const SWARMERS = ["🐛", "🤡", "🕷️", "🪳", "🐜", "🦟", "👁️"];
@@ -254,8 +254,8 @@ const PFX_CSS = `
   @keyframes pfxBoom{ 0%{ transform:translate(-50%,-50%) scale(0) rotate(-20deg); opacity:0;} 35%{ transform:translate(-50%,-50%) scale(1.25) rotate(6deg); opacity:1;} 70%{ transform:translate(-50%,-50%) scale(1.1) rotate(-2deg); opacity:1;} 100%{ transform:translate(-50%,-50%) scale(1.6) rotate(0); opacity:0;} }
 
   /* ================= whole-page (<body>) pranks — all self-revert ================= */
-  body.pfx-flip{ animation:pfxFlip 2.5s cubic-bezier(.5,.05,.2,1); }
-  @keyframes pfxFlip{ 0%{ transform:rotate(0);} 12%{ transform:rotate(180deg);} 88%{ transform:rotate(180deg);} 100%{ transform:rotate(360deg);} }
+  body.pfx-flip{ animation:pfxFlip 4s cubic-bezier(.5,.05,.2,1); }
+  @keyframes pfxFlip{ 0%{ transform:rotate(0);} 9%{ transform:rotate(180deg);} 91%{ transform:rotate(180deg);} 100%{ transform:rotate(360deg);} }
 
   body.pfx-spinout{ animation:pfxSpinout 1.9s cubic-bezier(.4,.1,.2,1); }
   @keyframes pfxSpinout{ 0%{ transform:rotate(0) scale(1);} 40%{ transform:rotate(360deg) scale(1.3);} 70%{ transform:rotate(680deg) scale(.82);} 100%{ transform:rotate(720deg) scale(1);} }
