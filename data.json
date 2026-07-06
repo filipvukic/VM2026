@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-05T23:44:17+00:00",
+  "updated_at": "2026-07-06T01:24:57+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -20269,19 +20269,33 @@
       "homeTla": "MEX",
       "away": "England",
       "awayTla": "ENG",
-      "status": "2026-07-06 01:00:00Z",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "25",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "1",
+          "team": "ENG",
+          "player": "Declan Rice",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Estadio Banorte",
@@ -20291,8 +20305,7 @@
       "referees": [
         {
           "name": "Alireza Faghani",
-          "role": "REFEREE",
-          "nationality": "Iran"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -20361,6 +20374,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
