@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T09:40:12+00:00",
+  "updated_at": "2026-07-06T09:46:05+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -12,10 +12,56 @@
   },
   "leaderboard": [
     {
+      "name": "Martin",
+      "match_points": 152,
+      "bonus_points": 0,
+      "total": 152,
+      "exact_count": 11,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "João Neves",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Thibaut Courtois",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappé",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 1,
+      "prize": 1650
+    },
+    {
       "name": "Isac",
-      "match_points": 146,
+      "match_points": 149,
       "bonus_points": 3,
-      "total": 149,
+      "total": 152,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -54,14 +100,60 @@
           "points": 0
         }
       },
-      "rank": 1,
-      "prize": 1650
+      "rank": 2,
+      "prize": 990
+    },
+    {
+      "name": "Vilgot",
+      "match_points": 147,
+      "bonus_points": 3,
+      "total": 150,
+      "exact_count": 8,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "pedri",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "england",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 3,
+      "prize": 660
     },
     {
       "name": "Oskar",
-      "match_points": 147,
+      "match_points": 149,
       "bonus_points": 0,
-      "total": 147,
+      "total": 149,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -100,106 +192,14 @@
           "points": 0
         }
       },
-      "rank": 2,
-      "prize": 990
-    },
-    {
-      "name": "Martin",
-      "match_points": 146,
-      "bonus_points": 0,
-      "total": 146,
-      "exact_count": 10,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "João Neves",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Thibaut Courtois",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappé",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 3,
-      "prize": 660
-    },
-    {
-      "name": "Vilgot",
-      "match_points": 143,
-      "bonus_points": 3,
-      "total": 146,
-      "exact_count": 7,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "pedri",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "england",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 4,
       "prize": 0
     },
     {
       "name": "Albin",
-      "match_points": 140,
+      "match_points": 142,
       "bonus_points": 3,
-      "total": 143,
+      "total": 145,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 138,
+      "match_points": 141,
       "bonus_points": 3,
-      "total": 141,
+      "total": 144,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -289,10 +289,10 @@
     },
     {
       "name": "Johan",
-      "match_points": 137,
+      "match_points": 143,
       "bonus_points": 0,
-      "total": 137,
-      "exact_count": 7,
+      "total": 143,
+      "exact_count": 8,
       "bonus_detail": {
         "best_young": {
           "pick": "Yamal",
@@ -331,6 +331,98 @@
         }
       },
       "rank": 7,
+      "prize": 0
+    },
+    {
+      "name": "Filip",
+      "match_points": 139,
+      "bonus_points": 0,
+      "total": 139,
+      "exact_count": 4,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "David Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappé",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 8,
+      "prize": 0
+    },
+    {
+      "name": "Hampus",
+      "match_points": 137,
+      "bonus_points": 0,
+      "total": 137,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Bart Verbruggen",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Bruno Fernandes",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Nederländerna",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 9,
       "prize": 0
     },
     {
@@ -376,106 +468,14 @@
           "points": 0
         }
       },
-      "rank": 8,
-      "prize": 0
-    },
-    {
-      "name": "Hampus",
-      "match_points": 134,
-      "bonus_points": 0,
-      "total": 134,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Bart Verbruggen",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Bruno Fernandes",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Nederländerna",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 9,
-      "prize": 0
-    },
-    {
-      "name": "Filip",
-      "match_points": 132,
-      "bonus_points": 0,
-      "total": 132,
-      "exact_count": 3,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "David Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappé",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 10,
       "prize": 0
     },
     {
       "name": "Alexander",
-      "match_points": 131,
+      "match_points": 132,
       "bonus_points": 0,
-      "total": 131,
+      "total": 132,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -19709,65 +19709,58 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            1,
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -19790,11 +19783,10 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -19937,73 +19929,65 @@
           "name": "Albin",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
             0,
-            0
+            4
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
           "tip": [
             0,
-            0
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Björn",
@@ -20018,19 +20002,17 @@
           "name": "Hampus",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
           "tip": [
             0,
-            0
+            4
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         }
       ]
     },
@@ -20189,74 +20171,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20270,20 +20244,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         }
       ]
     },
@@ -20517,74 +20489,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20599,19 +20563,528 @@
           "name": "Hampus",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            1
+          ],
+          "points": 1
+        }
+      ]
+    },
+    {
+      "id": 537379,
+      "utcDate": "2026-07-06T19:00:00Z",
+      "stage": "LAST_16",
+      "group": null,
+      "knockout": true,
+      "home": "Portugal",
+      "homeTla": "POR",
+      "away": "Spain",
+      "awayTla": "ESP",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "AT&T Stadium",
+        "city": "Arlington, Texas",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            1,
+            3
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
         },
         {
           "name": "Alexander",
           "tip": [
             0,
+            3
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537380,
+      "utcDate": "2026-07-07T00:00:00Z",
+      "stage": "LAST_16",
+      "group": null,
+      "knockout": true,
+      "home": "United States",
+      "homeTla": "USA",
+      "away": "Belgium",
+      "awayTla": "BEL",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "Lumen Field",
+        "city": "Seattle, Washington",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            1,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            0,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537381,
+      "utcDate": "2026-07-07T16:00:00Z",
+      "stage": "LAST_16",
+      "group": null,
+      "knockout": true,
+      "home": "Argentina",
+      "homeTla": "ARG",
+      "away": "Egypt",
+      "awayTla": "EGY",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "Mercedes-Benz Stadium",
+        "city": "Atlanta, Georgia",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            4,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537382,
+      "utcDate": "2026-07-07T20:00:00Z",
+      "stage": "LAST_16",
+      "group": null,
+      "knockout": true,
+      "home": "Switzerland",
+      "homeTla": "SUI",
+      "away": "Colombia",
+      "awayTla": "COL",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "BC Place",
+        "city": "Vancouver",
+        "country": "Canada"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537383,
+      "utcDate": "2026-07-09T20:00:00Z",
+      "stage": "QUARTER_FINALS",
+      "group": null,
+      "knockout": true,
+      "home": "France",
+      "homeTla": "FRA",
+      "away": "Morocco",
+      "awayTla": "MAR",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "Gillette Stadium",
+        "city": "Foxborough, Massachusetts",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Filip",
+          "tip": [
+            3,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
         }
       ]
     }
