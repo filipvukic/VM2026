@@ -72227,24 +72227,93 @@
     "homeTla": "MEX",
     "away": "England",
     "awayTla": "ENG",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      0
+      2,
+      3
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        1,
+        2
+      ],
       "fullTime": [
-        0,
-        0
+        2,
+        3
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "25",
-    "goals": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "36",
+        "team": "ENG",
+        "scorer": "Jude Bellingham",
+        "assist": "Bukayo Saka",
+        "type": "HEADER",
+        "description": "Goal! Mexico 0, England 1. Jude Bellingham (England) header from very close range to the bottom left corner. Assisted by Bukayo Saka with a cross.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "38",
+        "team": "ENG",
+        "scorer": "Jude Bellingham",
+        "assist": "Harry Kane",
+        "type": "REGULAR",
+        "description": "Goal! Mexico 0, England 2. Jude Bellingham (England) right footed shot from very close range to the top left corner. Assisted by Harry Kane.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "42",
+        "team": "MEX",
+        "scorer": "Julián Quiñones",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Mexico 1, England 2. Julián Quiñones (Mexico) right footed shot from the centre of the box to the high centre of the goal following a set piece situation.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "60",
+        "team": "ENG",
+        "scorer": "Harry Kane",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Mexico 1, England 3. Harry Kane (England) converts the penalty with a right footed shot to the bottom left corner.",
+        "score": [
+          1,
+          3
+        ],
+        "period": 2
+      },
+      {
+        "minute": "69",
+        "team": "MEX",
+        "scorer": "Raúl Jiménez",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! Mexico 2, England 3. Raúl Jiménez (Mexico) converts the penalty with a right footed shot to the bottom left corner.",
+        "score": [
+          2,
+          3
+        ],
+        "period": 2
+      }
+    ],
     "bookings": [
       {
         "minute": "1",
@@ -72252,9 +72321,115 @@
         "player": "Declan Rice",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "54",
+        "team": "ENG",
+        "player": "Jarell Quansah",
+        "card": "RED",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "ENG",
+        "player": "Marc Guéhi",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "MEX",
+        "player": "Jorge Sánchez",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "ENG",
+        "player": "Nico O'Reilly",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "MEX",
+        "player": "Johan Vásquez",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "ENG",
+        "player": "Jordan Henderson",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "MEX",
+        "playerIn": "Edson Álvarez",
+        "playerOut": "César Montes",
+        "period": 2
+      },
+      {
+        "minute": "57",
+        "team": "ENG",
+        "playerIn": "John Stones",
+        "playerOut": "Bukayo Saka",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "MEX",
+        "playerIn": "Santiago Gimenez",
+        "playerOut": "Gilberto Mora",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "MEX",
+        "playerIn": "Brian Gutiérrez",
+        "playerOut": "Luis Romo",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "ENG",
+        "playerIn": "Djed Spence",
+        "playerOut": "Nico O'Reilly",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "ENG",
+        "playerIn": "Dan Burn",
+        "playerOut": "Elliot Anderson",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "MEX",
+        "playerIn": "Álvaro Fidalgo",
+        "playerOut": "Jorge Sánchez",
+        "period": 2
+      },
+      {
+        "minute": "81",
+        "team": "MEX",
+        "playerIn": "Guillermo Martínez",
+        "playerOut": "Julián Quiñones",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "ENG",
+        "playerIn": "Morgan Rogers",
+        "playerOut": "Harry Kane",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Estadio Banorte",
       "city": "Mexico City",
@@ -72267,7 +72442,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 80824,
     "espnOdds": {
       "homeML": 205,
       "awayML": 155,
@@ -72305,7 +72480,7 @@
           "jersey": "3",
           "espnId": "224323",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jesús Gallardo",
@@ -72323,7 +72498,7 @@
           "jersey": "2",
           "espnId": "178746",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Érik Lira",
@@ -72341,7 +72516,7 @@
           "jersey": "7",
           "espnId": "242614",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Gilberto Mora",
@@ -72350,7 +72525,7 @@
           "jersey": "19",
           "espnId": "389575",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Raúl Jiménez",
@@ -72368,7 +72543,7 @@
           "jersey": "16",
           "espnId": "233075",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Roberto Alvarado",
@@ -72414,7 +72589,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "283827",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72468,7 +72643,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "260775",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72477,7 +72652,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "303577",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72486,7 +72661,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "241627",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72504,7 +72679,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "193566",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72557,7 +72732,7 @@
           "jersey": "3",
           "espnId": "328464",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jarell Quansah",
@@ -72584,7 +72759,7 @@
           "jersey": "8",
           "espnId": "238472",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Declan Rice",
@@ -72602,7 +72777,7 @@
           "jersey": "9",
           "espnId": "142200",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Anthony Gordon",
@@ -72620,7 +72795,7 @@
           "jersey": "7",
           "espnId": "280555",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -72630,7 +72805,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "157974",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72666,7 +72841,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "198138",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72711,7 +72886,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "267711",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72729,7 +72904,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "265653",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -72764,66 +72939,73 @@
       "_espnEventId": "760505"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 14.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 2.0,
-      "saves": 0.0,
-      "possessionPct": 53.0,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
+      "offsides": 1.0,
+      "wonCorners": 12.0,
+      "saves": 2.0,
+      "possessionPct": 66.8,
+      "totalShots": 20.0,
+      "shotsOnTarget": 5.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 95.0,
-      "totalPasses": 104.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 420.0,
+      "totalPasses": 455.0,
       "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 9.0,
-      "accurateLongBalls": 4.0,
-      "longballPct": 0.4,
-      "blockedShots": 2.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 2.0,
-      "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "accurateCrosses": 11.0,
+      "totalCrosses": 49.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 42.0,
+      "accurateLongBalls": 30.0,
+      "longballPct": 0.7,
+      "blockedShots": 7.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 16.0,
+      "tacklePct": 0.4,
+      "interceptions": 7.0,
+      "effectiveClearance": 13.0,
+      "totalClearance": 13.0
     },
     "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 1.0,
-      "redCards": 0.0,
+      "foulsCommitted": 7.0,
+      "yellowCards": 4.0,
+      "redCards": 1.0,
       "offsides": 0.0,
       "wonCorners": 2.0,
-      "saves": 1.0,
-      "possessionPct": 47.0,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "saves": 3.0,
+      "possessionPct": 33.2,
+      "totalShots": 6.0,
+      "shotsOnTarget": 5.0,
+      "shotPct": 0.8,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 78.0,
-      "totalPasses": 92.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 195.0,
+      "totalPasses": 244.0,
       "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 5.0,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 4.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 45.0,
+      "accurateLongBalls": 22.0,
       "longballPct": 0.5,
       "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 2.0,
-      "tacklePct": 0.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "effectiveTackles": 9.0,
+      "totalTackles": 18.0,
+      "tacklePct": 0.5,
+      "interceptions": 4.0,
+      "effectiveClearance": 49.0,
+      "totalClearance": 49.0
     },
     "homeForm": [
+      {
+        "date": "2026-07-06",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
       {
         "date": "2026-07-01",
         "result": "V",
@@ -72851,16 +73033,16 @@
         "gf": 2,
         "ga": 0,
         "home": true
-      },
-      {
-        "date": "2026-06-05",
-        "result": "V",
-        "gf": 5,
-        "ga": 1,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-07-06",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
       {
         "date": "2026-07-01",
         "result": "V",
@@ -72887,13 +73069,6 @@
         "result": "V",
         "gf": 4,
         "ga": 2,
-        "home": true
-      },
-      {
-        "date": "2026-06-10",
-        "result": "V",
-        "gf": 3,
-        "ga": 0,
         "home": true
       }
     ]
@@ -73451,7 +73626,7 @@
       "spread": "FRA -0.5",
       "overUnder": 2.5,
       "overOdds": 100.0,
-      "underOdds": -120.0,
+      "underOdds": -125.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
