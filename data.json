@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T18:30:36+00:00",
+  "updated_at": "2026-07-06T20:28:13+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -20587,20 +20587,37 @@
       "homeTla": "POR",
       "away": "Spain",
       "awayTla": "ESP",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "65",
       "goals": [],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "56",
+          "team": "POR",
+          "playerIn": "Nélson Semedo",
+          "playerOut": "Nuno Mendes",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "AT&T Stadium",
         "city": "Arlington, Texas",
@@ -20609,8 +20626,7 @@
       "referees": [
         {
           "name": "Anthony Taylor",
-          "role": "REFEREE",
-          "nationality": "England"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -20679,6 +20695,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
