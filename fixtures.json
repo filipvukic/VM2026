@@ -73082,10 +73082,10 @@
     "homeTla": "POR",
     "away": "Spain",
     "awayTla": "ESP",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       0,
-      0
+      1
     ],
     "scoreDetail": {
       "halfTime": [
@@ -73094,22 +73094,114 @@
       ],
       "fullTime": [
         0,
-        0
+        1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "65",
-    "goals": [],
-    "bookings": [],
+    "minute": null,
+    "goals": [
+      {
+        "minute": "90+1",
+        "team": "ESP",
+        "scorer": "Mikel Merino",
+        "assist": "Ferran Torres",
+        "type": "REGULAR",
+        "description": "Goal! Portugal 0, Spain 1. Mikel Merino (Spain) left footed shot from the centre of the box to the bottom left corner. Assisted by Ferran Torres with a through ball.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "89",
+        "team": "POR",
+        "player": "Bernardo Silva",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "POR",
+        "player": "Renato Veiga",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "ESP",
+        "player": "Ferran Torres",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
     "subs": [
       {
         "minute": "56",
         "team": "POR",
         "playerIn": "Nélson Semedo",
         "playerOut": "Nuno Mendes",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "POR",
+        "playerIn": "Diogo Dalot",
+        "playerOut": "João Cancelo",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "POR",
+        "playerIn": "Rafael Leão",
+        "playerOut": "João Félix",
+        "period": 2
+      },
+      {
+        "minute": "75",
+        "team": "ESP",
+        "playerIn": "Ferran Torres",
+        "playerOut": "Álex Baena",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "POR",
+        "playerIn": "Francisco Conceição",
+        "playerOut": "Pedro Neto",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "POR",
+        "playerIn": "Bernardo Silva",
+        "playerOut": "Vitinha",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "ESP",
+        "playerIn": "Fabián Ruiz",
+        "playerOut": "Pedri",
+        "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "ESP",
+        "playerIn": "Mikel Merino",
+        "playerOut": "Dani Olmo",
+        "period": 2
+      },
+      {
+        "minute": "90+7",
+        "team": "ESP",
+        "playerIn": "Borja Iglesias",
+        "playerOut": "Mikel Oyarzabal",
         "period": 2
       }
     ],
@@ -73125,7 +73217,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 70649,
     "espnOdds": {
       "homeML": 290,
       "awayML": -105,
@@ -73181,7 +73273,7 @@
           "jersey": "20",
           "espnId": "176399",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bruno Fernandes",
@@ -73208,7 +73300,7 @@
           "jersey": "23",
           "espnId": "288897",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cristiano Ronaldo",
@@ -73226,7 +73318,7 @@
           "jersey": "11",
           "espnId": "276350",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pedro Neto",
@@ -73235,7 +73327,7 @@
           "jersey": "18",
           "espnId": "256115",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -73272,7 +73364,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "238902",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73290,7 +73382,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "199833",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73308,7 +73400,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "312659",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73326,7 +73418,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "258917",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73433,7 +73525,7 @@
           "jersey": "10",
           "espnId": "227765",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Pedri",
@@ -73442,7 +73534,7 @@
           "jersey": "20",
           "espnId": "250465",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rodri",
@@ -73460,7 +73552,7 @@
           "jersey": "21",
           "espnId": "229018",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Álex Baena",
@@ -73469,7 +73561,7 @@
           "jersey": "15",
           "espnId": "297373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lamine Yamal",
@@ -73488,7 +73580,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "209581",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73506,7 +73598,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "214995",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73551,7 +73643,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "265869",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -73614,7 +73706,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "214596",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -73622,64 +73714,64 @@
       "_espnEventId": "760506"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 2.0,
       "wonCorners": 3.0,
-      "saves": 3.0,
-      "possessionPct": 46.7,
-      "totalShots": 6.0,
+      "saves": 5.0,
+      "possessionPct": 44.5,
+      "totalShots": 10.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 273.0,
-      "totalPasses": 319.0,
+      "accuratePasses": 357.0,
+      "totalPasses": 426.0,
+      "passPct": 0.8,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 53.0,
+      "accurateLongBalls": 24.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.6,
+      "interceptions": 7.0,
+      "effectiveClearance": 23.0,
+      "totalClearance": 23.0
+    },
+    "awayStats": {
+      "foulsCommitted": 13.0,
+      "yellowCards": 1.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 7.0,
+      "saves": 2.0,
+      "possessionPct": 55.5,
+      "totalShots": 15.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 467.0,
+      "totalPasses": 531.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 7.0,
+      "totalCrosses": 16.0,
       "crossPct": 0.1,
-      "totalLongBalls": 39.0,
-      "accurateLongBalls": 19.0,
+      "totalLongBalls": 36.0,
+      "accurateLongBalls": 17.0,
       "longballPct": 0.5,
-      "blockedShots": 2.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 12.0,
-      "tacklePct": 0.7,
+      "blockedShots": 3.0,
+      "effectiveTackles": 15.0,
+      "totalTackles": 19.0,
+      "tacklePct": 0.8,
       "interceptions": 5.0,
       "effectiveClearance": 14.0,
       "totalClearance": 14.0
-    },
-    "awayStats": {
-      "foulsCommitted": 10.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 4.0,
-      "saves": 2.0,
-      "possessionPct": 53.3,
-      "totalShots": 10.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 313.0,
-      "totalPasses": 360.0,
-      "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 10.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 27.0,
-      "accurateLongBalls": 13.0,
-      "longballPct": 0.5,
-      "blockedShots": 2.0,
-      "effectiveTackles": 12.0,
-      "totalTackles": 13.0,
-      "tacklePct": 0.9,
-      "interceptions": 3.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
     },
     "homeForm": [
       {
@@ -74330,17 +74422,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Hard Rock Stadium",
+      "city": "Miami Gardens, Florida",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 295,
+      "awayML": -115,
+      "spread": "ENG -115",
+      "overUnder": 2.5,
+      "overOdds": -125.0,
+      "underOdds": 100.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 3.0,
+      "totalGoals": 12.0,
+      "goalAssists": 9.0,
+      "goalsConceded": 9.0
+    },
+    "awayStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 11.0,
+      "goalAssists": 9.0,
+      "goalsConceded": 5.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-05",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-30",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-26",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-23",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-16",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-06",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-23",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "V",
+        "gf": 4,
+        "ga": 2,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537386,
