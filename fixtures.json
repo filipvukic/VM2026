@@ -74675,20 +74675,174 @@
     "homeTla": "ARG",
     "away": "Egypt",
     "awayTla": "EGY",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      3,
+      2
+    ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": null,
+      "halfTime": [
+        0,
+        1
+      ],
+      "fullTime": [
+        3,
+        2
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": null,
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": "90+8",
+    "goals": [
+      {
+        "minute": "15",
+        "team": "EGY",
+        "scorer": "Yasser Ibrahim",
+        "assist": "Marawan Attia",
+        "type": "HEADER",
+        "description": "Goal! Argentina 0, Egypt 1. Yasser Ibrahim (Egypt) header from the centre of the box to the bottom right corner. Assisted by Marwan Attia with a cross following a corner.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "67",
+        "team": "EGY",
+        "scorer": "Mostafa Zico",
+        "assist": "Haissem Hassan",
+        "type": "REGULAR",
+        "description": "Goal! Argentina 0, Egypt 2. Mostafa Zico (Egypt) right footed shot from the centre of the box to the centre of the goal. Assisted by Haissem Hassan following a fast break.",
+        "score": [
+          0,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "ARG",
+        "scorer": "Cristian Romero",
+        "assist": "Lionel Messi",
+        "type": "HEADER",
+        "description": "Goal! Argentina 1, Egypt 2. Cristian Romero (Argentina) header from the centre of the box to the top right corner. Assisted by Lionel Messi with a cross.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "ARG",
+        "scorer": "Lionel Messi",
+        "assist": "Gonzalo Montiel",
+        "type": "REGULAR",
+        "description": "Goal! Argentina 2, Egypt 2. Lionel Messi (Argentina) left footed shot from the centre of the box to the high centre of the goal. Assisted by Gonzalo Montiel.",
+        "score": [
+          2,
+          2
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "ARG",
+        "scorer": "Enzo Fernández",
+        "assist": "Lautaro Martínez",
+        "type": "HEADER",
+        "description": "Goal! Argentina 3, Egypt 2. Enzo Fernández (Argentina) header from the centre of the box to the bottom right corner. Assisted by Lautaro Martínez with a cross following a fast break.",
+        "score": [
+          3,
+          2
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "90+3",
+        "team": "EGY",
+        "player": "Mostafa Shoubir",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+4",
+        "team": "EGY",
+        "player": "Hamdy Fathy",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "EGY",
+        "playerIn": "Hamdy Fathy",
+        "playerOut": "Emam Ashour",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "ARG",
+        "playerIn": "Nico González",
+        "playerOut": "Nicolás Tagliafico",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "ARG",
+        "playerIn": "Lautaro Martínez",
+        "playerOut": "Rodrigo De Paul",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "ARG",
+        "playerIn": "Gonzalo Montiel",
+        "playerOut": "Nahuel Molina",
+        "period": 2
+      },
+      {
+        "minute": "73",
+        "team": "EGY",
+        "playerIn": "Trézéguet",
+        "playerOut": "Haissem Hassan",
+        "period": 2
+      },
+      {
+        "minute": "80",
+        "team": "EGY",
+        "playerIn": "Omar Marmoush",
+        "playerOut": "Mostafa Zico",
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "ARG",
+        "playerIn": "Facundo Medina",
+        "playerOut": "Julián Álvarez",
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "ARG",
+        "playerIn": "Nicolás Otamendi",
+        "playerOut": "Cristian Romero",
+        "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "EGY",
+        "playerIn": "Zizo",
+        "playerOut": "Mohanad Lashin",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Mercedes-Benz Stadium",
       "city": "Atlanta, Georgia",
@@ -74696,9 +74850,8 @@
     },
     "referees": [
       {
-        "name": "François Letexier",
-        "role": "REFEREE",
-        "nationality": "France"
+        "name": "Francois Letexier",
+        "role": "Referee"
       }
     ],
     "odds": null,
@@ -74713,7 +74866,7 @@
       "provider": "DraftKings"
     },
     "homeLineup": {
-      "formation": "4-4-2",
+      "formation": "4-1-3-2",
       "lineup": [
         {
           "name": "Emiliano Martínez",
@@ -74721,8 +74874,8 @@
           "positionName": "Goalkeeper",
           "jersey": "23",
           "espnId": "158626",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lisandro Martínez",
@@ -74730,8 +74883,8 @@
           "positionName": "Center Left Defender",
           "jersey": "6",
           "espnId": "233937",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Cristian Romero",
@@ -74739,8 +74892,17 @@
           "positionName": "Center Right Defender",
           "jersey": "13",
           "espnId": "96970",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
+        },
+        {
+          "name": "Leandro Paredes",
+          "position": "SW",
+          "positionName": "Sweeper",
+          "jersey": "5",
+          "espnId": "153115",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nicolás Tagliafico",
@@ -74748,7 +74910,7 @@
           "positionName": "Left Back",
           "jersey": "3",
           "espnId": "145190",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -74757,26 +74919,17 @@
           "positionName": "Right Back",
           "jersey": "26",
           "espnId": "164826",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Leandro Paredes",
-          "position": "CM-L",
-          "positionName": "Center Left Midfielder",
-          "jersey": "5",
-          "espnId": "153115",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
           "name": "Alexis Mac Allister",
-          "position": "CM-R",
-          "positionName": "Center Right Midfielder",
+          "position": "CM",
+          "positionName": "Center Midfielder",
           "jersey": "20",
           "espnId": "249299",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Enzo Fernández",
@@ -74784,8 +74937,8 @@
           "positionName": "Left Midfielder",
           "jersey": "24",
           "espnId": "285450",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Rodrigo De Paul",
@@ -74793,7 +74946,7 @@
           "positionName": "Right Midfielder",
           "jersey": "7",
           "espnId": "174466",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -74802,7 +74955,7 @@
           "positionName": "Center Left Forward",
           "jersey": "9",
           "espnId": "277206",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -74811,145 +74964,145 @@
           "positionName": "Center Right Forward",
           "jersey": "10",
           "espnId": "45843",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
         {
           "name": "Gerónimo Rulli",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "12",
           "espnId": "167192",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Giuliano Simeone",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "17",
           "espnId": "323838",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Giovani Lo Celso",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "11",
           "espnId": "207343",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Thiago Almada",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "16",
           "espnId": "277208",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Exequiel Palacios",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "14",
           "espnId": "228393",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Juan Musso",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "1",
           "espnId": "177927",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Valentín Barco",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "8",
           "espnId": "320760",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "José Manuel López",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "21",
           "espnId": "311743",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Lautaro Martínez",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "22",
           "espnId": "219713",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Nico Paz",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "18",
           "espnId": "337970",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Facundo Medina",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "25",
           "espnId": "249663",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Gonzalo Montiel",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "4",
           "espnId": "228262",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Marcos Senesi",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "2",
           "espnId": "233945",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nicolás Otamendi",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "19",
           "espnId": "119289",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Nico González",
-          "position": "SUB",
-          "positionName": "Substitute",
+          "position": null,
+          "positionName": null,
           "jersey": "15",
           "espnId": "76017",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         }
       ],
       "tla": "ARG",
@@ -74964,8 +75117,8 @@
           "positionName": "Goalkeeper",
           "jersey": "23",
           "espnId": "308915",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ramy Rabia",
@@ -74973,8 +75126,8 @@
           "positionName": "Center Left Defender",
           "jersey": "5",
           "espnId": "187571",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Yasser Ibrahim",
@@ -74982,8 +75135,8 @@
           "positionName": "Center Right Defender",
           "jersey": "2",
           "espnId": "265417",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Karim Hafez",
@@ -74991,8 +75144,8 @@
           "positionName": "Left Back",
           "jersey": "15",
           "espnId": "216119",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mohamed Hany",
@@ -75000,43 +75153,43 @@
           "positionName": "Right Back",
           "jersey": "3",
           "espnId": "119993",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Mohanad Lashin",
-          "position": "CM-L",
-          "positionName": "Center Left Midfielder",
-          "jersey": "17",
-          "espnId": "328932",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Marawan Attia",
-          "position": "CM-R",
-          "positionName": "Center Right Midfielder",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
           "jersey": "19",
           "espnId": "357112",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
-          "name": "Haissem Hassan",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "12",
-          "espnId": "276440",
-          "subbedIn": true,
+          "name": "Mohanad Lashin",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
+          "jersey": "17",
+          "espnId": "328932",
+          "subbedIn": false,
           "subbedOut": true
         },
         {
           "name": "Emam Ashour",
-          "position": "RM",
-          "positionName": "Right Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "8",
           "espnId": "299365",
-          "subbedIn": true,
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Haissem Hassan",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "12",
+          "espnId": "276440",
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -75045,7 +75198,7 @@
           "positionName": "Center Left Forward",
           "jersey": "11",
           "espnId": "378495",
-          "subbedIn": true,
+          "subbedIn": false,
           "subbedOut": true
         },
         {
@@ -75054,8 +75207,8 @@
           "positionName": "Center Right Forward",
           "jersey": "10",
           "espnId": "173896",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -75066,7 +75219,7 @@
           "jersey": "7",
           "espnId": "157825",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Mohamed Alaa",
@@ -75074,8 +75227,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "420953",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Zizo",
@@ -75084,7 +75237,7 @@
           "jersey": "25",
           "espnId": "195154",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Hossam Abdelmaguid",
@@ -75092,8 +75245,8 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "308926",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hamza Abdelkarim",
@@ -75101,8 +75254,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "399200",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hamdy Fathy",
@@ -75111,7 +75264,7 @@
           "jersey": "14",
           "espnId": "285057",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Mohamed El Shenawy",
@@ -75119,8 +75272,8 @@
           "positionName": "Substitute",
           "jersey": "1",
           "espnId": "205212",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mahmoud Saber",
@@ -75128,8 +75281,8 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "314444",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Omar Marmoush",
@@ -75138,7 +75291,7 @@
           "jersey": "22",
           "espnId": "303745",
           "subbedIn": true,
-          "subbedOut": true
+          "subbedOut": false
         },
         {
           "name": "Ibrahim Adel",
@@ -75146,8 +75299,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "299619",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mahdy Soliman",
@@ -75155,8 +75308,8 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "265426",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nabil Donga",
@@ -75164,8 +75317,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "287177",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tarek Alaa",
@@ -75173,24 +75326,72 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "393565",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "EGY",
       "_espnEventId": "760509"
     },
     "homeStats": {
-      "goalDifference": 8.0,
-      "totalGoals": 11.0,
-      "goalAssists": 5.0,
-      "goalsConceded": 3.0
+      "foulsCommitted": 12.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 6.0,
+      "saves": 0.0,
+      "possessionPct": 64.4,
+      "totalShots": 19.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 535.0,
+      "totalPasses": 593.0,
+      "passPct": 0.9,
+      "accurateCrosses": 8.0,
+      "totalCrosses": 26.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 18.0,
+      "longballPct": 0.7,
+      "blockedShots": 4.0,
+      "effectiveTackles": 15.0,
+      "totalTackles": 20.0,
+      "tacklePct": 0.8,
+      "interceptions": 7.0,
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
     },
     "awayStats": {
-      "goalDifference": 2.0,
-      "totalGoals": 6.0,
-      "goalAssists": 6.0,
-      "goalsConceded": 4.0
+      "foulsCommitted": 10.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 1.0,
+      "saves": 4.0,
+      "possessionPct": 35.6,
+      "totalShots": 5.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 278.0,
+      "totalPasses": 333.0,
+      "passPct": 0.8,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 7.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 31.0,
+      "accurateLongBalls": 9.0,
+      "longballPct": 0.3,
+      "blockedShots": 1.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.5,
+      "interceptions": 10.0,
+      "effectiveClearance": 42.0,
+      "totalClearance": 42.0
     },
     "homeForm": [
       {
@@ -75295,7 +75496,13 @@
       "city": "Vancouver",
       "country": "Canada"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "Ivan Barton",
+        "role": "REFEREE",
+        "nationality": null
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
@@ -75428,9 +75635,9 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -170,
-      "awayML": 500,
-      "spread": "FRA -170",
+      "homeML": -180,
+      "awayML": 550,
+      "spread": "FRA -180",
       "overUnder": 2.5,
       "overOdds": -105.0,
       "underOdds": -120.0,
@@ -75690,8 +75897,8 @@
       "awayML": -115,
       "spread": "ENG -115",
       "overUnder": 2.5,
-      "overOdds": -130.0,
-      "underOdds": 105.0,
+      "overOdds": -135.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,

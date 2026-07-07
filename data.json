@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T15:58:41+00:00",
+  "updated_at": "2026-07-07T18:02:08+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -11,52 +11,6 @@
     }
   },
   "leaderboard": [
-    {
-      "name": "Isac",
-      "match_points": 153,
-      "bonus_points": 3,
-      "total": 156,
-      "exact_count": 8,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 1,
-      "prize": 1650
-    },
     {
       "name": "Oskar",
       "match_points": 155,
@@ -100,8 +54,8 @@
           "points": 0
         }
       },
-      "rank": 2,
-      "prize": 990
+      "rank": 1,
+      "prize": 1650
     },
     {
       "name": "Martin",
@@ -146,14 +100,60 @@
           "points": 0
         }
       },
+      "rank": 2,
+      "prize": 990
+    },
+    {
+      "name": "Isac",
+      "match_points": 153,
+      "bonus_points": 0,
+      "total": 153,
+      "exact_count": 8,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 3,
       "prize": 660
     },
     {
       "name": "Vilgot",
       "match_points": 149,
-      "bonus_points": 3,
-      "total": 152,
+      "bonus_points": 0,
+      "total": 149,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -178,8 +178,8 @@
         },
         "top_scorer": {
           "pick": "mbappe",
-          "correct": true,
-          "points": 3
+          "correct": false,
+          "points": 0
         },
         "silver": {
           "pick": "frankrike",
@@ -193,98 +193,6 @@
         }
       },
       "rank": 4,
-      "prize": 0
-    },
-    {
-      "name": "Albin",
-      "match_points": 145,
-      "bonus_points": 3,
-      "total": 148,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 5,
-      "prize": 0
-    },
-    {
-      "name": "Casper",
-      "match_points": 143,
-      "bonus_points": 3,
-      "total": 146,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Vitinha",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 6,
       "prize": 0
     },
     {
@@ -326,6 +234,98 @@
         },
         "bronze": {
           "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 5,
+      "prize": 0
+    },
+    {
+      "name": "Albin",
+      "match_points": 145,
+      "bonus_points": 0,
+      "total": 145,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 6,
+      "prize": 0
+    },
+    {
+      "name": "Casper",
+      "match_points": 143,
+      "bonus_points": 0,
+      "total": 143,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Vitinha",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
           "correct": false,
           "points": 0
         }
@@ -426,52 +426,6 @@
       "prize": 0
     },
     {
-      "name": "Björn",
-      "match_points": 135,
-      "bonus_points": 3,
-      "total": 138,
-      "exact_count": 5,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 10,
-      "prize": 0
-    },
-    {
       "name": "Alexander",
       "match_points": 135,
       "bonus_points": 0,
@@ -510,6 +464,52 @@
         },
         "bronze": {
           "pick": "England",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 10,
+      "prize": 0
+    },
+    {
+      "name": "Björn",
+      "match_points": 135,
+      "bonus_points": 0,
+      "total": 135,
+      "exact_count": 5,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
           "correct": false,
           "points": 0
         }
@@ -21115,20 +21115,174 @@
       "homeTla": "ARG",
       "away": "Egypt",
       "awayTla": "EGY",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        3,
+        2
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          1
+        ],
+        "fullTime": [
+          3,
+          2
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "90+8",
+      "goals": [
+        {
+          "minute": "15",
+          "team": "EGY",
+          "scorer": "Yasser Ibrahim",
+          "assist": "Marawan Attia",
+          "type": "HEADER",
+          "description": "Goal! Argentina 0, Egypt 1. Yasser Ibrahim (Egypt) header from the centre of the box to the bottom right corner. Assisted by Marwan Attia with a cross following a corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "67",
+          "team": "EGY",
+          "scorer": "Mostafa Zico",
+          "assist": "Haissem Hassan",
+          "type": "REGULAR",
+          "description": "Goal! Argentina 0, Egypt 2. Mostafa Zico (Egypt) right footed shot from the centre of the box to the centre of the goal. Assisted by Haissem Hassan following a fast break.",
+          "score": [
+            0,
+            2
+          ],
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "ARG",
+          "scorer": "Cristian Romero",
+          "assist": "Lionel Messi",
+          "type": "HEADER",
+          "description": "Goal! Argentina 1, Egypt 2. Cristian Romero (Argentina) header from the centre of the box to the top right corner. Assisted by Lionel Messi with a cross.",
+          "score": [
+            1,
+            2
+          ],
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "ARG",
+          "scorer": "Lionel Messi",
+          "assist": "Gonzalo Montiel",
+          "type": "REGULAR",
+          "description": "Goal! Argentina 2, Egypt 2. Lionel Messi (Argentina) left footed shot from the centre of the box to the high centre of the goal. Assisted by Gonzalo Montiel.",
+          "score": [
+            2,
+            2
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "ARG",
+          "scorer": "Enzo Fernández",
+          "assist": "Lautaro Martínez",
+          "type": "HEADER",
+          "description": "Goal! Argentina 3, Egypt 2. Enzo Fernández (Argentina) header from the centre of the box to the bottom right corner. Assisted by Lautaro Martínez with a cross following a fast break.",
+          "score": [
+            3,
+            2
+          ],
+          "period": 2
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "90+3",
+          "team": "EGY",
+          "player": "Mostafa Shoubir",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+4",
+          "team": "EGY",
+          "player": "Hamdy Fathy",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "EGY",
+          "playerIn": "Hamdy Fathy",
+          "playerOut": "Emam Ashour",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "ARG",
+          "playerIn": "Nico González",
+          "playerOut": "Nicolás Tagliafico",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "ARG",
+          "playerIn": "Lautaro Martínez",
+          "playerOut": "Rodrigo De Paul",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "ARG",
+          "playerIn": "Gonzalo Montiel",
+          "playerOut": "Nahuel Molina",
+          "period": 2
+        },
+        {
+          "minute": "73",
+          "team": "EGY",
+          "playerIn": "Trézéguet",
+          "playerOut": "Haissem Hassan",
+          "period": 2
+        },
+        {
+          "minute": "80",
+          "team": "EGY",
+          "playerIn": "Omar Marmoush",
+          "playerOut": "Mostafa Zico",
+          "period": 2
+        },
+        {
+          "minute": "90+5",
+          "team": "ARG",
+          "playerIn": "Facundo Medina",
+          "playerOut": "Julián Álvarez",
+          "period": 2
+        },
+        {
+          "minute": "90+5",
+          "team": "ARG",
+          "playerIn": "Nicolás Otamendi",
+          "playerOut": "Cristian Romero",
+          "period": 2
+        },
+        {
+          "minute": "90+6",
+          "team": "EGY",
+          "playerIn": "Zizo",
+          "playerOut": "Mohanad Lashin",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
         "city": "Atlanta, Georgia",
@@ -21136,9 +21290,8 @@
       },
       "referees": [
         {
-          "name": "François Letexier",
-          "role": "REFEREE",
-          "nationality": "France"
+          "name": "Francois Letexier",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -21209,6 +21362,15 @@
           "points": null
         },
         {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
           "name": "Hampus",
           "tip": [
             4,
@@ -21255,7 +21417,13 @@
         "city": "Vancouver",
         "country": "Canada"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Ivan Barton",
+          "role": "REFEREE",
+          "nationality": null
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -21383,6 +21551,14 @@
           "points": null
         },
         {
+          "name": "Martin",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
           "name": "Alexander",
           "tip": [
             2,
@@ -21432,6 +21608,14 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
         }
       ]
     },
@@ -21472,6 +21656,14 @@
           "name": "Filip",
           "tip": [
             3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            2,
             2
           ],
           "points": null
@@ -22121,7 +22313,7 @@
     "winner": null,
     "silver": null,
     "bronze": null,
-    "top_scorer": "Kylian Mbappé",
+    "top_scorer": "Lionel Messi",
     "best_player": null,
     "best_young": null,
     "best_keeper": null
