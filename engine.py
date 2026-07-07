@@ -230,9 +230,36 @@ def build_espn_id_map(fd_matches, cache_path="espn_id_map.json"):
     return id_map
 
 
-def _espn_minute(clock_display):
-    """'9\\'' → '9',  \"90+2'\" → '90+2',  \"45'+5'\" → '45+5'"""
-    return str(clock_display or "").replace("'", "").strip()
+def _espn_minute(clock_display, period=None):
+    """'9\\'' → '9',  \"90+2'\" → '90+2',  \"45'+5'\" → '45+5'.
+    A bare running minute past the half (period 1 → >45, period 2 → >90) is
+    stoppage time → '45+X'/'90+X', so we never show a runaway '107' at 90+7."""
+    s = str(clock_display or "").replace("'", "").strip()
+    if not s or "+" in s:
+        return s
+    base = 45 if period == 1 else 90 if period == 2 else None
+    if base is not None and s.isdigit() and int(s) > base:
+        return f"{base}+{int(s) - base}"
+    return s
+
+
+def split_pot(total, splits):
+    """Fördela hela `total` (heltal kr) enligt andelarna i `splits` (t.ex.
+    [0.5, 0.3, 0.2]) så att summan av delarna EXAKT blir `total`.
+
+    Största-rest-metoden: avrunda varje andel nedåt och dela ut de kronor som
+    blir över till platserna med störst avrundningsrest (vid lika rest går kronan
+    till den högre placeringen). Det gör att t.ex. en jämn tredelning eller en
+    udda pott aldrig tappar/skapar en krona jämfört med totalen.
+    Returnerar {"1": .., "2": .., "3": ..}."""
+    raw = [total * s for s in splits]
+    parts = [int(x) for x in raw]                 # nedåtavrundning (raw > 0)
+    remainder = total - sum(parts)                # kronor kvar att fördela
+    order = sorted(range(len(splits)),
+                   key=lambda i: (raw[i] - parts[i], -i), reverse=True)
+    for k in range(max(0, remainder)):
+        parts[order[k % len(order)]] += 1
+    return {str(i + 1): parts[i] for i in range(len(splits))}
 
 
 def parse_espn_summary(data, home_tla, away_tla):
@@ -454,6 +481,7 @@ def parse_espn_summary(data, home_tla, away_tla):
     espn_completed = False
     espn_clock = None
     espn_display_clock = None
+    espn_period = None
     for comp in (data.get("header", {}).get("competitions") or []):
         st = comp.get("status", {}).get("type", {})
         espn_status = st.get("name", "")
@@ -461,6 +489,7 @@ def parse_espn_summary(data, home_tla, away_tla):
         espn_completed = bool(st.get("completed"))
         espn_clock = comp.get("status", {}).get("clock")
         espn_display_clock = comp.get("status", {}).get("displayClock")
+        espn_period = comp.get("status", {}).get("period")
         break
 
     return {
@@ -483,6 +512,7 @@ def parse_espn_summary(data, home_tla, away_tla):
         "espnCompleted": espn_completed,
         "espnClock": espn_clock,
         "espnDisplayClock": espn_display_clock,
+        "espnPeriod": espn_period,
     }
 
 
@@ -652,7 +682,7 @@ def _apply_espn(m, parsed):
     if espn_status == "STATUS_HALFTIME":
         m["minute"] = "HT"
     elif espn_status in ESPN_LIVE and parsed.get("espnDisplayClock"):
-        dc = _espn_minute(parsed["espnDisplayClock"])
+        dc = _espn_minute(parsed["espnDisplayClock"], parsed.get("espnPeriod"))
         if dc:
             m["minute"] = dc
     # Penalty shootout result from ESPN — football-data often lags here, so set the
@@ -1212,7 +1242,7 @@ def compute(tips, matches, scorers, standings=None, team_forms=None):
     n = len(tips["participants"])
     total_pot = tips["pot_per_player"] * n
     splits = tips.get("prize_split", [0.5, 0.3, 0.2])
-    prize = {str(i + 1): round(total_pot * s) for i, s in enumerate(splits)}
+    prize = split_pot(total_pot, splits)  # delarna summerar exakt till total_pot
     for row in leaderboard:
         row["prize"] = prize.get(str(row["rank"]), 0)
 

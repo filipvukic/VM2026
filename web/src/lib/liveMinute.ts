@@ -20,7 +20,11 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
     const mins = Math.floor((nowMs - ko) / 60000);
     if (mins <= 45) return Math.max(1, mins) + "'";
     if (mins <= 60) return "Paus";
-    return Math.min(mins - 15, cap) + "'";
+    // Wall-clock minus a ~15-min half-time break ≈ the playing minute. Past 90,
+    // show broadcast-style stoppage ("90+7") capped low, never a runaway "107".
+    const est = mins - 15;
+    if (est <= 90) return est + "'";
+    return "90+" + Math.min(est - 90, 15) + "'";
   }
   const s = String(m.minute);
   if (/^(HT|HALFTIME|PAUS|HALF[\s-]?TIME)$/i.test(s)) return "Paus";
@@ -31,5 +35,7 @@ export function liveMinuteText(m: Match, updatedAtMs: number | null, nowMs: numb
   const base = parseInt(s, 10);
   const elapsed = updatedAtMs ? Math.max(0, Math.floor((nowMs - updatedAtMs) / 60000)) : 0;
   const shown = Math.min(base + elapsed, cap);
+  // A group match has no extra time, so a ticked minute past 90 is stoppage → "90+X".
+  if (m.stage !== "ko" && shown > 90) return "90+" + Math.min(shown - 90, 15) + "'";
   return shown + "'";
 }

@@ -3,7 +3,6 @@ import { useNotif, fireNotification } from "../state/notifications";
 import { pushConfigured, sendTestPush } from "../state/push";
 import { iosNeedsInstall } from "../lib/platform";
 import { kr } from "../lib/format";
-import { PRIZES } from "../data/static/names";
 
 export function InfoView() {
   const ds = useData();
@@ -83,7 +82,7 @@ export function InfoView() {
         <div className="kicker" style={{ color: "var(--gold)" }}>Sammanlagd pott</div>
         <div className="display" style={{ fontSize: 40, margin: "4px 0 14px" }}>{kr(ds.pot.total)}</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
-          {PRIZES.map((p, i) => (
+          {ds.pot.split.map((p, i) => (
             <div key={i} className="card" style={{ padding: "12px 10px", textAlign: "center" }}>
               <div className="num" style={{ fontSize: 22, color: ["var(--gold)", "#cfd6e6", "#e8965a"][i] }}>{kr(p)}</div>
               <div className="kicker" style={{ fontSize: 9.5 }}>{splitLabels[i]} plats</div>
@@ -117,7 +116,8 @@ export function InfoView() {
           <li>Skulle det vara helt jämnt ända in i mål <b>delas placeringen och prispengarna lika</b> mellan spelarna.</li>
         </ol>
         <div className="dim" style={{ fontSize: 11.5, marginTop: 8 }}>
-          Tabellen sorteras alltså på totalpoäng → exakta → rätt utgång.
+          Tabellen sorteras alltså på totalpoäng → exakta → rätt utgång. Symbolen{" "}
+          <span style={{ color: "var(--gold)", fontWeight: 900 }}>⚖</span> vid en placering betyder att den avgjorts på tie-break.
         </div>
       </div>
 

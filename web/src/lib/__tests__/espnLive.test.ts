@@ -13,6 +13,7 @@ const fx = (over: Partial<any>): any => ({
 const ev = (over: Partial<EspnLite>): EspnLite => ({
   id: "e1", koUtc: "2026-06-15T02:00:00Z",
   homeNorm: "sweden", awayNorm: "tunisia", state: "in", home: 0, away: 0, clock: "5'",
+  clockSeconds: null, period: null,
   homeId: "h", awayId: "a", venue: null, goals: [], ...over,
 });
 
@@ -124,5 +125,25 @@ describe("overlayFixtures", () => {
     const f = fx({ utcDate: "2026-06-10T02:00:00Z" }); // 5 days ago
     const [m] = overlayFixtures([f], [ev({ state: "in", home: 2, away: 2 })], {}, NOW);
     expect(m.status).toBe("TIMED");
+  });
+
+  it("keeps ESPN's broadcast-style stoppage clock verbatim (90'+7' → 90+7)", () => {
+    const [m] = overlayFixtures([fx({})], [ev({ clock: "90'+7'", period: 2 })], {}, NOW);
+    expect(m.minute).toBe("90+7"); // not "907", not "97"
+  });
+
+  it("converts a bare 2nd-half running minute past 90 into stoppage (107 → 90+17)", () => {
+    const [m] = overlayFixtures([fx({})], [ev({ clock: "107'", period: 2 })], {}, NOW);
+    expect(m.minute).toBe("90+17"); // the reported bug: never a raw "107"
+  });
+
+  it("converts a bare 1st-half running minute past 45 into stoppage (47 → 45+2)", () => {
+    const [m] = overlayFixtures([fx({})], [ev({ clock: "47'", period: 1 })], {}, NOW);
+    expect(m.minute).toBe("45+2");
+  });
+
+  it("falls back to the regulation seconds clock when displayClock is missing", () => {
+    const [m] = overlayFixtures([fx({})], [ev({ clock: null, clockSeconds: 4380, period: 2 })], {}, NOW);
+    expect(m.minute).toBe("73"); // 4380s / 60
   });
 });

@@ -6,7 +6,6 @@ import { MatchCard } from "../components/MatchCard";
 import { Flag } from "../lib/flags";
 import { computeMovement } from "../features/insights/movement";
 import { isLive } from "../lib/liveState";
-import { PRIZES } from "../data/static/names";
 import { kr, svTime, svDateKey, svDayLabel } from "../lib/format";
 import { asset } from "../lib/assets";
 import { NotifyPrompt } from "../features/notifications/NotifyPrompt";
@@ -51,6 +50,7 @@ export function StandingsView() {
   const homeMatchesTitle = todayRest.length ? "Idag" : "Kommande matcher";
   const climber = [...st].sort((a, b) => move[b.id].deltaRank - move[a.id].deltaRank)[0];
   const hasMovement = st.some((p) => move[p.id].pointsToday > 0);
+  const hasTie = st.some((p) => p.tieBroken || p.sharedRank);
 
   return (
     <div className="view container">
@@ -119,8 +119,10 @@ export function StandingsView() {
                   {m.pointsToday > 0 && <span className="num" style={{ fontSize: 10, color: "var(--win)" }}>+{m.pointsToday}</span>}
                 </div>
                 <div className="podium-step" style={{ height: h, background: `linear-gradient(180deg, color-mix(in srgb, ${MEDAL[pos - 1]} 36%, var(--surface-2)), var(--surface))` }}>
-                  <div className="num" style={{ fontSize: 32, color: MEDAL[pos - 1] }}>{pos}</div>
-                  <div className="chip" style={{ marginTop: 4 }}>{kr(PRIZES[pos - 1] || 0)}</div>
+                  <div className="num" style={{ fontSize: 32, color: MEDAL[pos - 1], display: "inline-flex", alignItems: "baseline", gap: 2 }}>
+                    {pos}{(p.tieBroken || p.sharedRank) && <span className="tie-mark" title="Placering avgjord på tie-break">⚖</span>}
+                  </div>
+                  <div className="chip" style={{ marginTop: 4 }}>{kr(p.prize)}</div>
                 </div>
               </button>
             );
@@ -172,7 +174,9 @@ export function StandingsView() {
               className="lb-row"
               style={{ borderBottom: i < st.length - 1 ? "1px solid var(--line)" : "none" }}
             >
-              <div className="lb-rank num" style={{ color: p.rank <= 3 ? MEDAL[p.rank - 1] : "var(--ink-3)" }}>{p.rank}</div>
+              <div className="lb-rank num" style={{ color: p.rank <= 3 ? MEDAL[p.rank - 1] : "var(--ink-3)" }}>
+                {p.rank}{(p.tieBroken || p.sharedRank) && <span className="tie-mark" title="Placering avgjord på tie-break">⚖</span>}
+              </div>
               {hasMovement && <div style={{ width: 26, textAlign: "center" }}><Delta d={m.deltaRank} /></div>}
               <Avatar name={p.name} photo={p.photo} color={p.color} size={36} ring={p.rank <= 3 ? MEDAL[p.rank - 1] : null} />
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -186,12 +190,20 @@ export function StandingsView() {
               </div>
               <div style={{ textAlign: "right", minWidth: 60 }}>
                 <div className="num" style={{ fontSize: 20 }}>{p.total}</div>
-                <div className="dim" style={{ fontSize: 10.5, fontWeight: 700 }}>{p.exact} exakta{p.bonusPts ? ` · ${p.bonusPts}b` : ""}</div>
+                <div className="dim" style={{ fontSize: 10.5, fontWeight: 700 }}>
+                  <span style={{ color: p.tieBroken || p.sharedRank ? "var(--gold)" : undefined }}>{p.exact} exakta</span>{p.bonusPts ? ` · ${p.bonusPts}b` : ""}
+                </div>
               </div>
             </button>
           );
         })}
       </div>
+
+      {hasTie && (
+        <div className="dim tie-legend" style={{ fontSize: 11.5, margin: "10px 2px 0" }}>
+          <span className="tie-mark">⚖</span> Lika poäng avgörs på <b>flest exakta</b> → <b>flest rätt utgång</b>. Är allt lika delas placeringen och prispengarna lika.
+        </div>
+      )}
 
       <div className="dim" style={{ textAlign: "center", fontSize: 11.5, margin: "16px 0 4px" }}>
         Uppdaterad {ds.updatedAt ? svTime(new Date(ds.updatedAt)) : "—"} · potten fördelas 50/30/20
@@ -228,9 +240,14 @@ export function StandingsView() {
           background:color-mix(in srgb, var(--win) 12%, var(--surface)); border:1px solid color-mix(in srgb,var(--win) 30%, transparent); }
         .lb-row{ width:100%; display:flex; align-items:center; gap:11px; padding:11px 14px; text-align:left; transition:background .15s; }
         .lb-row:hover{ background:var(--surface-2); }
-        .lb-rank{ width:24px; text-align:center; font-size:18px; }
+        .lb-rank{ width:24px; text-align:center; font-size:18px; white-space:nowrap; }
+        .lb-rank .tie-mark{ margin-left:1px; }
         .bar{ height:7px; border-radius:999px; background:var(--surface-3); overflow:hidden; }
         .bar-fill{ height:100%; border-radius:999px; transform-origin:left; animation:barGrow .7s cubic-bezier(.2,.7,.2,1); }
+        .tie-mark{ font-size:.5em; color:var(--gold); font-weight:900; line-height:1; }
+        .tie-legend{ text-align:center; }
+        .tie-legend .tie-mark{ font-size:12.5px; margin-right:3px; }
+        .tie-legend b{ color:var(--ink-2); }
       `}</style>
     </div>
   );

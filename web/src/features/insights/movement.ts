@@ -16,28 +16,42 @@ export function computeMovement(ds: Dataset): Record<string, Movement> {
   );
 
   const pointsToday: Record<string, number> = {};
+  const exactToday: Record<string, number> = {};
+  const correctToday: Record<string, number> = {};
   ds.players.forEach((p) => {
-    let pts = 0;
+    let pts = 0, ex = 0, co = 0;
     todayPlayed.forEach((m) => {
       const t = p.tips[m.id];
-      if (t) pts += classifyTip(t, m.ga!, m.gb!).points;
+      if (!t) return;
+      const c = classifyTip(t, m.ga!, m.gb!);
+      pts += c.points;
+      if (c.result === "exact") ex++;
+      else if (c.result === "outcome") co++;
     });
     pointsToday[p.id] = pts;
+    exactToday[p.id] = ex;
+    correctToday[p.id] = co;
   });
 
-  // start-of-day standings = current total minus today's points
+  // start-of-day standings = current figures minus what today's matches added,
+  // ranked with the SAME tie-break as the live table (total → exakta → rätt utgång)
+  // so a placement only ever separated by the tie-break shows no phantom ▲▼ move.
   const startSorted = ds.players
-    .map((p) => ({ id: p.id, start: p.total - pointsToday[p.id], name: p.name }))
-    .sort((a, b) => b.start - a.start || a.name.localeCompare(b.name));
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      total: p.total - pointsToday[p.id],
+      exact: p.exact - exactToday[p.id],
+      correct: p.correct - correctToday[p.id],
+    }))
+    .sort((a, b) => b.total - a.total || b.exact - a.exact || b.correct - a.correct || a.name.localeCompare(b.name));
   const startRank: Record<string, number> = {};
-  let prev: number | null = null,
-    rank = 0;
   startSorted.forEach((p, i) => {
-    if (p.start !== prev) {
-      rank = i + 1;
-      prev = p.start;
-    }
-    startRank[p.id] = rank;
+    const prev = startSorted[i - 1];
+    startRank[p.id] =
+      i > 0 && prev.total === p.total && prev.exact === p.exact && prev.correct === p.correct
+        ? startRank[prev.id]
+        : i + 1;
   });
 
   const out: Record<string, Movement> = {};

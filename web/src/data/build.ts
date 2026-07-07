@@ -694,23 +694,35 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       bonusPts: tournamentOver ? p.bonus_points || 0 : 0,
       rank: p.rank || 0,
       total: matchPoints + (tournamentOver ? p.bonus_points || 0 : 0),
+      prize: 0,
+      tieBroken: false,
+      sharedRank: false,
     };
   });
 
-  const standings = players.slice().sort((a, b) => b.total - a.total || b.exact - a.exact || a.name.localeCompare(b.name));
-  let prevTot: number | null = null,
-    rank = 0;
+  // Full tie-break order: total → flest exakta → flest rätt utgång → namn (stabil
+  // visningsordning). "rätt utgång" är tie-break-nivå 2 enligt reglerna men saknades.
+  const standings = players
+    .slice()
+    .sort((a, b) => b.total - a.total || b.exact - a.exact || b.correct - a.correct || a.name.localeCompare(b.name));
+  // Placering (rank) höjs så fort tie-breaket skiljer spelare åt — två delar bara
+  // placering när de är HELT lika (total+exakta+rätt utgång). Ger 1,2,3,3,5…
+  const sameKey = (a: PlayerStanding, b: PlayerStanding) => a.total === b.total && a.exact === b.exact && a.correct === b.correct;
   standings.forEach((p, i) => {
-    if (p.total !== prevTot) {
-      rank = i + 1;
-      prevTot = p.total;
-    }
-    p.rank = rank;
+    p.rank = i > 0 && sameKey(p, standings[i - 1]) ? standings[i - 1].rank : i + 1;
   });
-  standings.forEach((s) => {
-    const p = players.find((x) => x.id === s.id);
-    if (p) p.rank = s.rank;
+  // Flagga vad som ska tydliggöras i tabellen:
+  //  tieBroken  = samma poäng som någon annan men en ANNAN placering (tie-break avgjorde ordningen)
+  //  sharedRank = delar placering med någon (genuint lika → delad pott)
+  standings.forEach((p) => {
+    p.tieBroken = standings.some((q) => q !== p && q.total === p.total && q.rank !== p.rank);
+    p.sharedRank = standings.some((q) => q !== p && q.rank === p.rank);
   });
+  // Pris per spelare: varje placering får sin nivå; delar flera spelare en placering
+  // slås deras nivåer ihop och delas lika (kronor bevaras → summan blir hela potten).
+  const potTotal = (D.pot && D.pot.total) || players.length * 300;
+  const splitArr = potSplit(D.pot, potTotal);
+  assignPrizes(standings, splitArr);
 
   const TOURNAMENT_START_MS = Date.UTC(2026, 5, 11, 19, 0);
   const anyLive = allMatches.some((m) => m.status === "live");
@@ -734,8 +746,9 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     forms,
     pot: {
       perPlayer: (D.pot && D.pot.per_player) || 300,
-      total: (D.pot && D.pot.total) || players.length * 300,
+      total: potTotal,
       currency: (D.pot && D.pot.currency) || "kr",
+      split: splitArr,
     },
     stars: [],
     updatedAt: D.updated_at,
@@ -753,4 +766,50 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       "Exakt resultat = ställningen efter ev. förlängning (straffmål räknas inte). " +
       "Rätt utgång = laget som går vidare (straffvinnaren räknas).",
   };
+}
+
+// Prize per place [1:a, 2:a, 3:a]. Prefer the engine's computed split (it now
+// allocates so the parts sum EXACTLY to the pot); fall back to an exact 50/30/20
+// split of the total so the tier amounts never disagree with the shown pott.
+function potSplit(pot: RawData["pot"], total: number): number[] {
+  const raw = pot && pot.split;
+  if (raw) {
+    const arr = [raw["1"], raw["2"], raw["3"]].filter((v) => typeof v === "number") as number[];
+    if (arr.length === 3) return arr;
+  }
+  return splitExact(total, [0.5, 0.3, 0.2]);
+}
+
+// Set each standing's `prize`. Players with the same rank (a genuine tie) pool the
+// prize tiers their block occupies and split it equally; leftover kronor go to the
+// first of the tied block. The grand total is preserved, so all prizes sum to the pot.
+function assignPrizes(standings: PlayerStanding[], split: number[]): void {
+  let i = 0;
+  while (i < standings.length) {
+    let j = i;
+    while (j + 1 < standings.length && standings[j + 1].rank === standings[i].rank) j++;
+    const size = j - i + 1;
+    const startTier = standings[i].rank - 1; // 0-based: rank 1 → tier index 0
+    let pool = 0;
+    for (let t = startTier; t < startTier + size; t++) pool += split[t] || 0;
+    const base = Math.floor(pool / size);
+    let rem = pool - base * size;
+    for (let k = i; k <= j; k++) {
+      standings[k].prize = base + (rem > 0 ? 1 : 0);
+      if (rem > 0) rem--;
+    }
+    i = j + 1;
+  }
+}
+
+// Largest-remainder allocation: floor each share, then hand the leftover kronor
+// to the places with the biggest rounding remainder (ties → higher place). Sum of
+// the parts always equals `total`.
+function splitExact(total: number, ratios: number[]): number[] {
+  const raw = ratios.map((r) => total * r);
+  const parts = raw.map((x) => Math.floor(x));
+  const remainder = total - parts.reduce((a, b) => a + b, 0);
+  const order = ratios.map((_, i) => i).sort((a, b) => (raw[b] - parts[b]) - (raw[a] - parts[a]) || a - b);
+  for (let k = 0; k < remainder; k++) parts[order[k % order.length]] += 1;
+  return parts;
 }

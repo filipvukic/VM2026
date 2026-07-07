@@ -2,7 +2,8 @@
 // Do not "tidy" these; missing aliases silently mis-code teams or drop tips.
 import type { Team } from "../types";
 
-export const PRIZES = [1350, 810, 540];
+// Prize tiers are no longer hardcoded — the engine computes them from the real
+// pot (an exact-summing 50/30/20 split) and the UI reads ds.pot.split. See build.ts.
 export const GROUP_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
 
 export const TLA_TO_ISO: Record<string, string | null> = {

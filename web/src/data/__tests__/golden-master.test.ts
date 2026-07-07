@@ -114,8 +114,21 @@ describe("golden master: TS build() == legacy window.VM.build()", () => {
   const pL = project(legacy);
   const pN = project(next);
 
-  it("standings (order, totals, exact, correct/other, rank, bonus) match", () => {
-    expect(pN.standings).toEqual(pL.standings);
+  it("standings SCORING (totals, exact, correct/other, points, bonus) matches legacy", () => {
+    // The PORT deliberately changed the tie-break: rank now separates equal-points
+    // players by exacts → correct-outcome (legacy shared the rank on total alone),
+    // which can also reorder equal-points players. So parity is asserted on the
+    // per-player scoring only — name-keyed, ignoring rank and array order. Rank
+    // behaviour is asserted separately below.
+    const byName = (arr: any[]) =>
+      arr
+        .slice()
+        .sort((a: any, b: any) => a.name.localeCompare(b.name))
+        .map((s: any) => ({
+          name: s.name, total: s.total, exact: s.exact, correct: s.correct,
+          other: s.other, points: s.points, bonusPts: s.bonusPts, bonus: s.bonus,
+        }));
+    expect(byName(pN.standings)).toEqual(byName(pL.standings));
   });
   it("group tables match", () => {
     expect(pN.groupTables).toEqual(pL.groupTables);
@@ -161,5 +174,53 @@ describe("golden master: TS build() == legacy window.VM.build()", () => {
       total: pL.pot.total,
       currency: pL.pot.currency,
     });
+  });
+
+  it("prize split has 3 tiers that sum EXACTLY to the pot, ordered 1st≥2nd≥3rd", () => {
+    const split = next.pot.split;
+    expect(split).toHaveLength(3);
+    // the whole pot is handed out — no krona lost or invented by rounding
+    expect(split.reduce((a, b) => a + b, 0)).toBe(next.pot.total);
+    // 50/30/20 → strictly descending tiers
+    expect(split[0]).toBeGreaterThanOrEqual(split[1]);
+    expect(split[1]).toBeGreaterThanOrEqual(split[2]);
+    // matches the engine's committed split when present
+    if (data.pot?.split) {
+      expect(split).toEqual([data.pot.split["1"], data.pot.split["2"], data.pot.split["3"]]);
+    }
+  });
+
+  it("rank uses the full tie-break: players share a rank IFF equal on total+exact+correct", () => {
+    const s = next.standings;
+    // list is in rank order and ranks never decrease
+    for (let i = 1; i < s.length; i++) expect(s[i].rank).toBeGreaterThanOrEqual(s[i - 1].rank);
+    // two players share a rank exactly when they're equal on every tie-break level
+    for (let i = 0; i < s.length; i++) {
+      for (let j = i + 1; j < s.length; j++) {
+        const allEqual = s[i].total === s[j].total && s[i].exact === s[j].exact && s[i].correct === s[j].correct;
+        expect(s[i].rank === s[j].rank).toBe(allEqual);
+      }
+    }
+    // equal points but MORE exacts must rank strictly higher (the user's case)
+    for (let i = 1; i < s.length; i++) {
+      const hi = s[i - 1], lo = s[i];
+      if (hi.total === lo.total && hi.rank !== lo.rank) {
+        expect(hi.exact > lo.exact || (hi.exact === lo.exact && hi.correct >= lo.correct)).toBe(true);
+      }
+    }
+  });
+
+  it("every player's prize is set and ALL prizes sum to exactly the pot (ties pool & split)", () => {
+    const s = next.standings;
+    expect(s.every((p: any) => typeof p.prize === "number")).toBe(true);
+    expect(s.reduce((a: number, p: any) => a + p.prize, 0)).toBe(next.pot.total);
+    // nobody outside the prize places gets money
+    for (const p of s) if (p.rank > 3) expect(p.prize).toBe(0);
+    // players who share a rank get the same prize (split equally)
+    const byRank: Record<number, number[]> = {};
+    for (const p of s) (byRank[p.rank] ||= []).push(p.prize);
+    for (const prizes of Object.values(byRank)) {
+      expect(Math.max(...prizes) - Math.min(...prizes)).toBeLessThanOrEqual(1); // equal ±1 kr rounding
+    }
   });
 });

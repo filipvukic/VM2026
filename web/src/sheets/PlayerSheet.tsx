@@ -89,14 +89,23 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         <div className="pl-id">
           <div className="display pl-name">{p.name}</div>
           <div className="pl-rankrow">
-            <span className="pl-medal" style={{ background: medalBg, color: medalFg }}>#{rank}</span>
+            <span className="pl-medal" style={{ background: medalBg, color: medalFg }}>
+              #{rank}{(p.tieBroken || p.sharedRank) && <span style={{ marginLeft: 2, fontSize: "0.72em" }} title="Avgjord på tie-break">⚖</span>}
+            </span>
             <span className="pl-rankof dim">av {N} spelare</span>
           </div>
+          {(p.tieBroken || p.sharedRank) && (
+            <div className="dim" style={{ fontSize: 11, fontWeight: 700, marginTop: 5, color: "var(--gold)" }}>
+              ⚖ {p.sharedRank
+                ? "Delad placering — allt lika, prispengarna delas lika"
+                : "Placering avgjord på tie-break (flest exakta → rätt utgång)"}
+            </div>
+          )}
         </div>
         <div className="pl-total">
           <div><span className="pl-total-n">{p.total}</span><span className="pl-total-p">p</span></div>
           <div className="pl-gap" style={{ color: rank === 1 ? "var(--gold)" : "var(--ink-3)" }}>
-            {rank === 1 ? "🏆 Leder ligan" : `${behindLeader} p efter ledaren`}
+            {rank === 1 ? "🏆 Leder ligan" : behindLeader === 0 ? "⚖ Efter ledaren på tie-break" : `${behindLeader} p efter ledaren`}
           </div>
         </div>
       </div>

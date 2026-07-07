@@ -444,6 +444,9 @@ export interface PlayerStanding {
   bonusPts: number;
   rank: number;
   total: number;
+  prize: number;        // kr for this placement (tied players pool + split their tiers)
+  tieBroken: boolean;   // same total as someone else, but a DIFFERENT rank → tie-break decided the order
+  sharedRank: boolean;  // genuinely equal (total+exact+correct) → shares the placement & splits the prize
 }
 
 export interface KoRound {
@@ -476,7 +479,7 @@ export interface Dataset {
   players: PlayerStanding[];
   standings: PlayerStanding[];
   forms: Record<string, FormEntry[]>;
-  pot: { perPlayer: number; total: number; currency: string };
+  pot: { perPlayer: number; total: number; currency: string; split: number[] };
   stars: never[];
   // pass-throughs the UI needs from raw
   updatedAt?: string;

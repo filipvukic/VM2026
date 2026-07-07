@@ -22,6 +22,8 @@ export interface EspnLite {
   home: number;
   away: number;
   clock: string | null;
+  clockSeconds: number | null; // ESPN's regulation match clock in seconds (capped at 5400=90:00)
+  period: number | null; // 1 = first half, 2 = second half (incl. its stoppage)
   homeId: string;
   awayId: string;
   venue: { stadium: string; city?: string; country?: string } | null;
@@ -100,6 +102,7 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
           const h = cs.find((c: any) => c.homeAway === "home");
           const a = cs.find((c: any) => c.homeAway === "away");
           if (!h || !a) continue;
+          const st = comp.status || ev.status || {};
           const type = (ev.status || comp.status || {}).type || {};
           const key = (ev.id || ev.uid || "") + "";
           if (key && seen.has(key)) continue;
@@ -124,7 +127,9 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
             state: type.state || "",
             home: Number(h.score),
             away: Number(a.score),
-            clock: (comp.status || ev.status || {}).displayClock || null,
+            clock: st.displayClock || null,
+            clockSeconds: typeof st.clock === "number" ? st.clock : null,
+            period: typeof st.period === "number" ? st.period : null,
             homeId: String(h.team?.id || h.id || ""),
             awayId: String(a.team?.id || a.id || ""),
             venue,
@@ -139,10 +144,25 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
   return out;
 }
 
-function minuteFromClock(clock: string | null): string | null {
-  if (!clock) return null;
-  const cleaned = clock.replace(/[^0-9+]/g, "");
-  return cleaned || null;
+// Football-correct live minute from ESPN's status. ESPN's displayClock is usually
+// already broadcast-style ("90'+7'" → "90+7"); we keep that verbatim. If it's a
+// bare running number (or missing) we bound it to the half so 2nd-half stoppage
+// shows as "90+X" (never "97"/"107") using the `period` and the regulation seconds
+// clock (`clockSeconds`, capped at 5400 = 90:00), matching what's on TV.
+function minuteFromClock(clock: string | null, clockSeconds: number | null, period: number | null): string | null {
+  const base = period === 1 ? 45 : period === 2 ? 90 : null;
+  const fmt = (n: number) => (base != null && n > base ? `${base}+${n - base}` : String(n));
+  if (clock) {
+    const cleaned = clock.replace(/[^0-9+]/g, "");
+    if (cleaned.includes("+")) return cleaned; // already "45+2" / "90+7"
+    const n = parseInt(cleaned, 10);
+    if (!Number.isNaN(n) && n > 0) return fmt(n);
+  }
+  // No usable displayClock — derive the minute from the regulation seconds clock.
+  if (typeof clockSeconds === "number" && clockSeconds > 0) {
+    return fmt(Math.floor(clockSeconds / 60));
+  }
+  return null;
 }
 
 const SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=";
@@ -393,6 +413,6 @@ export function overlayFixtures(
     if (best.state === "post") {
       return { ...f, status: "FINISHED", score: [h, a], venue, goals, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds };
     }
-    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock), venue, goals, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds, _liveOverlay: true };
+    return { ...f, status: "IN_PLAY", score: [h, a], minute: minuteFromClock(best.clock, best.clockSeconds, best.period), venue, goals, homeLineup, awayLineup, subs, bookings, homeStats, awayStats, espnOdds, _liveOverlay: true };
   });
 }
