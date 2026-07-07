@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T18:02:08+00:00",
+  "updated_at": "2026-07-07T20:08:12+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Oskar",
-      "match_points": 155,
+      "match_points": 157,
       "bonus_points": 0,
-      "total": 155,
+      "total": 157,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 155,
+      "match_points": 157,
       "bonus_points": 0,
-      "total": 155,
+      "total": 157,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Isac",
-      "match_points": 153,
+      "match_points": 155,
       "bonus_points": 0,
-      "total": 153,
+      "total": 155,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 149,
+      "match_points": 151,
       "bonus_points": 0,
-      "total": 149,
+      "total": 151,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 145,
+      "match_points": 147,
       "bonus_points": 0,
-      "total": 145,
+      "total": 147,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 145,
+      "match_points": 147,
       "bonus_points": 0,
-      "total": 145,
+      "total": 147,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 143,
+      "match_points": 145,
       "bonus_points": 0,
-      "total": 143,
+      "total": 145,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 141,
+      "match_points": 143,
       "bonus_points": 0,
-      "total": 141,
+      "total": 143,
       "exact_count": 4,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 139,
+      "match_points": 141,
       "bonus_points": 0,
-      "total": 139,
+      "total": 141,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 135,
+      "match_points": 137,
       "bonus_points": 0,
-      "total": 135,
+      "total": 137,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 135,
+      "match_points": 136,
       "bonus_points": 0,
-      "total": 135,
+      "total": 136,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -21115,7 +21115,7 @@
       "homeTla": "ARG",
       "away": "Egypt",
       "awayTla": "EGY",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         3,
         2
@@ -21134,7 +21134,7 @@
         "duration": "REGULAR",
         "winnerSide": "HOME_TEAM"
       },
-      "minute": "90+8",
+      "minute": null,
       "goals": [
         {
           "minute": "15",
@@ -21216,6 +21216,20 @@
           "player": "Hamdy Fathy",
           "card": "YELLOW",
           "period": 2
+        },
+        {
+          "minute": "90+8",
+          "team": "EGY",
+          "player": "Marawan Attia",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+12",
+          "team": "EGY",
+          "player": "Haissem Hassan",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
       "subs": [
@@ -21295,7 +21309,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 68239,
       "tips": [
         {
           "name": "Albin",
@@ -21303,7 +21317,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -21311,7 +21325,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -21319,7 +21333,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -21327,7 +21341,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -21335,7 +21349,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -21343,7 +21357,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -21351,7 +21365,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -21359,7 +21373,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Björn",
@@ -21367,7 +21381,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -21376,7 +21390,7 @@
             4,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -21384,7 +21398,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         }
       ]
     },
@@ -21398,17 +21412,23 @@
       "homeTla": "SUI",
       "away": "Colombia",
       "awayTla": "COL",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "7",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -21419,9 +21439,8 @@
       },
       "referees": [
         {
-          "name": "Ivan Barton",
-          "role": "REFEREE",
-          "nationality": null
+          "name": "Iván Arcides Barton Cisneros",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -21490,6 +21509,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
