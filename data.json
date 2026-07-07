@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T23:09:07+00:00",
+  "updated_at": "2026-07-07T00:18:39+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -20825,18 +20825,38 @@
       "homeTla": "USA",
       "away": "Belgium",
       "awayTla": "BEL",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
+      "minute": "17",
+      "goals": [
+        {
+          "minute": "9",
+          "team": "BEL",
+          "scorer": "Charles De Ketelaere",
+          "assist": "Nicolas Raskin",
+          "type": "REGULAR",
+          "description": "Goal! USA 0, Belgium 1. Charles De Ketelaere (Belgium) right footed shot from very close range to the centre of the goal. Assisted by Nicolas Raskin.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -20846,9 +20866,8 @@
       },
       "referees": [
         {
-          "name": "Adham Makhadmeh",
-          "role": "REFEREE",
-          "nationality": "Jordan"
+          "name": "Adham Mohammad",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -20917,6 +20936,15 @@
             0
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",

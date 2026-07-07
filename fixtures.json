@@ -73857,18 +73857,38 @@
     "homeTla": "USA",
     "away": "Belgium",
     "awayTla": "BEL",
-    "status": "TIMED",
-    "score": null,
+    "status": "IN_PLAY",
+    "score": [
+      0,
+      1
+    ],
     "scoreDetail": {
       "halfTime": null,
-      "fullTime": null,
+      "fullTime": [
+        0,
+        1
+      ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": null
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": null,
-    "goals": [],
+    "minute": "17",
+    "goals": [
+      {
+        "minute": "9",
+        "team": "BEL",
+        "scorer": "Charles De Ketelaere",
+        "assist": "Nicolas Raskin",
+        "type": "REGULAR",
+        "description": "Goal! USA 0, Belgium 1. Charles De Ketelaere (Belgium) right footed shot from very close range to the centre of the goal. Assisted by Nicolas Raskin.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      }
+    ],
     "bookings": [],
     "subs": [],
     "venue": {
@@ -73878,19 +73898,18 @@
     },
     "referees": [
       {
-        "name": "Adham Makhadmeh",
-        "role": "REFEREE",
-        "nationality": "Jordan"
+        "name": "Adham Mohammad",
+        "role": "Referee"
       }
     ],
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 150,
-      "awayML": 180,
-      "spread": "USA +150",
+      "homeML": 155,
+      "awayML": 185,
+      "spread": "USA +155",
       "overUnder": 2.5,
-      "overOdds": -130.0,
+      "overOdds": -125.0,
       "underOdds": 105.0,
       "provider": "DraftKings"
     },
@@ -73903,8 +73922,8 @@
           "positionName": "Goalkeeper",
           "jersey": "24",
           "espnId": "252974",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tim Ream",
@@ -73912,8 +73931,8 @@
           "positionName": "Center Left Defender",
           "jersey": "13",
           "espnId": "146290",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Chris Richards",
@@ -73921,8 +73940,8 @@
           "positionName": "Center Right Defender",
           "jersey": "3",
           "espnId": "272585",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Antonee Robinson",
@@ -73930,8 +73949,8 @@
           "positionName": "Left Back",
           "jersey": "5",
           "espnId": "222396",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Alex Freeman",
@@ -73939,8 +73958,8 @@
           "positionName": "Right Back",
           "jersey": "16",
           "espnId": "248276",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Tyler Adams",
@@ -73948,8 +73967,8 @@
           "positionName": "Center Midfielder",
           "jersey": "4",
           "espnId": "222776",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Malik Tillman",
@@ -73957,8 +73976,8 @@
           "positionName": "Left Midfielder",
           "jersey": "17",
           "espnId": "301416",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Weston McKennie",
@@ -73966,8 +73985,8 @@
           "positionName": "Right Midfielder",
           "jersey": "8",
           "espnId": "256715",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Folarin Balogun",
@@ -73975,8 +73994,8 @@
           "positionName": "Forward",
           "jersey": "20",
           "espnId": "282643",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Christian Pulisic",
@@ -73984,8 +74003,8 @@
           "positionName": "Left Forward",
           "jersey": "10",
           "espnId": "225607",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Sergiño Dest",
@@ -73993,8 +74012,8 @@
           "positionName": "Right Forward",
           "jersey": "2",
           "espnId": "266291",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -74004,8 +74023,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "249768",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Ricardo Pepi",
@@ -74013,8 +74032,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "289120",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Timothy Weah",
@@ -74022,8 +74041,8 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "266027",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Max Arfsten",
@@ -74031,8 +74050,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "359542",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Matt Turner",
@@ -74040,8 +74059,8 @@
           "positionName": "Substitute",
           "jersey": "1",
           "espnId": "303794",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Brenden Aaronson",
@@ -74049,8 +74068,8 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "259653",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Alejandro Zendejas",
@@ -74058,8 +74077,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "212824",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Giovanni Reyna",
@@ -74067,8 +74086,8 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "290230",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Joe Scally",
@@ -74076,8 +74095,8 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "272135",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Chris Brady",
@@ -74085,8 +74104,8 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "303693",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Auston Trusty",
@@ -74094,8 +74113,8 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "228619",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mark McKenzie",
@@ -74103,8 +74122,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "77072",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Haji Wright",
@@ -74112,8 +74131,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "220474",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Sebastian Berhalter",
@@ -74121,8 +74140,8 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "295771",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "USA",
@@ -74137,26 +74156,26 @@
           "positionName": "Goalkeeper",
           "jersey": "1",
           "espnId": "134283",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Nathan Ngoy",
-          "position": "CD-L",
-          "positionName": "Center Left Defender",
-          "jersey": "25",
-          "espnId": "318577",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Brandon Mechele",
-          "position": "CD-R",
-          "positionName": "Center Right Defender",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
           "jersey": "4",
           "espnId": "191222",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nathan Ngoy",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "25",
+          "espnId": "318577",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Maxim De Cuyper",
@@ -74164,8 +74183,8 @@
           "positionName": "Left Back",
           "jersey": "5",
           "espnId": "301327",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Timothy Castagne",
@@ -74173,8 +74192,8 @@
           "positionName": "Right Back",
           "jersey": "21",
           "espnId": "197163",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Youri Tielemans",
@@ -74182,26 +74201,26 @@
           "positionName": "Attacking Midfielder",
           "jersey": "8",
           "espnId": "193297",
-          "subbedIn": true,
-          "subbedOut": true
-        },
-        {
-          "name": "Amadou Onana",
-          "position": "LM",
-          "positionName": "Left Midfielder",
-          "jersey": "24",
-          "espnId": "304799",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Nicolas Raskin",
-          "position": "RM",
-          "positionName": "Right Midfielder",
+          "position": "LM",
+          "positionName": "Left Midfielder",
           "jersey": "23",
           "espnId": "260027",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Amadou Onana",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "24",
+          "espnId": "304799",
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Charles De Ketelaere",
@@ -74209,8 +74228,8 @@
           "positionName": "Forward",
           "jersey": "17",
           "espnId": "296319",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Leandro Trossard",
@@ -74218,8 +74237,8 @@
           "positionName": "Attacking Midfielder Left",
           "jersey": "10",
           "espnId": "174980",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Dodi Lukébakio",
@@ -74227,8 +74246,8 @@
           "positionName": "Attacking Midfielder Right",
           "jersey": "14",
           "espnId": "229443",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "bench": [
@@ -74238,8 +74257,8 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139437",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Diego Moreira",
@@ -74247,8 +74266,8 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "340678",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Alexis Saelemaekers",
@@ -74256,8 +74275,8 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "271132",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Matias Fernandez-Pardo",
@@ -74265,8 +74284,8 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "359651",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Thomas Meunier",
@@ -74274,8 +74293,8 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "166473",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Hans Vanaken",
@@ -74283,8 +74302,8 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "193849",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Senne Lammens",
@@ -74292,8 +74311,8 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "301425",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Jérémy Doku",
@@ -74301,8 +74320,8 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "283672",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Kevin De Bruyne",
@@ -74310,8 +74329,8 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "134947",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Axel Witsel",
@@ -74319,8 +74338,8 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "164895",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Mike Penders",
@@ -74328,8 +74347,8 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "332343",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Arthur Theate",
@@ -74337,8 +74356,8 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "304222",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Joaquin Seys",
@@ -74346,8 +74365,8 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "363068",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Zeno Debast",
@@ -74355,8 +74374,8 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "314473",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         },
         {
           "name": "Koni De Winter",
@@ -74364,24 +74383,72 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "309570",
-          "subbedIn": true,
-          "subbedOut": true
+          "subbedIn": false,
+          "subbedOut": false
         }
       ],
       "tla": "BEL",
       "_espnEventId": "760507"
     },
     "homeStats": {
-      "goalDifference": 6.0,
-      "totalGoals": 10.0,
-      "goalAssists": 4.0,
-      "goalsConceded": 4.0
+      "foulsCommitted": 2.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 0.0,
+      "saves": 2.0,
+      "possessionPct": 40.5,
+      "totalShots": 0.0,
+      "shotsOnTarget": 0.0,
+      "shotPct": 0.0,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 53.0,
+      "totalPasses": 67.0,
+      "passPct": 0.8,
+      "accurateCrosses": 0.0,
+      "totalCrosses": 0.0,
+      "crossPct": 0.0,
+      "totalLongBalls": 3.0,
+      "accurateLongBalls": 0.0,
+      "longballPct": 0.0,
+      "blockedShots": 0.0,
+      "effectiveTackles": 2.0,
+      "totalTackles": 3.0,
+      "tacklePct": 0.7,
+      "interceptions": 0.0,
+      "effectiveClearance": 9.0,
+      "totalClearance": 9.0
     },
     "awayStats": {
-      "goalDifference": 5.0,
-      "totalGoals": 9.0,
-      "goalAssists": 5.0,
-      "goalsConceded": 4.0
+      "foulsCommitted": 0.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 1.0,
+      "saves": 0.0,
+      "possessionPct": 59.5,
+      "totalShots": 7.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 84.0,
+      "totalPasses": 99.0,
+      "passPct": 0.8,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 3.0,
+      "crossPct": 0.3,
+      "totalLongBalls": 11.0,
+      "accurateLongBalls": 3.0,
+      "longballPct": 0.3,
+      "blockedShots": 2.0,
+      "effectiveTackles": 4.0,
+      "totalTackles": 7.0,
+      "tacklePct": 0.6,
+      "interceptions": 2.0,
+      "effectiveClearance": 2.0,
+      "totalClearance": 2.0
     },
     "homeForm": [
       {
