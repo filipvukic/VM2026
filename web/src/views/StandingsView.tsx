@@ -190,9 +190,13 @@ export function StandingsView() {
               </div>
               <div style={{ textAlign: "right", minWidth: 60 }}>
                 <div className="num" style={{ fontSize: 20 }}>{p.total}</div>
-                <div className="dim" style={{ fontSize: 10.5, fontWeight: 700 }}>
-                  <span style={{ color: p.tieBroken || p.sharedRank ? "var(--gold)" : undefined }}>{p.exact} exakta</span>{p.bonusPts ? ` · ${p.bonusPts}b` : ""}
-                </div>
+                {p.tieBroken || p.sharedRank ? (
+                  <div className="tie-reason" title="Avgör placeringen vid lika poäng">
+                    <span className="tie-mark">⚖</span> {p.tieReason}
+                  </div>
+                ) : (
+                  <div className="dim" style={{ fontSize: 10.5, fontWeight: 700 }}>{p.exact} exakta{p.bonusPts ? ` · ${p.bonusPts}b` : ""}</div>
+                )}
               </div>
             </button>
           );
@@ -245,6 +249,8 @@ export function StandingsView() {
         .bar{ height:7px; border-radius:999px; background:var(--surface-3); overflow:hidden; }
         .bar-fill{ height:100%; border-radius:999px; transform-origin:left; animation:barGrow .7s cubic-bezier(.2,.7,.2,1); }
         .tie-mark{ font-size:.5em; color:var(--gold); font-weight:900; line-height:1; }
+        .tie-reason{ display:inline-flex; align-items:center; justify-content:flex-end; gap:3px; margin-top:2px; font-size:10.5px; font-weight:800; color:var(--gold); white-space:nowrap; }
+        .tie-reason .tie-mark{ font-size:11px; }
         .tie-legend{ text-align:center; }
         .tie-legend .tie-mark{ font-size:12.5px; margin-right:3px; }
         .tie-legend b{ color:var(--ink-2); }

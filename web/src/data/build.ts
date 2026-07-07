@@ -697,6 +697,7 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
       prize: 0,
       tieBroken: false,
       sharedRank: false,
+      tieReason: "",
     };
   });
 
@@ -717,6 +718,18 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
   standings.forEach((p) => {
     p.tieBroken = standings.some((q) => q !== p && q.total === p.total && q.rank !== p.rank);
     p.sharedRank = standings.some((q) => q !== p && q.rank === p.rank);
+  });
+  // The stat that actually breaks a points-tie — exacts if they differ within the
+  // block of equal-total players, otherwise correct-outcome — so a viewer sees WHY
+  // two players on the same points are ranked differently (not just THAT they are).
+  standings.forEach((p) => {
+    if (p.tieBroken) {
+      const group = standings.filter((q) => q.total === p.total);
+      const exactsDiffer = group.some((q) => q.exact !== group[0].exact);
+      p.tieReason = exactsDiffer ? `${p.exact} exakta` : `${p.correct} rätt utgång`;
+    } else if (p.sharedRank) {
+      p.tieReason = "delad placering";
+    }
   });
   // Pris per spelare: varje placering får sin nivå; delar flera spelare en placering
   // slås deras nivåer ihop och delas lika (kronor bevaras → summan blir hela potten).

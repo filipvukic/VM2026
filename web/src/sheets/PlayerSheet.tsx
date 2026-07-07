@@ -98,7 +98,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
             <div className="dim" style={{ fontSize: 11, fontWeight: 700, marginTop: 5, color: "var(--gold)" }}>
               ⚖ {p.sharedRank
                 ? "Delad placering — allt lika, prispengarna delas lika"
-                : "Placering avgjord på tie-break (flest exakta → rätt utgång)"}
+                : `Placering avgjord på tie-break — ${p.tieReason}`}
             </div>
           )}
         </div>

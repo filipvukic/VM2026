@@ -447,6 +447,7 @@ export interface PlayerStanding {
   prize: number;        // kr for this placement (tied players pool + split their tiers)
   tieBroken: boolean;   // same total as someone else, but a DIFFERENT rank → tie-break decided the order
   sharedRank: boolean;  // genuinely equal (total+exact+correct) → shares the placement & splits the prize
+  tieReason: string;    // when in a points-tie: the deciding stat text ("8 exakta" / "38 rätt utgång"), else ""
 }
 
 export interface KoRound {
