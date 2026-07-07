@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T21:38:54+00:00",
+  "updated_at": "2026-07-07T22:42:20+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21412,7 +21412,7 @@
       "homeTla": "SUI",
       "away": "Colombia",
       "awayTla": "COL",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "score": [
         0,
         0
@@ -21426,12 +21426,15 @@
           0,
           0
         ],
-        "extraTime": null,
+        "extraTime": [
+          0,
+          0
+        ],
         "penalties": null,
-        "duration": "REGULAR",
+        "duration": "EXTRA_TIME",
         "winnerSide": "DRAW"
       },
-      "minute": "79",
+      "minute": "120",
       "goals": [],
       "bookings": [
         {
@@ -21454,6 +21457,20 @@
           "player": "Luis Suárez",
           "card": "YELLOW",
           "period": 2
+        },
+        {
+          "minute": "95",
+          "team": "COL",
+          "player": "Davinson Sánchez",
+          "card": "YELLOW",
+          "period": 3
+        },
+        {
+          "minute": "105",
+          "team": "SUI",
+          "player": "Miro Muheim",
+          "card": "YELLOW",
+          "period": 3
         }
       ],
       "subs": [
@@ -21484,6 +21501,55 @@
           "playerIn": "Miro Muheim",
           "playerOut": "Ricardo Rodríguez",
           "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "COL",
+          "playerIn": "Richard Ríos",
+          "playerOut": "Jefferson Lerma",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "COL",
+          "playerIn": "Cucho Hernández",
+          "playerOut": "Luis Suárez",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "SUI",
+          "playerIn": "Silvan Widmer",
+          "playerOut": "Denis Zakaria",
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "SUI",
+          "playerIn": "Cedric Itten",
+          "playerOut": "Breel Embolo",
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "SUI",
+          "playerIn": "Rubén Vargas",
+          "playerOut": "Dan Ndoye",
+          "period": 2
+        },
+        {
+          "minute": "103",
+          "team": "SUI",
+          "playerIn": "Zeki Amdouni",
+          "playerOut": "Fabian Rieder",
+          "period": 3
+        },
+        {
+          "minute": "119",
+          "team": "COL",
+          "playerIn": "Yerry Mina",
+          "playerOut": "Jhon Lucumí",
+          "period": 4
         }
       ],
       "venue": {

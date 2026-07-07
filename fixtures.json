@@ -75491,7 +75491,7 @@
     "homeTla": "SUI",
     "away": "Colombia",
     "awayTla": "COL",
-    "status": "IN_PLAY",
+    "status": "PAUSED",
     "score": [
       0,
       0
@@ -75505,12 +75505,15 @@
         0,
         0
       ],
-      "extraTime": null,
+      "extraTime": [
+        0,
+        0
+      ],
       "penalties": null,
-      "duration": "REGULAR",
+      "duration": "EXTRA_TIME",
       "winnerSide": "DRAW"
     },
-    "minute": "79",
+    "minute": "120",
     "goals": [],
     "bookings": [
       {
@@ -75533,6 +75536,20 @@
         "player": "Luis Suárez",
         "card": "YELLOW",
         "period": 2
+      },
+      {
+        "minute": "95",
+        "team": "COL",
+        "player": "Davinson Sánchez",
+        "card": "YELLOW",
+        "period": 3
+      },
+      {
+        "minute": "105",
+        "team": "SUI",
+        "player": "Miro Muheim",
+        "card": "YELLOW",
+        "period": 3
       }
     ],
     "subs": [
@@ -75563,6 +75580,55 @@
         "playerIn": "Miro Muheim",
         "playerOut": "Ricardo Rodríguez",
         "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "COL",
+        "playerIn": "Richard Ríos",
+        "playerOut": "Jefferson Lerma",
+        "period": 2
+      },
+      {
+        "minute": "82",
+        "team": "COL",
+        "playerIn": "Cucho Hernández",
+        "playerOut": "Luis Suárez",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "SUI",
+        "playerIn": "Silvan Widmer",
+        "playerOut": "Denis Zakaria",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "SUI",
+        "playerIn": "Cedric Itten",
+        "playerOut": "Breel Embolo",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "SUI",
+        "playerIn": "Rubén Vargas",
+        "playerOut": "Dan Ndoye",
+        "period": 2
+      },
+      {
+        "minute": "103",
+        "team": "SUI",
+        "playerIn": "Zeki Amdouni",
+        "playerOut": "Fabian Rieder",
+        "period": 3
+      },
+      {
+        "minute": "119",
+        "team": "COL",
+        "playerIn": "Yerry Mina",
+        "playerOut": "Jhon Lucumí",
+        "period": 4
       }
     ],
     "venue": {
@@ -75633,7 +75699,7 @@
           "jersey": "6",
           "espnId": "222628",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ardon Jashari",
@@ -75669,7 +75735,7 @@
           "jersey": "7",
           "espnId": "202099",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Dan Ndoye",
@@ -75678,7 +75744,7 @@
           "jersey": "11",
           "espnId": "275842",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Fabian Rieder",
@@ -75687,7 +75753,7 @@
           "jersey": "22",
           "espnId": "308908",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -75715,7 +75781,7 @@
           "positionName": "Substitute",
           "jersey": "23",
           "espnId": "320757",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75733,7 +75799,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "259513",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75751,7 +75817,7 @@
           "positionName": "Substitute",
           "jersey": "26",
           "espnId": "234153",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75769,7 +75835,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "175905",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75822,7 +75888,7 @@
           "jersey": "3",
           "espnId": "227697",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Davinson Sánchez",
@@ -75867,7 +75933,7 @@
           "jersey": "16",
           "espnId": "197399",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Luis Díaz",
@@ -75894,7 +75960,7 @@
           "jersey": "25",
           "espnId": "272722",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "James Rodríguez",
@@ -75931,7 +75997,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "301520",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75940,7 +76006,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "336809",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76021,7 +76087,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "196901",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76047,64 +76113,64 @@
       "_espnEventId": "760508"
     },
     "homeStats": {
-      "foulsCommitted": 9.0,
-      "yellowCards": 2.0,
+      "foulsCommitted": 22.0,
+      "yellowCards": 3.0,
       "redCards": 0.0,
-      "offsides": 4.0,
-      "wonCorners": 1.0,
-      "saves": 2.0,
-      "possessionPct": 51.3,
-      "totalShots": 5.0,
-      "shotsOnTarget": 2.0,
-      "shotPct": 0.4,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 348.0,
-      "totalPasses": 404.0,
-      "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 32.0,
-      "accurateLongBalls": 14.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 6.0,
-      "tacklePct": 0.5,
-      "interceptions": 9.0,
-      "effectiveClearance": 24.0,
-      "totalClearance": 24.0
-    },
-    "awayStats": {
-      "foulsCommitted": 13.0,
-      "yellowCards": 1.0,
-      "redCards": 0.0,
-      "offsides": 3.0,
-      "wonCorners": 4.0,
-      "saves": 2.0,
-      "possessionPct": 48.7,
+      "offsides": 5.0,
+      "wonCorners": 3.0,
+      "saves": 3.0,
+      "possessionPct": 53.2,
       "totalShots": 7.0,
       "shotsOnTarget": 2.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 312.0,
-      "totalPasses": 380.0,
-      "passPct": 0.8,
+      "accuratePasses": 546.0,
+      "totalPasses": 626.0,
+      "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 12.0,
+      "totalCrosses": 15.0,
       "crossPct": 0.1,
-      "totalLongBalls": 49.0,
-      "accurateLongBalls": 15.0,
-      "longballPct": 0.3,
-      "blockedShots": 3.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 12.0,
+      "totalLongBalls": 62.0,
+      "accurateLongBalls": 31.0,
+      "longballPct": 0.5,
+      "blockedShots": 1.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 13.0,
+      "tacklePct": 0.5,
+      "interceptions": 13.0,
+      "effectiveClearance": 37.0,
+      "totalClearance": 37.0
+    },
+    "awayStats": {
+      "foulsCommitted": 21.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 4.0,
+      "wonCorners": 7.0,
+      "saves": 2.0,
+      "possessionPct": 46.8,
+      "totalShots": 15.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.2,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 454.0,
+      "totalPasses": 548.0,
+      "passPct": 0.8,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 18.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 78.0,
+      "accurateLongBalls": 33.0,
+      "longballPct": 0.4,
+      "blockedShots": 4.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 16.0,
       "tacklePct": 0.4,
-      "interceptions": 8.0,
-      "effectiveClearance": 10.0,
-      "totalClearance": 10.0
+      "interceptions": 12.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
     },
     "homeForm": [
       {
@@ -76342,9 +76408,9 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -160,
+      "homeML": -165,
       "awayML": 450,
-      "spread": "ESP -160",
+      "spread": "ESP -165",
       "overUnder": 2.5,
       "overOdds": -125.0,
       "underOdds": 100.0,
