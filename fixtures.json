@@ -73857,23 +73857,26 @@
     "homeTla": "USA",
     "away": "Belgium",
     "awayTla": "BEL",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      0,
-      1
+      1,
+      4
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        1,
+        2
+      ],
       "fullTime": [
-        0,
-        1
+        1,
+        4
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "17",
+    "minute": null,
     "goals": [
       {
         "minute": "9",
@@ -73887,10 +73890,148 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "31",
+        "team": "USA",
+        "scorer": "Malik Tillman",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 1. Malik Tillman (USA) from a free kick with a right footed shot to the high centre of the goal.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "33",
+        "team": "BEL",
+        "scorer": "Charles De Ketelaere",
+        "assist": "Leandro Trossard",
+        "type": "HEADER",
+        "description": "Goal! USA 1, Belgium 2. Charles De Ketelaere (Belgium) header from very close range to the top right corner. Assisted by Leandro Trossard with a cross.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "57",
+        "team": "BEL",
+        "scorer": "Hans Vanaken",
+        "assist": "Charles De Ketelaere",
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 3. Hans Vanaken (Belgium) right footed shot from outside the box to the bottom right corner. Assisted by Charles De Ketelaere.",
+        "score": [
+          1,
+          3
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "BEL",
+        "scorer": "Romelu Lukaku",
+        "assist": "Hans Vanaken",
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 4. Romelu Lukaku (Belgium) right footed shot from the left side of the box to the bottom right corner. Assisted by Hans Vanaken.",
+        "score": [
+          1,
+          4
+        ],
+        "period": 2
       }
     ],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "35",
+        "team": "USA",
+        "player": "Weston McKennie",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "69",
+        "team": "USA",
+        "player": "Malik Tillman",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "21",
+        "team": "BEL",
+        "playerIn": "Hans Vanaken",
+        "playerOut": "Amadou Onana",
+        "period": 1
+      },
+      {
+        "minute": "45",
+        "team": "USA",
+        "playerIn": "Giovanni Reyna",
+        "playerOut": "Sergiño Dest",
+        "period": 2
+      },
+      {
+        "minute": "59",
+        "team": "USA",
+        "playerIn": "Sebastian Berhalter",
+        "playerOut": "Christian Pulisic",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BEL",
+        "playerIn": "Jérémy Doku",
+        "playerOut": "Dodi Lukébakio",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BEL",
+        "playerIn": "Romelu Lukaku",
+        "playerOut": "Charles De Ketelaere",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "USA",
+        "playerIn": "Ricardo Pepi",
+        "playerOut": "Tyler Adams",
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "BEL",
+        "playerIn": "Alexis Saelemaekers",
+        "playerOut": "Leandro Trossard",
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "BEL",
+        "playerIn": "Axel Witsel",
+        "playerOut": "Nicolas Raskin",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "USA",
+        "playerIn": "Max Arfsten",
+        "playerOut": "Antonee Robinson",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "USA",
+        "playerIn": "Haji Wright",
+        "playerOut": "Folarin Balogun",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Lumen Field",
       "city": "Seattle, Washington",
@@ -73903,7 +74044,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 66925,
     "espnOdds": {
       "homeML": 155,
       "awayML": 185,
@@ -73950,7 +74091,7 @@
           "jersey": "5",
           "espnId": "222396",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Alex Freeman",
@@ -73968,7 +74109,7 @@
           "jersey": "4",
           "espnId": "222776",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Malik Tillman",
@@ -73995,7 +74136,7 @@
           "jersey": "20",
           "espnId": "282643",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Christian Pulisic",
@@ -74004,7 +74145,7 @@
           "jersey": "10",
           "espnId": "225607",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sergiño Dest",
@@ -74013,7 +74154,7 @@
           "jersey": "2",
           "espnId": "266291",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -74032,7 +74173,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "289120",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74050,7 +74191,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "359542",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74086,7 +74227,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "290230",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74131,7 +74272,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "220474",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74140,7 +74281,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "295771",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -74211,7 +74352,7 @@
           "jersey": "23",
           "espnId": "260027",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Amadou Onana",
@@ -74220,7 +74361,7 @@
           "jersey": "24",
           "espnId": "304799",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Charles De Ketelaere",
@@ -74229,7 +74370,7 @@
           "jersey": "17",
           "espnId": "296319",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Leandro Trossard",
@@ -74238,7 +74379,7 @@
           "jersey": "10",
           "espnId": "174980",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Dodi Lukébakio",
@@ -74247,7 +74388,7 @@
           "jersey": "14",
           "espnId": "229443",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -74257,7 +74398,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139437",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74275,7 +74416,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "271132",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74302,7 +74443,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "193849",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74320,7 +74461,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "283672",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74338,7 +74479,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "164895",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -74391,66 +74532,73 @@
       "_espnEventId": "760507"
     },
     "homeStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 2.0,
-      "possessionPct": 40.5,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "wonCorners": 3.0,
+      "saves": 3.0,
+      "possessionPct": 56.2,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 53.0,
-      "totalPasses": 67.0,
-      "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 3.0,
-      "accurateLongBalls": 0.0,
-      "longballPct": 0.0,
+      "accuratePasses": 458.0,
+      "totalPasses": 527.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 11.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 37.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.5,
       "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 3.0,
-      "tacklePct": 0.7,
-      "interceptions": 0.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "effectiveTackles": 10.0,
+      "totalTackles": 21.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
     },
     "awayStats": {
-      "foulsCommitted": 0.0,
+      "foulsCommitted": 9.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 59.5,
-      "totalShots": 7.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.4,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 43.8,
+      "totalShots": 15.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 84.0,
-      "totalPasses": 99.0,
+      "accuratePasses": 332.0,
+      "totalPasses": 410.0,
       "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 11.0,
-      "accurateLongBalls": 3.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 14.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 59.0,
+      "accurateLongBalls": 19.0,
       "longballPct": 0.3,
-      "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
-      "tacklePct": 0.6,
-      "interceptions": 2.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "blockedShots": 4.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
     },
     "homeForm": [
+      {
+        "date": "2026-07-07",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
       {
         "date": "2026-07-02",
         "result": "V",
@@ -74478,16 +74626,16 @@
         "gf": 4,
         "ga": 1,
         "home": true
-      },
-      {
-        "date": "2026-06-06",
-        "result": "V",
-        "gf": 2,
-        "ga": 1,
-        "home": true
       }
     ],
     "awayForm": [
+      {
+        "date": "2026-07-07",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
       {
         "date": "2026-07-01",
         "result": "V",
@@ -74514,13 +74662,6 @@
         "result": "O",
         "gf": 1,
         "ga": 1,
-        "home": true
-      },
-      {
-        "date": "2026-06-06",
-        "result": "V",
-        "gf": 5,
-        "ga": 0,
         "home": true
       }
     ]
@@ -74983,8 +75124,8 @@
       "awayML": -115,
       "spread": "ENG -115",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,

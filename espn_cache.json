@@ -69706,7 +69706,7 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-07-06T20:28:09.096367+00:00"
+    "_fetched_at": "2026-07-07T04:27:43.290521+00:00"
   },
   "760504": {
     "goals": [
@@ -72065,8 +72065,8 @@
       "awayML": -115,
       "spread": "ENG -115",
       "overUnder": 2.5,
-      "overOdds": -125.0,
-      "underOdds": 100.0,
+      "overOdds": -130.0,
+      "underOdds": 105.0,
       "provider": "DraftKings"
     },
     "homeForm": [
@@ -72148,6 +72148,802 @@
     "espnCompleted": false,
     "espnClock": null,
     "espnDisplayClock": null,
-    "_fetched_at": "2026-07-06T21:58:04.757686+00:00"
+    "_fetched_at": "2026-07-07T04:27:43.290521+00:00"
+  },
+  "760507": {
+    "goals": [
+      {
+        "minute": "9",
+        "team": "BEL",
+        "scorer": "Charles De Ketelaere",
+        "assist": "Nicolas Raskin",
+        "type": "REGULAR",
+        "description": "Goal! USA 0, Belgium 1. Charles De Ketelaere (Belgium) right footed shot from very close range to the centre of the goal. Assisted by Nicolas Raskin.",
+        "score": [
+          0,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "31",
+        "team": "USA",
+        "scorer": "Malik Tillman",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 1. Malik Tillman (USA) from a free kick with a right footed shot to the high centre of the goal.",
+        "score": [
+          1,
+          1
+        ],
+        "period": 1
+      },
+      {
+        "minute": "33",
+        "team": "BEL",
+        "scorer": "Charles De Ketelaere",
+        "assist": "Leandro Trossard",
+        "type": "HEADER",
+        "description": "Goal! USA 1, Belgium 2. Charles De Ketelaere (Belgium) header from very close range to the top right corner. Assisted by Leandro Trossard with a cross.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 1
+      },
+      {
+        "minute": "57",
+        "team": "BEL",
+        "scorer": "Hans Vanaken",
+        "assist": "Charles De Ketelaere",
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 3. Hans Vanaken (Belgium) right footed shot from outside the box to the bottom right corner. Assisted by Charles De Ketelaere.",
+        "score": [
+          1,
+          3
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "BEL",
+        "scorer": "Romelu Lukaku",
+        "assist": "Hans Vanaken",
+        "type": "REGULAR",
+        "description": "Goal! USA 1, Belgium 4. Romelu Lukaku (Belgium) right footed shot from the left side of the box to the bottom right corner. Assisted by Hans Vanaken.",
+        "score": [
+          1,
+          4
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "35",
+        "team": "USA",
+        "player": "Weston McKennie",
+        "card": "YELLOW",
+        "period": 1
+      },
+      {
+        "minute": "69",
+        "team": "USA",
+        "player": "Malik Tillman",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "21",
+        "team": "BEL",
+        "playerIn": "Hans Vanaken",
+        "playerOut": "Amadou Onana",
+        "period": 1
+      },
+      {
+        "minute": "45",
+        "team": "USA",
+        "playerIn": "Giovanni Reyna",
+        "playerOut": "Sergiño Dest",
+        "period": 2
+      },
+      {
+        "minute": "59",
+        "team": "USA",
+        "playerIn": "Sebastian Berhalter",
+        "playerOut": "Christian Pulisic",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BEL",
+        "playerIn": "Jérémy Doku",
+        "playerOut": "Dodi Lukébakio",
+        "period": 2
+      },
+      {
+        "minute": "67",
+        "team": "BEL",
+        "playerIn": "Romelu Lukaku",
+        "playerOut": "Charles De Ketelaere",
+        "period": 2
+      },
+      {
+        "minute": "72",
+        "team": "USA",
+        "playerIn": "Ricardo Pepi",
+        "playerOut": "Tyler Adams",
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "BEL",
+        "playerIn": "Alexis Saelemaekers",
+        "playerOut": "Leandro Trossard",
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "BEL",
+        "playerIn": "Axel Witsel",
+        "playerOut": "Nicolas Raskin",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "USA",
+        "playerIn": "Max Arfsten",
+        "playerOut": "Antonee Robinson",
+        "period": 2
+      },
+      {
+        "minute": "90+2",
+        "team": "USA",
+        "playerIn": "Haji Wright",
+        "playerOut": "Folarin Balogun",
+        "period": 2
+      }
+    ],
+    "penalties": null,
+    "homeLineup": {
+      "formation": "4-3-3",
+      "lineup": [
+        {
+          "name": "Matt Freese",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "24",
+          "espnId": "252974",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Tim Ream",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "13",
+          "espnId": "146290",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Chris Richards",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "3",
+          "espnId": "272585",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Antonee Robinson",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "5",
+          "espnId": "222396",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Alex Freeman",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "16",
+          "espnId": "248276",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Tyler Adams",
+          "position": "CM",
+          "positionName": "Center Midfielder",
+          "jersey": "4",
+          "espnId": "222776",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Malik Tillman",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "17",
+          "espnId": "301416",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Weston McKennie",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "8",
+          "espnId": "256715",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Folarin Balogun",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "20",
+          "espnId": "282643",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Christian Pulisic",
+          "position": "LF",
+          "positionName": "Left Forward",
+          "jersey": "10",
+          "espnId": "225607",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Sergiño Dest",
+          "position": "RF",
+          "positionName": "Right Forward",
+          "jersey": "2",
+          "espnId": "266291",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Miles Robinson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "249768",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Ricardo Pepi",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "289120",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Timothy Weah",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "21",
+          "espnId": "266027",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Max Arfsten",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "359542",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Matt Turner",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "1",
+          "espnId": "303794",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Brenden Aaronson",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "259653",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alejandro Zendejas",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "212824",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Giovanni Reyna",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "290230",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Joe Scally",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "23",
+          "espnId": "272135",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Chris Brady",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "25",
+          "espnId": "303693",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Auston Trusty",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "228619",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Mark McKenzie",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "77072",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Haji Wright",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "220474",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Sebastian Berhalter",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "14",
+          "espnId": "295771",
+          "subbedIn": true,
+          "subbedOut": false
+        }
+      ],
+      "tla": "USA",
+      "_espnEventId": "760507"
+    },
+    "awayLineup": {
+      "formation": "4-2-3-1",
+      "lineup": [
+        {
+          "name": "Thibaut Courtois",
+          "position": "G",
+          "positionName": "Goalkeeper",
+          "jersey": "1",
+          "espnId": "134283",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Brandon Mechele",
+          "position": "CD-L",
+          "positionName": "Center Left Defender",
+          "jersey": "4",
+          "espnId": "191222",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nathan Ngoy",
+          "position": "CD-R",
+          "positionName": "Center Right Defender",
+          "jersey": "25",
+          "espnId": "318577",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Maxim De Cuyper",
+          "position": "LB",
+          "positionName": "Left Back",
+          "jersey": "5",
+          "espnId": "301327",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Timothy Castagne",
+          "position": "RB",
+          "positionName": "Right Back",
+          "jersey": "21",
+          "espnId": "197163",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Youri Tielemans",
+          "position": "AM",
+          "positionName": "Attacking Midfielder",
+          "jersey": "8",
+          "espnId": "193297",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Nicolas Raskin",
+          "position": "LM",
+          "positionName": "Left Midfielder",
+          "jersey": "23",
+          "espnId": "260027",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Amadou Onana",
+          "position": "RM",
+          "positionName": "Right Midfielder",
+          "jersey": "24",
+          "espnId": "304799",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Charles De Ketelaere",
+          "position": "F",
+          "positionName": "Forward",
+          "jersey": "17",
+          "espnId": "296319",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Leandro Trossard",
+          "position": "AM-L",
+          "positionName": "Attacking Midfielder Left",
+          "jersey": "10",
+          "espnId": "174980",
+          "subbedIn": false,
+          "subbedOut": true
+        },
+        {
+          "name": "Dodi Lukébakio",
+          "position": "AM-R",
+          "positionName": "Attacking Midfielder Right",
+          "jersey": "14",
+          "espnId": "229443",
+          "subbedIn": false,
+          "subbedOut": true
+        }
+      ],
+      "bench": [
+        {
+          "name": "Romelu Lukaku",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "9",
+          "espnId": "139437",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Diego Moreira",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "19",
+          "espnId": "340678",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Alexis Saelemaekers",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "22",
+          "espnId": "271132",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Matias Fernandez-Pardo",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "26",
+          "espnId": "359651",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Thomas Meunier",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "15",
+          "espnId": "166473",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Hans Vanaken",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "20",
+          "espnId": "193849",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Senne Lammens",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "12",
+          "espnId": "301425",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Jérémy Doku",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "11",
+          "espnId": "283672",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "7",
+          "espnId": "134947",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Axel Witsel",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "6",
+          "espnId": "164895",
+          "subbedIn": true,
+          "subbedOut": false
+        },
+        {
+          "name": "Mike Penders",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "13",
+          "espnId": "332343",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Arthur Theate",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "3",
+          "espnId": "304222",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Joaquin Seys",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "18",
+          "espnId": "363068",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Zeno Debast",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "2",
+          "espnId": "314473",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
+          "name": "Koni De Winter",
+          "position": "SUB",
+          "positionName": "Substitute",
+          "jersey": "16",
+          "espnId": "309570",
+          "subbedIn": false,
+          "subbedOut": false
+        }
+      ],
+      "tla": "BEL",
+      "_espnEventId": "760507"
+    },
+    "homeStats": {
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 0.0,
+      "wonCorners": 3.0,
+      "saves": 3.0,
+      "possessionPct": 56.2,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 458.0,
+      "totalPasses": 527.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 11.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 37.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.5,
+      "blockedShots": 0.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 21.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
+    },
+    "awayStats": {
+      "foulsCommitted": 9.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 43.8,
+      "totalShots": 15.0,
+      "shotsOnTarget": 7.0,
+      "shotPct": 0.5,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 332.0,
+      "totalPasses": 410.0,
+      "passPct": 0.8,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 14.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 59.0,
+      "accurateLongBalls": 19.0,
+      "longballPct": 0.3,
+      "blockedShots": 4.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 23.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 20.0,
+      "totalClearance": 20.0
+    },
+    "venue": {
+      "stadium": "Lumen Field",
+      "city": "Seattle, Washington",
+      "country": "USA"
+    },
+    "attendance": 66925,
+    "referees": [
+      {
+        "name": "Adham Mohammad",
+        "role": "Referee"
+      }
+    ],
+    "espnOdds": {
+      "homeML": 155,
+      "awayML": 185,
+      "spread": "USA +155",
+      "overUnder": 2.5,
+      "overOdds": -125.0,
+      "underOdds": 105.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-07",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-07-02",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-26",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-19",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-13",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-07",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 1,
+        "ga": 5,
+        "home": false
+      },
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ],
+    "espnStatus": "STATUS_FULL_TIME",
+    "espnState": "post",
+    "espnCompleted": true,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "_fetched_at": "2026-07-07T04:27:43.290521+00:00"
   }
 }
