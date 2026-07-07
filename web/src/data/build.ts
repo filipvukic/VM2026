@@ -765,6 +765,9 @@ export function build(data: RawData, fixtures: RawFixture[]): Dataset {
     },
     stars: [],
     updatedAt: D.updated_at,
+    // Bonus points (winner/scorer/…) are only added to totals once the final is over.
+    // Until then standings show MATCH points only; the UI uses this to say so.
+    tournamentOver,
     // Hide the "facit" for bonus until the tournament is over, so nothing shows as decided
     // (e.g. the provisional top scorer) while it can still change.
     bonusActual: tournamentOver

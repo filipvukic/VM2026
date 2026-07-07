@@ -484,6 +484,7 @@ export interface Dataset {
   stars: never[];
   // pass-throughs the UI needs from raw
   updatedAt?: string;
+  tournamentOver: boolean; // true once the final is over → bonus points count toward totals
   bonusActual?: Record<RawBonusKey, string | null>;
   bonusPoints?: Record<RawBonusKey, number>;
   awardsPending?: string[];

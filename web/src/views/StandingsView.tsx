@@ -164,6 +164,14 @@ export function StandingsView() {
         <div className="section-title">Tabell</div>
         <div className="kicker">{hasMovement ? "▲▼ = rörelse idag" : "poäng · exakta som tie-break"}</div>
       </div>
+      {!ds.tournamentOver && (
+        <div className="bonus-note">
+          <span aria-hidden>🏅</span>
+          <span>
+            Tabellen visar <b>matchpoäng</b>. Alla <b>bonuspoäng</b> (vinnare, skyttekung m.m.) läggs på först <b>när finalen är spelad</b>.
+          </span>
+        </div>
+      )}
       <div className="card" style={{ overflow: "hidden" }}>
         {st.map((p, i) => {
           const m = move[p.id];
@@ -254,6 +262,10 @@ export function StandingsView() {
         .tie-legend{ text-align:center; }
         .tie-legend .tie-mark{ font-size:12.5px; margin-right:3px; }
         .tie-legend b{ color:var(--ink-2); }
+        .bonus-note{ display:flex; gap:8px; align-items:flex-start; margin:0 0 12px; padding:9px 12px; border-radius:var(--r-md);
+          background:color-mix(in srgb, var(--gold) 10%, var(--surface)); border:1px solid color-mix(in srgb, var(--gold) 28%, var(--line-2));
+          font-size:12px; color:var(--ink-2); line-height:1.45; }
+        .bonus-note b{ color:var(--ink); font-weight:800; }
       `}</style>
     </div>
   );

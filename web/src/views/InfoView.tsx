@@ -123,6 +123,10 @@ export function InfoView() {
 
       {/* bonus */}
       <div className="section-head"><div className="section-title" style={{ fontSize: 20 }}>Bonuspoäng</div></div>
+      <div className="dim" style={{ fontSize: 12.5, margin: "-2px 2px 10px", lineHeight: 1.5 }}>
+        Under turneringen visar tabellen bara <b style={{ color: "var(--ink)" }}>matchpoäng</b>. Alla bonuspoäng nedan
+        räknas in i totalen <b style={{ color: "var(--ink)" }}>först när finalen är spelad</b> (facit kan ändras ända in i slutet).
+      </div>
       <div className="card" style={{ overflow: "hidden", marginBottom: 16 }}>
         {[
           ["Vinnare", bp.winner ?? 10],

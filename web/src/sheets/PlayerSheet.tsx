@@ -113,7 +113,11 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
       {/* key numbers */}
       <div className="pl-stats">
         <StatChip label="Matchpoäng" value={p.points} />
-        <StatChip label="Bonuspoäng" value={p.bonusPts} />
+        <StatChip
+          label={ds.tournamentOver ? "Bonuspoäng" : "Bonus efter finalen"}
+          value={ds.tournamentOver ? p.bonusPts : "–"}
+          accent={ds.tournamentOver ? undefined : "var(--ink-3)"}
+        />
         <StatChip label="Träffsäkerhet" value={`${hitRate}%`} accent="var(--cool-2)" />
       </div>
 
@@ -197,7 +201,10 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
 
       {/* bonus picks */}
       <div className="card card-pad" style={{ marginTop: 12 }}>
-        <div className="kicker" style={{ marginBottom: 10 }}>Bonustips</div>
+        <div className="kicker" style={{ marginBottom: 4 }}>Bonustips</div>
+        {!ds.tournamentOver && (
+          <div className="dim" style={{ fontSize: 11, marginBottom: 10 }}>Poängen för dessa läggs på totalen först efter finalen.</div>
+        )}
         <div className="pl-bonus">
           {(Object.keys(BONUS_LABEL) as BonusSlot[]).map((k) => {
             const v = p.bonus[k];
