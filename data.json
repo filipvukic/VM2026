@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T20:08:12+00:00",
+  "updated_at": "2026-07-07T21:38:54+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21418,7 +21418,10 @@
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
         "fullTime": [
           0,
           0
@@ -21428,10 +21431,61 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "7",
+      "minute": "79",
       "goals": [],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "51",
+          "team": "SUI",
+          "player": "Granit Xhaka",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "59",
+          "team": "SUI",
+          "player": "Denis Zakaria",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "COL",
+          "player": "Luis Suárez",
+          "card": "YELLOW",
+          "period": 2
+        }
+      ],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "SUI",
+          "playerIn": "Djibril Sow",
+          "playerOut": "Ardon Jashari",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "COL",
+          "playerIn": "Juan Fernando Quintero",
+          "playerOut": "James Rodríguez",
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "COL",
+          "playerIn": "Jáminton Campaz",
+          "playerOut": "Jhon Arias",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "SUI",
+          "playerIn": "Miro Muheim",
+          "playerOut": "Ricardo Rodríguez",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "BC Place",
         "city": "Vancouver",

@@ -75497,7 +75497,10 @@
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
       "fullTime": [
         0,
         0
@@ -75507,10 +75510,61 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "7",
+    "minute": "79",
     "goals": [],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "51",
+        "team": "SUI",
+        "player": "Granit Xhaka",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "59",
+        "team": "SUI",
+        "player": "Denis Zakaria",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "COL",
+        "player": "Luis Suárez",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "SUI",
+        "playerIn": "Djibril Sow",
+        "playerOut": "Ardon Jashari",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "COL",
+        "playerIn": "Juan Fernando Quintero",
+        "playerOut": "James Rodríguez",
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "COL",
+        "playerIn": "Jáminton Campaz",
+        "playerOut": "Jhon Arias",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "SUI",
+        "playerIn": "Miro Muheim",
+        "playerOut": "Ricardo Rodríguez",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "BC Place",
       "city": "Vancouver",
@@ -75570,7 +75624,7 @@
           "jersey": "13",
           "espnId": "136865",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Denis Zakaria",
@@ -75588,7 +75642,7 @@
           "jersey": "14",
           "espnId": "303973",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Granit Xhaka",
@@ -75724,7 +75778,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "243626",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75733,7 +75787,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "222446",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75750,7 +75804,7 @@
       "_espnEventId": "760508"
     },
     "awayLineup": {
-      "formation": "4-3-3",
+      "formation": "4-4-1-1",
       "lineup": [
         {
           "name": "Camilo Vargas",
@@ -75798,20 +75852,29 @@
           "subbedOut": false
         },
         {
+          "name": "Gustavo Puerta",
+          "position": "CM-L",
+          "positionName": "Center Left Midfielder",
+          "jersey": "14",
+          "espnId": "341736",
+          "subbedIn": false,
+          "subbedOut": false
+        },
+        {
           "name": "Jefferson Lerma",
-          "position": "CM",
-          "positionName": "Center Midfielder",
+          "position": "CM-R",
+          "positionName": "Center Right Midfielder",
           "jersey": "16",
           "espnId": "197399",
           "subbedIn": false,
           "subbedOut": false
         },
         {
-          "name": "Gustavo Puerta",
+          "name": "Luis Díaz",
           "position": "LM",
           "positionName": "Left Midfielder",
-          "jersey": "14",
-          "espnId": "341736",
+          "jersey": "7",
+          "espnId": "257390",
           "subbedIn": false,
           "subbedOut": false
         },
@@ -75822,7 +75885,7 @@
           "jersey": "11",
           "espnId": "239566",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Luis Suárez",
@@ -75834,22 +75897,13 @@
           "subbedOut": false
         },
         {
-          "name": "Luis Díaz",
-          "position": "LF",
-          "positionName": "Left Forward",
-          "jersey": "7",
-          "espnId": "257390",
-          "subbedIn": false,
-          "subbedOut": false
-        },
-        {
           "name": "James Rodríguez",
-          "position": "RF",
-          "positionName": "Right Forward",
+          "position": "RCF",
+          "positionName": "Rear Center Forward",
           "jersey": "10",
           "espnId": "82816",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -75895,7 +75949,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "255295",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75949,7 +76003,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "177780",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -75993,64 +76047,64 @@
       "_espnEventId": "760508"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 0.0,
-      "saves": 0.0,
-      "possessionPct": 61.3,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 4.0,
+      "wonCorners": 1.0,
+      "saves": 2.0,
+      "possessionPct": 51.3,
+      "totalShots": 5.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 33.0,
-      "totalPasses": 38.0,
+      "accuratePasses": 348.0,
+      "totalPasses": 404.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 3.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.7,
-      "blockedShots": 0.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 0.0,
-      "tacklePct": 0.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
+      "accurateCrosses": 1.0,
+      "totalCrosses": 6.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 32.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 3.0,
+      "totalTackles": 6.0,
+      "tacklePct": 0.5,
+      "interceptions": 9.0,
+      "effectiveClearance": 24.0,
+      "totalClearance": 24.0
     },
     "awayStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 38.7,
-      "totalShots": 0.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "offsides": 3.0,
+      "wonCorners": 4.0,
+      "saves": 2.0,
+      "possessionPct": 48.7,
+      "totalShots": 7.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 15.0,
-      "totalPasses": 21.0,
-      "passPct": 0.7,
+      "accuratePasses": 312.0,
+      "totalPasses": 380.0,
+      "passPct": 0.8,
       "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 7.0,
-      "accurateLongBalls": 1.0,
-      "longballPct": 0.1,
-      "blockedShots": 0.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 0.0,
-      "tacklePct": 0.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 1.0,
-      "totalClearance": 1.0
+      "totalCrosses": 12.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 15.0,
+      "longballPct": 0.3,
+      "blockedShots": 3.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 12.0,
+      "tacklePct": 0.4,
+      "interceptions": 8.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
     },
     "homeForm": [
       {
