@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07T13:20:21+00:00",
+  "updated_at": "2026-07-07T15:58:41+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21134,7 +21134,13 @@
         "city": "Atlanta, Georgia",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "François Letexier",
+          "role": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -21149,7 +21155,7 @@
         {
           "name": "Filip",
           "tip": [
-            3,
+            2,
             1
           ],
           "points": null
@@ -21378,6 +21384,49 @@
         },
         {
           "name": "Alexander",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537384,
+      "utcDate": "2026-07-10T19:00:00Z",
+      "stage": "QUARTER_FINALS",
+      "group": null,
+      "knockout": true,
+      "home": "Spain",
+      "homeTla": "ESP",
+      "away": "Belgium",
+      "awayTla": "BEL",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Filip",
           "tip": [
             2,
             1
