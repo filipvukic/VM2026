@@ -75491,9 +75491,9 @@
     "homeTla": "SUI",
     "away": "Colombia",
     "awayTla": "COL",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
-      0,
+      1,
       0
     ],
     "scoreDetail": {
@@ -75502,18 +75502,21 @@
         0
       ],
       "fullTime": [
-        0,
-        0
+        4,
+        3
       ],
       "extraTime": [
         0,
         0
       ],
-      "penalties": null,
-      "duration": "EXTRA_TIME",
-      "winnerSide": "DRAW"
+      "penalties": [
+        3,
+        3
+      ],
+      "duration": "PENALTY_SHOOTOUT",
+      "winnerSide": null
     },
-    "minute": "120",
+    "minute": null,
     "goals": [],
     "bookings": [
       {
@@ -75643,7 +75646,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 52497,
     "espnOdds": {
       "homeML": 250,
       "awayML": 140,
