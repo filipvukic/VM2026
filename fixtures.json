@@ -74698,12 +74698,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": -270,
-      "awayML": 850,
-      "spread": "ARG -270",
+      "homeML": -300,
+      "awayML": 950,
+      "spread": "ARG -300",
       "overUnder": 2.5,
-      "overOdds": 100.0,
-      "underOdds": -125.0,
+      "overOdds": -110.0,
+      "underOdds": -115.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -74827,12 +74827,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 240,
-      "awayML": 130,
-      "spread": "COL +130",
+      "homeML": 245,
+      "awayML": 125,
+      "spread": "COL +125",
       "overUnder": 2.5,
-      "overOdds": 135.0,
-      "underOdds": -165.0,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -75058,10 +75058,10 @@
     "utcDate": "2026-07-10T19:00:00Z",
     "stage": "QUARTER_FINALS",
     "group": null,
-    "home": null,
-    "homeTla": null,
-    "away": null,
-    "awayTla": null,
+    "home": "Spain",
+    "homeTla": "ESP",
+    "away": "Belgium",
+    "awayTla": "BEL",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -75076,17 +75076,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "SoFi Stadium",
+      "city": "Inglewood, California",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -160,
+      "awayML": 450,
+      "spread": "ESP -160",
+      "overUnder": 2.5,
+      "overOdds": -125.0,
+      "underOdds": 100.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 8.0,
+      "totalGoals": 8.0,
+      "goalAssists": 7.0,
+      "goalsConceded": 0.0
+    },
+    "awayStats": {
+      "goalDifference": 5.0,
+      "totalGoals": 9.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 4.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-06",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-07-02",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-21",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-07",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 1,
+        "ga": 5,
+        "home": false
+      },
+      {
+        "date": "2026-06-21",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-15",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537385,
