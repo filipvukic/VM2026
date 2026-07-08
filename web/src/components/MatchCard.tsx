@@ -1,7 +1,7 @@
 import type { Match } from "../data/types";
 import { useData } from "../state/dataset";
 import { Flag } from "../lib/flags";
-import { svTime } from "../lib/format";
+import { svTime, svDateKey, svDayLabel } from "../lib/format";
 import { liveMinuteText } from "../lib/liveMinute";
 import { isLive } from "../lib/liveState";
 import { broadcastForPair } from "../data/static/broadcasts";
@@ -12,12 +12,15 @@ interface Props {
   onOpen?: (m: Match) => void;
   myTip?: [number, number] | null;
   compact?: boolean;
+  // Show the kickoff DAY (relative, e.g. "Imorgon"/"Ons 15 jul") for upcoming matches
+  // shown outside a day-grouped list — e.g. the start page's "Kommande matcher" strip.
+  showDay?: boolean;
 }
 
 // Match card: the two teams stacked (flag · name · score), a hairline, then a clean
 // status line (live minute / Slut / Avspark) with a status-coloured dot and the TV
 // channel. No loud accent border — the dot + score colour carry the state.
-export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
+export function MatchCard({ match: m, onOpen, myTip, compact, showDay }: Props) {
   const ds = useData();
   const now = useNow(isLive(m) ? 30_000 : 0);
   const updatedAt = ds.updatedAt ? new Date(ds.updatedAt).getTime() : null;
@@ -28,6 +31,11 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
   const showScore = played || live;
   const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.kickoff) : null;
   const state = live ? "live" : played ? "done" : "soon";
+  // For upcoming matches shown outside a day-grouped list, prefix the kickoff time with
+  // its day so you can tell WHICH day it is; omitted when the match is today (just time).
+  const soonDay = showDay && !live && !played && svDateKey(m.kickoff) !== svDateKey(ds.now)
+    ? svDayLabel(m.kickoff, ds.now)
+    : null;
 
   const TeamRow = ({ side }: { side: "h" | "a" }) => {
     const code = side === "h" ? m.home : m.away;
@@ -65,7 +73,7 @@ export function MatchCard({ match: m, onOpen, myTip, compact }: Props) {
           ) : played ? (
             <><span className="mc-dot" />Slut{m.pen ? ` · str ${m.pen[0]}–${m.pen[1]}` : ""}</>
           ) : (
-            <><span className="mc-dot" />Avspark <b>{svTime(m.kickoff)}</b></>
+            <><span className="mc-dot" />Avspark <b>{soonDay ? `${soonDay} ` : ""}{svTime(m.kickoff)}</b></>
           )}
         </span>
         <span className="mc-foot-r">

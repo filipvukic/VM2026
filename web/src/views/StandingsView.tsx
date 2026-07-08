@@ -153,7 +153,7 @@ export function StandingsView() {
           </div>
           <div className="home-matches">
             {homeMatches.map((m) => (
-              <MatchCard key={m.id} match={m} onOpen={() => openMatch(m.id)} compact />
+              <MatchCard key={m.id} match={m} onOpen={() => openMatch(m.id)} compact showDay />
             ))}
           </div>
         </>
