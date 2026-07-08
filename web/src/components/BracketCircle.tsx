@@ -321,7 +321,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
                   <button
                     key={`n${i}`}
                     className={`bc-badge${n.ring === level ? " cur" : ""}${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
-                    style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, pointerEvents: clickable ? undefined : "none" }}
+                    style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, pointerEvents: clickable ? "auto" : "none" }}
                     onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
                     onMouseLeave={clickable ? () => setHovId(null) : undefined}
                     onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
@@ -384,7 +384,10 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            its own compositor layer (will-change), it fades on the GPU with the zoom on the SAME
            easing + duration — no per-element repaint, and the animated-layer count stays at 5 no
            matter how many teams are on the board. */
-        .bc-ring{ position:absolute; inset:0; transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); will-change:opacity; }
+        /* Each ring wrapper is a full-area (inset:0) overlay, so they stack over each other — they
+           MUST NOT intercept clicks, or the topmost (innermost) ring swallows taps meant for flags
+           in the rounds below it. Only the clickable flags re-enable pointer events (see bc-badge). */
+        .bc-ring{ position:absolute; inset:0; pointer-events:none; transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); will-change:opacity; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
