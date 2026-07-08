@@ -204,7 +204,17 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     } else {
       arcSeg(a1, a2, rp, null, ring); radial(a1, rp, rc, null, ring); radial(a2, rp, rc, null, ring);
     }
-    if (played) { const [sx, sy] = polar(C, (rp + rc) / 2, mid); scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}`, ring }); }
+    if (played) {
+      // Put the score BETWEEN the two teams that actually played. R32 (ring 0) is the exception:
+      // its two flags are a tight adjacent pair, so the score sits in the pocket just inside them
+      // (the radial midpoint) — as before. For every later round the two competitors sit far apart
+      // on the SAME ring (radius rc), so "between them" is the midpoint of the chord joining the two
+      // flags, at the match's mid-angle — right in the gap between them, not down by the winner.
+      let sx: number, sy: number;
+      if (ring === 0) { [sx, sy] = polar(C, (rp + rc) / 2, mid); }
+      else { const [ax, ay] = polar(C, rc, a1); const [bx, by] = polar(C, rc, a2); sx = (ax + bx) / 2; sy = (ay + by) / 2; }
+      scores.push({ x: sx, y: sy, t: `${m!.ga}–${m!.gb}`, ring });
+    }
   };
 
   R32_ORDER.forEach((fifa, mi) => {
