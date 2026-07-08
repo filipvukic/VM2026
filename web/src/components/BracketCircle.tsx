@@ -26,10 +26,6 @@ const DELTA = 4.2;
 const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
 const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round without over-zooming past it
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
-// Fake a gaussian blur on receded SVG lines (Safari ignores CSS blur() on SVG geometry) by stacking
-// strokes: [widthMultiple, receded opacity]. Wide→narrow; opacities picked to approximate a smooth
-// gaussian falloff (small steps, no bright sharp core). The sharp focused line is drawn separately.
-const LINE_BLUR = [[9, 0.05], [6.6, 0.07], [4.8, 0.09], [3.4, 0.12], [2.3, 0.15], [1.4, 0.19]] as const;
 
 interface Node { x: number; y: number; d: number; code: string | null; iso: string | null; id: string | null; live: boolean; lost: boolean; ring: number }
 interface Seg { x1: number; y1: number; x2: number; y2: number; color: string | null; ring: number }
@@ -254,14 +250,25 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const [hovId, setHovId] = useState<string | null>(null);
 
   // Depth of field WITHOUT a CSS blur filter (filters re-rasterise / go blocky when scaled, which
-  // caused the jank, the "squares", and the trophy artefacts). Instead the receded rounds' flags
-  // become soft radial-gradient BLOBS — a paint, not a filter, so it scales crisply, needs no
-  // cached texture, and can cross-fade both ways (no zoom-out gap). FOCUS holds everything sharp
-  // with receded rounds dimmed; its receded flags fade to 0 and hand off to the blob on CTX.
-  const focusDim = (ring: number, natural: number) => (ring >= level ? natural : ctxDim(ring) * natural);
+  // caused the jank). Receded rounds simply DIM via opacity. Crucially, that opacity is applied ONCE
+  // per round on a single wrapper (.bc-ring) rather than on every flag/line/score — so a zoom fades
+  // just 5 elements (5 compositor layers), not ~800. That is the fix for the "laggar med fler lag":
+  // the animated-layer count no longer grows with the number of teams.
+  const focusDim = (ring: number) => (ring >= level ? 1 : ctxDim(ring));
+
+  // Bucket every primitive by its ring so each round becomes one opacity-animated group.
+  const ringData = [0, 1, 2, 3, 4].map((ring) => ({
+    ring,
+    arcs: arcs.filter((a) => a.ring === ring),
+    radials: radials.filter((l) => l.ring === ring),
+    nodes: nodes.filter((n) => n.ring === ring),
+    scores: scores.filter((s) => s.ring === ring),
+  }));
 
   const content = (
       <>
+        {/* Centre halo — ring-independent, always full opacity, never transitions. A paint (SVG
+            gradient), not a filter, so it scales cleanly. */}
         <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
           <defs>
             <radialGradient id="bcGlow" cx="50%" cy="50%" r="50%">
@@ -271,63 +278,51 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
             </radialGradient>
           </defs>
           <circle cx={C} cy={C} r={S * 0.22} fill="url(#bcGlow)" />
-          {/* Safari ignores CSS blur() on SVG geometry, so receded lines are "blurred" with a stack
-              of strokes (LINE_BLUR) approximating a gaussian falloff — many fine layers, no sharp
-              core when receded. Opacity only → reliable everywhere, no filter, no jank. The sharp
-              focused line is a single stroke drawn on top; the two cross-fade with the zoom. */}
-          {arcs.flatMap((a, i) => { const r = a.ring < level, b = ctxDim(a.ring), w = sw(a.color), s = a.color || lineCol; return [
-            ...LINE_BLUR.map(([wm, of], k) => <path key={`a${i}b${k}`} d={a.d} fill="none" stroke={s} strokeWidth={w * wm} strokeLinecap="round" style={{ opacity: r ? b * of : 0 }} />),
-            <path key={`a${i}`} d={a.d} fill="none" stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? 0 : 1 }} />,
-          ]; })}
-          {radials.flatMap((l, i) => { const r = l.ring < level, b = ctxDim(l.ring), w = sw(l.color), s = l.color || lineCol; return [
-            ...LINE_BLUR.map(([wm, of], k) => <line key={`r${i}b${k}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w * wm} strokeLinecap="round" style={{ opacity: r ? b * of : 0 }} />),
-            <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={s} strokeWidth={w} strokeLinecap="round" style={{ opacity: r ? 0 : 1 }} />,
-          ]; })}
         </svg>
 
+        {/* One wrapper per round. The recede/dim is a SINGLE opacity on this wrapper, so the whole
+            round fades as one compositor layer — 5 animated layers total regardless of team count.
+            Everything inside stays at its natural opacity (no per-element transition), which is what
+            kills the zoom lag. */}
+        {ringData.map(({ ring, arcs: ra, radials: rl, nodes: rn, scores: rs }) => {
+          const [lx, ly] = polar(C, R[ring], 180);
+          return (
+            <div key={ring} className="bc-ring" style={{ opacity: focusDim(ring) }}>
+              {/* Lines: a single crisp stroke each (no stacked fake-blur). The wrapper dims them. */}
+              <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
+                {ra.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" />)}
+                {rl.map((l, i) => <line key={`r${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={l.color || lineCol} strokeWidth={sw(l.color)} strokeLinecap="round" />)}
+              </svg>
 
-        {ROUND_NAMES.map((t, i) => {
-          const [lx, ly] = polar(C, R[i], 180);
-          return <span key={`l${i}`} className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145), opacity: focusDim(i, 1) }}>{t}</span>;
+              <span className="bc-round" style={{ left: lx, top: ly, fontSize: Math.max(7, S * 0.0145) }}>{ROUND_NAMES[ring]}</span>
+
+              {rn.map((n, i) => {
+                if (!n.code) return <span key={`j${i}`} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot }} />;
+                const receded = n.ring < level;
+                const clickable = !receded; // only the sharp, in-focus flags are interactive
+                return (
+                  <button
+                    key={`n${i}`}
+                    className={`bc-badge${n.ring === level ? " cur" : ""}${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
+                    style={{ left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d, pointerEvents: clickable ? undefined : "none" }}
+                    onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
+                    onMouseLeave={clickable ? () => setHovId(null) : undefined}
+                    onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
+                    disabled={!clickable || !n.id}
+                    tabIndex={clickable ? undefined : -1}
+                    aria-label={n.code}
+                  >
+                    <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
+                  </button>
+                );
+              })}
+
+              {rs.map((s, i) => <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: sfz }}>{s.t}</span>)}
+            </div>
+          );
         })}
 
         <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
-
-        {nodes.map((n, i) => {
-          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1) }} />;
-          const receded = n.ring < level;
-          const clickable = !receded; // only the sharp, in-focus flags are interactive
-          // Filter-FREE recede: receded rounds fade via OPACITY only — no blur, no grayscale. A CSS
-          // filter on an element inside the scaling stage forces a re-rasterisation every frame of the
-          // zoom (the main source of the lag), so the whole circle is kept filter-free: the zoom is
-          // then pure transform + opacity, which the compositor handles smoothly.
-          return (
-            <button
-              key={i}
-              className={`bc-badge${n.ring === level ? " cur" : ""}${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
-              style={{
-                left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d,
-                opacity: (n.lost ? 0.42 : 1) * (receded ? ctxDim(n.ring) : 1),
-                pointerEvents: clickable ? undefined : "none",
-              }}
-              onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
-              onMouseLeave={clickable ? () => setHovId(null) : undefined}
-              onClick={clickable ? () => { if (!moved.current && n.id) onOpen(n.id); } : undefined}
-              disabled={!clickable || !n.id}
-              tabIndex={clickable ? undefined : -1}
-              aria-label={n.code}
-            >
-              <Flag iso={n.iso} code={n.code} size={n.d} rounded={false} hi />
-            </button>
-          );
-        })}
-
-        {scores.map((s, i) => {
-          // Filter-free like the flags — receded scores fade via opacity only.
-          return (
-            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: sfz, opacity: focusDim(s.ring, 1) }}>{s.t}</span>
-          );
-        })}
       </>
   );
 
@@ -348,9 +343,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
 
       <div className="bc-wrap" ref={ref} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
         <div className="bc-stage" style={{ width: BASE, height: BASE, transform: `translate(-50%,-50%) scale(${fit * LEVEL_SCALE[level]})`, transition: ready ? undefined : "none" }}>
-          {/* One layer, correct stacking: lines → soft blobs → sharp badges. No filter anywhere,
-              so the zoom is pure transform + opacity — smooth, crisp, no scaling artefacts. */}
-          <div className="bc-layer bc-focus">{content}</div>
+          {/* Content grouped into per-round layers (.bc-ring). No filter anywhere and only 5
+              opacity-animated wrappers, so the zoom is smooth regardless of team count. */}
+          <div className="bc-layer">{content}</div>
         </div>
       </div>
 
@@ -366,19 +361,13 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-wrap{ position:relative; width:100%; max-width:620px; margin:0 auto; aspect-ratio:1/1; overflow:hidden; touch-action:none; border-radius:18px; }
         .bc-stage{ position:absolute; left:50%; top:50%; transform-origin:center; transition:transform .95s cubic-bezier(.62,0,.2,1); will-change:transform; }
         @media (prefers-reduced-motion: reduce){ .bc-stage{ transition:transform .2s ease; } }
-        /* No filter anywhere. The receded flags are soft radial-gradient blobs (.bc-blob) that
-           cross-fade by opacity with the sharp flags — a paint, not a filter, so the zoom is pure
-           transform + opacity: smooth, crisp, and it fades symmetrically both ways (no gap). */
         .bc-layer{ position:absolute; inset:0; }
         .bc-svg{ position:absolute; inset:0; }
-        /* Receded lines soften via stacked-stroke halos fading in (opacity only — reliable on
-           Safari, which ignores CSS blur() on SVG geometry). */
-        /* Same easing + duration as the stage's zoom transform, both directions, so the blur/dim
-           tracks the motion and never snaps ahead of it. */
-        .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
-        .bc-focus .bc-round{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
-        .bc-focus .bc-score{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
-        .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
+        /* THE lag fix: the recede/dim of a whole round is one opacity on one wrapper. Promoted to
+           its own compositor layer (will-change), it fades on the GPU with the zoom on the SAME
+           easing + duration — no per-element repaint, and the animated-layer count stays at 5 no
+           matter how many teams are on the board. */
+        .bc-ring{ position:absolute; inset:0; transition:opacity .95s cubic-bezier(.62,0,.2,1); will-change:opacity; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
@@ -390,7 +379,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           transition:transform .12s, box-shadow .15s; }
         /* Current round: a crisp ring so the enlarged active step pops while the outer rounds fade back. */
         .bc-badge.cur{ box-shadow:0 0 0 2.5px var(--ink), 0 0 0 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.45); z-index:4; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
