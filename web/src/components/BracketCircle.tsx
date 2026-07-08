@@ -22,6 +22,10 @@ const GAP = 28;
 const DELTA = 4.2;
 const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
 const LEVEL_SCALE = [1, 1.22, 1.62, 2.25, 3.1]; // gentle — frames each round without over-zooming past it
+// Enlarge the CURRENT round's flags so the active round is the focal point. The boost grows with the
+// round — deeper rounds have fewer teams (more angular room) and matter more. The outer R32 value is
+// capped so the two teams of a match (~73px apart) don't collide when enlarged.
+const CUR_BOOST = [1.15, 1.4, 1.6, 1.8, 1.9];
 const LEVEL_LABEL = ["Hela slutspelet", "Åttondelsfinal", "Kvartsfinal", "Semifinal", "Final"];
 // Fake a gaussian blur on receded SVG lines (Safari ignores CSS blur() on SVG geometry) by stacking
 // strokes: [widthMultiple, receded opacity]. Wide→narrow; opacities picked to approximate a smooth
@@ -154,6 +158,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const C = S / 2;
   const R = RAD.map((x) => x * S);
   const D = DIA.map((x) => x * S);
+  // Flag diameter for a ring — the current round is enlarged (proportional to the round).
+  const dFor = (ring: number) => D[ring] * (ring === level ? CUR_BOOST[level] : 1);
   const isoOf = (code: string | null) => (code ? ds.teams[code]?.iso ?? null : null);
   const colorOf = (code: string | null) => {
     if (!code) return null;
@@ -214,7 +220,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       const code = m ? (side === "home" ? m.home : m.away) : null;
       const lost = !!(m && m.status === "played" && m.winner && code && m.winner !== code);
       const [x, y] = polar(C, R[0], base + off);
-      nodes.push({ x, y, d: D[0], code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
+      nodes.push({ x, y, d: dFor(0), code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
     });
     addMatch(m, base - DELTA, base + DELTA, m?.home ?? null, m?.away ?? null, R[1], R[0], 0);
   });
@@ -222,7 +228,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     const nm = byFifa[nextFifa];
     const lost = !!(code && nm && nm.status === "played" && nm.winner && nm.winner !== code);
     const [x, y] = polar(C, R[lvl], angle);
-    nodes.push({ x, y, d: D[lvl], code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost, ring: lvl });
+    nodes.push({ x, y, d: dFor(lvl), code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost, ring: lvl });
   };
   R32_ORDER.forEach((fifa, mi) => winnerBadge(winOf(fifa), 1, angR32(mi), R16_ORDER[Math.floor(mi / 2)]));
   R16_ORDER.forEach((fifa, j) => winnerBadge(winOf(fifa), 2, angR16(j), QF_ORDER[Math.floor(j / 2)]));
@@ -392,7 +398,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
           transition:transform .12s, box-shadow .15s; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1),
+          width .95s cubic-bezier(.62,0,.2,1), height .95s cubic-bezier(.62,0,.2,1), left .95s cubic-bezier(.62,0,.2,1), top .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
