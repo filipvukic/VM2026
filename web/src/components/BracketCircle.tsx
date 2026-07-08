@@ -172,7 +172,14 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // and scores. Kept low so the active step clearly reads as the focus (weaker/more transparent
   // outer rounds). FIXED per ring (NOT level-dependent) so an already-receded round keeps the same
   // look when you zoom another step. Rounds nearer the centre stay a touch stronger than the far ones.
-  const ctxDim = (ring: number) => 0.35 + ring * 0.05;
+  // Kept LOW so the current match dominates — earlier rounds are barely-there context.
+  const ctxDim = (ring: number) => 0.16 + ring * 0.045;
+  // Blur (px at the S=1100 render size) for a receded round — a REAL depth-of-field blur, affordable
+  // now because it sits on ONE composited layer per round (.bc-ring), not ~800 elements: the filter
+  // runs once at base resolution, then the compositor scales/fades that cached texture during zoom.
+  // Blurrier the further out (deeper background). In-focus rounds are blur(0) (kept as a blur()
+  // function so focus⇄receded interpolates instead of snapping).
+  const blurPx = (ring: number) => S * (0.0072 - ring * 0.0011);
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
@@ -297,7 +304,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         {ringData.map(({ ring, arcs: ra, radials: rl, nodes: rn, scores: rs }) => {
           const [lx, ly] = polar(C, R[ring], 180);
           return (
-            <div key={ring} className="bc-ring" style={{ opacity: focusDim(ring) }}>
+            <div key={ring} className="bc-ring" style={{ opacity: focusDim(ring), filter: `blur(${ring < level ? blurPx(ring) : 0}px)` }}>
               {/* Lines: a single crisp stroke each (no stacked fake-blur). The wrapper dims them. */}
               <svg className="bc-svg" viewBox={`0 0 ${S} ${S}`} width={S} height={S} aria-hidden>
                 {ra.map((a, i) => <path key={`a${i}`} d={a.d} fill="none" stroke={a.color || lineCol} strokeWidth={sw(a.color)} strokeLinecap="round" />)}
@@ -377,7 +384,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            its own compositor layer (will-change), it fades on the GPU with the zoom on the SAME
            easing + duration — no per-element repaint, and the animated-layer count stays at 5 no
            matter how many teams are on the board. */
-        .bc-ring{ position:absolute; inset:0; transition:opacity .95s cubic-bezier(.62,0,.2,1); will-change:opacity; }
+        .bc-ring{ position:absolute; inset:0; transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); will-change:opacity; }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
