@@ -17,10 +17,10 @@ const QF_ORDER = [97, 98, 99, 100];
 const SF_ORDER = [101, 102];
 
 const RAD = [0.452, 0.358, 0.268, 0.18, 0.1];
-// Flag diameter per ring as a fraction of S. FIXED per ring (never changes with the
-// current round): outermost = normal, each ring inward a step bigger — the funnel toward
-// the final. Sizes stay within each ring's angular room so nothing collides.
-const DIA = [0.05, 0.06, 0.07, 0.08, 0.088];
+// Flag diameter per ring as a fraction of S — uniform base. The CURRENT round's flags are
+// then gently enlarged (dFor below) so the active step stands out, while the rounds OUTSIDE
+// it fade back (ctxDim). Uniform base keeps the outer R32 pair from colliding when enlarged.
+const DIA = [0.046, 0.046, 0.046, 0.046, 0.046];
 const GAP = 28;
 const DELTA = 4.2;
 const ROUND_NAMES = ["16-DEL", "8-DEL", "KVART", "SEMI", "FINAL"];
@@ -157,6 +157,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const C = S / 2;
   const R = RAD.map((x) => x * S);
   const D = DIA.map((x) => x * S);
+  // The CURRENT round's flags are gently enlarged so the active step is the focal point.
+  const dFor = (ring: number) => D[ring] * (ring === level ? 1.25 : 1);
   const isoOf = (code: string | null) => (code ? ds.teams[code]?.iso ?? null : null);
   const colorOf = (code: string | null) => {
     if (!code) return null;
@@ -170,11 +172,11 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   const angQF = (j: number) => ang(4, j);
   const angSF = (j: number) => ang(2, j);
 
-  // Brightness of a receded round (its soft blob + faded lines). FIXED per ring (NOT level-
-  // dependent) so an already-receded round keeps the same look when you zoom another step — every
-  // zoom step then behaves like the clean first one. Gentle gradient: rounds nearer the centre
-  // (higher ring) stay a touch brighter than the far outer rounds.
-  const ctxDim = (ring: number) => 0.72 + ring * 0.03;
+  // Brightness of a round that lies OUTSIDE (before) the current step — its flags, lines, labels
+  // and scores. Kept low so the active step clearly reads as the focus (weaker/more transparent
+  // outer rounds). FIXED per ring (NOT level-dependent) so an already-receded round keeps the same
+  // look when you zoom another step. Rounds nearer the centre stay a touch stronger than the far ones.
+  const ctxDim = (ring: number) => 0.42 + ring * 0.05;
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
@@ -217,7 +219,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
       const code = m ? (side === "home" ? m.home : m.away) : null;
       const lost = !!(m && m.status === "played" && m.winner && code && m.winner !== code);
       const [x, y] = polar(C, R[0], base + off);
-      nodes.push({ x, y, d: D[0], code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
+      nodes.push({ x, y, d: dFor(0), code, iso: isoOf(code), id: m?._realId != null ? m.id : null, live, lost, ring: 0 });
     });
     addMatch(m, base - DELTA, base + DELTA, m?.home ?? null, m?.away ?? null, R[1], R[0], 0);
   });
@@ -225,7 +227,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
     const nm = byFifa[nextFifa];
     const lost = !!(code && nm && nm.status === "played" && nm.winner && nm.winner !== code);
     const [x, y] = polar(C, R[lvl], angle);
-    nodes.push({ x, y, d: D[lvl], code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost, ring: lvl });
+    nodes.push({ x, y, d: dFor(lvl), code, iso: isoOf(code), id: nm && nm._realId != null ? nm.id : null, live: false, lost, ring: lvl });
   };
   R32_ORDER.forEach((fifa, mi) => winnerBadge(winOf(fifa), 1, angR32(mi), R16_ORDER[Math.floor(mi / 2)]));
   R16_ORDER.forEach((fifa, j) => winnerBadge(winOf(fifa), 2, angR16(j), QF_ORDER[Math.floor(j / 2)]));
@@ -307,7 +309,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           return (
             <button
               key={i}
-              className={`bc-badge${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
+              className={`bc-badge${n.ring === level ? " cur" : ""}${n.live ? " live" : ""}${n.lost ? " lost" : ""}${clickable && n.id === hovId ? " hov" : ""}`}
               style={{
                 left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d,
                 opacity: (n.lost ? 0.42 : 1) * (receded ? ctxDim(n.ring) : 1),
@@ -395,7 +397,10 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         .bc-badge{ position:absolute; padding:0; border-radius:50%; overflow:hidden; background:var(--surface-2);
           box-shadow:0 0 0 1.5px var(--line-2), 0 2px 6px rgba(0,0,0,.3); display:grid; place-items:center; z-index:3;
           transition:transform .12s, box-shadow .15s; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        /* Current round: a crisp ring so the enlarged active step pops while the outer rounds fade back. */
+        .bc-badge.cur{ box-shadow:0 0 0 2.5px var(--ink), 0 0 0 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.45); z-index:4; }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1),
+          width .95s cubic-bezier(.62,0,.2,1), height .95s cubic-bezier(.62,0,.2,1), left .95s cubic-bezier(.62,0,.2,1), top .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
