@@ -176,7 +176,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
   // and scores. Kept low so the active step clearly reads as the focus (weaker/more transparent
   // outer rounds). FIXED per ring (NOT level-dependent) so an already-receded round keeps the same
   // look when you zoom another step. Rounds nearer the centre stay a touch stronger than the far ones.
-  const ctxDim = (ring: number) => 0.42 + ring * 0.05;
+  const ctxDim = (ring: number) => 0.35 + ring * 0.05;
 
   const nodes: Node[] = [];
   const radials: Seg[] = [];
@@ -294,18 +294,13 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         <div className="bc-trophy" style={{ left: C, top: C, fontSize: S * 0.085 }}>🏆</div>
 
         {nodes.map((n, i) => {
-          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1), filter: `blur(${(n.ring < level ? S * 0.009 : 0).toFixed(1)}px)` }} />;
+          if (!n.code) return <span key={i} className="bc-jdot" style={{ left: n.x - dot / 2, top: n.y - dot / 2, width: dot, height: dot, opacity: focusDim(n.ring, 1) }} />;
           const receded = n.ring < level;
           const clickable = !receded; // only the sharp, in-focus flags are interactive
-          // Receded flags stay visible but get a REAL blur (same element → no double-load / same
-          // size) plus a light dim. Focused flags are crisp. The blur/opacity transition with the
-          // zoom. No cached texture, so the blur is clean (no blocky "squares").
-          // EVERY flag must carry a blur() function in BOTH states (0px when focused) so the filter
-          // FUNCTION LIST is identical and CSS interpolates it. Otherwise a focused non-lost flag is
-          // `none` while its receded state is `blur()`, and Safari SNAPS `none → blur` instead of
-          // easing — which made the outermost round's many winner flags pop instead of blurring.
-          const bl = receded ? `blur(${(n.d * 0.11).toFixed(1)}px)` : "blur(0px)";
-          const filt = [bl, n.lost ? "grayscale(.6)" : ""].join(" ");
+          // Filter-FREE recede: receded rounds fade via OPACITY only — no blur, no grayscale. A CSS
+          // filter on an element inside the scaling stage forces a re-rasterisation every frame of the
+          // zoom (the main source of the lag), so the whole circle is kept filter-free: the zoom is
+          // then pure transform + opacity, which the compositor handles smoothly.
           return (
             <button
               key={i}
@@ -313,7 +308,6 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
               style={{
                 left: n.x - n.d / 2, top: n.y - n.d / 2, width: n.d, height: n.d,
                 opacity: (n.lost ? 0.42 : 1) * (receded ? ctxDim(n.ring) : 1),
-                filter: filt,
                 pointerEvents: clickable ? undefined : "none",
               }}
               onMouseEnter={clickable ? () => setHovId(n.id) : undefined}
@@ -329,12 +323,9 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
         })}
 
         {scores.map((s, i) => {
-          const receded = s.ring < level;
-          // An HTML span (unlike the SVG lines) → a real blur() works and matches the receded flags.
-          // Keep it a single blur() function (0px when focused) so the filter list interpolates
-          // smoothly instead of snapping when the round recedes/returns.
+          // Filter-free like the flags — receded scores fade via opacity only.
           return (
-            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: sfz, opacity: focusDim(s.ring, 1), filter: `blur(${(receded ? sfz * 0.3 : 0).toFixed(1)}px)` }}>{s.t}</span>
+            <span key={`s${i}`} className="bc-score" style={{ left: s.x, top: s.y, fontSize: sfz, opacity: focusDim(s.ring, 1) }}>{s.t}</span>
           );
         })}
       </>
@@ -386,8 +377,8 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
            tracks the motion and never snaps ahead of it. */
         .bc-focus .bc-svg path, .bc-focus .bc-svg line{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-focus .bc-round{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
-        .bc-focus .bc-score{ transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
-        .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-score{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-jdot{ transition:opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-round{ position:absolute; transform:translate(-50%,-50%); z-index:1; pointer-events:none; font-weight:800; letter-spacing:.08em; color:color-mix(in srgb, var(--ink-3) 58%, transparent); }
         /* No drop-shadow filter here: a filter re-rasterises every frame while the stage scales,
            which made the trophy's halo shimmer during the zoom. The bcGlow SVG circle behind it
@@ -399,11 +390,11 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           transition:transform .12s, box-shadow .15s; }
         /* Current round: a crisp ring so the enlarged active step pops while the outer rounds fade back. */
         .bc-badge.cur{ box-shadow:0 0 0 2.5px var(--ink), 0 0 0 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.45); z-index:4; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
-        .bc-badge.lost{ opacity:.42; filter:grayscale(.65); }
+        .bc-badge.lost{ opacity:.42; }
         .bc-badge img{ display:block; border-radius:0; }
         .bc-score{ position:absolute; transform:translate(-50%,-50%); z-index:4; pointer-events:none;
           font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums; color:var(--ink-2);
