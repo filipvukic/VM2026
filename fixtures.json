@@ -75493,7 +75493,7 @@
     "awayTla": "COL",
     "status": "FINISHED",
     "score": [
-      1,
+      0,
       0
     ],
     "scoreDetail": {
@@ -75510,11 +75510,11 @@
         0
       ],
       "penalties": [
-        3,
+        4,
         3
       ],
       "duration": "PENALTY_SHOOTOUT",
-      "winnerSide": null
+      "winnerSide": "HOME_TEAM"
     },
     "minute": null,
     "goals": [],
@@ -76642,10 +76642,10 @@
     "utcDate": "2026-07-12T01:00:00Z",
     "stage": "QUARTER_FINALS",
     "group": null,
-    "home": null,
-    "homeTla": null,
-    "away": null,
-    "awayTla": null,
+    "home": "Argentina",
+    "homeTla": "ARG",
+    "away": "Switzerland",
+    "awayTla": "SUI",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -76660,17 +76660,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "GEHA Field at Arrowhead Stadium",
+      "city": "Kansas City, Missouri",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": -140,
+      "awayML": 425,
+      "spread": "ARG -140",
+      "overUnder": 2.5,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 8.0,
+      "totalGoals": 11.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 3.0
+    },
+    "awayStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 9.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 3.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-07",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-07-03",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-07",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-07-03",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-24",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-13",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      }
+    ]
   },
   {
     "id": 537387,

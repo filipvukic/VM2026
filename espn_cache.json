@@ -72831,7 +72831,7 @@
     "espnClock": null,
     "espnDisplayClock": null,
     "espnPeriod": null,
-    "_fetched_at": "2026-07-07T22:42:16.800786+00:00"
+    "_fetched_at": "2026-07-08T07:03:51.522339+00:00"
   },
   "760509": {
     "goals": [
@@ -74368,5 +74368,122 @@
     "espnDisplayClock": null,
     "espnPeriod": null,
     "_fetched_at": "2026-07-07T23:36:22.267726+00:00"
+  },
+  "760513": {
+    "goals": [],
+    "bookings": [],
+    "subs": [],
+    "penalties": null,
+    "homeLineup": null,
+    "awayLineup": null,
+    "homeStats": {
+      "goalDifference": 8.0,
+      "totalGoals": 11.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 3.0
+    },
+    "awayStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 9.0,
+      "goalAssists": 5.0,
+      "goalsConceded": 3.0
+    },
+    "venue": {
+      "stadium": "GEHA Field at Arrowhead Stadium",
+      "city": "Kansas City, Missouri",
+      "country": "USA"
+    },
+    "attendance": null,
+    "referees": [],
+    "espnOdds": {
+      "homeML": -140,
+      "awayML": 425,
+      "spread": "ARG -140",
+      "overUnder": 2.5,
+      "overOdds": 125.0,
+      "underOdds": -155.0,
+      "provider": "DraftKings"
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-07",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-07-03",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-17",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-07",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-07-03",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-24",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-18",
+        "result": "V",
+        "gf": 4,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-13",
+        "result": "O",
+        "gf": 1,
+        "ga": 1,
+        "home": false
+      }
+    ],
+    "espnStatus": "STATUS_SCHEDULED",
+    "espnState": "pre",
+    "espnCompleted": false,
+    "espnClock": null,
+    "espnDisplayClock": null,
+    "espnPeriod": null,
+    "_fetched_at": "2026-07-08T07:03:51.522339+00:00"
   }
 }
