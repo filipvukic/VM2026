@@ -399,8 +399,7 @@ export function BracketCircle({ ds, onOpen, fill }: { ds: Dataset; onOpen: (id: 
           transition:transform .12s, box-shadow .15s; }
         /* Current round: a crisp ring so the enlarged active step pops while the outer rounds fade back. */
         .bc-badge.cur{ box-shadow:0 0 0 2.5px var(--ink), 0 0 0 4px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.45); z-index:4; }
-        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1),
-          width .95s cubic-bezier(.62,0,.2,1), height .95s cubic-bezier(.62,0,.2,1), left .95s cubic-bezier(.62,0,.2,1), top .95s cubic-bezier(.62,0,.2,1); }
+        .bc-focus .bc-badge{ transition:transform .12s, box-shadow .15s, opacity .95s cubic-bezier(.62,0,.2,1), filter .95s cubic-bezier(.62,0,.2,1); }
         .bc-badge:not(:disabled):active{ transform:scale(.92); }
         .bc-badge.hov{ box-shadow:0 0 0 2.5px var(--cool), 0 0 12px color-mix(in srgb, var(--cool) 50%, transparent); z-index:5; }
         .bc-badge.live{ box-shadow:0 0 0 2px var(--hot), 0 0 10px color-mix(in srgb, var(--hot) 45%, transparent); }
