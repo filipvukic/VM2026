@@ -25,6 +25,7 @@ import { useFixtureOdds } from "../state/fixtureOdds";
 import { classifyTip, type TipResult } from "../data/scoring";
 import { reg90Score } from "../lib/reg90";
 import { useMatchWeather } from "../lib/weather";
+import { capacityFor } from "../lib/venueCapacity";
 import { useKoBets, koFid, type Tip } from "../state/koBets";
 import { useKoPublicTips, type KoTipsByFixture } from "../state/koTips";
 import type { Dataset, Match, MatchStats, RawTip } from "../data/types";
@@ -73,6 +74,16 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
   const live = isLive(m);
   const played = m.status === "played" || (m.status === "live" && !!m.likelyEnded);
   const vIso = venueIso(m.venue);
+  // Arena capacity (fixed reference data — ESPN never supplies it) + how full it was.
+  const capacity = capacityFor(m.venue?.stadium);
+  const nf = (n: number) => n.toLocaleString("sv-SE");
+  const crowdText = m.attendance && capacity
+    ? `${nf(m.attendance)} av ${nf(capacity)} platser (${Math.round((m.attendance / capacity) * 100)}%)`
+    : m.attendance
+      ? `${nf(m.attendance)} i publiken`
+      : capacity
+        ? `${nf(capacity)} platser`
+        : null;
   // Where to watch on Swedish TV — only useful before/while it airs, not after.
   const bc = !played ? broadcastForPair(m.home, m.away, home?.name, away?.name, m.kickoff) : null;
 
@@ -120,7 +131,7 @@ export function MatchDetail({ id, ...chrome }: { id: string } & SheetChrome) {
         {m.venue?.stadium && (
           <div className="dim" style={{ fontSize: 12, marginTop: 12, display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
             {vIso && <Flag iso={vIso} size={12} />}
-            {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{m.attendance ? ` · ${m.attendance.toLocaleString("sv-SE")} i publiken` : ""}
+            {m.venue.stadium}{m.venue.city ? `, ${m.venue.city}` : ""}{crowdText ? ` · ${crowdText}` : ""}
             {wxMax != null && <span title="Dagens topptemperatur på orten">{" · "}☀️ {wxMax}°</span>}
           </div>
         )}
