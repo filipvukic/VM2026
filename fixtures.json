@@ -76261,24 +76261,112 @@
     "awayTla": "MAR",
     "status": "IN_PLAY",
     "score": [
-      0,
+      2,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
-      "fullTime": [
+      "halfTime": [
         0,
+        0
+      ],
+      "fullTime": [
+        2,
         0
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "12",
-    "goals": [],
-    "bookings": [],
-    "subs": [],
+    "minute": "81",
+    "goals": [
+      {
+        "minute": "60",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": "Désiré Doué",
+        "type": "REGULAR",
+        "description": "Goal! France 1, Morocco 0. Kylian Mbappé (France) right footed shot from the left side of the box to the top right corner. Assisted by Désiré Doué.",
+        "score": [
+          1,
+          0
+        ],
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "FRA",
+        "scorer": "Ousmane Dembélé",
+        "assist": "Kylian Mbappé",
+        "type": "REGULAR",
+        "description": "Goal! France 2, Morocco 0. Ousmane Dembélé (France) right footed shot from outside the box to the bottom right corner. Assisted by Kylian Mbappé.",
+        "score": [
+          2,
+          0
+        ],
+        "period": 2
+      }
+    ],
+    "bookings": [
+      {
+        "minute": "63",
+        "team": "MAR",
+        "player": "Issa Diop",
+        "card": "YELLOW",
+        "period": 2
+      }
+    ],
+    "subs": [
+      {
+        "minute": "62",
+        "team": "MAR",
+        "playerIn": "Soufiane Rahimi",
+        "playerOut": "Bilal El Khannouss",
+        "period": 2
+      },
+      {
+        "minute": "62",
+        "team": "MAR",
+        "playerIn": "Sofyan Amrabat",
+        "playerOut": "Ayyoub Bouaddi",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "FRA",
+        "playerIn": "Warren Zaïre-Emery",
+        "playerOut": "Manu Koné",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "MAR",
+        "playerIn": "Zakaria El Ouahdi",
+        "playerOut": "Anass Salah-Eddine",
+        "period": 2
+      },
+      {
+        "minute": "74",
+        "team": "MAR",
+        "playerIn": "Gessime Yassine",
+        "playerOut": "Brahim Díaz",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "FRA",
+        "playerIn": "Jean-Philippe Mateta",
+        "playerOut": "Kylian Mbappé",
+        "period": 2
+      },
+      {
+        "minute": "77",
+        "team": "FRA",
+        "playerIn": "Bradley Barcola",
+        "playerOut": "Désiré Doué",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Gillette Stadium",
       "city": "Foxborough, Massachusetts",
@@ -76297,7 +76385,7 @@
       "awayML": 500,
       "spread": "FRA -170",
       "overUnder": 2.5,
-      "overOdds": -110.0,
+      "overOdds": -115.0,
       "underOdds": -110.0,
       "provider": "DraftKings"
     },
@@ -76374,7 +76462,7 @@
           "jersey": "6",
           "espnId": "285226",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kylian Mbappé",
@@ -76383,7 +76471,7 @@
           "jersey": "10",
           "espnId": "231388",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Désiré Doué",
@@ -76392,7 +76480,7 @@
           "jersey": "20",
           "espnId": "336388",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ousmane Dembélé",
@@ -76465,7 +76553,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "328238",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76519,7 +76607,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "345581",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76528,7 +76616,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "241187",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76581,7 +76669,7 @@
           "jersey": "26",
           "espnId": "297296",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Achraf Hakimi",
@@ -76617,7 +76705,7 @@
           "jersey": "6",
           "espnId": "373927",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bilal El Khannouss",
@@ -76626,7 +76714,7 @@
           "jersey": "23",
           "espnId": "336595",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Chemsdine Talbi",
@@ -76644,7 +76732,7 @@
           "jersey": "10",
           "espnId": "246532",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -76690,7 +76778,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "379012",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76717,7 +76805,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "195226",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76735,7 +76823,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "276139",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76771,7 +76859,7 @@
           "positionName": "Substitute",
           "jersey": "13",
           "espnId": "325024",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76788,64 +76876,64 @@
       "_espnEventId": "760510"
     },
     "homeStats": {
-      "foulsCommitted": 1.0,
+      "foulsCommitted": 8.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 1.0,
+      "wonCorners": 4.0,
       "saves": 0.0,
-      "possessionPct": 45.4,
-      "totalShots": 3.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 0.3,
+      "possessionPct": 49.3,
+      "totalShots": 17.0,
+      "shotsOnTarget": 6.0,
+      "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 57.0,
-      "totalPasses": 68.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 1.0,
-      "crossPct": 1.0,
-      "totalLongBalls": 6.0,
-      "accurateLongBalls": 3.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 379.0,
+      "totalPasses": 426.0,
+      "passPct": 0.9,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 10.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 25.0,
+      "accurateLongBalls": 13.0,
       "longballPct": 0.5,
-      "blockedShots": 1.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 0.0,
-      "tacklePct": 0.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 1.0,
-      "totalClearance": 1.0
+      "blockedShots": 5.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.9,
+      "interceptions": 10.0,
+      "effectiveClearance": 14.0,
+      "totalClearance": 14.0
     },
     "awayStats": {
-      "foulsCommitted": 1.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 54.6,
-      "totalShots": 0.0,
+      "wonCorners": 3.0,
+      "saves": 4.0,
+      "possessionPct": 50.7,
+      "totalShots": 2.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 67.0,
-      "totalPasses": 83.0,
+      "accuratePasses": 372.0,
+      "totalPasses": 440.0,
       "passPct": 0.8,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
-      "crossPct": 0.0,
-      "totalLongBalls": 12.0,
-      "accurateLongBalls": 3.0,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 8.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 36.0,
+      "accurateLongBalls": 9.0,
       "longballPct": 0.3,
-      "blockedShots": 0.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 1.0,
-      "tacklePct": 1.0,
-      "interceptions": 2.0,
-      "effectiveClearance": 1.0,
-      "totalClearance": 1.0
+      "blockedShots": 1.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 16.0,
+      "tacklePct": 0.4,
+      "interceptions": 6.0,
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
     },
     "homeForm": [
       {
