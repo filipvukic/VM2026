@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T16:36:58+00:00",
+  "updated_at": "2026-07-09T18:23:13+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21689,7 +21689,13 @@
         "city": "Foxborough, Massachusetts",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Facundo Tello",
+          "role": "REFEREE",
+          "nationality": "Argentina"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -21712,7 +21718,7 @@
         {
           "name": "Martin",
           "tip": [
-            2,
+            3,
             1
           ],
           "points": null
