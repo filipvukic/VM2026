@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T18:23:13+00:00",
+  "updated_at": "2026-07-09T20:13:30+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21670,17 +21670,23 @@
       "homeTla": "FRA",
       "away": "Morocco",
       "awayTla": "MAR",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "12",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -21692,8 +21698,7 @@
       "referees": [
         {
           "name": "Facundo Tello",
-          "role": "REFEREE",
-          "nationality": "Argentina"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -21726,7 +21731,7 @@
         {
           "name": "Oskar",
           "tip": [
-            1,
+            4,
             1
           ],
           "points": null
@@ -21734,7 +21739,7 @@
         {
           "name": "Isac",
           "tip": [
-            3,
+            2,
             1
           ],
           "points": null
@@ -21762,6 +21767,24 @@
             2
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Alexander",
