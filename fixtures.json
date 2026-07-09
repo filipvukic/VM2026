@@ -76259,7 +76259,7 @@
     "homeTla": "FRA",
     "away": "Morocco",
     "awayTla": "MAR",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       2,
       0
@@ -76278,7 +76278,7 @@
       "duration": "REGULAR",
       "winnerSide": "HOME_TEAM"
     },
-    "minute": "81",
+    "minute": null,
     "goals": [
       {
         "minute": "60",
@@ -76365,6 +76365,20 @@
         "playerIn": "Bradley Barcola",
         "playerOut": "Désiré Doué",
         "period": 2
+      },
+      {
+        "minute": "85",
+        "team": "MAR",
+        "playerIn": "Amine Sbaï",
+        "playerOut": "Chemsdine Talbi",
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "FRA",
+        "playerIn": "Malo Gusto",
+        "playerOut": "Jules Koundé",
+        "period": 2
       }
     ],
     "venue": {
@@ -76379,7 +76393,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 63811,
     "espnOdds": {
       "homeML": -170,
       "awayML": 500,
@@ -76435,7 +76449,7 @@
           "jersey": "5",
           "espnId": "231692",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Michael Olise",
@@ -76625,7 +76639,7 @@
           "positionName": "Substitute",
           "jersey": "2",
           "espnId": "308947",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -76723,7 +76737,7 @@
           "jersey": "7",
           "espnId": "360062",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Brahim Díaz",
@@ -76832,7 +76846,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "314388",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -76876,60 +76890,60 @@
       "_espnEventId": "760510"
     },
     "homeStats": {
-      "foulsCommitted": 8.0,
+      "foulsCommitted": 10.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 4.0,
-      "saves": 0.0,
-      "possessionPct": 49.3,
-      "totalShots": 17.0,
-      "shotsOnTarget": 6.0,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 48.1,
+      "totalShots": 22.0,
+      "shotsOnTarget": 8.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
-      "accuratePasses": 379.0,
-      "totalPasses": 426.0,
+      "accuratePasses": 432.0,
+      "totalPasses": 485.0,
       "passPct": 0.9,
-      "accurateCrosses": 4.0,
-      "totalCrosses": 10.0,
+      "accurateCrosses": 5.0,
+      "totalCrosses": 12.0,
       "crossPct": 0.4,
-      "totalLongBalls": 25.0,
-      "accurateLongBalls": 13.0,
+      "totalLongBalls": 30.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.5,
       "blockedShots": 5.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.9,
-      "interceptions": 10.0,
-      "effectiveClearance": 14.0,
-      "totalClearance": 14.0
+      "effectiveTackles": 8.0,
+      "totalTackles": 11.0,
+      "tacklePct": 0.7,
+      "interceptions": 11.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
     },
     "awayStats": {
-      "foulsCommitted": 9.0,
+      "foulsCommitted": 13.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 0.0,
-      "wonCorners": 3.0,
-      "saves": 4.0,
-      "possessionPct": 50.7,
-      "totalShots": 2.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "wonCorners": 5.0,
+      "saves": 6.0,
+      "possessionPct": 51.9,
+      "totalShots": 5.0,
+      "shotsOnTarget": 1.0,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 372.0,
-      "totalPasses": 440.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 36.0,
-      "accurateLongBalls": 9.0,
+      "accuratePasses": 452.0,
+      "totalPasses": 524.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 39.0,
+      "accurateLongBalls": 12.0,
       "longballPct": 0.3,
       "blockedShots": 1.0,
       "effectiveTackles": 6.0,
-      "totalTackles": 16.0,
+      "totalTackles": 17.0,
       "tacklePct": 0.4,
       "interceptions": 6.0,
       "effectiveClearance": 12.0,
@@ -77175,8 +77189,8 @@
       "awayML": -115,
       "spread": "ENG -115",
       "overUnder": 2.5,
-      "overOdds": -130.0,
-      "underOdds": 105.0,
+      "overOdds": -135.0,
+      "underOdds": 110.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
