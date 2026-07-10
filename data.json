@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T18:52:16+00:00",
+  "updated_at": "2026-07-10T20:09:02+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21908,19 +21908,63 @@
       "homeTla": "ESP",
       "away": "Belgium",
       "awayTla": "BEL",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        1,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          1,
+          1
+        ],
+        "fullTime": [
+          1,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
+      "minute": "47",
+      "goals": [
+        {
+          "minute": "30",
+          "team": "ESP",
+          "scorer": "Fabián Ruiz",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Spain 1, Belgium 0. Fabián Ruiz (Spain) right footed shot from the centre of the box to the high centre of the goal.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "41",
+          "team": "BEL",
+          "scorer": "Charles De Ketelaere",
+          "assist": "Timothy Castagne",
+          "type": "HEADER",
+          "description": "Goal! Spain 1, Belgium 1. Charles De Ketelaere (Belgium) header from the centre of the box to the centre of the goal. Assisted by Timothy Castagne with a cross.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "43",
+          "team": "ESP",
+          "player": "Pau Cubarsí",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "SoFi Stadium",
@@ -21930,8 +21974,7 @@
       "referees": [
         {
           "name": "Michael Oliver",
-          "role": "REFEREE",
-          "nationality": "England"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -22000,6 +22043,24 @@
             0
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Alexander",
