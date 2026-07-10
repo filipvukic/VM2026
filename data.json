@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T15:30:10+00:00",
+  "updated_at": "2026-07-10T17:20:52+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -21927,7 +21927,13 @@
         "city": "Inglewood, California",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Michael Oliver",
+          "role": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -21960,6 +21966,14 @@
           "tip": [
             2,
             0
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
