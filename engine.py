@@ -1023,10 +1023,15 @@ def merge_ko_bets(tips, worker_url, admin_key):
     """Hämtar slutspelstips från workern (KV) och lägger in dem som vanliga
     tipsposter på rätt deltagare. Tipsen är keyade på FIFA-/football-data-match-id,
     så vi lägger in {"id": <match-id>, "tip": [h, a]} — find_match matchar på id.
-    Tyst no-op om worker_url/admin_key saknas eller hämtningen failar (gruppspels-
-    tipsen påverkas aldrig)."""
+    Gruppspelstipsen påverkas aldrig.
+
+    Returnerar True BARA när alla slutspelstips hämtades färskt och korrekt — det är
+    signalen till att det är säkert att 0–0-defaulta otippade låsta matcher (då VET vi
+    att vi har allas riktiga tips). Vid saknade nycklar eller ett nätverksfel returneras
+    False, så att default_ko_bets hoppas över och ett verkligt (men ohämtat) tips aldrig
+    maskeras av ett fabricerat 0–0."""
     if not worker_url or not admin_key:
-        return
+        return False
     try:
         url = worker_url.rstrip("/") + "/ko/all?key=" + admin_key
         req = Request(url, headers={"User-Agent": "vm2026-engine"})
@@ -1034,7 +1039,7 @@ def merge_ko_bets(tips, worker_url, admin_key):
             all_bets = json.loads(r.read().decode("utf-8"))
     except (HTTPError, URLError, ValueError, OSError) as e:
         print(f"  Kunde inte hämta slutspelstips: {e}")
-        return
+        return False
     by_name = {norm(p["name"]): p for p in tips.get("participants", [])}
     added = 0
     for name, bets in (all_bets or {}).items():
@@ -1053,6 +1058,62 @@ def merge_ko_bets(tips, worker_url, admin_key):
             seen.add(mid)
             added += 1
     print(f"  Slutspelstips: {added} tips inlagda från workern")
+    return True
+
+
+def restore_ko_bets_from_data(tips, data_path):
+    """Fallback när workern INTE kunde nås: frys slutspelstipsen i det senast
+    committade läget genom att återanvända ALLA slutspelstips (både riktiga och de
+    auto-0–0 som redan låg i data.json) från förra körningen. Så här undviks BÅDE att
+    verkliga tips maskeras av ett nyfabricerat 0–0 (buggen) OCH att otippade, redan
+    avgjorda matcher tappar sitt 0–0 och rubbar ställningen under ett tillfälligt
+    avbrott. Default-flaggan bevaras så profilerna fortsatt kan skilja äkta tips från
+    auto-0–0. Sätter INTE ko_synced=True — bara en färsk hämtning får skapa NYA 0–0
+    (för matcher som hunnit låsas sedan förra committen). Returnerar antal återställda.
+
+    (Alla auto-0–0 skapas numera bara vid en lyckad hämtning, dvs. när vi bevisligen
+    har allas riktiga tips, så ett committat default-tips är alltid auktoritativt att
+    frysa vidare — och rättas ändå automatiskt vid nästa lyckade körning om det skulle
+    vara en gammal felaktig 0–0.)"""
+    try:
+        with open(data_path, encoding="utf-8") as f:
+            prev = json.load(f)
+    except (OSError, ValueError):
+        return 0
+    # namn -> {match-id: (tip, default?)} för ALLA committade slutspelstips
+    snapshot = {}
+    for m in prev.get("matches", []):
+        if not m.get("knockout"):
+            continue
+        mid = m.get("id")
+        if not isinstance(mid, int):
+            continue
+        for t in m.get("tips", []):
+            tip = t.get("tip")
+            if isinstance(tip, list) and len(tip) == 2:
+                snapshot.setdefault(norm(t.get("name")), {})[mid] = (tip, bool(t.get("default")))
+    if not snapshot:
+        return 0
+    by_name = {norm(p["name"]): p for p in tips.get("participants", [])}
+    restored = 0
+    for nkey, bets in snapshot.items():
+        p = by_name.get(nkey)
+        if not p:
+            continue
+        seen = {e["id"] for e in p.get("matches", []) if "id" in e}
+        for mid, (tip, is_default) in bets.items():
+            if mid in seen:
+                continue
+            entry = {"id": mid, "tip": [int(tip[0]), int(tip[1])]}
+            if is_default:
+                entry["default"] = True  # bevara auto-0–0-markeringen i utdatan
+            p.setdefault("matches", []).append(entry)
+            seen.add(mid)
+            restored += 1
+    if restored:
+        print(f"  Slutspelstips: {restored} tips frysta från {data_path} "
+              f"(workern nåddes ej — inga NYA 0–0-default skapas denna körning)")
+    return restored
 
 
 # Slutspelstips gäller åttondelsfinal och framåt (sextondelen/LAST_32 var bara test).
@@ -1137,15 +1198,19 @@ def top_scorer(scorers, manual):
 # --------------------------------------------------------------------------- #
 # Huvudberäkning
 # --------------------------------------------------------------------------- #
-def compute(tips, matches, scorers, standings=None, team_forms=None):
+def compute(tips, matches, scorers, standings=None, team_forms=None, ko_synced=True):
     cfg = tips["scoring"]
     resolve = build_team_resolver(tips.get("team_aliases", {}))
     anorm = make_alias_norm(tips.get("team_aliases", {}))
     bmatch = make_bonus_match(tips.get("team_aliases", {}))
     manual = tips.get("manual_results", {})
 
-    # Otippade låsta slutspelsmatcher räknas som 0–0 (görs efter merge_ko_bets).
-    default_ko_bets(tips, matches)
+    # Otippade låsta slutspelsmatcher räknas som 0–0 (görs efter merge_ko_bets) —
+    # men BARA när vi säkert hämtat allas slutspelstips färskt (ko_synced). Kunde
+    # workern inte nås hoppar vi över det, annars skulle ett verkligt (ohämtat) tips
+    # maskeras av ett fabricerat 0–0 (buggen där t.ex. ett 2–0 visades som 0–0).
+    if ko_synced:
+        default_ko_bets(tips, matches)
 
     medals = derive_medals(matches, resolve)
     actual_bonus = {
@@ -1564,7 +1629,13 @@ def main():
 
     # Slutspelstips som deltagarna lagt in via sajten (lagras i workern, gated av
     # personlig kod) → läggs in som id-baserade tipsposter innan poängräkningen.
-    merge_ko_bets(tips, os.environ.get("KO_WORKER_URL"), os.environ.get("KO_ADMIN_KEY"))
+    # ko_synced=True bara vid en färsk lyckad hämtning; då är det säkert att 0–0-
+    # defaulta otippade låsta matcher. Misslyckas hämtningen återanvänder vi de
+    # riktiga tipsen från förra data.json (så de inte försvinner) MEN defaultar inte
+    # (så ett nyss lagt, ohämtat tips aldrig maskeras av ett fabricerat 0–0).
+    ko_synced = merge_ko_bets(tips, os.environ.get("KO_WORKER_URL"), os.environ.get("KO_ADMIN_KEY"))
+    if not ko_synced:
+        restore_ko_bets_from_data(tips, args.out)
 
     team_forms = {}
     if args.mock:
@@ -1600,7 +1671,7 @@ def main():
             except Exception:
                 team_forms = {}
 
-    data = compute(tips, matches, scorers, standings, team_forms=team_forms)
+    data = compute(tips, matches, scorers, standings, team_forms=team_forms, ko_synced=ko_synced)
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     with open(args.fixtures_out, "w", encoding="utf-8") as f:

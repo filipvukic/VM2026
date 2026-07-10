@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useData } from "../state/dataset";
 import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
@@ -40,13 +39,11 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const tipped = ds.allMatches
     .filter((m) => p.tips[m.id])
     .sort((a, b) => +a.kickoff - +b.kickoff);
-  // the next match this player has tipped that hasn't finished (live or upcoming)
+  // the next match this player has tipped that hasn't finished (live or upcoming) —
+  // used only to highlight/label it as "NÄSTA". We deliberately do NOT auto-scroll to
+  // it on open: opening a profile should land at the top (hero + stats), not jump the
+  // user down into the match list.
   const nextId = tipped.find((m) => m.status !== "played")?.id;
-  const nextRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = nextRef.current;
-    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 250);
-  }, [nextId]);
 
   // Standing context + accuracy.
   const N = ds.players.length;
@@ -256,7 +253,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const isNext = m.id === nextId;
               const state = played ? (pts === 5 ? "exact" : pts === 2 ? "win" : "floor") : liveM ? "live" : "up";
               return (
-                <div key={m.id} ref={isNext ? nextRef : undefined} className={`mt-row mt-${state}${isNext ? " mt-next" : ""}`}>
+                <div key={m.id} className={`mt-row mt-${state}${isNext ? " mt-next" : ""}`}>
                   {isNext && <span className="mt-nextbadge">NÄSTA</span>}
                   <button className="mt-date" onClick={openThis}>{svDayMonth(m.kickoff)}</button>
                   <button className="mt-team mt-home" onClick={() => m.home && openTeam(m.home)} disabled={!m.home}>
@@ -337,7 +334,11 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         .mt-res{ flex:0 0 auto; font-size:11px; font-weight:900; }
         .mt-exact .mt-res{ color:var(--gold); } .mt-win .mt-res{ color:var(--win); } .mt-floor .mt-res{ color:var(--loss); }
         .mt-row.mt-live{ border-left-color:var(--hot); background:color-mix(in srgb, var(--hot) 6%, var(--surface)); }
-        .mt-row.mt-next{ border:1.5px solid var(--cool); border-left:3px solid var(--cool); background:color-mix(in srgb, var(--cool) 11%, var(--surface)); margin-top:5px; }
+        /* the "next" row hosts the NÄSTA tab, which straddles the top edge (top:-7px);
+           the base row clips with overflow:hidden, so let THIS row show the overrun and
+           stack above its neighbour. (min-width:0 children still keep names ellipsised,
+           so nothing spills sideways.) */
+        .mt-row.mt-next{ border:1.5px solid var(--cool); border-left:3px solid var(--cool); background:color-mix(in srgb, var(--cool) 11%, var(--surface)); margin-top:9px; overflow:visible; z-index:1; }
         .mt-date{ flex:0 0 auto; width:30px; padding:0; text-align:left; font-size:9.5px; font-weight:800; line-height:1.15; color:var(--ink-3); }
         .mt-team{ flex:1 1 0; min-width:0; display:flex; align-items:center; gap:5px; padding:0; }
         .mt-home{ justify-content:flex-end; }
@@ -354,8 +355,8 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         .mt-pts{ flex:0 0 auto; width:20px; height:20px; border-radius:6px; display:grid; place-items:center;
           font-size:11px; font-weight:900; font-variant-numeric:tabular-nums; }
         .mt-pts-empty{ background:transparent; }
-        .mt-nextbadge{ position:absolute; top:-7px; left:9px; font-size:8px; font-weight:900; letter-spacing:.05em;
-          padding:1px 7px; border-radius:var(--r-pill); background:var(--cool); color:#0a0712; }
+        .mt-nextbadge{ position:absolute; top:-7px; left:9px; z-index:2; font-size:8px; font-weight:900; letter-spacing:.05em;
+          padding:1px 7px; border-radius:var(--r-pill); background:var(--cool); color:#0a0712; box-shadow:0 1px 3px rgba(0,0,0,.28); }
       `}</style>
     </Sheet>
   );
