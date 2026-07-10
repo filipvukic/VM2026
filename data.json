@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T08:53:04+00:00",
+  "updated_at": "2026-07-10T10:39:28+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,10 +13,10 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 155,
+      "match_points": 159,
       "bonus_points": 3,
-      "total": 158,
-      "exact_count": 9,
+      "total": 162,
+      "exact_count": 8,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 156,
+      "match_points": 161,
       "bonus_points": 0,
-      "total": 156,
+      "total": 161,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 155,
+      "match_points": 161,
       "bonus_points": 0,
-      "total": 155,
+      "total": 161,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 152,
+      "match_points": 155,
       "bonus_points": 3,
-      "total": 155,
+      "total": 158,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -196,103 +196,11 @@
       "prize": 0
     },
     {
-      "name": "Albin",
-      "match_points": 149,
-      "bonus_points": 3,
-      "total": 152,
-      "exact_count": 7,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 5,
-      "prize": 0
-    },
-    {
-      "name": "Casper",
-      "match_points": 147,
-      "bonus_points": 3,
-      "total": 150,
-      "exact_count": 7,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Vitinha",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 6,
-      "prize": 0
-    },
-    {
       "name": "Johan",
-      "match_points": 146,
+      "match_points": 154,
       "bonus_points": 0,
-      "total": 146,
-      "exact_count": 8,
+      "total": 154,
+      "exact_count": 9,
       "bonus_detail": {
         "best_young": {
           "pick": "Yamal",
@@ -330,7 +238,145 @@
           "points": 0
         }
       },
+      "rank": 5,
+      "prize": 0
+    },
+    {
+      "name": "Albin",
+      "match_points": 150,
+      "bonus_points": 3,
+      "total": 153,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 6,
+      "prize": 0
+    },
+    {
+      "name": "Casper",
+      "match_points": 148,
+      "bonus_points": 3,
+      "total": 151,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Vitinha",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 7,
+      "prize": 0
+    },
+    {
+      "name": "Filip",
+      "match_points": 146,
+      "bonus_points": 0,
+      "total": 146,
+      "exact_count": 4,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "David Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappé",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "England",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 8,
       "prize": 0
     },
     {
@@ -376,15 +422,15 @@
           "points": 0
         }
       },
-      "rank": 8,
+      "rank": 9,
       "prize": 0
     },
     {
       "name": "Hampus",
-      "match_points": 143,
+      "match_points": 144,
       "bonus_points": 0,
-      "total": 143,
-      "exact_count": 7,
+      "total": 144,
+      "exact_count": 6,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -422,52 +468,6 @@
           "points": 0
         }
       },
-      "rank": 9,
-      "prize": 0
-    },
-    {
-      "name": "Filip",
-      "match_points": 141,
-      "bonus_points": 0,
-      "total": 141,
-      "exact_count": 4,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "David Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappé",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "England",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 10,
       "prize": 0
     },
@@ -476,7 +476,7 @@
       "match_points": 140,
       "bonus_points": 0,
       "total": 140,
-      "exact_count": 7,
+      "exact_count": 6,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -19709,65 +19709,58 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            1,
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -19790,11 +19783,10 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -19937,73 +19929,65 @@
           "name": "Albin",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
             0,
-            0
+            4
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
           "tip": [
             0,
-            0
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Björn",
@@ -20018,19 +20002,17 @@
           "name": "Hampus",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
           "tip": [
             0,
-            0
+            4
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         }
       ]
     },
@@ -20189,74 +20171,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20270,20 +20244,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         }
       ]
     },
@@ -20517,74 +20489,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20599,19 +20563,17 @@
           "name": "Hampus",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         }
       ]
     },
@@ -20765,74 +20727,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
             0,
-            0
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20846,20 +20800,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Alexander",
           "tip": [
             0,
-            0
+            3
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         }
       ]
     },
@@ -21065,74 +21017,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Martin",
           "tip": [
-            0,
+            1,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Isac",
           "tip": [
             0,
-            0
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
+            1,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -21146,20 +21090,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 1
         }
       ]
     },
@@ -21372,74 +21314,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Björn",
@@ -21453,20 +21387,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            4,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         }
       ]
     },
@@ -21640,74 +21572,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 1
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 1
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 5,
-          "default": true
+          "points": 1
         },
         {
           "name": "Johan",
           "tip": [
-            0,
-            0
+            2,
+            2
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Björn",
@@ -21721,20 +21645,18 @@
         {
           "name": "Hampus",
           "tip": [
-            0,
-            0
+            1,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 2
         },
         {
           "name": "Alexander",
           "tip": [
-            0,
-            0
+            1,
+            2
           ],
-          "points": 5,
-          "default": true
+          "points": 1
         }
       ]
     },
@@ -21887,74 +21809,66 @@
         {
           "name": "Albin",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Filip",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Martin",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Oskar",
           "tip": [
-            0,
-            0
+            4,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Isac",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Casper",
           "tip": [
-            0,
-            0
+            3,
+            1
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Johan",
           "tip": [
-            0,
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": 5
         },
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            3,
+            2
           ],
-          "points": 1,
-          "default": true
+          "points": 2
         },
         {
           "name": "Björn",
@@ -21977,11 +21891,299 @@
         {
           "name": "Alexander",
           "tip": [
-            0,
+            2,
+            1
+          ],
+          "points": 2
+        }
+      ]
+    },
+    {
+      "id": 537384,
+      "utcDate": "2026-07-10T19:00:00Z",
+      "stage": "QUARTER_FINALS",
+      "group": null,
+      "knockout": true,
+      "home": "Spain",
+      "homeTla": "ESP",
+      "away": "Belgium",
+      "awayTla": "BEL",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "SoFi Stadium",
+        "city": "Inglewood, California",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            2,
             0
           ],
-          "points": 1,
-          "default": true
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537385,
+      "utcDate": "2026-07-11T21:00:00Z",
+      "stage": "QUARTER_FINALS",
+      "group": null,
+      "knockout": true,
+      "home": "Norway",
+      "homeTla": "NOR",
+      "away": "England",
+      "awayTla": "ENG",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "Hard Rock Stadium",
+        "city": "Miami Gardens, Florida",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            1,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            3,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            0,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            2,
+            2
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        }
+      ]
+    },
+    {
+      "id": 537386,
+      "utcDate": "2026-07-12T01:00:00Z",
+      "stage": "QUARTER_FINALS",
+      "group": null,
+      "knockout": true,
+      "home": "Argentina",
+      "homeTla": "ARG",
+      "away": "Switzerland",
+      "awayTla": "SUI",
+      "status": "TIMED",
+      "score": null,
+      "scoreDetail": {
+        "halfTime": null,
+        "fullTime": null,
+        "extraTime": null,
+        "penalties": null,
+        "duration": "REGULAR",
+        "winnerSide": null
+      },
+      "minute": null,
+      "goals": [],
+      "bookings": [],
+      "subs": [],
+      "venue": {
+        "stadium": "GEHA Field at Arrowhead Stadium",
+        "city": "Kansas City, Missouri",
+        "country": "USA"
+      },
+      "referees": [],
+      "odds": null,
+      "attendance": null,
+      "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Filip",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Oskar",
+          "tip": [
+            3,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Casper",
+          "tip": [
+            2,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Johan",
+          "tip": [
+            1,
+            0
+          ],
+          "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            1,
+            1
+          ],
+          "points": null
         }
       ]
     }
