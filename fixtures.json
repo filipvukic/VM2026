@@ -77033,9 +77033,9 @@
     "homeTla": "ESP",
     "away": "Belgium",
     "awayTla": "BEL",
-    "status": "PAUSED",
+    "status": "FINISHED",
     "score": [
-      1,
+      2,
       1
     ],
     "scoreDetail": {
@@ -77044,15 +77044,15 @@
         1
       ],
       "fullTime": [
-        1,
+        2,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "47",
+    "minute": null,
     "goals": [
       {
         "minute": "30",
@@ -77079,6 +77079,19 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "88",
+        "team": "ESP",
+        "scorer": "Mikel Merino",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Spain 2, Belgium 1. Mikel Merino (Spain) left footed shot from very close range to the top left corner.",
+        "score": [
+          2,
+          1
+        ],
+        "period": 2
       }
     ],
     "bookings": [
@@ -77088,9 +77101,94 @@
         "player": "Pau Cubarsí",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "85",
+        "team": "BEL",
+        "player": "Kevin De Bruyne",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "ESP",
+        "player": "Aymeric Laporte",
+        "card": "YELLOW",
+        "period": 2
+      },
+      {
+        "minute": "90+5",
+        "team": "BEL",
+        "player": "Axel Witsel",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "55",
+        "team": "ESP",
+        "playerIn": "Ferran Torres",
+        "playerOut": "Álex Baena",
+        "period": 2
+      },
+      {
+        "minute": "55",
+        "team": "ESP",
+        "playerIn": "Pedri",
+        "playerOut": "Fabián Ruiz",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "BEL",
+        "playerIn": "Romelu Lukaku",
+        "playerOut": "Hans Vanaken",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "BEL",
+        "playerIn": "Axel Witsel",
+        "playerOut": "Leandro Trossard",
+        "period": 2
+      },
+      {
+        "minute": "61",
+        "team": "BEL",
+        "playerIn": "Joaquin Seys",
+        "playerOut": "Maxim De Cuyper",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "BEL",
+        "playerIn": "Senne Lammens",
+        "playerOut": "Thibaut Courtois",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "ESP",
+        "playerIn": "Nico Williams",
+        "playerOut": "Mikel Oyarzabal",
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "BEL",
+        "playerIn": "Alexis Saelemaekers",
+        "playerOut": "Kevin De Bruyne",
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "ESP",
+        "playerIn": "Mikel Merino",
+        "playerOut": "Dani Olmo",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "SoFi Stadium",
       "city": "Inglewood, California",
@@ -77103,7 +77201,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 0,
     "espnOdds": {
       "homeML": -165,
       "awayML": 475,
@@ -77168,7 +77266,7 @@
           "jersey": "10",
           "espnId": "227765",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Fabián Ruiz",
@@ -77177,7 +77275,7 @@
           "jersey": "8",
           "espnId": "214596",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rodri",
@@ -77195,7 +77293,7 @@
           "jersey": "21",
           "espnId": "229018",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Álex Baena",
@@ -77204,7 +77302,7 @@
           "jersey": "15",
           "espnId": "297373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lamine Yamal",
@@ -77223,7 +77321,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "312146",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77259,7 +77357,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "209581",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77322,7 +77420,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "250465",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77340,7 +77438,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "265869",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77366,7 +77464,7 @@
           "jersey": "1",
           "espnId": "134283",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Brandon Mechele",
@@ -77393,7 +77491,7 @@
           "jersey": "5",
           "espnId": "301327",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Timothy Castagne",
@@ -77411,7 +77509,7 @@
           "jersey": "7",
           "espnId": "134947",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Nicolas Raskin",
@@ -77429,7 +77527,7 @@
           "jersey": "20",
           "espnId": "193849",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Charles De Ketelaere",
@@ -77456,7 +77554,7 @@
           "jersey": "10",
           "espnId": "174980",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -77466,7 +77564,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "271132",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77484,7 +77582,7 @@
           "positionName": "Substitute",
           "jersey": "18",
           "espnId": "363068",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77502,7 +77600,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "301425",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77547,7 +77645,7 @@
           "positionName": "Substitute",
           "jersey": "6",
           "espnId": "164895",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -77565,7 +77663,7 @@
           "positionName": "Substitute",
           "jersey": "9",
           "espnId": "139437",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -77573,64 +77671,64 @@
       "_espnEventId": "760511"
     },
     "homeStats": {
-      "foulsCommitted": 7.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 13.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 3.0,
-      "saves": 0.0,
-      "possessionPct": 63.0,
-      "totalShots": 9.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.3,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 284.0,
-      "totalPasses": 320.0,
-      "passPct": 0.9,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 8.0,
-      "crossPct": 0.1,
-      "totalLongBalls": 18.0,
-      "accurateLongBalls": 8.0,
-      "longballPct": 0.4,
-      "blockedShots": 3.0,
-      "effectiveTackles": 3.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.4,
-      "interceptions": 3.0,
-      "effectiveClearance": 5.0,
-      "totalClearance": 5.0
-    },
-    "awayStats": {
-      "foulsCommitted": 6.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 1.0,
-      "wonCorners": 0.0,
-      "saves": 2.0,
-      "possessionPct": 37.0,
-      "totalShots": 2.0,
-      "shotsOnTarget": 1.0,
+      "offsides": 3.0,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 67.8,
+      "totalShots": 17.0,
+      "shotsOnTarget": 8.0,
       "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 151.0,
-      "totalPasses": 185.0,
+      "accuratePasses": 598.0,
+      "totalPasses": 665.0,
+      "passPct": 0.9,
+      "accurateCrosses": 2.0,
+      "totalCrosses": 19.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 37.0,
+      "accurateLongBalls": 21.0,
+      "longballPct": 0.6,
+      "blockedShots": 5.0,
+      "effectiveTackles": 5.0,
+      "totalTackles": 11.0,
+      "tacklePct": 0.5,
+      "interceptions": 4.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
+    },
+    "awayStats": {
+      "foulsCommitted": 18.0,
+      "yellowCards": 2.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 1.0,
+      "saves": 6.0,
+      "possessionPct": 32.2,
+      "totalShots": 5.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 244.0,
+      "totalPasses": 314.0,
       "passPct": 0.8,
       "accurateCrosses": 2.0,
-      "totalCrosses": 6.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 22.0,
-      "accurateLongBalls": 11.0,
-      "longballPct": 0.5,
-      "blockedShots": 1.0,
-      "effectiveTackles": 1.0,
-      "totalTackles": 3.0,
-      "tacklePct": 0.3,
-      "interceptions": 5.0,
-      "effectiveClearance": 14.0,
-      "totalClearance": 14.0
+      "totalCrosses": 10.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 45.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.4,
+      "blockedShots": 2.0,
+      "effectiveTackles": 6.0,
+      "totalTackles": 10.0,
+      "tacklePct": 0.6,
+      "interceptions": 10.0,
+      "effectiveClearance": 33.0,
+      "totalClearance": 33.0
     },
     "homeForm": [
       {
