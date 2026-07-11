@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T20:13:19+00:00",
+  "updated_at": "2026-07-11T21:07:25+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -22180,17 +22180,23 @@
       "homeTla": "NOR",
       "away": "England",
       "awayTla": "ENG",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "6",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -22202,8 +22208,7 @@
       "referees": [
         {
           "name": "Clément Turpin",
-          "role": "REFEREE",
-          "nationality": "France"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -22272,6 +22277,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
