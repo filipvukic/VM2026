@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T21:07:25+00:00",
+  "updated_at": "2026-07-11T22:03:31+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 164,
+      "match_points": 162,
       "bonus_points": 3,
-      "total": 167,
+      "total": 165,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 163,
+      "match_points": 162,
       "bonus_points": 0,
-      "total": 163,
+      "total": 162,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 162,
+      "match_points": 160,
       "bonus_points": 0,
-      "total": 162,
+      "total": 160,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 157,
+      "match_points": 156,
       "bonus_points": 3,
-      "total": 160,
+      "total": 159,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 155,
+      "match_points": 154,
       "bonus_points": 3,
-      "total": 158,
+      "total": 157,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 156,
+      "match_points": 155,
       "bonus_points": 0,
-      "total": 156,
+      "total": 155,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 150,
+      "match_points": 148,
       "bonus_points": 3,
-      "total": 153,
+      "total": 151,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 151,
+      "match_points": 149,
       "bonus_points": 0,
-      "total": 151,
+      "total": 149,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 143,
+      "match_points": 142,
       "bonus_points": 3,
-      "total": 146,
+      "total": 145,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 145,
+      "match_points": 143,
       "bonus_points": 0,
-      "total": 145,
+      "total": 143,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 142,
+      "match_points": 141,
       "bonus_points": 0,
-      "total": 142,
+      "total": 141,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -20269,7 +20269,7 @@
       "homeTla": "MEX",
       "away": "England",
       "awayTla": "ENG",
-      "status": "FINISHED",
+      "status": "2026-07-06 01:00:00Z",
       "score": [
         2,
         3
@@ -20492,7 +20492,7 @@
             2,
             1
           ],
-          "points": 1
+          "points": null
         },
         {
           "name": "Filip",
@@ -20500,7 +20500,7 @@
             1,
             2
           ],
-          "points": 2
+          "points": null
         },
         {
           "name": "Martin",
@@ -20508,7 +20508,7 @@
             0,
             2
           ],
-          "points": 2
+          "points": null
         },
         {
           "name": "Oskar",
@@ -20516,7 +20516,7 @@
             3,
             2
           ],
-          "points": 1
+          "points": null
         },
         {
           "name": "Isac",
@@ -20524,7 +20524,7 @@
             1,
             2
           ],
-          "points": 2
+          "points": null
         },
         {
           "name": "Casper",
@@ -20532,7 +20532,7 @@
             0,
             2
           ],
-          "points": 2
+          "points": null
         },
         {
           "name": "Johan",
@@ -20540,7 +20540,7 @@
             2,
             1
           ],
-          "points": 1
+          "points": null
         },
         {
           "name": "Vilgot",
@@ -20548,7 +20548,7 @@
             1,
             1
           ],
-          "points": 1
+          "points": null
         },
         {
           "name": "Björn",
@@ -20556,7 +20556,7 @@
             0,
             0
           ],
-          "points": 1,
+          "points": null,
           "default": true
         },
         {
@@ -20565,7 +20565,7 @@
             0,
             2
           ],
-          "points": 2
+          "points": null
         },
         {
           "name": "Alexander",
@@ -20573,7 +20573,7 @@
             1,
             1
           ],
-          "points": 1
+          "points": null
         }
       ]
     },
@@ -22180,24 +22180,54 @@
       "homeTla": "NOR",
       "away": "England",
       "awayTla": "ENG",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "score": [
-        0,
-        0
+        1,
+        1
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          1,
+          1
+        ],
         "fullTime": [
-          0,
-          0
+          1,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "6",
-      "goals": [],
+      "minute": "HT",
+      "goals": [
+        {
+          "minute": "36",
+          "team": "NOR",
+          "scorer": "Andreas Schjelderup",
+          "assist": "Martin Ødegaard",
+          "type": "REGULAR",
+          "description": "Goal! Norway 1, England 0. Andreas Schjelderup (Norway) left footed shot from the left side of the box to the top right corner. Assisted by Martin Ødegaard.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+2",
+          "team": "ENG",
+          "scorer": "Jude Bellingham",
+          "assist": "Anthony Gordon",
+          "type": "REGULAR",
+          "description": "Goal! Norway 1, England 1. Jude Bellingham (England) left footed shot from the left side of the box to the bottom right corner. Assisted by Anthony Gordon following a fast break.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
