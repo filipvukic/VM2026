@@ -31,6 +31,24 @@ export interface EspnLite {
 }
 export interface EspnLineups { home: RawLineup | null; away: RawLineup | null }
 
+// A fetch that can never hang. iOS suspends in-flight requests when the app is
+// backgrounded (screen lock, app switch) and they can stay pending indefinitely —
+// which would stall the poll chain and freeze the live minute on screen. Always
+// resolves: null on any error, non-OK status or timeout.
+async function fetchJson(url: string, timeoutMs = 12000): Promise<any | null> {
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), timeoutMs);
+  try {
+    const r = await fetch(url, { cache: "no-store", signal: ac.signal });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch {
+    return null; // network/CORS hiccup or timeout — overlay is best-effort
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 function norm(s: string): string {
   return (s || "")
     .toLowerCase()
@@ -91,10 +109,9 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
   const out: EspnLite[] = [];
   await Promise.all(
     utcDates(nowMs).map(async (day) => {
-      try {
-        const r = await fetch(SCOREBOARD + day, { cache: "no-store" });
-        if (!r.ok) return;
-        const j = await r.json();
+      {
+        const j = await fetchJson(SCOREBOARD + day);
+        if (!j) return;
         for (const ev of j.events || []) {
           const comp = (ev.competitions || [])[0];
           if (!comp) continue;
@@ -136,8 +153,6 @@ export async function fetchEspnEvents(nowMs: number): Promise<EspnLite[]> {
             goals,
           });
         }
-      } catch {
-        /* network/CORS hiccup — overlay is best-effort */
       }
     })
   );
@@ -221,9 +236,8 @@ function lineupSide(roster: any, eventId: string): RawLineup | null {
 
 export async function fetchEventSummary(eventId: string): Promise<EspnSummary | null> {
   try {
-    const r = await fetch(SUMMARY + eventId, { cache: "no-store" });
-    if (!r.ok) return null;
-    const d = await r.json();
+    const d = await fetchJson(SUMMARY + eventId);
+    if (!d) return null;
     const ros = d.rosters || [];
     const hr = ros.find((x: any) => x.homeAway === "home");
     const ar = ros.find((x: any) => x.homeAway === "away");
@@ -289,9 +303,8 @@ export async function fetchFixtureOdds(home: string, away: string, koUtc: string
   });
   for (const day of days) {
     try {
-      const r = await fetch(SCOREBOARD + day, { cache: "no-store" });
-      if (!r.ok) continue;
-      const j = await r.json();
+      const j = await fetchJson(SCOREBOARD + day);
+      if (!j) continue;
       for (const ev of j.events || []) {
         const comp = (ev.competitions || [])[0];
         const cs = comp?.competitors || [];

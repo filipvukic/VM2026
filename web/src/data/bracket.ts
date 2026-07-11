@@ -202,6 +202,12 @@ export function buildKnockout(
     s.ga = rm.ga;
     s.gb = rm.gb;
     s.winner = rm.winner;
+    // The live clock rides along with the status: without these the KO slot is
+    // "live" but has no minute, and the UI falls back to guessing it from the
+    // kickoff (which ignores stoppage time and drifts minutes off the real game).
+    s.minute = rm.minute;
+    s.liveOverlay = rm.liveOverlay;
+    s.likelyEnded = rm.likelyEnded;
     s.scorers = rm.scorers || [];
     s.cards = rm.cards || [];
     s.subs = rm.subs || [];

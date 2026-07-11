@@ -50,14 +50,26 @@ function inLiveWindow(nowMs: number): boolean {
 }
 
 let timer: ReturnType<typeof setTimeout> | null = null;
+let inFlight = false;
+let started = false;
 
 // Self-scheduling poller. Pulls the scoreboard (all matches) every cycle, and the
 // per-match SUMMARY (lineups/subs/cards) for matches in the live window — line-ups
 // are fetched once (cached), live matches refetched each cycle for fresh subs.
+//
+// The chain must never be able to die: a stalled cycle leaves the last ESPN
+// snapshot on screen, so the live minute silently freezes while the match plays on.
+// `inFlight` (not the timer handle) marks a cycle in progress, the re-arm lives in
+// `finally` so it survives any throw, and the fetches time out rather than hang.
 export function startEspnLive() {
-  if (timer) return;
+  if (started) return;
+  started = true;
+
   const tick = async () => {
+    if (timer) clearTimeout(timer);
     timer = null;
+    if (inFlight) return; // a cycle is already running — it re-arms itself when done
+    inFlight = true;
     const now = Date.now();
     const hidden = typeof document !== "undefined" && document.hidden;
     // Keep polling even when the tab is hidden (slower) so live updates — and the
@@ -80,22 +92,24 @@ export function startEspnLive() {
           if (sm) next[e.id] = sm;
         })
       );
-      useEspnLive.getState().set(events, next);
+      if (events.length) useEspnLive.getState().set(events, next);
     } catch {
       /* ignore */
+    } finally {
+      inFlight = false;
+      const live = inLiveWindow(Date.now());
+      const delay = hidden ? (live ? 60000 : 300000) : live ? 25000 : 240000;
+      timer = setTimeout(tick, delay);
     }
-    const live = inLiveWindow(Date.now());
-    const delay = hidden ? (live ? 60000 : 300000) : live ? 25000 : 240000;
-    timer = setTimeout(tick, delay);
   };
+
   tick();
   if (typeof document !== "undefined") {
+    // Coming back to the app (unlock / app switch) must always refresh: the clock
+    // on screen is as old as the last cycle, and a phone that slept through the
+    // scheduled one can be minutes behind. tick() self-guards via `inFlight`.
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && timer) {
-        clearTimeout(timer);
-        timer = null;
-        tick();
-      }
+      if (!document.hidden) tick();
     });
   }
 }
