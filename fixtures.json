@@ -77837,12 +77837,12 @@
     "odds": null,
     "attendance": null,
     "espnOdds": {
-      "homeML": 300,
-      "awayML": -110,
-      "spread": "ENG -110",
+      "homeML": 280,
+      "awayML": -105,
+      "spread": "ENG -105",
       "overUnder": 2.5,
       "overOdds": -140.0,
-      "underOdds": 110.0,
+      "underOdds": 115.0,
       "provider": "DraftKings"
     },
     "homeLineup": null,
@@ -78070,8 +78070,8 @@
     "group": null,
     "home": "France",
     "homeTla": "FRA",
-    "away": null,
-    "awayTla": null,
+    "away": "Spain",
+    "awayTla": "ESP",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -78086,17 +78086,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "AT&T Stadium",
+      "city": "Arlington, Texas",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 135,
+      "awayML": 215,
+      "spread": "FRA +135",
+      "overUnder": 2.5,
+      "overOdds": -105.0,
+      "underOdds": -115.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 14.0,
+      "totalGoals": 16.0,
+      "goalAssists": 14.0,
+      "goalsConceded": 2.0
+    },
+    "awayStats": {
+      "goalDifference": 9.0,
+      "totalGoals": 9.0,
+      "goalAssists": 8.0,
+      "goalsConceded": 0.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-09",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-07-04",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-30",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-26",
+        "result": "F",
+        "gf": 1,
+        "ga": 4,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-10",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-07-06",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-07-02",
+        "result": "V",
+        "gf": 3,
+        "ga": 0,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 1,
+        "home": false
+      },
+      {
+        "date": "2026-06-21",
+        "result": "V",
+        "gf": 4,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537388,
