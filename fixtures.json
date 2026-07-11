@@ -77814,9 +77814,9 @@
     "homeTla": "NOR",
     "away": "England",
     "awayTla": "ENG",
-    "status": "PAUSED",
+    "status": "IN_PLAY",
     "score": [
-      1,
+      2,
       1
     ],
     "scoreDetail": {
@@ -77825,15 +77825,15 @@
         1
       ],
       "fullTime": [
-        1,
+        2,
         1
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "HOME_TEAM"
     },
-    "minute": "HT",
+    "minute": null,
     "goals": [
       {
         "minute": "36",
@@ -77854,7 +77854,7 @@
         "scorer": "Jude Bellingham",
         "assist": "Anthony Gordon",
         "type": "REGULAR",
-        "description": "Goal! Norway 1, England 1. Jude Bellingham (England) left footed shot from the left side of the box to the bottom right corner. Assisted by Anthony Gordon following a fast break.",
+        "description": "Goal! Norway 1, England 1. Jude Bellingham (England) left footed shot from the left side of the box to the bottom right corner. Assisted by Anthony Gordon.",
         "score": [
           1,
           1
@@ -77863,7 +77863,71 @@
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "ENG",
+        "playerIn": "Bukayo Saka",
+        "playerOut": "Noni Madueke",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "ENG",
+        "playerIn": "Eberechi Eze",
+        "playerOut": "Declan Rice",
+        "period": 2
+      },
+      {
+        "minute": "60",
+        "team": "NOR",
+        "playerIn": "Fredrik Aursnes",
+        "playerOut": "Julian Ryerson",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "NOR",
+        "playerIn": "Oscar Bobb",
+        "playerOut": "Alexander Sørloth",
+        "period": 2
+      },
+      {
+        "minute": "68",
+        "team": "NOR",
+        "playerIn": "Antonio Nusa",
+        "playerOut": "Andreas Schjelderup",
+        "period": 2
+      },
+      {
+        "minute": "71",
+        "team": "ENG",
+        "playerIn": "Reece James",
+        "playerOut": "Anthony Gordon",
+        "period": 2
+      },
+      {
+        "minute": "86",
+        "team": "ENG",
+        "playerIn": "Djed Spence",
+        "playerOut": "Nico O'Reilly",
+        "period": 2
+      },
+      {
+        "minute": "89",
+        "team": "ENG",
+        "playerIn": "Morgan Rogers",
+        "playerOut": "Ezri Konsa",
+        "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "NOR",
+        "playerIn": "Marcus Holmgren Pedersen",
+        "playerOut": "David Møller Wolfe",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -77923,7 +77987,7 @@
           "jersey": "5",
           "espnId": "313361",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Julian Ryerson",
@@ -77932,7 +77996,7 @@
           "jersey": "26",
           "espnId": "222991",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Sander Berge",
@@ -77977,7 +78041,7 @@
           "jersey": "21",
           "espnId": "313415",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Alexander Sørloth",
@@ -77986,7 +78050,7 @@
           "jersey": "7",
           "espnId": "188230",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -78014,7 +78078,7 @@
           "positionName": "Substitute",
           "jersey": "14",
           "espnId": "212900",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78023,7 +78087,7 @@
           "positionName": "Substitute",
           "jersey": "20",
           "espnId": "319368",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78068,7 +78132,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "307111",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78095,7 +78159,7 @@
           "positionName": "Substitute",
           "jersey": "16",
           "espnId": "129285",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78166,7 +78230,7 @@
           "jersey": "3",
           "espnId": "328464",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ezri Konsa",
@@ -78175,7 +78239,7 @@
           "jersey": "2",
           "espnId": "231859",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Jude Bellingham",
@@ -78202,7 +78266,7 @@
           "jersey": "4",
           "espnId": "238262",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Harry Kane",
@@ -78220,7 +78284,7 @@
           "jersey": "18",
           "espnId": "268782",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Noni Madueke",
@@ -78229,7 +78293,7 @@
           "jersey": "20",
           "espnId": "293236",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -78257,7 +78321,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "265653",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78266,7 +78330,7 @@
           "positionName": "Substitute",
           "jersey": "21",
           "espnId": "251400",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78320,7 +78384,7 @@
           "positionName": "Substitute",
           "jersey": "25",
           "espnId": "267711",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78347,7 +78411,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "280555",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78356,7 +78420,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "189007",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -78364,64 +78428,64 @@
       "_espnEventId": "760512"
     },
     "homeStats": {
+      "foulsCommitted": 8.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 1.0,
+      "wonCorners": 5.0,
+      "saves": 1.0,
+      "possessionPct": 42.3,
+      "totalShots": 9.0,
+      "shotsOnTarget": 4.0,
+      "shotPct": 0.4,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 327.0,
+      "totalPasses": 386.0,
+      "passPct": 0.8,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 13.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 14.0,
+      "longballPct": 0.4,
+      "blockedShots": 1.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 19.0,
+      "tacklePct": 0.5,
+      "interceptions": 5.0,
+      "effectiveClearance": 15.0,
+      "totalClearance": 15.0
+    },
+    "awayStats": {
       "foulsCommitted": 5.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 32.4,
-      "totalShots": 5.0,
-      "shotsOnTarget": 3.0,
-      "shotPct": 0.6,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 146.0,
-      "totalPasses": 175.0,
-      "passPct": 0.8,
-      "accurateCrosses": 1.0,
-      "totalCrosses": 1.0,
-      "crossPct": 1.0,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 7.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 6.0,
-      "totalTackles": 11.0,
-      "tacklePct": 0.5,
-      "interceptions": 2.0,
-      "effectiveClearance": 10.0,
-      "totalClearance": 10.0
-    },
-    "awayStats": {
-      "foulsCommitted": 3.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
       "offsides": 3.0,
-      "wonCorners": 2.0,
-      "saves": 2.0,
-      "possessionPct": 67.6,
-      "totalShots": 4.0,
+      "wonCorners": 3.0,
+      "saves": 3.0,
+      "possessionPct": 57.7,
+      "totalShots": 7.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.5,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 337.0,
-      "totalPasses": 355.0,
+      "accuratePasses": 481.0,
+      "totalPasses": 521.0,
       "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 9.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 20.0,
-      "accurateLongBalls": 15.0,
-      "longballPct": 0.8,
-      "blockedShots": 1.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "accurateCrosses": 6.0,
+      "totalCrosses": 17.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 33.0,
+      "accurateLongBalls": 21.0,
+      "longballPct": 0.6,
+      "blockedShots": 3.0,
+      "effectiveTackles": 7.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.9,
+      "interceptions": 5.0,
+      "effectiveClearance": 21.0,
+      "totalClearance": 21.0
     },
     "homeForm": [
       {
@@ -78526,7 +78590,13 @@
       "city": "Kansas City, Missouri",
       "country": "USA"
     },
-    "referees": [],
+    "referees": [
+      {
+        "name": "João Pinheiro",
+        "role": "REFEREE",
+        "nationality": "Portugal"
+      }
+    ],
     "odds": null,
     "attendance": null,
     "espnOdds": {

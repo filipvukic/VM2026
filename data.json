@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T22:03:31+00:00",
+  "updated_at": "2026-07-11T23:01:52+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -22180,9 +22180,9 @@
       "homeTla": "NOR",
       "away": "England",
       "awayTla": "ENG",
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "score": [
-        1,
+        2,
         1
       ],
       "scoreDetail": {
@@ -22191,15 +22191,15 @@
           1
         ],
         "fullTime": [
-          1,
+          2,
           1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": "HT",
+      "minute": null,
       "goals": [
         {
           "minute": "36",
@@ -22220,7 +22220,7 @@
           "scorer": "Jude Bellingham",
           "assist": "Anthony Gordon",
           "type": "REGULAR",
-          "description": "Goal! Norway 1, England 1. Jude Bellingham (England) left footed shot from the left side of the box to the bottom right corner. Assisted by Anthony Gordon following a fast break.",
+          "description": "Goal! Norway 1, England 1. Jude Bellingham (England) left footed shot from the left side of the box to the bottom right corner. Assisted by Anthony Gordon.",
           "score": [
             1,
             1
@@ -22229,7 +22229,71 @@
         }
       ],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "ENG",
+          "playerIn": "Bukayo Saka",
+          "playerOut": "Noni Madueke",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "ENG",
+          "playerIn": "Eberechi Eze",
+          "playerOut": "Declan Rice",
+          "period": 2
+        },
+        {
+          "minute": "60",
+          "team": "NOR",
+          "playerIn": "Fredrik Aursnes",
+          "playerOut": "Julian Ryerson",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "NOR",
+          "playerIn": "Oscar Bobb",
+          "playerOut": "Alexander Sørloth",
+          "period": 2
+        },
+        {
+          "minute": "68",
+          "team": "NOR",
+          "playerIn": "Antonio Nusa",
+          "playerOut": "Andreas Schjelderup",
+          "period": 2
+        },
+        {
+          "minute": "71",
+          "team": "ENG",
+          "playerIn": "Reece James",
+          "playerOut": "Anthony Gordon",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "ENG",
+          "playerIn": "Djed Spence",
+          "playerOut": "Nico O'Reilly",
+          "period": 2
+        },
+        {
+          "minute": "89",
+          "team": "ENG",
+          "playerIn": "Morgan Rogers",
+          "playerOut": "Ezri Konsa",
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "NOR",
+          "playerIn": "Marcus Holmgren Pedersen",
+          "playerOut": "David Møller Wolfe",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Hard Rock Stadium",
         "city": "Miami Gardens, Florida",
@@ -22364,7 +22428,13 @@
         "city": "Kansas City, Missouri",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "João Pinheiro",
+          "role": "REFEREE",
+          "nationality": "Portugal"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
