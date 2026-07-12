@@ -23,9 +23,19 @@ export function reg90Score(m: Match): [number, number] | null {
     for (const g of reg) if (g.score) { h = Math.max(h, g.score[0]); a = Math.max(a, g.score[1]); }
     return [h, a];
   }
-  // No regulation goals recorded: with no events at all we can't separate ET from
-  // regulation → fall back to the final score; with events but none ≤90 it's a real
-  // 0–0 at the 90-minute mark (any goals came in extra time).
+  // No regulation goals in the event list. Derive it from the score fields instead
+  // of falling back to the final score — that's wrong the moment a match was decided
+  // in extra time. `scoreDetail.extraTime` is the goals SCORED IN extra time, and
+  // ga/gb are already penalty-stripped, so ga/gb − extraTime is the 90-minute score.
+  // (The engine derives it the same way; keep the two in step.)
+  const et = m.scoreDetail?.extraTime;
+  if (et && m.ga != null && m.gb != null) {
+    const h = m.ga - (et[0] || 0);
+    const a = m.gb - (et[1] || 0);
+    if (h >= 0 && a >= 0) return [h, a];
+  }
+  // With events but none ≤90 it's a real 0–0 at the 90-minute mark (all goals came
+  // in extra time). With no events at all, the final score is the best guess left.
   if (!goals.length) return m.ga != null && m.gb != null ? [m.ga, m.gb] : null;
   return [0, 0];
 }

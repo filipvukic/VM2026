@@ -27,6 +27,12 @@ jobs:
         with:
           python-version: "3.x"
 
+      # Poängsättningen får aldrig gå sönder tyst: slutspelstips ska poängsättas mot
+      # 90-minutersresultatet, inte mot resultatet efter förlängning. Fångar regressioner
+      # INNAN motorn skriver om data.json/leaderboard.
+      - name: Testa poängsättningen
+        run: python test_engine.py
+
       - name: Kör tippningsmotorn
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}

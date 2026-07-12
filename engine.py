@@ -953,19 +953,54 @@ def _is_regulation_goal(g):
     return _leading_min(g.get("minute")) <= 90
 
 
+def reg90_from_score(m):
+    """90-minutersresultatet härlett ur score-fälten, utan att titta på målhändelser.
+    football-datas `extraTime` är MÅLEN SOM GJORDES I FÖRLÄNGNINGEN (inte ställningen
+    vid slutet av den), så fullTime − straffar − extraTime = ställningen efter 90.
+    Returnerar None när fälten saknas."""
+    sc = m.get("score") or {}
+    ft = sc.get("fullTime") or {}
+    h, a = ft.get("home"), ft.get("away")
+    if h is None or a is None:
+        return None
+    # straffar viks in i fullTime av football-data -> bort med dem först (som final_score)
+    pens = sc.get("penalties") or {}
+    ph, pa = pens.get("home"), pens.get("away")
+    if ph is not None and pa is not None:
+        h, a = h - ph, a - pa
+    et = sc.get("extraTime") or {}
+    h, a = h - (et.get("home") or 0), a - (et.get("away") or 0)
+    if h < 0 or a < 0:
+        return None  # oväntad kombination -> låt anroparen falla tillbaka
+    return (h, a)
+
+
 def reg90_score(m):
     """Ställning efter 90 min (ordinarie tid) — det som slutspelstips poängsätts mot.
     En slutspelsmatch kan vara oavgjord efter 90 och avgöras i förlängning/straffar,
     så tipset gäller 90-minutersresultatet (oavgjort giltigt). ET-mål räknas inte;
-    löpande ställningen för sista ordinarie målet är facit."""
-    goals = m.get("goals") or []
+    löpande ställningen för sista ordinarie målet är facit.
+
+    OBS: målen MÅSTE hämtas via _goals(m). Råa m["goals"] är tom på football-datas
+    feed — alla målhändelser kommer från ESPN och ligger i m["_espn"]. Att läsa
+    m["goals"] direkt gav en tom lista, vilket föll tillbaka på slutresultatet och
+    poängsatte slutspelstipsen mot resultatet EFTER förlängning (Argentina–Schweiz
+    poängsattes 3–1 i stället för 1–1)."""
+    goals = _goals(m)
     reg = [g for g in goals if _is_regulation_goal(g)]
     if reg:
         h = max((g["score"][0] for g in reg if g.get("score")), default=0)
         a = max((g["score"][1] for g in reg if g.get("score")), default=0)
         return (h, a)
+
+    # Inga ordinarie mål i händelselistan. Härled ur score-fälten i stället för att
+    # gissa på slutresultatet — det senare är fel så fort matchen avgjordes i
+    # förlängning. Detta täcker även matcher helt utan målhändelser.
+    derived = reg90_from_score(m)
+    if derived is not None:
+        return derived
     if not goals:
-        return final_score(m)  # inga events att resonera kring -> bästa gissning
+        return final_score(m)  # inga events OCH inga score-fält -> bästa gissning
     return (0, 0)  # events finns men inga i ordinarie tid -> äkta 0-0 vid 90'
 
 
