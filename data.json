@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-12T00:03:26+00:00",
+  "updated_at": "2026-07-12T03:47:34+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 167,
+      "match_points": 168,
       "bonus_points": 3,
-      "total": 170,
+      "total": 171,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 164,
+      "match_points": 166,
       "bonus_points": 0,
-      "total": 164,
+      "total": 166,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 159,
+      "match_points": 161,
       "bonus_points": 3,
-      "total": 162,
+      "total": 164,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 161,
+      "match_points": 162,
       "bonus_points": 0,
-      "total": 161,
+      "total": 162,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 157,
+      "match_points": 158,
       "bonus_points": 3,
-      "total": 160,
+      "total": 161,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 156,
+      "match_points": 158,
       "bonus_points": 0,
-      "total": 156,
+      "total": 158,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 149,
+      "match_points": 151,
       "bonus_points": 3,
-      "total": 152,
+      "total": 154,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 150,
+      "match_points": 151,
       "bonus_points": 0,
-      "total": 150,
+      "total": 151,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 143,
+      "match_points": 144,
       "bonus_points": 3,
-      "total": 146,
+      "total": 147,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 145,
+      "match_points": 147,
       "bonus_points": 0,
-      "total": 145,
+      "total": 147,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 142,
+      "match_points": 143,
       "bonus_points": 0,
-      "total": 142,
+      "total": 143,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -22454,20 +22454,206 @@
       "homeTla": "ARG",
       "away": "Switzerland",
       "awayTla": "SUI",
-      "status": "TIMED",
-      "score": null,
+      "status": "FINISHED",
+      "score": [
+        2,
+        1
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
-        "extraTime": null,
+        "halfTime": [
+          1,
+          0
+        ],
+        "fullTime": [
+          2,
+          1
+        ],
+        "extraTime": [
+          1,
+          0
+        ],
         "penalties": null,
-        "duration": "REGULAR",
-        "winnerSide": null
+        "duration": "EXTRA_TIME",
+        "winnerSide": "HOME_TEAM"
       },
       "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "goals": [
+        {
+          "minute": "10",
+          "team": "ARG",
+          "scorer": "Alexis Mac Allister",
+          "assist": "Lionel Messi",
+          "type": "HEADER",
+          "description": "Goal! Argentina 1, Switzerland 0. Alexis Mac Allister (Argentina) header from the left side of the six yard box to the bottom right corner. Assisted by Lionel Messi with a cross following a corner.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 1
+        },
+        {
+          "minute": "67",
+          "team": "SUI",
+          "scorer": "Dan Ndoye",
+          "assist": "Ricardo Rodríguez",
+          "type": "REGULAR",
+          "description": "Goal! Argentina 1, Switzerland 1. Dan Ndoye (Switzerland) right footed shot from a difficult angle on the left to the centre of the goal. Assisted by Ricardo Rodríguez with a through ball.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "112",
+          "team": "ARG",
+          "scorer": "Julián Álvarez",
+          "assist": "José Manuel López",
+          "type": "REGULAR",
+          "description": "Goal! Argentina 2, Switzerland 1. Julián Alvarez (Argentina) right footed shot from outside the box to the top right corner. Assisted by José Manuel López.",
+          "score": [
+            2,
+            1
+          ],
+          "period": 4
+        },
+        {
+          "minute": "120+1",
+          "team": "ARG",
+          "scorer": "Lautaro Martínez",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! Argentina 3, Switzerland 1. Lautaro Martínez (Argentina) right footed shot from the centre of the box to the bottom right corner following a fast break.",
+          "score": [
+            3,
+            1
+          ],
+          "period": 4
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "44",
+          "team": "SUI",
+          "player": "Breel Embolo",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "72",
+          "team": "SUI",
+          "player": "Breel Embolo",
+          "card": "YELLOW_RED",
+          "period": 2
+        },
+        {
+          "minute": "97",
+          "team": "ARG",
+          "player": "Thiago Almada",
+          "card": "YELLOW",
+          "period": 3
+        },
+        {
+          "minute": "98",
+          "team": "ARG",
+          "player": "Lautaro Martínez",
+          "card": "YELLOW",
+          "period": 3
+        },
+        {
+          "minute": "114",
+          "team": "ARG",
+          "player": "José Manuel López",
+          "card": "YELLOW",
+          "period": 4
+        }
+      ],
+      "subs": [
+        {
+          "minute": "78",
+          "team": "ARG",
+          "playerIn": "Nico González",
+          "playerOut": "Nicolás Tagliafico",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "ARG",
+          "playerIn": "Lautaro Martínez",
+          "playerOut": "Rodrigo De Paul",
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "ARG",
+          "playerIn": "Gonzalo Montiel",
+          "playerOut": "Nahuel Molina",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "SUI",
+          "playerIn": "Silvan Widmer",
+          "playerOut": "Djibril Sow",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "SUI",
+          "playerIn": "Zeki Amdouni",
+          "playerOut": "Dan Ndoye",
+          "period": 2
+        },
+        {
+          "minute": "86",
+          "team": "SUI",
+          "playerIn": "Miro Muheim",
+          "playerOut": "Fabian Rieder",
+          "period": 2
+        },
+        {
+          "minute": "90+5",
+          "team": "SUI",
+          "playerIn": "Eray Cömert",
+          "playerOut": "Ricardo Rodríguez",
+          "period": 2
+        },
+        {
+          "minute": "90",
+          "team": "ARG",
+          "playerIn": "Thiago Almada",
+          "playerOut": "Enzo Fernández",
+          "period": 3
+        },
+        {
+          "minute": "96",
+          "team": "SUI",
+          "playerIn": "Ardon Jashari",
+          "playerOut": "Denis Zakaria",
+          "period": 3
+        },
+        {
+          "minute": "105",
+          "team": "ARG",
+          "playerIn": "Nicolás Otamendi",
+          "playerOut": "Cristian Romero",
+          "period": 4
+        },
+        {
+          "minute": "110",
+          "team": "ARG",
+          "playerIn": "José Manuel López",
+          "playerOut": "Leandro Paredes",
+          "period": 4
+        },
+        {
+          "minute": "115",
+          "team": "SUI",
+          "playerIn": "Rubén Vargas",
+          "playerOut": "Remo Freuler",
+          "period": 4
+        }
+      ],
       "venue": {
         "stadium": "GEHA Field at Arrowhead Stadium",
         "city": "Kansas City, Missouri",
@@ -22476,12 +22662,11 @@
       "referees": [
         {
           "name": "João Pinheiro",
-          "role": "REFEREE",
-          "nationality": "Portugal"
+          "role": "Referee"
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 69045,
       "tips": [
         {
           "name": "Albin",
@@ -22489,7 +22674,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -22497,7 +22682,16 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
+        },
+        {
+          "name": "Martin",
+          "tip": [
+            0,
+            0
+          ],
+          "points": 1,
+          "default": true
         },
         {
           "name": "Oskar",
@@ -22505,7 +22699,16 @@
             3,
             0
           ],
-          "points": null
+          "points": 2
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            0,
+            0
+          ],
+          "points": 1,
+          "default": true
         },
         {
           "name": "Casper",
@@ -22513,7 +22716,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -22521,7 +22724,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -22529,7 +22732,16 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": 1,
+          "default": true
         },
         {
           "name": "Hampus",
@@ -22537,7 +22749,7 @@
             1,
             0
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -22545,7 +22757,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     }
