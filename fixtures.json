@@ -77814,10 +77814,10 @@
     "homeTla": "NOR",
     "away": "England",
     "awayTla": "ENG",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      2,
-      1
+      1,
+      2
     ],
     "scoreDetail": {
       "halfTime": [
@@ -77825,13 +77825,16 @@
         1
       ],
       "fullTime": [
-        2,
+        1,
+        2
+      ],
+      "extraTime": [
+        0,
         1
       ],
-      "extraTime": null,
       "penalties": null,
-      "duration": "REGULAR",
-      "winnerSide": "HOME_TEAM"
+      "duration": "EXTRA_TIME",
+      "winnerSide": "AWAY_TEAM"
     },
     "minute": null,
     "goals": [
@@ -77860,9 +77863,30 @@
           1
         ],
         "period": 1
+      },
+      {
+        "minute": "93",
+        "team": "ENG",
+        "scorer": "Jude Bellingham",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! Norway 1, England 2. Jude Bellingham (England) right footed shot from the centre of the box to the bottom left corner following a corner.",
+        "score": [
+          1,
+          2
+        ],
+        "period": 3
       }
     ],
-    "bookings": [],
+    "bookings": [
+      {
+        "minute": "117",
+        "team": "NOR",
+        "player": "Kristoffer Ajer",
+        "card": "YELLOW",
+        "period": 4
+      }
+    ],
     "subs": [
       {
         "minute": "45",
@@ -77926,6 +77950,27 @@
         "playerIn": "Marcus Holmgren Pedersen",
         "playerOut": "David Møller Wolfe",
         "period": 2
+      },
+      {
+        "minute": "90",
+        "team": "NOR",
+        "playerIn": "Leo Østigard",
+        "playerOut": "Torbjørn Heggem",
+        "period": 3
+      },
+      {
+        "minute": "105",
+        "team": "NOR",
+        "playerIn": "Jørgen Strand Larsen",
+        "playerOut": "Erling Haaland",
+        "period": 4
+      },
+      {
+        "minute": "111",
+        "team": "ENG",
+        "playerIn": "Dan Burn",
+        "playerOut": "Jude Bellingham",
+        "period": 4
       }
     ],
     "venue": {
@@ -77940,7 +77985,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 0,
     "espnOdds": {
       "homeML": 330,
       "awayML": -125,
@@ -77969,7 +78014,7 @@
           "jersey": "17",
           "espnId": "272867",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Kristoffer Ajer",
@@ -78032,7 +78077,7 @@
           "jersey": "9",
           "espnId": "253989",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Andreas Schjelderup",
@@ -78105,7 +78150,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "252747",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78123,7 +78168,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "281736",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78248,7 +78293,7 @@
           "jersey": "10",
           "espnId": "291281",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Elliot Anderson",
@@ -78348,7 +78393,7 @@
           "positionName": "Substitute",
           "jersey": "15",
           "espnId": "198138",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -78428,64 +78473,64 @@
       "_espnEventId": "760512"
     },
     "homeStats": {
-      "foulsCommitted": 8.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 10.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 1.0,
-      "wonCorners": 5.0,
-      "saves": 1.0,
-      "possessionPct": 42.3,
-      "totalShots": 9.0,
+      "wonCorners": 7.0,
+      "saves": 6.0,
+      "possessionPct": 47.7,
+      "totalShots": 13.0,
       "shotsOnTarget": 4.0,
-      "shotPct": 0.4,
-      "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 327.0,
-      "totalPasses": 386.0,
-      "passPct": 0.8,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 13.0,
-      "crossPct": 0.2,
-      "totalLongBalls": 35.0,
-      "accurateLongBalls": 14.0,
-      "longballPct": 0.4,
-      "blockedShots": 1.0,
-      "effectiveTackles": 9.0,
-      "totalTackles": 19.0,
-      "tacklePct": 0.5,
-      "interceptions": 5.0,
-      "effectiveClearance": 15.0,
-      "totalClearance": 15.0
-    },
-    "awayStats": {
-      "foulsCommitted": 5.0,
-      "yellowCards": 0.0,
-      "redCards": 0.0,
-      "offsides": 3.0,
-      "wonCorners": 3.0,
-      "saves": 3.0,
-      "possessionPct": 57.7,
-      "totalShots": 7.0,
-      "shotsOnTarget": 2.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 481.0,
-      "totalPasses": 521.0,
+      "accuratePasses": 492.0,
+      "totalPasses": 576.0,
       "passPct": 0.9,
-      "accurateCrosses": 6.0,
-      "totalCrosses": 17.0,
-      "crossPct": 0.4,
-      "totalLongBalls": 33.0,
-      "accurateLongBalls": 21.0,
-      "longballPct": 0.6,
+      "accurateCrosses": 3.0,
+      "totalCrosses": 19.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 48.0,
+      "accurateLongBalls": 20.0,
+      "longballPct": 0.4,
       "blockedShots": 3.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 8.0,
-      "tacklePct": 0.9,
-      "interceptions": 5.0,
+      "effectiveTackles": 12.0,
+      "totalTackles": 24.0,
+      "tacklePct": 0.5,
+      "interceptions": 8.0,
       "effectiveClearance": 21.0,
       "totalClearance": 21.0
+    },
+    "awayStats": {
+      "foulsCommitted": 8.0,
+      "yellowCards": 0.0,
+      "redCards": 0.0,
+      "offsides": 5.0,
+      "wonCorners": 4.0,
+      "saves": 3.0,
+      "possessionPct": 52.3,
+      "totalShots": 14.0,
+      "shotsOnTarget": 8.0,
+      "shotPct": 0.6,
+      "penaltyKickGoals": 0.0,
+      "penaltyKickShots": 0.0,
+      "accuratePasses": 567.0,
+      "totalPasses": 626.0,
+      "passPct": 0.9,
+      "accurateCrosses": 9.0,
+      "totalCrosses": 21.0,
+      "crossPct": 0.4,
+      "totalLongBalls": 50.0,
+      "accurateLongBalls": 26.0,
+      "longballPct": 0.5,
+      "blockedShots": 3.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 15.0,
+      "tacklePct": 0.7,
+      "interceptions": 7.0,
+      "effectiveClearance": 35.0,
+      "totalClearance": 35.0
     },
     "homeForm": [
       {
