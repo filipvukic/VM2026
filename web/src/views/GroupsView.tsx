@@ -4,7 +4,7 @@ import { useSheets } from "../state/sheets";
 import { Flag, groupColor } from "../lib/flags";
 import { isLive } from "../lib/liveState";
 import { liveMinuteText } from "../lib/liveMinute";
-import { classifyTip } from "../data/scoring";
+import { classifyTipForMatch } from "../data/scoring";
 import { Avatar } from "../components/Avatar";
 import { svTime, svDayMonth } from "../lib/format";
 import { useNow } from "../state/useNow";
@@ -48,9 +48,11 @@ function groupTipLeaders(ds: Dataset, letter: string) {
     matches.forEach((m) => {
       const tip = p.tips[m.id];
       if (tip) {
-        const c = classifyTip(tip, m.ga!, m.gb!);
-        pts += c.points;
-        if (c.result === "exact") exact++;
+        const c = classifyTipForMatch(m, tip);
+        if (c) {
+          pts += c.points;
+          if (c.result === "exact") exact++;
+        }
       }
     });
     return { id: p.id, name: p.name, color: p.color, photo: p.photo, pts, exact };

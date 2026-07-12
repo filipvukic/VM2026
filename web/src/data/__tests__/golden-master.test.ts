@@ -114,21 +114,46 @@ describe("golden master: TS build() == legacy window.VM.build()", () => {
   const pL = project(legacy);
   const pN = project(next);
 
-  it("standings SCORING (totals, exact, correct/other, points, bonus) matches legacy", () => {
+  it("standings SCORING (totals, exact, points, bonus) matches legacy", () => {
     // The PORT deliberately changed the tie-break: rank now separates equal-points
     // players by exacts → correct-outcome (legacy shared the rank on total alone),
     // which can also reorder equal-points players. So parity is asserted on the
     // per-player scoring only — name-keyed, ignoring rank and array order. Rank
     // behaviour is asserted separately below.
+    //
+    // `correct` / `other` are NOT compared: legacy derives that split from a naive
+    // H/B/X comparison against the FINAL score, so it mis-buckets every knockout tip
+    // once a match is decided in extra time (Argentina–Switzerland: a 1–1 tip is the
+    // exact 90-minute result, but legacy compares it to 3–1 and calls it a miss). The
+    // port buckets them by the engine's per-match points, which honour the 90-minute
+    // rule. See reg90-scoring.test.ts. Everything engine-driven — total, exact,
+    // points, bonus — must still match exactly, and does.
     const byName = (arr: any[]) =>
       arr
         .slice()
         .sort((a: any, b: any) => a.name.localeCompare(b.name))
         .map((s: any) => ({
-          name: s.name, total: s.total, exact: s.exact, correct: s.correct,
-          other: s.other, points: s.points, bonusPts: s.bonusPts, bonus: s.bonus,
+          name: s.name, total: s.total, exact: s.exact,
+          points: s.points, bonusPts: s.bonusPts, bonus: s.bonus,
         }));
     expect(byName(pN.standings)).toEqual(byName(pL.standings));
+  });
+
+  it("every graded tip is bucketed exactly once (exact + correct + other)", () => {
+    // Dropping the correct/other parity check above must not lose coverage. Count the
+    // graded tips straight out of data.json (independent of build()) and assert the
+    // three buckets account for each one exactly once — so a reclassification can move
+    // a tip between correct and other, but never double-count or drop it.
+    const gradedPerPlayer = new Map<string, number>();
+    for (const m of (data as any).matches || []) {
+      for (const t of m.tips || []) {
+        if (t.points == null) continue;
+        gradedPerPlayer.set(t.name, (gradedPerPlayer.get(t.name) || 0) + 1);
+      }
+    }
+    for (const s of pN.standings as any[]) {
+      expect(s.exact + s.correct + s.other).toBe(gradedPerPlayer.get(s.name) || 0);
+    }
   });
   it("group tables match", () => {
     expect(pN.groupTables).toEqual(pL.groupTables);

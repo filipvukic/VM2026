@@ -3,7 +3,8 @@ import { useSheets } from "../state/sheets";
 import { Sheet, type SheetChrome } from "../components/Sheet";
 import { Avatar } from "../components/Avatar";
 import { Flag } from "../lib/flags";
-import { classifyTip } from "../data/scoring";
+import { classifyTipForMatch } from "../data/scoring";
+import { reg90Score } from "../lib/reg90";
 import { svDayMonth } from "../lib/format";
 import { fixName } from "../data/static/names";
 import { isLive } from "../lib/liveState";
@@ -73,7 +74,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
   const form = tipped
     .filter((m) => m.status === "played" && m.ga != null && m.gb != null)
     .slice(-14)
-    .map((m) => ({ m, pts: classifyTip(p.tips[m.id]!, m.ga!, m.gb!).points }));
+    .map((m) => ({ m, pts: classifyTipForMatch(m, p.tips[m.id]!)?.points ?? 0 }));
 
   return (
     <Sheet {...chrome} accent={p.color}>
@@ -177,7 +178,7 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const tip = p.tips[m.id];
               const home = m.home ? ds.teams[m.home] : null;
               const away = m.away ? ds.teams[m.away] : null;
-              const res = tip && m.ga != null && m.gb != null ? classifyTip(tip, m.ga, m.gb).result : null;
+              const res = tip ? classifyTipForMatch(m, tip)?.result ?? null : null;
               const tipCol = res === "exact" ? "var(--gold)" : res === "outcome" ? "var(--win)" : res === "floor" ? "var(--ink-3)" : "var(--ink-2)";
               return (
                 <button key={m.id} onClick={() => m._realId && openMatch(m.id)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 9px", borderRadius: 9, background: "var(--surface)", width: "100%", textAlign: "left", minWidth: 0 }}>
@@ -248,7 +249,13 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
               const away = m.away ? ds.teams[m.away] : null;
               const played = m.status === "played" && m.ga != null && m.gb != null;
               const liveM = isLive(m);
-              const pts = played ? classifyTip(tip, m.ga!, m.gb!).points : null;
+              const pts = played ? classifyTipForMatch(m, tip)?.points ?? null : null;
+              // FACIT = the result the tip is GRADED on: 90 min for knockout matches.
+              // Showing m.ga–m.gb here would print the after-extra-time score next to
+              // points earned on the 90-minute one (Argentina–Switzerland: "FACIT 3–1"
+              // beside 5 p for a 1–1 tip).
+              const facit = played ? reg90Score(m) : null;
+              const aet = facit && (facit[0] !== m.ga || facit[1] !== m.gb);
               const openThis = () => m._realId && openMatch(m.id);
               const isNext = m.id === nextId;
               const state = played ? (pts === 5 ? "exact" : pts === 2 ? "win" : "floor") : liveM ? "live" : "up";
@@ -262,8 +269,11 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
                   </button>
                   <button className="mt-score" onClick={openThis}>
                     <span className="mt-sline"><span className="mt-slab">DU</span><span className="mt-tip">{tip[0]}–{tip[1]}</span></span>
-                    {played ? (
-                      <span className="mt-sline"><span className="mt-slab">FACIT</span><span className="mt-facit">{m.ga}–{m.gb}</span></span>
+                    {played && facit ? (
+                      <span className="mt-sline" title={aet ? `Slutade ${m.ga}–${m.gb} efter förlängning — tipset gäller 90-minutersresultatet` : undefined}>
+                        <span className="mt-slab">FACIT</span>
+                        <span className="mt-facit">{facit[0]}–{facit[1]}{aet && <span className="mt-aet"> 90′</span>}</span>
+                      </span>
                     ) : liveM ? (
                       <span className="mt-sline"><span className="mt-slab mt-livew">NU</span><span className="mt-facit mt-livew">{m.ga ?? 0}–{m.gb ?? 0}</span></span>
                     ) : (
@@ -351,6 +361,8 @@ export function PlayerSheet({ id, ...chrome }: { id: string } & SheetChrome) {
         .mt-tip{ font-size:13px; font-weight:900; line-height:1.15; font-variant-numeric:tabular-nums; color:var(--ink); }
         .mt-facit{ font-size:11px; font-weight:900; color:var(--ink-2); font-variant-numeric:tabular-nums; line-height:1.1; }
         .mt-when{ font-size:8px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); }
+        /* marks a KO match that went to extra time: FACIT is the 90-min result, not the final score */
+        .mt-aet{ font-size:8px; font-weight:900; color:var(--ink-3); }
         .mt-livew{ color:var(--hot); }
         .mt-pts{ flex:0 0 auto; width:20px; height:20px; border-radius:6px; display:grid; place-items:center;
           font-size:11px; font-weight:900; font-variant-numeric:tabular-nums; }

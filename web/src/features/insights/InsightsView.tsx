@@ -3,7 +3,7 @@ import { useData } from "../../state/dataset";
 import { useSheets } from "../../state/sheets";
 import { Avatar } from "../../components/Avatar";
 import { Flag } from "../../lib/flags";
-import { classifyTip, type TipResult } from "../../data/scoring";
+import { classifyTipForMatch, type TipResult } from "../../data/scoring";
 import type { Dataset, Match, PlayerStanding } from "../../data/types";
 
 interface Stat {
@@ -24,14 +24,14 @@ function computeStats(ds: Dataset): Stat[] {
       const mine = played.filter((m) => p.tips[m.id]);
       let exact = 0, correct = 0;
       mine.forEach((m) => {
-        const r = classifyTip(p.tips[m.id], m.ga!, m.gb!).result;
+        const r = classifyTipForMatch(m, p.tips[m.id])?.result;
         if (r === "exact") exact++;
         else if (r === "outcome") correct++;
       });
       return {
         p, played: mine.length, exact, correct,
         hitRate: mine.length ? (exact + correct) / mine.length : 0,
-        recent: mine.slice(-6).map((m) => classifyTip(p.tips[m.id], m.ga!, m.gb!).result),
+        recent: mine.slice(-6).map((m) => classifyTipForMatch(m, p.tips[m.id])?.result).filter(Boolean) as TipResult[],
       };
     })
     .filter((s) => s.played > 0);
@@ -202,7 +202,7 @@ function FgRow({ p, recent, onPlayer, onMatch }: { p: PlayerStanding; recent: Ma
       </button>
       {recent.map((m) => {
         const tip = p.tips[m.id];
-        const r = tip && m.ga != null && m.gb != null ? classifyTip(tip, m.ga, m.gb).result : null;
+        const r = tip ? classifyTipForMatch(m, tip)?.result ?? null : null;
         const pts = r === "exact" ? 5 : r === "outcome" ? 2 : r === "floor" ? 1 : null;
         return (
           <button key={m.id} className="fg-cell" onClick={() => m._realId && onMatch(m.id)} style={{ borderTop: "1px solid var(--line)" }} title={tip ? `${p.name}: ${tip[0]}–${tip[1]} (${pts}p)` : "inget tips"}>

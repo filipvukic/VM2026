@@ -1,4 +1,4 @@
-import { classifyTip } from "../../data/scoring";
+import { classifyTipForMatch } from "../../data/scoring";
 import { svDateKey } from "../../lib/format";
 import type { Dataset } from "../../data/types";
 
@@ -23,7 +23,8 @@ export function computeMovement(ds: Dataset): Record<string, Movement> {
     todayPlayed.forEach((m) => {
       const t = p.tips[m.id];
       if (!t) return;
-      const c = classifyTip(t, m.ga!, m.gb!);
+      const c = classifyTipForMatch(m, t);
+      if (!c) return;
       pts += c.points;
       if (c.result === "exact") ex++;
       else if (c.result === "outcome") co++;
@@ -83,7 +84,7 @@ export function computeRace(ds: Dataset): RaceSeries {
       played.forEach((m) => {
         if (svDateKey(m.kickoff) <= day) {
           const t = p.tips[m.id];
-          if (t) cum += classifyTip(t, m.ga!, m.gb!).points;
+          if (t) cum += classifyTipForMatch(m, t)?.points ?? 0;
         }
       });
       return cum;
