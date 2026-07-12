@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-12T03:47:34+00:00",
+  "updated_at": "2026-07-12T06:21:10+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 168,
+      "match_points": 170,
       "bonus_points": 3,
-      "total": 171,
+      "total": 173,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 166,
+      "match_points": 167,
       "bonus_points": 0,
-      "total": 166,
+      "total": 167,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 161,
+      "match_points": 162,
       "bonus_points": 3,
-      "total": 164,
+      "total": 165,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 162,
+      "match_points": 164,
       "bonus_points": 0,
-      "total": 162,
+      "total": 164,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 158,
+      "match_points": 159,
       "bonus_points": 3,
-      "total": 161,
+      "total": 162,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 158,
+      "match_points": 159,
       "bonus_points": 0,
-      "total": 158,
+      "total": 159,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 151,
+      "match_points": 153,
       "bonus_points": 3,
-      "total": 154,
+      "total": 156,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 151,
+      "match_points": 153,
       "bonus_points": 0,
-      "total": 151,
+      "total": 153,
       "exact_count": 5,
       "bonus_detail": {
         "best_young": {
@@ -380,56 +380,10 @@
       "prize": 0
     },
     {
-      "name": "Björn",
-      "match_points": 144,
-      "bonus_points": 3,
-      "total": 147,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Kylian Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Argentina",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 9,
-      "prize": 0
-    },
-    {
       "name": "Hampus",
-      "match_points": 147,
+      "match_points": 149,
       "bonus_points": 0,
-      "total": 147,
+      "total": 149,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -468,14 +422,60 @@
           "points": 0
         }
       },
+      "rank": 9,
+      "prize": 0
+    },
+    {
+      "name": "Björn",
+      "match_points": 145,
+      "bonus_points": 3,
+      "total": 148,
+      "exact_count": 6,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Kylian Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Argentina",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
       "rank": 10,
       "prize": 0
     },
     {
       "name": "Alexander",
-      "match_points": 143,
+      "match_points": 144,
       "bonus_points": 0,
-      "total": 143,
+      "total": 144,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -20269,7 +20269,7 @@
       "homeTla": "MEX",
       "away": "England",
       "awayTla": "ENG",
-      "status": "2026-07-06 01:00:00Z",
+      "status": "FINISHED",
       "score": [
         2,
         3
@@ -20492,7 +20492,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -20500,7 +20500,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Martin",
@@ -20508,7 +20508,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Oskar",
@@ -20516,7 +20516,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -20524,7 +20524,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -20532,7 +20532,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Johan",
@@ -20540,7 +20540,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -20548,7 +20548,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -20556,7 +20556,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -20565,7 +20565,7 @@
             0,
             2
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Alexander",
@@ -20573,7 +20573,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
@@ -22456,7 +22456,7 @@
       "awayTla": "SUI",
       "status": "FINISHED",
       "score": [
-        2,
+        3,
         1
       ],
       "scoreDetail": {
@@ -22465,11 +22465,11 @@
           0
         ],
         "fullTime": [
-          2,
+          3,
           1
         ],
         "extraTime": [
-          1,
+          2,
           0
         ],
         "penalties": null,

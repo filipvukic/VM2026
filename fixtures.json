@@ -72227,7 +72227,7 @@
     "homeTla": "MEX",
     "away": "England",
     "awayTla": "ENG",
-    "status": "2026-07-06 01:00:00Z",
+    "status": "FINISHED",
     "score": [
       2,
       3
@@ -78618,7 +78618,7 @@
     "awayTla": "SUI",
     "status": "FINISHED",
     "score": [
-      2,
+      3,
       1
     ],
     "scoreDetail": {
@@ -78627,11 +78627,11 @@
         0
       ],
       "fullTime": [
-        2,
+        3,
         1
       ],
       "extraTime": [
-        1,
+        2,
         0
       ],
       "penalties": null,
@@ -79584,10 +79584,10 @@
     "utcDate": "2026-07-15T19:00:00Z",
     "stage": "SEMI_FINALS",
     "group": null,
-    "home": null,
-    "homeTla": null,
-    "away": null,
-    "awayTla": null,
+    "home": "England",
+    "homeTla": "ENG",
+    "away": "Argentina",
+    "awayTla": "ARG",
     "status": "TIMED",
     "score": null,
     "scoreDetail": {
@@ -79602,17 +79602,111 @@
     "goals": [],
     "bookings": [],
     "subs": [],
-    "venue": null,
+    "venue": {
+      "stadium": "Mercedes-Benz Stadium",
+      "city": "Atlanta, Georgia",
+      "country": "USA"
+    },
     "referees": [],
     "odds": null,
     "attendance": null,
-    "espnOdds": null,
+    "espnOdds": {
+      "homeML": 155,
+      "awayML": 205,
+      "spread": "ENG +155",
+      "overUnder": 2.5,
+      "overOdds": 130.0,
+      "underOdds": -165.0,
+      "provider": "DraftKings"
+    },
     "homeLineup": null,
     "awayLineup": null,
-    "homeStats": {},
-    "awayStats": {},
-    "homeForm": [],
-    "awayForm": []
+    "homeStats": {
+      "goalDifference": 6.0,
+      "totalGoals": 11.0,
+      "goalAssists": 9.0,
+      "goalsConceded": 5.0
+    },
+    "awayStats": {
+      "goalDifference": 9.0,
+      "totalGoals": 14.0,
+      "goalAssists": 8.0,
+      "goalsConceded": 5.0
+    },
+    "homeForm": [
+      {
+        "date": "2026-07-11",
+        "result": "F",
+        "gf": 1,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-07-06",
+        "result": "F",
+        "gf": 2,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-07-01",
+        "result": "V",
+        "gf": 2,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-06-27",
+        "result": "F",
+        "gf": 0,
+        "ga": 2,
+        "home": false
+      },
+      {
+        "date": "2026-06-23",
+        "result": "O",
+        "gf": 0,
+        "ga": 0,
+        "home": true
+      }
+    ],
+    "awayForm": [
+      {
+        "date": "2026-07-12",
+        "result": "V",
+        "gf": 3,
+        "ga": 1,
+        "home": true
+      },
+      {
+        "date": "2026-07-07",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-07-03",
+        "result": "V",
+        "gf": 3,
+        "ga": 2,
+        "home": true
+      },
+      {
+        "date": "2026-06-28",
+        "result": "F",
+        "gf": 1,
+        "ga": 3,
+        "home": false
+      },
+      {
+        "date": "2026-06-22",
+        "result": "V",
+        "gf": 2,
+        "ga": 0,
+        "home": true
+      }
+    ]
   },
   {
     "id": 537389,
