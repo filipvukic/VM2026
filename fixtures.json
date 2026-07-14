@@ -79459,7 +79459,7 @@
     "homeTla": "FRA",
     "away": "Spain",
     "awayTla": "ESP",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       0,
       2
@@ -79478,7 +79478,7 @@
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "79",
+    "minute": null,
     "goals": [
       {
         "minute": "22",
@@ -79521,6 +79521,13 @@
         "player": "Marc Cucurella",
         "card": "YELLOW",
         "period": 1
+      },
+      {
+        "minute": "86",
+        "team": "FRA",
+        "player": "Kylian Mbappé",
+        "card": "YELLOW",
+        "period": 2
       }
     ],
     "subs": [
@@ -79579,6 +79586,20 @@
         "playerIn": "Pedri",
         "playerOut": "Fabián Ruiz",
         "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "ESP",
+        "playerIn": "Marcos Llorente",
+        "playerOut": "Pedro Porro",
+        "period": 2
+      },
+      {
+        "minute": "84",
+        "team": "ESP",
+        "playerIn": "Nico Williams",
+        "playerOut": "Álex Baena",
+        "period": 2
       }
     ],
     "venue": {
@@ -79593,7 +79614,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 70176,
     "espnOdds": {
       "homeML": 160,
       "awayML": 210,
@@ -79892,7 +79913,7 @@
           "jersey": "12",
           "espnId": "268533",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Dani Olmo",
@@ -79937,7 +79958,7 @@
           "jersey": "15",
           "espnId": "297373",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Lamine Yamal",
@@ -79992,7 +80013,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "206474",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -80010,7 +80031,7 @@
           "positionName": "Substitute",
           "jersey": "17",
           "espnId": "312146",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -80090,64 +80111,64 @@
       "_espnEventId": "760514"
     },
     "homeStats": {
-      "foulsCommitted": 9.0,
-      "yellowCards": 1.0,
+      "foulsCommitted": 11.0,
+      "yellowCards": 2.0,
       "redCards": 0.0,
       "offsides": 4.0,
-      "wonCorners": 6.0,
+      "wonCorners": 7.0,
       "saves": 0.0,
-      "possessionPct": 47.8,
-      "totalShots": 5.0,
-      "shotsOnTarget": 0.0,
-      "shotPct": 0.0,
+      "possessionPct": 49.1,
+      "totalShots": 10.0,
+      "shotsOnTarget": 3.0,
+      "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 312.0,
-      "totalPasses": 369.0,
+      "accuratePasses": 395.0,
+      "totalPasses": 472.0,
       "passPct": 0.8,
       "accurateCrosses": 4.0,
-      "totalCrosses": 15.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 31.0,
-      "accurateLongBalls": 15.0,
+      "totalCrosses": 20.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 36.0,
+      "accurateLongBalls": 19.0,
       "longballPct": 0.5,
       "blockedShots": 2.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 10.0,
-      "tacklePct": 0.5,
-      "interceptions": 7.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "effectiveTackles": 8.0,
+      "totalTackles": 14.0,
+      "tacklePct": 0.6,
+      "interceptions": 8.0,
+      "effectiveClearance": 11.0,
+      "totalClearance": 11.0
     },
     "awayStats": {
-      "foulsCommitted": 8.0,
+      "foulsCommitted": 12.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 5.0,
       "wonCorners": 1.0,
-      "saves": 0.0,
-      "possessionPct": 52.2,
-      "totalShots": 8.0,
+      "saves": 3.0,
+      "possessionPct": 50.9,
+      "totalShots": 10.0,
       "shotsOnTarget": 2.0,
-      "shotPct": 0.3,
+      "shotPct": 0.2,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
-      "accuratePasses": 353.0,
-      "totalPasses": 411.0,
+      "accuratePasses": 428.0,
+      "totalPasses": 500.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 7.0,
+      "totalCrosses": 8.0,
       "crossPct": 0.1,
-      "totalLongBalls": 34.0,
-      "accurateLongBalls": 9.0,
+      "totalLongBalls": 49.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.3,
       "blockedShots": 3.0,
-      "effectiveTackles": 7.0,
-      "totalTackles": 15.0,
-      "tacklePct": 0.5,
-      "interceptions": 6.0,
-      "effectiveClearance": 15.0,
-      "totalClearance": 15.0
+      "effectiveTackles": 14.0,
+      "totalTackles": 22.0,
+      "tacklePct": 0.6,
+      "interceptions": 7.0,
+      "effectiveClearance": 22.0,
+      "totalClearance": 22.0
     },
     "homeForm": [
       {

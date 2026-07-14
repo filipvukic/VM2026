@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T20:41:14+00:00",
+  "updated_at": "2026-07-14T21:36:59+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 167,
+      "match_points": 168,
       "bonus_points": 3,
-      "total": 170,
+      "total": 171,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -59,9 +59,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 166,
+      "match_points": 167,
       "bonus_points": 0,
-      "total": 166,
+      "total": 167,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 163,
+      "match_points": 164,
       "bonus_points": 3,
-      "total": 166,
+      "total": 167,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 165,
+      "match_points": 166,
       "bonus_points": 0,
-      "total": 165,
+      "total": 166,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 162,
+      "match_points": 163,
       "bonus_points": 0,
-      "total": 162,
+      "total": 163,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 157,
+      "match_points": 158,
       "bonus_points": 3,
-      "total": 160,
+      "total": 161,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 157,
+      "match_points": 158,
       "bonus_points": 0,
-      "total": 157,
+      "total": 158,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 153,
+      "match_points": 154,
       "bonus_points": 3,
-      "total": 156,
+      "total": 157,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 152,
+      "match_points": 153,
       "bonus_points": 0,
-      "total": 152,
+      "total": 153,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 147,
+      "match_points": 148,
       "bonus_points": 3,
-      "total": 150,
+      "total": 151,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 147,
+      "match_points": 148,
       "bonus_points": 0,
-      "total": 147,
+      "total": 148,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -22771,7 +22771,7 @@
       "homeTla": "FRA",
       "away": "Spain",
       "awayTla": "ESP",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         0,
         2
@@ -22790,7 +22790,7 @@
         "duration": "REGULAR",
         "winnerSide": "AWAY_TEAM"
       },
-      "minute": "79",
+      "minute": null,
       "goals": [
         {
           "minute": "22",
@@ -22833,6 +22833,13 @@
           "player": "Marc Cucurella",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "86",
+          "team": "FRA",
+          "player": "Kylian Mbappé",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
       "subs": [
@@ -22891,6 +22898,20 @@
           "playerIn": "Pedri",
           "playerOut": "Fabián Ruiz",
           "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "ESP",
+          "playerIn": "Marcos Llorente",
+          "playerOut": "Pedro Porro",
+          "period": 2
+        },
+        {
+          "minute": "84",
+          "team": "ESP",
+          "playerIn": "Nico Williams",
+          "playerOut": "Álex Baena",
+          "period": 2
         }
       ],
       "venue": {
@@ -22905,7 +22926,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 70176,
       "tips": [
         {
           "name": "Albin",
@@ -22913,7 +22934,7 @@
             3,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -22921,7 +22942,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -22929,7 +22950,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -22937,7 +22958,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -22945,7 +22966,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -22953,7 +22974,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -22961,7 +22982,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -22969,7 +22990,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -22977,7 +22998,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -22986,7 +23007,7 @@
             3,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -22994,7 +23015,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         }
       ]
     },
