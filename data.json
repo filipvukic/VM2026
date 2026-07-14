@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T18:00:30+00:00",
+  "updated_at": "2026-07-14T19:37:26+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -22771,20 +22771,63 @@
       "homeTla": "FRA",
       "away": "Spain",
       "awayTla": "ESP",
-      "status": "TIMED",
-      "score": null,
+      "status": "IN_PLAY",
+      "score": [
+        0,
+        1
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          1
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": null,
-      "goals": [],
-      "bookings": [],
-      "subs": [],
+      "minute": "36",
+      "goals": [
+        {
+          "minute": "22",
+          "team": "ESP",
+          "scorer": "Mikel Oyarzabal",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! France 0, Spain 1. Mikel Oyarzabal (Spain) converts the penalty with a left footed shot to the top right corner.",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
+      "bookings": [
+        {
+          "minute": "9",
+          "team": "FRA",
+          "player": "Adrien Rabiot",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "31",
+          "team": "ESP",
+          "player": "Marc Cucurella",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "30",
+          "team": "FRA",
+          "playerIn": "Maxence Lacroix",
+          "playerOut": "William Saliba",
+          "period": 1
+        }
+      ],
       "venue": {
         "stadium": "AT&T Stadium",
         "city": "Arlington, Texas",
@@ -22792,9 +22835,8 @@
       },
       "referees": [
         {
-          "name": "Ivan Barton",
-          "role": "REFEREE",
-          "nationality": null
+          "name": "Iván Arcides Barton Cisneros",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -22819,7 +22861,7 @@
         {
           "name": "Martin",
           "tip": [
-            2,
+            3,
             1
           ],
           "points": null
@@ -22851,7 +22893,7 @@
         {
           "name": "Johan",
           "tip": [
-            1,
+            2,
             0
           ],
           "points": null
@@ -22865,6 +22907,15 @@
           "points": null
         },
         {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
           "name": "Hampus",
           "tip": [
             3,
@@ -22876,7 +22927,7 @@
           "name": "Alexander",
           "tip": [
             2,
-            2
+            1
           ],
           "points": null
         }
@@ -22966,7 +23017,7 @@
         {
           "name": "Alexander",
           "tip": [
-            1,
+            2,
             2
           ],
           "points": null
