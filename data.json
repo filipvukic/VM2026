@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T19:37:26+00:00",
+  "updated_at": "2026-07-14T20:41:14+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -22774,20 +22774,23 @@
       "status": "IN_PLAY",
       "score": [
         0,
-        1
+        2
       ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": [
+        "halfTime": [
           0,
           1
+        ],
+        "fullTime": [
+          0,
+          2
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "AWAY_TEAM"
       },
-      "minute": "36",
+      "minute": "79",
       "goals": [
         {
           "minute": "22",
@@ -22801,6 +22804,19 @@
             1
           ],
           "period": 1
+        },
+        {
+          "minute": "58",
+          "team": "ESP",
+          "scorer": "Pedro Porro",
+          "assist": "Dani Olmo",
+          "type": "REGULAR",
+          "description": "Goal! France 0, Spain 2. Pedro Porro (Spain) right footed shot from the centre of the box to the bottom right corner. Assisted by Dani Olmo.",
+          "score": [
+            0,
+            2
+          ],
+          "period": 2
         }
       ],
       "bookings": [
@@ -22826,6 +22842,55 @@
           "playerIn": "Maxence Lacroix",
           "playerOut": "William Saliba",
           "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "FRA",
+          "playerIn": "Manu Koné",
+          "playerOut": "Adrien Rabiot",
+          "period": 2
+        },
+        {
+          "minute": "57",
+          "team": "FRA",
+          "playerIn": "Désiré Doué",
+          "playerOut": "Bradley Barcola",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "FRA",
+          "playerIn": "Theo Hernández",
+          "playerOut": "Lucas Digne",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "FRA",
+          "playerIn": "Rayan Cherki",
+          "playerOut": "Michael Olise",
+          "period": 2
+        },
+        {
+          "minute": "74",
+          "team": "ESP",
+          "playerIn": "Ferran Torres",
+          "playerOut": "Mikel Oyarzabal",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "ESP",
+          "playerIn": "Mikel Merino",
+          "playerOut": "Dani Olmo",
+          "period": 2
+        },
+        {
+          "minute": "78",
+          "team": "ESP",
+          "playerIn": "Pedri",
+          "playerOut": "Fabián Ruiz",
+          "period": 2
         }
       ],
       "venue": {
