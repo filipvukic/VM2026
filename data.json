@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T18:48:36+00:00",
+  "updated_at": "2026-07-15T19:56:09+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23029,19 +23029,43 @@
       "homeTla": "ENG",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "HT",
       "goals": [],
-      "bookings": [],
+      "bookings": [
+        {
+          "minute": "37",
+          "team": "ENG",
+          "player": "Elliot Anderson",
+          "card": "YELLOW",
+          "period": 1
+        },
+        {
+          "minute": "42",
+          "team": "ARG",
+          "player": "Lisandro Martínez",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
       "subs": [],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
@@ -23051,8 +23075,7 @@
       "referees": [
         {
           "name": "Ismail Elfath",
-          "role": "REFEREE",
-          "nationality": "United States"
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -23121,6 +23144,15 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         },
         {
           "name": "Hampus",
