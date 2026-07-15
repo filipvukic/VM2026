@@ -80254,10 +80254,10 @@
     "homeTla": "ENG",
     "away": "Argentina",
     "awayTla": "ARG",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
       1,
-      1
+      2
     ],
     "scoreDetail": {
       "halfTime": [
@@ -80266,14 +80266,14 @@
       ],
       "fullTime": [
         1,
-        1
+        2
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
-      "winnerSide": "DRAW"
+      "winnerSide": "AWAY_TEAM"
     },
-    "minute": "90+5",
+    "minute": null,
     "goals": [
       {
         "minute": "55",
@@ -80401,6 +80401,20 @@
         "playerIn": "Nico O'Reilly",
         "playerOut": "Declan Rice",
         "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "ENG",
+        "playerIn": "Ivan Toney",
+        "playerOut": "John Stones",
+        "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "ENG",
+        "playerIn": "Marcus Rashford",
+        "playerOut": "Djed Spence",
+        "period": 2
       }
     ],
     "venue": {
@@ -80415,7 +80429,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 68239,
     "espnOdds": {
       "homeML": 170,
       "awayML": 205,
@@ -80453,7 +80467,7 @@
           "jersey": "5",
           "espnId": "157974",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Djed Spence",
@@ -80462,7 +80476,7 @@
           "jersey": "25",
           "espnId": "267711",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Reece James",
@@ -80616,7 +80630,7 @@
           "positionName": "Substitute",
           "jersey": "11",
           "espnId": "230945",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -80625,7 +80639,7 @@
           "positionName": "Substitute",
           "jersey": "22",
           "espnId": "180639",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -80903,27 +80917,27 @@
       "_espnEventId": "760515"
     },
     "homeStats": {
-      "foulsCommitted": 9.0,
+      "foulsCommitted": 11.0,
       "yellowCards": 1.0,
       "redCards": 0.0,
       "offsides": 1.0,
       "wonCorners": 2.0,
       "saves": 3.0,
-      "possessionPct": 33.3,
+      "possessionPct": 35.7,
       "totalShots": 5.0,
       "shotsOnTarget": 2.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 250.0,
-      "totalPasses": 290.0,
-      "passPct": 0.9,
+      "accuratePasses": 273.0,
+      "totalPasses": 325.0,
+      "passPct": 0.8,
       "accurateCrosses": 3.0,
-      "totalCrosses": 10.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 29.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.3,
+      "totalCrosses": 15.0,
+      "crossPct": 0.2,
+      "totalLongBalls": 42.0,
+      "accurateLongBalls": 16.0,
+      "longballPct": 0.4,
       "blockedShots": 2.0,
       "effectiveTackles": 8.0,
       "totalTackles": 14.0,
@@ -80939,28 +80953,28 @@
       "offsides": 3.0,
       "wonCorners": 6.0,
       "saves": 1.0,
-      "possessionPct": 66.7,
+      "possessionPct": 64.3,
       "totalShots": 15.0,
       "shotsOnTarget": 5.0,
       "shotPct": 0.3,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 531.0,
-      "totalPasses": 580.0,
+      "accuratePasses": 537.0,
+      "totalPasses": 590.0,
       "passPct": 0.9,
       "accurateCrosses": 6.0,
       "totalCrosses": 19.0,
       "crossPct": 0.3,
-      "totalLongBalls": 23.0,
-      "accurateLongBalls": 12.0,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 13.0,
       "longballPct": 0.5,
       "blockedShots": 3.0,
-      "effectiveTackles": 9.0,
-      "totalTackles": 18.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 20.0,
       "tacklePct": 0.5,
       "interceptions": 6.0,
-      "effectiveClearance": 17.0,
-      "totalClearance": 17.0
+      "effectiveClearance": 30.0,
+      "totalClearance": 30.0
     },
     "homeForm": [
       {

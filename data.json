@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T20:56:06+00:00",
+  "updated_at": "2026-07-15T21:54:58+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,10 +13,10 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 168,
+      "match_points": 173,
       "bonus_points": 3,
-      "total": 171,
-      "exact_count": 9,
+      "total": 176,
+      "exact_count": 10,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -59,9 +59,9 @@
     },
     {
       "name": "Martin",
-      "match_points": 167,
+      "match_points": 168,
       "bonus_points": 0,
-      "total": 167,
+      "total": 168,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -105,9 +105,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 164,
+      "match_points": 165,
       "bonus_points": 3,
-      "total": 167,
+      "total": 168,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -151,9 +151,9 @@
     },
     {
       "name": "Oskar",
-      "match_points": 166,
+      "match_points": 167,
       "bonus_points": 0,
-      "total": 166,
+      "total": 167,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 163,
+      "match_points": 164,
       "bonus_points": 0,
-      "total": 163,
+      "total": 164,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -243,9 +243,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 158,
+      "match_points": 160,
       "bonus_points": 3,
-      "total": 161,
+      "total": 163,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -288,10 +288,56 @@
       "prize": 0
     },
     {
+      "name": "Casper",
+      "match_points": 159,
+      "bonus_points": 3,
+      "total": 162,
+      "exact_count": 7,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Vitinha",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 7,
+      "prize": 0
+    },
+    {
       "name": "Filip",
-      "match_points": 158,
+      "match_points": 159,
       "bonus_points": 0,
-      "total": 158,
+      "total": 159,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -330,60 +376,14 @@
           "points": 0
         }
       },
-      "rank": 7,
-      "prize": 0
-    },
-    {
-      "name": "Casper",
-      "match_points": 154,
-      "bonus_points": 3,
-      "total": 157,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Vitinha",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 8,
       "prize": 0
     },
     {
       "name": "Alexander",
-      "match_points": 153,
+      "match_points": 154,
       "bonus_points": 0,
-      "total": 153,
+      "total": 154,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 148,
+      "match_points": 149,
       "bonus_points": 3,
-      "total": 151,
+      "total": 152,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 148,
+      "match_points": 149,
       "bonus_points": 0,
-      "total": 148,
+      "total": 149,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -23029,10 +23029,10 @@
       "homeTla": "ENG",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
         1,
-        1
+        2
       ],
       "scoreDetail": {
         "halfTime": [
@@ -23041,14 +23041,14 @@
         ],
         "fullTime": [
           1,
-          1
+          2
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": "90+5",
+      "minute": null,
       "goals": [
         {
           "minute": "55",
@@ -23176,6 +23176,20 @@
           "playerIn": "Nico O'Reilly",
           "playerOut": "Declan Rice",
           "period": 2
+        },
+        {
+          "minute": "90+6",
+          "team": "ENG",
+          "playerIn": "Ivan Toney",
+          "playerOut": "John Stones",
+          "period": 2
+        },
+        {
+          "minute": "90+6",
+          "team": "ENG",
+          "playerIn": "Marcus Rashford",
+          "playerOut": "Djed Spence",
+          "period": 2
         }
       ],
       "venue": {
@@ -23190,7 +23204,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 68239,
       "tips": [
         {
           "name": "Albin",
@@ -23198,7 +23212,7 @@
             2,
             3
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -23206,7 +23220,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -23214,7 +23228,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -23222,7 +23236,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -23230,7 +23244,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Casper",
@@ -23238,7 +23252,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 5
         },
         {
           "name": "Johan",
@@ -23246,7 +23260,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -23254,7 +23268,7 @@
             1,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Björn",
@@ -23262,7 +23276,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23271,7 +23285,7 @@
             4,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Alexander",
@@ -23279,7 +23293,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         }
       ]
     }
