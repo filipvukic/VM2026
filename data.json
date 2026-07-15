@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T16:39:45+00:00",
+  "updated_at": "2026-07-15T17:51:48+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23048,7 +23048,13 @@
         "city": "Atlanta, Georgia",
         "country": "USA"
       },
-      "referees": [],
+      "referees": [
+        {
+          "name": "Ismail Elfath",
+          "role": "REFEREE",
+          "nationality": "United States"
+        }
+      ],
       "odds": null,
       "attendance": null,
       "tips": [
@@ -23081,6 +23087,14 @@
           "tip": [
             3,
             1
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            1,
+            2
           ],
           "points": null
         },
