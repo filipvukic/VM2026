@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T19:56:09+00:00",
+  "updated_at": "2026-07-15T20:56:06+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23029,10 +23029,10 @@
       "homeTla": "ENG",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "score": [
-        0,
-        0
+        1,
+        1
       ],
       "scoreDetail": {
         "halfTime": [
@@ -23040,16 +23040,56 @@
           0
         ],
         "fullTime": [
-          0,
-          0
+          1,
+          1
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "HT",
-      "goals": [],
+      "minute": "90+5",
+      "goals": [
+        {
+          "minute": "55",
+          "team": "ENG",
+          "scorer": "Anthony Gordon",
+          "assist": "Morgan Rogers",
+          "type": "REGULAR",
+          "description": "Goal! England 1, Argentina 0. Anthony Gordon (England) right footed shot from very close range to the bottom left corner. Assisted by Morgan Rogers with a cross.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 2
+        },
+        {
+          "minute": "85",
+          "team": "ARG",
+          "scorer": "Enzo Fernández",
+          "assist": "Lionel Messi",
+          "type": "REGULAR",
+          "description": "Goal! England 1, Argentina 1. Enzo Fernández (Argentina) right footed shot from outside the box to the bottom left corner. Assisted by Lionel Messi following a corner.",
+          "score": [
+            1,
+            1
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "ARG",
+          "scorer": "Lautaro Martínez",
+          "assist": "Lionel Messi",
+          "type": "HEADER",
+          "description": "Goal! England 1, Argentina 2. Lautaro Martínez (Argentina) header from very close range to the top left corner. Assisted by Lionel Messi with a cross.",
+          "score": [
+            1,
+            2
+          ],
+          "period": 2
+        }
+      ],
       "bookings": [
         {
           "minute": "37",
@@ -23064,9 +23104,80 @@
           "player": "Lisandro Martínez",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "51",
+          "team": "ARG",
+          "player": "Cristian Romero",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+4",
+          "team": "ARG",
+          "player": "Rodrigo De Paul",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "64",
+          "team": "ARG",
+          "playerIn": "Nico González",
+          "playerOut": "Leandro Paredes",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ENG",
+          "playerIn": "Ezri Konsa",
+          "playerOut": "Anthony Gordon",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ARG",
+          "playerIn": "Gonzalo Montiel",
+          "playerOut": "Nahuel Molina",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ARG",
+          "playerIn": "Rodrigo De Paul",
+          "playerOut": "Giuliano Simeone",
+          "period": 2
+        },
+        {
+          "minute": "72",
+          "team": "ARG",
+          "playerIn": "Nicolás Otamendi",
+          "playerOut": "Lisandro Martínez",
+          "period": 2
+        },
+        {
+          "minute": "81",
+          "team": "ARG",
+          "playerIn": "Lautaro Martínez",
+          "playerOut": "Nicolás Tagliafico",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ENG",
+          "playerIn": "Dan Burn",
+          "playerOut": "Reece James",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ENG",
+          "playerIn": "Nico O'Reilly",
+          "playerOut": "Declan Rice",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Mercedes-Benz Stadium",
         "city": "Atlanta, Georgia",
