@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T22:55:10+00:00",
+  "updated_at": "2026-07-18T23:45:06+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 173,
-      "bonus_points": 3,
-      "total": 176,
+      "match_points": 174,
+      "bonus_points": 6,
+      "total": 180,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -50,18 +50,64 @@
         },
         "bronze": {
           "pick": "England",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         }
       },
       "rank": 1,
       "prize": 1650
     },
     {
+      "name": "Vilgot",
+      "match_points": 166,
+      "bonus_points": 6,
+      "total": 172,
+      "exact_count": 9,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Mike Maignan",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "pedri",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "mbappe",
+          "correct": true,
+          "points": 3
+        },
+        "silver": {
+          "pick": "frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "england",
+          "correct": true,
+          "points": 3
+        }
+      },
+      "rank": 2,
+      "prize": 990
+    },
+    {
       "name": "Martin",
-      "match_points": 168,
+      "match_points": 169,
       "bonus_points": 0,
-      "total": 168,
+      "total": 169,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -100,60 +146,14 @@
           "points": 0
         }
       },
-      "rank": 2,
-      "prize": 990
-    },
-    {
-      "name": "Vilgot",
-      "match_points": 165,
-      "bonus_points": 3,
-      "total": 168,
-      "exact_count": 9,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Mike Maignan",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "pedri",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "mbappe",
-          "correct": true,
-          "points": 3
-        },
-        "silver": {
-          "pick": "frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "england",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 3,
       "prize": 660
     },
     {
       "name": "Oskar",
-      "match_points": 167,
+      "match_points": 168,
       "bonus_points": 0,
-      "total": 167,
+      "total": 168,
       "exact_count": 12,
       "bonus_detail": {
         "best_young": {
@@ -197,9 +197,9 @@
     },
     {
       "name": "Johan",
-      "match_points": 164,
-      "bonus_points": 0,
-      "total": 164,
+      "match_points": 165,
+      "bonus_points": 3,
+      "total": 168,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -234,8 +234,8 @@
         },
         "bronze": {
           "pick": "England",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         }
       },
       "rank": 5,
@@ -243,9 +243,9 @@
     },
     {
       "name": "Albin",
-      "match_points": 160,
+      "match_points": 161,
       "bonus_points": 3,
-      "total": 163,
+      "total": 164,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -289,9 +289,9 @@
     },
     {
       "name": "Casper",
-      "match_points": 159,
+      "match_points": 160,
       "bonus_points": 3,
-      "total": 162,
+      "total": 163,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -335,9 +335,9 @@
     },
     {
       "name": "Filip",
-      "match_points": 159,
+      "match_points": 160,
       "bonus_points": 0,
-      "total": 159,
+      "total": 160,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -381,9 +381,9 @@
     },
     {
       "name": "Alexander",
-      "match_points": 154,
-      "bonus_points": 0,
-      "total": 154,
+      "match_points": 155,
+      "bonus_points": 3,
+      "total": 158,
       "exact_count": 8,
       "bonus_detail": {
         "best_young": {
@@ -418,8 +418,8 @@
         },
         "bronze": {
           "pick": "England",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 3
         }
       },
       "rank": 9,
@@ -427,9 +427,9 @@
     },
     {
       "name": "Björn",
-      "match_points": 149,
+      "match_points": 150,
       "bonus_points": 3,
-      "total": 152,
+      "total": 153,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -473,9 +473,9 @@
     },
     {
       "name": "Hampus",
-      "match_points": 149,
+      "match_points": 150,
       "bonus_points": 0,
-      "total": 149,
+      "total": 150,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -23307,10 +23307,10 @@
       "homeTla": "FRA",
       "away": "England",
       "awayTla": "ENG",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        3,
-        4
+        4,
+        6
       ],
       "scoreDetail": {
         "halfTime": [
@@ -23318,15 +23318,15 @@
           4
         ],
         "fullTime": [
-          3,
-          4
+          4,
+          6
         ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
         "winnerSide": "AWAY_TEAM"
       },
-      "minute": "90+1",
+      "minute": null,
       "goals": [
         {
           "minute": "3",
@@ -23431,6 +23431,32 @@
             5
           ],
           "period": 2
+        },
+        {
+          "minute": "90+6",
+          "team": "FRA",
+          "scorer": "Ousmane Dembélé",
+          "assist": "Dayot Upamecano",
+          "type": "REGULAR",
+          "description": "Goal! France 4, England 5. Ousmane Dembélé (France) left footed shot from the centre of the box to the bottom left corner. Assisted by Dayot Upamecano following a fast break.",
+          "score": [
+            4,
+            5
+          ],
+          "period": 2
+        },
+        {
+          "minute": "90+8",
+          "team": "ENG",
+          "scorer": "Jude Bellingham",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Goal! France 4, England 6. Jude Bellingham (England) right footed shot from the centre of the box to the bottom right corner following a fast break.",
+          "score": [
+            4,
+            6
+          ],
+          "period": 2
         }
       ],
       "bookings": [],
@@ -23497,6 +23523,13 @@
           "playerIn": "Jules Koundé",
           "playerOut": "Malo Gusto",
           "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "ENG",
+          "playerIn": "Trevoh Chalobah",
+          "playerOut": "Marc Guéhi",
+          "period": 2
         }
       ],
       "venue": {
@@ -23511,7 +23544,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 64478,
       "tips": [
         {
           "name": "Albin",
@@ -23519,7 +23552,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Filip",
@@ -23527,7 +23560,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -23535,7 +23568,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -23543,7 +23576,7 @@
             3,
             3
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Isac",
@@ -23551,7 +23584,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Casper",
@@ -23559,7 +23592,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -23567,7 +23600,7 @@
             2,
             0
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Vilgot",
@@ -23575,7 +23608,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23584,7 +23617,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23593,7 +23626,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23602,7 +23635,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         }
       ]
@@ -24316,7 +24349,7 @@
   "bonus_actual": {
     "winner": null,
     "silver": null,
-    "bronze": null,
+    "bronze": "England",
     "top_scorer": "Kylian Mbappé",
     "best_player": null,
     "best_young": null,

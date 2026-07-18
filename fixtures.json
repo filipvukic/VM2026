@@ -81060,10 +81060,10 @@
     "homeTla": "FRA",
     "away": "England",
     "awayTla": "ENG",
-    "status": "IN_PLAY",
+    "status": "FINISHED",
     "score": [
-      3,
-      4
+      4,
+      6
     ],
     "scoreDetail": {
       "halfTime": [
@@ -81071,15 +81071,15 @@
         4
       ],
       "fullTime": [
-        3,
-        4
+        4,
+        6
       ],
       "extraTime": null,
       "penalties": null,
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "90+1",
+    "minute": null,
     "goals": [
       {
         "minute": "3",
@@ -81184,6 +81184,32 @@
           5
         ],
         "period": 2
+      },
+      {
+        "minute": "90+6",
+        "team": "FRA",
+        "scorer": "Ousmane Dembélé",
+        "assist": "Dayot Upamecano",
+        "type": "REGULAR",
+        "description": "Goal! France 4, England 5. Ousmane Dembélé (France) left footed shot from the centre of the box to the bottom left corner. Assisted by Dayot Upamecano following a fast break.",
+        "score": [
+          4,
+          5
+        ],
+        "period": 2
+      },
+      {
+        "minute": "90+8",
+        "team": "ENG",
+        "scorer": "Jude Bellingham",
+        "assist": null,
+        "type": "REGULAR",
+        "description": "Goal! France 4, England 6. Jude Bellingham (England) right footed shot from the centre of the box to the bottom right corner following a fast break.",
+        "score": [
+          4,
+          6
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
@@ -81250,6 +81276,13 @@
         "playerIn": "Jules Koundé",
         "playerOut": "Malo Gusto",
         "period": 2
+      },
+      {
+        "minute": "90+3",
+        "team": "ENG",
+        "playerIn": "Trevoh Chalobah",
+        "playerOut": "Marc Guéhi",
+        "period": 2
       }
     ],
     "venue": {
@@ -81264,7 +81297,7 @@
       }
     ],
     "odds": null,
-    "attendance": null,
+    "attendance": 64478,
     "espnOdds": {
       "homeML": -145,
       "awayML": 350,
@@ -81536,7 +81569,7 @@
           "jersey": "6",
           "espnId": "265907",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Ezri Konsa",
@@ -81663,7 +81696,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "227784",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81752,34 +81785,34 @@
       "_espnEventId": "760516"
     },
     "homeStats": {
-      "foulsCommitted": 13.0,
+      "foulsCommitted": 14.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 2.0,
-      "wonCorners": 2.0,
+      "offsides": 3.0,
+      "wonCorners": 3.0,
       "saves": 4.0,
-      "possessionPct": 45.7,
-      "totalShots": 18.0,
-      "shotsOnTarget": 8.0,
-      "shotPct": 0.4,
+      "possessionPct": 45.9,
+      "totalShots": 19.0,
+      "shotsOnTarget": 9.0,
+      "shotPct": 0.5,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 381.0,
-      "totalPasses": 418.0,
+      "accuratePasses": 403.0,
+      "totalPasses": 444.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 5.0,
+      "totalCrosses": 6.0,
       "crossPct": 0.0,
       "totalLongBalls": 26.0,
       "accurateLongBalls": 17.0,
       "longballPct": 0.7,
       "blockedShots": 4.0,
-      "effectiveTackles": 9.0,
-      "totalTackles": 14.0,
+      "effectiveTackles": 10.0,
+      "totalTackles": 16.0,
       "tacklePct": 0.6,
-      "interceptions": 6.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "interceptions": 8.0,
+      "effectiveClearance": 10.0,
+      "totalClearance": 10.0
     },
     "awayStats": {
       "foulsCommitted": 8.0,
@@ -81788,28 +81821,28 @@
       "offsides": 3.0,
       "wonCorners": 4.0,
       "saves": 5.0,
-      "possessionPct": 54.3,
-      "totalShots": 18.0,
-      "shotsOnTarget": 10.0,
+      "possessionPct": 54.1,
+      "totalShots": 19.0,
+      "shotsOnTarget": 11.0,
       "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 1.0,
-      "accuratePasses": 450.0,
-      "totalPasses": 491.0,
+      "accuratePasses": 468.0,
+      "totalPasses": 517.0,
       "passPct": 0.9,
       "accurateCrosses": 4.0,
       "totalCrosses": 12.0,
       "crossPct": 0.3,
-      "totalLongBalls": 30.0,
-      "accurateLongBalls": 14.0,
-      "longballPct": 0.5,
+      "totalLongBalls": 35.0,
+      "accurateLongBalls": 15.0,
+      "longballPct": 0.4,
       "blockedShots": 6.0,
-      "effectiveTackles": 8.0,
-      "totalTackles": 21.0,
+      "effectiveTackles": 11.0,
+      "totalTackles": 25.0,
       "tacklePct": 0.4,
       "interceptions": 11.0,
-      "effectiveClearance": 9.0,
-      "totalClearance": 9.0
+      "effectiveClearance": 12.0,
+      "totalClearance": 12.0
     },
     "homeForm": [
       {
