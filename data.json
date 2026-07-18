@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T20:09:27+00:00",
+  "updated_at": "2026-07-18T21:03:17+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23317,8 +23317,22 @@
         "duration": "REGULAR",
         "winnerSide": null
       },
-      "minute": null,
-      "goals": [],
+      "minute": "3",
+      "goals": [
+        {
+          "minute": "3",
+          "team": "ENG",
+          "scorer": "Declan Rice",
+          "assist": null,
+          "type": "REGULAR",
+          "description": "Declan Rice (England) Goal at 3'",
+          "score": [
+            0,
+            1
+          ],
+          "period": 1
+        }
+      ],
       "bookings": [],
       "subs": [],
       "venue": {
@@ -23329,13 +23343,20 @@
       "referees": [
         {
           "name": "Jesús Valenzuela",
-          "role": "REFEREE",
-          "nationality": "Venezuela"
+          "role": "Referee"
         }
       ],
       "odds": null,
       "attendance": null,
       "tips": [
+        {
+          "name": "Albin",
+          "tip": [
+            2,
+            1
+          ],
+          "points": null
+        },
         {
           "name": "Filip",
           "tip": [
@@ -23348,7 +23369,7 @@
           "name": "Martin",
           "tip": [
             2,
-            0
+            1
           ],
           "points": null
         },
@@ -23357,6 +23378,14 @@
           "tip": [
             3,
             3
+          ],
+          "points": null
+        },
+        {
+          "name": "Isac",
+          "tip": [
+            2,
+            1
           ],
           "points": null
         },
@@ -23375,6 +23404,42 @@
             0
           ],
           "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         }
       ]
     },
