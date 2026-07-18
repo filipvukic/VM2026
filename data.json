@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T21:03:17+00:00",
+  "updated_at": "2026-07-18T21:59:27+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23307,17 +23307,26 @@
       "homeTla": "FRA",
       "away": "England",
       "awayTla": "ENG",
-      "status": "TIMED",
-      "score": null,
+      "status": "PAUSED",
+      "score": [
+        0,
+        4
+      ],
       "scoreDetail": {
-        "halfTime": null,
-        "fullTime": null,
+        "halfTime": [
+          0,
+          4
+        ],
+        "fullTime": [
+          0,
+          4
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "AWAY_TEAM"
       },
-      "minute": "3",
+      "minute": "HT",
       "goals": [
         {
           "minute": "3",
@@ -23325,10 +23334,49 @@
           "scorer": "Declan Rice",
           "assist": null,
           "type": "REGULAR",
-          "description": "Declan Rice (England) Goal at 3'",
+          "description": "Goal! France 0, England 1. Declan Rice (England) right footed shot from outside the box to the bottom right corner.",
           "score": [
             0,
             1
+          ],
+          "period": 1
+        },
+        {
+          "minute": "18",
+          "team": "ENG",
+          "scorer": "Ezri Konsa",
+          "assist": "Declan Rice",
+          "type": "HEADER",
+          "description": "Goal! France 0, England 2. Ezri Konsa (England) header from the centre of the box to the bottom right corner. Assisted by Declan Rice with a cross following a corner.",
+          "score": [
+            0,
+            2
+          ],
+          "period": 1
+        },
+        {
+          "minute": "37",
+          "team": "ENG",
+          "scorer": "Bukayo Saka",
+          "assist": "Marcus Rashford",
+          "type": "REGULAR",
+          "description": "Goal! France 0, England 3. Bukayo Saka (England) left footed shot from the left side of the box to the high centre of the goal. Assisted by Marcus Rashford following a fast break.",
+          "score": [
+            0,
+            3
+          ],
+          "period": 1
+        },
+        {
+          "minute": "45+1",
+          "team": "ENG",
+          "scorer": "Bukayo Saka",
+          "assist": "Eberechi Eze",
+          "type": "REGULAR",
+          "description": "Goal! France 0, England 4. Bukayo Saka (England) left footed shot from the centre of the box to the bottom right corner. Assisted by Eberechi Eze with a through ball.",
+          "score": [
+            0,
+            4
           ],
           "period": 1
         }
