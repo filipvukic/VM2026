@@ -81060,9 +81060,9 @@
     "homeTla": "FRA",
     "away": "England",
     "awayTla": "ENG",
-    "status": "PAUSED",
+    "status": "IN_PLAY",
     "score": [
-      0,
+      3,
       4
     ],
     "scoreDetail": {
@@ -81071,7 +81071,7 @@
         4
       ],
       "fullTime": [
-        0,
+        3,
         4
       ],
       "extraTime": null,
@@ -81079,7 +81079,7 @@
       "duration": "REGULAR",
       "winnerSide": "AWAY_TEAM"
     },
-    "minute": "HT",
+    "minute": "90+1",
     "goals": [
       {
         "minute": "3",
@@ -81132,10 +81132,126 @@
           4
         ],
         "period": 1
+      },
+      {
+        "minute": "48",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": "Michael Olise",
+        "type": "REGULAR",
+        "description": "Goal! France 1, England 4. Kylian Mbappé (France) left footed shot from the centre of the box to the bottom right corner. Assisted by Michael Olise with a through ball following a fast break.",
+        "score": [
+          1,
+          4
+        ],
+        "period": 2
+      },
+      {
+        "minute": "54",
+        "team": "FRA",
+        "scorer": "Bradley Barcola",
+        "assist": "Kylian Mbappé",
+        "type": "REGULAR",
+        "description": "Goal! France 2, England 4. Bradley Barcola (France) right footed shot from the centre of the box to the bottom left corner. Assisted by Kylian Mbappé with a through ball.",
+        "score": [
+          2,
+          4
+        ],
+        "period": 2
+      },
+      {
+        "minute": "66",
+        "team": "FRA",
+        "scorer": "Kylian Mbappé",
+        "assist": "Michael Olise",
+        "type": "REGULAR",
+        "description": "Goal! France 3, England 4. Kylian Mbappé (France) left footed shot from the centre of the box to the bottom right corner. Assisted by Michael Olise.",
+        "score": [
+          3,
+          4
+        ],
+        "period": 2
+      },
+      {
+        "minute": "87",
+        "team": "ENG",
+        "scorer": "Bukayo Saka",
+        "assist": null,
+        "type": "PENALTY",
+        "description": "Goal! France 3, England 5. Bukayo Saka (England) converts the penalty with a left footed shot to the bottom right corner.",
+        "score": [
+          3,
+          5
+        ],
+        "period": 2
       }
     ],
     "bookings": [],
-    "subs": [],
+    "subs": [
+      {
+        "minute": "45",
+        "team": "FRA",
+        "playerIn": "Ousmane Dembélé",
+        "playerOut": "Rayan Cherki",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "FRA",
+        "playerIn": "Bradley Barcola",
+        "playerOut": "Désiré Doué",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "FRA",
+        "playerIn": "Lucas Digne",
+        "playerOut": "Theo Hernández",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "FRA",
+        "playerIn": "Dayot Upamecano",
+        "playerOut": "Ibrahima Konaté",
+        "period": 2
+      },
+      {
+        "minute": "45",
+        "team": "ENG",
+        "playerIn": "Ollie Watkins",
+        "playerOut": "Marcus Rashford",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "ENG",
+        "playerIn": "Elliot Anderson",
+        "playerOut": "Ivan Toney",
+        "period": 2
+      },
+      {
+        "minute": "79",
+        "team": "ENG",
+        "playerIn": "Jude Bellingham",
+        "playerOut": "Eberechi Eze",
+        "period": 2
+      },
+      {
+        "minute": "83",
+        "team": "ENG",
+        "playerIn": "Reece James",
+        "playerOut": "Jarell Quansah",
+        "period": 2
+      },
+      {
+        "minute": "90+1",
+        "team": "FRA",
+        "playerIn": "Jules Koundé",
+        "playerOut": "Malo Gusto",
+        "period": 2
+      }
+    ],
     "venue": {
       "stadium": "Hard Rock Stadium",
       "city": "Miami Gardens, Florida",
@@ -81186,7 +81302,7 @@
           "jersey": "15",
           "espnId": "251634",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Theo Hernández",
@@ -81195,7 +81311,7 @@
           "jersey": "19",
           "espnId": "233621",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Malo Gusto",
@@ -81204,7 +81320,7 @@
           "jersey": "2",
           "espnId": "308947",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Rayan Cherki",
@@ -81213,7 +81329,7 @@
           "jersey": "24",
           "espnId": "298008",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Adrien Rabiot",
@@ -81249,7 +81365,7 @@
           "jersey": "20",
           "espnId": "336388",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Michael Olise",
@@ -81304,7 +81420,7 @@
           "positionName": "Substitute",
           "jersey": "12",
           "espnId": "328238",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81322,7 +81438,7 @@
           "positionName": "Substitute",
           "jersey": "5",
           "espnId": "231692",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81349,7 +81465,7 @@
           "positionName": "Substitute",
           "jersey": "4",
           "espnId": "222793",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81358,7 +81474,7 @@
           "positionName": "Substitute",
           "jersey": "7",
           "espnId": "229744",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81376,7 +81492,7 @@
           "positionName": "Substitute",
           "jersey": "3",
           "espnId": "160115",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81456,7 +81572,7 @@
           "jersey": "26",
           "espnId": "298524",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Eberechi Eze",
@@ -81465,7 +81581,7 @@
           "jersey": "21",
           "espnId": "251400",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Morgan Rogers",
@@ -81483,7 +81599,7 @@
           "jersey": "11",
           "espnId": "230945",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Bukayo Saka",
@@ -81501,7 +81617,7 @@
           "jersey": "22",
           "espnId": "180639",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         }
       ],
       "bench": [
@@ -81520,7 +81636,7 @@
           "positionName": "Substitute",
           "jersey": "10",
           "espnId": "291281",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81556,7 +81672,7 @@
           "positionName": "Substitute",
           "jersey": "8",
           "espnId": "238472",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81619,7 +81735,7 @@
           "positionName": "Substitute",
           "jersey": "24",
           "espnId": "189007",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -81628,7 +81744,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "198825",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         }
       ],
@@ -81636,64 +81752,64 @@
       "_espnEventId": "760516"
     },
     "homeStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 13.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 1.0,
+      "offsides": 2.0,
       "wonCorners": 2.0,
-      "saves": 2.0,
-      "possessionPct": 44.6,
-      "totalShots": 5.0,
-      "shotsOnTarget": 2.0,
+      "saves": 4.0,
+      "possessionPct": 45.7,
+      "totalShots": 18.0,
+      "shotsOnTarget": 8.0,
       "shotPct": 0.4,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 216.0,
-      "totalPasses": 238.0,
+      "accuratePasses": 381.0,
+      "totalPasses": 418.0,
       "passPct": 0.9,
-      "accurateCrosses": 0.0,
-      "totalCrosses": 2.0,
+      "accurateCrosses": 1.0,
+      "totalCrosses": 5.0,
       "crossPct": 0.0,
-      "totalLongBalls": 17.0,
-      "accurateLongBalls": 10.0,
-      "longballPct": 0.6,
-      "blockedShots": 2.0,
-      "effectiveTackles": 4.0,
-      "totalTackles": 7.0,
+      "totalLongBalls": 26.0,
+      "accurateLongBalls": 17.0,
+      "longballPct": 0.7,
+      "blockedShots": 4.0,
+      "effectiveTackles": 9.0,
+      "totalTackles": 14.0,
       "tacklePct": 0.6,
-      "interceptions": 3.0,
-      "effectiveClearance": 3.0,
-      "totalClearance": 3.0
+      "interceptions": 6.0,
+      "effectiveClearance": 9.0,
+      "totalClearance": 9.0
     },
     "awayStats": {
-      "foulsCommitted": 5.0,
+      "foulsCommitted": 8.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
       "offsides": 3.0,
-      "wonCorners": 3.0,
-      "saves": 2.0,
-      "possessionPct": 55.4,
-      "totalShots": 11.0,
-      "shotsOnTarget": 7.0,
+      "wonCorners": 4.0,
+      "saves": 5.0,
+      "possessionPct": 54.3,
+      "totalShots": 18.0,
+      "shotsOnTarget": 10.0,
       "shotPct": 0.6,
       "penaltyKickGoals": 0.0,
-      "penaltyKickShots": 0.0,
-      "accuratePasses": 272.0,
-      "totalPasses": 290.0,
+      "penaltyKickShots": 1.0,
+      "accuratePasses": 450.0,
+      "totalPasses": 491.0,
       "passPct": 0.9,
-      "accurateCrosses": 3.0,
-      "totalCrosses": 9.0,
+      "accurateCrosses": 4.0,
+      "totalCrosses": 12.0,
       "crossPct": 0.3,
-      "totalLongBalls": 14.0,
-      "accurateLongBalls": 7.0,
+      "totalLongBalls": 30.0,
+      "accurateLongBalls": 14.0,
       "longballPct": 0.5,
-      "blockedShots": 4.0,
-      "effectiveTackles": 5.0,
-      "totalTackles": 12.0,
+      "blockedShots": 6.0,
+      "effectiveTackles": 8.0,
+      "totalTackles": 21.0,
       "tacklePct": 0.4,
-      "interceptions": 7.0,
-      "effectiveClearance": 6.0,
-      "totalClearance": 6.0
+      "interceptions": 11.0,
+      "effectiveClearance": 9.0,
+      "totalClearance": 9.0
     },
     "homeForm": [
       {

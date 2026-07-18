@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T21:59:27+00:00",
+  "updated_at": "2026-07-18T22:55:10+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23307,9 +23307,9 @@
       "homeTla": "FRA",
       "away": "England",
       "awayTla": "ENG",
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "score": [
-        0,
+        3,
         4
       ],
       "scoreDetail": {
@@ -23318,7 +23318,7 @@
           4
         ],
         "fullTime": [
-          0,
+          3,
           4
         ],
         "extraTime": null,
@@ -23326,7 +23326,7 @@
         "duration": "REGULAR",
         "winnerSide": "AWAY_TEAM"
       },
-      "minute": "HT",
+      "minute": "90+1",
       "goals": [
         {
           "minute": "3",
@@ -23379,10 +23379,126 @@
             4
           ],
           "period": 1
+        },
+        {
+          "minute": "48",
+          "team": "FRA",
+          "scorer": "Kylian Mbappé",
+          "assist": "Michael Olise",
+          "type": "REGULAR",
+          "description": "Goal! France 1, England 4. Kylian Mbappé (France) left footed shot from the centre of the box to the bottom right corner. Assisted by Michael Olise with a through ball following a fast break.",
+          "score": [
+            1,
+            4
+          ],
+          "period": 2
+        },
+        {
+          "minute": "54",
+          "team": "FRA",
+          "scorer": "Bradley Barcola",
+          "assist": "Kylian Mbappé",
+          "type": "REGULAR",
+          "description": "Goal! France 2, England 4. Bradley Barcola (France) right footed shot from the centre of the box to the bottom left corner. Assisted by Kylian Mbappé with a through ball.",
+          "score": [
+            2,
+            4
+          ],
+          "period": 2
+        },
+        {
+          "minute": "66",
+          "team": "FRA",
+          "scorer": "Kylian Mbappé",
+          "assist": "Michael Olise",
+          "type": "REGULAR",
+          "description": "Goal! France 3, England 4. Kylian Mbappé (France) left footed shot from the centre of the box to the bottom right corner. Assisted by Michael Olise.",
+          "score": [
+            3,
+            4
+          ],
+          "period": 2
+        },
+        {
+          "minute": "87",
+          "team": "ENG",
+          "scorer": "Bukayo Saka",
+          "assist": null,
+          "type": "PENALTY",
+          "description": "Goal! France 3, England 5. Bukayo Saka (England) converts the penalty with a left footed shot to the bottom right corner.",
+          "score": [
+            3,
+            5
+          ],
+          "period": 2
         }
       ],
       "bookings": [],
-      "subs": [],
+      "subs": [
+        {
+          "minute": "45",
+          "team": "FRA",
+          "playerIn": "Ousmane Dembélé",
+          "playerOut": "Rayan Cherki",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "FRA",
+          "playerIn": "Bradley Barcola",
+          "playerOut": "Désiré Doué",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "FRA",
+          "playerIn": "Lucas Digne",
+          "playerOut": "Theo Hernández",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "FRA",
+          "playerIn": "Dayot Upamecano",
+          "playerOut": "Ibrahima Konaté",
+          "period": 2
+        },
+        {
+          "minute": "45",
+          "team": "ENG",
+          "playerIn": "Ollie Watkins",
+          "playerOut": "Marcus Rashford",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "ENG",
+          "playerIn": "Elliot Anderson",
+          "playerOut": "Ivan Toney",
+          "period": 2
+        },
+        {
+          "minute": "79",
+          "team": "ENG",
+          "playerIn": "Jude Bellingham",
+          "playerOut": "Eberechi Eze",
+          "period": 2
+        },
+        {
+          "minute": "83",
+          "team": "ENG",
+          "playerIn": "Reece James",
+          "playerOut": "Jarell Quansah",
+          "period": 2
+        },
+        {
+          "minute": "90+1",
+          "team": "FRA",
+          "playerIn": "Jules Koundé",
+          "playerOut": "Malo Gusto",
+          "period": 2
+        }
+      ],
       "venue": {
         "stadium": "Hard Rock Stadium",
         "city": "Miami Gardens, Florida",
