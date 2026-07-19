@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T21:07:37+00:00",
+  "updated_at": "2026-07-19T22:05:46+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -13,9 +13,9 @@
   "leaderboard": [
     {
       "name": "Isac",
-      "match_points": 174,
-      "bonus_points": 6,
-      "total": 180,
+      "match_points": 176,
+      "bonus_points": 16,
+      "total": 192,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -25,8 +25,8 @@
         },
         "winner": {
           "pick": "Spanien",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 10
         },
         "best_keeper": {
           "pick": "Mike Maignan",
@@ -59,9 +59,9 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 166,
-      "bonus_points": 6,
-      "total": 172,
+      "match_points": 167,
+      "bonus_points": 16,
+      "total": 183,
       "exact_count": 9,
       "bonus_detail": {
         "best_young": {
@@ -71,8 +71,8 @@
         },
         "winner": {
           "pick": "Spanien",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 10
         },
         "best_keeper": {
           "pick": "Mike Maignan",
@@ -104,10 +104,56 @@
       "prize": 990
     },
     {
+      "name": "Oskar",
+      "match_points": 170,
+      "bonus_points": 10,
+      "total": 180,
+      "exact_count": 12,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": true,
+          "points": 10
+        },
+        "best_keeper": {
+          "pick": "Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Kylian Mbappe",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Tyskland",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "Brasilien",
+          "correct": false,
+          "points": 0
+        }
+      },
+      "rank": 3,
+      "prize": 660
+    },
+    {
       "name": "Martin",
-      "match_points": 169,
+      "match_points": 170,
       "bonus_points": 0,
-      "total": 169,
+      "total": 170,
       "exact_count": 11,
       "bonus_detail": {
         "best_young": {
@@ -146,60 +192,14 @@
           "points": 0
         }
       },
-      "rank": 3,
-      "prize": 660
-    },
-    {
-      "name": "Oskar",
-      "match_points": 168,
-      "bonus_points": 0,
-      "total": 168,
-      "exact_count": 12,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Raya",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Kylian Mbappe",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Tyskland",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Brasilien",
-          "correct": false,
-          "points": 0
-        }
-      },
       "rank": 4,
       "prize": 0
     },
     {
       "name": "Johan",
-      "match_points": 165,
+      "match_points": 167,
       "bonus_points": 3,
-      "total": 168,
+      "total": 170,
       "exact_count": 10,
       "bonus_detail": {
         "best_young": {
@@ -242,10 +242,56 @@
       "prize": 0
     },
     {
+      "name": "Alexander",
+      "match_points": 156,
+      "bonus_points": 13,
+      "total": 169,
+      "exact_count": 8,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Lamine Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Spanien",
+          "correct": true,
+          "points": 10
+        },
+        "best_keeper": {
+          "pick": "David Raya",
+          "correct": false,
+          "points": 0
+        },
+        "best_player": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": true,
+          "points": 3
+        }
+      },
+      "rank": 6,
+      "prize": 0
+    },
+    {
       "name": "Albin",
-      "match_points": 161,
+      "match_points": 163,
       "bonus_points": 3,
-      "total": 164,
+      "total": 166,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -284,14 +330,14 @@
           "points": 0
         }
       },
-      "rank": 6,
+      "rank": 7,
       "prize": 0
     },
     {
       "name": "Casper",
-      "match_points": 160,
+      "match_points": 161,
       "bonus_points": 3,
-      "total": 163,
+      "total": 164,
       "exact_count": 7,
       "bonus_detail": {
         "best_young": {
@@ -330,14 +376,14 @@
           "points": 0
         }
       },
-      "rank": 7,
+      "rank": 8,
       "prize": 0
     },
     {
       "name": "Filip",
-      "match_points": 160,
+      "match_points": 161,
       "bonus_points": 0,
-      "total": 160,
+      "total": 161,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -376,15 +422,15 @@
           "points": 0
         }
       },
-      "rank": 8,
+      "rank": 9,
       "prize": 0
     },
     {
-      "name": "Alexander",
-      "match_points": 155,
-      "bonus_points": 3,
-      "total": 158,
-      "exact_count": 8,
+      "name": "Hampus",
+      "match_points": 151,
+      "bonus_points": 10,
+      "total": 161,
+      "exact_count": 6,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -393,16 +439,16 @@
         },
         "winner": {
           "pick": "Spanien",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 10
         },
         "best_keeper": {
-          "pick": "David Raya",
+          "pick": "Bart Verbruggen",
           "correct": false,
           "points": 0
         },
         "best_player": {
-          "pick": "Harry Kane",
+          "pick": "Bruno Fernandes",
           "correct": false,
           "points": 0
         },
@@ -417,19 +463,19 @@
           "points": 0
         },
         "bronze": {
-          "pick": "England",
-          "correct": true,
-          "points": 3
+          "pick": "Nederländerna",
+          "correct": false,
+          "points": 0
         }
       },
-      "rank": 9,
+      "rank": 10,
       "prize": 0
     },
     {
       "name": "Björn",
-      "match_points": 150,
-      "bonus_points": 3,
-      "total": 153,
+      "match_points": 151,
+      "bonus_points": 8,
+      "total": 159,
       "exact_count": 6,
       "bonus_detail": {
         "best_young": {
@@ -459,57 +505,11 @@
         },
         "silver": {
           "pick": "Argentina",
-          "correct": false,
-          "points": 0
+          "correct": true,
+          "points": 5
         },
         "bronze": {
           "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        }
-      },
-      "rank": 10,
-      "prize": 0
-    },
-    {
-      "name": "Hampus",
-      "match_points": 150,
-      "bonus_points": 0,
-      "total": 150,
-      "exact_count": 6,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Lamine Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Spanien",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Bart Verbruggen",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Bruno Fernandes",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "Nederländerna",
           "correct": false,
           "points": 0
         }
@@ -23650,9 +23650,9 @@
       "homeTla": "ESP",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": [
-        0,
+        1,
         0
       ],
       "scoreDetail": {
@@ -23661,16 +23661,33 @@
           0
         ],
         "fullTime": [
+          1,
+          0
+        ],
+        "extraTime": [
           0,
           0
         ],
-        "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": "DRAW"
+        "winnerSide": "HOME_TEAM"
       },
-      "minute": "90",
-      "goals": [],
+      "minute": null,
+      "goals": [
+        {
+          "minute": "106",
+          "team": "ESP",
+          "scorer": "Ferran Torres",
+          "assist": "Nico Williams",
+          "type": "REGULAR",
+          "description": "Goal! Spain 1, Argentina 0. Ferran Torres (Spain) left footed shot from the centre of the box to the high centre of the goal. Assisted by Nico Williams with a headed pass.",
+          "score": [
+            1,
+            0
+          ],
+          "period": 4
+        }
+      ],
       "bookings": [
         {
           "minute": "41",
@@ -23692,6 +23709,27 @@
           "player": "Enzo Fernández",
           "card": "YELLOW",
           "period": 2
+        },
+        {
+          "minute": "90+2",
+          "team": "ARG",
+          "player": "Cristian Romero",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "90+3",
+          "team": "ARG",
+          "player": "Enzo Fernández",
+          "card": "YELLOW_RED",
+          "period": 2
+        },
+        {
+          "minute": "111",
+          "team": "ARG",
+          "player": "Alexis Mac Allister",
+          "card": "YELLOW",
+          "period": 4
         }
       ],
       "subs": [
@@ -23757,6 +23795,27 @@
           "playerIn": "Mikel Merino",
           "playerOut": "Dani Olmo",
           "period": 2
+        },
+        {
+          "minute": "99",
+          "team": "ESP",
+          "playerIn": "Martín Zubimendi",
+          "playerOut": "Rodri",
+          "period": 3
+        },
+        {
+          "minute": "99",
+          "team": "ESP",
+          "playerIn": "Eric García",
+          "playerOut": "Aymeric Laporte",
+          "period": 3
+        },
+        {
+          "minute": "102",
+          "team": "ARG",
+          "playerIn": "Marcos Senesi",
+          "playerOut": "Julián Álvarez",
+          "period": 3
         }
       ],
       "venue": {
@@ -23771,7 +23830,7 @@
         }
       ],
       "odds": null,
-      "attendance": null,
+      "attendance": 0,
       "tips": [
         {
           "name": "Albin",
@@ -23779,7 +23838,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Filip",
@@ -23787,7 +23846,7 @@
             2,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Martin",
@@ -23795,7 +23854,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Oskar",
@@ -23803,7 +23862,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Isac",
@@ -23811,7 +23870,7 @@
             2,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Casper",
@@ -23819,7 +23878,7 @@
             1,
             2
           ],
-          "points": null
+          "points": 1
         },
         {
           "name": "Johan",
@@ -23827,7 +23886,7 @@
             3,
             1
           ],
-          "points": null
+          "points": 2
         },
         {
           "name": "Vilgot",
@@ -23835,7 +23894,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23844,7 +23903,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23853,7 +23912,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         },
         {
@@ -23862,7 +23921,7 @@
             0,
             0
           ],
-          "points": null,
+          "points": 1,
           "default": true
         }
       ]
@@ -24507,8 +24566,8 @@
     }
   ],
   "bonus_actual": {
-    "winner": null,
-    "silver": null,
+    "winner": "Spain",
+    "silver": "Argentina",
     "bronze": "England",
     "top_scorer": "Kylian Mbappé",
     "best_player": null,
