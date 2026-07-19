@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T18:08:17+00:00",
+  "updated_at": "2026-07-19T19:22:24+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23650,17 +23650,23 @@
       "homeTla": "ESP",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "TIMED",
-      "score": null,
+      "status": "LIVE",
+      "score": [
+        0,
+        0
+      ],
       "scoreDetail": {
         "halfTime": null,
-        "fullTime": null,
+        "fullTime": [
+          0,
+          0
+        ],
         "extraTime": null,
         "penalties": null,
         "duration": "REGULAR",
-        "winnerSide": null
+        "winnerSide": "DRAW"
       },
-      "minute": null,
+      "minute": "16",
       "goals": [],
       "bookings": [],
       "subs": [],
@@ -23671,9 +23677,8 @@
       },
       "referees": [
         {
-          "name": "Slavko Vinčič",
-          "role": "REFEREE",
-          "nationality": "Slovenia"
+          "name": "Slavko Vincici",
+          "role": "Referee"
         }
       ],
       "odds": null,
@@ -23699,7 +23704,7 @@
           "name": "Martin",
           "tip": [
             1,
-            0
+            2
           ],
           "points": null
         },
@@ -23734,6 +23739,42 @@
             1
           ],
           "points": null
+        },
+        {
+          "name": "Vilgot",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Björn",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Hampus",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
+        },
+        {
+          "name": "Alexander",
+          "tip": [
+            0,
+            0
+          ],
+          "points": null,
+          "default": true
         }
       ]
     }
