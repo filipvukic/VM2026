@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T19:22:24+00:00",
+  "updated_at": "2026-07-19T20:13:20+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23650,13 +23650,16 @@
       "homeTla": "ESP",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "LIVE",
+      "status": "PAUSED",
       "score": [
         0,
         0
       ],
       "scoreDetail": {
-        "halfTime": null,
+        "halfTime": [
+          0,
+          0
+        ],
         "fullTime": [
           0,
           0
@@ -23666,10 +23669,26 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "16",
+      "minute": "HT",
       "goals": [],
-      "bookings": [],
-      "subs": [],
+      "bookings": [
+        {
+          "minute": "41",
+          "team": "ARG",
+          "player": "Lisandro Martínez",
+          "card": "YELLOW",
+          "period": 1
+        }
+      ],
+      "subs": [
+        {
+          "minute": "44",
+          "team": "ARG",
+          "playerIn": "Nicolás Otamendi",
+          "playerOut": "Lisandro Martínez",
+          "period": 1
+        }
+      ],
       "venue": {
         "stadium": "MetLife Stadium",
         "city": "East Rutherford, New Jersey",

@@ -81928,13 +81928,16 @@
     "homeTla": "ESP",
     "away": "Argentina",
     "awayTla": "ARG",
-    "status": "LIVE",
+    "status": "PAUSED",
     "score": [
       0,
       0
     ],
     "scoreDetail": {
-      "halfTime": null,
+      "halfTime": [
+        0,
+        0
+      ],
       "fullTime": [
         0,
         0
@@ -81944,10 +81947,26 @@
       "duration": "REGULAR",
       "winnerSide": "DRAW"
     },
-    "minute": "16",
+    "minute": "HT",
     "goals": [],
-    "bookings": [],
-    "subs": [],
+    "bookings": [
+      {
+        "minute": "41",
+        "team": "ARG",
+        "player": "Lisandro Martínez",
+        "card": "YELLOW",
+        "period": 1
+      }
+    ],
+    "subs": [
+      {
+        "minute": "44",
+        "team": "ARG",
+        "playerIn": "Nicolás Otamendi",
+        "playerOut": "Lisandro Martínez",
+        "period": 1
+      }
+    ],
     "venue": {
       "stadium": "MetLife Stadium",
       "city": "East Rutherford, New Jersey",
@@ -82232,7 +82251,7 @@
           "jersey": "6",
           "espnId": "233937",
           "subbedIn": false,
-          "subbedOut": false
+          "subbedOut": true
         },
         {
           "name": "Cristian Romero",
@@ -82359,7 +82378,7 @@
           "positionName": "Substitute",
           "jersey": "19",
           "espnId": "119289",
-          "subbedIn": false,
+          "subbedIn": true,
           "subbedOut": false
         },
         {
@@ -82457,64 +82476,64 @@
       "_espnEventId": "760517"
     },
     "homeStats": {
-      "foulsCommitted": 3.0,
+      "foulsCommitted": 7.0,
       "yellowCards": 0.0,
       "redCards": 0.0,
-      "offsides": 0.0,
-      "wonCorners": 1.0,
+      "offsides": 2.0,
+      "wonCorners": 2.0,
       "saves": 0.0,
-      "possessionPct": 66.5,
-      "totalShots": 1.0,
-      "shotsOnTarget": 1.0,
-      "shotPct": 1.0,
+      "possessionPct": 64.6,
+      "totalShots": 3.0,
+      "shotsOnTarget": 2.0,
+      "shotPct": 0.7,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 124.0,
-      "totalPasses": 140.0,
+      "accuratePasses": 313.0,
+      "totalPasses": 348.0,
       "passPct": 0.9,
       "accurateCrosses": 1.0,
-      "totalCrosses": 3.0,
-      "crossPct": 0.3,
-      "totalLongBalls": 7.0,
-      "accurateLongBalls": 3.0,
+      "totalCrosses": 10.0,
+      "crossPct": 0.1,
+      "totalLongBalls": 23.0,
+      "accurateLongBalls": 10.0,
       "longballPct": 0.4,
       "blockedShots": 0.0,
-      "effectiveTackles": 2.0,
-      "totalTackles": 2.0,
-      "tacklePct": 1.0,
-      "interceptions": 1.0,
-      "effectiveClearance": 1.0,
-      "totalClearance": 1.0
+      "effectiveTackles": 6.0,
+      "totalTackles": 7.0,
+      "tacklePct": 0.9,
+      "interceptions": 4.0,
+      "effectiveClearance": 5.0,
+      "totalClearance": 5.0
     },
     "awayStats": {
-      "foulsCommitted": 2.0,
-      "yellowCards": 0.0,
+      "foulsCommitted": 9.0,
+      "yellowCards": 1.0,
       "redCards": 0.0,
-      "offsides": 0.0,
+      "offsides": 1.0,
       "wonCorners": 0.0,
-      "saves": 1.0,
-      "possessionPct": 33.5,
+      "saves": 2.0,
+      "possessionPct": 35.4,
       "totalShots": 0.0,
       "shotsOnTarget": 0.0,
       "shotPct": 0.0,
       "penaltyKickGoals": 0.0,
       "penaltyKickShots": 0.0,
-      "accuratePasses": 60.0,
-      "totalPasses": 71.0,
+      "accuratePasses": 155.0,
+      "totalPasses": 196.0,
       "passPct": 0.8,
       "accurateCrosses": 0.0,
-      "totalCrosses": 0.0,
+      "totalCrosses": 1.0,
       "crossPct": 0.0,
-      "totalLongBalls": 5.0,
-      "accurateLongBalls": 2.0,
-      "longballPct": 0.4,
+      "totalLongBalls": 27.0,
+      "accurateLongBalls": 7.0,
+      "longballPct": 0.3,
       "blockedShots": 0.0,
-      "effectiveTackles": 0.0,
-      "totalTackles": 1.0,
-      "tacklePct": 0.0,
-      "interceptions": 2.0,
-      "effectiveClearance": 2.0,
-      "totalClearance": 2.0
+      "effectiveTackles": 6.0,
+      "totalTackles": 8.0,
+      "tacklePct": 0.8,
+      "interceptions": 5.0,
+      "effectiveClearance": 4.0,
+      "totalClearance": 4.0
     },
     "homeForm": [
       {
