@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-19T20:13:20+00:00",
+  "updated_at": "2026-07-19T21:07:37+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -23650,7 +23650,7 @@
       "homeTla": "ESP",
       "away": "Argentina",
       "awayTla": "ARG",
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "score": [
         0,
         0
@@ -23669,7 +23669,7 @@
         "duration": "REGULAR",
         "winnerSide": "DRAW"
       },
-      "minute": "HT",
+      "minute": "90",
       "goals": [],
       "bookings": [
         {
@@ -23678,6 +23678,20 @@
           "player": "Lisandro Martínez",
           "card": "YELLOW",
           "period": 1
+        },
+        {
+          "minute": "52",
+          "team": "ARG",
+          "player": "Leandro Paredes",
+          "card": "YELLOW",
+          "period": 2
+        },
+        {
+          "minute": "82",
+          "team": "ARG",
+          "player": "Enzo Fernández",
+          "card": "YELLOW",
+          "period": 2
         }
       ],
       "subs": [
@@ -23687,6 +23701,62 @@
           "playerIn": "Nicolás Otamendi",
           "playerOut": "Lisandro Martínez",
           "period": 1
+        },
+        {
+          "minute": "45",
+          "team": "ARG",
+          "playerIn": "Leandro Paredes",
+          "playerOut": "Nico González",
+          "period": 2
+        },
+        {
+          "minute": "58",
+          "team": "ARG",
+          "playerIn": "Nahuel Molina",
+          "playerOut": "Gonzalo Montiel",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "ESP",
+          "playerIn": "Ferran Torres",
+          "playerOut": "Mikel Oyarzabal",
+          "period": 2
+        },
+        {
+          "minute": "62",
+          "team": "ESP",
+          "playerIn": "Pedri",
+          "playerOut": "Fabián Ruiz",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "ARG",
+          "playerIn": "Facundo Medina",
+          "playerOut": "Cristian Romero",
+          "period": 2
+        },
+        {
+          "minute": "70",
+          "team": "ARG",
+          "playerIn": "Giuliano Simeone",
+          "playerOut": "Rodrigo De Paul",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "ESP",
+          "playerIn": "Nico Williams",
+          "playerOut": "Álex Baena",
+          "period": 2
+        },
+        {
+          "minute": "75",
+          "team": "ESP",
+          "playerIn": "Mikel Merino",
+          "playerOut": "Dani Olmo",
+          "period": 2
         }
       ],
       "venue": {
