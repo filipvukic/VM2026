@@ -13,9 +13,11 @@ import { WC_HISTORY, FIFA_RANKING, FIFA_RANKING_DATE, TEAM_DETAILS } from "../da
 import { COUNTRY_FACTS } from "../data/static/countryFacts";
 import { WikiLink } from "../components/WikiLink";
 import { svDayMonth } from "../lib/format";
+import { importCountryGlobe } from "../features/globe/preload";
 
-// Heavy (Three.js) — only loaded when a team sheet's globe actually renders.
-const CountryGlobe = lazy(() => import("../features/globe/CountryGlobe"));
+// Heavy (Three.js) — only loaded when a team sheet's globe actually renders (or when the
+// app shell pre-warms it during idle; both go through importCountryGlobe → same chunk).
+const CountryGlobe = lazy(importCountryGlobe);
 
 export function TeamSheet({ code, ...chrome }: { code: string } & SheetChrome) {
   const ds = useData();

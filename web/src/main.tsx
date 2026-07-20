@@ -10,6 +10,7 @@ import { startPolling } from "./state/polling";
 import { startEspnLive } from "./state/espnLive";
 import { startKoTips } from "./state/koTips";
 import { startPresence } from "./state/presence";
+import { preloadGlobe } from "./features/globe/preload";
 
 function Root() {
   const status = useStore((s) => s.status);
@@ -37,6 +38,19 @@ function Root() {
     if (fonts?.ready) fonts.ready.then(done, done); else done();
     const t = setTimeout(done, 2500); // never hang on a slow/blocked font
     return () => { alive = false; clearTimeout(t); };
+  }, []);
+
+  // Warm the heavy 3D globe (its ~1.8 MB Three.js chunk + remote GeoJSON/earth texture)
+  // during idle, so the FIRST team sheet you open animates smoothly instead of paying the
+  // whole cold-start on that tap. Runs when the main thread is free (or after a 4s cap),
+  // never competing with the initial data load / first paint.
+  useEffect(() => {
+    type RIC = (cb: () => void, opts?: { timeout: number }) => number;
+    const w = window as unknown as { requestIdleCallback?: RIC; cancelIdleCallback?: (id: number) => void };
+    const id = w.requestIdleCallback
+      ? w.requestIdleCallback(preloadGlobe, { timeout: 4000 })
+      : window.setTimeout(preloadGlobe, 2000);
+    return () => { if (w.requestIdleCallback && w.cancelIdleCallback) w.cancelIdleCallback(id); else clearTimeout(id); };
   }, []);
 
   // show the splash long enough for its intro to actually be seen, even on a cache hit

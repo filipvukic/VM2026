@@ -21,6 +21,36 @@ type Feat = any;
 let FEATURES_CACHE: Feat[] | null = null;
 const EMPTY: Feat[] = []; // stable empty ref for deferred label data
 
+// Load the world polygons once, shared across every globe AND the idle pre-warm below.
+// A single in-flight promise dedups the case where the pre-warm overlaps the first real
+// open, so the GeoJSON is never fetched twice.
+let featuresPromise: Promise<Feat[]> | null = null;
+function loadFeatures(): Promise<Feat[]> {
+  if (FEATURES_CACHE) return Promise.resolve(FEATURES_CACHE);
+  if (!featuresPromise) {
+    featuresPromise = fetch(GEOJSON_URL)
+      .then((r) => r.json())
+      .then((d) => (FEATURES_CACHE = [...(d.features || []), ...(EXTRA_COUNTRIES as Feat[])]))
+      .catch(() => (FEATURES_CACHE = [...(EXTRA_COUNTRIES as Feat[])]));
+  }
+  return featuresPromise;
+}
+
+// Prefetch the globe's remote assets during idle (called from the app shell) so the
+// FIRST team sheet opens hot instead of paying the cold-start on that tap: the world
+// polygons land in FEATURES_CACHE and the earth texture in the browser's HTTP/decode
+// cache, ready for the first GPU upload. Safe to call repeatedly.
+let assetsWarmed = false;
+export function warmGlobeAssets(): void {
+  if (assetsWarmed) return;
+  assetsWarmed = true;
+  loadFeatures();
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.decoding = "async";
+  img.src = EARTH_TEXTURE;
+}
+
 // ISO3 → label position + area, to drop a code label on each country sized by how
 // big it is (the geojson has no label coords; COUNTRY_FACTS has a lat/lng + area).
 const FACTS_BY_CCA3: Record<string, { lat: number; lng: number; area: number | null }> = {};
@@ -231,20 +261,12 @@ export default function CountryGlobe({ iso, name, active, hero }: { iso?: string
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded]);
 
-  // Fetch all world polygons once (cached across opens), plus the bundled extras.
+  // Fetch all world polygons once (cached across opens + warmed by the idle pre-warm),
+  // plus the bundled extras. loadFeatures() dedups an in-flight pre-warm fetch.
   useEffect(() => {
     if (FEATURES_CACHE) { setFeatures(FEATURES_CACHE); return; }
     let alive = true;
-    fetch(GEOJSON_URL)
-      .then((r) => r.json())
-      .then((d) => {
-        FEATURES_CACHE = [...(d.features || []), ...(EXTRA_COUNTRIES as Feat[])];
-        if (alive) setFeatures(FEATURES_CACHE!);
-      })
-      .catch(() => {
-        FEATURES_CACHE = [...(EXTRA_COUNTRIES as Feat[])];
-        if (alive) setFeatures(FEATURES_CACHE!);
-      });
+    loadFeatures().then((f) => { if (alive) setFeatures(f); });
     return () => {
       alive = false;
     };
