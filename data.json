@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-20T06:48:14+00:00",
+  "updated_at": "2026-07-20T08:07:10+00:00",
   "pot": {
     "per_player": 300,
     "total": 3300,
@@ -59,10 +59,10 @@
     },
     {
       "name": "Vilgot",
-      "match_points": 171,
+      "match_points": 167,
       "bonus_points": 16,
-      "total": 187,
-      "exact_count": 10,
+      "total": 183,
+      "exact_count": 9,
       "bonus_detail": {
         "best_young": {
           "pick": "Lamine Yamal",
@@ -196,6 +196,52 @@
       "prize": 0
     },
     {
+      "name": "Johan",
+      "match_points": 166,
+      "bonus_points": 6,
+      "total": 172,
+      "exact_count": 10,
+      "bonus_detail": {
+        "best_young": {
+          "pick": "Yamal",
+          "correct": false,
+          "points": 0
+        },
+        "winner": {
+          "pick": "Portugal",
+          "correct": false,
+          "points": 0
+        },
+        "best_keeper": {
+          "pick": "Unai Simón",
+          "correct": true,
+          "points": 3
+        },
+        "best_player": {
+          "pick": "Bruno Fernandes",
+          "correct": false,
+          "points": 0
+        },
+        "top_scorer": {
+          "pick": "Harry Kane",
+          "correct": false,
+          "points": 0
+        },
+        "silver": {
+          "pick": "Frankrike",
+          "correct": false,
+          "points": 0
+        },
+        "bronze": {
+          "pick": "England",
+          "correct": true,
+          "points": 3
+        }
+      },
+      "rank": 5,
+      "prize": 0
+    },
+    {
       "name": "Martin",
       "match_points": 170,
       "bonus_points": 0,
@@ -236,52 +282,6 @@
           "pick": "Frankrike",
           "correct": false,
           "points": 0
-        }
-      },
-      "rank": 5,
-      "prize": 0
-    },
-    {
-      "name": "Johan",
-      "match_points": 166,
-      "bonus_points": 3,
-      "total": 169,
-      "exact_count": 10,
-      "bonus_detail": {
-        "best_young": {
-          "pick": "Yamal",
-          "correct": false,
-          "points": 0
-        },
-        "winner": {
-          "pick": "Portugal",
-          "correct": false,
-          "points": 0
-        },
-        "best_keeper": {
-          "pick": "Unai Simón",
-          "correct": false,
-          "points": 0
-        },
-        "best_player": {
-          "pick": "Bruno Fernandes",
-          "correct": false,
-          "points": 0
-        },
-        "top_scorer": {
-          "pick": "Harry Kane",
-          "correct": false,
-          "points": 0
-        },
-        "silver": {
-          "pick": "Frankrike",
-          "correct": false,
-          "points": 0
-        },
-        "bronze": {
-          "pick": "England",
-          "correct": true,
-          "points": 3
         }
       },
       "rank": 6,
@@ -23891,11 +23891,10 @@
         {
           "name": "Vilgot",
           "tip": [
-            0,
-            0
+            2,
+            1
           ],
-          "points": 5,
-          "default": true
+          "points": 1
         },
         {
           "name": "Björn",
@@ -24570,9 +24569,9 @@
     "silver": "Argentina",
     "bronze": "England",
     "top_scorer": "Kylian Mbappé",
-    "best_player": null,
-    "best_young": null,
-    "best_keeper": null
+    "best_player": "Rodri",
+    "best_young": "Pau Cubarsí",
+    "best_keeper": "Unai Simón"
   },
   "bonus_points": {
     "winner": 10,
@@ -24583,11 +24582,7 @@
     "best_young": 3,
     "best_keeper": 3
   },
-  "awards_pending": [
-    "best_player",
-    "best_young",
-    "best_keeper"
-  ],
+  "awards_pending": [],
   "unmatched_tips": {},
   "knockout_rule": "scored on the 90-minute (regulation) result; draws valid",
   "team_forms": {
