@@ -1,10 +1,12 @@
 name: Uppdatera lag-form (senaste 5)
 
+# AVSTÄNGD 2026-08-12: VM 2026 är slut — schemat är bortkommenterat (inte borttaget)
+# för att inte slösa Actions-minuter. Avkommentera cron-raden för att slå på igen.
 on:
-  schedule:
-    # En gång per dygn (~05:30 UTC). Hämtningen tar ca 5 min p.g.a.
-    # football-data.org gratisplan: 10 req/min och vi hämtar 48 lag.
-    - cron: "30 5 * * *"
+  # schedule:
+  #   # En gång per dygn (~05:30 UTC). Hämtningen tar ca 5 min p.g.a.
+  #   # football-data.org gratisplan: 10 req/min och vi hämtar 48 lag.
+  #   - cron: "30 5 * * *"
   workflow_dispatch:
 
 permissions:

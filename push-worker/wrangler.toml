@@ -5,8 +5,11 @@ main = "src/index.ts"
 compatibility_date = "2026-06-01"
 
 # Poll ESPN once a minute and push new goals/kickoffs/full-times.
-[triggers]
-crons = ["* * * * *"]
+# AVSTÄNGD 2026-08-12: VM 2026 är slut — inget att pusha om längre, så vi låter inte
+# workern polla ESPN varje minut i onödan. Avkommentera raderna nedan och kör
+# `npx wrangler deploy` för att slå på det igen. (/subscribe och /ko/* fungerar som vanligt.)
+# [triggers]
+# crons = ["* * * * *"]
 
 # KV stores: push subscriptions (sub:*) + the last-seen goal state (goalstate).
 # Create it once:  npx wrangler kv namespace create SUBS

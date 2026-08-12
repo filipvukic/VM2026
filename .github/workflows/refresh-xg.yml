@@ -1,11 +1,13 @@
 name: Uppdatera xG + förbundskaptener (FotMob)
 
+# AVSTÄNGD 2026-08-12: VM 2026 är slut — schemat är bortkommenterat (inte borttaget)
+# för att inte slösa Actions-minuter. Avkommentera cron-raden för att slå på igen.
 on:
-  schedule:
-    # Var 30:e minut. Hämtar riktig xG per spelad match + förbundskaptener från
-    # FotMobs server-renderade sidor (ingen nyckel behövs). Helt skild från
-    # tippningsmotorn (engine.py) så den pipelinen är orörd.
-    - cron: "*/30 * * * *"
+  # schedule:
+  #   # Var 30:e minut. Hämtar riktig xG per spelad match + förbundskaptener från
+  #   # FotMobs server-renderade sidor (ingen nyckel behövs). Helt skild från
+  #   # tippningsmotorn (engine.py) så den pipelinen är orörd.
+  #   - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
